@@ -14,12 +14,13 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   ensureDataDirs();
   log.info('Arrancando Robin Search (servidor local)', {
     version: config.version,
-    carpeta: config.watchedFolder,
+    carpetas: config.watchedFolders,
     dataDir: config.dataDir,
   });
 
-  if (!config.watchedFolder) {
-    log.warn('ROBIN_FOLDER no configurada: sin carpeta de expedientes que indexar.');
+  const hayCarpetas = config.watchedFolders.length > 0;
+  if (!hayCarpetas) {
+    log.warn('Sin carpetas de expedientes (ROBIN_FOLDER / ROBIN_FOLDERS): nada que indexar.');
   }
 
   // Comprobación de actualización en background (no bloquea el arranque).
@@ -35,10 +36,10 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
 
-  // Indexado inicial (incremental) de la carpeta configurada.
-  if (initialIndex && config.watchedFolder) {
+  // Indexado inicial (incremental) de todas las carpetas configuradas.
+  if (initialIndex && hayCarpetas) {
     try {
-      const resumen = await indexFolder({ folder: config.watchedFolder, force: false });
+      const resumen = await indexFolder({ force: false });
       log.info('Indexado inicial completado', resumen);
     } catch (err) {
       log.error('Fallo en el indexado inicial', { err: String(err) });
@@ -46,7 +47,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
 
-  if (watch && config.watchedFolder) startWatcher();
+  if (watch && hayCarpetas) startWatcher();
 }
 
 export default { bootstrap };

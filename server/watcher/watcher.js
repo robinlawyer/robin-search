@@ -4,13 +4,13 @@
 
 import chokidar from 'chokidar';
 import path from 'node:path';
-import { config, SUPPORTED_EXTENSIONS } from '../config.js';
+import { config, SUPPORTED_EXTENSIONS, logicalPath } from '../config.js';
 import { log } from '../logger.js';
 import { setActivo, setIndexando } from '../state.js';
 import { indexFile, removeFilePath } from '../indexer/indexer.js';
 
 let _watcher = null;
-const pending = new Map(); // relPath → { absPath, tipo: 'index'|'remove' }
+const pending = new Map(); // absPath → { absPath, tipo: 'index'|'remove' }
 let flushTimer = null;
 let draining = false;
 const DEBOUNCE_MS = 1500;
@@ -32,15 +32,16 @@ async function drain() {
   draining = true;
   try {
     while (pending.size > 0) {
-      const [relPath, job] = pending.entries().next().value;
-      pending.delete(relPath);
-      setIndexando({ procesados: 0, total: 1, ficheroActual: relPath });
+      const [absPath, job] = pending.entries().next().value;
+      pending.delete(absPath);
+      const ruta = logicalPath(absPath);
+      setIndexando({ procesados: 0, total: 1, ficheroActual: ruta });
       try {
-        if (job.tipo === 'remove') await removeFilePath(job.absPath);
-        else await indexFile(job.absPath);
-        log.info('Watcher: re-indexado', { relPath, tipo: job.tipo });
+        if (job.tipo === 'remove') await removeFilePath(absPath);
+        else await indexFile(absPath);
+        log.info('Watcher: re-indexado', { ruta, tipo: job.tipo });
       } catch (err) {
-        log.error('Watcher: error procesando cambio', { relPath, err: String(err) });
+        log.error('Watcher: error procesando cambio', { ruta, err: String(err) });
       }
     }
   } finally {
@@ -50,19 +51,18 @@ async function drain() {
 }
 
 function enqueue(absPath, tipo) {
-  const relPath = path.relative(config.watchedFolder, absPath);
-  pending.set(relPath, { absPath, tipo });
+  pending.set(path.resolve(absPath), { tipo });
   scheduleFlush();
 }
 
 export function startWatcher() {
-  if (!config.watchedFolder) {
-    log.warn('Watcher no iniciado: sin carpeta configurada');
+  if (!config.watchedFolders || config.watchedFolders.length === 0) {
+    log.warn('Watcher no iniciado: sin carpetas configuradas');
     return null;
   }
   if (_watcher) return _watcher;
 
-  _watcher = chokidar.watch(config.watchedFolder, {
+  _watcher = chokidar.watch(config.watchedFolders, {
     ignoreInitial: true, // el indexado inicial lo hace indexFolder en el arranque
     persistent: true,
     awaitWriteFinish: { stabilityThreshold: 1000, pollInterval: 200 },
@@ -75,7 +75,7 @@ export function startWatcher() {
     .on('unlink', (p) => isSupported(p) && enqueue(p, 'remove'))
     .on('error', (err) => log.error('Watcher error', { err: String(err) }));
 
-  log.info('Watcher activo', { carpeta: config.watchedFolder });
+  log.info('Watcher activo', { carpetas: config.watchedFolders });
   return _watcher;
 }
 

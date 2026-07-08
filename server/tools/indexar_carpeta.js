@@ -19,7 +19,7 @@ export const definition = {
       path: {
         type: 'string',
         description:
-          'Opcional: carpeta a indexar. Por defecto, la carpeta de expedientes configurada.',
+          'Opcional: una carpeta concreta a indexar. Por defecto, todas las carpetas configuradas.',
       },
       forzar: {
         type: 'boolean',
@@ -37,13 +37,13 @@ export const definition = {
 };
 
 export async function handler(args) {
-  const folder = args?.path || config.watchedFolder;
-  if (!folder) {
+  const folders = args?.path ? [args.path] : undefined;
+  if (!folders && config.watchedFolders.length === 0) {
     return fail(
-      'No hay carpeta de expedientes configurada. Define ROBIN_FOLDER o pasa el parámetro "path".',
+      'No hay carpetas de expedientes configuradas. Define ROBIN_FOLDER/ROBIN_FOLDERS o pasa "path".',
     );
   }
-  const resumen = await indexFolder({ folder, force: Boolean(args?.forzar) });
+  const resumen = await indexFolder({ folders, force: Boolean(args?.forzar) });
   return ok(resumen);
 }
 

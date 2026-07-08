@@ -2,8 +2,10 @@
 // nuevos o modificados desde la última ejecución (RF-03.7). Guarda metadatos, NUNCA
 // contenido documental.
 //
-// Clave = ruta relativa a la carpeta vigilada. Valor:
-//   { docId, size, mtimeMs, indexedAt, numChunks, numPages, sinOcr }
+// Multi-raíz: la CLAVE es la ruta ABSOLUTA del fichero (única entre carpetas distintas).
+// Cada entrada guarda además la raíz y la ruta lógica (`nombreRaíz/rutaRelativa`) que se usa
+// para filtrar y citar. Valor:
+//   { docId, raiz, rutaRelativa, size, mtimeMs, indexedAt, numChunks, numPages, sinOcr }
 
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -29,39 +31,41 @@ function persist() {
   fs.renameSync(tmp, config.manifestPath); // escritura atómica
 }
 
-export function docIdForRelPath(relPath) {
-  return crypto.createHash('sha1').update(relPath).digest('hex').slice(0, 16);
+// docId estable y único por fichero, derivado de su ruta absoluta.
+export function docIdForAbsPath(absPath) {
+  return crypto.createHash('sha1').update(absPath).digest('hex').slice(0, 16);
 }
 
-export function get(relPath) {
-  return load()[relPath] ?? null;
+export function get(absPath) {
+  return load()[absPath] ?? null;
 }
 
 // ¿El fichero ha cambiado (o es nuevo) respecto al registro?
-export function isStale(relPath, stat) {
-  const entry = get(relPath);
+export function isStale(absPath, stat) {
+  const entry = get(absPath);
   if (!entry) return true;
   return entry.size !== stat.size || entry.mtimeMs !== stat.mtimeMs;
 }
 
-export function set(relPath, entry) {
+export function set(absPath, entry) {
   const reg = load();
-  reg[relPath] = entry;
+  reg[absPath] = entry;
   persist();
 }
 
-export function remove(relPath) {
+export function remove(absPath) {
   const reg = load();
-  const entry = reg[relPath];
+  const entry = reg[absPath];
   if (entry) {
-    delete reg[relPath];
+    delete reg[absPath];
     persist();
   }
   return entry ?? null;
 }
 
+// Todas las entradas (valores), cada una con su ruta lógica y raíz.
 export function all() {
-  return { ...load() };
+  return Object.values(load());
 }
 
 export function stats() {
@@ -69,9 +73,9 @@ export function stats() {
   let documentos = 0;
   let fragmentos = 0;
   const sinOcr = [];
-  for (const [relPath, e] of Object.entries(reg)) {
+  for (const e of Object.values(reg)) {
     if (e.sinOcr) {
-      sinOcr.push(relPath);
+      sinOcr.push(e.rutaRelativa);
       continue;
     }
     documentos += 1;
@@ -80,4 +84,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForRelPath, get, isStale, set, remove, all, stats };
+export default { docIdForAbsPath, get, isStale, set, remove, all, stats };

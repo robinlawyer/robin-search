@@ -1,14 +1,13 @@
 {
-  "name": "@robinlawyer/local-server",
+  "name": "@robinlawyer/robin-search",
   "version": "1.0.0",
   "description": "Robin Search — servidor MCP local que indexa los expedientes del despacho y los hace buscables semánticamente sin que ningún documento salga del ordenador del abogado.",
   "type": "module",
-  "license": "UNLICENSED",
-  "private": true,
-  "author": "Robin Lawyer",
+  "license": "MIT",
+  "author": "Robin Lawyer (Stay Hungry and Foolish, S.L.)",
   "homepage": "https://robinlawyer.ai",
   "bin": {
-    "robin-local": "cli/index.js"
+    "robin-search": "cli/index.js"
   },
   "main": "server/index.js",
   "engines": {
@@ -18,15 +17,17 @@
     "start": "node server/index.js",
     "cli": "node cli/index.js",
     "check": "for f in $(git ls-files '*.js' 2>/dev/null || find . -name '*.js' -not -path './node_modules/*'); do node --check \"$f\" || exit 1; done && echo 'syntax OK'",
-    "pack:mcpb": "npx @anthropic-ai/mcpb pack . dist/robin-local.mcpb"
+    "pack:mcpb": "npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.4.0",
     "@xenova/transformers": "^2.17.2",
-    "vectra": "^0.9.0",
     "chokidar": "^3.6.0",
     "mammoth": "^1.8.0",
-    "pdfjs-dist": "^4.6.82"
+    "mupdf": "^1.28.0",
+    "pdfjs-dist": "^4.6.82",
+    "tesseract.js": "^7.0.0",
+    "vectra": "^0.9.0"
   },
   "files": [
     "server",

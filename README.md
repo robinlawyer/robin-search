@@ -12,7 +12,9 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 - **Embedding:** `multilingual-e5-small` en ONNX, 100 % local vía `@xenova/transformers`.
   Búsqueda asimétrica con prefijos `query:` / `passage:`.
 - **Índice vectorial:** `vectra` (local, sin proceso separado).
-- **Formatos v1.0:** PDF (con texto) y DOCX. TXT/MD y OCR → v1.1.
+- **Formatos v1.0:** PDF (con texto **y escaneados vía OCR local**) y DOCX. TXT/MD → v1.1.
+- **OCR local:** PDFs escaneados se reconocen en el ordenador con `mupdf` + `tesseract.js` (WASM). Ninguna imagen sale del equipo.
+- **Multi-carpeta:** vigila **varias carpetas de expedientes independientes** a la vez; cada una es filtrable y citable por su nombre (`carpeta_filtro`).
 - **Privacidad:** el contenido documental **nunca** sale del ordenador (RGPD / secreto profesional).
 
 ---
@@ -29,7 +31,7 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 ### Claude Code / Cursor (npm)
 
 ```bash
-npm install -g @robinlawyer/local-server
+npm install -g @robinlawyer/robin-search
 ```
 
 Ver [docs/CLAUDE_CODE_SETUP.md](docs/CLAUDE_CODE_SETUP.md) y [docs/CURSOR_SETUP.md](docs/CURSOR_SETUP.md).
@@ -37,7 +39,7 @@ Ver [docs/CLAUDE_CODE_SETUP.md](docs/CLAUDE_CODE_SETUP.md) y [docs/CURSOR_SETUP.
 ### IT — despliegue masivo (pre-indexado headless)
 
 ```bash
-robin-local --silent --token="TOKEN" --folder="/ruta/a/Expedientes"
+robin-search --silent --token="TOKEN" --folder="/ruta/a/Expedientes"
 ```
 
 Indexa una vez y sale (código 0). Integrable en GPO / JAMF / Intune. Ver [docs/IT_DEPLOYMENT.md](docs/IT_DEPLOYMENT.md).
@@ -81,9 +83,9 @@ ordenados por similitud. **Respuesta esperada:** el pasaje literal de la cláusu
 > **Prompt del abogado:** «¿Está todo indexado? ¿Hay documentos que no se hayan podido leer?»
 
 `estado_servidor()` devuelve documentos y fragmentos indexados, tamaño del índice y la lista
-`ficheros_sin_ocr`. **Respuesta esperada:** «1.247 documentos indexados (18.930 fragmentos). 3
-PDFs escaneados sin OCR no se han indexado: pásalos por OCR (Adobe/Google) y se indexarán
-solos.»
+`ficheros_sin_ocr`. **Respuesta esperada:** «1.247 documentos indexados (18.930 fragmentos),
+incluidos los escaneados que se han pasado por OCR local. `ficheros_sin_ocr` está vacío.» (Solo
+aparecen aquí los PDFs cuyo OCR ha fallado o si el OCR está desactivado.)
 
 ---
 
@@ -101,5 +103,5 @@ abogado. El modelo de embedding corre en local, sin telemetría. Ver
 npm install
 ROBIN_FOLDER=/ruta/a/Expedientes npm start   # arranca el servidor MCP (stdio)
 npm run check                                 # syntax-check de todos los .js
-npm run pack:mcpb                             # empaqueta dist/robin-local.mcpb
+npm run pack:mcpb                             # empaqueta dist/robin-search.mcpb
 ```

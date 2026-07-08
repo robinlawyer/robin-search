@@ -45,7 +45,7 @@
   jurídicas/normativas (la query, nunca el documento).
 - **Embedding:** local, sin API ni telemetría.
 - **Datos generados** (índice `vectra`, `files.json`, logs) viven en el dir de datos de la app
-  (`~/Library/Application Support/RobinLawyer/robin-local` en macOS), **nunca** en la carpeta de
+  (`~/Library/Application Support/RobinLawyer/robin-search` en macOS), **nunca** en la carpeta de
   expedientes → no disparan el watcher ni contaminan el expediente.
 
 ## Escala (criterios de aceptación)

@@ -16,7 +16,7 @@ let logPath = null;
 function logFile() {
   if (!logPath) {
     ensureDataDirs();
-    logPath = path.join(config.logDir, 'robin-local.log');
+    logPath = path.join(config.logDir, 'robin-search.log');
   }
   return logPath;
 }
@@ -29,7 +29,7 @@ function rotateIfNeeded(file) {
     return;
   }
   if (size < MAX_BYTES) return;
-  // robin-local.log.2 → .3, .1 → .2, base → .1
+  // robin-search.log.2 → .3, .1 → .2, base → .1
   for (let i = MAX_FILES - 1; i >= 1; i--) {
     const src = i === 1 ? file : `${file}.${i - 1}`;
     const dst = `${file}.${i}`;

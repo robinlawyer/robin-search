@@ -1,12 +1,13 @@
-// Orquestador del indexado: recorre la carpeta, decide qué ficheros procesar (incremental),
-// extrae texto, trocea, genera embeddings locales y los guarda en el índice vectorial.
+// Orquestador del indexado: recorre las carpetas vigiladas (multi-raíz), decide qué ficheros
+// procesar (incremental), extrae texto, trocea, genera embeddings locales y los guarda en el
+// índice vectorial.
 //
 // Pipeline por fichero:
 //   extractFile → chunkPages → embedPassages (e5-small local) → store.upsertChunks → registry.set
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { config, SUPPORTED_EXTENSIONS } from '../config.js';
+import { config, SUPPORTED_EXTENSIONS, logicalPath, rootForPath } from '../config.js';
 import { log } from '../logger.js';
 import { state, setIndexando, setActivo, setError } from '../state.js';
 import { extractFile } from './extract.js';
@@ -19,11 +20,7 @@ function isSupported(filePath) {
   return SUPPORTED_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
-function relOf(absPath, folder) {
-  return path.relative(folder, absPath);
-}
-
-// Recorre recursivamente la carpeta y devuelve rutas absolutas de ficheros soportados.
+// Recorre recursivamente una carpeta y devuelve rutas absolutas de ficheros soportados.
 // Ignora directorios ocultos y el propio directorio de datos por si estuviera anidado.
 function* walk(dir) {
   let entries;
@@ -46,44 +43,48 @@ function* walk(dir) {
 }
 
 // Indexa (o re-indexa) un único fichero. Devuelve el resumen de lo procesado.
-export async function indexFile(absPath, { folder = config.watchedFolder, force = false } = {}) {
-  const relPath = relOf(absPath, folder);
+export async function indexFile(absPath, { force = false } = {}) {
+  const abs = path.resolve(absPath);
+  const rutaLogica = logicalPath(abs);
+  const root = rootForPath(abs);
   let stat;
   try {
-    stat = fs.statSync(absPath);
+    stat = fs.statSync(abs);
   } catch {
-    return { relPath, estado: 'omitido', motivo: 'no_existe' };
+    return { ruta: rutaLogica, estado: 'omitido', motivo: 'no_existe' };
   }
 
-  if (!force && !registry.isStale(relPath, stat)) {
-    return { relPath, estado: 'sin_cambios' };
+  if (!force && !registry.isStale(abs, stat)) {
+    return { ruta: rutaLogica, estado: 'sin_cambios' };
   }
 
-  const docId = registry.docIdForRelPath(relPath);
+  const docId = registry.docIdForAbsPath(abs);
 
   // Si ya había chunks de este documento (fichero modificado), los borramos antes de reinsertar.
   await store.deleteByDoc(docId);
 
-  const { pages, sinOcr, numPages } = await extractFile(absPath, {
+  const { pages, sinOcr, numPages } = await extractFile(abs, {
     maxPages: config.maxPagesPerFile,
   });
 
+  const baseEntry = {
+    docId,
+    raiz: root?.name ?? null,
+    rutaRelativa: rutaLogica,
+    size: stat.size,
+    mtimeMs: stat.mtimeMs,
+    indexedAt: new Date().toISOString(),
+    numPages,
+  };
+
   if (sinOcr) {
-    state.ficherosSinOcr.add(relPath);
-    registry.set(relPath, {
-      docId,
-      size: stat.size,
-      mtimeMs: stat.mtimeMs,
-      indexedAt: new Date().toISOString(),
-      numChunks: 0,
-      numPages,
-      sinOcr: true,
-    });
-    log.warn('PDF sin OCR detectado, omitido del índice', { relPath });
-    return { relPath, estado: 'sin_ocr' };
+    state.ficherosSinOcr.add(rutaLogica);
+    registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: true });
+    log.warn('PDF sin OCR (no legible), omitido del índice', { ruta: rutaLogica });
+    return { ruta: rutaLogica, estado: 'sin_ocr' };
   }
 
-  state.ficherosSinOcr.delete(relPath);
+  state.ficherosSinOcr.delete(rutaLogica);
 
   const chunks = chunkPages(pages, {
     chunkSizeTokens: config.chunkSizeTokens,
@@ -91,21 +92,13 @@ export async function indexFile(absPath, { folder = config.watchedFolder, force 
   });
 
   if (chunks.length === 0) {
-    registry.set(relPath, {
-      docId,
-      size: stat.size,
-      mtimeMs: stat.mtimeMs,
-      indexedAt: new Date().toISOString(),
-      numChunks: 0,
-      numPages,
-      sinOcr: false,
-    });
-    return { relPath, estado: 'vacio' };
+    registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: false });
+    return { ruta: rutaLogica, estado: 'vacio' };
   }
 
   const vectors = await embedPassages(chunks.map((c) => c.text));
 
-  const fichero = path.basename(relPath);
+  const fichero = path.basename(abs);
   const fechaModificacion = stat.mtime.toISOString();
   const items = chunks.map((c, i) => ({
     chunkId: c.chunkId,
@@ -113,41 +106,41 @@ export async function indexFile(absPath, { folder = config.watchedFolder, force 
     metadata: {
       texto: c.text,
       fichero,
-      rutaRelativa: relPath,
+      rutaRelativa: rutaLogica,
+      raiz: root?.name ?? null,
       pagina: c.page,
       fechaModificacion,
     },
   }));
 
   await store.upsertChunks(docId, items);
+  registry.set(abs, { ...baseEntry, numChunks: chunks.length, sinOcr: false });
 
-  registry.set(relPath, {
-    docId,
-    size: stat.size,
-    mtimeMs: stat.mtimeMs,
-    indexedAt: new Date().toISOString(),
-    numChunks: chunks.length,
-    numPages,
-    sinOcr: false,
-  });
-
-  return { relPath, estado: 'indexado', chunks: chunks.length };
+  return { ruta: rutaLogica, estado: 'indexado', chunks: chunks.length };
 }
 
 // Elimina un fichero del índice (invocado por el watcher al borrarse un fichero).
-export async function removeFilePath(absPath, { folder = config.watchedFolder } = {}) {
-  const relPath = relOf(absPath, folder);
-  const entry = registry.remove(relPath);
-  state.ficherosSinOcr.delete(relPath);
+export async function removeFilePath(absPath) {
+  const abs = path.resolve(absPath);
+  const rutaLogica = logicalPath(abs);
+  const entry = registry.remove(abs);
+  state.ficherosSinOcr.delete(rutaLogica);
   if (entry) await store.deleteByDoc(entry.docId);
-  return { relPath, estado: 'eliminado' };
+  return { ruta: rutaLogica, estado: 'eliminado' };
 }
 
-// Indexa la carpeta completa (incremental salvo `force`). Actualiza el estado runtime.
-export async function indexFolder({ folder = config.watchedFolder, force = false, onProgress } = {}) {
-  if (!folder) throw new Error('No hay carpeta de expedientes configurada (ROBIN_FOLDER).');
+// Indexa una o varias carpetas (incremental salvo `force`). Por defecto, todas las raíces
+// configuradas. Actualiza el estado runtime.
+export async function indexFolder({ folders, force = false, onProgress } = {}) {
+  const roots = folders
+    ? (Array.isArray(folders) ? folders : [folders]).map((f) => path.resolve(f))
+    : config.watchedFolders;
+  if (!roots || roots.length === 0) {
+    throw new Error('No hay carpetas de expedientes configuradas (ROBIN_FOLDER / ROBIN_FOLDERS).');
+  }
+
   const resumen = {
-    carpeta: folder,
+    carpetas: roots,
     indexados: 0,
     sinCambios: 0,
     sinOcr: 0,
@@ -156,16 +149,17 @@ export async function indexFolder({ folder = config.watchedFolder, force = false
     fragmentosNuevos: 0,
   };
 
-  const files = [...walk(folder)];
+  const files = [];
+  for (const root of roots) for (const f of walk(root)) files.push(f);
   setIndexando({ procesados: 0, total: files.length, ficheroActual: null });
 
   try {
     let i = 0;
     for (const abs of files) {
       i += 1;
-      state.progreso = { procesados: i, total: files.length, ficheroActual: relOf(abs, folder) };
+      state.progreso = { procesados: i, total: files.length, ficheroActual: logicalPath(abs) };
       try {
-        const r = await indexFile(abs, { folder, force });
+        const r = await indexFile(abs, { force });
         if (r.estado === 'indexado') {
           resumen.indexados += 1;
           resumen.fragmentosNuevos += r.chunks || 0;
@@ -174,7 +168,7 @@ export async function indexFolder({ folder = config.watchedFolder, force = false
         else resumen.omitidos += 1;
       } catch (err) {
         resumen.errores += 1;
-        log.error('Error indexando fichero', { fichero: relOf(abs, folder), err: String(err) });
+        log.error('Error indexando fichero', { fichero: logicalPath(abs), err: String(err) });
       }
       if (onProgress) onProgress(state.progreso, resumen);
     }
@@ -184,7 +178,7 @@ export async function indexFolder({ folder = config.watchedFolder, force = false
     throw err;
   }
 
-  log.info('Indexado de carpeta completado', resumen);
+  log.info('Indexado completado', resumen);
   return resumen;
 }
 

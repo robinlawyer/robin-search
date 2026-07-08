@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // CLI de Robin Search.
 //
-//   robin-local                         → arranca el servidor MCP (stdio). Este es el modo
+//   robin-search                         → arranca el servidor MCP (stdio). Este es el modo
 //                                         que usan Claude Desktop (.mcpb), Claude Code y Cursor.
-//   robin-local --silent --token=... --folder=...
+//   robin-search --silent --token=... --folder=...
 //                                       → modo IT: indexa la carpeta una vez y sale (0). Sirve
 //                                         para pre-cargar el índice en despliegues masivos
 //                                         (GPO/JAMF/Intune) sin interacción del usuario.
@@ -12,14 +12,17 @@
 // cargar cualquier módulo que lea la configuración (import dinámico) para que surtan efecto.
 
 function parseArgs(argv) {
-  const opts = { silent: false, help: false, version: false, _: [] };
+  const opts = { silent: false, help: false, version: false, folders: [], _: [] };
   for (const arg of argv) {
     if (arg === '--silent' || arg === '-s') opts.silent = true;
     else if (arg === '--help' || arg === '-h') opts.help = true;
     else if (arg === '--version' || arg === '-v') opts.version = true;
     else if (arg.startsWith('--token=')) opts.token = arg.slice('--token='.length);
-    else if (arg.startsWith('--folder=')) opts.folder = arg.slice('--folder='.length);
-    else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
+    // --folder puede repetirse para vigilar varias carpetas.
+    else if (arg.startsWith('--folder=')) opts.folders.push(arg.slice('--folder='.length));
+    else if (arg.startsWith('--folders=')) {
+      for (const f of arg.slice('--folders='.length).split(/[\n;,]+/)) if (f.trim()) opts.folders.push(f.trim());
+    } else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
     else if (arg === 'index') opts.silent = true;
     else if (arg === 'serve') opts._.push('serve');
     else opts._.push(arg);
@@ -30,18 +33,19 @@ function parseArgs(argv) {
 const HELP = `Robin Search — servidor MCP local de búsqueda en expedientes.
 
 Uso:
-  robin-local [opciones]
+  robin-search [opciones]
 
 Opciones:
   (sin opciones)        Arranca el servidor MCP por stdio (Claude Desktop / Code / Cursor).
   --silent, -s          Modo IT: indexa la carpeta una vez y sale. No arranca el servidor.
   --token=TOKEN         Token Robin Lawyer (equivale a ROBIN_TOKEN).
-  --folder=RUTA         Carpeta de expedientes a indexar (equivale a ROBIN_FOLDER).
+  --folder=RUTA         Carpeta de expedientes. Repetible para vigilar VARIAS carpetas.
+  --folders=A;B;C       Varias carpetas de una vez (separadas por ; , o salto de línea).
   --data-dir=RUTA       Directorio de datos (índice/logs). Por defecto, dir de la app del SO.
   --version, -v         Muestra la versión.
   --help, -h            Muestra esta ayuda.
 
-Variables de entorno equivalentes: ROBIN_TOKEN, ROBIN_FOLDER, ROBIN_DATA_DIR.
+Variables de entorno equivalentes: ROBIN_TOKEN, ROBIN_FOLDER, ROBIN_FOLDERS, ROBIN_DATA_DIR.
 `;
 
 async function run() {
@@ -54,7 +58,8 @@ async function run() {
 
   // Trasladar flags → entorno ANTES de importar config.
   if (opts.token) process.env.ROBIN_TOKEN = opts.token;
-  if (opts.folder) process.env.ROBIN_FOLDER = opts.folder;
+  if (opts.folders.length === 1) process.env.ROBIN_FOLDER = opts.folders[0];
+  else if (opts.folders.length > 1) process.env.ROBIN_FOLDERS = opts.folders.join('\n');
   if (opts.dataDir) process.env.ROBIN_DATA_DIR = opts.dataDir;
 
   if (opts.version) {
@@ -68,14 +73,14 @@ async function run() {
     const { bootstrap } = await import('../server/bootstrap.js');
     const { state } = await import('../server/state.js');
     const { config } = await import('../server/config.js');
-    if (!config.watchedFolder) {
-      process.stderr.write('robin-local: falta --folder o ROBIN_FOLDER.\n');
+    if (config.watchedFolders.length === 0) {
+      process.stderr.write('robin-search: falta --folder/--folders o ROBIN_FOLDER/ROBIN_FOLDERS.\n');
       process.exit(2);
     }
-    process.stdout.write(`Indexando ${config.watchedFolder} ...\n`);
+    process.stdout.write(`Indexando ${config.watchedFolders.length} carpeta(s):\n  ${config.watchedFolders.join('\n  ')}\n`);
     await bootstrap({ initialIndex: true, watch: false, warmModel: true });
     if (state.estado === 'error') {
-      process.stderr.write(`robin-local: indexado con errores: ${state.ultimoError}\n`);
+      process.stderr.write(`robin-search: indexado con errores: ${state.ultimoError}\n`);
       process.exit(1);
     }
     process.stdout.write('Indexado completado.\n');
@@ -87,6 +92,6 @@ async function run() {
 }
 
 run().catch((err) => {
-  process.stderr.write(`robin-local: ${err?.message ?? err}\n`);
+  process.stderr.write(`robin-search: ${err?.message ?? err}\n`);
   process.exit(1);
 });

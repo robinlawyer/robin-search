@@ -13,13 +13,13 @@ IT del despacho. Cada abogado solo rellena token y carpeta en el diálogo nativo
 ### Instalación silenciosa
 
 ```bash
-npm install -g @robinlawyer/local-server
+npm install -g @robinlawyer/robin-search
 ```
 
 ### Pre-indexar el expediente (sin interacción)
 
 ```bash
-robin-local --silent --token="TOKEN" --folder="C:\Expedientes"
+robin-search --silent --token="TOKEN" --folder="C:\Expedientes"
 ```
 
 - Indexa la carpeta una vez y sale con código **0** (o **1** si hubo errores de indexado, **2**
@@ -39,9 +39,9 @@ robin-local --silent --token="TOKEN" --folder="C:\Expedientes"
 
 | SO      | Ruta                                                             |
 | ------- | --------------------------------------------------------------- |
-| macOS   | `~/Library/Application Support/RobinLawyer/robin-local`          |
-| Windows | `%APPDATA%\RobinLawyer\robin-local`                             |
-| Linux   | `~/.local/share/robin-lawyer/robin-local`                       |
+| macOS   | `~/Library/Application Support/RobinLawyer/robin-search`          |
+| Windows | `%APPDATA%\RobinLawyer\robin-search`                             |
+| Linux   | `~/.local/share/robin-lawyer/robin-search`                       |
 
 Contiene `index/` (vectra), `files.json` (registro incremental) y `logs/`. Ningún documento
 original; se puede borrar para forzar un re-indexado limpio.

@@ -12,7 +12,7 @@
   "homepage": "https://robinlawyer.ai",
   "documentation": "https://robinlawyer.ai/descargas",
   "support": "https://robinlawyer.ai/contacto",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": ["legal", "abogados", "rag", "búsqueda", "expedientes", "privacidad", "rgpd"],
   "privacy_policies": ["https://robinlawyer.ai/privacidad"],
   "server": {
@@ -23,7 +23,7 @@
       "args": ["${__dirname}/server/index.js"],
       "env": {
         "ROBIN_TOKEN": "${user_config.robin_token}",
-        "ROBIN_FOLDER": "${user_config.robin_folder}"
+        "ROBIN_FOLDERS": "${user_config.robin_folders}"
       }
     }
   },
@@ -35,10 +35,11 @@
       "sensitive": true,
       "required": false
     },
-    "robin_folder": {
+    "robin_folders": {
       "type": "directory",
-      "title": "Carpeta de expedientes",
-      "description": "Carpeta con los documentos del despacho que quieres indexar. Se vigila para re-indexar automáticamente. Ningún documento sale de tu ordenador.",
+      "title": "Carpetas de expedientes",
+      "description": "Una o varias carpetas con los documentos del despacho. Cada una se indexa y se vigila por separado; ningún documento sale de tu ordenador.",
+      "multiple": true,
       "required": true
     }
   },

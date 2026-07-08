@@ -7,6 +7,9 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { config } from '../config.js';
+import { log } from '../logger.js';
+import { ocrPdf } from './ocr.js';
 
 // Umbral: caracteres de texto extraíble por página por debajo del cual consideramos que
 // el PDF es una imagen escaneada sin capa OCR.
@@ -42,8 +45,25 @@ export async function extractPdf(filePath, { maxPages }) {
   }
   await pdf.destroy();
 
-  const sinOcr = limit > 0 && totalChars / limit < MIN_CHARS_PER_PAGE;
-  return { pages: sinOcr ? [] : pages, sinOcr, numPages };
+  const escaneado = limit > 0 && totalChars / limit < MIN_CHARS_PER_PAGE;
+
+  // PDF con capa de texto: devolvemos directamente.
+  if (!escaneado) return { pages, sinOcr: false, numPages, viaOcr: false };
+
+  // PDF escaneado: si el OCR está activado (v1.0), lo aplicamos en local. Si está desactivado
+  // o no produce texto, se marca sinOcr para que el abogado lo sepa.
+  if (!config.ocrEnabled) return { pages: [], sinOcr: true, numPages };
+
+  log.info('PDF escaneado: aplicando OCR local', { fichero: path.basename(filePath), numPages });
+  let ocrPages = [];
+  try {
+    ocrPages = await ocrPdf(filePath, { maxPages });
+  } catch (err) {
+    log.error('OCR falló; el fichero se marca sin OCR', { err: String(err) });
+    return { pages: [], sinOcr: true, numPages };
+  }
+  if (ocrPages.length === 0) return { pages: [], sinOcr: true, numPages };
+  return { pages: ocrPages, sinOcr: false, numPages, viaOcr: true };
 }
 
 // DOCX no tiene paginación fiable → todo el documento como un único bloque (page: null).

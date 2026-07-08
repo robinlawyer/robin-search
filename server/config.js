@@ -11,7 +11,7 @@ export const VERSION = '1.0.0';
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
 export const UPDATE_CHECK_URL =
-  process.env.ROBIN_UPDATE_URL || 'https://robinlawyer.ai/descargas/robin-local-latest.json';
+  process.env.ROBIN_UPDATE_URL || 'https://robinlawyer.ai/descargas/robin-search-latest.json';
 
 // Formatos soportados en v1.0 (TXT/MD → v1.1).
 export const SUPPORTED_EXTENSIONS = new Set(['.pdf', '.docx']);
@@ -27,18 +27,18 @@ function defaultDataDir() {
   const home = os.homedir();
   switch (process.platform) {
     case 'darwin':
-      return path.join(home, 'Library', 'Application Support', 'RobinLawyer', 'robin-local');
+      return path.join(home, 'Library', 'Application Support', 'RobinLawyer', 'robin-search');
     case 'win32':
       return path.join(
         firstDefined(process.env.APPDATA, path.join(home, 'AppData', 'Roaming')),
         'RobinLawyer',
-        'robin-local',
+        'robin-search',
       );
     default:
       return path.join(
         firstDefined(process.env.XDG_DATA_HOME, path.join(home, '.local', 'share')),
         'robin-lawyer',
-        'robin-local',
+        'robin-search',
       );
   }
 }
@@ -48,8 +48,53 @@ function toInt(val, fallback) {
   return Number.isFinite(n) && n > 0 ? n : fallback;
 }
 
+// Multi-raíz: el abogado puede vigilar VARIAS carpetas de expedientes independientes.
+//   ROBIN_FOLDERS = varias carpetas (array JSON, o separadas por salto de línea / ; / ,)
+//   ROBIN_FOLDER  = una sola (compatibilidad hacia atrás)
+function parseFolders() {
+  const multi = firstDefined(process.env.ROBIN_FOLDERS);
+  const single = firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER);
+  let list = [];
+  if (multi) {
+    const t = multi.trim();
+    if (t.startsWith('[')) {
+      try {
+        list = JSON.parse(t);
+      } catch {
+        list = [];
+      }
+    } else {
+      list = t.split(/[\n;,]+/);
+    }
+  } else if (single) {
+    list = [single];
+  }
+  return list.map((s) => String(s).trim()).filter(Boolean);
+}
+
+// Cada carpeta vigilada es una "raíz" con un nombre (por defecto, el nombre de la carpeta).
+// El nombre es el "asa" con la que se filtra la búsqueda y se cita el documento, así que se
+// desduplica si dos carpetas comparten nombre de base.
+function buildRoots(paths) {
+  const roots = [];
+  const used = new Map();
+  for (const p of paths) {
+    const abs = path.resolve(p);
+    let name = path.basename(abs) || abs;
+    if (used.has(name)) {
+      const n = used.get(name) + 1;
+      used.set(name, n);
+      name = `${name}-${n}`;
+    } else {
+      used.set(name, 1);
+    }
+    roots.push({ name, path: abs });
+  }
+  return roots;
+}
+
 function buildConfig() {
-  const watchedFolder = firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER);
+  const roots = buildRoots(parseFolders());
   const dataDir = firstDefined(process.env.ROBIN_DATA_DIR) || defaultDataDir();
 
   const cfg = {
@@ -59,7 +104,11 @@ function buildConfig() {
     robinToken: firstDefined(process.env.ROBIN_TOKEN),
     robinApiUrl: firstDefined(process.env.ROBIN_API_URL) || 'https://api.robinlawyer.ai/mcp',
 
-    watchedFolder: watchedFolder ? path.resolve(watchedFolder) : null,
+    // Carpetas de expedientes vigiladas (multi-raíz).
+    roots,
+    watchedFolders: roots.map((r) => r.path),
+    // Primera raíz — solo para mensajes/compatibilidad; el código itera watchedFolders/roots.
+    watchedFolder: roots[0]?.path ?? null,
 
     dataDir,
     indexDir: path.join(dataDir, 'index'),
@@ -80,8 +129,18 @@ function buildConfig() {
 
     nResultsDefault: toInt(process.env.ROBIN_N_RESULTS, 5),
 
+    // OCR de PDFs escaneados (v1.0). 100% local vía tesseract.js (WASM). Activado por
+    // defecto; se puede desactivar en despliegues que hagan OCR externo por lotes.
+    ocrEnabled: process.env.ROBIN_OCR !== 'false',
+    ocrLang: firstDefined(process.env.ROBIN_OCR_LANG) || 'spa',
+    ocrDpi: toInt(process.env.ROBIN_OCR_DPI, 200),
+    // Tope de páginas a las que se aplica OCR por fichero (el OCR es lento; evita que un
+    // escaneado gigante bloquee la cola indefinidamente).
+    ocrMaxPages: toInt(process.env.ROBIN_OCR_MAX_PAGES, 5000),
+
     logLevel: firstDefined(process.env.ROBIN_LOG_LEVEL) || 'info',
   };
+  cfg.tesseractCache = path.join(cfg.dataDir, 'tesseract');
 
   return cfg;
 }
@@ -93,6 +152,30 @@ export function ensureDataDirs() {
   for (const dir of [config.dataDir, config.indexDir, config.logDir]) {
     fs.mkdirSync(dir, { recursive: true });
   }
+}
+
+// Devuelve la raíz (carpeta vigilada) a la que pertenece una ruta absoluta, o null.
+// Ante anidamiento, gana la raíz más específica (prefijo más largo).
+export function rootForPath(absPath) {
+  const resolved = path.resolve(absPath);
+  let best = null;
+  for (const r of config.roots) {
+    if (resolved === r.path || resolved.startsWith(r.path + path.sep)) {
+      if (!best || r.path.length > best.path.length) best = r;
+    }
+  }
+  return best;
+}
+
+// Ruta "lógica" de un fichero = `${nombreRaíz}/${rutaRelativaDentroDeLaRaíz}`. Es lo que se
+// muestra en las citas y contra lo que actúa `carpeta_filtro`, de modo que dos ficheros con
+// la misma ruta relativa en raíces distintas no colisionan.
+export function logicalPath(absPath) {
+  const r = rootForPath(absPath);
+  const resolved = path.resolve(absPath);
+  if (!r) return path.basename(resolved);
+  const rel = path.relative(r.path, resolved).split(path.sep).join('/');
+  return rel ? `${r.name}/${rel}` : r.name;
 }
 
 export default config;

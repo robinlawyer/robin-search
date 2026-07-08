@@ -28,13 +28,13 @@ export const definition = {
 
 export async function handler(args) {
   const carpetaFiltro = args?.carpeta_filtro || null;
-  const reg = registry.all();
   const documentos = [];
-  for (const [rutaRelativa, e] of Object.entries(reg)) {
-    if (!matchesFolder(rutaRelativa, carpetaFiltro)) continue;
+  for (const e of registry.all()) {
+    if (!matchesFolder(e.rutaRelativa, carpetaFiltro)) continue;
     documentos.push({
       doc_id: e.docId,
-      ruta_relativa: rutaRelativa,
+      raiz: e.raiz ?? null,
+      ruta_relativa: e.rutaRelativa,
       fragmentos: e.numChunks || 0,
       paginas: e.numPages ?? null,
       sin_ocr: Boolean(e.sinOcr),

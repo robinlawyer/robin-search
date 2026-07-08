@@ -59,6 +59,7 @@ export async function handler(args) {
       chunk_id: r.chunkId,
       texto: r.metadata.texto,
       fichero: r.metadata.fichero,
+      raiz: r.metadata.raiz ?? null,
       ruta_relativa: r.metadata.rutaRelativa,
       pagina: r.metadata.pagina,
       fecha_modificacion: r.metadata.fechaModificacion,

@@ -48,7 +48,7 @@ export async function handler() {
     estado: state.estado,
     version: VERSION,
     actualizacion_disponible: state.actualizacionDisponible,
-    carpeta_vigilada: config.watchedFolder,
+    carpetas_vigiladas: config.roots.map((r) => ({ nombre: r.name, ruta: r.path })),
     documentos_indexados: documentos,
     fragmentos_totales: fragmentos,
     ficheros_sin_ocr: sinOcr,
