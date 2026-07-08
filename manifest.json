@@ -1,0 +1,74 @@
+{
+  "manifest_version": "0.3",
+  "name": "robin-search",
+  "display_name": "Robin Search — Búsqueda local de expedientes",
+  "version": "1.0.0",
+  "description": "Indexa los documentos de tus expedientes y los hace buscables semánticamente sin que ningún byte salga de tu ordenador.",
+  "long_description": "Robin Search es el servidor de búsqueda local de Robin Lawyer. Indexa una carpeta de expedientes (PDF y DOCX) con un modelo de embedding que se ejecuta 100% en tu ordenador (multilingual-e5-small en ONNX) y permite a Claude buscar en lenguaje natural sobre documentos que superan con creces la ventana de contexto (decenas de miles de páginas). Ningún contenido documental se envía a servidores externos, en cumplimiento del RGPD y del secreto profesional.",
+  "author": {
+    "name": "Robin Lawyer",
+    "url": "https://robinlawyer.ai"
+  },
+  "homepage": "https://robinlawyer.ai",
+  "documentation": "https://robinlawyer.ai/descargas",
+  "support": "https://robinlawyer.ai/contacto",
+  "license": "UNLICENSED",
+  "keywords": ["legal", "abogados", "rag", "búsqueda", "expedientes", "privacidad", "rgpd"],
+  "privacy_policies": ["https://robinlawyer.ai/privacidad"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "ROBIN_TOKEN": "${user_config.robin_token}",
+        "ROBIN_FOLDER": "${user_config.robin_folder}"
+      }
+    }
+  },
+  "user_config": {
+    "robin_token": {
+      "type": "string",
+      "title": "Token Robin Lawyer",
+      "description": "Tu token de acceso a Robin Lawyer (área de cliente en robinlawyer.ai). Se guarda cifrado en el llavero del sistema.",
+      "sensitive": true,
+      "required": false
+    },
+    "robin_folder": {
+      "type": "directory",
+      "title": "Carpeta de expedientes",
+      "description": "Carpeta con los documentos del despacho que quieres indexar. Se vigila para re-indexar automáticamente. Ningún documento sale de tu ordenador.",
+      "required": true
+    }
+  },
+  "tools": [
+    {
+      "name": "buscar_documentos",
+      "description": "Búsqueda semántica en lenguaje natural sobre los documentos del expediente indexado."
+    },
+    {
+      "name": "indexar_carpeta",
+      "description": "Indexa (o re-indexa) la carpeta de expedientes. Incremental por defecto."
+    },
+    {
+      "name": "obtener_fragmento",
+      "description": "Devuelve el texto completo de un fragmento por doc_id y chunk_id."
+    },
+    {
+      "name": "listar_documentos_indexados",
+      "description": "Lista los documentos indexados con sus metadatos, incluidos los PDFs sin OCR."
+    },
+    {
+      "name": "estado_servidor",
+      "description": "Estado, versión, actualización disponible, carpeta vigilada y contadores del índice."
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}

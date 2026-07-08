@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.mcpb
+.DS_Store
+# Índice y logs generados en runtime (viven en el dir de datos del usuario, nunca en el repo)
+data/
+*.log
+# Modelos ONNX cacheados por @xenova/transformers
+.cache/
+models/
