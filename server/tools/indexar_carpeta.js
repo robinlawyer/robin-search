@@ -5,6 +5,7 @@
 import { config } from '../config.js';
 import { indexFolder } from '../indexer/indexer.js';
 import { ok, fail } from './util.js';
+import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
   name: 'indexar_carpeta',
@@ -37,6 +38,9 @@ export const definition = {
 };
 
 export async function handler(args) {
+  const auth = await ensureAuthorized();
+  if (!auth.ok) return authPromptResult(auth.loginUrl);
+
   const folders = args?.path ? [args.path] : undefined;
   if (!folders && config.watchedFolders.length === 0) {
     return fail(

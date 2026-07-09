@@ -2,6 +2,7 @@
 
 import * as registry from '../indexer/registry.js';
 import { ok, matchesFolder } from './util.js';
+import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
   name: 'listar_documentos_indexados',
@@ -27,6 +28,9 @@ export const definition = {
 };
 
 export async function handler(args) {
+  const auth = await ensureAuthorized();
+  if (!auth.ok) return authPromptResult(auth.loginUrl);
+
   const carpetaFiltro = args?.carpeta_filtro || null;
   const documentos = [];
   for (const e of registry.all()) {

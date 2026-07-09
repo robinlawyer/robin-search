@@ -7,6 +7,7 @@ import { config, VERSION } from '../config.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
 import { ok } from './util.js';
+import { authStatus } from '../auth/oauth.js';
 
 function dirSizeMb(dir) {
   let bytes = 0;
@@ -47,6 +48,7 @@ export async function handler() {
   const respuesta = {
     estado: state.estado,
     version: VERSION,
+    sesion: await authStatus(),
     actualizacion_disponible: state.actualizacionDisponible,
     carpetas_vigiladas: config.roots.map((r) => ({ nombre: r.name, ruta: r.path })),
     documentos_indexados: documentos,

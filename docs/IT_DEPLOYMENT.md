@@ -6,7 +6,8 @@ Dos vías según el cliente del despacho.
 
 Para despachos con plan **Team/Enterprise**, el `.mcpb` se distribuye por política del sistema
 (JAMF en macOS, Intune en Windows) y se autoriza vía allowlist de extensiones gestionada por el
-IT del despacho. Cada abogado solo rellena token y carpeta en el diálogo nativo.
+IT del despacho. Cada abogado solo selecciona la carpeta en el diálogo nativo; la sesión se
+inicia con su cuenta de Robin Lawyer en el navegador (o, headless, con `ROBIN_TOKEN`).
 
 ## B) Claude Code / Cursor — npm + pre-indexado headless
 

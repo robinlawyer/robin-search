@@ -2,6 +2,7 @@
 
 import * as store from '../search/store.js';
 import { ok, fail } from './util.js';
+import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
   name: 'obtener_fragmento',
@@ -26,6 +27,9 @@ export const definition = {
 };
 
 export async function handler(args) {
+  const auth = await ensureAuthorized();
+  if (!auth.ok) return authPromptResult(auth.loginUrl);
+
   const docId = args?.doc_id;
   const chunkId = args?.chunk_id;
   if (!docId || chunkId === undefined || chunkId === null) {

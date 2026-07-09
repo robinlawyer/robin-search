@@ -2,9 +2,10 @@
 // local, para avisar en `estado_servidor` (C.1 de la spec). Es una llamada de metadatos:
 // NO transporta ningún contenido documental.
 
-import { config, UPDATE_CHECK_URL, VERSION } from './config.js';
+import { UPDATE_CHECK_URL, VERSION } from './config.js';
 import { log } from './logger.js';
 import { state } from './state.js';
+import { getBearerQuiet } from './auth/oauth.js';
 
 function isNewer(remote, local) {
   const a = String(remote).split('.').map((n) => parseInt(n, 10) || 0);
@@ -21,9 +22,10 @@ export async function checkForUpdate({ timeoutMs = 4000 } = {}) {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
+    const bearer = await getBearerQuiet();
     const res = await fetch(UPDATE_CHECK_URL, {
       signal: controller.signal,
-      headers: config.robinToken ? { Authorization: `Bearer ${config.robinToken}` } : {},
+      headers: bearer ? { Authorization: `Bearer ${bearer}` } : {},
     });
     clearTimeout(timer);
     if (!res.ok) return null;

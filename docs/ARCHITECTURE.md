@@ -41,8 +41,8 @@
 ## Privacidad / RGPD
 
 - **En reposo:** índice + documentos en el disco del abogado. Robin no tiene acceso.
-- **En tránsito:** solo verificación de token, comprobación de versión y consultas
-  jurídicas/normativas (la query, nunca el documento).
+- **En tránsito:** solo el login OAuth con Robin Lawyer (autorización + refresco del token) y la
+  comprobación de versión. Nunca viaja el documento.
 - **Embedding:** local, sin API ni telemetría.
 - **Datos generados** (índice `vectra`, `files.json`, logs) viven en el dir de datos de la app
   (`~/Library/Application Support/RobinLawyer/robin-search` en macOS), **nunca** en la carpeta de

@@ -103,6 +103,10 @@ function buildConfig() {
     // a la API remota de jurisprudencia/normativa. NUNCA viaja con contenido documental.
     robinToken: firstDefined(process.env.ROBIN_TOKEN),
     robinApiUrl: firstDefined(process.env.ROBIN_API_URL) || 'https://api.robinlawyer.ai/mcp',
+    // Servidor OAuth de Robin Lawyer (el mismo que usa el conector remoto). El abogado inicia
+    // sesión en el navegador; Robin Search no pide token que pegar. `ROBIN_TOKEN` sigue
+    // disponible como fallback headless para despliegue IT masivo (sin navegador).
+    oauthIssuer: (firstDefined(process.env.ROBIN_OAUTH_ISSUER) || 'https://api.robinlawyer.ai').replace(/\/+$/, ''),
 
     // Carpetas de expedientes vigiladas (multi-raíz).
     roots,
@@ -114,6 +118,8 @@ function buildConfig() {
     indexDir: path.join(dataDir, 'index'),
     manifestPath: path.join(dataDir, 'files.json'),
     logDir: path.join(dataDir, 'logs'),
+    // Credenciales OAuth (client_id + tokens) — fichero 0600, nunca en la carpeta vigilada.
+    authStatePath: path.join(dataDir, 'auth.json'),
 
     // Modelo de embedding: multilingual-e5-small en ONNX int8, ejecutado 100% en local.
     embeddingModel: firstDefined(process.env.ROBIN_EMBED_MODEL) || 'Xenova/multilingual-e5-small',

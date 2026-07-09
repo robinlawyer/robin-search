@@ -33,12 +33,17 @@ function parseArgs(argv) {
 const HELP = `Robin Search — servidor MCP local de búsqueda en expedientes.
 
 Uso:
-  robin-search [opciones]
+  robin-search [comando] [opciones]
+
+Comandos:
+  login                 Inicia sesión en Robin Lawyer (abre el navegador). Guarda la sesión.
+  logout                Cierra la sesión y borra las credenciales locales.
 
 Opciones:
   (sin opciones)        Arranca el servidor MCP por stdio (Claude Desktop / Code / Cursor).
   --silent, -s          Modo IT: indexa la carpeta una vez y sale. No arranca el servidor.
-  --token=TOKEN         Token Robin Lawyer (equivale a ROBIN_TOKEN).
+  --token=TOKEN         Token pre-provisionado para IT/headless (equivale a ROBIN_TOKEN). El
+                        abogado normal NO lo necesita: inicia sesión con "login".
   --folder=RUTA         Carpeta de expedientes. Repetible para vigilar VARIAS carpetas.
   --folders=A;B;C       Varias carpetas de una vez (separadas por ; , o salto de línea).
   --data-dir=RUTA       Directorio de datos (índice/logs). Por defecto, dir de la app del SO.
@@ -65,6 +70,18 @@ async function run() {
   if (opts.version) {
     const { VERSION } = await import('../server/config.js');
     process.stdout.write(`robin-search ${VERSION}\n`);
+    return;
+  }
+
+  // Iniciar / cerrar sesión en Robin Lawyer (OAuth). No es modo MCP → stdout seguro.
+  if (opts._.includes('login')) {
+    const { loginInteractive } = await import('../server/auth/oauth.js');
+    process.exit((await loginInteractive()) ? 0 : 1);
+  }
+  if (opts._.includes('logout')) {
+    const { logout } = await import('../server/auth/oauth.js');
+    await logout();
+    process.stdout.write('Sesión cerrada.\n');
     return;
   }
 

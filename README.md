@@ -25,8 +25,10 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 
 1. Descarga `robin-search.mcpb` desde `robinlawyer.ai/descargas`.
 2. Doble clic → Claude Desktop abre el diálogo nativo.
-3. Rellena **Token Robin Lawyer** (se guarda cifrado en el llavero) y **Carpeta de expedientes**.
+3. Selecciona la **Carpeta de expedientes** (una o varias). **No hay que pegar ningún token.**
 4. Confirma. El servidor arranca, indexa en segundo plano y queda añadido al arranque.
+5. La **primera vez que busques**, se abre el navegador para que **inicies sesión con tu cuenta de
+   Robin Lawyer** (OAuth, igual que el conector remoto). Hecho una vez, se recuerda.
 
 ### Claude Code / Cursor (npm)
 
@@ -91,10 +93,10 @@ aparecen aquí los PDFs cuyo OCR ha fallado o si el OCR está desactivado.)
 
 ## Privacidad (RGPD)
 
-Las únicas llamadas de red son: (1) verificación del token Robin Lawyer y comprobación de
-versión en el arranque; (2) búsquedas a `api.robinlawyer.ai` de jurisprudencia/normativa (solo
-la consulta, **sin contenido documental**). El índice y los documentos viven en el disco del
-abogado. El modelo de embedding corre en local, sin telemetría. Ver
+Las únicas llamadas de red son: (1) el **login OAuth** con Robin Lawyer (autorización + refresco
+del token) y (2) la comprobación de versión en el arranque. **Ningún contenido documental** sale
+del equipo. El índice y los documentos viven en el disco del abogado. El modelo de embedding
+corre en local, sin telemetría. Ver
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#privacidad--rgpd).
 
 ## Desarrollo

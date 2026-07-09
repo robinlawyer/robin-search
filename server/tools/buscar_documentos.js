@@ -5,6 +5,7 @@ import { config } from '../config.js';
 import { embedQuery } from '../embedder/embedder.js';
 import * as store from '../search/store.js';
 import { ok, fail, matchesFolder } from './util.js';
+import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
   name: 'buscar_documentos',
@@ -40,6 +41,9 @@ export const definition = {
 };
 
 export async function handler(args) {
+  const auth = await ensureAuthorized();
+  if (!auth.ok) return authPromptResult(auth.loginUrl);
+
   const query = (args?.query || '').trim();
   if (!query) return fail('El parámetro "query" es obligatorio.');
   const n = args?.n_resultados || config.nResultsDefault;
