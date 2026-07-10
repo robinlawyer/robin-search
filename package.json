@@ -32,7 +32,8 @@
   "files": [
     "server",
     "cli",
-    "manifest",
+    "manifest.json",
+    "icon.png",
     "README.md"
   ]
 }
