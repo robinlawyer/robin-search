@@ -24,8 +24,10 @@ function parseArgs(argv) {
       for (const f of arg.slice('--folders='.length).split(/[\n;,]+/)) if (f.trim()) opts.folders.push(f.trim());
     } else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
     else if (arg === 'index') opts.silent = true;
-    else if (arg === 'serve') opts._.push('serve');
-    else opts._.push(arg);
+    else if (arg === 'serve' || arg === 'login' || arg === 'logout') opts._.push(arg);
+    // Cualquier otro argumento posicional es una CARPETA de expedientes. Así es como el
+    // instalador .mcpb pasa las (varias) carpetas: se expanden como argumentos.
+    else opts.folders.push(arg);
   }
   return opts;
 }
@@ -61,10 +63,11 @@ async function run() {
     return;
   }
 
-  // Trasladar flags → entorno ANTES de importar config.
+  // Trasladar flags → entorno ANTES de importar config. Se usa ROBIN_FOLDERS (multi) para
+  // todos los casos: parseFolders() en config.js acepta 1 ruta, varias, o un array JSON
+  // (según cómo expanda las carpetas el cliente).
   if (opts.token) process.env.ROBIN_TOKEN = opts.token;
-  if (opts.folders.length === 1) process.env.ROBIN_FOLDER = opts.folders[0];
-  else if (opts.folders.length > 1) process.env.ROBIN_FOLDERS = opts.folders.join('\n');
+  if (opts.folders.length) process.env.ROBIN_FOLDERS = opts.folders.join('\n');
   if (opts.dataDir) process.env.ROBIN_DATA_DIR = opts.dataDir;
 
   if (opts.version) {

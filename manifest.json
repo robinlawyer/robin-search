@@ -18,20 +18,18 @@
   "privacy_policies": ["https://robinlawyer.ai/privacidad"],
   "server": {
     "type": "node",
-    "entry_point": "server/index.js",
+    "entry_point": "cli/index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/server/index.js"],
-      "env": {
-        "ROBIN_FOLDER": "${user_config.robin_folder}"
-      }
+      "args": ["${__dirname}/cli/index.js", "${user_config.robin_folders}"]
     }
   },
   "user_config": {
-    "robin_folder": {
+    "robin_folders": {
       "type": "directory",
-      "title": "Carpeta de expedientes",
-      "description": "La carpeta con los documentos del despacho (se indexan también todas sus subcarpetas). Ningún documento sale de tu ordenador.",
+      "title": "Carpetas de expedientes",
+      "description": "Una o varias carpetas con los documentos del despacho — cada una puede ser un caso distinto, esté donde esté en tu ordenador. Pulsa \"Añadir\" para agregar cada carpeta. Se indexan también sus subcarpetas y ningún documento sale de tu ordenador.",
+      "multiple": true,
       "required": true
     }
   },
