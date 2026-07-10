@@ -17,7 +17,8 @@
     "start": "node server/index.js",
     "cli": "node cli/index.js",
     "check": "for f in $(git ls-files '*.js' 2>/dev/null || find . -name '*.js' -not -path './node_modules/*'); do node --check \"$f\" || exit 1; done && echo 'syntax OK'",
-    "pack:mcpb": "npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb"
+    "sign:mac": "if [ \"$(uname)\" = Darwin ]; then find node_modules -name '*.node' -exec sh -c 'file \"$1\" | grep -q Mach-O && codesign --force --sign - \"$1\"' _ {} \\; ; echo 'binarios macOS firmados (ad-hoc)'; fi",
+    "pack:mcpb": "npm run sign:mac && npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.4.0",

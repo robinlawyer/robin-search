@@ -23,16 +23,15 @@
       "command": "node",
       "args": ["${__dirname}/server/index.js"],
       "env": {
-        "ROBIN_FOLDERS": "${user_config.robin_folders}"
+        "ROBIN_FOLDER": "${user_config.robin_folder}"
       }
     }
   },
   "user_config": {
-    "robin_folders": {
+    "robin_folder": {
       "type": "directory",
-      "title": "Carpetas de expedientes",
-      "description": "Una o varias carpetas con los documentos del despacho. Cada una se indexa y se vigila por separado; ningún documento sale de tu ordenador.",
-      "multiple": true,
+      "title": "Carpeta de expedientes",
+      "description": "La carpeta con los documentos del despacho (se indexan también todas sus subcarpetas). Ningún documento sale de tu ordenador.",
       "required": true
     }
   },
