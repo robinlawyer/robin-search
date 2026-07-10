@@ -12,15 +12,29 @@ import crypto from 'node:crypto';
 import { config, ensureDataDirs } from '../config.js';
 
 let _cache = null;
+let _knownMtime = 0; // mtime del files.json que refleja _cache
 
+function currentMtime() {
+  try {
+    return fs.statSync(config.manifestPath).mtimeMs;
+  } catch {
+    return 0;
+  }
+}
+
+// Relee files.json si ha cambiado en disco desde la última lectura/escritura. Así stats()/all()
+// SIEMPRE reflejan el índice real, aunque otro proceso (o un arranque previo) lo haya escrito —
+// evita el caso "indexado en disco pero la tool devuelve 0" por caché en memoria obsoleta.
 function load() {
-  if (_cache) return _cache;
   ensureDataDirs();
+  const m = currentMtime();
+  if (_cache && m === _knownMtime) return _cache;
   try {
     _cache = JSON.parse(fs.readFileSync(config.manifestPath, 'utf8'));
   } catch {
-    _cache = {};
+    if (!_cache) _cache = {};
   }
+  _knownMtime = m;
   return _cache;
 }
 
@@ -29,6 +43,7 @@ function persist() {
   const tmp = `${config.manifestPath}.tmp`;
   fs.writeFileSync(tmp, JSON.stringify(_cache, null, 0));
   fs.renameSync(tmp, config.manifestPath); // escritura atómica
+  _knownMtime = currentMtime(); // nuestra propia escritura no debe forzar una relectura
 }
 
 // docId estable y único por fichero, derivado de su ruta absoluta.
