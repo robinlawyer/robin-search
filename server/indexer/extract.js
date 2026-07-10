@@ -7,9 +7,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { config } from '../config.js';
 import { log } from '../logger.js';
 import { ocrPdf } from './ocr.js';
+
+const require = createRequire(import.meta.url);
 
 // Umbral: caracteres de texto extraíble por página por debajo del cual consideramos que
 // el PDF es una imagen escaneada sin capa OCR.
@@ -17,7 +20,14 @@ const MIN_CHARS_PER_PAGE = 12;
 
 // Resultado: { pages: [{ page: number, text: string }], sinOcr: boolean, numPages: number }
 export async function extractPdf(filePath, { maxPages }) {
-  const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  // En Node (y dentro del .mcpb) pdfjs necesita un workerSrc explícito o lanza
+  // "No GlobalWorkerOptions.workerSrc specified". Lo resolvemos al fichero real del worker,
+  // que pdfjs carga como "fake worker" en el hilo principal (no hay Web Workers en Node).
+  if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+    pdfjs.GlobalWorkerOptions.workerSrc = require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs');
+  }
+  const { getDocument } = pdfjs;
   const data = new Uint8Array(fs.readFileSync(filePath));
   const loadingTask = getDocument({
     data,

@@ -1,0 +1,2 @@
+# onnxruntime-node es un binario NATIVO que Claude Desktop bloquea (library validation).
+node_modules/onnxruntime-node/

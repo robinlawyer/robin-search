@@ -21,6 +21,13 @@ async function getPipeline() {
       // inicial del modelo (que no es contenido documental).
       env.allowLocalModels = true;
       if (process.env.ROBIN_MODEL_CACHE) env.cacheDir = process.env.ROBIN_MODEL_CACHE;
+      // WASM en el HILO PRINCIPAL: en Node (y dentro del .mcpb) los Web Workers de
+      // onnxruntime-web no funcionan (lanza ERR_WORKER_PATH con una URL blob:). Desactivamos
+      // el proxy y forzamos 1 hilo → inferencia WASM síncrona, sin workers.
+      if (env.backends?.onnx?.wasm) {
+        env.backends.onnx.wasm.proxy = false;
+        env.backends.onnx.wasm.numThreads = 1;
+      }
       log.info('Cargando modelo de embedding', { model: config.embeddingModel });
       const extractor = await pipeline('feature-extraction', config.embeddingModel, {
         quantized: config.embeddingQuantized,
