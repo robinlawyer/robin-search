@@ -3,6 +3,9 @@
 // los documentos del expediente. stdout está reservado para el protocolo JSON-RPC de MCP;
 // todo el logging va a fichero y stderr.
 
+// IMPORTANTE: primero de todo, blindar stdout (redirige console.* de las librerías a stderr).
+import './stdio-guard.js';
+
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';

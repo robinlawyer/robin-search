@@ -26,6 +26,11 @@ export async function extractPdf(filePath, { maxPages }) {
   // que pdfjs carga como "fake worker" en el hilo principal (no hay Web Workers en Node).
   if (!pdfjs.GlobalWorkerOptions.workerSrc) {
     pdfjs.GlobalWorkerOptions.workerSrc = require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs');
+    // Silenciar los avisos de pdfjs (p. ej. "Setting up fake worker"), que además protege el
+    // canal stdio; solo errores.
+    if (typeof pdfjs.setVerbosityLevel === 'function') {
+      pdfjs.setVerbosityLevel(pdfjs.VerbosityLevel ? pdfjs.VerbosityLevel.ERRORS : 0);
+    }
   }
   const { getDocument } = pdfjs;
   const data = new Uint8Array(fs.readFileSync(filePath));
