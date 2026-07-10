@@ -18,6 +18,38 @@ if (!fs.existsSync(target)) {
   process.exit(1);
 }
 
+// --- Parche 2: quitar el import ESTÁTICO de `sharp` (binario nativo) en transformers.
+// `sharp` solo se usa para procesar IMÁGENES; Robin Search es texto (PDF/DOCX). El import
+// estático carga el .node al importar transformers y Claude Desktop lo bloquea (Team ID).
+const imageJs = path.join(root, 'node_modules', '@xenova', 'transformers', 'src', 'utils', 'image.js');
+if (fs.existsSync(imageJs)) {
+  let img = fs.readFileSync(imageJs, 'utf8');
+  let imgChanged = false;
+  if (img.includes("import sharp from 'sharp';")) {
+    img = img.replace(
+      "import sharp from 'sharp';",
+      "const sharp = null; // [ROBIN] sin sharp: nativo bloqueado por Claude Desktop; solo texto",
+    );
+    imgChanged = true;
+  }
+  // Sin sharp, image.js lanzaba "Unable to load image processing library" AL CARGAR (rompía el
+  // embedding de texto). Lo hacemos perezoso: solo falla si de verdad se procesa una imagen.
+  if (img.includes("throw new Error('Unable to load image processing library.');")) {
+    img = img.replace(
+      "throw new Error('Unable to load image processing library.');",
+      "loadImageFunction = async () => { throw new Error('[ROBIN] Robin Search solo procesa texto (imágenes no soportadas).'); };",
+    );
+    imgChanged = true;
+  }
+  if (imgChanged) {
+    fs.writeFileSync(imageJs, img);
+    console.log('patch-wasm: sharp + throw de imagen neutralizados en image.js.');
+  } else if (!img.includes('[ROBIN]')) {
+    console.error('patch-wasm: image.js no coincide con lo esperado — revisar versión.');
+    process.exit(1);
+  }
+}
+
 let src = fs.readFileSync(target, 'utf8');
 let changed = false;
 
