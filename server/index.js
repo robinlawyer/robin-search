@@ -18,6 +18,7 @@ import { fail } from './tools/util.js';
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
 import obtenerFragmento from './tools/obtener_fragmento.js';
+import obtenerDocumento from './tools/obtener_documento.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
 import estadoServidor from './tools/estado_servidor.js';
 
@@ -25,6 +26,7 @@ const TOOLS = [
   buscarDocumentos,
   indexarCarpeta,
   obtenerFragmento,
+  obtenerDocumento,
   listarDocumentos,
   estadoServidor,
 ];

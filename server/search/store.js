@@ -83,6 +83,17 @@ export async function getChunk(docId, chunkId) {
   return items.length ? items[0].metadata : null;
 }
 
+// Devuelve TODOS los chunks de un documento, ordenados por chunkId. Para lectura íntegra
+// (revisión exhaustiva documento a documento, p.ej. due diligence: recorrer el documento
+// completo, no solo el top-K semántico de query()).
+export async function getDocChunks(docId) {
+  const index = await getIndex();
+  const items = await index.listItemsByMetadata({ docId: { $eq: docId } });
+  return items
+    .map((it) => it.metadata)
+    .sort((a, b) => (a.chunkId ?? 0) - (b.chunkId ?? 0));
+}
+
 // Nº total de fragmentos en el índice.
 export async function totalChunks() {
   const index = await getIndex();
@@ -90,4 +101,4 @@ export async function totalChunks() {
   return items.length;
 }
 
-export default { upsertChunks, deleteByDoc, query, getChunk, totalChunks };
+export default { upsertChunks, deleteByDoc, query, getChunk, getDocChunks, totalChunks };
