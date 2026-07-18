@@ -55,6 +55,7 @@ Indexa una vez y sale (código 0). Integrable en GPO / JAMF / Intune. Ver [docs/
 | `buscar_documentos`           | Búsqueda semántica en lenguaje natural sobre el expediente     | `readOnlyHint`    |
 | `indexar_carpeta`             | Indexa/re-indexa la carpeta (incremental por defecto)          | `idempotentHint`  |
 | `obtener_fragmento`           | Texto completo de un fragmento por `doc_id`+`chunk_id`         | `readOnlyHint`    |
+| `obtener_documento`           | Texto íntegro de un documento (todos sus fragmentos en orden)  | `readOnlyHint`    |
 | `listar_documentos_indexados` | Lista documentos indexados (incluye PDFs sin OCR)             | `readOnlyHint`    |
 | `estado_servidor`             | Estado, versión, actualización, contadores, ficheros sin OCR   | `readOnlyHint`    |
 
@@ -91,12 +92,30 @@ aparecen aquí los PDFs cuyo OCR ha fallado o si el OCR está desactivado.)
 
 ---
 
-## Privacidad (RGPD)
+## Privacy Policy (Política de privacidad)
 
-Las únicas llamadas de red son: (1) el **login OAuth** con Robin Lawyer (autorización + refresco
-del token) y (2) la comprobación de versión en el arranque. **Ningún contenido documental** sale
-del equipo. El índice y los documentos viven en el disco del abogado. El modelo de embedding
-corre en local, sin telemetría. Ver
+**Política de privacidad completa: https://robinlawyer.ai/privacidad**
+
+Robin Search está diseñado para que **ningún byte del contenido de tus documentos salga de tu
+ordenador**, en cumplimiento del RGPD (Reglamento (UE) 2016/679), la LOPDGDD (LO 3/2018) y el
+secreto profesional del abogado (art. 542.3 LOPJ).
+
+- **Qué se procesa en local (y nunca se envía a ningún servidor):** el texto de tus documentos, el
+  OCR de los escaneados, los embeddings y el índice vectorial. Todo ello se calcula y se almacena
+  en el disco de tu equipo (`~/Library/Application Support/RobinLawyer/robin-search` en macOS; la
+  carpeta equivalente `%APPDATA%` en Windows). El modelo de embedding corre 100 % en local, **sin
+  telemetría**.
+- **Únicas llamadas de red que hace el servidor:** (1) el **login OAuth 2.1 + PKCE** con Robin
+  Lawyer, que solo transmite las credenciales de autenticación y el token (ningún documento), y
+  (2) una **comprobación de versión** al arrancar (solo consulta el número de versión publicado).
+  Ninguna de las dos envía contenido documental.
+- **Datos que trata Robin Lawyer como responsable del tratamiento:** únicamente los de tu cuenta
+  (identidad y estado de suscripción) a efectos de autenticación. Responsable: **Stay Hungry and
+  Foolish, S.L.** Ejercicio de derechos: **privacidad@robinlawyer.ai**.
+- **Conservación y borrado:** el índice y los documentos son tuyos y viven en tu disco; desinstalar
+  la extensión o borrar el directorio de datos elimina el índice local por completo.
+
+Detalle técnico del modelo de privacidad en
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#privacidad--rgpd).
 
 ## Desarrollo
