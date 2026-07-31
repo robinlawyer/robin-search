@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "robin-search",
   "display_name": "Robin Search",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "icon": "icon.png",
   "description": "Indexa los documentos de tus expedientes y los hace buscables semánticamente sin que ningún byte salga de tu ordenador.",
   "long_description": "Robin Search es el servidor de búsqueda local de Robin Lawyer. Indexa una carpeta de expedientes con un modelo de embedding que se ejecuta 100% en tu ordenador (multilingual-e5-small en ONNX) y permite a Claude buscar en lenguaje natural sobre documentos que superan con creces la ventana de contexto (decenas de miles de páginas). No solo lee PDF y Word: entiende la realidad desordenada de un despacho — RTF, ODT, TXT, Markdown y HTML; presentaciones (PPTX, ODP); hojas de cálculo (XLSX, XLS, ODS, CSV); correos de Outlook (.msg) y estándar (.eml); volcados de WhatsApp; fotos y escaneos con OCR local (JPG, PNG, TIFF, HEIC); y expedientes comprimidos de LexNet o Justizia.eus (ZIP, RAR, 7z). Ningún contenido documental se envía a servidores externos, en cumplimiento del RGPD y del secreto profesional. La primera vez que lo uses iniciarás sesión con tu cuenta de Robin Lawyer en el navegador (no hay que pegar ningún token).",
