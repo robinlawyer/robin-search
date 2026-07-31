@@ -66,8 +66,9 @@ export async function handler(args) {
         total_fragmentos: 0,
         texto: '',
         aviso:
-          'Documento detectado como PDF escaneado sin capa de texto y aún no procesado por OCR: ' +
-          'no hay texto que devolver. Vuelve a intentarlo cuando el OCR lo haya indexado.',
+          'Documento sin texto legible (PDF escaneado o imagen) y aún no procesado por OCR, o ' +
+          'con el OCR desactivado: no hay texto que devolver. Vuelve a intentarlo cuando el OCR ' +
+          'lo haya indexado.',
       });
     }
     return fail('Documento no encontrado o sin fragmentos indexados.', { doc_id: docId });

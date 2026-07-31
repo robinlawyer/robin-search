@@ -9,7 +9,8 @@ export const definition = {
   title: 'Listar documentos indexados',
   description:
     'Lista los documentos indexados del expediente con su ruta, número de fragmentos, ' +
-    'páginas y fecha de indexado. Incluye los PDFs detectados sin OCR (no indexados).',
+    'páginas y fecha de indexado. Incluye los ficheros sin texto legible extraíble ' +
+    '(PDF escaneado o imagen sin OCR, no indexados).',
   inputSchema: {
     type: 'object',
     properties: {

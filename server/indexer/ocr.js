@@ -7,6 +7,7 @@
 // datos — es el modelo, no contenido documental (mismo criterio que el modelo de embedding).
 
 import fs from 'node:fs';
+import path from 'node:path';
 import { config, ensureDataDirs } from '../config.js';
 import { log } from '../logger.js';
 
@@ -39,6 +40,30 @@ export async function terminateOcr() {
     }
     _workerPromise = null;
   }
+}
+
+// OCR de una imagen suelta (foto de siniestro, escaneo, pantallazo). Reutiliza el mismo
+// worker de tesseract.js (WASM) que el OCR de PDF: nada sale del ordenador.
+// Los .heic/.heif (fotos de iPhone) se convierten antes a un bitmap PNG con heic-convert
+// (libheif en WASM), porque tesseract no lee HEIC directamente.
+// Devuelve [{ page: 1, text }] (una imagen = una "página") o [] si no hay texto legible.
+export async function ocrImage(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  let input;
+  if (ext === '.heic' || ext === '.heif') {
+    const heicConvert = (await import('heic-convert')).default;
+    const buffer = fs.readFileSync(filePath);
+    // A PNG sin pérdida para no degradar el OCR de un documento fotografiado.
+    input = Buffer.from(await heicConvert({ buffer, format: 'PNG' }));
+  } else {
+    input = fs.readFileSync(filePath);
+  }
+  const worker = await getWorker();
+  const {
+    data: { text },
+  } = await worker.recognize(input);
+  const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+  return clean ? [{ page: 1, text: clean }] : [];
 }
 
 // Rasteriza y aplica OCR a un PDF escaneado. Devuelve [{ page, text }] igual que el
@@ -75,4 +100,4 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
   return pages;
 }
 
-export default { ocrPdf, terminateOcr };
+export default { ocrPdf, ocrImage, terminateOcr };

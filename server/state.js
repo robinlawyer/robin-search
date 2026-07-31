@@ -5,7 +5,8 @@ export const state = {
   estado: 'activo', // 'activo' | 'indexando' | 'error'
   ultimoError: null,
   progreso: null, // { procesados, total, ficheroActual } durante un indexado
-  // Set de rutas relativas de PDFs escaneados sin OCR detectados (RF-03.4).
+  // Set de rutas relativas de ficheros sin texto legible extraíble: PDFs escaneados o
+  // imágenes de los que el OCR no obtuvo texto (o con OCR desactivado) (RF-03.4).
   ficherosSinOcr: new Set(),
   // Aviso de actualización disponible (rellenado en arranque contra endpoint público).
   actualizacionDisponible: null,

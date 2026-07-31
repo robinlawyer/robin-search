@@ -12,8 +12,15 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 - **Embedding:** `multilingual-e5-small` en ONNX, 100 % local vía `@xenova/transformers`.
   Búsqueda asimétrica con prefijos `query:` / `passage:`.
 - **Índice vectorial:** `vectra` (local, sin proceso separado).
-- **Formatos v1.0:** PDF (con texto **y escaneados vía OCR local**) y DOCX. TXT/MD → v1.1.
-- **OCR local:** PDFs escaneados se reconocen en el ordenador con `mupdf` + `tesseract.js` (WASM). Ninguna imagen sale del equipo.
+- **Formatos (v1.1):** un expediente real no son solo PDF/DOCX limpios. Robin Search indexa,
+  todo en local y con librerías 100 % JS/WASM (sin binarios nativos):
+  - **Texto / histórico:** `.pdf` (texto y escaneado vía OCR), `.docx`, `.rtf`, `.odt`, `.txt`, `.md`, `.html`.
+  - **Presentaciones:** `.pptx`, `.odp`.
+  - **Matrices financieras/concursales:** `.xlsx`, `.xls`, `.ods`, `.csv`, `.tsv`.
+  - **Comunicaciones y evidencias:** `.eml`, `.msg` (Outlook, con adjuntos) y **volcados de WhatsApp** (`.txt`).
+  - **Peritajes gráficos (OCR local):** `.jpg`, `.png`, `.tiff`, `.bmp`, `.gif`, `.heic` (fotos de iPhone).
+  - **Contenedores judiciales:** `.zip`, `.rar`, `.7z` (expedientes de LexNet / Justizia.eus, se abren y se indexa su contenido).
+- **OCR local:** PDFs escaneados e imágenes se reconocen en el ordenador con `mupdf` + `tesseract.js` (WASM); los `.heic` se convierten antes con `heic-convert`. Ninguna imagen sale del equipo.
 - **Multi-carpeta:** vigila **varias carpetas de expedientes independientes** a la vez; cada una es filtrable y citable por su nombre (`carpeta_filtro`).
 - **Privacidad:** el contenido documental **nunca** sale del ordenador (RGPD / secreto profesional).
 

@@ -11,9 +11,12 @@ export const definition = {
   name: 'indexar_carpeta',
   title: 'Indexar la carpeta de expedientes',
   description:
-    'Indexa los documentos (PDF/DOCX) de la carpeta de expedientes para poder buscarlos ' +
-    'semánticamente. Por defecto solo procesa ficheros nuevos o modificados (incremental). ' +
-    'Usa forzar=true para re-indexar todo.',
+    'Indexa los documentos de la carpeta de expedientes para poder buscarlos semánticamente. ' +
+    'Soporta PDF y Word, pero también RTF/ODT/TXT/Markdown/HTML, presentaciones (PPTX/ODP), ' +
+    'hojas de cálculo (XLSX/XLS/ODS/CSV), correos (.eml y .msg de Outlook), volcados de ' +
+    'WhatsApp, imágenes con OCR local (JPG/PNG/TIFF/HEIC) y expedientes comprimidos ' +
+    '(ZIP/RAR/7z, p. ej. de LexNet o Justizia.eus). Por defecto solo procesa ficheros nuevos ' +
+    'o modificados (incremental). Usa forzar=true para re-indexar todo.',
   inputSchema: {
     type: 'object',
     properties: {

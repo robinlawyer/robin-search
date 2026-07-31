@@ -6,15 +6,30 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
 export const UPDATE_CHECK_URL =
   process.env.ROBIN_UPDATE_URL || 'https://robinlawyer.ai/descargas/robin-search-latest.json';
 
-// Formatos soportados en v1.0 (TXT/MD → v1.1).
-export const SUPPORTED_EXTENSIONS = new Set(['.pdf', '.docx']);
+// Formatos soportados. Un expediente real no son solo PDF/DOCX limpios: es un ecosistema
+// de pruebas, comunicaciones y archivos técnicos. Robin Search los indexa TODOS en local
+// (RGPD / secreto profesional), con extractores 100% JS/WASM (sin binarios nativos):
+//   · Texto / histórico documental: .pdf .docx .rtf .odt .txt .md .html
+//   · Presentaciones: .pptx .odp
+//   · Matrices financieras/concursales: .xlsx .xls .ods .csv .tsv
+//   · Comunicaciones y evidencias: .eml .msg (Outlook) + volcados de WhatsApp (.txt)
+//   · Peritajes gráficos (OCR local): .jpg .jpeg .png .tiff .bmp .gif .heic
+//   · Contenedores judiciales (LexNet / Justizia.eus): .zip .rar .7z
+export const SUPPORTED_EXTENSIONS = new Set([
+  '.pdf', '.docx', '.rtf', '.odt', '.txt', '.md', '.markdown', '.html', '.htm',
+  '.pptx', '.odp',
+  '.xlsx', '.xls', '.xlsm', '.ods', '.fods', '.csv', '.tsv',
+  '.eml', '.msg',
+  '.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif',
+  '.zip', '.rar', '.7z',
+]);
 
 function firstDefined(...vals) {
   return vals.find((v) => v !== undefined && v !== null && v !== '');
