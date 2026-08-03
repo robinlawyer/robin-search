@@ -221,10 +221,38 @@ function openBrowser(url) {
   }
 }
 
+// Página que ve el abogado en el navegador al terminar el login OAuth. Mismo
+// patrón que el resto de mensajes de sistema de RobinLawyer.ai: caja blanca
+// centrada con el logotipo DENTRO, arriba. El logo se sirve desde la web (el
+// abogado acaba de autenticarse online, así que hay conexión); si fallara, se
+// oculta sin romper el diseño.
 function htmlPage(titulo, mensaje) {
-  return `<!doctype html><meta charset="utf-8"><title>${titulo}</title>
-<div style="font-family:system-ui,-apple-system,sans-serif;max-width:520px;margin:18vh auto;text-align:center;color:#1a1a1a">
-<h1 style="font-size:1.4rem">${titulo}</h1><p style="color:#555">${mensaje}</p></div>`;
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${titulo} — RobinLawyer.ai</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#111110;background:#f9f9f8;
+    background-image:radial-gradient(ellipse 50% 40% at 85% 15%,rgba(108,92,242,.10),transparent 60%),
+      radial-gradient(ellipse 45% 35% at 12% 88%,rgba(108,92,242,.08),transparent 60%);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;-webkit-font-smoothing:antialiased}
+  .card{position:relative;background:#fff;border:1px solid #e2e2df;border-radius:18px;
+    box-shadow:0 20px 60px rgba(17,17,16,.08);max-width:460px;width:100%;
+    padding:clamp(2rem,5vw,2.6rem) clamp(1.6rem,5vw,2.4rem);text-align:center}
+  .card::before{content:"";position:absolute;top:0;left:24px;right:24px;height:3px;
+    background:linear-gradient(90deg,transparent,#6c5cf2 30%,#8a7df5 70%,transparent);border-radius:0 0 3px 3px}
+  .logo{display:flex;justify-content:center;margin:0 0 1.5rem}
+  .logo img{height:44px;width:auto;display:block}
+  h1{font-size:1.35rem;font-weight:700;letter-spacing:-.02em;margin:0 0 .5rem;line-height:1.25}
+  p{color:#555;font-size:.95rem;line-height:1.55;margin:0}
+</style></head><body>
+  <div class="card">
+    <div class="logo"><img src="https://robinlawyer.ai/assets/robin-logo.png?v=20260722" alt="RobinLawyer.ai" onerror="this.style.display='none'"></div>
+    <h1>${titulo}</h1>
+    <p>${mensaje}</p>
+  </div>
+</body></html>`;
 }
 
 // Escucha en el primer puerto loopback libre de los registrados.
@@ -301,7 +329,10 @@ function awaitCallback(server, port, expectedState) {
         return;
       }
       finish(
-        htmlPage('✓ Sesión iniciada en Robin Lawyer', 'Ya puedes volver a Claude y seguir trabajando. Esta pestaña se puede cerrar.'),
+        htmlPage(
+          '✓ Conexión establecida con RobinLawyer.ai',
+          'Infraestructura de dirección jurídica vinculada correctamente. Ya puedes cerrar esta pestaña de forma segura y regresar a Claude para trabajar sobre tus expedientes.',
+        ),
         () => resolve(code),
       );
     });

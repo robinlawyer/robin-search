@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 
-export const VERSION = '1.2.0';
+export const VERSION = '1.2.1';
 
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
