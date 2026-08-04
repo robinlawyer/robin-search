@@ -1,4 +1,4 @@
-# Robin Search en Cursor
+# RobinSearch en Cursor
 
 ## 1. Instalar
 
@@ -41,6 +41,6 @@ Settings → **Tools & MCP** → `robin-search` debe aparecer en verde con sus 5
 
 ## Nota sobre el límite de herramientas de Cursor
 
-Cursor limita a ~40 herramientas activas. Las 5 de Robin Search + las 93 de Robin Lawyer
+Cursor limita a ~40 herramientas activas. Las 5 de RobinSearch + las 93 de Robin Lawyer
 remoto lo superan. Si usas ambos, desactiva desde **Tools & MCP** las herramientas de Robin
 Lawyer que no necesites en ese proyecto para dejar sitio a la búsqueda local.

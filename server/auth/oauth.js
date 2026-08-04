@@ -22,7 +22,7 @@ import { log } from '../logger.js';
 import { fail } from '../tools/util.js';
 
 const SCOPES = 'mcp:tools mcp:resources';
-const CLIENT_NAME = 'Robin Search (servidor local)';
+const CLIENT_NAME = 'RobinSearch (servidor local)';
 const RESOURCE = config.oauthIssuer.replace(/\/+$/, '') + '/mcp';
 // Puertos loopback candidatos: se registran los 5 en el DCR y en el login se usa el primero
 // libre. El servidor OAuth exige coincidencia EXACTA de redirect_uri, por eso son fijos.

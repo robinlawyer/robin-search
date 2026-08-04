@@ -1,4 +1,4 @@
-// Configuración central de Robin Search (servidor MCP local).
+// Configuración central de RobinSearch (servidor MCP local).
 // Todo se resuelve desde variables de entorno (código portable, sin rutas hardcodeadas)
 // para cumplir el requisito catalog-ready de Anthropic.
 
@@ -14,7 +14,7 @@ export const UPDATE_CHECK_URL =
   process.env.ROBIN_UPDATE_URL || 'https://robinlawyer.ai/descargas/robin-search-latest.json';
 
 // Formatos soportados. Un expediente real no son solo PDF/DOCX limpios: es un ecosistema
-// de pruebas, comunicaciones y archivos técnicos. Robin Search los indexa TODOS en local
+// de pruebas, comunicaciones y archivos técnicos. RobinSearch los indexa TODOS en local
 // (RGPD / secreto profesional), con extractores 100% JS/WASM (sin binarios nativos):
 //   · Texto / histórico documental: .pdf .docx .rtf .odt .txt .md .html
 //   · Presentaciones: .pptx .odp
@@ -119,7 +119,7 @@ function buildConfig() {
     robinToken: firstDefined(process.env.ROBIN_TOKEN),
     robinApiUrl: firstDefined(process.env.ROBIN_API_URL) || 'https://api.robinlawyer.ai/mcp',
     // Servidor OAuth de Robin Lawyer (el mismo que usa el conector remoto). El abogado inicia
-    // sesión en el navegador; Robin Search no pide token que pegar. `ROBIN_TOKEN` sigue
+    // sesión en el navegador; RobinSearch no pide token que pegar. `ROBIN_TOKEN` sigue
     // disponible como fallback headless para despliegue IT masivo (sin navegador).
     oauthIssuer: (firstDefined(process.env.ROBIN_OAUTH_ISSUER) || 'https://api.robinlawyer.ai').replace(/\/+$/, ''),
 

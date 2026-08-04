@@ -12,7 +12,7 @@ import { checkForUpdate } from './update.js';
 
 export async function bootstrap({ initialIndex = true, watch = true, warmModel = true } = {}) {
   ensureDataDirs();
-  log.info('Arrancando Robin Search (servidor local)', {
+  log.info('Arrancando RobinSearch (servidor local)', {
     version: config.version,
     carpetas: config.watchedFolders,
     dataDir: config.dataDir,

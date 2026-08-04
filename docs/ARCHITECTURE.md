@@ -1,4 +1,4 @@
-# Arquitectura — Robin Search
+# Arquitectura — RobinSearch
 
 ## Flujo
 

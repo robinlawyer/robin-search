@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Robin Search — servidor MCP local (stdio). Expone las 5 herramientas de búsqueda sobre
+// RobinSearch — servidor MCP local (stdio). Expone las 5 herramientas de búsqueda sobre
 // los documentos del expediente. stdout está reservado para el protocolo JSON-RPC de MCP;
 // todo el logging va a fichero y stderr.
 

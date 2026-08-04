@@ -19,7 +19,7 @@ if (!fs.existsSync(target)) {
 }
 
 // --- Parche 2: quitar el import ESTÁTICO de `sharp` (binario nativo) en transformers.
-// `sharp` solo se usa para procesar IMÁGENES; Robin Search es texto (PDF/DOCX). El import
+// `sharp` solo se usa para procesar IMÁGENES; RobinSearch es texto (PDF/DOCX). El import
 // estático carga el .node al importar transformers y Claude Desktop lo bloquea (Team ID).
 const imageJs = path.join(root, 'node_modules', '@xenova', 'transformers', 'src', 'utils', 'image.js');
 if (fs.existsSync(imageJs)) {
@@ -37,7 +37,7 @@ if (fs.existsSync(imageJs)) {
   if (img.includes("throw new Error('Unable to load image processing library.');")) {
     img = img.replace(
       "throw new Error('Unable to load image processing library.');",
-      "loadImageFunction = async () => { throw new Error('[ROBIN] Robin Search solo procesa texto (imágenes no soportadas).'); };",
+      "loadImageFunction = async () => { throw new Error('[ROBIN] RobinSearch solo procesa texto (imágenes no soportadas).'); };",
     );
     imgChanged = true;
   }

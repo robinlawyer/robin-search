@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// CLI de Robin Search.
+// CLI de RobinSearch.
 //
 //   robin-search                         → arranca el servidor MCP (stdio). Este es el modo
 //                                         que usan Claude Desktop (.mcpb), Claude Code y Cursor.
@@ -32,7 +32,7 @@ function parseArgs(argv) {
   return opts;
 }
 
-const HELP = `Robin Search — servidor MCP local de búsqueda en expedientes.
+const HELP = `RobinSearch — servidor MCP local de búsqueda en expedientes.
 
 Uso:
   robin-search [comando] [opciones]

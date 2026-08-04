@@ -1,4 +1,4 @@
-// Extracción de texto por fichero. El objetivo de Robin Search es entender la realidad
+// Extracción de texto por fichero. El objetivo de RobinSearch es entender la realidad
 // desordenada de un despacho, no solo los PDF/DOCX "limpios": correos, hojas de cálculo,
 // fotos de siniestros, volcados de WhatsApp y expedientes comprimidos de LexNet/Justizia.eus.
 //

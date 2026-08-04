@@ -1,6 +1,6 @@
-# Robin Search — servidor MCP local de expedientes
+# RobinSearch — servidor MCP local de expedientes
 
-Robin Search es el **Paso 2 del onboarding de Robin Lawyer**: un servidor MCP que corre en el
+RobinSearch es el **Paso 2 del onboarding de Robin Lawyer**: un servidor MCP que corre en el
 ordenador del abogado, indexa la carpeta de expedientes del despacho y la hace **buscable
 semánticamente sin que ningún byte de los documentos salga del equipo**.
 
@@ -12,7 +12,7 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 - **Embedding:** `multilingual-e5-small` en ONNX, 100 % local vía `@xenova/transformers`.
   Búsqueda asimétrica con prefijos `query:` / `passage:`.
 - **Índice vectorial:** `vectra` (local, sin proceso separado).
-- **Formatos (v1.1):** un expediente real no son solo PDF/DOCX limpios. Robin Search indexa,
+- **Formatos (v1.1):** un expediente real no son solo PDF/DOCX limpios. RobinSearch indexa,
   todo en local y con librerías 100 % JS/WASM (sin binarios nativos):
   - **Texto / histórico:** `.pdf` (texto y escaneado vía OCR), `.docx`, `.rtf`, `.odt`, `.txt`, `.md`, `.html`.
   - **Presentaciones:** `.pptx`, `.odp`.
@@ -103,7 +103,7 @@ aparecen aquí los PDFs cuyo OCR ha fallado o si el OCR está desactivado.)
 
 **Política de privacidad completa: https://robinlawyer.ai/privacidad**
 
-Robin Search está diseñado para que **ningún byte del contenido de tus documentos salga de tu
+RobinSearch está diseñado para que **ningún byte del contenido de tus documentos salga de tu
 ordenador**, en cumplimiento del RGPD (Reglamento (UE) 2016/679), la LOPDGDD (LO 3/2018) y el
 secreto profesional del abogado (art. 542.3 LOPJ).
 

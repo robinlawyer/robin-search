@@ -1,5 +1,5 @@
 # Binarios NATIVOS que Claude Desktop bloquea (library validation, Team ID).
-# Robin Search va 100% WASM/JS; estos módulos se neutralizan por patch-wasm o try/catch.
+# RobinSearch va 100% WASM/JS; estos módulos se neutralizan por patch-wasm o try/catch.
 node_modules/onnxruntime-node/
 node_modules/sharp/
 node_modules/@img/
