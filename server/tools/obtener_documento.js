@@ -4,9 +4,11 @@
 // donde la búsqueda semántica top-K de buscar_documentos no garantiza cobertura completa.
 // Los documentos largos se devuelven por ventanas de fragmentos para no desbordar el contexto.
 
+import { expedienteForLogicalPath } from '../config.js';
 import * as store from '../search/store.js';
 import * as registry from '../indexer/registry.js';
 import { ok, fail } from './util.js';
+import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 const MAX_FRAGMENTOS_POR_LLAMADA = 60;
@@ -20,7 +22,8 @@ export const definition = {
     'documento a documento (due diligence, revisión integral de un expediente), donde no basta ' +
     'la búsqueda semántica top-K de buscar_documentos. Los documentos largos se devuelven por ' +
     'ventanas: si "siguiente_fragmento" no es null, vuelve a llamar con "desde_fragmento" igual ' +
-    'a ese valor hasta agotar el documento.',
+    'a ese valor hasta agotar el documento. Aislado por expediente: solo devuelve documentos ' +
+    'del expediente activo (o del que indiques en "expediente").',
   inputSchema: {
     type: 'object',
     properties: {
@@ -35,6 +38,12 @@ export const definition = {
       max_fragmentos: {
         type: 'integer',
         description: `Máximo de fragmentos por llamada (por defecto y tope ${MAX_FRAGMENTOS_POR_LLAMADA}).`,
+      },
+      expediente: {
+        type: 'string',
+        description:
+          'Expediente al que debe pertenecer el documento. Si se omite, se usa el expediente ' +
+          'activo de la sesión. Si tampoco hay activo, la llamada falla.',
       },
     },
     required: ['doc_id'],
@@ -54,13 +63,45 @@ export async function handler(args) {
   const docId = args?.doc_id;
   if (!docId) return fail('Se requiere "doc_id".');
 
+  const gate = expedientes.exigirExpediente(args?.expediente ?? null);
+  if (!gate.ok) return fail(gate.error, gate.extra);
+  const expediente = gate.expediente;
+
   const entry = registry.all().find((e) => e.docId === docId) || null;
+
+  // Barrera de aislamiento: un doc_id de OTRO expediente no devuelve contenido. Sin esto,
+  // bastaría arrastrar un identificador de una conversación anterior para leer entero un
+  // documento del cliente equivocado.
+  const expDoc = entry ? entry.expediente || expedienteForLogicalPath(entry.rutaRelativa) : null;
+  if (entry && expDoc !== expediente) {
+    return fail(
+      `Ese documento pertenece a otro expediente ("${expDoc}"), no al expediente activo ` +
+        `("${expediente}"). Cambia de expediente con establecer_expediente_activo si es lo que quieres.`,
+      { doc_id: docId, expediente_activo: expediente },
+    );
+  }
+
   const chunks = await store.getDocChunks(docId);
+
+  // Documento que no está en el registro (índice heredado): se comprueba contra el metadato
+  // del propio fragmento antes de devolver nada.
+  if (!entry && chunks.length > 0) {
+    const expChunk =
+      chunks[0].expediente || expedienteForLogicalPath(chunks[0].rutaRelativa);
+    if (expChunk !== expediente) {
+      return fail(
+        `Ese documento pertenece a otro expediente ("${expChunk}"), no al expediente activo ` +
+          `("${expediente}").`,
+        { doc_id: docId, expediente_activo: expediente },
+      );
+    }
+  }
 
   if (chunks.length === 0) {
     if (entry && entry.sinOcr) {
       return ok({
         doc_id: docId,
+        expediente,
         ruta_relativa: entry.rutaRelativa,
         sin_ocr: true,
         total_fragmentos: 0,
@@ -97,6 +138,7 @@ export async function handler(args) {
 
   return ok({
     doc_id: docId,
+    expediente,
     fichero,
     ruta_relativa: entry?.rutaRelativa ?? seleccion[0]?.rutaRelativa ?? null,
     total_fragmentos: total,

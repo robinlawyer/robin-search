@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// RobinSearch — servidor MCP local (stdio). Expone las 5 herramientas de búsqueda sobre
+// RobinSearch — servidor MCP local (stdio). Expone las herramientas de búsqueda sobre
 // los documentos del expediente. stdout está reservado para el protocolo JSON-RPC de MCP;
 // todo el logging va a fichero y stderr.
 
@@ -20,6 +20,7 @@ import indexarCarpeta from './tools/indexar_carpeta.js';
 import obtenerFragmento from './tools/obtener_fragmento.js';
 import obtenerDocumento from './tools/obtener_documento.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
+import establecerExpedienteActivo from './tools/establecer_expediente_activo.js';
 import estadoServidor from './tools/estado_servidor.js';
 
 const TOOLS = [
@@ -28,6 +29,7 @@ const TOOLS = [
   obtenerFragmento,
   obtenerDocumento,
   listarDocumentos,
+  establecerExpedienteActivo,
   estadoServidor,
 ];
 

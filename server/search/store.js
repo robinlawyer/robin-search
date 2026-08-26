@@ -118,6 +118,35 @@ export async function getDocChunks(docId) {
     .sort((a, b) => (a.chunkId ?? 0) - (b.chunkId ?? 0));
 }
 
+// Migración: sella con su `expediente` los fragmentos indexados por versiones anteriores
+// (< 1.3.0), que no llevaban el campo. Sin esto, un índice ya existente devolvería CERO
+// resultados en cuanto se filtra por expediente — el usuario que actualiza vería "no encuentro
+// nada" en lugar de sus documentos. Reutiliza el vector ya calculado: no re-embebe nada.
+export function backfillExpediente(derivar) {
+  return withWriteLock(async () => {
+    const index = await getIndex();
+    const items = await index.listItems();
+    const pendientes = items.filter((it) => !it.metadata?.expediente);
+    if (pendientes.length === 0) return { sellados: 0, total: items.length };
+
+    await index.beginUpdate();
+    try {
+      for (const it of pendientes) {
+        await index.upsertItem({
+          id: it.id,
+          vector: it.vector,
+          metadata: { ...it.metadata, expediente: derivar(it.metadata?.rutaRelativa) },
+        });
+      }
+      await index.endUpdate();
+    } catch (err) {
+      index.cancelUpdate();
+      throw err;
+    }
+    return { sellados: pendientes.length, total: items.length };
+  });
+}
+
 // Nº total de fragmentos en el índice.
 export async function totalChunks() {
   const index = await getIndex();
@@ -125,4 +154,12 @@ export async function totalChunks() {
   return items.length;
 }
 
-export default { upsertChunks, deleteByDoc, query, getChunk, getDocChunks, totalChunks };
+export default {
+  upsertChunks,
+  deleteByDoc,
+  query,
+  getChunk,
+  getDocChunks,
+  backfillExpediente,
+  totalChunks,
+};

@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 
-export const VERSION = '1.2.2';
+export const VERSION = '1.3.0';
 
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
@@ -150,6 +150,17 @@ function buildConfig() {
 
     nResultsDefault: toInt(process.env.ROBIN_N_RESULTS, 5),
 
+    // Aislamiento por expediente. `expedienteDepth` = cuántos niveles de subcarpeta por
+    // debajo de cada carpeta vigilada delimitan un expediente:
+    //   1 (por defecto) → carpeta madre con una subcarpeta por caso:  Expedientes/Caso-A/...
+    //   0               → cada carpeta vigilada ES un expediente (el abogado añade una por caso)
+    // Los documentos sueltos directamente bajo la raíz forman el expediente de la propia raíz.
+    expedienteDepth: (() => {
+      const raw = process.env.ROBIN_EXPEDIENTE_DEPTH;
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 0 ? n : 1;
+    })(),
+
     // OCR de PDFs escaneados (v1.0). 100% local vía tesseract.js (WASM). Activado por
     // defecto; se puede desactivar en despliegues que hagan OCR externo por lotes.
     ocrEnabled: process.env.ROBIN_OCR !== 'false',
@@ -197,6 +208,32 @@ export function logicalPath(absPath) {
   if (!r) return path.basename(resolved);
   const rel = path.relative(r.path, resolved).split(path.sep).join('/');
   return rel ? `${r.name}/${rel}` : r.name;
+}
+
+// ---------------------------------------------------------------------------------------
+// Expediente = unidad de aislamiento. Se deriva de la ruta lógica del documento, así que no
+// exige que el abogado configure nada: es la carpeta del caso tal y como ya la tiene en disco.
+//
+// Regla (con expedienteDepth = 1, el valor por defecto):
+//   Expedientes/Caso-A/demanda.pdf        → "Expedientes/Caso-A"
+//   Expedientes/Caso-A/anexos/prueba.pdf  → "Expedientes/Caso-A"
+//   Expedientes/suelto.pdf                → "Expedientes"   (suelto bajo la raíz)
+// Con expedienteDepth = 0, todo lo de una raíz es un único expediente: "Expedientes".
+export const EXPEDIENTE_SIN_CARPETA = '_sin_expediente';
+
+// Deriva el expediente a partir de la ruta LÓGICA (`nombreRaíz/rutaRelativa`), que es lo que
+// se guarda en el registro y en el índice. Determinista y sin tocar disco.
+export function expedienteForLogicalPath(rutaLogica, depth = config.expedienteDepth) {
+  if (!rutaLogica) return EXPEDIENTE_SIN_CARPETA;
+  const segments = String(rutaLogica).split('/').filter(Boolean);
+  const carpetas = segments.slice(0, -1); // el último segmento es el nombre del fichero
+  if (carpetas.length === 0) return EXPEDIENTE_SIN_CARPETA;
+  return carpetas.slice(0, 1 + Math.max(0, depth)).join('/');
+}
+
+// Ídem a partir de una ruta absoluta.
+export function expedienteForPath(absPath, depth = config.expedienteDepth) {
+  return expedienteForLogicalPath(logicalPath(absPath), depth);
 }
 
 export default config;

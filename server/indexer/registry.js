@@ -9,7 +9,7 @@
 
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { config, ensureDataDirs } from '../config.js';
+import { config, ensureDataDirs, expedienteForLogicalPath } from '../config.js';
 
 let _cache = null;
 let _knownMtime = 0; // mtime del files.json que refleja _cache
@@ -83,6 +83,20 @@ export function all() {
   return Object.values(load());
 }
 
+// Migración: rellena el campo `expediente` en las entradas escritas por versiones < 1.3.0.
+// Devuelve cuántas se sellaron. Barato: se deriva de la ruta lógica ya guardada.
+export function backfillExpediente() {
+  const reg = load();
+  let sellados = 0;
+  for (const [abs, e] of Object.entries(reg)) {
+    if (e.expediente) continue;
+    reg[abs] = { ...e, expediente: expedienteForLogicalPath(e.rutaRelativa) };
+    sellados += 1;
+  }
+  if (sellados) persist();
+  return sellados;
+}
+
 export function stats() {
   const reg = load();
   let documentos = 0;
@@ -99,4 +113,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, all, stats };
+export default { docIdForAbsPath, get, isStale, set, remove, all, backfillExpediente, stats };

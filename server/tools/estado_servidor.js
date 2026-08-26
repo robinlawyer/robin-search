@@ -6,6 +6,7 @@ import path from 'node:path';
 import { config, VERSION } from '../config.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
+import * as expedientes from '../expedientes.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
 
@@ -32,8 +33,9 @@ export const definition = {
   title: 'Estado del servidor local',
   description:
     'Devuelve el estado del servidor de búsqueda local: versión, si hay actualización ' +
-    'disponible, carpeta vigilada, documentos y fragmentos indexados, ficheros sin OCR y ' +
-    'tamaño del índice.',
+    'disponible, carpetas vigiladas, expedientes detectados (con sus contadores), expediente ' +
+    'activo de la sesión, documentos y fragmentos indexados, ficheros sin OCR y tamaño del ' +
+    'índice. Úsala para saber qué expedientes hay antes de fijar uno.',
   inputSchema: { type: 'object', properties: {} },
   annotations: {
     readOnlyHint: true,
@@ -45,12 +47,17 @@ export const definition = {
 
 export async function handler() {
   const { documentos, fragmentos, sinOcr } = registry.stats();
+  const catalogo = expedientes.catalogo();
   const respuesta = {
     estado: state.estado,
     version: VERSION,
     sesion: await authStatus(),
     actualizacion_disponible: state.actualizacionDisponible,
     carpetas_vigiladas: config.roots.map((r) => ({ nombre: r.name, ruta: r.path })),
+    // Aislamiento por expediente: qué expedientes hay y en cuál se está trabajando.
+    expedientes_detectados: catalogo.map((e) => e.expediente),
+    expedientes: catalogo,
+    expediente_activo: expedientes.getActivo(),
     documentos_indexados: documentos,
     fragmentos_totales: fragmentos,
     ficheros_sin_ocr: sinOcr,
@@ -61,6 +68,13 @@ export async function handler() {
   }
   if (state.estado === 'indexando' && state.progreso) respuesta.progreso = state.progreso;
   if (state.estado === 'error' && state.ultimoError) respuesta.ultimo_error = state.ultimoError;
+  if (!expedientes.getActivo()) {
+    respuesta.aviso_expediente =
+      catalogo.length > 0
+        ? 'No hay expediente activo. Fíjalo con establecer_expediente_activo antes de buscar: ' +
+          'las búsquedas están aisladas por expediente y no cubren todos a la vez.'
+        : 'Aún no se ha detectado ningún expediente en las carpetas vigiladas.';
+  }
   return ok(respuesta);
 }
 

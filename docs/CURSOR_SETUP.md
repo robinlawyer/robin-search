@@ -37,7 +37,7 @@ También se dispara solo la primera vez que uses la búsqueda. (IT sin navegador
 
 ## 4. Verificar
 
-Settings → **Tools & MCP** → `robin-search` debe aparecer en verde con sus 5 herramientas.
+Settings → **Tools & MCP** → `robin-search` debe aparecer en verde con sus herramientas.
 
 ## Nota sobre el límite de herramientas de Cursor
 

@@ -7,7 +7,13 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { config, SUPPORTED_EXTENSIONS, logicalPath, rootForPath } from '../config.js';
+import {
+  config,
+  SUPPORTED_EXTENSIONS,
+  logicalPath,
+  rootForPath,
+  expedienteForLogicalPath,
+} from '../config.js';
 import { log } from '../logger.js';
 import { state, setIndexando, setActivo, setError } from '../state.js';
 import { extractFile } from './extract.js';
@@ -67,10 +73,16 @@ export async function indexFile(absPath, { force = false } = {}) {
     maxPages: config.maxPagesPerFile,
   });
 
+  const expediente = expedienteForLogicalPath(rutaLogica);
+
   const baseEntry = {
     docId,
     raiz: root?.name ?? null,
     rutaRelativa: rutaLogica,
+    // Expediente del documento: es el campo por el que se AÍSLA la búsqueda. Se deriva de la
+    // carpeta del caso al indexar, se guarda en cada fragmento y se filtra de forma exacta en
+    // el índice vectorial (antes de puntuar), no a posteriori en memoria.
+    expediente,
     size: stat.size,
     mtimeMs: stat.mtimeMs,
     indexedAt: new Date().toISOString(),
@@ -108,6 +120,7 @@ export async function indexFile(absPath, { force = false } = {}) {
       fichero,
       rutaRelativa: rutaLogica,
       raiz: root?.name ?? null,
+      expediente,
       pagina: c.page,
       fechaModificacion,
     },

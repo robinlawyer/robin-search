@@ -26,7 +26,7 @@
 | `indexer/indexer.js`      | Orquestación extract→chunk→embed→store, incremental                     |
 | `watcher/watcher.js`      | chokidar con debounce y cola serializada                               |
 | `update.js`               | Aviso de versión (metadatos, sin documentos)                          |
-| `tools/*.js`              | Las 5 herramientas MCP con anotaciones catalog-ready                    |
+| `tools/*.js`              | Las herramientas MCP con anotaciones catalog-ready                    |
 | `index.js`                | Servidor MCP stdio                                                     |
 
 ## Decisiones (correos 23-jun)

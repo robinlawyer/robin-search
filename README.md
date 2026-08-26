@@ -21,7 +21,8 @@ lenguaje natural y recibe solo los fragmentos relevantes.
   - **Peritajes gráficos (OCR local):** `.jpg`, `.png`, `.tiff`, `.bmp`, `.gif`, `.heic` (fotos de iPhone).
   - **Contenedores judiciales:** `.zip`, `.rar`, `.7z` (expedientes de LexNet / Justizia.eus, se abren y se indexa su contenido).
 - **OCR local:** PDFs escaneados e imágenes se reconocen en el ordenador con `mupdf` + `tesseract.js` (WASM); los `.heic` se convierten antes con `heic-convert`. Ninguna imagen sale del equipo.
-- **Multi-carpeta:** vigila **varias carpetas de expedientes independientes** a la vez; cada una es filtrable y citable por su nombre (`carpeta_filtro`).
+- **Multi-carpeta:** vigila **varias carpetas de expedientes independientes** a la vez; cada una es filtrable y citable por su nombre.
+- **Aislamiento por expediente (v1.3.0):** cada carpeta de caso es un cliente distinto. Las búsquedas se limitan **siempre** a un expediente — el activo de la sesión (`establecer_expediente_activo`) o el que se indique en el parámetro `expediente`. Si no hay ninguno, la herramienta **devuelve error en lugar de buscar en todo**: traer contexto del caso B en una consulta sobre el caso A no es ruido, es riesgo de conflicto de intereses y de secreto profesional.
 - **Privacidad:** el contenido documental **nunca** sale del ordenador (RGPD / secreto profesional).
 
 ---
@@ -63,8 +64,9 @@ Indexa una vez y sale (código 0). Integrable en GPO / JAMF / Intune. Ver [docs/
 | `indexar_carpeta`             | Indexa/re-indexa la carpeta (incremental por defecto)          | `idempotentHint`  |
 | `obtener_fragmento`           | Texto completo de un fragmento por `doc_id`+`chunk_id`         | `readOnlyHint`    |
 | `obtener_documento`           | Texto íntegro de un documento (todos sus fragmentos en orden)  | `readOnlyHint`    |
-| `listar_documentos_indexados` | Lista documentos indexados (incluye PDFs sin OCR)             | `readOnlyHint`    |
-| `estado_servidor`             | Estado, versión, actualización, contadores, ficheros sin OCR   | `readOnlyHint`    |
+| `listar_documentos_indexados` | Lista documentos indexados del expediente (incluye PDFs sin OCR) | `readOnlyHint`    |
+| `establecer_expediente_activo` | Fija el expediente de la sesión (o lo limpia al cerrar el asunto) | —                 |
+| `estado_servidor`             | Estado, versión, actualización, expedientes detectados y activo, contadores | `readOnlyHint`    |
 
 ---
 
@@ -75,7 +77,7 @@ Indexa una vez y sale (código 0). Integrable en GPO / JAMF / Intune. Ver [docs/
 > **Prompt del abogado:** «¿Hay contradicciones entre la declaración de María García (carpeta
 > `03_Testigos`) y el contrato de obra de `02_Documentos`?»
 
-Claude llama a `buscar_documentos` con `carpeta_filtro` para cada carpeta y compara los
+Claude llama a `buscar_documentos` con `expediente` para cada caso y compara los
 fragmentos. **Respuesta esperada:** un análisis fundamentado en el texto real de ambos
 documentos, con cita de fichero y página, sin haber cargado los 40.000 folios al contexto.
 
