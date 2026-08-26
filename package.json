@@ -16,6 +16,7 @@
   "scripts": {
     "start": "node server/index.js",
     "cli": "node cli/index.js",
+    "test:aislamiento": "node scripts/test-aislamiento.mjs",
     "check": "for f in $(git ls-files '*.js' 2>/dev/null || find . -name '*.js' -not -path './node_modules/*'); do node --check \"$f\" || exit 1; done && echo 'syntax OK'",
     "postinstall": "node scripts/patch-wasm.mjs || true",
     "patch:wasm": "node scripts/patch-wasm.mjs",

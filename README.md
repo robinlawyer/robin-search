@@ -22,6 +22,7 @@ lenguaje natural y recibe solo los fragmentos relevantes.
   - **Contenedores judiciales:** `.zip`, `.rar`, `.7z` (expedientes de LexNet / Justizia.eus, se abren y se indexa su contenido).
 - **OCR local:** PDFs escaneados e imágenes se reconocen en el ordenador con `mupdf` + `tesseract.js` (WASM); los `.heic` se convierten antes con `heic-convert`. Ninguna imagen sale del equipo.
 - **Multi-carpeta:** vigila **varias carpetas de expedientes independientes** a la vez; cada una es filtrable y citable por su nombre.
+- **Carpeta madre, un caso por subcarpeta:** el abogado selecciona **una sola vez** la carpeta que contiene una subcarpeta por expediente. Cada subcarpeta de primer nivel es un caso, se indexa sola, y los casos nuevos aparecen sin reconfigurar nada. Ver [Un proyecto de Claude por expediente](docs/PROYECTO_POR_EXPEDIENTE.md).
 - **Aislamiento por expediente (v1.3.0):** cada carpeta de caso es un cliente distinto. Las búsquedas se limitan **siempre** a un expediente — el activo de la sesión (`establecer_expediente_activo`) o el que se indique en el parámetro `expediente`. Si no hay ninguno, la herramienta **devuelve error en lugar de buscar en todo**: traer contexto del caso B en una consulta sobre el caso A no es ruido, es riesgo de conflicto de intereses y de secreto profesional.
 - **Privacidad:** el contenido documental **nunca** sale del ordenador (RGPD / secreto profesional).
 
