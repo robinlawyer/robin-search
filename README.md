@@ -102,6 +102,30 @@ aparecen aquí los PDFs cuyo OCR ha fallado o si el OCR está desactivado.)
 
 ---
 
+## Expedientes en una unidad de red
+
+Un despacho mediano no suele tener los expedientes en el portátil, sino en el servidor: una
+unidad mapeada (`Z:\`), una ruta UNC (`\\servidor\Expedientes`) o un montaje SMB en Mac.
+RobinSearch lo detecta solo y cambia de estrategia, porque sobre SMB el sistema operativo **no
+notifica de forma fiable** lo que un compañero deja en el expediente desde otro equipo:
+
+- Se re-escanea el expediente **al fijarlo como activo** — justo cuando vas a trabajar en él.
+- Y **periódicamente** (5 min por defecto). Ambos son incrementales: solo se re-indexa lo que
+  cambió, y lo que se retiró del expediente sale también del índice.
+- Si la unidad se cae, se dice explícitamente (con el motivo) en `indexar_carpeta`,
+  `establecer_expediente_activo` y `estado_servidor`, en vez de contestar «0 documentos». Y no
+  se vacía el índice de lo que no se ha podido leer.
+
+La carpeta de red se selecciona como cualquier otra, en la configuración de la extensión
+(Claude Desktop → Configuración → Extensiones → RobinSearch). **No** se puede dar de alta desde
+el chat: `indexar_carpeta` solo actúa dentro de las carpetas que el abogado consintió.
+
+| Variable | Por defecto | Para qué |
+| --- | --- | --- |
+| `ROBIN_RESCAN_MS` | `300000` (5 min) | Cada cuánto se re-escanean las carpetas de red. `0` lo desactiva (quedan el refresco al abrir el expediente y el indexado a mano). |
+| `ROBIN_RESCAN_ON_OPEN` | `true` | Refrescar el expediente contra el disco al fijarlo como activo. |
+| `ROBIN_NETWORK_PATHS` | — | Rutas (separadas por `;`) que deben tratarse como red aunque la detección automática no lo vea. Escotilla para un equipo concreto. |
+
 ## Privacy Policy (Política de privacidad)
 
 **Política de privacidad completa: https://robinlawyer.ai/privacidad**
@@ -134,5 +158,6 @@ Detalle técnico del modelo de privacidad en
 npm install
 ROBIN_FOLDER=/ruta/a/Expedientes npm start   # arranca el servidor MCP (stdio)
 npm run check                                 # syntax-check de todos los .js
+npm test                                      # aislamiento por expediente + carpetas de red
 npm run pack:mcpb                             # empaqueta dist/robin-search.mcpb
 ```
