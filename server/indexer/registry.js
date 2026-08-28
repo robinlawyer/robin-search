@@ -83,6 +83,12 @@ export function all() {
   return Object.values(load());
 }
 
+// Pares [rutaAbsoluta, entrada]. La ruta absoluta es la CLAVE del registro, no un campo de la
+// entrada, así que hace falta esto para reconciliar el índice contra lo que hay en disco.
+export function entries() {
+  return Object.entries(load());
+}
+
 // Migración: rellena el campo `expediente` en las entradas escritas por versiones < 1.3.0.
 // Devuelve cuántas se sellaron. Barato: se deriva de la ruta lógica ya guardada.
 export function backfillExpediente() {
@@ -113,4 +119,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, all, backfillExpediente, stats };
+export default { docIdForAbsPath, get, isStale, set, remove, all, entries, backfillExpediente, stats };

@@ -2,7 +2,6 @@
 // pero no borra datos del usuario ni es destructiva: readOnlyHint:false, destructiveHint:false,
 // idempotentHint:true (re-ejecutar con los mismos ficheros no cambia el resultado).
 
-import path from 'node:path';
 import { config, rootForPath } from '../config.js';
 import { indexFolder } from '../indexer/indexer.js';
 import { ok, fail } from './util.js';
@@ -71,11 +70,9 @@ export async function handler(args) {
         { candidatos: r.candidatos, expedientes_disponibles: r.conocidos },
       );
     }
-    // El id del expediente es `nombreRaíz/subcarpetas...`; se traduce a ruta absoluta.
-    const [nombreRaiz, ...resto] = r.expediente.split('/');
-    const raiz = config.roots.find((x) => x.name === nombreRaiz);
-    if (!raiz) return fail(`No se localiza la carpeta vigilada "${nombreRaiz}".`);
-    folders = [resto.length ? path.join(raiz.path, ...resto) : raiz.path];
+    const ruta = expedientes.rutaAbsoluta(r.expediente);
+    if (!ruta) return fail(`No se localiza en disco el expediente "${r.expediente}".`);
+    folders = [ruta];
   } else if (args?.path) {
     // Solo se indexa DENTRO de las carpetas que el abogado configuró. Aceptar una ruta
     // arbitraria dejaría entrar en el índice documentos de fuera del ámbito consentido (y sin
@@ -84,15 +81,32 @@ export async function handler(args) {
     if (!rootForPath(abs)) {
       return fail(
         `La carpeta "${args.path}" está fuera de las carpetas de expedientes configuradas. ` +
-          'RobinSearch solo indexa dentro de ellas; añádela desde la configuración del conector ' +
-          'si quieres incluirla.',
+          'RobinSearch solo indexa dentro de ellas — esto NO se puede cambiar desde el chat. ' +
+          'Para añadirla (incluida una unidad de red Z:\\ o una ruta \\\\servidor\\recurso): ' +
+          'Claude Desktop → Configuración → Extensiones → RobinSearch → "Carpeta madre de ' +
+          'expedientes", y reinicia Claude Desktop.',
         { carpetas_configuradas: config.watchedFolders },
       );
     }
     folders = [abs];
   }
 
-  const resumen = await indexFolder({ folders, force: Boolean(args?.forzar) });
+  const resumen = await indexFolder({
+    folders,
+    force: Boolean(args?.forzar),
+    // Al re-indexar a mano también se retira del índice lo que ya no está en disco, para que
+    // una búsqueda no siga devolviendo un escrito que se sacó del expediente.
+    reconciliarBorrados: true,
+  });
+
+  // Carpeta ilegible ≠ carpeta vacía. Si la unidad de red no responde hay que decirlo, no
+  // devolver un "0 documentos" que se lee como "aquí no hay nada".
+  if (resumen.carpetas_inaccesibles || resumen.subcarpetas_ilegibles) {
+    resumen.aviso =
+      'Alguna carpeta no se ha podido leer, así que el índice puede estar incompleto. ' +
+      'Si es una unidad de red, comprueba en el Explorador que sigue conectada y que la ' +
+      'sesión tiene credenciales sobre ese recurso.';
+  }
   return ok(resumen);
 }
 

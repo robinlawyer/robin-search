@@ -58,7 +58,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   // Indexado inicial (incremental) de todas las carpetas configuradas.
   if (initialIndex && hayCarpetas) {
     try {
-      const resumen = await indexFolder({ force: false });
+      const resumen = await indexFolder({ force: false, reconciliarBorrados: true });
       log.info('Indexado inicial completado', resumen);
     } catch (err) {
       log.error('Fallo en el indexado inicial', { err: String(err) });

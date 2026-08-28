@@ -21,7 +21,7 @@ function parseArgs(argv) {
     // --folder puede repetirse para vigilar varias carpetas.
     else if (arg.startsWith('--folder=')) opts.folders.push(arg.slice('--folder='.length));
     else if (arg.startsWith('--folders=')) {
-      for (const f of arg.slice('--folders='.length).split(/[\n;,]+/)) if (f.trim()) opts.folders.push(f.trim());
+      for (const f of arg.slice('--folders='.length).split(/[\n;]+/)) if (f.trim()) opts.folders.push(f.trim());
     } else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
     else if (arg === 'index') opts.silent = true;
     else if (arg === 'serve' || arg === 'login' || arg === 'logout') opts._.push(arg);
@@ -47,7 +47,7 @@ Opciones:
   --token=TOKEN         Token pre-provisionado para IT/headless (equivale a ROBIN_TOKEN). El
                         abogado normal NO lo necesita: inicia sesión con "login".
   --folder=RUTA         Carpeta de expedientes. Repetible para vigilar VARIAS carpetas.
-  --folders=A;B;C       Varias carpetas de una vez (separadas por ; , o salto de línea).
+  --folders=A;B;C       Varias carpetas de una vez (separadas por ; o salto de línea).
   --data-dir=RUTA       Directorio de datos (índice/logs). Por defecto, dir de la app del SO.
   --version, -v         Muestra la versión.
   --help, -h            Muestra esta ayuda.

@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { config, VERSION } from '../config.js';
+import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
 import * as expedientes from '../expedientes.js';
@@ -53,7 +54,34 @@ export async function handler() {
     version: VERSION,
     sesion: await authStatus(),
     actualizacion_disponible: state.actualizacionDisponible,
-    carpetas_vigiladas: config.roots.map((r) => ({ nombre: r.name, ruta: r.path })),
+    // Se declara dónde vive cada carpeta y si ahora mismo se puede leer: un expediente en el
+    // servidor del despacho se mantiene al día por re-escaneo, no por eventos, y si la unidad
+    // se desconecta el abogado tiene que poder verlo aquí y no deducirlo de un "0 resultados".
+    carpetas_vigiladas: config.roots.map((r) => {
+      const enRed = esRutaDeRed(r.path);
+      let accesible = true;
+      try {
+        fs.readdirSync(r.path);
+      } catch {
+        accesible = false;
+      }
+      const ficha = { nombre: r.name, ruta: r.path, ubicacion: enRed ? 'red' : 'local', accesible };
+      if (enRed) {
+        const cada = config.rescanRedMs >= 60000
+          ? `${Math.round(config.rescanRedMs / 60000)} min`
+          : `${Math.round(config.rescanRedMs / 1000)} s`;
+        ficha.actualizacion = config.rescanRedMs > 0
+          ? `re-escaneo cada ${cada} y al abrir el expediente`
+          : 'solo al abrir el expediente o al indexar a mano';
+      }
+      if (!accesible) {
+        ficha.aviso = enRed
+          ? 'Carpeta de red ILEGIBLE ahora mismo: comprueba que la unidad sigue conectada. Lo ' +
+            'que se busque sobre ella puede estar incompleto o desactualizado.'
+          : 'Carpeta ilegible: comprueba que sigue existiendo y que tienes permiso.';
+      }
+      return ficha;
+    }),
     // Aislamiento por expediente: qué expedientes hay y en cuál se está trabajando.
     expedientes_detectados: catalogo.map((e) => e.expediente),
     expedientes: catalogo,

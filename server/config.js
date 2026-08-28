@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 
-export const VERSION = '1.3.0';
+export const VERSION = '1.3.1';
 
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
@@ -66,6 +66,26 @@ function toInt(val, fallback) {
 // Multi-raíz: el abogado puede vigilar VARIAS carpetas de expedientes independientes.
 //   ROBIN_FOLDERS = varias carpetas (array JSON, o separadas por salto de línea / ; / ,)
 //   ROBIN_FOLDER  = una sola (compatibilidad hacia atrás)
+function esDirectorio(p) {
+  try {
+    return fs.statSync(p).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+// La coma NO es separador de carpetas por defecto: en un despacho es normalísimo que la
+// carpeta del cliente lleve una en el nombre ("Z:\\Clientes\\Construcciones Vidal, S.L."), y
+// partir ahí dejaba esa carpeta sin indexar sin decir nada. Solo se desdobla por coma si el
+// texto completo NO es una carpeta y los trozos SÍ lo son (compatibilidad con los
+// ROBIN_FOLDERS="A,B" que documentamos antes).
+function desdoblarPorComa(trozo) {
+  const t = trozo.trim();
+  if (!t.includes(',') || esDirectorio(t)) return [t];
+  const partes = t.split(',').map((x) => x.trim()).filter(Boolean);
+  return partes.length > 1 && partes.every(esDirectorio) ? partes : [t];
+}
+
 function parseFolders() {
   const multi = firstDefined(process.env.ROBIN_FOLDERS);
   const single = firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER);
@@ -79,7 +99,7 @@ function parseFolders() {
         list = [];
       }
     } else {
-      list = t.split(/[\n;,]+/);
+      list = t.split(/[\n;]+/).flatMap(desdoblarPorComa);
     }
   } else if (single) {
     list = [single];
@@ -170,6 +190,18 @@ function buildConfig() {
     // escaneado gigante bloquee la cola indefinidamente).
     ocrMaxPages: toInt(process.env.ROBIN_OCR_MAX_PAGES, 5000),
 
+    // Carpetas de RED (unidad mapeada Z:\\ o montaje SMB). El SO no notifica de forma fiable
+    // los cambios que hace un compañero desde otro equipo, así que se re-escanean solas cada
+    // `rescanRedMs` (incremental: solo se re-indexa lo que cambió) y, además, al abrir el
+    // expediente. ROBIN_RESCAN_MS=0 desactiva el re-escaneo periódico.
+    rescanRedMs: (() => {
+      const raw = process.env.ROBIN_RESCAN_MS;
+      if (raw === undefined || raw === '') return 5 * 60 * 1000;
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 0 ? n : 5 * 60 * 1000;
+    })(),
+    rescanAlAbrir: process.env.ROBIN_RESCAN_ON_OPEN !== 'false',
+
     logLevel: firstDefined(process.env.ROBIN_LOG_LEVEL) || 'info',
   };
   cfg.tesseractCache = path.join(cfg.dataDir, 'tesseract');
@@ -188,11 +220,19 @@ export function ensureDataDirs() {
 
 // Devuelve la raíz (carpeta vigilada) a la que pertenece una ruta absoluta, o null.
 // Ante anidamiento, gana la raíz más específica (prefijo más largo).
+// En Windows y macOS el sistema de ficheros no distingue mayúsculas: "Z:\\Expedientes" y
+// "z:\\expedientes" son la MISMA carpeta. Comparar sensible a mayúsculas dejaba fuera del
+// ámbito una ruta correcta (p. ej. la que escribe Claude con otra caja que la configurada).
+const COMPARA_SIN_CAJA = process.platform === 'win32' || process.platform === 'darwin';
+const paraComparar = (p) => (COMPARA_SIN_CAJA ? p.toLowerCase() : p);
+
 export function rootForPath(absPath) {
   const resolved = path.resolve(absPath);
+  const cmp = paraComparar(resolved);
   let best = null;
   for (const r of config.roots) {
-    if (resolved === r.path || resolved.startsWith(r.path + path.sep)) {
+    const rc = paraComparar(r.path);
+    if (cmp === rc || cmp.startsWith(rc + path.sep)) {
       if (!best || r.path.length > best.path.length) best = r;
     }
   }

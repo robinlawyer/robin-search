@@ -15,6 +15,7 @@ import {
   expedienteForLogicalPath,
 } from '../config.js';
 import { log } from '../logger.js';
+import { esRutaDeRed } from '../net.js';
 import { state, setIndexando, setActivo, setError } from '../state.js';
 import { extractFile } from './extract.js';
 import { chunkPages } from './chunk.js';
@@ -28,12 +29,16 @@ function isSupported(filePath) {
 
 // Recorre recursivamente una carpeta y devuelve rutas absolutas de ficheros soportados.
 // Ignora directorios ocultos y el propio directorio de datos por si estuviera anidado.
-function* walk(dir) {
+function* walk(dir, ilegibles = null) {
   let entries;
   try {
     entries = fs.readdirSync(dir, { withFileTypes: true });
   } catch (err) {
+    // Una subcarpeta ilegible a mitad del recorrido no puede pasar en silencio: sobre una
+    // unidad de red que se cae (o una carpeta que otro usuario tiene bloqueada) el índice
+    // quedaría incompleto y la búsqueda diría "no hay nada" sobre documentos que sí existen.
     log.warn('No se pudo leer directorio', { dir, err: String(err) });
+    if (ilegibles) ilegibles.push({ carpeta: dir, motivo: String(err?.code || err) });
     return;
   }
   for (const entry of entries) {
@@ -41,7 +46,7 @@ function* walk(dir) {
     const full = path.join(dir, entry.name);
     if (full === config.dataDir) continue;
     if (entry.isDirectory()) {
-      yield* walk(full);
+      yield* walk(full, ilegibles);
     } else if (entry.isFile() && isSupported(full)) {
       yield full;
     }
@@ -144,7 +149,7 @@ export async function removeFilePath(absPath) {
 
 // Indexa una o varias carpetas (incremental salvo `force`). Por defecto, todas las raíces
 // configuradas. Actualiza el estado runtime.
-export async function indexFolder({ folders, force = false, onProgress } = {}) {
+export async function indexFolder({ folders, force = false, onProgress, reconciliarBorrados = false } = {}) {
   const roots = folders
     ? (Array.isArray(folders) ? folders : [folders]).map((f) => path.resolve(f))
     : config.watchedFolders;
@@ -158,12 +163,43 @@ export async function indexFolder({ folders, force = false, onProgress } = {}) {
     sinCambios: 0,
     sinOcr: 0,
     omitidos: 0,
+    eliminados: 0,
     errores: 0,
     fragmentosNuevos: 0,
   };
 
+  // Una carpeta ILEGIBLE no es una carpeta vacía. Si la unidad de red está desconectada o la
+  // sesión de Windows ha perdido las credenciales del recurso, `walk` no encuentra nada y
+  // antes devolvíamos "0 documentos" — que el abogado lee como "aquí no hay expediente".
+  // Se distingue de forma explícita.
+  const accesibles = [];
+  for (const root of roots) {
+    try {
+      fs.readdirSync(root);
+      accesibles.push(root);
+    } catch (err) {
+      const enRed = esRutaDeRed(root);
+      const code = err?.code;
+      (resumen.carpetas_inaccesibles ??= []).push({
+        carpeta: root,
+        ubicacion: enRed ? 'red' : 'local',
+        motivo:
+          code === 'ENOENT' ? 'no_existe'
+          : code === 'EACCES' || code === 'EPERM' ? 'sin_permiso'
+          : String(code || err),
+        detalle: enRed
+          ? 'No se puede leer la carpeta de red. Comprueba que la unidad sigue conectada en el ' +
+            'Explorador y que la sesión tiene credenciales sobre ese recurso.'
+          : 'No se puede leer la carpeta. Comprueba que sigue existiendo y que tienes permiso.',
+      });
+      log.error('Carpeta de expedientes inaccesible', { carpeta: root, err: String(err) });
+    }
+  }
+
   const files = [];
-  for (const root of roots) for (const f of walk(root)) files.push(f);
+  const ilegibles = [];
+  for (const root of accesibles) for (const f of walk(root, ilegibles)) files.push(f);
+  if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
   setIndexando({ procesados: 0, total: files.length, ficheroActual: null });
 
   try {
@@ -185,6 +221,26 @@ export async function indexFolder({ folders, force = false, onProgress } = {}) {
       }
       if (onProgress) onProgress(state.progreso, resumen);
     }
+
+    // Documentos que estaban indexados y ya no están en disco. En carpeta local los retira el
+    // watcher al vuelo; en una carpeta de RED no hay evento fiable, así que el re-escaneo
+    // periódico también tiene que limpiarlos — o el abogado seguiría encontrando en la
+    // búsqueda un escrito que un compañero ya retiró del expediente.
+    if (reconciliarBorrados && ilegibles.length === 0) {
+      const presentes = new Set(files);
+      for (const [abs] of registry.entries()) {
+        if (presentes.has(abs)) continue;
+        const dentro = accesibles.some((r) => abs === r || abs.startsWith(r + path.sep));
+        if (!dentro) continue;
+        try {
+          await removeFilePath(abs);
+          resumen.eliminados += 1;
+        } catch (err) {
+          log.error('Error retirando del índice un fichero borrado', { fichero: abs, err: String(err) });
+        }
+      }
+    }
+
     setActivo();
   } catch (err) {
     setError(err);

@@ -127,6 +127,16 @@ export function resolver(nombre) {
   return { ok: false, motivo: 'desconocido', conocidos };
 }
 
+// Ruta absoluta en disco de un expediente. El id es `nombreRaíz/subcarpetas...`, así que se
+// traduce contra la raíz configurada. Devuelve null si el expediente no cuelga de ninguna.
+export function rutaAbsoluta(expedienteId) {
+  if (!expedienteId || expedienteId === EXPEDIENTE_SIN_CARPETA) return null;
+  const [nombreRaiz, ...resto] = String(expedienteId).split('/');
+  const raiz = config.roots.find((x) => x.name === nombreRaiz);
+  if (!raiz) return null;
+  return resto.length ? path.join(raiz.path, ...resto) : raiz.path;
+}
+
 export function getActivo() {
   return state.expedienteActivo;
 }

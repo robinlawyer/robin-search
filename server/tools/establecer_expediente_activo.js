@@ -7,6 +7,9 @@
 
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
+import { config } from '../config.js';
+import { esRutaDeRed } from '../net.js';
+import { reescanear } from '../watcher/watcher.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
@@ -83,6 +86,17 @@ export async function handler(args) {
   }
 
   expedientes.setActivo(r.expediente);
+
+  // Si el expediente vive en una carpeta de RED (Z:\\ o montaje del servidor del despacho), se
+  // refresca contra el disco AL ABRIRLO. Es el momento exacto en que el abogado va a trabajar
+  // sobre el asunto, y sobre SMB no hay evento fiable que nos avise de lo que han dejado ahí
+  // los compañeros desde la última vez. Es incremental: solo se re-indexa lo que ha cambiado.
+  const ruta = expedientes.rutaAbsoluta(r.expediente);
+  let refresco = null;
+  if (config.rescanAlAbrir && ruta && esRutaDeRed(ruta)) {
+    refresco = await reescanear([ruta], { motivo: 'apertura' });
+  }
+
   const ficha =
     expedientes.catalogo().find((e) => e.expediente === r.expediente) ||
     { documentos: 0, fragmentos: 0, sin_ocr: 0 };
@@ -93,6 +107,22 @@ export async function handler(args) {
     fragmentos_indexados: ficha.fragmentos,
     ficheros_sin_ocr: ficha.sin_ocr,
   };
+
+  if (refresco) {
+    respuesta.ubicacion = 'red';
+    respuesta.actualizado_desde_disco = {
+      documentos_nuevos_o_modificados: refresco.indexados,
+      documentos_retirados: refresco.eliminados,
+    };
+    if (refresco.carpetas_inaccesibles || refresco.subcarpetas_ilegibles) {
+      // La carpeta de red no responde: NO es un expediente vacío, y hay que decirlo así.
+      respuesta.aviso_red =
+        'No se ha podido leer la carpeta de red del expediente, así que lo que se busque puede ' +
+        'estar incompleto o desactualizado. Comprueba que la unidad sigue conectada.';
+      if (refresco.carpetas_inaccesibles) respuesta.carpetas_inaccesibles = refresco.carpetas_inaccesibles;
+      if (refresco.subcarpetas_ilegibles) respuesta.subcarpetas_ilegibles = refresco.subcarpetas_ilegibles;
+    }
+  }
   if (ficha.documentos === 0) {
     respuesta.aviso =
       'El expediente existe pero aún no tiene documentos indexados: puede que el indexado ' +
