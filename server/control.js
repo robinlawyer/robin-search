@@ -34,10 +34,23 @@ function nombreCanal() {
 
 export function rutaCanal() {
   if (process.platform === 'win32') return `\\\\.\\pipe\\${nombreCanal()}`;
-  // En macOS la ruta de un socket no puede pasar de ~104 caracteres, así que
-  // NO vale meterlo en "Application Support/...": el directorio temporal del
-  // usuario es corto y además privado.
-  return path.join(os.tmpdir(), `${nombreCanal()}.sock`);
+  // `/tmp` A PROPÓSITO, y no os.tmpdir().
+  //
+  // os.tmpdir() NO vale aquí: este servidor lo lanza Claude Desktop, y ese
+  // proceso no hereda el TMPDIR por usuario de la sesión gráfica de macOS. El
+  // servidor acababa abriendo /tmp/robinsearch-<x>.sock mientras la app de
+  // escritorio miraba en /var/folders/…/T/robinsearch-<x>.sock. Mismo nombre,
+  // mismo hash, distinto directorio: no se encontraban nunca.
+  //
+  // Tampoco vale el directorio de datos: la ruta de un socket UNIX no puede
+  // pasar de ~104 caracteres y "…/Library/Application Support/RobinLawyer/
+  // robin-search/" ya se come 90 con un usuario de nombre normal.
+  //
+  // /tmp es corto y es el mismo para todos los procesos del equipo. El socket
+  // se crea con permisos 0600, así que otro usuario no puede leerlo, y el
+  // nombre lleva el hash del directorio de datos: dos instalaciones distintas
+  // no se pisan.
+  return path.join('/tmp', `${nombreCanal()}.sock`);
 }
 
 let servidor = null;

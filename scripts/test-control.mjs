@@ -41,8 +41,14 @@ c.stdout.on('data',()=>{});
 // La ruta del canal se calcula igual que en el servidor: si divergieran, la app
 // buscaría en un sitio y el servidor escucharía en otro.
 const huella=crypto.createHash('sha256').update(DATOS).digest('hex').slice(0,8);
+// OJO: `/tmp` literal, no os.tmpdir(). El servidor lo lanza Claude Desktop y
+// ese proceso NO hereda el TMPDIR por usuario de la sesión gráfica de macOS:
+// el servidor abría /tmp/robinsearch-<x>.sock y la app miraba en
+// /var/folders/…/T/robinsearch-<x>.sock. Mismo nombre, distinto directorio, y
+// no se encontraron nunca. Si alguien vuelve a poner os.tmpdir() aquí, el
+// canal se rompe en cuanto salga de una terminal.
 const RUTA = process.platform==='win32' ? `\\\\.\\pipe\\robinsearch-${huella}`
-                                        : path.join(os.tmpdir(), `robinsearch-${huella}.sock`);
+                                        : path.join('/tmp', `robinsearch-${huella}.sock`);
 
 function conectar(){
   return new Promise((res,rej)=>{
@@ -70,6 +76,8 @@ function lector(socket){
 
 async function main(){
   const s=await conectarConEspera();
+  check('el canal NO depende del TMPDIR del proceso (Claude no hereda el de la sesión)',
+    !RUTA.includes('/var/folders/') && (process.platform==='win32' || RUTA.startsWith('/tmp/')), RUTA);
   const msgs=lector(s);
   check('la app puede conectarse al canal de control', true, RUTA.replace(os.tmpdir(),'…'));
 
@@ -79,6 +87,9 @@ async function main(){
   check('nada más conectar, el servidor manda su estado', msgs.length>0 && msgs[0].tipo==='estado',
     msgs[0]?JSON.stringify({estado:msgs[0].estado,carpetas:msgs[0].carpetas?.length}):'sin mensajes');
   check('y dice qué carpetas vigila', Array.isArray(msgs[0]?.carpetas) && msgs[0].carpetas.length===1);
+  const pkg=JSON.parse(fs.readFileSync(path.join(REPO,'package.json'),'utf8'));
+  check('la versión que reporta es la del paquete, no una constante a mano',
+    msgs[0]?.version===pkg.version, `dice ${msgs[0]?.version}, el paquete es ${pkg.version}`);
   check('sin filtrar contenido de los documentos',
     !JSON.stringify(msgs[0]).includes('SECRETO'));
 
@@ -174,7 +185,7 @@ async function main(){
     {env:{...env, ROBIN_FOLDERS:path.dirname(MADRE), ROBIN_DATA_DIR:path.join(base,'datos-it')},stdio:'ignore'});
   const huellaIT=crypto.createHash('sha256').update(path.join(base,'datos-it')).digest('hex').slice(0,8);
   const rutaIT=process.platform==='win32'?`\\\\.\\pipe\\robinsearch-${huellaIT}`
-                                        :path.join(os.tmpdir(),`robinsearch-${huellaIT}.sock`);
+                                        :path.join('/tmp',`robinsearch-${huellaIT}.sock`);
   let sIT=null;
   for(let i=0;i<60 && !sIT;i++){
     try { sIT=await new Promise((res,rej)=>{const x=net.connect(rutaIT);x.once('connect',()=>res(x));x.once('error',rej);}); }
