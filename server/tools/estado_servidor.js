@@ -10,6 +10,8 @@ import * as registry from '../indexer/registry.js';
 import * as expedientes from '../expedientes.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
+import { estadoMotor } from '../embedder/embedder.js';
+import { estadoOcr } from '../indexer/ocr.js';
 
 function dirSizeMb(dir) {
   let bytes = 0;
@@ -36,7 +38,10 @@ export const definition = {
     'Devuelve el estado del servidor de búsqueda local: versión, si hay actualización ' +
     'disponible, carpetas vigiladas, expedientes detectados (con sus contadores), expediente ' +
     'activo de la sesión, documentos y fragmentos indexados, ficheros sin OCR y tamaño del ' +
-    'índice. Úsala para saber qué expedientes hay antes de fijar uno.',
+    'índice. Incluye además el estado del MOTOR DE EMBEDDING y el resumen del último ' +
+    'indexado con las causas de sus errores: si algo no se encuentra, mira eso ANTES de ' +
+    'concluir que el documento no existe. Úsala para saber qué expedientes hay antes de ' +
+    'fijar uno.',
   inputSchema: { type: 'object', properties: {} },
   annotations: {
     readOnlyHint: true,
@@ -53,6 +58,10 @@ export async function handler() {
     estado: state.estado,
     version: VERSION,
     sesion: await authStatus(),
+    // Sin motor de embedding no se indexa NI se busca: todos los ficheros fallan y todas las
+    // consultas también. Es la primera cosa que hay que poder ver, y antes no se veía.
+    motor_embedding: estadoMotor(),
+    ocr: estadoOcr(),
     actualizacion_disponible: state.actualizacionDisponible,
     // Se declara dónde vive cada carpeta y si ahora mismo se puede leer: un expediente en el
     // servidor del despacho se mantiene al día por re-escaneo, no por eventos, y si la unidad
@@ -95,7 +104,19 @@ export async function handler() {
     respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Descárgala desde robinlawyer.ai/descargas`;
   }
   if (state.estado === 'indexando' && state.progreso) respuesta.progreso = state.progreso;
-  if (state.estado === 'error' && state.ultimoError) respuesta.ultimo_error = state.ultimoError;
+  if (state.ultimoError) respuesta.ultimo_error = state.ultimoError;
+
+  // Resumen del último indexado CON sus causas de error. Un "0 documentos indexados" con 680
+  // errores y un servidor en 'activo' era indistinguible de una carpeta vacía.
+  if (state.ultimoIndexado) {
+    respuesta.ultimo_indexado = state.ultimoIndexado;
+    if (state.ultimoIndexado.errores > 0) {
+      respuesta.aviso_indexado =
+        `El último indexado falló en ${state.ultimoIndexado.errores} fichero(s). ` +
+        'Mira "errores_por_causa" en ultimo_indexado: si la causa se repite en todos, el fallo ' +
+        'no es de los documentos sino del servidor (motor de embedding, permisos o disco).';
+    }
+  }
   if (!expedientes.getActivo()) {
     respuesta.aviso_expediente =
       catalogo.length > 0

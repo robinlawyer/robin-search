@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 
-export const VERSION = '1.3.1';
+export const VERSION = '1.4.0';
 
 // Endpoint público de Robin para comprobar la última versión disponible del servidor
 // local (aviso de actualización en `estado_servidor`). NO transporta contenido documental.
@@ -142,6 +142,9 @@ function buildConfig() {
     // sesión en el navegador; RobinSearch no pide token que pegar. `ROBIN_TOKEN` sigue
     // disponible como fallback headless para despliegue IT masivo (sin navegador).
     oauthIssuer: (firstDefined(process.env.ROBIN_OAUTH_ISSUER) || 'https://api.robinlawyer.ai').replace(/\/+$/, ''),
+    // No abrir el navegador para el login OAuth: pruebas automáticas y
+    // despliegues headless de IT (ahí se usa ROBIN_TOKEN).
+    noBrowser: firstDefined(process.env.ROBIN_NO_BROWSER) === '1',
 
     // Carpetas de expedientes vigiladas (multi-raíz).
     roots,

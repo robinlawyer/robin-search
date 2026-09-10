@@ -196,11 +196,43 @@ export function exigirExpediente(explicito) {
   };
 }
 
+// ¿Está `exp` DENTRO del expediente seleccionado? Un expediente incluye lo que cuelga de él.
+//
+// Por qué no basta la igualdad: el abogado elige la carpeta al instalar, y si elige la del
+// CASO (en vez de la carpeta madre) sus subcarpetas pasan a ser expedientes por derecho
+// propio — "Caso", "Caso/01 Demanda", "Caso/02 Prueba". Con igualdad estricta, fijar "Caso"
+// dejaba fuera sus propias subcarpetas y la búsqueda contestaba con los sueltos de la raíz,
+// SIN error: el abogado creía haber buscado en el expediente entero y no era verdad.
+// La comparación es POR SEGMENTOS, así que "Madre/Pérez" nunca alcanza a "Madre/Pérez - Divorcio":
+// el aislamiento entre casos HERMANOS —que es el que protege el secreto profesional— intacto.
+export function enAmbito(exp, seleccionado) {
+  if (!seleccionado || !exp) return false;
+  return exp === seleccionado || String(exp).startsWith(`${seleccionado}/`);
+}
+
+// Los expedientes conocidos que caen dentro del seleccionado (él incluido).
+export function ambito(seleccionado) {
+  if (!seleccionado) return [];
+  return nombresConocidos().filter((c) => enAmbito(c, seleccionado));
+}
+
+// Contadores sumados de todo el ámbito, para no anunciar "0 documentos" sobre un caso que sí
+// los tiene repartidos en subcarpetas.
+export function contadoresAmbito(seleccionado) {
+  const acc = { documentos: 0, fragmentos: 0, sin_ocr: 0 };
+  for (const e of catalogo()) {
+    if (!enAmbito(e.expediente, seleccionado)) continue;
+    acc.documentos += e.documentos;
+    acc.fragmentos += e.fragmentos;
+    acc.sin_ocr += e.sin_ocr;
+  }
+  return acc;
+}
+
 // ¿La ruta lógica de un documento pertenece al expediente dado?
 export function perteneceA(rutaLogica, expediente) {
   if (!expediente) return false;
-  const exp = expedienteForLogicalPath(rutaLogica);
-  return exp === expediente;
+  return enAmbito(expedienteForLogicalPath(rutaLogica), expediente);
 }
 
 export default {
@@ -210,6 +242,9 @@ export default {
   catalogo,
   nombresConocidos,
   resolver,
+  enAmbito,
+  ambito,
+  contadoresAmbito,
   getActivo,
   setActivo,
   exigirExpediente,

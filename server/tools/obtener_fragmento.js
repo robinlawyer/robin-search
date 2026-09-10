@@ -54,7 +54,7 @@ export async function handler(args) {
 
   // Barrera de aislamiento: un (doc_id, chunk_id) de otro expediente no devuelve texto.
   const expChunk = meta.expediente || expedienteForLogicalPath(meta.rutaRelativa);
-  if (expChunk !== expediente) {
+  if (!expedientes.enAmbito(expChunk, expediente)) {
     return fail(
       `Ese fragmento pertenece a otro expediente ("${expChunk}"), no al expediente activo ` +
         `("${expediente}").`,

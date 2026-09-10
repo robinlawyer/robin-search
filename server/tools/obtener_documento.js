@@ -73,7 +73,7 @@ export async function handler(args) {
   // bastaría arrastrar un identificador de una conversación anterior para leer entero un
   // documento del cliente equivocado.
   const expDoc = entry ? entry.expediente || expedienteForLogicalPath(entry.rutaRelativa) : null;
-  if (entry && expDoc !== expediente) {
+  if (entry && !expedientes.enAmbito(expDoc, expediente)) {
     return fail(
       `Ese documento pertenece a otro expediente ("${expDoc}"), no al expediente activo ` +
         `("${expediente}"). Cambia de expediente con establecer_expediente_activo si es lo que quieres.`,
@@ -88,7 +88,7 @@ export async function handler(args) {
   if (!entry && chunks.length > 0) {
     const expChunk =
       chunks[0].expediente || expedienteForLogicalPath(chunks[0].rutaRelativa);
-    if (expChunk !== expediente) {
+    if (!expedientes.enAmbito(expChunk, expediente)) {
       return fail(
         `Ese documento pertenece a otro expediente ("${expChunk}"), no al expediente activo ` +
           `("${expediente}").`,

@@ -22,8 +22,8 @@ import path from 'node:path';
 import { config, SUPPORTED_EXTENSIONS, logicalPath } from '../config.js';
 import { esRutaDeRed } from '../net.js';
 import { log } from '../logger.js';
-import { setActivo, setIndexando } from '../state.js';
-import { indexFile, removeFilePath, indexFolder } from '../indexer/indexer.js';
+import { setActivo, setIndexando, setError, clearError } from '../state.js';
+import { indexFile, removeFilePath, indexFolder, normalizarCausa } from '../indexer/indexer.js';
 
 let _watcher = null;
 let _rescanTimer = null;
@@ -58,6 +58,12 @@ async function drain() {
     return;
   }
   draining = true;
+  // El watcher tenía el mismo punto ciego que el indexado: registraba el fallo en el log y
+  // volvía a 'activo'. Un watcher que falla en TODOS los cambios (motor caído, disco lleno)
+  // dejaba el expediente congelado en silencio.
+  let fallos = 0;
+  let hechos = 0;
+  let ultimaCausa = null;
   try {
     while (pending.size > 0) {
       const [absPath, job] = pending.entries().next().value;
@@ -67,13 +73,21 @@ async function drain() {
       try {
         if (job.tipo === 'remove') await removeFilePath(absPath);
         else await indexFile(absPath);
+        hechos += 1;
         log.info('Watcher: re-indexado', { ruta, tipo: job.tipo });
       } catch (err) {
+        fallos += 1;
+        ultimaCausa = normalizarCausa(err);
         log.error('Watcher: error procesando cambio', { ruta, err: String(err) });
       }
     }
   } finally {
     draining = false;
+    if (fallos > 0) {
+      setError(`El watcher no pudo procesar ${fallos} cambio(s) del expediente. Causa: ${ultimaCausa}`);
+    } else if (hechos > 0) {
+      clearError();
+    }
     setActivo();
   }
 }

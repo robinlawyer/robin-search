@@ -54,7 +54,7 @@ export async function handler(args) {
   const documentos = [];
   for (const e of registry.all()) {
     const exp = e.expediente || expedienteForLogicalPath(e.rutaRelativa);
-    if (exp !== expediente) continue;
+    if (!expedientes.enAmbito(exp, expediente)) continue;
     if (prefijo) {
       const rel = String(e.rutaRelativa || '').replace(/\\/g, '/');
       if (rel !== prefijo && !rel.startsWith(`${prefijo}/`)) continue;

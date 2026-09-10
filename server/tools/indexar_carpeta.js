@@ -2,6 +2,8 @@
 // pero no borra datos del usuario ni es destructiva: readOnlyHint:false, destructiveHint:false,
 // idempotentHint:true (re-ejecutar con los mismos ficheros no cambia el resultado).
 
+import path from 'node:path';
+
 import { config, rootForPath } from '../config.js';
 import { indexFolder } from '../indexer/indexer.js';
 import { ok, fail } from './util.js';
@@ -101,12 +103,29 @@ export async function handler(args) {
 
   // Carpeta ilegible ≠ carpeta vacía. Si la unidad de red no responde hay que decirlo, no
   // devolver un "0 documentos" que se lee como "aquí no hay nada".
+  const avisos = [];
   if (resumen.carpetas_inaccesibles || resumen.subcarpetas_ilegibles) {
-    resumen.aviso =
+    avisos.push(
       'Alguna carpeta no se ha podido leer, así que el índice puede estar incompleto. ' +
-      'Si es una unidad de red, comprueba en el Explorador que sigue conectada y que la ' +
-      'sesión tiene credenciales sobre ese recurso.';
+        'Si es una unidad de red, comprueba en el Explorador que sigue conectada y que la ' +
+        'sesión tiene credenciales sobre ese recurso.',
+    );
   }
+  // Un recuento de errores SIN causa no se puede diagnosticar desde el chat, y el abogado no
+  // va a abrir el fichero de log. Las causas se devuelven agrupadas en `errores_por_causa`.
+  if (resumen.errores > 0) {
+    const total = resumen.errores + resumen.indexados + resumen.sinCambios + resumen.sinOcr + resumen.omitidos;
+    const todos = resumen.indexados === 0 && resumen.errores === total;
+    avisos.push(
+      `Han fallado ${resumen.errores} fichero(s). Las causas agrupadas van en ` +
+        '"errores_por_causa" (con un fichero de ejemplo por causa).' +
+        (todos
+          ? ' Han fallado TODOS: eso no es un problema de los documentos, sino del servidor. ' +
+            'Llama a estado_servidor y mira "motor_embedding" antes que nada.'
+          : ''),
+    );
+  }
+  if (avisos.length) resumen.aviso = avisos.join(' ');
   return ok(resumen);
 }
 

@@ -50,6 +50,9 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     try {
       await warmup();
     } catch (err) {
+      // Sin modelo no se puede indexar NI buscar: todo fichero fallará. El error se marca
+      // aquí y ya NO lo borra el indexado que viene a continuación (antes, el `setActivo()`
+      // final de `indexFolder` lo pisaba y la causa desaparecía de `estado_servidor`).
       log.error('No se pudo cargar el modelo de embedding', { err: String(err) });
       setError(err);
     }

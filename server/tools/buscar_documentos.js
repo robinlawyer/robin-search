@@ -36,8 +36,9 @@ export const definition = {
       expediente: {
         type: 'string',
         description:
-          'Expediente en el que buscar (carpeta del caso). Si se omite, se usa el expediente ' +
-          'activo de la sesión. Si tampoco hay activo, la llamada falla: nunca se busca en todos.',
+          'Expediente en el que buscar (carpeta del caso). Incluye sus subcarpetas. Si se ' +
+          'omite, se usa el expediente activo de la sesión. Si tampoco hay activo, la llamada ' +
+          'falla: nunca se busca en todos.',
       },
       subcarpeta: {
         type: 'string',
@@ -81,7 +82,14 @@ export async function handler(args) {
   // devolver menos de n resultados, o ninguno, al quedarse sin candidatos del expediente).
   const prefijo = subcarpeta ? `${expediente}/${subcarpeta}` : null;
   const topK = prefijo ? Math.min(n * 5, 200) : n;
-  const raw = await store.query(vector, topK, { expediente: { $eq: expediente } });
+  // El ámbito es el expediente Y lo que cuelga de él (ver expedientes.enAmbito). Con igualdad
+  // estricta, un caso cuyas subcarpetas son expedientes por sí mismas devolvía solo los
+  // documentos sueltos de su raíz, sin avisar de nada.
+  const alcance = expedientes.ambito(expediente);
+  const filtro = alcance.length > 1
+    ? { expediente: { $in: alcance } }
+    : { expediente: { $eq: expediente } };
+  const raw = await store.query(vector, topK, filtro);
 
   const dentroDeSubcarpeta = (ruta) => {
     if (!prefijo) return true;

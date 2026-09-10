@@ -22,6 +22,9 @@ import obtenerDocumento from './tools/obtener_documento.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
 import establecerExpedienteActivo from './tools/establecer_expediente_activo.js';
 import estadoServidor from './tools/estado_servidor.js';
+import siguientePorRevisar from './tools/siguiente_por_revisar.js';
+import anotar from './tools/anotar.js';
+import obtenerAnotaciones from './tools/obtener_anotaciones.js';
 
 const TOOLS = [
   buscarDocumentos,
@@ -31,6 +34,10 @@ const TOOLS = [
   listarDocumentos,
   establecerExpedienteActivo,
   estadoServidor,
+  // Barrido exhaustivo del expediente (due diligence sobre lo que no cabe en contexto).
+  siguientePorRevisar,
+  anotar,
+  obtenerAnotaciones,
 ];
 
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));

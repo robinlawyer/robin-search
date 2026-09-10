@@ -97,9 +97,8 @@ export async function handler(args) {
     refresco = await reescanear([ruta], { motivo: 'apertura' });
   }
 
-  const ficha =
-    expedientes.catalogo().find((e) => e.expediente === r.expediente) ||
-    { documentos: 0, fragmentos: 0, sin_ocr: 0 };
+  // Contadores de TODO el ámbito del caso (él y sus subcarpetas), no solo de su raíz.
+  const ficha = expedientes.contadoresAmbito(r.expediente);
 
   const respuesta = {
     expediente_activo: r.expediente,

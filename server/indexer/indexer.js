@@ -16,12 +16,35 @@ import {
 } from '../config.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
-import { state, setIndexando, setActivo, setError } from '../state.js';
+import {
+  state,
+  setIndexando,
+  setActivo,
+  setError,
+  clearError,
+  setUltimoIndexado,
+} from '../state.js';
 import { extractFile } from './extract.js';
 import { chunkPages } from './chunk.js';
 import { embedPassages } from '../embedder/embedder.js';
 import * as store from '../search/store.js';
 import * as registry from './registry.js';
+
+// Reduce el mensaje de un error a una CAUSA agrupable. Sin esto, 680 ficheros que fallan por
+// el mismo motivo producían 680 mensajes distintos (cada uno con su ruta) y no se veía que
+// eran un único fallo. Se quitan rutas absolutas y números para que agrupen.
+export function normalizarCausa(err) {
+  const code = err?.code ? String(err.code) : null;
+  const bruto = String(err?.message ?? err ?? 'error desconocido');
+  const primeraLinea = bruto.split('\n').find((l) => l.trim()) || bruto;
+  const limpio = primeraLinea
+    .replace(/'[^'\n]*[\\/][^'\n]*'/g, "'<ruta>'")             // rutas entrecomilladas (con espacios)
+    .replace(/(?:[A-Za-z]:)?[\\/][^\s'\"()]{8,}/g, '<ruta>')      // rutas absolutas sueltas
+    .replace(/\b\d{3,}\b/g, '<n>')                            // offsets, tamaños, líneas
+    .trim()
+    .slice(0, 200);
+  return code && !limpio.includes(code) ? `${code}: ${limpio}` : limpio;
+}
 
 function isSupported(filePath) {
   return SUPPORTED_EXTENSIONS.has(path.extname(filePath).toLowerCase());
@@ -198,6 +221,7 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
 
   const files = [];
   const ilegibles = [];
+  const causas = new Map();
   for (const root of accesibles) for (const f of walk(root, ilegibles)) files.push(f);
   if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
   setIndexando({ procesados: 0, total: files.length, ficheroActual: null });
@@ -217,6 +241,13 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
         else resumen.omitidos += 1;
       } catch (err) {
         resumen.errores += 1;
+        // La CAUSA se agrega aquí, no solo en el log: el abogado no va a abrir un fichero de
+        // log, y sin causa un "errores: 680" es indiagnosticable desde el chat.
+        const causa = normalizarCausa(err);
+        const acc = causas.get(causa) || { causa, ficheros: 0, ejemplo: null };
+        acc.ficheros += 1;
+        if (!acc.ejemplo) acc.ejemplo = logicalPath(abs);
+        causas.set(causa, acc);
         log.error('Error indexando fichero', { fichero: logicalPath(abs), err: String(err) });
       }
       if (onProgress) onProgress(state.progreso, resumen);
@@ -241,13 +272,33 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
       }
     }
 
+    if (causas.size) {
+      resumen.errores_por_causa = [...causas.values()]
+        .sort((a, b) => b.ficheros - a.ficheros)
+        .slice(0, 5);
+    }
+
+    // Un indexado con TODOS los ficheros en error no es un indexado "activo". Se refleja en el
+    // estado del servidor, en lugar de dejarlo en 'activo' con 0 documentos —que se lee como
+    // "aquí no hay nada"— y se limpia el error solo cuando la pasada sale limpia de verdad.
+    if (resumen.errores > 0) {
+      const top = resumen.errores_por_causa?.[0];
+      setError(
+        `El último indexado falló en ${resumen.errores} de ${files.length} fichero(s)` +
+          (top ? `. Causa principal (${top.ficheros}): ${top.causa}` : '.'),
+      );
+    } else if (!resumen.carpetas_inaccesibles && !resumen.subcarpetas_ilegibles) {
+      clearError();
+    }
     setActivo();
   } catch (err) {
     setError(err);
+    setUltimoIndexado(resumen);
     throw err;
   }
 
-  log.info('Indexado completado', resumen);
+  setUltimoIndexado(resumen);
+  log[resumen.errores > 0 ? 'error' : 'info']('Indexado completado', resumen);
   return resumen;
 }
 

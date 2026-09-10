@@ -150,6 +150,68 @@ async function exchangeCode(disc, clientId, code, redirect, verifier) {
   return normalizeTokens(await r.json());
 }
 
+// Recogida del código por la conexión de SALIDA, en paralelo al callback
+// loopback. Motivo: el salto del navegador a 127.0.0.1 lo rompe cualquier
+// antivirus/EDR que vigile sockets locales, un proxy sin excepción para
+// loopback, o un navegador embebido que no sepa ir a loopback. Medido en el
+// primer despacho real: 12 códigos emitidos y 0 recogidos, mientras la salida
+// HTTPS de esa misma máquina funcionaba sin un fallo.
+//
+// Nos identificamos con el code_verifier de PKCE, que solo existe aquí: el
+// code_challenge viaja en la URL de autorización (y se imprime en el chat),
+// así que no serviría como credencial.
+const PICKUP_INTERVAL_MS = 2000;
+
+function programar(fn, ms) {
+  const t = setTimeout(fn, ms);
+  if (t.unref) t.unref(); // nunca debe impedir que el proceso MCP cierre
+  return t;
+}
+
+function pickupCode(url, clientId, verifier, deadlineMs, signal) {
+  return new Promise((resolve, reject) => {
+    let parado = false;
+    const parar = () => {
+      parado = true;
+      clearTimeout(timer);
+    };
+    if (signal) signal.addEventListener('abort', parar, { once: true });
+
+    let timer = null;
+    const tick = async () => {
+      if (parado) return;
+      if (Date.now() > deadlineMs) {
+        parar();
+        reject(new Error('pickup_timeout'));
+        return;
+      }
+      try {
+        const r = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ client_id: clientId, code_verifier: verifier }).toString(),
+        });
+        if (r.ok) {
+          const d = await r.json();
+          if (d && d.status === 'ready' && d.code) {
+            parar();
+            log.info('Código de autorización recogido por la conexión de salida');
+            resolve(d.code);
+            return;
+          }
+        }
+        // 4xx/5xx o "pending": se reintenta. Un backend antiguo sin este
+        // endpoint devuelve 404 y el sondeo simplemente nunca acierta, así
+        // que el flujo se comporta exactamente como antes.
+      } catch {
+        /* sin red momentáneamente: se reintenta */
+      }
+      if (!parado) timer = programar(tick, PICKUP_INTERVAL_MS);
+    };
+    timer = programar(tick, PICKUP_INTERVAL_MS);
+  });
+}
+
 async function refresh(a) {
   if (!a?.refresh_token) return null;
   const disc = await discover();
@@ -200,19 +262,27 @@ export async function getBearerQuiet() {
 }
 
 // ---------- navegador + loopback ---------- //
+// Orden para abrir el navegador, por plataforma. Exportado para poder probarlo:
+// en Windows NO se puede pasar por el shell. `cmd /c start "" <url>` parece
+// funcionar y no funciona: Node solo entrecomilla un argumento si contiene
+// espacios, así que cmd.exe parte la URL en el primer `&` y el navegador
+// recibe solo `?response_type=code` → 422 en el servidor (visto en producción
+// el 10-sep-2026 con un abogado en prueba, que no pudo entrar en 40 minutos).
+// rundll32 recibe la URL como un único argumento, sin shell que la parta.
+export function browserCommand(platform, url) {
+  if (platform === 'darwin') return { cmd: 'open', args: [url] };
+  if (platform === 'win32') return { cmd: 'rundll32', args: ['url.dll,FileProtocolHandler', url] };
+  return { cmd: 'xdg-open', args: [url] };
+}
+
 function openBrowser(url) {
+  // Escotilla para pruebas y para despliegue headless de IT: no abrir nada.
+  if (config.noBrowser) {
+    log.info('No abro el navegador (ROBIN_NO_BROWSER)', { url });
+    return;
+  }
   try {
-    let cmd, args;
-    if (process.platform === 'darwin') {
-      cmd = 'open';
-      args = [url];
-    } else if (process.platform === 'win32') {
-      cmd = 'cmd';
-      args = ['/c', 'start', '', url];
-    } else {
-      cmd = 'xdg-open';
-      args = [url];
-    }
+    const { cmd, args } = browserCommand(process.platform, url);
     const child = spawn(cmd, args, { stdio: 'ignore', detached: true });
     child.on('error', (e) => log.warn('No pude abrir el navegador', { err: String(e) }));
     child.unref();
@@ -283,6 +353,29 @@ function listenOnAny(ports) {
   });
 }
 
+// Cuando el código lo trae el sondeo, el servidor loopback se deja escuchando
+// un rato más: si el navegador acaba llegando (tarde, o por otro camino), ve la
+// pantalla de "conexión establecida" en vez de un error de conexión. Y si no
+// llega nunca, se cierra solo y libera el puerto.
+const GRACIA_CIERRE_MS = 60 * 1000;
+
+function cerrarConGracia(server, codeP, ms = GRACIA_CIERRE_MS) {
+  let cerrado = false;
+  const cerrar = () => {
+    if (cerrado) return;
+    cerrado = true;
+    try {
+      server.close();
+    } catch {
+      /* noop */
+    }
+  };
+  // Si el callback llega (o vence), awaitCallback ya cierra: esto es el tope.
+  codeP.then(cerrar, cerrar);
+  const t = setTimeout(cerrar, ms);
+  if (t.unref) t.unref();
+}
+
 function awaitCallback(server, port, expectedState) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
@@ -323,8 +416,15 @@ function awaitCallback(server, port, expectedState) {
         return;
       }
       if (!code || gotState !== expectedState) {
-        finish(htmlPage('Error de seguridad', 'La respuesta no coincide con la petición. Cierra esta pestaña e inténtalo de nuevo.'), () =>
-          reject(new Error('state_mismatch')),
+        // Enlace de un intento anterior. Antes esto abortaba el flujo VIVO
+        // (cerraba el servidor y rechazaba con state_mismatch), así que cada
+        // reintento con un enlace viejo quemaba el intento bueno y el abogado
+        // no podía entrar nunca. Ahora se lo explicamos y seguimos escuchando.
+        res.end(
+          htmlPage(
+            'Este enlace ya no es válido',
+            'Corresponde a un intento anterior. Vuelve a Claude, pídele otra vez la búsqueda y abre el enlace NUEVO que te dé.',
+          ),
         );
         return;
       }
@@ -342,9 +442,19 @@ function awaitCallback(server, port, expectedState) {
 // ---------- flujo de login (idempotente) ---------- //
 let _loginPromise = null;
 let _lastAuthorizeUrl = null;
+// Promesa que se resuelve con el enlace del flujo VIVO en cuanto está
+// construido. Sin ella, ensureAuthorized() devolvía `_lastAuthorizeUrl` en el
+// mismo tick en que lanza startLogin(): null la primera vez y el enlace del
+// flujo ANTERIOR las siguientes — cuyo `state` rechaza el servidor loopback en
+// curso, de modo que el login no podía completarse nunca.
+let _authorizeUrlPromise = null;
+let _publishAuthorizeUrl = null;
 
 function startLogin() {
   if (_loginPromise) return _loginPromise;
+  _authorizeUrlPromise = new Promise((resolve) => {
+    _publishAuthorizeUrl = resolve;
+  });
   _loginPromise = (async () => {
     const disc = await discover();
     const a = await ensureClient();
@@ -366,10 +476,33 @@ function startLogin() {
         resource: RESOURCE,
       }).toString();
     _lastAuthorizeUrl = authorizeUrl;
+    if (_publishAuthorizeUrl) _publishAuthorizeUrl(authorizeUrl);
     log.info('Esperando inicio de sesión en el navegador', { puerto: port });
+    // Dos caminos a la vez para el mismo código: el callback loopback de
+    // siempre (rápido cuando la red del despacho lo permite) y la recogida por
+    // nuestra conexión de salida (funciona aunque el loopback esté cortado).
+    // Vale el primero que llegue; si uno falla, el login NO se cae mientras el
+    // otro siga vivo.
+    const abort = new AbortController();
     const codeP = awaitCallback(server, port, state);
+    const pickupUrl =
+      disc.robin_code_pickup_endpoint ||
+      (disc.issuer || config.oauthIssuer).replace(/\/+$/, '') + '/oauth/pickup';
+    const pickP = pickupCode(pickupUrl, a.client_id, verifier, Date.now() + CALLBACK_TIMEOUT_MS, abort.signal);
     openBrowser(authorizeUrl);
-    const code = await codeP;
+    let code;
+    try {
+      code = await Promise.any([codeP, pickP]);
+    } catch (agg) {
+      // Promise.any solo rechaza si fallan LOS DOS caminos.
+      const causas = (agg && agg.errors) || [];
+      throw new Error(causas.map((e) => String(e?.message ?? e)).join(' / ') || 'login_timeout');
+    }
+    abort.abort(); // detiene el sondeo si ganó el callback
+    // Si ganó el sondeo, el servidor loopback sigue escuchando un rato: así,
+    // cuando el navegador consiga llegar (o no), no se queda con un error de
+    // conexión en la cara.
+    cerrarConGracia(server, codeP);
     const tokens = await exchangeCode(disc, a.client_id, code, redirect, verifier);
     const merged = { ...(loadAuth() || {}), ...tokens, updated_at: Date.now() };
     saveAuth(merged);
@@ -387,8 +520,40 @@ function startLogin() {
     })
     .finally(() => {
       _loginPromise = null;
+      // Si el flujo murió antes de construir el enlace, desbloqueamos a quien
+      // lo esté esperando en vez de dejarlo colgado.
+      if (_publishAuthorizeUrl) _publishAuthorizeUrl(_lastAuthorizeUrl);
     });
   return _loginPromise;
+}
+
+// Espera, con tope, a que el flujo en curso publique su enlace de login. El
+// tope existe para no dejar la llamada MCP colgada si la red va mal: en ese
+// caso devolvemos lo último que tengamos (o null, y la tool le dice al abogado
+// que lo pida otra vez en unos segundos).
+function awaitAuthorizeUrl(timeoutMs = 6000) {
+  if (!_authorizeUrlPromise) return Promise.resolve(_lastAuthorizeUrl);
+  const pending = _authorizeUrlPromise;
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = (v) => {
+      if (done) return;
+      done = true;
+      resolve(v || null);
+    };
+    const t = setTimeout(() => finish(_lastAuthorizeUrl), timeoutMs);
+    if (t.unref) t.unref();
+    pending.then(
+      (u) => {
+        clearTimeout(t);
+        finish(u);
+      },
+      () => {
+        clearTimeout(t);
+        finish(_lastAuthorizeUrl);
+      },
+    );
+  });
 }
 
 // Gate para las herramientas: devuelve { ok, bearer } o { ok:false, loginUrl } y dispara el
@@ -401,7 +566,8 @@ export async function ensureAuthorized() {
     return { ok: true, bearer, mode: 'oauth', user: a?.user || null };
   }
   startLogin(); // no bloquea la llamada MCP; el usuario completa el login en el navegador
-  return { ok: false, loginUrl: _lastAuthorizeUrl };
+  const loginUrl = await awaitAuthorizeUrl();
+  return { ok: false, loginUrl };
 }
 
 // Respuesta MCP amable cuando falta sesión.
