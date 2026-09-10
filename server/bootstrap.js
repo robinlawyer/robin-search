@@ -11,8 +11,9 @@ import * as registry from './indexer/registry.js';
 import * as store from './search/store.js';
 import { startWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
+import { iniciarControl } from './control.js';
 
-export async function bootstrap({ initialIndex = true, watch = true, warmModel = true } = {}) {
+export async function bootstrap({ initialIndex = true, watch = true, warmModel = true, control = false } = {}) {
   ensureDataDirs();
   log.info('Arrancando RobinSearch (servidor local)', {
     version: config.version,
@@ -40,6 +41,12 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   } catch (err) {
     log.error('Fallo al migrar el índice a aislamiento por expediente', { err: String(err) });
+  }
+
+  // Canal de control para la app de escritorio. Accesorio: si no se puede
+  // abrir, se registra y seguimos — el servidor MCP no depende de él.
+  if (control) {
+    iniciarControl().catch((err) => log.warn('Canal de control no iniciado', { err: String(err) }));
   }
 
   // Comprobación de actualización en background (no bloquea el arranque).

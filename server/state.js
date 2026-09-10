@@ -21,11 +21,28 @@ export const state = {
   actualizacionDisponible: null,
 };
 
+// Suscriptores a los cambios de estado. Existe para que el canal de control
+// (control.js) pueda avisar a la app de escritorio SIN que state.js dependa de
+// él: si state importara control, y control importa state, tendríamos un ciclo.
+const avisadores = new Set();
+
+export function alCambiar(fn) {
+  avisadores.add(fn);
+  return () => avisadores.delete(fn);
+}
+
+function avisar() {
+  for (const fn of avisadores) {
+    try { fn(state); } catch { /* un observador roto jamás rompe el estado */ }
+  }
+}
+
 export function setIndexando(progreso) {
   // Un indexado en curso no borra un error anterior: si el motor de embedding no cargó, ese
   // error sigue siendo la explicación de lo que está a punto de pasar.
   state.estado = 'indexando';
   state.progreso = progreso;
+  avisar();
 }
 
 // Fin de una operación. NO limpia `ultimoError`: si algo había fallado (típicamente el motor
@@ -38,22 +55,26 @@ export function setIndexando(progreso) {
 export function setActivo() {
   state.progreso = null;
   state.estado = state.ultimoError ? 'error' : 'activo';
+  avisar();
 }
 
 export function setError(err) {
   state.estado = 'error';
   state.ultimoError = String(err?.message ?? err);
+  avisar();
 }
 
 // Solo se llama cuando una operación termina BIEN de principio a fin.
 export function clearError() {
   state.ultimoError = null;
   if (state.estado === 'error') state.estado = 'activo';
+  avisar();
 }
 
 // Guarda el resumen del último indexado para que `estado_servidor` pueda contarlo.
 export function setUltimoIndexado(resumen) {
   state.ultimoIndexado = resumen ? { ...resumen, fin: new Date().toISOString() } : null;
+  avisar();
   return state.ultimoIndexado;
 }
 

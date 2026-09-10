@@ -230,7 +230,10 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
     let i = 0;
     for (const abs of files) {
       i += 1;
-      state.progreso = { procesados: i, total: files.length, ficheroActual: logicalPath(abs) };
+      // Por setIndexando y no asignando `state.progreso` a pelo: así el cambio
+      // llega a los observadores (canal de control -> app de escritorio). El
+      // efecto sobre el estado es idéntico; lo que se gana es el aviso.
+      setIndexando({ procesados: i, total: files.length, ficheroActual: logicalPath(abs) });
       try {
         const r = await indexFile(abs, { force });
         if (r.estado === 'indexado') {

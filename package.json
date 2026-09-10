@@ -22,12 +22,13 @@
     "test:barrido": "node scripts/test-barrido.mjs",
     "test:login": "node scripts/test-login.mjs",
     "test:login-bloqueado": "node scripts/test-login-bloqueado.mjs",
-    "test": "npm run test:login && npm run test:login-bloqueado && npm run test:aislamiento && npm run test:red && npm run test:diagnostico && npm run test:barrido",
+    "test": "npm run test:login && npm run test:login-bloqueado && npm run test:control && npm run test:aislamiento && npm run test:red && npm run test:diagnostico && npm run test:barrido",
     "check": "for f in $(git ls-files '*.js' 2>/dev/null || find . -name '*.js' -not -path './node_modules/*'); do node --check \"$f\" || exit 1; done && echo 'syntax OK'",
     "postinstall": "node scripts/patch-wasm.mjs || true",
     "fetch:model": "node scripts/fetch-model.mjs",
     "patch:wasm": "node scripts/patch-wasm.mjs",
-    "pack:mcpb": "node scripts/patch-wasm.mjs && node scripts/fetch-model.mjs && npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb"
+    "pack:mcpb": "node scripts/patch-wasm.mjs && node scripts/fetch-model.mjs && npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb",
+    "test:control": "node scripts/test-control.mjs"
   },
   "dependencies": {
     "@kenjiuno/msgreader": "^1.28.0",

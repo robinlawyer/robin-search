@@ -76,7 +76,7 @@ async function main() {
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
   // desde el primer momento (estado_servidor informará "indexando").
-  bootstrap({ initialIndex: true, watch: true, warmModel: true }).catch((err) =>
+  bootstrap({ initialIndex: true, watch: true, warmModel: true, control: true }).catch((err) =>
     log.error('Fallo en bootstrap', { err: String(err) }),
   );
 }
