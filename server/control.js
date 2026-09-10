@@ -19,10 +19,11 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-import { config } from './config.js';
+import { config, guardarCarpetas, carpetasFijadasPorEntorno } from './config.js';
 import { log } from './logger.js';
 import { state, alCambiar } from './state.js';
 import { indexFolder } from './indexer/indexer.js';
+import { startWatcher, stopWatcher } from './watcher/watcher.js';
 
 // Un nombre por carpeta de datos: dos instalaciones distintas (p. ej. un
 // segundo perfil) no se pisan.
@@ -103,6 +104,41 @@ async function reindexar(socket, { force = false } = {}) {
   }
 }
 
+// Cambiar las carpetas desde la app: se guardan, se aplican EN CALIENTE (sin
+// reiniciar Claude) y se indexa lo nuevo. Antes esto vivía en la pantalla de
+// configuración de Claude y obligaba a reiniciarlo.
+async function configurar(socket, { carpetas }) {
+  if (!Array.isArray(carpetas)) {
+    return enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: 'carpetas_invalidas' });
+  }
+  try {
+    const aplicadas = guardarCarpetas(carpetas);
+    // Si las carpetas vienen impuestas por el entorno, lo guardado NO es lo
+    // vigilado. Se dice y no se reindexa: al abogado no se le puede enseñar un
+    // «ya se está indexando» que no va a ocurrir.
+    if (carpetasFijadasPorEntorno()) {
+      log.warn('Carpetas guardadas pero NO aplicadas: las fija el entorno', { guardadas: carpetas });
+      return enviar(socket, {
+        tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: 'fijadas_por_entorno',
+        guardadas: carpetas, vigiladas: config.watchedFolders,
+      });
+    }
+    log.info('Carpetas de expedientes cambiadas desde la app', { carpetas: aplicadas });
+    try {
+      await stopWatcher();          // es asíncrono: sin await se solapan dos vigilantes
+      if (aplicadas.length) startWatcher();
+    } catch (err) {
+      log.warn('No se pudo reiniciar el vigilante de carpetas', { err: String(err) });
+    }
+    enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: true, carpetas: aplicadas });
+    anunciar();
+    if (aplicadas.length) reindexar(socket, { force: false });
+  } catch (err) {
+    log.error('Fallo guardando las carpetas', { err: String(err) });
+    enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: String(err?.message ?? err) });
+  }
+}
+
 function atender(socket) {
   clientes.add(socket);
   socket.setEncoding('utf8');
@@ -122,6 +158,7 @@ function atender(socket) {
       try { msg = JSON.parse(linea); } catch { continue; }
       if (msg.cmd === 'estado') enviar(socket, retrato());
       else if (msg.cmd === 'reindexar') reindexar(socket, msg);
+      else if (msg.cmd === 'configurar') configurar(socket, msg);
       else enviar(socket, { tipo: 'respuesta', ok: false, motivo: 'orden_desconocida' });
     }
   });

@@ -86,7 +86,60 @@ function desdoblarPorComa(trozo) {
   return partes.length > 1 && partes.every(esDirectorio) ? partes : [t];
 }
 
-function parseFolders() {
+// Carpetas elegidas desde la app de escritorio. Viven en NUESTRO directorio de
+// datos, no en los ajustes de Claude: el abogado configura RobinSearch en la
+// app de RobinSearch, y no en dos sitios distintos.
+export function rutaAjustes(dataDir) {
+  return path.join(dataDir, 'ajustes.json');
+}
+
+function leerAjustes(dataDir) {
+  try {
+    const raw = fs.readFileSync(rutaAjustes(dataDir), 'utf8');
+    const d = JSON.parse(raw);
+    return Array.isArray(d?.carpetas) ? d.carpetas.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+// Migración de un solo uso: quien ya tenía la carpeta puesta en la pantalla de
+// configuración de Claude no debe perderla al actualizar. Se lee UNA vez el
+// fichero de ajustes de la extensión y se copia al nuestro.
+function migrarDesdeClaude(dataDir) {
+  try {
+    if (fs.existsSync(rutaAjustes(dataDir))) return [];
+    const home = os.homedir();
+    const base = process.platform === 'darwin'
+      ? path.join(home, 'Library', 'Application Support', 'Claude')
+      : process.platform === 'win32'
+        ? path.join(process.env.APPDATA || path.join(home, 'AppData', 'Roaming'), 'Claude')
+        : path.join(home, '.config', 'Claude');
+    const f = path.join(base, 'Claude Extensions Settings', 'local.mcpb.robin-lawyer.robin-search.json');
+    const d = JSON.parse(fs.readFileSync(f, 'utf8'));
+    const carpetas = d?.userConfig?.robin_folders;
+    if (!Array.isArray(carpetas) || !carpetas.length) return [];
+    fs.mkdirSync(dataDir, { recursive: true });
+    fs.writeFileSync(rutaAjustes(dataDir), JSON.stringify({ carpetas, migradoDeClaude: true }, null, 2));
+    return carpetas.map(String);
+  } catch {
+    return [];
+  }
+}
+
+// ¿Fija las carpetas el ENTORNO? En un despliegue masivo de IT (GPO/JAMF/
+// Intune) se pasan por variable, y entonces lo que elija el abogado en la app
+// no se aplica. Hay que saberlo para poder DECÍRSELO en vez de fingir que sí.
+export function carpetasFijadasPorEntorno() {
+  return Boolean(
+    firstDefined(process.env.ROBIN_FOLDERS)
+    || firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER),
+  );
+}
+
+function parseFolders(dataDir) {
+  // Precedencia: variables de entorno (despliegue de IT y pruebas) por encima
+  // de todo; después lo que haya elegido el abogado en la app.
   const multi = firstDefined(process.env.ROBIN_FOLDERS);
   const single = firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER);
   let list = [];
@@ -103,6 +156,9 @@ function parseFolders() {
     }
   } else if (single) {
     list = [single];
+  } else if (dataDir) {
+    list = leerAjustes(dataDir);
+    if (!list.length) list = migrarDesdeClaude(dataDir);
   }
   return list.map((s) => String(s).trim()).filter(Boolean);
 }
@@ -129,8 +185,8 @@ function buildRoots(paths) {
 }
 
 function buildConfig() {
-  const roots = buildRoots(parseFolders());
   const dataDir = firstDefined(process.env.ROBIN_DATA_DIR) || defaultDataDir();
+  const roots = buildRoots(parseFolders(dataDir));
 
   const cfg = {
     version: VERSION,
@@ -277,6 +333,28 @@ export function expedienteForLogicalPath(rutaLogica, depth = config.expedienteDe
 // Ídem a partir de una ruta absoluta.
 export function expedienteForPath(absPath, depth = config.expedienteDepth) {
   return expedienteForLogicalPath(logicalPath(absPath), depth);
+}
+
+// Relee las carpetas sin reiniciar el proceso. Los consumidores leen
+// `config.roots` / `config.watchedFolders` en cada uso, así que basta con
+// actualizar el objeto: no hay copias congeladas por ahí.
+export function recargarCarpetas() {
+  const roots = buildRoots(parseFolders(config.dataDir));
+  config.roots = roots;
+  config.watchedFolders = roots.map((r) => r.path);
+  config.watchedFolder = roots[0]?.path ?? null;
+  return config.watchedFolders;
+}
+
+// Guarda las carpetas que ha elegido el abogado en la app y las aplica.
+export function guardarCarpetas(carpetas) {
+  const lista = (Array.isArray(carpetas) ? carpetas : [carpetas])
+    .map((c) => String(c || '').trim())
+    .filter(Boolean)
+    .map((c) => path.resolve(c));
+  fs.mkdirSync(config.dataDir, { recursive: true });
+  fs.writeFileSync(rutaAjustes(config.dataDir), JSON.stringify({ carpetas: lista }, null, 2));
+  return recargarCarpetas();
 }
 
 export default config;

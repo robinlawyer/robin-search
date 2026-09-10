@@ -26,7 +26,12 @@ for(let i=1;i<=6;i++){
     `Documento ${i} del expediente. Despido disciplinario y liquidación. SECRETO-${i}.`);
 }
 
-const env={...process.env, ROBIN_FOLDERS:path.dirname(MADRE), ROBIN_DATA_DIR:DATOS,
+// Como en casa del abogado: la carpeta la dejó la APP en su fichero de ajustes,
+// no una variable de entorno (el manifiesto ya no las pasa).
+fs.mkdirSync(DATOS,{recursive:true});
+fs.writeFileSync(path.join(DATOS,'ajustes.json'), JSON.stringify({carpetas:[path.dirname(MADRE)]},null,2));
+
+const env={...process.env, ROBIN_DATA_DIR:DATOS,
   ROBIN_TOKEN:'ROBIN-PRUEBA-control', ROBIN_OCR:'false', ROBIN_LOG_LEVEL:'error',
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no', ROBIN_OAUTH_ISSUER:'http://127.0.0.1:9'};
 const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
@@ -68,7 +73,9 @@ async function main(){
   const msgs=lector(s);
   check('la app puede conectarse al canal de control', true, RUTA.replace(os.tmpdir(),'…'));
 
-  await espera(600);
+  // Esperar al MENSAJE, no al reloj: con la máquina cargada (esta suite corre
+  // detrás de otras dos que indexan) 600 ms fijos daban un falso fallo.
+  for(let i=0;i<60 && !msgs.length;i++) await espera(150);
   check('nada más conectar, el servidor manda su estado', msgs.length>0 && msgs[0].tipo==='estado',
     msgs[0]?JSON.stringify({estado:msgs[0].estado,carpetas:msgs[0].carpetas?.length}):'sin mensajes');
   check('y dice qué carpetas vigila', Array.isArray(msgs[0]?.carpetas) && msgs[0].carpetas.length===1);
@@ -116,6 +123,32 @@ async function main(){
     msgs.length>antes2, `${antes2} → ${msgs.length}`);
   c2.kill();
 
+  // --- La carpeta la manda la APP, no la pantalla de configuracion de Claude ---
+  // El abogado configura RobinSearch en la app de RobinSearch, en un sitio y no
+  // en dos. Y se aplica EN CALIENTE: sin reiniciar Claude.
+  const OTRA = path.join(base, 'Expedientes 2', 'Acme - Mercantil');
+  fs.mkdirSync(OTRA, { recursive: true });
+  for (let i = 1; i <= 3; i++) {
+    fs.writeFileSync(path.join(OTRA, `0${i} contrato.txt`), `Contrato mercantil ${i}. OTRO-SECRETO-${i}.`);
+  }
+  const antesCfg = msgs.length;
+  s.write(JSON.stringify({ cmd: 'configurar', carpetas: [path.dirname(MADRE), path.dirname(OTRA)] }) + '\n');
+  for (let i = 0; i < 100 && !msgs.slice(antesCfg).some(m => m.tipo === 'respuesta' && m.cmd === 'configurar'); i++) await espera(150);
+  const rc = msgs.slice(antesCfg).find(m => m.tipo === 'respuesta' && m.cmd === 'configurar');
+  check('el servidor acepta las carpetas que manda la app', rc?.ok === true, JSON.stringify(rc?.carpetas?.length));
+  check('y las guarda en SU fichero de ajustes, no en los de Claude',
+    fs.existsSync(path.join(DATOS, 'ajustes.json')));
+  const guardado = JSON.parse(fs.readFileSync(path.join(DATOS, 'ajustes.json'), 'utf8'));
+  check('con las dos carpetas dentro', (guardado.carpetas || []).length === 2, JSON.stringify(guardado.carpetas?.length));
+
+  for (let i = 0; i < 100 && !msgs.slice(antesCfg).some(m => m.tipo === 'fin-reindexado'); i++) await espera(150);
+  const est = msgs.filter(m => m.tipo === 'estado').at(-1);
+  check('las aplica EN CALIENTE, sin reiniciar Claude', (est?.carpetas || []).length === 2,
+    `${est?.carpetas?.length} carpetas vigiladas`);
+  const finCfg = msgs.slice(antesCfg).filter(m => m.tipo === 'fin-reindexado').at(-1);
+  check('y se indexa lo nuevo sin que nadie lo pida', finCfg?.ok === true && finCfg.resumen?.indexados >= 3,
+    `indexados=${finCfg?.resumen?.indexados}`);
+
   // --- Al cerrar el servidor, el socket no queda huérfano bloqueando el siguiente arranque ---
   c.kill();
   await espera(1500);
@@ -125,7 +158,40 @@ async function main(){
     try { const s3=await conectar(); s3.destroy(); reconectado=true; } catch { await espera(250); }
   }
   check('tras reiniciar el servidor, la app vuelve a conectar', reconectado);
+
+  if (reconectado) {
+    const s4 = await conectar();
+    const m4 = lector(s4);
+    for (let i = 0; i < 40 && !m4.length; i++) await espera(150);
+    check('y arranca con las carpetas del fichero de ajustes, sin variables de entorno',
+      (m4[0]?.carpetas || []).length === 2, `${m4[0]?.carpetas?.length} carpetas`);
+    try { s4.destroy(); } catch { /* nada */ }
+  }
   c3.kill();
+
+  // --- Despliegue de IT: si el entorno fija las carpetas, no se finge ---
+  const cIT=spawn('node',[path.join(REPO,'server/index.js')],
+    {env:{...env, ROBIN_FOLDERS:path.dirname(MADRE), ROBIN_DATA_DIR:path.join(base,'datos-it')},stdio:'ignore'});
+  const huellaIT=crypto.createHash('sha256').update(path.join(base,'datos-it')).digest('hex').slice(0,8);
+  const rutaIT=process.platform==='win32'?`\\\\.\\pipe\\robinsearch-${huellaIT}`
+                                        :path.join(os.tmpdir(),`robinsearch-${huellaIT}.sock`);
+  let sIT=null;
+  for(let i=0;i<60 && !sIT;i++){
+    try { sIT=await new Promise((res,rej)=>{const x=net.connect(rutaIT);x.once('connect',()=>res(x));x.once('error',rej);}); }
+    catch { await espera(250); }
+  }
+  if(sIT){
+    const mIT=lector(sIT);
+    sIT.write(JSON.stringify({cmd:'configurar',carpetas:[path.dirname(OTRA)]})+'\n');
+    for(let i=0;i<60 && !mIT.some(m=>m.cmd==='configurar');i++) await espera(150);
+    const rIT=mIT.find(m=>m.cmd==='configurar');
+    check('si las carpetas las fija el entorno (despliegue de IT), se DICE en vez de fingir',
+      rIT?.ok===false && rIT.motivo==='fijadas_por_entorno', JSON.stringify(rIT?.motivo));
+    try{sIT.destroy();}catch{}
+  } else {
+    check('si las carpetas las fija el entorno, se DICE en vez de fingir', false, 'no se pudo conectar');
+  }
+  cIT.kill();
 
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
