@@ -101,7 +101,12 @@ async function main(){
   // --- Reindexado a petición: es lo que hará el botón de la app ---
   const antes=msgs.length;
   s.write(JSON.stringify({cmd:'reindexar', force:true})+'\n');
-  for(let i=0;i<80 && !msgs.some(m=>m.tipo==='fin-reindexado');i++) await espera(150);
+  // Hasta 60 s. Un reindexado forzado carga el modelo de embeddings y, medido
+  // en Linux (Debian 12, 4 CPU), tarda de 6,5 a 21 s: con el límite anterior de
+  // 12 s la prueba «fallaba» una vez de cada tres con el reindexado terminando
+  // bien. El bucle sale en cuanto llega el fin, así que en una máquina rápida
+  // sigue tardando lo mismo.
+  for(let i=0;i<400 && !msgs.some(m=>m.tipo==='fin-reindexado');i++) await espera(150);
 
   const respuesta=msgs.slice(antes).find(m=>m.tipo==='respuesta'&&m.cmd==='reindexar');
   check('el servidor acepta la orden de reindexar', respuesta?.ok===true);
