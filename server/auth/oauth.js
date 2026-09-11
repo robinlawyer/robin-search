@@ -161,6 +161,11 @@ async function exchangeCode(disc, clientId, code, redirect, verifier) {
 // code_challenge viaja en la URL de autorización (y se imprime en el chat),
 // así que no serviría como credencial.
 const PICKUP_INTERVAL_MS = 2000;
+// Cada consulta de sondeo con su propio límite. Sin él, una conexión que se
+// queda colgada —un proxy de despacho que retiene la petición sin contestar—
+// paraba el sondeo hasta 5 minutos (el límite por defecto de las cabeceras en
+// Node), justo en las redes para las que existe este camino.
+const PICKUP_REQUEST_TIMEOUT_MS = Number(process.env.ROBIN_PICKUP_TIMEOUT_MS) || 10000;
 
 function programar(fn, ms) {
   const t = setTimeout(fn, ms);
@@ -168,7 +173,7 @@ function programar(fn, ms) {
   return t;
 }
 
-function pickupCode(url, clientId, verifier, deadlineMs, signal) {
+export function pickupCode(url, clientId, verifier, deadlineMs, signal, { timeoutMs = PICKUP_REQUEST_TIMEOUT_MS } = {}) {
   return new Promise((resolve, reject) => {
     let parado = false;
     const parar = () => {
@@ -190,6 +195,7 @@ function pickupCode(url, clientId, verifier, deadlineMs, signal) {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams({ client_id: clientId, code_verifier: verifier }).toString(),
+          signal: AbortSignal.timeout(timeoutMs),
         });
         if (r.ok) {
           const d = await r.json();
@@ -243,7 +249,12 @@ async function whoami(access) {
   if (!access) return null;
   const disc = await discover();
   try {
-    const r = await fetch(disc.userinfo_endpoint, { headers: { Authorization: `Bearer ${access}` } });
+    // Con límite: el login espera a esta respuesta para guardar la sesión de
+    // una vez, y una red de despacho que se la traga no puede dejarlo colgado.
+    const r = await fetch(disc.userinfo_endpoint, {
+      headers: { Authorization: `Bearer ${access}` },
+      signal: AbortSignal.timeout(8000),
+    });
     if (!r.ok) return null;
     return await r.json();
   } catch {
@@ -504,13 +515,19 @@ function startLogin() {
     // conexión en la cara.
     cerrarConGracia(server, codeP);
     const tokens = await exchangeCode(disc, a.client_id, code, redirect, verifier);
-    const merged = { ...(loadAuth() || {}), ...tokens, updated_at: Date.now() };
-    saveAuth(merged);
+    // Quién es ANTES de guardar, y una sola escritura. Antes se guardaba la
+    // sesión sin usuario, se preguntaba por la red y se volvía a guardar: en
+    // ese hueco, quien leyera la sesión la veía «iniciada, sin usuario», y la
+    // app de escritorio pintaba «Sesión iniciada con clave de licencia», que
+    // es falso. Con red lenta, segundos delante del abogado. (Lo destapó la
+    // batería de pruebas corriendo en Linux, más lento que el Mac.)
     const user = await whoami(tokens.access_token);
-    if (user) {
-      merged.user = user;
-      saveAuth(merged);
-    }
+    const merged = { ...(loadAuth() || {}), ...tokens, updated_at: Date.now() };
+    // Y si no se sabe quién es, no se hereda el usuario de una sesión anterior:
+    // tras entrar con otra cuenta, enseñaría el correo equivocado.
+    if (user) merged.user = user;
+    else delete merged.user;
+    saveAuth(merged);
     log.info('Sesión de Robin Lawyer iniciada', { usuario: user?.email || null });
     return { ok: true, user };
   })()
