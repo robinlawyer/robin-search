@@ -195,9 +195,16 @@ secreto profesional del abogado (art. 542.3 LOPJ).
   carpeta equivalente `%APPDATA%` en Windows). El modelo de embedding corre 100 % en local, **sin
   telemetría**.
 - **Únicas llamadas de red que hace el servidor:** (1) el **login OAuth 2.1 + PKCE** con Robin
-  Lawyer, que solo transmite las credenciales de autenticación y el token (ningún documento), y
-  (2) una **comprobación de versión** al arrancar (solo consulta el número de versión publicado).
-  Ninguna de las dos envía contenido documental.
+  Lawyer, que solo transmite las credenciales de autenticación y el token (ningún documento),
+  (2) una **comprobación de versión** al arrancar (solo consulta el número de versión publicado), y
+  (3) desde la 1.4.5, un **aviso técnico cuando RobinSearch falla** (se cae, no puede abrir su
+  índice, no carga el modelo o un fichero no se deja leer), para que el soporte de Robin Lawyer se
+  entere sin que tengas que mandar nada. El aviso lleva **solo datos técnicos**: versión, sistema
+  operativo, memoria, en qué paso falló, el error, la extensión y el tamaño del fichero implicado y
+  el final de los registros del programa. **Nunca** lleva contenido, nombres de fichero, rutas ni
+  nombres de carpetas o expedientes: el registro se envía por lista blanca de campos y se limpia de
+  rutas y nombres antes de salir (y el servidor lo vuelve a limpiar al recibirlo). Se desactiva con
+  `ROBIN_DIAGNOSTICO_URL=off`. Ninguna de las tres envía contenido documental.
 - **Datos que trata Robin Lawyer como responsable del tratamiento:** únicamente los de tu cuenta
   (identidad y estado de suscripción) a efectos de autenticación. Responsable: **Stay Hungry and
   Foolish, S.L.** Ejercicio de derechos: **privacidad@robinlawyer.ai**.

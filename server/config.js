@@ -128,13 +128,40 @@ function migrarDesdeClaude(dataDir) {
       : process.platform === 'win32'
         ? path.join(process.env.APPDATA || path.join(home, 'AppData', 'Roaming'), 'Claude')
         : path.join(home, '.config', 'Claude');
-    const f = path.join(base, 'Claude Extensions Settings', 'local.mcpb.robin-lawyer.robin-search.json');
-    const d = JSON.parse(fs.readFileSync(f, 'utf8'));
-    const carpetas = d?.userConfig?.robin_folders;
-    if (!Array.isArray(carpetas) || !carpetas.length) return [];
-    fs.mkdirSync(dataDir, { recursive: true });
-    fs.writeFileSync(rutaAjustes(dataDir), JSON.stringify({ carpetas, migradoDeClaude: true }, null, 2));
-    return carpetas.map(String);
+    // El id de la extensión lo deriva Claude del autor del manifiesto, y ha cambiado: la 1.0.0
+    // era `local.mcpb.robin-lawyer.robin-search` y desde la 1.2.2 es
+    // `local.mcpb.robinlawyer.ai.robin-search`. Leer solo el primero dejaba SIN CARPETA a quien
+    // actualizaba desde una 1.2.2–1.4.1 sin pasar por la app (visto el 14-sep-2026). Se prueban
+    // todos, el más reciente primero.
+    const dir = path.join(base, 'Claude Extensions Settings');
+    const mtime = (f) => {
+      try {
+        return fs.statSync(f).mtimeMs;
+      } catch {
+        return 0;
+      }
+    };
+    const candidatos = fs
+      .readdirSync(dir)
+      .filter((n) => /^local\.mcpb\..*robin-search\.json$/i.test(n))
+      .map((n) => path.join(dir, n))
+      .sort((a, b) => mtime(b) - mtime(a));
+    for (const f of candidatos) {
+      let carpetas;
+      try {
+        carpetas = JSON.parse(fs.readFileSync(f, 'utf8'))?.userConfig?.robin_folders;
+      } catch {
+        continue;
+      }
+      const lista = Array.isArray(carpetas)
+        ? carpetas.map(String).filter(Boolean)
+        : typeof carpetas === 'string' && carpetas.trim() ? [carpetas.trim()] : [];
+      if (!lista.length) continue;
+      fs.mkdirSync(dataDir, { recursive: true });
+      fs.writeFileSync(rutaAjustes(dataDir), JSON.stringify({ carpetas: lista, migradoDeClaude: true }, null, 2));
+      return lista;
+    }
+    return [];
   } catch {
     return [];
   }
@@ -211,6 +238,9 @@ function buildConfig() {
     // sesión en el navegador; RobinSearch no pide token que pegar. `ROBIN_TOKEN` sigue
     // disponible como fallback headless para despliegue IT masivo (sin navegador).
     oauthIssuer: (firstDefined(process.env.ROBIN_OAUTH_ISSUER) || 'https://api.robinlawyer.ai').replace(/\/+$/, ''),
+    // Aviso técnico automático de fallos (diagnostico.js). Solo datos técnicos: nada de los
+    // documentos. null = desactivado.
+    diagnosticoUrl: urlDiagnostico(),
     // No abrir el navegador para el login OAuth: pruebas automáticas y
     // despliegues headless de IT (ahí se usa ROBIN_TOKEN).
     noBrowser: firstDefined(process.env.ROBIN_NO_BROWSER) === '1',
@@ -222,6 +252,8 @@ function buildConfig() {
     watchedFolder: roots[0]?.path ?? null,
 
     dataDir,
+    // Índice de vectra (≤1.4.4). Ya no se escribe: solo se lee UNA vez para pasarlo al formato
+    // por documento de <dataDir>/indice (search/store.js), y después se borra.
     indexDir: path.join(dataDir, 'index'),
     manifestPath: path.join(dataDir, 'files.json'),
     logDir: path.join(dataDir, 'logs'),
@@ -285,9 +317,51 @@ export const config = buildConfig();
 
 // Crea los directorios de datos si no existen. Idempotente.
 export function ensureDataDirs() {
-  for (const dir of [config.dataDir, config.indexDir, config.logDir]) {
+  for (const dir of [config.dataDir, config.logDir]) {
     fs.mkdirSync(dir, { recursive: true });
   }
+}
+
+// Tamaño máximo por tipo de fichero. Por encima, el fichero se APARTA del indexado y se dice en
+// estado_servidor: un único fichero gigante no puede agotar la memoria del proceso y tumbar
+// RobinSearch. ROBIN_MAX_MB fija un tope único para todos los tipos.
+const LIMITE_MB_POR_TIPO = {
+  '.pdf': 512,
+  '.zip': 1024,
+  '.rar': 1024,
+  '.7z': 1024,
+  '.jpg': 64,
+  '.jpeg': 64,
+  '.png': 64,
+  '.bmp': 64,
+  '.gif': 64,
+  '.heic': 64,
+  '.tif': 128,
+  '.tiff': 128,
+  '.txt': 128,
+  '.md': 128,
+};
+const LIMITE_MB_OTROS = 256;
+
+export function limiteBytes(ext) {
+  const unico = parseFloat(process.env.ROBIN_MAX_MB);
+  const mb = Number.isFinite(unico) && unico > 0
+    ? unico
+    : LIMITE_MB_POR_TIPO[String(ext || '').toLowerCase()] ?? LIMITE_MB_OTROS;
+  return Math.round(mb * 1024 * 1024);
+}
+
+// Adónde va el aviso técnico. ROBIN_DIAGNOSTICO_URL=off lo desactiva (despliegues de IT que no
+// quieran más salida que la del login). Si se ha redirigido el feed de actualizaciones a otro
+// sitio (pruebas automáticas, entornos de IT), NO se avisa a producción salvo que se diga
+// explícitamente: una prueba que rompe el motor adrede no puede llenar de avisos el panel.
+function urlDiagnostico() {
+  const v = firstDefined(process.env.ROBIN_DIAGNOSTICO_URL);
+  if (v) return /^(off|0|false|no)$/i.test(v.trim()) ? null : v.trim();
+  const feed = firstDefined(process.env.ROBIN_UPDATE_URL);
+  if (feed && !/^https:\/\/([a-z0-9-]+\.)*robinlawyer\.ai\//i.test(feed)) return null;
+  const issuer = (firstDefined(process.env.ROBIN_OAUTH_ISSUER) || 'https://api.robinlawyer.ai').replace(/\/+$/, '');
+  return `${issuer}/robinsearch/diagnostico`;
 }
 
 // Devuelve la raíz (carpeta vigilada) a la que pertenece una ruta absoluta, o null.

@@ -14,6 +14,8 @@ import { config, VERSION } from './config.js';
 import { log } from './logger.js';
 import { bootstrap } from './bootstrap.js';
 import { fail } from './tools/util.js';
+import * as diagnostico from './diagnostico.js';
+import * as escritor from './escritor.js';
 
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
@@ -43,6 +45,11 @@ const TOOLS = [
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));
 
 async function main() {
+  // Salida ordenada (Claude cierra, SIGTERM, stdin cerrado) frente a caída: la primera suelta el
+  // índice y borra la marca de fase; una caída deja la marca y el siguiente arranque la atiende.
+  // Antes, una promesa rechazada sin capturar tumbaba el proceso en silencio.
+  const { salirLimpio } = diagnostico.instalarManejadores({ alCerrar: () => escritor.soltar() });
+
   const server = new Server(
     { name: 'robin-search', version: VERSION },
     { capabilities: { tools: {} } },
@@ -70,8 +77,20 @@ async function main() {
     }
   });
 
+  server.onclose = () => salirLimpio('cliente_desconectado');
   const transport = new StdioServerTransport();
   await server.connect(transport);
+  // Sin esto, al cerrar Claude el proceso seguía vivo (el watcher lo mantiene) hasta que lo
+  // mataban a la fuerza: un huérfano con el índice abierto. Solo si llegó a hablar un cliente:
+  // lanzado sin entrada (stdin a /dev/null: pruebas, un servicio de IT), el fin de stdin llega
+  // al instante y no significa que nadie se haya ido.
+  let huboCliente = false;
+  process.stdin.on('data', () => {
+    huboCliente = true;
+  });
+  process.stdin.on('end', () => {
+    if (huboCliente) salirLimpio('stdin_cerrado');
+  });
   log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder });
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
@@ -79,6 +98,13 @@ async function main() {
   bootstrap({ initialIndex: true, watch: true, warmModel: true, control: true }).catch((err) =>
     log.error('Fallo en bootstrap', { err: String(err) }),
   );
+
+  // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
+  if (process.env.ROBIN_PRUEBA_RECHAZO === '1') {
+    setTimeout(() => {
+      Promise.reject(new Error('rechazo de prueba leyendo /Users/prueba/Expedientes/Pérez - Divorcio/demanda.pdf'));
+    }, 300);
+  }
 }
 
 main().catch((err) => {

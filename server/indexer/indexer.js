@@ -13,6 +13,7 @@ import {
   logicalPath,
   rootForPath,
   expedienteForLogicalPath,
+  limiteBytes,
 } from '../config.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
@@ -29,6 +30,9 @@ import { chunkPages } from './chunk.js';
 import { embedPassages } from '../embedder/embedder.js';
 import * as store from '../search/store.js';
 import * as registry from './registry.js';
+import * as cuarentena from './cuarentena.js';
+import * as diagnostico from '../diagnostico.js';
+import * as escritor from '../escritor.js';
 
 // Reduce el mensaje de un error a una CAUSA agrupable. Sin esto, 680 ficheros que fallan por
 // el mismo motivo producían 680 mensajes distintos (cada uno con su ruta) y no se veía que
@@ -77,7 +81,47 @@ function* walk(dir, ilegibles = null) {
 }
 
 // Indexa (o re-indexa) un único fichero. Devuelve el resumen de lo procesado.
+//
+// Antes de leerlo: se salta si está APARTADO (hizo caer el proceso, o es demasiado grande) y se
+// deja la marca de «leyendo este fichero» (diagnostico.js). Si el lector tumba el proceso —
+// memoria agotada, un comprimido o un PDF que revienta—, la marca sobrevive y el siguiente
+// arranque sabe qué fichero fue. Hasta la 1.4.4 ese fichero tumbaba RobinSearch en CADA
+// arranque, para siempre, y nadie sabía cuál era.
 export async function indexFile(absPath, { force = false } = {}) {
+  const abs = path.resolve(absPath);
+  let stat;
+  try {
+    stat = fs.statSync(abs);
+  } catch {
+    return indexFileSinMarca(abs, { force });
+  }
+  if (!force && !registry.isStale(abs, stat)) {
+    return { ruta: logicalPath(abs), estado: 'sin_cambios' };
+  }
+  const ext = path.extname(abs).toLowerCase();
+  const apartado = cuarentena.estaApartado(abs, stat);
+  if (apartado) return { ruta: logicalPath(abs), estado: 'apartado', motivo: apartado.motivo };
+  const limite = limiteBytes(ext);
+  if (stat.size > limite) {
+    cuarentena.apartarPorTamanyo(abs, stat, limite);
+    log.warn('Fichero apartado por tamaño', { ext, bytes: stat.size, limite });
+    // Si estaba indexado de antes, se retira: lo indexado ya no es lo que hay en el fichero.
+    if (registry.get(abs)) await removeFilePath(abs);
+    return { ruta: logicalPath(abs), estado: 'apartado', motivo: cuarentena.MOTIVO_TAMANYO };
+  }
+  diagnostico.marcarFase('indexando', { fichero: abs, ext, bytes: stat.size });
+  // Solo pruebas automáticas: simula un lector que tumba el proceso (como un OOM).
+  if (process.env.ROBIN_PRUEBA_CAER_EN && path.basename(abs) === process.env.ROBIN_PRUEBA_CAER_EN) {
+    process.kill(process.pid, 'SIGKILL');
+  }
+  try {
+    return await indexFileSinMarca(abs, { force });
+  } finally {
+    diagnostico.finFase();
+  }
+}
+
+async function indexFileSinMarca(absPath, { force = false } = {}) {
   const abs = path.resolve(absPath);
   const rutaLogica = logicalPath(abs);
   const root = rootForPath(abs);
@@ -172,7 +216,54 @@ export async function removeFilePath(absPath) {
 
 // Indexa una o varias carpetas (incremental salvo `force`). Por defecto, todas las raíces
 // configuradas. Actualiza el estado runtime.
-export async function indexFolder({ folders, force = false, onProgress, reconciliarBorrados = false } = {}) {
+function respirar() {
+  return new Promise((r) => setImmediate(r));
+}
+
+// Indexados en curso en ESTE proceso (el inicial del arranque, el que pide la app, el
+// re-escaneo de una carpeta de red). El canal de control lo usa para poner en cola lo que pida
+// la app en vez de lanzar un segundo indexado encima del primero.
+let _enCurso = 0;
+const _alTerminar = new Set();
+
+export function indexandoAhora() {
+  return _enCurso > 0;
+}
+
+export function alTerminarIndexado(fn) {
+  _alTerminar.add(fn);
+  return () => _alTerminar.delete(fn);
+}
+
+export async function indexFolder(opciones = {}) {
+  _enCurso += 1;
+  try {
+    return await indexFolderSinContar(opciones);
+  } finally {
+    _enCurso -= 1;
+    if (_enCurso === 0) {
+      setImmediate(() => {
+        for (const fn of _alTerminar) {
+          try {
+            fn();
+          } catch {
+            /* un observador roto no rompe el indexado */
+          }
+        }
+      });
+    }
+  }
+}
+
+async function indexFolderSinContar({ folders, force = false, onProgress, reconciliarBorrados = false } = {}) {
+  // Una sola instancia escribe en el índice (escritor.js): Claude arranca el servidor dos veces
+  // y dos indexados a la vez sobre el mismo directorio de datos se pisarían.
+  if (!escritor.soyEscritor() && !escritor.adquirir()) {
+    throw new Error(
+      'Otra instancia de RobinSearch (por ejemplo, otra ventana de Claude) está indexando ahora ' +
+        'mismo. Vuelve a intentarlo en unos segundos.',
+    );
+  }
   const roots = folders
     ? (Array.isArray(folders) ? folders : [folders]).map((f) => path.resolve(f))
     : config.watchedFolders;
@@ -186,6 +277,7 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
     sinCambios: 0,
     sinOcr: 0,
     omitidos: 0,
+    apartados: 0,
     eliminados: 0,
     errores: 0,
     fragmentosNuevos: 0,
@@ -195,6 +287,11 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
   // sesión de Windows ha perdido las credenciales del recurso, `walk` no encuentra nada y
   // antes devolvíamos "0 documentos" — que el abogado lee como "aquí no hay expediente".
   // Se distingue de forma explícita.
+  // La app y Claude tienen que saber AL INSTANTE que ha empezado algo: lo que sigue (comprobar
+  // las carpetas y contar lo que hay) puede tardar.
+  setIndexando({ fase: 'buscando', procesados: 0, total: 0, encontrados: 0, carpeta: roots[0] ?? null, carpetas: roots, ficheroActual: null });
+  await respirar();
+
   const accesibles = [];
   for (const root of roots) {
     try {
@@ -219,21 +316,62 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
     }
   }
 
+  // Contar lo que hay puede llevar decenas de segundos (miles de ficheros, iCloud, un disco
+  // externo). Antes se contaba de un tirón y sin soltar el proceso: ni la app ni Claude sabían
+  // nada hasta el final (15-sep-2026: ~30 s de pantalla quieta tras elegir carpeta).
+  // Ahora se va diciendo cuántos lleva, y se suelta el proceso cada poco para que el aviso
+  // salga de verdad.
   const files = [];
   const ilegibles = [];
   const causas = new Map();
-  for (const root of accesibles) for (const f of walk(root, ilegibles)) files.push(f);
+  const buscando = (carpeta) =>
+    setIndexando({
+      fase: 'buscando',
+      procesados: 0,
+      total: 0,
+      encontrados: files.length,
+      carpeta,
+      carpetas: accesibles,
+      ficheroActual: null,
+    });
+  for (const root of accesibles) {
+    buscando(root);
+    await respirar();
+    let desde = Date.now();
+    for (const f of walk(root, ilegibles)) {
+      files.push(f);
+      if (Date.now() - desde > 150) {
+        buscando(root);
+        await respirar();
+        desde = Date.now();
+      }
+    }
+  }
   if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
-  setIndexando({ procesados: 0, total: files.length, ficheroActual: null });
+  setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
 
   try {
     let i = 0;
+    let ultimoRespiro = Date.now();
     for (const abs of files) {
       i += 1;
       // Por setIndexando y no asignando `state.progreso` a pelo: así el cambio
       // llega a los observadores (canal de control -> app de escritorio). El
       // efecto sobre el estado es idéntico; lo que se gana es el aviso.
-      setIndexando({ procesados: i, total: files.length, ficheroActual: logicalPath(abs) });
+      setIndexando({
+        fase: 'indexando',
+        procesados: i,
+        total: files.length,
+        ficheroActual: logicalPath(abs),
+        carpeta: rootForPath(abs)?.path ?? null,
+        carpetas: accesibles,
+      });
+      // Miles de ficheros sin cambios se despachan sin esperar a nada: sin soltar el proceso de
+      // vez en cuando, el canal de la app se quedaría mudo hasta el final.
+      if (Date.now() - ultimoRespiro > 150) {
+        await respirar();
+        ultimoRespiro = Date.now();
+      }
       try {
         const r = await indexFile(abs, { force });
         if (r.estado === 'indexado') {
@@ -241,6 +379,7 @@ export async function indexFolder({ folders, force = false, onProgress, reconcil
           resumen.fragmentosNuevos += r.chunks || 0;
         } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
         else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
+        else if (r.estado === 'apartado') resumen.apartados += 1;
         else resumen.omitidos += 1;
       } catch (err) {
         resumen.errores += 1;

@@ -22,7 +22,7 @@ import crypto from 'node:crypto';
 import { config, guardarCarpetas, carpetasFijadasPorEntorno } from './config.js';
 import { log } from './logger.js';
 import { state, alCambiar } from './state.js';
-import { indexFolder } from './indexer/indexer.js';
+import { indexFolder, indexandoAhora, alTerminarIndexado } from './indexer/indexer.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 
 // Un nombre por carpeta de datos: dos instalaciones distintas (p. ej. un
@@ -99,21 +99,69 @@ export function anunciar() {
   for (const c of clientes) enviar(c, r);
 }
 
+// Lo que la app pide con un indexado ya en marcha (el del arranque, o uno anterior) NO se
+// rechaza: el abogado ha pulsado un botón y tiene que pasar algo. Se pone en cola y sale en
+// cuanto termine el actual. null = nada · 'todas' = todas las carpetas · Set = esas carpetas.
 let reindexando = false;
-async function reindexar(socket, { force = false } = {}) {
-  if (reindexando) return enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: false, motivo: 'ya_en_curso' });
+let enCola = null;
+let colaForce = false;
+
+function carpetaVigilada(carpeta) {
+  const pedida = path.resolve(String(carpeta));
+  return config.watchedFolders.find((c) => path.resolve(c) === pedida) ?? null;
+}
+
+function encolar(carpetas, force) {
+  if (!carpetas) enCola = 'todas';
+  else if (enCola !== 'todas') {
+    enCola = enCola || new Set();
+    for (const c of carpetas) enCola.add(c);
+  }
+  colaForce = colaForce || force;
+}
+
+function drenarCola() {
+  if (!enCola || reindexando || indexandoAhora()) return;
+  const siguiente = enCola;
+  const force = colaForce;
+  enCola = null;
+  colaForce = false;
+  lanzar(null, siguiente === 'todas' ? null : [...siguiente].filter(carpetaVigilada), force);
+}
+
+// `carpeta`: solo esa (el botón «Indexar ahora» de cada carpeta en la app); sin ella, todas.
+async function reindexar(socket, { force = false, carpeta = null } = {}) {
+  let carpetas = null;
+  if (carpeta) {
+    const vigilada = carpetaVigilada(carpeta);
+    if (!vigilada) {
+      return enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: false, motivo: 'carpeta_no_vigilada', carpeta });
+    }
+    carpetas = [vigilada];
+  }
+  if (reindexando || indexandoAhora()) {
+    encolar(carpetas, force);
+    return enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, encolado: true, carpetas: carpetas ?? config.watchedFolders });
+  }
+  return lanzar(socket, carpetas, force);
+}
+
+async function lanzar(socket, carpetas, force) {
+  if (carpetas && !carpetas.length) return;
+  const cuales = carpetas ?? config.watchedFolders;
   reindexando = true;
-  enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, iniciado: true });
+  if (socket) enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, iniciado: true, carpetas: cuales });
   try {
-    const resumen = await indexFolder({ force, reconciliarBorrados: true, onProgress: anunciar });
+    const resumen = await indexFolder({ folders: carpetas ?? undefined, force, reconciliarBorrados: true, onProgress: anunciar });
     log.info('Reindexado a petición de la app', resumen);
-    for (const c of clientes) enviar(c, { tipo: 'fin-reindexado', ok: true, resumen });
+    for (const c of clientes) enviar(c, { tipo: 'fin-reindexado', ok: true, resumen, carpetas: cuales });
   } catch (err) {
     log.error('Fallo el reindexado pedido por la app', { err: String(err) });
-    for (const c of clientes) enviar(c, { tipo: 'fin-reindexado', ok: false, motivo: String(err?.message ?? err) });
+    for (const c of clientes) enviar(c, { tipo: 'fin-reindexado', ok: false, motivo: String(err?.message ?? err), carpetas: cuales });
   } finally {
     reindexando = false;
     anunciar();
+    drenarCola();
   }
 }
 
@@ -214,6 +262,7 @@ export async function iniciarControl() {
     }
     if (servidor.unref) servidor.unref();  // nunca debe impedir que el proceso cierre
     alCambiar(anunciar);                   // cada cambio de estado llega a la app
+    alTerminarIndexado(drenarCola);        // lo encolado sale cuando acaba el indexado en curso
     log.info('Canal de control abierto', { ruta });
     return ruta;
   } catch (err) {

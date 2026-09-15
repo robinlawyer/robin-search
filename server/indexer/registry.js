@@ -78,6 +78,27 @@ export function remove(absPath) {
   return entry ?? null;
 }
 
+// Varias de una vez (una sola escritura de files.json). Lo usa el cotejo registro↔índice del
+// arranque: lo que se quita aquí se vuelve a indexar desde el documento original.
+export function removeMany(absPaths) {
+  const reg = load();
+  let quitadas = 0;
+  for (const p of absPaths) {
+    if (reg[p]) {
+      delete reg[p];
+      quitadas += 1;
+    }
+  }
+  if (quitadas) persist();
+  return quitadas;
+}
+
+// Olvidarlo todo (índice irrecuperable que se rehace desde los documentos).
+export function vaciar() {
+  _cache = {};
+  persist();
+}
+
 // Todas las entradas (valores), cada una con su ruta lógica y raíz.
 export function all() {
   return Object.values(load());
@@ -119,4 +140,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, all, entries, backfillExpediente, stats };
+export default { docIdForAbsPath, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats };

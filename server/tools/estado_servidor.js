@@ -3,10 +3,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { config, VERSION } from '../config.js';
+import { config, VERSION, logicalPath } from '../config.js';
 import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
+import * as cuarentena from '../indexer/cuarentena.js';
+import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
@@ -98,13 +100,43 @@ export async function handler() {
     documentos_indexados: documentos,
     fragmentos_totales: fragmentos,
     ficheros_sin_ocr: sinOcr,
-    tamanyo_indice_mb: dirSizeMb(config.indexDir),
+    tamanyo_indice_mb: dirSizeMb(store.dirIndice()),
   };
   if (state.actualizacionDisponible) {
     respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Descárgala desde robinlawyer.ai/descargas`;
   }
   if (state.estado === 'indexando' && state.progreso) respuesta.progreso = state.progreso;
   if (state.ultimoError) respuesta.ultimo_error = state.ultimoError;
+
+  // Ficheros que el indexado SE SALTA (cuarentena.js): los que hicieron caer el proceso al
+  // leerlos y los que superan el tamaño máximo. Sin esto, «no lo encuentro» sobre un documento
+  // apartado sería indistinguible de que no exista.
+  const apartados = cuarentena.lista().filter((a) => fs.existsSync(a.abs));
+  if (apartados.length) {
+    respuesta.ficheros_apartados = apartados.map((a) => ({
+      ruta: logicalPath(a.abs),
+      motivo:
+        a.motivo === cuarentena.MOTIVO_TAMANYO
+          ? 'demasiado grande para indexarlo'
+          : 'hizo que el indexador se cayera al leerlo',
+      tamanyo_mb: Number((a.bytes / 1048576).toFixed(1)),
+    }));
+    respuesta.aviso_apartados =
+      `${apartados.length} fichero(s) NO están en el índice (ver ficheros_apartados): lo que se ` +
+      'busque no los cubre. Si hace falta su contenido, que el abogado lo abra y lo adjunte a la ' +
+      'conversación. Se reintentan solos si el fichero cambia o con la próxima versión de RobinSearch.';
+  }
+
+  // Aviso técnico automático (diagnostico.js): el abogado no tiene que mandar nada a nadie.
+  if (state.ultimoInforme) {
+    respuesta.aviso_tecnico =
+      state.ultimoInforme.enviado || state.ultimoInforme.noEnviado === 'ya_avisado'
+        ? 'RobinSearch ha detectado un fallo técnico y ya se lo ha comunicado a Robin ' +
+          'automáticamente (solo datos técnicos: ni el contenido ni los nombres de los documentos ' +
+          'salen del ordenador). El abogado no tiene que hacer nada.'
+        : 'RobinSearch ha detectado un fallo técnico y no ha podido comunicárselo a Robin ' +
+          '(sin conexión, o aviso desactivado en este equipo).';
+  }
 
   // Resumen del último indexado CON sus causas de error. Un "0 documentos indexados" con 680
   // errores y un servidor en 'activo' era indistinguible de una carpeta vacía.

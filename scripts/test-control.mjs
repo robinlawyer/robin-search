@@ -21,8 +21,11 @@ const base=fs.mkdtempSync(path.join(os.tmpdir(),'rs-control-'));
 const DATOS=path.join(base,'datos');
 const MADRE=path.join(base,'Expedientes','Núñez - Despido');
 fs.mkdirSync(MADRE,{recursive:true});
-for(let i=1;i<=6;i++){
-  fs.writeFileSync(path.join(MADRE,`0${i} documento.txt`),
+// 30 y no 6: desde la 1.4.5 el índice escribe cada documento por separado (antes reescribía el
+// índice ENTERO por cada fichero) y 6 ficheros se indexan antes de que el canal, que emite como
+// mucho dos veces por segundo, llegue a enseñar un estado intermedio con su fichero.
+for(let i=1;i<=30;i++){
+  fs.writeFileSync(path.join(MADRE,`${String(i).padStart(2,'0')} documento.txt`),
     `Documento ${i} del expediente. Despido disciplinario y liquidación. SECRETO-${i}.`);
 }
 
@@ -128,6 +131,40 @@ async function main(){
   await espera(600);
   check('una orden desconocida se rechaza sin cerrar el canal',
     msgs.some(m=>m.motivo==='orden_desconocida') && !s.destroyed);
+
+  // --- «Indexar ahora» de UNA carpeta (el botón de la app), y lo que se pide con otro en marcha ---
+  // 15-sep-2026: un abogado eligió carpeta y la pantalla estuvo ~30 s quieta, porque el servidor
+  // contaba todos los ficheros de un tirón antes de decir nada. Ahora dice «buscando» al instante.
+  for (let i = 0; i < 100; i++) {
+    s.write(JSON.stringify({ cmd: 'estado' }) + '\n');
+    await espera(150);
+    const u = msgs.filter((m) => m.tipo === 'estado').at(-1);
+    if (u && u.estado !== 'indexando') break;
+  }
+  const RAIZ = path.dirname(MADRE);
+  const antesC = msgs.length;
+  const t0C = Date.now();
+  s.write(JSON.stringify({ cmd: 'reindexar', force: true, carpeta: RAIZ }) + '\n');
+  s.write(JSON.stringify({ cmd: 'reindexar', carpeta: RAIZ }) + '\n');
+  s.write(JSON.stringify({ cmd: 'reindexar', carpeta: path.join(base, 'no-vigilada') }) + '\n');
+  let primeraSenal = null;
+  for (let i = 0; i < 1200 && msgs.slice(antesC).filter((m) => m.tipo === 'fin-reindexado').length < 2; i++) {
+    if (primeraSenal === null && msgs.slice(antesC).some((m) => m.tipo === 'estado' && m.progreso)) primeraSenal = Date.now() - t0C;
+    await espera(50);
+  }
+  const nuevosC = msgs.slice(antesC);
+  const respC = nuevosC.filter((m) => m.tipo === 'respuesta' && m.cmd === 'reindexar');
+  check('«Indexar ahora» de una carpeta: se acepta y dice cuál',
+    respC[0]?.ok === true && respC[0]?.carpetas?.[0] === RAIZ, JSON.stringify(respC[0]));
+  check('otra petición con un indexado en marcha queda EN COLA, no rechazada',
+    respC[1]?.ok === true && respC[1]?.encolado === true, JSON.stringify(respC[1]));
+  check('una carpeta que no se vigila se rechaza', respC[2]?.ok === false && respC[2]?.motivo === 'carpeta_no_vigilada');
+  check('la app sabe AL INSTANTE que ha empezado (fase «buscando», antes de tener el total)',
+    nuevosC.some((m) => m.tipo === 'estado' && m.progreso?.fase === 'buscando' && m.progreso?.carpeta === RAIZ)
+      && primeraSenal !== null && primeraSenal < 1500, `${primeraSenal} ms`);
+  const finesC = nuevosC.filter((m) => m.tipo === 'fin-reindexado');
+  check('lo encolado se hace al terminar lo anterior (dos fines, cada uno con su carpeta)',
+    finesC.length === 2 && finesC.every((m) => m.ok && m.carpetas?.[0] === RAIZ), `${finesC.length} fines`);
 
   // --- Una segunda instancia no puede robar el canal ---
   const c2=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:'ignore'});

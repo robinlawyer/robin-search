@@ -1,6 +1,6 @@
 {
   "name": "@robinlawyer/robin-search",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "RobinSearch — servidor MCP local que indexa los expedientes del despacho y los hace buscables semánticamente sin que ningún documento salga del ordenador del abogado.",
   "type": "module",
   "license": "MIT",
@@ -22,7 +22,8 @@
     "test:barrido": "node scripts/test-barrido.mjs",
     "test:login": "node scripts/test-login.mjs",
     "test:login-bloqueado": "node scripts/test-login-bloqueado.mjs",
-    "test": "npm run test:login && npm run test:login-bloqueado && npm run test:sondeo-colgado && npm run test:control && npm run test:aislamiento && npm run test:red && npm run test:diagnostico && npm run test:barrido",
+    "test:robustez": "node scripts/test-robustez.mjs",
+    "test": "export ROBIN_DIAGNOSTICO_URL=off; npm run test:login && npm run test:login-bloqueado && npm run test:sondeo-colgado && npm run test:control && npm run test:aislamiento && npm run test:red && npm run test:diagnostico && npm run test:barrido && npm run test:robustez",
     "check": "for f in $(git ls-files '*.js' 2>/dev/null || find . -name '*.js' -not -path './node_modules/*'); do node --check \"$f\" || exit 1; done && echo 'syntax OK'",
     "postinstall": "node scripts/patch-wasm.mjs || true",
     "fetch:model": "node scripts/fetch-model.mjs",
@@ -47,7 +48,6 @@
     "pdfjs-dist": "^4.6.82",
     "rtf-stream-parser": "^3.8.1",
     "tesseract.js": "^7.0.0",
-    "vectra": "^0.9.0",
     "xlsx": "^0.18.5"
   },
   "files": [
