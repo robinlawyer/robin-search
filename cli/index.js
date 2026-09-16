@@ -76,6 +76,12 @@ async function run() {
     return;
   }
 
+  // Los certificados raíz del sistema (proxy/antivirus del despacho) antes de cualquier conexión.
+  if (opts._.includes('login') || opts._.includes('logout') || opts.silent) {
+    const { usarCertificadosDelSistema } = await import('../server/red-corporativa.js');
+    usarCertificadosDelSistema();
+  }
+
   // Iniciar / cerrar sesión en Robin Lawyer (OAuth). No es modo MCP → stdout seguro.
   if (opts._.includes('login')) {
     const { loginInteractive } = await import('../server/auth/oauth.js');

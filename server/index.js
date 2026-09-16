@@ -17,6 +17,7 @@ import { fail } from './tools/util.js';
 import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
 import * as registry from './indexer/registry.js';
+import { usarCertificadosDelSistema, proxyIgnorado } from './red-corporativa.js';
 
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
@@ -46,6 +47,13 @@ const TOOLS = [
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));
 
 async function main() {
+  // Antes de cualquier conexión: los certificados raíz que IT instala en el sistema (red-corporativa.js).
+  const certificados = usarCertificadosDelSistema();
+  log.info('Certificados del sistema', certificados);
+  if (proxyIgnorado()) {
+    log.warn('Hay un proxy configurado en el entorno pero Node no lo usa (falta NODE_USE_ENV_PROXY=1)');
+  }
+
   // Salida ordenada (Claude cierra, SIGTERM, stdin cerrado) frente a caída: la primera suelta el
   // índice y borra la marca de fase; una caída deja la marca y el siguiente arranque la atiende.
   // Antes, una promesa rechazada sin capturar tumbaba el proceso en silencio.

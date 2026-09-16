@@ -18,16 +18,39 @@ function isNewer(remote, local) {
 }
 
 // Devuelve la versión disponible (string) o null. Rellena state.actualizacionDisponible.
+//
+// El tope cubre TODO: obtener la sesión (que puede renovarla por red), la petición y leer la
+// respuesta. Antes solo cubría la petición: un servidor que mandaba las cabeceras y no terminaba
+// el cuerpo, o una renovación de sesión colgada, dejaban esto esperando para siempre.
 export async function checkForUpdate({ timeoutMs = 4000 } = {}) {
+  const controller = new AbortController();
+  let timer;
+  const tope = new Promise((_, rechazar) => {
+    timer = setTimeout(() => {
+      controller.abort();
+      rechazar(new Error('tiempo agotado'));
+    }, timeoutMs);
+    timer.unref?.();
+  });
+  tope.catch(() => {});
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    return await Promise.race([comprobar(controller.signal), tope]);
+  } catch {
+    // Sin conexión / endpoint caído / tope: no es un error, simplemente no avisamos.
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function comprobar(signal) {
+  try {
     const bearer = await getBearerQuiet();
+    if (signal.aborted) return null;
     const res = await fetch(UPDATE_CHECK_URL, {
-      signal: controller.signal,
+      signal,
       headers: bearer ? { Authorization: `Bearer ${bearer}` } : {},
     });
-    clearTimeout(timer);
     if (!res.ok) return null;
     const data = await res.json();
     const latest = data?.version;
