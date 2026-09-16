@@ -361,8 +361,12 @@ function buildConfig() {
     ocrLang: firstDefined(process.env.ROBIN_OCR_LANG) || 'spa',
     ocrDpi: toInt(process.env.ROBIN_OCR_DPI, 200),
     // Tope de páginas a las que se aplica OCR por fichero (el OCR es lento; evita que un
-    // escaneado gigante bloquee la cola indefinidamente).
-    ocrMaxPages: toInt(process.env.ROBIN_OCR_MAX_PAGES, 5000),
+    // escaneado gigante bloquee la cola indefinidamente). Hasta la 1.4.7 eran 5000: a varios
+    // segundos por página, un solo escaneado tenía el indexado parado horas. 300 páginas cubren
+    // casi cualquier escrito; un tomo mayor se indexa hasta ahí y se dice en el registro.
+    ocrMaxPages: toInt(process.env.ROBIN_OCR_MAX_PAGES, 300),
+    // Y un tope de TIEMPO por documento (minutos), por si las páginas son lentísimas.
+    ocrMaxMsPorDocumento: toInt(process.env.ROBIN_OCR_MAX_MIN, 30) * 60 * 1000,
 
     // Carpetas de RED (unidad mapeada Z:\\ o montaje SMB). El SO no notifica de forma fiable
     // los cambios que hace un compañero desde otro equipo, así que se re-escanean solas cada
@@ -410,7 +414,23 @@ const LIMITE_MB_POR_TIPO = {
   '.tiff': 128,
   '.txt': 128,
   '.md': 128,
+  // Hojas de cálculo y CSV: xlsx/papaparse los cargan enteros y el texto resultante se multiplica
+  // (cada celda con su separador); por encima de 32 MB el proceso se quedaba sin memoria.
+  '.xlsx': 32,
+  '.xlsm': 32,
+  '.xls': 32,
+  '.ods': 32,
+  '.fods': 32,
+  '.csv': 32,
+  '.tsv': 32,
 };
+
+// Tope de fragmentos por documento: un documento enorme (un volcado de miles de páginas) se
+// indexa hasta aquí. Sin tope, su .jsonl crecía sin límite y volvía a no poder leerse.
+export const MAX_FRAGMENTOS_POR_DOCUMENTO = (() => {
+  const n = parseInt(process.env.ROBIN_MAX_FRAGMENTOS, 10);
+  return Number.isFinite(n) && n > 0 ? n : 20000;
+})();
 const LIMITE_MB_OTROS = 256;
 
 export function limiteBytes(ext) {

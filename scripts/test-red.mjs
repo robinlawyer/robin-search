@@ -147,6 +147,36 @@ async function main(){
       l.data.total>=2, `documentos=${l.data.total}`);
   } finally { legible(); } }
 
+  // --- Red corporativa: certificados raíz del sistema y comprobación de versión con tope real ---
+  console.log('\nRed corporativa\n');
+  {
+    const http=await import('node:http');
+    // Un servidor que manda las cabeceras y nunca termina el cuerpo (proxy que se queda a medias).
+    const srv=http.createServer((req,res)=>{res.writeHead(200,{'Content-Type':'application/json'});res.write('{"vers');});
+    await new Promise(r=>srv.listen(0,'127.0.0.1',r));
+    const prog=`
+      const { usarCertificadosDelSistema, proxyIgnorado } = await import(${JSON.stringify(new URL('../server/red-corporativa.js', import.meta.url).href)});
+      const tls = await import('node:tls');
+      const r = usarCertificadosDelSistema();
+      const soporta = typeof tls.setDefaultCACertificates === 'function';
+      const incluye = soporta && r.aplicado ? tls.getCACertificates('system').every((c) => tls.getCACertificates('default').includes(c)) : null;
+      const { checkForUpdate } = await import(${JSON.stringify(new URL('../server/update.js', import.meta.url).href)});
+      const t0 = Date.now();
+      const v = await checkForUpdate({ timeoutMs: 1500 });
+      console.log(JSON.stringify({ r, soporta, incluye, v, ms: Date.now() - t0, proxy: proxyIgnorado({ HTTPS_PROXY: 'http://proxy:8080' }), proxyOk: proxyIgnorado({ HTTPS_PROXY: 'http://proxy:8080', NODE_USE_ENV_PROXY: '1' }) }));
+      process.exit(0);`;
+    let x=null;
+    try{
+      const out=execFileSync(process.execPath,['--input-type=module','-e',prog],{env:{...process.env,ROBIN_DATA_DIR:path.join(base,'datos-red-corp'),ROBIN_TOKEN:'t',ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:`http://127.0.0.1:${srv.address().port}/v`},timeout:30000}).toString();
+      x=JSON.parse(out.trim().split('\n').pop());
+    }catch(e){ x={error:String(e.message).slice(0,200)}; }
+    srv.closeAllConnections?.(); srv.close();
+    check('con Node que lo permite, los certificados del SISTEMA se añaden a los de Node (sin quitar ninguno)',
+      x && (x.soporta ? (x.r?.aplicado===true && x.incluye===true) || x.r?.motivo==='sin_certificados_de_sistema' : x.r?.motivo==='node_sin_soporte'), JSON.stringify(x?.r||x));
+    check('la comprobación de versión no se queda colgada si el cuerpo no llega nunca', x?.v===null && x.ms<5000, `${x?.ms} ms`);
+    check('un proxy en el entorno que Node no va a usar se detecta (para dejarlo dicho)', x?.proxy===true && x?.proxyOk===false);
+  }
+
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
   if(fallos){console.log(se.slice(-2000));process.exitCode=1;}

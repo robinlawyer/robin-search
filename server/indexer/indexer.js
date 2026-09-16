@@ -16,6 +16,7 @@ import {
   limiteBytes,
   canonizarRuta,
   esExtensionSoportada,
+  MAX_FRAGMENTOS_POR_DOCUMENTO,
 } from '../config.js';
 import { rutas, tipoReal } from '../rutas.js';
 import { log } from '../logger.js';
@@ -51,6 +52,12 @@ export function normalizarCausa(err) {
     .trim()
     .slice(0, 200);
   return code && !limpio.includes(code) ? `${code}: ${limpio}` : limpio;
+}
+
+function errorSinCerrojo() {
+  return Object.assign(new Error('Otra instancia de RobinSearch ha tomado el índice: este indexado se deja a ella.'), {
+    code: 'ROBIN_SIN_CERROJO',
+  });
 }
 
 function isSupported(filePath) {
@@ -187,9 +194,11 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
   // con uno nuevo, los fragmentos viejos quedarían en el índice duplicados).
   const docId = registry.get(abs)?.docId || registry.docIdForAbsPath(abs);
 
-  // Si ya había chunks de este documento (fichero modificado), los borramos antes de reinsertar.
-  await store.deleteByDoc(docId);
-
+  // NO se borra lo indexado antes de extraer (hasta la 1.4.7 sí): si la extracción o el embedding
+  // fallan en un reindexado —fichero abierto en Word, unidad de red que se cae—, el documento
+  // DESAPARECÍA del índice. Ahora la versión anterior sigue buscable hasta que la nueva está
+  // lista, y se sustituye de una vez (store.reemplazarDoc). Como el registro no se actualiza, el
+  // fichero sigue «cambiado» y se reintenta en la siguiente pasada.
   const { pages, sinOcr, numPages } = await extractFile(abs, {
     maxPages: config.maxPagesPerFile,
   });
@@ -211,6 +220,8 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
   };
 
   if (sinOcr) {
+    if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
+    await store.deleteByDoc(docId);
     state.ficherosSinOcr.add(rutaLogica);
     registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: true });
     log.warn('PDF sin OCR (no legible), omitido del índice', { ruta: rutaLogica });
@@ -219,12 +230,21 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
 
   state.ficherosSinOcr.delete(rutaLogica);
 
-  const chunks = chunkPages(pages, {
+  let chunks = chunkPages(pages, {
     chunkSizeTokens: config.chunkSizeTokens,
     chunkOverlapTokens: config.chunkOverlapTokens,
   });
+  if (chunks.length > MAX_FRAGMENTOS_POR_DOCUMENTO) {
+    log.warn('Documento con más fragmentos que el tope: se indexa hasta el tope', {
+      fragmentos: chunks.length,
+      tope: MAX_FRAGMENTOS_POR_DOCUMENTO,
+    });
+    chunks = chunks.slice(0, MAX_FRAGMENTOS_POR_DOCUMENTO);
+  }
 
   if (chunks.length === 0) {
+    if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
+    await store.deleteByDoc(docId);
     registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: false });
     return { ruta: rutaLogica, estado: 'vacio' };
   }
@@ -247,7 +267,9 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
     },
   }));
 
-  await store.upsertChunks(docId, items);
+  // Justo antes de escribir: ¿sigue siendo esta la instancia que escribe? (escritor.js)
+  if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
+  await store.reemplazarDoc(docId, items);
   registry.set(abs, { ...baseEntry, numChunks: chunks.length, sinOcr: false });
 
   return { ruta: rutaLogica, estado: 'indexado', chunks: chunks.length };
@@ -257,6 +279,7 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
 export async function removeFilePath(absPath) {
   const abs = path.resolve(absPath);
   const rutaLogica = logicalPath(abs);
+  if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
   const entry = registry.remove(abs);
   state.ficherosSinOcr.delete(rutaLogica);
   if (entry) await store.deleteByDoc(entry.docId);
@@ -407,6 +430,9 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     let i = 0;
     let ultimoRespiro = Date.now();
     for (const abs of files) {
+      // Otra instancia se quedó con el índice mientras esta estaba parada: se corta aquí, sin
+      // una escritura más (escritor.js).
+      if (!escritor.soyEscritor()) throw errorSinCerrojo();
       i += 1;
       // Por setIndexando y no asignando `state.progreso` a pelo: así el cambio
       // llega a los observadores (canal de control -> app de escritorio). El
@@ -487,7 +513,9 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     }
     setActivo();
   } catch (err) {
-    setError(err);
+    // Pasar a lector no es un fallo del indexado: lo sigue la otra instancia.
+    if (err?.code === 'ROBIN_SIN_CERROJO') setActivo();
+    else setError(err);
     setUltimoIndexado(resumen);
     throw err;
   }

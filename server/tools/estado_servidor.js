@@ -2,7 +2,6 @@
 // y ficheros sin OCR. Solo lectura.
 
 import fs from 'node:fs';
-import path from 'node:path';
 import { config, VERSION, logicalPath, rootForPath } from '../config.js';
 import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
@@ -15,22 +14,52 @@ import { authStatus } from '../auth/oauth.js';
 import { estadoMotor } from '../embedder/embedder.js';
 import { estadoOcr } from '../indexer/ocr.js';
 
-function dirSizeMb(dir) {
-  let bytes = 0;
+// Tamaño del índice: de los contadores que ya mantiene el índice. Hasta la 1.4.7 se hacía stat
+// de CADA fichero del índice en cada llamada (40.000 ficheros con 20.000 documentos, y el
+// antivirus mirando cada uno).
+function tamanyoIndiceMb() {
   try {
-    const stack = [dir];
-    while (stack.length) {
-      const d = stack.pop();
-      for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
-        const full = path.join(d, entry.name);
-        if (entry.isDirectory()) stack.push(full);
-        else bytes += fs.statSync(full).size;
-      }
-    }
+    return Number((store.resumen().bytes / (1024 * 1024)).toFixed(2));
   } catch {
-    /* índice aún no creado */
+    return 0;
   }
-  return Number((bytes / (1024 * 1024)).toFixed(2));
+}
+
+// ¿Se puede leer la carpeta? Asíncrono, con tope y en caché: sobre una unidad de red
+// desconectada un readdirSync dejaba estado_servidor (y todo el proceso) parado hasta que el
+// sistema se rendía, a veces más de un minuto. Si no contesta en TOPE_ACCESO_MS se dice
+// «sin respuesta»; la comprobación sigue por detrás y su resultado vale para la siguiente llamada.
+const TOPE_ACCESO_MS = Number(process.env.ROBIN_TOPE_ACCESO_MS) || 3000;
+const CACHE_ACCESO_MS = 60 * 1000;
+const _acceso = new Map(); // ruta → { t, accesible, promesa }
+
+async function comprobarAcceso(ruta) {
+  const dir = await fs.promises.opendir(ruta);
+  try {
+    await dir.read();
+  } finally {
+    await dir.close().catch(() => {});
+  }
+  return true;
+}
+
+async function accesible(ruta) {
+  const previo = _acceso.get(ruta);
+  if (previo && previo.accesible !== undefined && Date.now() - previo.t < CACHE_ACCESO_MS) return previo.accesible;
+  let promesa = previo?.promesa;
+  if (!promesa) {
+    promesa = comprobarAcceso(ruta)
+      .catch(() => false)
+      .then((ok) => {
+        _acceso.set(ruta, { t: Date.now(), accesible: ok, promesa: null });
+        return ok;
+      });
+    _acceso.set(ruta, { ...(previo || {}), promesa });
+  }
+  let tope;
+  const r = await Promise.race([promesa, new Promise((res) => (tope = setTimeout(() => res('sin_respuesta'), TOPE_ACCESO_MS)))]);
+  clearTimeout(tope);
+  return r;
 }
 
 export const definition = {
@@ -68,15 +97,11 @@ export async function handler() {
     // Se declara dónde vive cada carpeta y si ahora mismo se puede leer: un expediente en el
     // servidor del despacho se mantiene al día por re-escaneo, no por eventos, y si la unidad
     // se desconecta el abogado tiene que poder verlo aquí y no deducirlo de un "0 resultados".
-    carpetas_vigiladas: config.roots.map((r) => {
+    carpetas_vigiladas: (await Promise.all(config.roots.map(async (r) => [r, await accesible(r.path)]))).map(([r, acceso]) => {
       const enRed = esRutaDeRed(r.path);
-      let accesible = true;
-      try {
-        fs.readdirSync(r.path);
-      } catch {
-        accesible = false;
-      }
-      const ficha = { nombre: r.name, ruta: r.path, ubicacion: enRed ? 'red' : 'local', accesible };
+      const ok = acceso === true;
+      const ficha = { nombre: r.name, ruta: r.path, ubicacion: enRed ? 'red' : 'local', accesible: ok };
+      if (acceso === 'sin_respuesta') ficha.sin_respuesta = true;
       if (enRed) {
         const cada = config.rescanRedMs >= 60000
           ? `${Math.round(config.rescanRedMs / 60000)} min`
@@ -85,7 +110,11 @@ export async function handler() {
           ? `re-escaneo cada ${cada} y al abrir el expediente`
           : 'solo al abrir el expediente o al indexar a mano';
       }
-      if (!accesible) {
+      if (acceso === 'sin_respuesta') {
+        ficha.aviso =
+          `La carpeta no ha contestado en ${TOPE_ACCESO_MS / 1000} s (unidad de red lenta o desconectada). Lo ` +
+          'que se busque sobre ella puede estar incompleto o desactualizado.';
+      } else if (!ok) {
         ficha.aviso = enRed
           ? 'Carpeta de red ILEGIBLE ahora mismo: comprueba que la unidad sigue conectada. Lo ' +
             'que se busque sobre ella puede estar incompleto o desactualizado.'
@@ -100,7 +129,7 @@ export async function handler() {
     documentos_indexados: documentos,
     fragmentos_totales: fragmentos,
     ficheros_sin_ocr: sinOcr,
-    tamanyo_indice_mb: dirSizeMb(store.dirIndice()),
+    tamanyo_indice_mb: tamanyoIndiceMb(),
   };
   if (state.actualizacionDisponible) {
     respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Descárgala desde robinlawyer.ai/descargas`;

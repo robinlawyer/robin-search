@@ -3,6 +3,8 @@
 // los documentos del expediente. stdout está reservado para el protocolo JSON-RPC de MCP;
 // todo el logging va a fichero y stderr.
 
+// Antes que nada: con un Node demasiado antiguo se dice claro y se sale (version-node.js).
+import './version-node.js';
 // IMPORTANTE: primero de todo, blindar stdout (redirige console.* de las librerías a stderr).
 import './stdio-guard.js';
 
@@ -17,6 +19,7 @@ import { fail } from './tools/util.js';
 import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
 import * as registry from './indexer/registry.js';
+import { usarCertificadosDelSistema, proxyIgnorado } from './red-corporativa.js';
 
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
@@ -46,6 +49,13 @@ const TOOLS = [
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));
 
 async function main() {
+  // Antes de cualquier conexión: los certificados raíz que IT instala en el sistema (red-corporativa.js).
+  const certificados = usarCertificadosDelSistema();
+  log.info('Certificados del sistema', certificados);
+  if (proxyIgnorado()) {
+    log.warn('Hay un proxy configurado en el entorno pero Node no lo usa (falta NODE_USE_ENV_PROXY=1)');
+  }
+
   // Salida ordenada (Claude cierra, SIGTERM, stdin cerrado) frente a caída: la primera suelta el
   // índice y borra la marca de fase; una caída deja la marca y el siguiente arranque la atiende.
   // Antes, una promesa rechazada sin capturar tumbaba el proceso en silencio.
@@ -114,13 +124,6 @@ async function main() {
   };
   server.oninitialized = () => setImmediate(arrancar);
   setTimeout(arrancar, 3000); // sin unref: sin cliente, es lo que mantiene vivo el proceso
-
-  // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
-  if (process.env.ROBIN_PRUEBA_RECHAZO === '1') {
-    setTimeout(() => {
-      Promise.reject(new Error('rechazo de prueba leyendo /Users/prueba/Expedientes/Pérez - Divorcio/demanda.pdf'));
-    }, 300);
-  }
 }
 
 main().catch((err) => {

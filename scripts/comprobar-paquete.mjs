@@ -50,6 +50,10 @@ check('sin binarios nativos (.node .dll .dylib .so .exe)', nativos.length === 0,
 const PROHIBIDOS = ['node_modules/onnxruntime-node/', 'node_modules/sharp/', 'node_modules/@img/', 'node_modules/@napi-rs/', 'node_modules/fsevents/'];
 const colados = PROHIBIDOS.filter((p) => nombres.some((n) => n.startsWith(p)));
 check('.mcpbignore ha dejado fuera los módulos nativos', colados.length === 0, colados.join(', '));
+// Lo que solo sirve para instalar sharp o generar código (sin uso en ejecución).
+const SOBRANTES = [/^node_modules\/bare-[^/]+\//, /^node_modules\/protobufjs\/cli\//, /^node_modules\/prebuild-install\//];
+const sobrantes = [...new Set(nombres.filter((n) => SOBRANTES.some((re) => re.test(n))).map((n) => n.split('/').slice(0, 3).join('/')))];
+check('.mcpbignore ha dejado fuera bare-*, protobufjs/cli y prebuild-install', sobrantes.length === 0, sobrantes.slice(0, 5).join(', '));
 
 // 2. Enlaces simbólicos y rutas raras
 const S_IFMT = 0o170000;

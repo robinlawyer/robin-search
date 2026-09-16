@@ -12,10 +12,12 @@
 
 import fs from 'node:fs';
 import os from 'node:os';
+import crypto from 'node:crypto';
+import zlib from 'node:zlib';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import { config } from '../config.js';
+import { config, limiteBytes } from '../config.js';
 import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
@@ -478,8 +480,35 @@ export async function extractImage(filePath) {
 // Contenedores: .zip / .rar / .7z  (expedientes de LexNet / Justizia.eus)
 // ─────────────────────────────────────────────────────────────────────────────
 // Límites de seguridad frente a zip-bombs y expedientes enormes.
+//
+// Hasta la 1.4.7 los tres formatos se descomprimían ENTEROS en memoria (zip: getData() de todo;
+// rar: extract({}) con copia; 7z: todo al sistema de ficheros en memoria del WASM) y SOLO después
+// se miraban los límites: un zip de 1 MB con 1 GB de ceros dentro agotaba la memoria y tumbaba
+// RobinSearch. Ahora se leen primero las CABECERAS (tamaño descomprimido declarado, tamaño
+// comprimido, número de miembros), se descarta lo que no cabe, y se extrae miembro a miembro con
+// la salida acotada a lo declarado: una cabecera que miente se corta en cuanto se pasa.
 const ARCHIVE_MAX_MEMBERS = 2000;
 const ARCHIVE_MAX_TOTAL_BYTES = 500 * 1024 * 1024;
+// Proporción descomprimido/comprimido a partir de la que un miembro grande se trata como bomba.
+// Un texto normal comprime 5-20 veces; un bloque de ceros, ~1000.
+const ARCHIVE_MAX_RATIO = 250;
+const ARCHIVE_RATIO_DESDE_BYTES = 32 * 1024 * 1024;
+// Entradas del directorio que se llegan a MIRAR (no a extraer): un zip con millones de entradas
+// vacías no puede tenernos leyendo cabeceras para siempre.
+const ARCHIVE_MAX_ENTRADAS = 200000;
+
+// ¿Se extrae este miembro? Decide con lo DECLARADO en la cabecera, antes de descomprimir nada.
+function admitirMiembro(m, cuenta) {
+  const ext = path.extname(m.name).toLowerCase();
+  if (!SUPPORTED_INNER.has(ext)) return null;
+  if (m.cifrado) return 'cifrado';
+  if (cuenta.miembros >= ARCHIVE_MAX_MEMBERS) return 'demasiados_miembros';
+  if (!Number.isFinite(m.size) || m.size < 0) return 'tamaño_desconocido';
+  if (m.size > limiteBytes(ext)) return 'demasiado_grande';
+  if (cuenta.bytes + m.size > ARCHIVE_MAX_TOTAL_BYTES) return 'total_superado';
+  if (m.size > ARCHIVE_RATIO_DESDE_BYTES && m.packed > 0 && m.size / m.packed > ARCHIVE_MAX_RATIO) return 'proporcion_sospechosa';
+  return 'ok';
+}
 
 export async function extractArchive(filePath, opts) {
   const ext = extensionDe(filePath);
@@ -487,82 +516,318 @@ export async function extractArchive(filePath, opts) {
   // No recursamos archivos dentro de archivos (profundidad 1): evita zip-bombs anidadas.
   if (depth >= 1) return { pages: [], sinOcr: false, numPages: null };
 
-  let members = [];
-  try {
-    if (ext === '.zip') members = await readZipMembers(filePath);
-    else if (ext === '.rar') members = await readRarMembers(filePath);
-    else if (ext === '.7z') members = await read7zMembers(filePath);
-  } catch (err) {
-    log.error('No se pudo abrir el contenedor', { fichero: path.basename(filePath), err: String(err) });
-    return { pages: [], sinOcr: false, numPages: null };
-  }
-
   const pages = [];
-  let total = 0;
-  let count = 0;
-  for (const m of members) {
-    if (count >= ARCHIVE_MAX_MEMBERS || total >= ARCHIVE_MAX_TOTAL_BYTES) {
-      log.warn('Contenedor truncado por límite de seguridad', { fichero: path.basename(filePath), miembros: count });
-      break;
+  const cuenta = { miembros: 0, bytes: 0 };
+  const descartes = {};
+  const admitir = (m) => {
+    const r = admitirMiembro(m, cuenta);
+    if (r === 'ok') {
+      cuenta.miembros += 1;
+      cuenta.bytes += m.size;
+      return true;
     }
-    if (!SUPPORTED_INNER.has(path.extname(m.name).toLowerCase())) continue;
-    count += 1;
-    total += m.content.length;
+    if (r) descartes[r] = (descartes[r] || 0) + 1;
+    return false;
+  };
+  const alMiembro = async (name, destino) => {
     try {
-      const inner = await extractBufferByName(m.name, m.content, { ...opts, depth: depth + 1 });
+      const inner = Buffer.isBuffer(destino)
+        ? await extractBufferByName(name, destino, { ...opts, depth: depth + 1 })
+        : await extractByExtension(destino, path.extname(name).toLowerCase(), { ...opts, depth: depth + 1 });
       if (inner?.pages?.length) {
-        pages.push({ page: null, text: `[archivo: ${m.name}]` });
+        pages.push({ page: null, text: `[archivo: ${name}]` });
         for (const pg of inner.pages) pages.push({ page: pg.page, text: pg.text });
       }
     } catch (err) {
-      log.warn('Miembro del contenedor ilegible', { miembro: m.name, err: String(err) });
+      log.warn('Miembro del contenedor ilegible', { ext: path.extname(name).toLowerCase(), err: String(err?.message ?? err) });
     }
+  };
+
+  try {
+    if (ext === '.zip') await recorrerZip(filePath, admitir, alMiembro, descartes);
+    else if (ext === '.rar') await recorrerRar(filePath, admitir, alMiembro, descartes);
+    else if (ext === '.7z') await recorrer7z(filePath, admitir, alMiembro, descartes);
+  } catch (err) {
+    log.error('No se pudo abrir el contenedor', { fichero: path.basename(filePath), err: String(err) });
+    return { pages, sinOcr: pages.length === 0, numPages: null };
+  }
+  if (Object.keys(descartes).length) {
+    log.warn('Contenedor: miembros no extraídos por límite de seguridad', { ext, ...descartes, extraidos: cuenta.miembros });
   }
   return { pages, sinOcr: pages.length === 0, numPages: null };
 }
 
-async function readZipMembers(filePath) {
-  const AdmZip = (await import('adm-zip')).default;
-  const zip = new AdmZip(filePath);
-  return zip.getEntries()
-    .filter((e) => !e.isDirectory)
-    .map((e) => ({ name: e.entryName, content: e.getData() }));
-}
-
-async function readRarMembers(filePath) {
-  const { createExtractorFromData } = await import('node-unrar-js');
-  const wasmBinary = fs.readFileSync(require.resolve('node-unrar-js/esm/js/unrar.wasm'));
-  const data = Uint8Array.from(fs.readFileSync(filePath)).buffer;
-  const extractor = await createExtractorFromData({ wasmBinary, data });
-  const extracted = extractor.extract({});
-  const members = [];
-  for (const file of extracted.files) {
-    if (file.fileHeader.flags.directory) continue;
-    if (file.extraction) members.push({ name: file.fileHeader.name, content: Buffer.from(file.extraction) });
+// ── ZIP: directorio central leído del disco, un miembro cada vez ──────────────────────────
+function leerExacto(fd, buf, posicion) {
+  let leido = 0;
+  while (leido < buf.length) {
+    const n = fs.readSync(fd, buf, leido, buf.length - leido, posicion + leido);
+    if (n <= 0) throw new Error('zip cortado');
+    leido += n;
   }
-  return members;
+  return buf;
 }
 
-async function read7zMembers(filePath) {
+// Entradas del directorio central: { name, method, flags, packed, size, local, cifrado }.
+export function cabecerasZip(fd, tamanyo) {
+  const colaLen = Math.min(tamanyo, 22 + 65535 + 20);
+  const cola = leerExacto(fd, Buffer.alloc(colaLen), tamanyo - colaLen);
+  let eocd = -1;
+  for (let i = colaLen - 22; i >= 0; i--) {
+    if (cola.readUInt32LE(i) === 0x06054b50) {
+      eocd = i;
+      break;
+    }
+  }
+  if (eocd < 0) throw new Error('zip sin directorio central');
+  let total = cola.readUInt16LE(eocd + 10);
+  let cdSize = cola.readUInt32LE(eocd + 12);
+  let cdOff = cola.readUInt32LE(eocd + 16);
+  if ((total === 0xffff || cdSize === 0xffffffff || cdOff === 0xffffffff) && eocd >= 20 && cola.readUInt32LE(eocd - 20) === 0x07064b50) {
+    const e64 = leerExacto(fd, Buffer.alloc(56), Number(cola.readBigUInt64LE(eocd - 20 + 8)));
+    if (e64.readUInt32LE(0) !== 0x06064b50) throw new Error('zip64 dañado');
+    total = Number(e64.readBigUInt64LE(32));
+    cdSize = Number(e64.readBigUInt64LE(40));
+    cdOff = Number(e64.readBigUInt64LE(48));
+  }
+  if (cdOff + cdSize > tamanyo || cdSize > 256 * 1024 * 1024) throw new Error('zip con directorio central dañado');
+  const cd = leerExacto(fd, Buffer.alloc(cdSize), cdOff);
+  const out = [];
+  let p = 0;
+  while (p + 46 <= cd.length && out.length < Math.min(total || Infinity, ARCHIVE_MAX_ENTRADAS)) {
+    if (cd.readUInt32LE(p) !== 0x02014b50) break;
+    const flags = cd.readUInt16LE(p + 8);
+    const method = cd.readUInt16LE(p + 10);
+    let packed = cd.readUInt32LE(p + 20);
+    let size = cd.readUInt32LE(p + 24);
+    const nLen = cd.readUInt16LE(p + 28);
+    const xLen = cd.readUInt16LE(p + 30);
+    const cLen = cd.readUInt16LE(p + 32);
+    let local = cd.readUInt32LE(p + 42);
+    const nombre = cd.subarray(p + 46, p + 46 + nLen);
+    // Campo extra zip64: solo trae los valores que en la cabecera valen 0xFFFFFFFF, en este orden.
+    let x = p + 46 + nLen;
+    const finX = x + xLen;
+    while (x + 4 <= finX) {
+      const id = cd.readUInt16LE(x);
+      const len = cd.readUInt16LE(x + 2);
+      if (id === 0x0001) {
+        let q = x + 4;
+        if (size === 0xffffffff && q + 8 <= x + 4 + len) (size = Number(cd.readBigUInt64LE(q))), (q += 8);
+        if (packed === 0xffffffff && q + 8 <= x + 4 + len) (packed = Number(cd.readBigUInt64LE(q))), (q += 8);
+        if (local === 0xffffffff && q + 8 <= x + 4 + len) local = Number(cd.readBigUInt64LE(q));
+      }
+      x += 4 + len;
+    }
+    const name = nombre.toString(flags & 0x800 ? 'utf8' : 'latin1');
+    p = finX + cLen;
+    if (name.endsWith('/')) continue; // carpeta
+    out.push({ name, flags, method, packed, size, local, cifrado: Boolean(flags & 0x1) });
+  }
+  return out;
+}
+
+const inflarRaw = (buf, maxOutputLength) =>
+  new Promise((resolve, reject) => zlib.inflateRaw(buf, { maxOutputLength }, (err, r) => (err ? reject(err) : resolve(r))));
+
+async function recorrerZip(filePath, admitir, alMiembro, descartes) {
+  const fd = fs.openSync(filePath, 'r');
+  try {
+    const tamanyo = fs.fstatSync(fd).size;
+    for (const m of cabecerasZip(fd, tamanyo)) {
+      if (!admitir(m)) continue;
+      if (m.method !== 0 && m.method !== 8) {
+        descartes.compresion_no_soportada = (descartes.compresion_no_soportada || 0) + 1;
+        continue;
+      }
+      // Lo comprimido tampoco puede ser mayor que lo que dice descomprimir (con margen para deflate).
+      if (m.packed > m.size + m.size / 100 + 1024 * 1024 || m.local + 30 > tamanyo) {
+        descartes.cabecera_incoherente = (descartes.cabecera_incoherente || 0) + 1;
+        continue;
+      }
+      let contenido;
+      try {
+        const lh = leerExacto(fd, Buffer.alloc(30), m.local);
+        if (lh.readUInt32LE(0) !== 0x04034b50) throw new Error('cabecera local dañada');
+        const inicio = m.local + 30 + lh.readUInt16LE(26) + lh.readUInt16LE(28);
+        if (inicio + m.packed > tamanyo) throw new Error('zip cortado');
+        const comprimido = leerExacto(fd, Buffer.alloc(m.packed), inicio);
+        // La salida se acota a lo DECLARADO: una cabecera que miente (dice 2 KB y trae 1 GB) se
+        // corta en cuanto lo supera, sin llegar a reservar esa memoria.
+        contenido = m.method === 0 ? comprimido : await inflarRaw(comprimido, Math.max(1, m.size));
+        if (contenido.length !== m.size) throw new Error('tamaño distinto del declarado');
+      } catch (err) {
+        descartes.miembro_danado = (descartes.miembro_danado || 0) + 1;
+        log.warn('Miembro del zip no extraído', { ext: path.extname(m.name).toLowerCase(), err: String(err?.code || err?.message || err) });
+        continue;
+      }
+      await alMiembro(m.name, contenido);
+      contenido = null;
+    }
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+// ── RAR: node-unrar-js leyendo del disco y escribiendo cada miembro a un temporal ─────────
+// (createExtractorFromData guardaba en memoria el archivo entero Y todo lo extraído.)
+function dirTemporal() {
+  const d = path.join(os.tmpdir(), `robin-search-${process.pid}-${crypto.randomBytes(6).toString('hex')}`);
+  fs.mkdirSync(d, { recursive: true });
+  return d;
+}
+
+async function recorrerRar(filePath, admitir, alMiembro, descartes) {
+  const { createExtractorFromFile } = await import('node-unrar-js');
+  const wasmBinary = fs.readFileSync(require.resolve('node-unrar-js/esm/js/unrar.wasm'));
+  const dir = dirTemporal();
+  let lista = null;
+  let extractor = null;
+  try {
+    // Lista primero (solo cabeceras) y decide qué se extrae.
+    lista = await createExtractorFromFile({ wasmBinary, filepath: filePath, targetPath: dir });
+    const elegidos = new Set();
+    let vistas = 0;
+    for (const h of lista.getFileList().fileHeaders) {
+      if (++vistas > ARCHIVE_MAX_ENTRADAS) break;
+      if (h.flags.directory) continue;
+      if (admitir({ name: h.name, size: h.unpSize, packed: h.packSize, cifrado: h.flags.encrypted })) elegidos.add(h.name);
+    }
+    if (!elegidos.size) return;
+    // El nombre en disco lo ponemos NOSOTROS (número + extensión): un nombre de miembro con «../»
+    // no puede escribir fuera del temporal.
+    // (unrar ya limpia el nombre antes de pasárnoslo, así que se casa por ORDEN, no por nombre.)
+    let n = 0;
+    let ultimo = null;
+    extractor = await createExtractorFromFile({
+      wasmBinary,
+      filepath: filePath,
+      targetPath: dir,
+      filenameTransform: (nombre) => {
+        ultimo = `m${n++}${path.extname(nombre).toLowerCase().replace(/[^.a-z0-9]/g, '')}`;
+        return ultimo;
+      },
+    });
+    const { files } = extractor.extract({ files: (h) => elegidos.has(h.name) });
+    // El generador extrae de uno en uno al avanzar: se procesa y se borra cada miembro antes del
+    // siguiente.
+    for (const f of files) {
+      const seguro = ultimo;
+      ultimo = null;
+      if (!seguro || f.fileHeader.flags.directory) continue;
+      const ruta = path.join(dir, seguro);
+      try {
+        if (fs.existsSync(ruta)) await alMiembro(f.fileHeader.name, ruta);
+      } finally {
+        fs.rmSync(ruta, { force: true });
+      }
+    }
+  } catch (err) {
+    descartes.rar_ilegible = (descartes.rar_ilegible || 0) + 1;
+    throw err;
+  } finally {
+    // node-unrar-js solo cierra el archivo si se recorre ENTERO y sin errores: un corte (tope de
+    // entradas, un miembro dañado) dejaba el descriptor abierto hasta que el proceso muriera.
+    for (const x of [lista, extractor]) {
+      try {
+        if (x?._archive) x.closeArc();
+      } catch {
+        /* ya cerrado */
+      }
+    }
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+// ── 7z: 7z-wasm leyendo el archivo del disco (NODEFS), en lotes acotados ──────────────────
+const LOTE_7Z_BYTES = 64 * 1024 * 1024;
+
+async function recorrer7z(filePath, admitir, alMiembro) {
   const SevenZipFactory = (await import('7z-wasm')).default;
-  const sevenZip = await SevenZipFactory();
-  const archiveName = 'archive' + path.extname(filePath).toLowerCase();
-  const outDir = '/out';
-  sevenZip.FS.writeFile(archiveName, Uint8Array.from(fs.readFileSync(filePath)));
-  sevenZip.FS.mkdir(outDir);
-  sevenZip.callMain(['x', archiveName, '-o' + outDir, '-y']);
-  const members = [];
-  const walkFs = (dir) => {
-    for (const name of sevenZip.FS.readdir(dir)) {
-      if (name === '.' || name === '..') continue;
-      const full = dir + '/' + name;
-      const stat = sevenZip.FS.stat(full);
-      if (sevenZip.FS.isDir(stat.mode)) walkFs(full);
-      else members.push({ name: full.slice(outDir.length + 1), content: Buffer.from(sevenZip.FS.readFile(full)) });
+  const salida = [];
+  const sevenZip = await SevenZipFactory({ print: (l) => salida.push(String(l)), printErr: () => {} });
+  // 7z-wasm (Emscripten) deja process.exitCode con el código de 7-Zip cuando algo sale mal: sin
+  // restaurarlo, RobinSearch saldría más tarde con código de error por un 7z ilegible.
+  const ejecutar = (args) => {
+    const previo = process.exitCode;
+    try {
+      sevenZip.callMain(args);
+    } catch {
+      /* 7-Zip termina lanzando su código de salida: se mira el resultado, no la excepción */
+    } finally {
+      process.exitCode = previo;
     }
   };
-  try { walkFs(outDir); } catch { /* nada extraído */ }
-  return members;
+  const entrada = '/in';
+  let archivo;
+  sevenZip.FS.mkdir(entrada);
+  try {
+    // El archivo se LEE del disco: copiarlo al sistema de ficheros en memoria duplicaba su tamaño.
+    sevenZip.FS.mount(sevenZip.NODEFS, { root: path.dirname(filePath) }, entrada);
+    archivo = `${entrada}/${path.basename(filePath)}`;
+    sevenZip.FS.stat(archivo);
+  } catch {
+    // Sin NODEFS en esta plataforma (rutas de red raras): copia en memoria (ya limitada por tamaño).
+    archivo = '/archivo.7z';
+    sevenZip.FS.writeFile(archivo, fs.readFileSync(filePath));
+  }
+
+  ejecutar(['l', '-slt', '-ba', archivo]);
+  const miembros = [];
+  let actual = null;
+  for (const linea of salida) {
+    const m = /^([A-Za-z ]+?) = (.*)$/.exec(linea);
+    if (!m) {
+      if (actual?.name != null) miembros.push(actual);
+      actual = null;
+      continue;
+    }
+    actual ??= {};
+    if (m[1] === 'Path') actual.name = m[2];
+    else if (m[1] === 'Size') actual.size = Number(m[2]);
+    else if (m[1] === 'Packed Size') actual.packed = Number(m[2]) || 0;
+    else if (m[1] === 'Attributes') actual.dir = /^D/.test(m[2]);
+    else if (m[1] === 'Folder') actual.dir = actual.dir || m[2] === '+';
+    else if (m[1] === 'Encrypted') actual.cifrado = m[2] === '+';
+  }
+  if (actual?.name != null) miembros.push(actual);
+
+  // Un archivo «sólido» no trae tamaño comprimido por miembro: la proporción se mira sobre el total.
+  const tamArchivo = fs.statSync(filePath).size || 1;
+  const totalDeclarado = miembros.reduce((s, m) => s + (m.dir ? 0 : m.size || 0), 0);
+  const solido = miembros.every((m) => !m.packed);
+  const elegidos = miembros
+    .slice(0, ARCHIVE_MAX_ENTRADAS)
+    .filter((m) => !m.dir && admitir({ ...m, packed: solido ? (m.size * tamArchivo) / Math.max(1, totalDeclarado) : m.packed }));
+
+  const out = '/out';
+  sevenZip.FS.mkdir(out);
+  for (let i = 0; i < elegidos.length; ) {
+    const lote = [];
+    let bytes = 0;
+    while (i < elegidos.length && (lote.length === 0 || bytes + elegidos[i].size <= LOTE_7Z_BYTES)) {
+      bytes += elegidos[i].size;
+      lote.push(elegidos[i++]);
+    }
+    // -spd: los nombres son literales (sin comodines). Lo extraído está acotado por lo declarado.
+    ejecutar(['x', archivo, `-o${out}`, '-y', '-spd', '--', ...lote.map((m) => m.name)]);
+    for (const m of lote) {
+      const ruta = `${out}/${m.name}`;
+      let contenido = null;
+      try {
+        contenido = Buffer.from(sevenZip.FS.readFile(ruta));
+        sevenZip.FS.unlink(ruta);
+      } catch {
+        continue; // no se extrajo (dañado): se sigue
+      }
+      await alMiembro(m.name, contenido);
+    }
+  }
+  try {
+    sevenZip.FS.unmount(entrada);
+  } catch {
+    /* nada */
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

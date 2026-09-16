@@ -32,7 +32,15 @@ const TOPE_VECTORES_BYTES = (() => {
   const n = parseInt(process.env.ROBIN_MAX_VECTORES_MB, 10);
   return (Number.isFinite(n) && n > 0 ? n : 768) * 1024 * 1024;
 })();
+// Caché de metadatos (con el texto) por BYTES, no por documentos: 48 documentos pequeños son
+// nada, pero 48 tomos de miles de fragmentos eran gigas.
+const TOPE_META_BYTES = (() => {
+  const n = parseInt(process.env.ROBIN_MAX_META_MB, 10);
+  return (Number.isFinite(n) && n > 0 ? n : 96) * 1024 * 1024;
+})();
 const MAX_META_EN_CACHE = 48;
+// Cada cuánto suelta el proceso una búsqueda sobre todo el índice (ms).
+const CEDER_CADA_MS = 25;
 const RESTOS_MIN_EDAD_MS = 10 * 60 * 1000;
 
 // Un docId es un hash hexadecimal (registry.docIdForAbsPath). Las herramientas lo reciben del
@@ -56,8 +64,16 @@ let _dirMtime = -1;
 // docId → { gen, v: Float32Array, normas: Float32Array, bytes }   (LRU por orden de inserción)
 const _vec = new Map();
 let _vecBytes = 0;
-// docId → { gen, lista: [metadata] }
+// docId → { gen, lista: [metadata], bytes }
 const _meta = new Map();
+let _metaBytes = 0;
+function quitarMeta(docId) {
+  const e = _meta.get(docId);
+  if (e) {
+    _metaBytes -= e.bytes || 0;
+    _meta.delete(docId);
+  }
+}
 
 // vectra solo admitía una transacción a la vez y aquí se conserva la misma disciplina: toda
 // escritura del proceso pasa por esta cola.
@@ -169,7 +185,7 @@ function aplicarCatalogo(nuevo) {
   }
   for (const [id, e] of [..._meta]) {
     const c = nuevo.get(id);
-    if (!c || c.gen !== e.gen) _meta.delete(id);
+    if (!c || c.gen !== e.gen) quitarMeta(id);
   }
   _cab = nuevo;
   _dirMtime = mtimeDir();
@@ -246,30 +262,78 @@ function vectoresDe(cab) {
   return ent;
 }
 
+// Lee un .jsonl LÍNEA A LÍNEA por trozos de 1 MB. Leerlo de una vez como texto volvía a dar
+// ERR_STRING_TOO_LONG con un documento de más de ~512 MB (el mismo fallo que tumbaba vectra).
+function* lineasDe(ruta) {
+  const fd = fs.openSync(ruta, 'r');
+  try {
+    const buf = Buffer.alloc(1024 * 1024);
+    let resto = Buffer.alloc(0);
+    let pos = 0;
+    for (;;) {
+      const n = fs.readSync(fd, buf, 0, buf.length, pos);
+      if (n <= 0) break;
+      pos += n;
+      let trozo = resto.length ? Buffer.concat([resto, buf.subarray(0, n)]) : buf.subarray(0, n);
+      let i;
+      while ((i = trozo.indexOf(10)) >= 0) {
+        yield trozo.toString('utf8', 0, i);
+        trozo = trozo.subarray(i + 1);
+      }
+      resto = Buffer.from(trozo);
+    }
+    if (resto.length) yield resto.toString('utf8');
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
 // Metadatos (con el texto) de cada fragmento, en el MISMO orden que sus vectores.
 function metadatosDe(cab) {
   const e = _meta.get(cab.docId);
-  if (e && e.gen === cab.gen) return e.lista;
-  const lineas = fs.readFileSync(rutaMeta(cab.docId), 'utf8').split('\n');
-  let enDisco = null;
-  try {
-    enDisco = JSON.parse(lineas[0]);
-  } catch {
-    return null;
+  if (e && e.gen === cab.gen) {
+    _meta.delete(cab.docId);
+    _meta.set(cab.docId, e); // recién usado: al final de la cola
+    return e.lista;
   }
-  // El documento se reescribió entre la lectura de la cabecera y esta: no se mezclan.
-  if (enDisco?.gen !== cab.gen) return null;
   const lista = [];
-  for (let i = 1; i < lineas.length; i++) {
-    if (!lineas[i]) continue;
+  let primera = true;
+  for (const linea of lineasDe(rutaMeta(cab.docId))) {
+    if (primera) {
+      primera = false;
+      let enDisco = null;
+      try {
+        enDisco = JSON.parse(linea);
+      } catch {
+        return null;
+      }
+      // El documento se reescribió entre la lectura de la cabecera y esta: no se mezclan.
+      if (enDisco?.gen !== cab.gen) return null;
+      continue;
+    }
+    if (!linea) continue;
     try {
-      lista.push(JSON.parse(lineas[i]));
+      lista.push(JSON.parse(linea));
     } catch {
       lista.push(null);
     }
   }
-  _meta.set(cab.docId, { gen: cab.gen, lista });
-  while (_meta.size > MAX_META_EN_CACHE) _meta.delete(_meta.keys().next().value);
+  if (primera) return null;
+  if (e) quitarMeta(cab.docId);
+  // Tamaño aproximado en memoria: el del .jsonl (el texto domina).
+  let bytes = 0;
+  try {
+    bytes = fs.statSync(rutaMeta(cab.docId)).size;
+  } catch {
+    bytes = 0;
+  }
+  _meta.set(cab.docId, { gen: cab.gen, lista, bytes });
+  _metaBytes += bytes;
+  while ((_metaBytes > TOPE_META_BYTES || _meta.size > MAX_META_EN_CACHE) && _meta.size > 1) {
+    const primero = _meta.keys().next().value;
+    if (primero === cab.docId) break;
+    quitarMeta(primero);
+  }
   return lista;
 }
 
@@ -320,7 +384,7 @@ function escribirDoc(docId, lista) {
   if (previa?.gen && previa.gen !== gen) quitar(rutaVec(docId, previa.gen));
 
   soltarVectores(docId);
-  _meta.delete(docId);
+  quitarMeta(docId);
   if (!_cab) _cab = new Map();
   const st = fs.statSync(rutaMeta(docId));
   _cab.set(docId, { ...cab, mtimeMs: st.mtimeMs, bytes: st.size + f.byteLength });
@@ -331,7 +395,7 @@ function borrarDoc(docId, cab = _cab?.get(docId) ?? leerCabecera(docId)) {
   conReintentos(() => fs.rmSync(rutaMeta(docId), { force: true })); // sin .jsonl el documento deja de existir
   if (cab?.gen) quitar(rutaVec(docId, cab.gen));
   soltarVectores(docId);
-  _meta.delete(docId);
+  quitarMeta(docId);
   _cab?.delete(docId);
   _dirMtime = mtimeDir();
   return cab?.n ?? 0;
@@ -376,6 +440,20 @@ export function upsertChunks(docId, chunks) {
       lista = [...leerDocCompleto(cab).filter((p) => !nuevos.has(p.chunkId)), ...lista];
     }
     escribirDoc(docId, lista);
+  });
+}
+
+// Sustituye el documento ENTERO por estos fragmentos, de una vez: hasta que la escritura se
+// confirma, se sigue viendo la versión anterior. Es lo que usa el indexado (a diferencia de
+// upsertChunks, que conserva los fragmentos que no vengan en la lista).
+export function reemplazarDoc(docId, chunks) {
+  return conCerrojo(async () => {
+    if (!esDocIdValido(docId)) throw new Error(`docId no válido: ${docId}`);
+    asegurarCatalogo();
+    escribirDoc(
+      docId,
+      chunks.map((c) => ({ chunkId: c.chunkId, vector: c.vector, metadata: { ...c.metadata } })),
+    );
   });
 }
 
@@ -452,7 +530,7 @@ export async function query(vector, topK, filter = undefined) {
   const { doc: fDoc, frag: fFrag } = partirFiltro(filter);
 
   const top = []; // ordenado de mayor a menor score
-  const meter = (score, docId, j) => {
+  const meter = (score, docId, j, gen) => {
     if (top.length === K && score <= top[K - 1].score) return;
     let lo = 0;
     let hi = top.length;
@@ -461,11 +539,19 @@ export async function query(vector, topK, filter = undefined) {
       if (top[mid].score >= score) lo = mid + 1;
       else hi = mid;
     }
-    top.splice(lo, 0, { score, docId, j });
+    top.splice(lo, 0, { score, docId, j, gen });
     if (top.length > K) top.pop();
   };
 
-  for (const cab of _cab.values()) {
+  // Sobre una FOTO del catálogo: al soltar el proceso, la instancia que indexa puede cambiarlo.
+  // Con 5.000 documentos una búsqueda pasaba de 15 s sin soltar el proceso: Claude no recibía
+  // respuesta a nada más mientras tanto.
+  let cedido = Date.now();
+  for (const cab of [..._cab.values()]) {
+    if (Date.now() - cedido > CEDER_CADA_MS) {
+      await new Promise((r) => setImmediate(r));
+      cedido = Date.now();
+    }
     if (cab.dim !== q.length) continue;
     if (!fDoc.every(([c, cond]) => cumple(cab[c], cond))) continue;
     let ent;
@@ -484,13 +570,14 @@ export async function query(vector, topK, filter = undefined) {
       let s = 0;
       const o = j * dim;
       for (let k = 0; k < dim; k++) s += v[o + k] * q[k];
-      meter(s / (qn * (normas[j] || 1)), cab.docId, j);
+      meter(s / (qn * (normas[j] || 1)), cab.docId, j, cab.gen);
     }
   }
 
   const out = [];
   for (const t of top) {
     const cab = _cab.get(t.docId);
+    if (cab && cab.gen !== t.gen) continue; // reescrito mientras se buscaba: el orden ya no vale
     let metas = null;
     try {
       metas = cab ? metadatosDe(cab) : null;
@@ -686,12 +773,14 @@ export function borrarTodo() {
   _vec.clear();
   _vecBytes = 0;
   _meta.clear();
+  _metaBytes = 0;
   fs.mkdirSync(dirDocs(), { recursive: true });
   _dirMtime = mtimeDir();
 }
 
 export default {
   upsertChunks,
+  reemplazarDoc,
   deleteByDoc,
   resellar,
   query,

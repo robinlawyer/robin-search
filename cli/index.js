@@ -11,6 +11,9 @@
 // Los flags --token y --folder rellenan ROBIN_TOKEN y ROBIN_FOLDER. Se procesan ANTES de
 // cargar cualquier módulo que lea la configuración (import dinámico) para que surtan efecto.
 
+// Lo primero: con un Node demasiado antiguo se dice claro y se sale (no lee configuración).
+import '../server/version-node.js';
+
 function parseArgs(argv) {
   const opts = { silent: false, help: false, version: false, folders: [], _: [] };
   for (const arg of argv) {
@@ -74,6 +77,12 @@ async function run() {
     const { VERSION } = await import('../server/config.js');
     process.stdout.write(`robin-search ${VERSION}\n`);
     return;
+  }
+
+  // Los certificados raíz del sistema (proxy/antivirus del despacho) antes de cualquier conexión.
+  if (opts._.includes('login') || opts._.includes('logout') || opts.silent) {
+    const { usarCertificadosDelSistema } = await import('../server/red-corporativa.js');
+    usarCertificadosDelSistema();
   }
 
   // Iniciar / cerrar sesión en Robin Lawyer (OAuth). No es modo MCP → stdout seguro.
