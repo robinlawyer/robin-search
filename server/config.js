@@ -5,13 +5,16 @@
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 // La versión sale del package.json que viaja en el paquete, NO de una
 // constante a mano: escrita dos veces, se olvida una. El servidor estuvo
 // diciendo que era la 1.4.0 siendo la 1.4.2, y eso se enseña al abogado.
 function leerVersion() {
   try {
-    const aqui = path.dirname(new URL(import.meta.url).pathname);
+    // fileURLToPath y no `new URL().pathname`: en Windows este da «/C:/...» y la
+    // lectura fallaba siempre → versión 0.0.0 y aviso de actualización perpetuo.
+    const aqui = path.dirname(fileURLToPath(import.meta.url));
     const pkg = JSON.parse(fs.readFileSync(path.join(aqui, '..', 'package.json'), 'utf8'));
     return pkg.version || '0.0.0';
   } catch {
