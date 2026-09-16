@@ -64,7 +64,15 @@ async function arrancarWorker() {
   const { createWorker } = await import('tesseract.js');
 
   const emp = idiomaEmpaquetado();
-  const opciones = { cachePath: config.tesseractCache };
+  // errorHandler OBLIGATORIO: sin él, tesseract.js relanza el fallo de un trabajo DESDE el
+  // manejador de mensajes del worker (createWorker.js), fuera de cualquier promesa. Una sola
+  // imagen que no puede leer («Error attempting to read image.», p. ej. un .bmp roto de 243
+  // bytes) era una excepción sin capturar que tumbaba RobinSearch entero. Con él, el rechazo
+  // llega a `recognize` y solo falla ese fichero.
+  const opciones = {
+    cachePath: config.tesseractCache,
+    errorHandler: (err) => log.warn('OCR: el motor no pudo leer una imagen', { err: String(err?.message ?? err).slice(0, 200) }),
+  };
   if (emp.ok) {
     // Ruta local (no URL) → tesseract.js lo lee del disco. Guardamos el fichero sin
     // comprimir, así que `gzip:false`.
@@ -98,6 +106,33 @@ async function getWorker() {
   }
 }
 
+// Una página o imagen tarda segundos. Si el worker muere (memoria del WASM) o se queda colgado,
+// tesseract.js no rechaza nunca y el indexado entero esperaba para siempre. Pasado el tope se
+// descarta ese worker (el siguiente fichero arranca uno nuevo) y solo falla este.
+const TOPE_RECONOCER_MS = Number(process.env.ROBIN_OCR_TOPE_MS) || 180_000;
+
+async function reconocer(input) {
+  const worker = await getWorker();
+  let tope;
+  try {
+    return await Promise.race([
+      worker.recognize(input),
+      new Promise((_, rechazar) => {
+        tope = setTimeout(() => rechazar(new Error(`OCR sin respuesta en ${TOPE_RECONOCER_MS / 1000} s`)), TOPE_RECONOCER_MS);
+      }),
+    ]);
+  } catch (err) {
+    if (/sin respuesta/.test(String(err?.message))) {
+      if (_workerPromise) _workerPromise = null;
+      _estado = { ..._estado, listo: false };
+      worker.terminate().catch(() => {});
+    }
+    throw err;
+  } finally {
+    clearTimeout(tope);
+  }
+}
+
 export async function terminateOcr() {
   if (_workerPromise) {
     try {
@@ -126,10 +161,9 @@ export async function ocrImage(filePath) {
   } else {
     input = fs.readFileSync(filePath);
   }
-  const worker = await getWorker();
   const {
     data: { text },
-  } = await worker.recognize(input);
+  } = await reconocer(input);
   const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
   return clean ? [{ page: 1, text: clean }] : [];
 }
@@ -143,7 +177,7 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
   const total = doc.countPages();
   const limit = Math.min(total, maxPages ?? config.ocrMaxPages, config.ocrMaxPages);
 
-  const worker = await getWorker();
+  await getWorker(); // si el OCR no arranca, falla el fichero antes de rasterizar nada
   const scale = mupdf.Matrix.scale(dpi / 72, dpi / 72);
   const pages = [];
 
@@ -155,7 +189,7 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
       const png = pix.asPNG();
       const {
         data: { text },
-      } = await worker.recognize(Buffer.from(png));
+      } = await reconocer(Buffer.from(png));
       const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
       if (clean) pages.push({ page: i + 1, text: clean });
       pix.destroy?.();
