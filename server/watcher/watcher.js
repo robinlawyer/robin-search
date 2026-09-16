@@ -18,8 +18,11 @@
 // mecanismos no escriban a la vez en el registro ni solapen embeddings.
 
 import chokidar from 'chokidar';
+import fs from 'node:fs';
 import path from 'node:path';
-import { config, SUPPORTED_EXTENSIONS, logicalPath } from '../config.js';
+import { config, logicalPath, esExtensionSoportada, canonizarRuta, rootForPath } from '../config.js';
+import { rutas } from '../rutas.js';
+import * as registry from '../indexer/registry.js';
 import { esRutaDeRed } from '../net.js';
 import { log } from '../logger.js';
 import { setActivo, setIndexando, setError, clearError } from '../state.js';
@@ -27,6 +30,8 @@ import { indexFile, removeFilePath, indexFolder, normalizarCausa } from '../inde
 
 let _watcher = null;
 let _rescanTimer = null;
+let _nativos = []; // fs.watch recursivos (Windows y macOS)
+let _rescanLocalTimer = null; // re-escaneo de carpetas locales cuando no se pueden vigilar
 const pending = new Map(); // absPath → { absPath, tipo: 'index'|'remove' }
 let flushTimer = null;
 let draining = false;
@@ -44,7 +49,7 @@ function serializar(fn) {
 }
 
 function isSupported(p) {
-  return SUPPORTED_EXTENSIONS.has(path.extname(p).toLowerCase());
+  return esExtensionSoportada(p);
 }
 
 function scheduleFlush() {
@@ -93,8 +98,128 @@ async function drain() {
 }
 
 function enqueue(absPath, tipo) {
-  pending.set(path.resolve(absPath), { tipo });
+  // Escrita como la escribe el recorrido de la carpeta: si no, el mismo documento tendría dos
+  // claves en el registro.
+  let abs = path.resolve(absPath);
+  try {
+    abs = canonizarRuta(abs);
+  } catch {
+    /* se queda como llega */
+  }
+  pending.set(abs, { tipo });
   scheduleFlush();
+}
+
+// ¿Se ignora esta ruta? Datos de RobinSearch y todo lo oculto (cualquier segmento con «.»).
+function ignorada(abs, raiz) {
+  if (rutas.dentroDe(abs, config.dataDir)) return true;
+  const rel = raiz ? rutas.relativaDentro(abs, raiz) : null;
+  const segs = rel ? rel.split(path.sep) : [path.basename(abs)];
+  return segs.some((s) => s.startsWith('.'));
+}
+
+// Un evento del vigilante nativo sobre `abs`. fs.watch no dice qué ha pasado (solo «rename» o
+// «change»): se mira el disco. Si ya no existe, se retira el fichero o TODO lo indexado bajo la
+// carpeta que desapareció o se renombró; si es una carpeta nueva (o renombrada), se recorre.
+// Lo de carpetas se agrupa (una copia de 500 ficheros no son 500 recorridos).
+const _carpetas = new Map(); // abs → 'recorrer' | 'retirar'
+let _carpetasTimer = null;
+
+function programarCarpetas() {
+  if (_carpetasTimer) clearTimeout(_carpetasTimer);
+  _carpetasTimer = setTimeout(() => {
+    _carpetasTimer = null;
+    const lote = [..._carpetas];
+    _carpetas.clear();
+    const retirar = lote.filter(([, q]) => q === 'retirar').map(([c]) => c);
+    const recorrer = lote.filter(([, q]) => q === 'recorrer').map(([c]) => c);
+    if (retirar.length) {
+      for (const [clave] of registry.entries()) {
+        if (retirar.some((c) => clave !== c && rutas.dentroDe(clave, c))) enqueue(clave, 'remove');
+      }
+    }
+    if (recorrer.length) reescanear(recorrer, { motivo: 'carpeta_cambiada' });
+  }, DEBOUNCE_MS);
+  _carpetasTimer.unref?.();
+}
+
+function eventoNativo(tipoEvento, abs) {
+  let st = null;
+  try {
+    st = fs.statSync(abs);
+  } catch {
+    st = null;
+  }
+  if (!st) {
+    if (isSupported(abs)) {
+      enqueue(abs, 'remove');
+      if (registry.get(canonizarRuta(abs, { disco: false }))) return; // era un fichero indexado
+    }
+    _carpetas.set(abs, 'retirar');
+    programarCarpetas();
+    return;
+  }
+  if (st.isDirectory()) {
+    // «change» sobre una carpeta es que ha cambiado algo DENTRO, y eso llega con su propio evento.
+    if (tipoEvento !== 'rename' || !rootForPath(abs)) return;
+    _carpetas.set(abs, 'recorrer');
+    programarCarpetas();
+    return;
+  }
+  if (st.isFile() && isSupported(abs)) enqueue(abs, 'index');
+}
+
+// Windows y macOS: UN solo vigilante recursivo por carpeta, del propio sistema
+// (ReadDirectoryChangesW / FSEvents). chokidar 3 abre un vigilante POR SUBCARPETA, y en Windows
+// una carpeta con un descriptor abierto no se puede renombrar: el abogado no podía cambiar el
+// nombre de la carpeta de un caso mientras Claude estaba abierto.
+function vigilarNativo(locales) {
+  for (const raiz of locales) {
+    let w;
+    try {
+      w = fs.watch(raiz, { recursive: true, persistent: true }, (tipoEvento, nombre) => {
+        if (!nombre) {
+          // Algunos sistemas no dicen qué cambió: se repasa la carpeta entera (incremental).
+          reescanear([raiz], { motivo: 'evento_sin_nombre' });
+          return;
+        }
+        const abs = path.join(raiz, String(nombre));
+        if (ignorada(abs, raiz)) return;
+        eventoNativo(tipoEvento, abs);
+      });
+    } catch (err) {
+      log.error('No se pudo vigilar la carpeta: se re-escaneará periódicamente', { err: String(err) });
+      pasarAReescaneo([raiz], err);
+      continue;
+    }
+    w.on('error', (err) => {
+      log.error('Watcher error', { err: String(err) });
+      try {
+        w.close();
+      } catch {
+        /* ya cerrado */
+      }
+      _nativos = _nativos.filter((x) => x !== w);
+      pasarAReescaneo([raiz], err);
+    });
+    _nativos.push(w);
+  }
+}
+
+// Sin vigilante (Linux sin descriptores de inotify —ENOSPC/EMFILE—, o una carpeta que el sistema
+// no deja vigilar): no se deja la carpeta congelada en silencio, se re-escanea cada poco como las
+// de red.
+const _enReescaneo = new Set();
+function pasarAReescaneo(carpetas, err) {
+  for (const c of carpetas) _enReescaneo.add(c);
+  log.warn('Carpetas locales sin vigilante: se re-escanean periódicamente', {
+    carpetas: [..._enReescaneo],
+    causa: String(err?.code || err),
+  });
+  if (_rescanLocalTimer) return;
+  const cada = config.rescanRedMs > 0 ? config.rescanRedMs : 5 * 60 * 1000;
+  _rescanLocalTimer = setInterval(() => reescanear([..._enReescaneo], { motivo: 'sin_vigilante' }), cada);
+  _rescanLocalTimer.unref?.();
 }
 
 // Carpetas de red configuradas (las que necesitan re-escaneo en vez de eventos).
@@ -134,24 +259,42 @@ export function startWatcher() {
     log.warn('Watcher no iniciado: sin carpetas configuradas');
     return null;
   }
-  if (_watcher || _rescanTimer) return _watcher;
+  if (_watcher || _rescanTimer || _nativos.length || _rescanLocalTimer) return _watcher;
 
   const red = carpetasDeRed();
   const locales = config.watchedFolders.filter((p) => !red.includes(p));
 
-  if (locales.length > 0) {
+  const nativo = process.env.ROBIN_VIGILANTE !== 'chokidar'
+    && (process.platform === 'win32' || process.platform === 'darwin');
+  if (locales.length > 0 && nativo) {
+    vigilarNativo(locales);
+    log.info('Watcher activo (carpetas locales, vigilante del sistema)', { carpetas: locales });
+  } else if (locales.length > 0) {
     _watcher = chokidar.watch(locales, {
       ignoreInitial: true, // el indexado inicial lo hace indexFolder en el arranque
       persistent: true,
       awaitWriteFinish: { stabilityThreshold: 1000, pollInterval: 200 },
-      ignored: (p) => p.includes(config.dataDir) || path.basename(p).startsWith('.'),
+      // Los ficheros que no se indexan ni se vigilan: en Linux cada uno gasta un descriptor de
+      // inotify, y una carpeta de despacho tiene miles de ficheros que no son documentos.
+      ignored: (p, stats) =>
+        rutas.dentroDe(p, config.dataDir)
+        || path.basename(p).startsWith('.')
+        || Boolean(stats?.isFile?.() && !isSupported(p)),
     });
 
     _watcher
       .on('add', (p) => isSupported(p) && enqueue(p, 'index'))
       .on('change', (p) => isSupported(p) && enqueue(p, 'index'))
       .on('unlink', (p) => isSupported(p) && enqueue(p, 'remove'))
-      .on('error', (err) => log.error('Watcher error', { err: String(err) }));
+      .on('error', (err) => {
+        log.error('Watcher error', { err: String(err) });
+        if (err?.code === 'ENOSPC' || err?.code === 'EMFILE') {
+          const w = _watcher;
+          _watcher = null;
+          w?.close().catch(() => {});
+          pasarAReescaneo(locales, err);
+        }
+      });
 
     log.info('Watcher activo (carpetas locales)', { carpetas: locales });
   }
@@ -177,6 +320,24 @@ export async function stopWatcher() {
     clearInterval(_rescanTimer);
     _rescanTimer = null;
   }
+  for (const w of _nativos) {
+    try {
+      w.close();
+    } catch {
+      /* ya cerrado */
+    }
+  }
+  _nativos = [];
+  if (_carpetasTimer) {
+    clearTimeout(_carpetasTimer);
+    _carpetasTimer = null;
+  }
+  _carpetas.clear();
+  if (_rescanLocalTimer) {
+    clearInterval(_rescanLocalTimer);
+    _rescanLocalTimer = null;
+  }
+  _enReescaneo.clear();
   if (_watcher) {
     await _watcher.close();
     _watcher = null;
