@@ -680,9 +680,11 @@ async function recorrerRar(filePath, admitir, alMiembro, descartes) {
   const { createExtractorFromFile } = await import('node-unrar-js');
   const wasmBinary = fs.readFileSync(require.resolve('node-unrar-js/esm/js/unrar.wasm'));
   const dir = dirTemporal();
+  let lista = null;
+  let extractor = null;
   try {
     // Lista primero (solo cabeceras) y decide qué se extrae.
-    const lista = await createExtractorFromFile({ wasmBinary, filepath: filePath, targetPath: dir });
+    lista = await createExtractorFromFile({ wasmBinary, filepath: filePath, targetPath: dir });
     const elegidos = new Set();
     let vistas = 0;
     for (const h of lista.getFileList().fileHeaders) {
@@ -696,7 +698,7 @@ async function recorrerRar(filePath, admitir, alMiembro, descartes) {
     // (unrar ya limpia el nombre antes de pasárnoslo, así que se casa por ORDEN, no por nombre.)
     let n = 0;
     let ultimo = null;
-    const extractor = await createExtractorFromFile({
+    extractor = await createExtractorFromFile({
       wasmBinary,
       filepath: filePath,
       targetPath: dir,
@@ -723,6 +725,15 @@ async function recorrerRar(filePath, admitir, alMiembro, descartes) {
     descartes.rar_ilegible = (descartes.rar_ilegible || 0) + 1;
     throw err;
   } finally {
+    // node-unrar-js solo cierra el archivo si se recorre ENTERO y sin errores: un corte (tope de
+    // entradas, un miembro dañado) dejaba el descriptor abierto hasta que el proceso muriera.
+    for (const x of [lista, extractor]) {
+      try {
+        if (x?._archive) x.closeArc();
+      } catch {
+        /* ya cerrado */
+      }
+    }
     fs.rmSync(dir, { recursive: true, force: true });
   }
 }
