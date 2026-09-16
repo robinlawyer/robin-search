@@ -740,6 +740,26 @@ async function recorrerRar(filePath, admitir, alMiembro, descartes) {
 }
 
 // ── 7z: 7z-wasm leyendo el archivo del disco (NODEFS), en lotes acotados ──────────────────
+// NODEFS monta la carpeta del CLIENTE dentro de 7-Zip y, tal cual, con permiso de escritura: un
+// nombre de miembro malicioso o un fallo de 7-Zip podría escribir, borrar o renombrar ahí. Antes
+// de montar se le quitan a NODEFS todas las operaciones que modifican algo y la apertura con
+// escritura: RobinSearch solo LEE los documentos del cliente, y aquí también. Lo extraído va a
+// /out, que es memoria (MEMFS), no el disco.
+export function nodefsSoloLectura(sevenZip) {
+  const { NODEFS, FS } = sevenZip;
+  const denegar = () => {
+    throw FS.ErrnoError ? new FS.ErrnoError(2) : new Error('solo lectura');
+  };
+  for (const op of ['mknod', 'rename', 'unlink', 'rmdir', 'symlink', 'setattr']) NODEFS.node_ops[op] = denegar;
+  for (const op of ['write', 'allocate', 'msync', 'setattr']) if (NODEFS.stream_ops[op]) NODEFS.stream_ops[op] = denegar;
+  const abrir = NODEFS.stream_ops.open;
+  // O_WRONLY 1 · O_RDWR 2 · O_CREAT 64 · O_TRUNC 512 · O_APPEND 1024 (constantes de Emscripten)
+  NODEFS.stream_ops.open = function abrirSoloLectura(stream) {
+    if (stream.flags & (1 | 2 | 64 | 512 | 1024)) denegar();
+    return abrir.call(this, stream);
+  };
+}
+
 const LOTE_7Z_BYTES = 64 * 1024 * 1024;
 
 async function recorrer7z(filePath, admitir, alMiembro) {
@@ -763,6 +783,7 @@ async function recorrer7z(filePath, admitir, alMiembro) {
   sevenZip.FS.mkdir(entrada);
   try {
     // El archivo se LEE del disco: copiarlo al sistema de ficheros en memoria duplicaba su tamaño.
+    nodefsSoloLectura(sevenZip);
     sevenZip.FS.mount(sevenZip.NODEFS, { root: path.dirname(filePath) }, entrada);
     archivo = `${entrada}/${path.basename(filePath)}`;
     sevenZip.FS.stat(archivo);

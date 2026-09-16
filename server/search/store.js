@@ -26,6 +26,7 @@ import crypto from 'node:crypto';
 import { config } from '../config.js';
 import { log } from '../logger.js';
 import { conReintentos, escribirAtomico } from '../persistencia.js';
+import { rutas } from '../rutas.js';
 import { itemsVectra } from './migracion-vectra.js';
 
 const TOPE_VECTORES_BYTES = (() => {
@@ -736,7 +737,7 @@ async function migrarDesdeVectra(ruta, derivarExpediente) {
   else actual = null;
 
   // Con reintentos: en Windows otra instancia de una versión anterior puede tenerlo abierto.
-  fs.rmSync(path.dirname(ruta), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  borrarCarpetaPropia(path.dirname(ruta));
   const r = {
     documentos,
     fragmentos,
@@ -766,9 +767,21 @@ export async function abrir({ migrar = true, derivarExpediente = null, alMigrar 
 
 // Rehacer desde cero (índice irrecuperable). Los documentos originales siguen en su carpeta: se
 // vuelven a indexar desde ellos.
+// Borrado recursivo SOLO de carpetas propias de RobinSearch. Si por una configuración rara (un
+// ROBIN_DATA_DIR puesto a mano) una carpeta de expedientes quedara dentro de lo que se va a borrar,
+// o lo que se va a borrar dentro de ella, no se borra nada: se lanza. Los documentos del cliente
+// no se tocan nunca.
+function borrarCarpetaPropia(dir) {
+  const carpetas = (config.watchedFolders || []).map((c) => (typeof c === 'string' ? c : c?.path)).filter(Boolean);
+  if (carpetas.some((c) => rutas.dentroDe(c, dir) || rutas.dentroDe(dir, c))) {
+    throw new Error('Negado: una carpeta de expedientes coincide con la carpeta de datos de RobinSearch');
+  }
+  fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+}
+
 export function borrarTodo() {
-  fs.rmSync(dirIndice(), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
-  fs.rmSync(path.dirname(rutaVectraAntigua()), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  borrarCarpetaPropia(dirIndice());
+  borrarCarpetaPropia(path.dirname(rutaVectraAntigua()));
   _cab = new Map();
   _vec.clear();
   _vecBytes = 0;

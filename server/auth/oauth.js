@@ -230,7 +230,23 @@ function refresh(a) {
   return _renovando;
 }
 
+// Sin conexión (portátil de vacaciones, AVE, red caída, servidor de Robin sin responder) la sesión
+// no se puede renovar, pero buscar en los expedientes es 100 % local: se permite durante
+// DIAS_SIN_CONEXION desde que caducó el último token válido. Al volver la conexión se renueva sola
+// (la llave de renovación dura 90 días y se alarga con cada uso) y nadie tiene que volver a entrar.
+// Solo un rechazo explícito del servidor (sesión revocada o caducada) exige iniciar sesión.
+export const DIAS_SIN_CONEXION = Number(process.env.ROBIN_DIAS_SIN_CONEXION) || 14;
+let _ultimaRenovacion = null; // 'ok' | 'sin_conexion' | 'rechazada'
+
 async function renovar(a) {
+  const r = await intentarRenovar(a);
+  if (r) _ultimaRenovacion = 'ok';
+  else if (_ultimaRenovacion !== 'rechazada') _ultimaRenovacion = 'sin_conexion';
+  return r;
+}
+
+async function intentarRenovar(a) {
+  _ultimaRenovacion = null;
   if (!a?.refresh_token) return null;
   const disc = await discover();
   const body = new URLSearchParams({
@@ -263,6 +279,7 @@ async function renovar(a) {
       // es la sesión buena y no se borra.
       const actual = loadAuth();
       if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
+      _ultimaRenovacion = 'rechazada';
       clearTokens(); // refresh revocado/expirado → hay que volver a iniciar sesión
     }
     return null;
@@ -618,6 +635,12 @@ export async function ensureAuthorized() {
   if (bearer) {
     const a = loadAuth();
     return { ok: true, bearer, mode: 'oauth', user: a?.user || null };
+  }
+  const a = loadAuth();
+  const hasta = (a?.expires_at || 0) + DIAS_SIN_CONEXION * 24 * 3600 * 1000;
+  if (_ultimaRenovacion === 'sin_conexion' && a?.access_token && a?.refresh_token && Date.now() < hasta) {
+    log.info('Sin conexión con Robin: se sigue con la sesión guardada', { hasta: new Date(hasta).toISOString() });
+    return { ok: true, bearer: a.access_token, mode: 'sin_conexion', user: a.user || null, sin_conexion_hasta: new Date(hasta).toISOString() };
   }
   startLogin(); // no bloquea la llamada MCP; el usuario completa el login en el navegador
   const loginUrl = await awaitAuthorizeUrl();
