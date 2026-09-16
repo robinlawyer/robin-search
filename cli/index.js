@@ -113,7 +113,10 @@ async function run() {
       process.exit(1);
     }
     process.stdout.write('Indexado completado.\n');
-    return;
+    // Salida explícita: los hilos de embedding que quedan esperando trabajo mantendrían vivo el
+    // proceso, y un despliegue de IT que espera a que termine se quedaba colgado. El registro
+    // pendiente se vuelca en el manejador de 'exit'.
+    process.exit(0);
   }
 
   // Modo por defecto: arrancar el servidor MCP (el módulo se auto-ejecuta).

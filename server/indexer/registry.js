@@ -16,6 +16,8 @@ let _cache = null;
 // docId → ruta absoluta, construido bajo demanda. Las herramientas buscaban la entrada de un
 // documento con all().find(): recorrer 20.000 entradas en cada llamada.
 let _porDocId = null;
+// huella de contenido → Set de rutas absolutas (indexer.js: ficheros repetidos). Bajo demanda.
+let _porHuella = null;
 let _knownMtime = 0; // mtime del files.json que refleja _cache
 let _sucio = false; // cambios en memoria aún no volcados
 let _temporizador = null;
@@ -55,6 +57,7 @@ function load() {
     throw err;
   }
   _porDocId = null;
+  _porHuella = null;
   if (r.estado === 'ok') {
     _cache = r.valor;
   } else {
@@ -118,6 +121,7 @@ export function descartarPendiente() {
   _sucio = false;
   _cache = null;
   _porDocId = null;
+  _porHuella = null;
   _knownMtime = 0;
 }
 
@@ -150,7 +154,33 @@ export function set(absPath, entry) {
     if (previa?.docId && previa.docId !== entry?.docId) _porDocId.delete(previa.docId);
     if (entry?.docId) _porDocId.set(entry.docId, absPath);
   }
+  if (_porHuella) {
+    if (previa?.huella) _porHuella.get(previa.huella)?.delete(absPath);
+    if (entry?.huella) anotarHuella(entry.huella, absPath);
+  }
   persist();
+}
+
+function anotarHuella(huella, absPath) {
+  let rutas = _porHuella.get(huella);
+  if (!rutas) _porHuella.set(huella, (rutas = new Set()));
+  rutas.add(absPath);
+}
+
+// Rutas cuyo contenido tiene esta huella, según el registro: [[rutaAbsoluta, entrada], …].
+// Recorrer las 20.000 entradas por cada fichero nuevo sería cuadrático.
+export function conHuella(huella) {
+  const reg = load();
+  if (!_porHuella) {
+    _porHuella = new Map();
+    for (const [abs, e] of Object.entries(reg)) if (e?.huella) anotarHuella(e.huella, abs);
+  }
+  const out = [];
+  for (const abs of _porHuella.get(huella) ?? []) {
+    const e = reg[abs];
+    if (e?.huella === huella) out.push([abs, e]);
+  }
+  return out;
 }
 
 // Entrada del registro de un documento por su docId (o null).
@@ -171,6 +201,7 @@ export function remove(absPath) {
   if (entry) {
     delete reg[absPath];
     if (_porDocId && entry.docId) _porDocId.delete(entry.docId);
+    if (_porHuella && entry.huella) _porHuella.get(entry.huella)?.delete(absPath);
     persist();
   }
   return entry ?? null;
@@ -183,6 +214,7 @@ export function renombrarClave(de, a) {
   if (de === a || !reg[de] || reg[a]) return false;
   reg[a] = reg[de];
   delete reg[de];
+  _porHuella = null;
   persist();
   return true;
 }
@@ -195,6 +227,7 @@ export function removeMany(absPaths) {
   for (const p of absPaths) {
     if (reg[p]) {
       if (_porDocId && reg[p].docId) _porDocId.delete(reg[p].docId);
+      if (_porHuella && reg[p].huella) _porHuella.get(reg[p].huella)?.delete(p);
       delete reg[p];
       quitadas += 1;
     }
@@ -207,6 +240,7 @@ export function removeMany(absPaths) {
 export function vaciar() {
   _cache = {};
   _porDocId = null;
+  _porHuella = null;
   persist({ ya: true });
 }
 
@@ -251,4 +285,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, porDocId, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };
+export default { docIdForAbsPath, porDocId, conHuella, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };

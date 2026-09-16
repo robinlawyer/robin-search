@@ -520,6 +520,33 @@ export function resellar(docId, campos) {
   });
 }
 
+// Escribe `destino` con los fragmentos (texto, página y vectores) de `origen`, que es un fichero
+// de CONTENIDO idéntico en otra ruta (indexer.js lo comprueba por huella). En un despacho el mismo
+// PDF está en varias carpetas o llega adjunto varias veces: recalcular sus vectores es lo más caro
+// del indexado y daría exactamente lo mismo. El destino es un documento propio con SU ruta, SU
+// expediente y SU raíz en cada fragmento (el aislamiento por expediente filtra por ellos): de
+// `origen` solo se toma lo que sale del contenido (texto, página, vector). También vale sobre sí
+// mismo (origen = destino): el mismo fichero con otra fecha y el mismo contenido. Devuelve cuántos
+// fragmentos escribió, o null si `origen` no está completo (quien llama indexa entonces de cero).
+export function copiarDoc(origen, destino, { fichero, rutaRelativa, raiz, expediente, fechaModificacion }) {
+  return conCerrojo(async () => {
+    if (!esDocIdValido(origen) || !esDocIdValido(destino)) return null;
+    asegurarCatalogo();
+    const cab = _cab.get(origen);
+    if (!cab) return null;
+    const trozos = leerDocCompleto(cab);
+    if (!trozos.length || trozos.length !== cab.n) return null;
+    // Mismos campos y en el mismo orden que escribe el indexado.
+    const lista = trozos.map(({ chunkId, vector, metadata: { texto, pagina } }) => ({
+      chunkId,
+      vector,
+      metadata: { texto, fichero, rutaRelativa, raiz, expediente, pagina, fechaModificacion },
+    }));
+    escribirDoc(destino, lista);
+    return lista.length;
+  });
+}
+
 // Búsqueda por similitud coseno. `filter` opcional sobre metadatos ({campo: valor|{$eq|$ne|$in|$nin}}).
 export async function query(vector, topK, filter = undefined) {
   asegurarCatalogo();
@@ -796,6 +823,7 @@ export default {
   reemplazarDoc,
   deleteByDoc,
   resellar,
+  copiarDoc,
   query,
   getChunk,
   getDocChunks,

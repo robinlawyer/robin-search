@@ -18,6 +18,8 @@ import { fileURLToPath } from 'node:url';
 
 import { config } from '../config.js';
 import { log } from '../logger.js';
+import { cargarExtractor, conPrefijo, vectoresDeLote } from './motor.js';
+import * as pool from './pool.js';
 
 export const EMBEDDING_DIM = 384; // multilingual-e5-small
 
@@ -27,6 +29,9 @@ const MANIFEST_PATH = path.join(MODELS_DIR, 'manifest.json');
 
 let _pipelinePromise = null;
 let _estado = { cargado: false, cargando: false, origen: null, error: null };
+// null mientras mandan los hilos; { modo: 'hilo_principal', motivo } si se calcula aquí.
+let _modo = null;
+let _hilosPromise = null;
 
 // ¿Está el modelo empaquetado y ÍNTEGRO? Se comprueba por tamaño de cada fichero contra el
 // manifiesto que escribe el script de empaquetado: un .onnx truncado (descarga cortada, copia
@@ -60,51 +65,87 @@ export function modeloEmpaquetado(modelo = config.embeddingModel) {
   return { ok: true, dir: MODELS_DIR, modelo };
 }
 
-async function cargarPipeline() {
-  // onnxruntime-web (Emscripten) instala al cargarse manejadores de proceso que RELANZAN toda
-  // promesa rechazada y toda excepción: convertían cualquier fallo menor en la caída del servidor
-  // (el host de Node de Claude sale con cualquier excepción sin capturar). Los nuestros
-  // (diagnostico.js) ya registran y avisan; los que añada la librería se retiran.
-  const previos = {
-    unhandledRejection: new Set(process.listeners('unhandledRejection')),
-    uncaughtException: new Set(process.listeners('uncaughtException')),
-  };
-  const retirarAjenos = () => {
-    for (const [evento, antes] of Object.entries(previos)) {
-      for (const l of process.listeners(evento)) if (!antes.has(l)) process.removeListener(evento, l);
-    }
-  };
-  const { pipeline, env } = await import('@xenova/transformers');
-  env.allowLocalModels = true;
-  if (process.env.ROBIN_MODEL_CACHE) env.cacheDir = process.env.ROBIN_MODEL_CACHE;
+// Hilos de embedding: ROBIN_EMBED_HILOS=0 → todo en el hilo principal (el modo de siempre);
+// =N → N hilos exactos; sin definir → según núcleos y memoria (pool.js).
+function hilosPedidos() {
+  const bruto = process.env.ROBIN_EMBED_HILOS;
+  if (bruto === undefined || bruto === '' || bruto === 'auto') return { hilos: pool.hilosPorDefecto(), explicito: false };
+  const n = parseInt(bruto, 10);
+  return { hilos: Number.isFinite(n) && n >= 0 ? Math.min(n, 16) : pool.hilosPorDefecto(), explicito: true };
+}
 
+// Fragmentos por llamada al modelo: 16, de un mismo documento y en orden, como siempre. NO es un
+// parámetro de rendimiento que se pueda tocar: el modelo cuantizado calcula la escala de
+// cuantización de las activaciones sobre el lote entero, y el mismo fragmento calculado en un
+// lote distinto da un vector algo distinto (coseno ≈0,997; medido el 16-sep-2026). Con los mismos
+// lotes, los vectores son idénticos bit a bit a los de los índices que ya tienen los despachos.
+// (El ritmo por fragmento apenas cambia con el lote: 1, 4, 8 y 16 dieron lo mismo.)
+const LOTE = 16;
+
+async function cargarPipeline() {
   const local = modeloEmpaquetado();
   if (local.ok) {
-    // Todo en disco: ni una petición de red para cargar el modelo.
-    env.localModelPath = MODELS_DIR;
-    env.allowRemoteModels = false;
     _estado.origen = 'empaquetado';
   } else {
-    env.allowRemoteModels = true;
     _estado.origen = 'descarga';
     log.warn('Modelo de embedding NO empaquetado: se intentará descargar', local);
   }
-
-  // WASM en el HILO PRINCIPAL: en Node (y dentro del .mcpb) los Web Workers de
-  // onnxruntime-web no funcionan (lanza ERR_WORKER_PATH con una URL blob:). Desactivamos
-  // el proxy y forzamos 1 hilo → inferencia WASM síncrona, sin workers.
-  if (env.backends?.onnx?.wasm) {
-    env.backends.onnx.wasm.proxy = false;
-    env.backends.onnx.wasm.numThreads = 1;
-  }
-
   log.info('Cargando modelo de embedding', { model: config.embeddingModel, origen: _estado.origen });
-  const extractor = await pipeline('feature-extraction', config.embeddingModel, {
+  const extractor = await cargarExtractor({
+    modelo: config.embeddingModel,
     quantized: config.embeddingQuantized,
+    modelsDir: MODELS_DIR,
+    empaquetado: local.ok,
+    cacheDir: process.env.ROBIN_MODEL_CACHE || null,
   });
-  retirarAjenos();
   log.info('Modelo de embedding listo', { origen: _estado.origen });
   return extractor;
+}
+
+// Arranca los hilos de embedding. Devuelve true si hay al menos uno listo. Si no, todo sigue en
+// el hilo principal: nunca peor que antes de los hilos.
+async function arrancarHilos() {
+  const { hilos, explicito } = hilosPedidos();
+  if (hilos === 0) {
+    _modo = { modo: 'hilo_principal', motivo: 'ROBIN_EMBED_HILOS=0' };
+    return false;
+  }
+  const local = modeloEmpaquetado();
+  // Sin modelo empaquetado cada hilo lo descargaría por su cuenta: se deja en el hilo principal.
+  if (!local.ok) {
+    _modo = { modo: 'hilo_principal', motivo: 'modelo no empaquetado' };
+    return false;
+  }
+  _estado.cargando = true;
+  let ok = false;
+  try {
+    ok = await pool.iniciar({
+      objetivo: hilos,
+      ajustarPorMemoria: !explicito,
+      datosHilo: {
+        modelo: config.embeddingModel,
+        quantized: config.embeddingQuantized,
+        modelsDir: MODELS_DIR,
+        empaquetado: true,
+        cacheDir: process.env.ROBIN_MODEL_CACHE || null,
+        dim: EMBEDDING_DIM,
+      },
+      topeCargaMs: Number(process.env.ROBIN_EMBED_TOPE_CARGA_MS) || 120000,
+      respaldo: (textos) => lotePrincipal(textos),
+      avisar: (nivel, msg, datos) => log[nivel]?.(msg, datos),
+    });
+  } catch (err) {
+    log.warn('Hilos de embedding no disponibles', { err: String(err?.message ?? err) });
+    ok = false;
+  }
+  if (ok) {
+    _estado = { ..._estado, cargado: true, cargando: false, origen: 'empaquetado', error: null };
+    _modo = null;
+  } else {
+    _estado.cargando = false;
+    _modo = { modo: 'hilo_principal', motivo: pool.estado().motivo || 'los hilos no arrancaron' };
+  }
+  return ok;
 }
 
 async function getPipeline() {
@@ -127,8 +168,21 @@ async function getPipeline() {
   }
 }
 
+// ¿Hay hilos de embedding? Se decide UNA vez (la primera carga); si no arrancan, hilo principal.
+function conHilos() {
+  if (!_hilosPromise) _hilosPromise = arrancarHilos();
+  return _hilosPromise;
+}
+
+// Arranca los hilos (si procede) sin cargar el modelo en el hilo principal: el indexado lo llama
+// antes de repartir documentos, para saber si puede llevar varios a la vez.
+export async function prepararHilos() {
+  return conHilos();
+}
+
 // Precarga explícita (usada en arranque para no pagar la latencia en la primera búsqueda).
 export async function warmup() {
+  if (await conHilos()) return;
   await getPipeline();
 }
 
@@ -142,6 +196,7 @@ export function estadoMotor() {
     cargando: _estado.cargando,
     origen: _estado.origen,
     empaquetado: empaquetado.ok,
+    calculo: _modo ?? (_hilosPromise ? pool.estado() : { modo: 'sin_cargar' }),
     ...(empaquetado.ok ? {} : { modelo_empaquetado: empaquetado }),
     ...(_estado.error ? { error: _estado.error } : {}),
     ...(_estado.error || !empaquetado.ok
@@ -154,32 +209,43 @@ export function estadoMotor() {
   };
 }
 
-function withPrefix(prefix, texts) {
-  return texts.map((t) => `${prefix}: ${t}`);
-}
-
-async function embedBatch(texts) {
+// Un lote en el hilo principal (modo sin hilos, o respaldo del pool): Float32Array n × dim.
+async function lotePrincipal(textos) {
   const extractor = await getPipeline();
-  const output = await extractor(texts, { pooling: 'mean', normalize: true });
-  // output.tolist() → array de vectores (uno por texto).
-  return output.tolist();
+  return vectoresDeLote(extractor, textos, EMBEDDING_DIM);
 }
 
-// Embedding de pasajes (chunks del expediente). Procesa en lotes para no reventar memoria.
-export async function embedPassages(texts, { batchSize = 16 } = {}) {
+function trocear(v) {
+  const out = [];
+  for (let k = 0; k < v.length / EMBEDDING_DIM; k++) out.push(v.subarray(k * EMBEDDING_DIM, (k + 1) * EMBEDDING_DIM));
+  return out;
+}
+
+// Embedding de pasajes (chunks del expediente). Devuelve un Float32Array de 384 por texto, en
+// orden. Con hilos, los lotes de un mismo documento se calculan a la vez en hilos distintos.
+export async function embedPassages(texts, { batchSize = LOTE } = {}) {
+  if (!texts.length) return [];
+  const prefijados = conPrefijo('passage', texts);
+  const lotes = [];
+  for (let i = 0; i < prefijados.length; i += batchSize) lotes.push(prefijados.slice(i, i + batchSize));
+  if (await conHilos()) return (await Promise.all(lotes.map((l) => pool.calcular(l)))).flatMap(trocear);
   const vectors = [];
-  for (let i = 0; i < texts.length; i += batchSize) {
-    const batch = withPrefix('passage', texts.slice(i, i + batchSize));
-    const embedded = await embedBatch(batch);
-    for (const v of embedded) vectors.push(v);
-  }
+  for (const l of lotes) for (const v of trocear(await lotePrincipal(l))) vectors.push(v);
   return vectors;
 }
 
-// Embedding de una consulta del abogado.
+// Embedding de una consulta del abogado. Con hilos pasa DELANTE de los fragmentos del indexado.
 export async function embedQuery(text) {
-  const [vector] = await embedBatch(withPrefix('query', [text]));
-  return vector;
+  const prefijado = conPrefijo('query', [text]);
+  if (await conHilos()) {
+    return trocear(await pool.calcular(prefijado, { consulta: true }))[0];
+  }
+  return trocear(await lotePrincipal(prefijado))[0];
 }
 
-export default { warmup, embedPassages, embedQuery, estadoMotor, modeloEmpaquetado, EMBEDDING_DIM };
+// Para el indexado: cuánto trabajo hay en cola y cuántos hilos lo consumen (control de memoria).
+export function cargaEmbedding() {
+  return pool.activo() ? { pendientes: pool.pendientes(), hilos: pool.capacidad(), lote: LOTE } : null;
+}
+
+export default { warmup, prepararHilos, embedPassages, embedQuery, estadoMotor, modeloEmpaquetado, cargaEmbedding, EMBEDDING_DIM };

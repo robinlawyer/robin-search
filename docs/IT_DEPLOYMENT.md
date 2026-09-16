@@ -36,6 +36,18 @@ robin-search --silent --token="TOKEN" --folder="C:\Expedientes"
 | `--folder`   | `ROBIN_FOLDER`    |
 | `--data-dir` | `ROBIN_DATA_DIR`  |
 
+### Velocidad de indexado y memoria
+
+El cálculo de vectores (lo que más tarda) se reparte en hilos de trabajo locales. Por defecto,
+uno por núcleo menos uno, como mucho 4 y sin pasar del 30 % de la memoria del equipo (cada hilo
+ocupa ~1,1 GB mientras indexa; terminado el indexado, los hilos de más se sueltan a los 2 min).
+
+| Variable            | Efecto                                                                       |
+| ------------------- | ---------------------------------------------------------------------------- |
+| `ROBIN_EMBED_HILOS` | `0`: todo en el hilo principal (como hasta la 1.5.0). `N`: N hilos exactos.  |
+
+El índice y los resultados de búsqueda son idénticos con cualquier valor.
+
 ### Directorios de datos (para respaldo/limpieza)
 
 | SO      | Ruta                                                             |

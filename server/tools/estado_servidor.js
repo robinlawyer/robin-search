@@ -69,7 +69,8 @@ export const definition = {
     'Devuelve el estado del servidor de búsqueda local: versión, si hay actualización ' +
     'disponible, carpetas vigiladas, expedientes detectados (con sus contadores), expediente ' +
     'activo de la sesión, documentos y fragmentos indexados, ficheros sin OCR y tamaño del ' +
-    'índice. Incluye además el estado del MOTOR DE EMBEDDING y el resumen del último ' +
+    'índice. Mientras indexa, el progreso con una estimación del tiempo restante (eta) que ' +
+    'puedes dar al abogado como aproximada. Incluye además el estado del MOTOR DE EMBEDDING y el resumen del último ' +
     'indexado con las causas de sus errores: si algo no se encuentra, mira eso ANTES de ' +
     'concluir que el documento no existe. Úsala para saber qué expedientes hay antes de ' +
     'fijar uno.',
