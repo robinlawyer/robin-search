@@ -25,6 +25,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { config } from '../config.js';
 import { log } from '../logger.js';
+import { conReintentos, escribirAtomico } from '../persistencia.js';
 import { itemsVectra } from './migracion-vectra.js';
 
 const TOPE_VECTORES_BYTES = (() => {
@@ -70,33 +71,7 @@ function conCerrojo(fn) {
   return run;
 }
 
-// En Windows no se puede renombrar encima de un fichero, ni borrarlo, mientras otro proceso lo
-// tiene abierto (la otra instancia, leyéndolo para una búsqueda). Es cuestión de milisegundos:
-// se reintenta un poco antes de dar la escritura por fallida.
-const OCUPADO = new Set(['EPERM', 'EBUSY', 'EACCES']);
-const _dormir = new Int32Array(new SharedArrayBuffer(4));
-function conReintentos(fn) {
-  for (let i = 0; ; i++) {
-    try {
-      return fn();
-    } catch (err) {
-      if (!OCUPADO.has(err?.code) || i >= 20) throw err;
-      Atomics.wait(_dormir, 0, 0, 25 + i * 10);
-    }
-  }
-}
-
-function escribirAtomico(ruta, datos) {
-  const tmp = `${ruta}.${process.pid}.tmp`;
-  fs.writeFileSync(tmp, datos);
-  try {
-    conReintentos(() => fs.renameSync(tmp, ruta));
-  } catch (err) {
-    fs.rmSync(tmp, { force: true });
-    throw err;
-  }
-}
-
+// Escritura atómica y reintentos ante el antivirus / la otra instancia: persistencia.js.
 // Borrar sin hacer fallar la operación: lo que no se pueda quitar ahora (un .vec de una
 // generación ya sustituida) lo recoge limpiarRestos en el siguiente arranque.
 function quitar(ruta) {
@@ -160,33 +135,34 @@ function soltarVectores(docId) {
   }
 }
 
-// Relee las cabeceras del disco. Solo vuelve a abrir los documentos que han cambiado.
-function escanear() {
-  const nuevo = new Map();
-  let nombres = [];
+function nombresDocs() {
   try {
-    nombres = fs.readdirSync(dirDocs());
+    return fs.readdirSync(dirDocs());
   } catch {
-    nombres = [];
+    return [];
   }
-  for (const nombre of nombres) {
-    if (!nombre.endsWith('.jsonl')) continue;
-    const docId = nombre.slice(0, -'.jsonl'.length);
-    if (!esDocIdValido(docId)) continue;
-    let mt;
-    try {
-      mt = fs.statSync(rutaMeta(docId)).mtimeMs;
-    } catch {
-      continue;
-    }
-    const previa = _cab?.get(docId);
-    if (previa && previa.mtimeMs === mt) {
-      nuevo.set(docId, previa);
-      continue;
-    }
-    const cab = leerCabecera(docId);
-    if (cab) nuevo.set(docId, cab);
+}
+
+function cabeceraAlDia(nombre, nuevo) {
+  if (!nombre.endsWith('.jsonl')) return;
+  const docId = nombre.slice(0, -'.jsonl'.length);
+  if (!esDocIdValido(docId)) return;
+  let mt;
+  try {
+    mt = fs.statSync(rutaMeta(docId)).mtimeMs;
+  } catch {
+    return;
   }
+  const previa = _cab?.get(docId);
+  if (previa && previa.mtimeMs === mt) {
+    nuevo.set(docId, previa);
+    return;
+  }
+  const cab = leerCabecera(docId);
+  if (cab) nuevo.set(docId, cab);
+}
+
+function aplicarCatalogo(nuevo) {
   for (const [id, e] of [..._vec]) {
     const c = nuevo.get(id);
     if (!c || c.gen !== e.gen) soltarVectores(id);
@@ -197,6 +173,29 @@ function escanear() {
   }
   _cab = nuevo;
   _dirMtime = mtimeDir();
+}
+
+// Relee las cabeceras del disco. Solo vuelve a abrir los documentos que han cambiado.
+function escanear() {
+  const nuevo = new Map();
+  for (const nombre of nombresDocs()) cabeceraAlDia(nombre, nuevo);
+  aplicarCatalogo(nuevo);
+}
+
+// Lo mismo al ABRIR, soltando el proceso cada pocos milisegundos: con 20.000 documentos (y un
+// antivirus mirando cada fichero) la primera lectura pasa del minuto, y si el proceso no atiende
+// a Claude mientras tanto, Claude lo da por muerto («Server disconnected»).
+async function escanearCediendo() {
+  const nuevo = new Map();
+  let t = Date.now();
+  for (const nombre of nombresDocs()) {
+    cabeceraAlDia(nombre, nuevo);
+    if (Date.now() - t > 30) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  }
+  aplicarCatalogo(nuevo);
 }
 
 // Otra instancia (la que indexa) puede haber escrito documentos: si el directorio ha cambiado
@@ -598,7 +597,8 @@ async function migrarDesdeVectra(ruta, derivarExpediente) {
   if (info.completo) volcar();
   else actual = null;
 
-  fs.rmSync(path.dirname(ruta), { recursive: true, force: true });
+  // Con reintentos: en Windows otra instancia de una versión anterior puede tenerlo abierto.
+  fs.rmSync(path.dirname(ruta), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   const r = {
     documentos,
     fragmentos,
@@ -621,7 +621,7 @@ export async function abrir({ migrar = true, derivarExpediente = null, alMigrar 
     alMigrar?.();
     migracion = await conCerrojo(() => migrarDesdeVectra(viejo, derivarExpediente));
   }
-  escanear();
+  await escanearCediendo();
   if (migrar) limpiarRestos();
   return { ...resumen(), migracion };
 }
@@ -629,8 +629,8 @@ export async function abrir({ migrar = true, derivarExpediente = null, alMigrar 
 // Rehacer desde cero (índice irrecuperable). Los documentos originales siguen en su carpeta: se
 // vuelven a indexar desde ellos.
 export function borrarTodo() {
-  fs.rmSync(dirIndice(), { recursive: true, force: true });
-  fs.rmSync(path.dirname(rutaVectraAntigua()), { recursive: true, force: true });
+  fs.rmSync(dirIndice(), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  fs.rmSync(path.dirname(rutaVectraAntigua()), { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   _cab = new Map();
   _vec.clear();
   _vecBytes = 0;

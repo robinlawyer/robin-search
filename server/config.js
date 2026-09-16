@@ -6,6 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { escribirJson, leerJson } from './persistencia.js';
 
 // La versión sale del package.json que viaja en el paquete, NO de una
 // constante a mano: escrita dos veces, se olvida una. El servidor estuvo
@@ -109,11 +110,12 @@ export function rutaAjustes(dataDir) {
   return path.join(dataDir, 'ajustes.json');
 }
 
+// Ajustes cortados (apagón a mitad) no pueden dejar al abogado sin carpetas: se recuperan de la
+// copia .bak que deja cada escritura.
 function leerAjustes(dataDir) {
   try {
-    const raw = fs.readFileSync(rutaAjustes(dataDir), 'utf8');
-    const d = JSON.parse(raw);
-    return Array.isArray(d?.carpetas) ? d.carpetas.map(String) : [];
+    const r = leerJson(rutaAjustes(dataDir));
+    return Array.isArray(r.valor?.carpetas) ? r.valor.carpetas.map(String) : [];
   } catch {
     return [];
   }
@@ -161,7 +163,7 @@ function migrarDesdeClaude(dataDir) {
         : typeof carpetas === 'string' && carpetas.trim() ? [carpetas.trim()] : [];
       if (!lista.length) continue;
       fs.mkdirSync(dataDir, { recursive: true });
-      fs.writeFileSync(rutaAjustes(dataDir), JSON.stringify({ carpetas: lista, migradoDeClaude: true }, null, 2));
+      escribirJson(rutaAjustes(dataDir), { carpetas: lista, migradoDeClaude: true }, { bak: true, indent: 2 });
       return lista;
     }
     return [];
@@ -443,7 +445,7 @@ export function guardarCarpetas(carpetas) {
     .filter(Boolean)
     .map((c) => path.resolve(c));
   fs.mkdirSync(config.dataDir, { recursive: true });
-  fs.writeFileSync(rutaAjustes(config.dataDir), JSON.stringify({ carpetas: lista }, null, 2));
+  escribirJson(rutaAjustes(config.dataDir), { carpetas: lista }, { bak: true, indent: 2 });
   return recargarCarpetas();
 }
 

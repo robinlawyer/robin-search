@@ -18,9 +18,10 @@ import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
 const results = [];
 const check = (n, c, d = '') => {
   results.push(c);
@@ -143,8 +144,11 @@ const leerLog = (datos) => {
   }
 };
 
+// En Windows kill() es TerminateProcess: no hay manejador que ejecutar. Claude Desktop cierra el
+// servidor cerrando su stdin, así que ahí se para igual que lo para Claude.
 async function parar(s) {
-  s.proc.kill('SIGTERM');
+  if (process.platform === 'win32') s.proc.stdin.end();
+  else s.proc.kill('SIGTERM');
   return conTope(s.salida, 10000);
 }
 
@@ -246,7 +250,9 @@ await parar(s);
 console.log('\nC. El aviso técnico no lleva nada de los documentos\n');
 const todo = recibidos.map((r) => r.bruto).join('\n');
 const prohibidos = [
-  base, os.homedir(), os.userInfo().username, 'Pérez', 'Divorcio', 'García', 'Reclamación', 'veneno',
+  // Las rutas de Windows viajan con la barra invertida DUPLICADA dentro del JSON.
+  base, os.homedir(), JSON.stringify(base).slice(1, -1), JSON.stringify(os.homedir()).slice(1, -1),
+  os.userInfo().username, 'Pérez', 'Divorcio', 'García', 'Reclamación', 'veneno',
   'contrato', 'burofax', 'Lledó', 'Concurso', 'Expedientes', 'custodia', 'suministro',
 ];
 for (const p of prohibidos) check(`C. ningún aviso contiene «${p.length > 40 ? `…${p.slice(-30)}` : p}»`, !todo.includes(p));
@@ -258,7 +264,7 @@ antes = recibidos.length;
 s = servidor({ madre: madreA, datos: datosA });
 await esperarFin(s.call);
 fin = await parar(s);
-check('D.1 SIGTERM: sale con código 0', fin?.code === 0, JSON.stringify(fin));
+check(`D.1 ${process.platform === 'win32' ? 'stdin cerrado' : 'SIGTERM'}: sale con código 0`, fin?.code === 0, JSON.stringify(fin));
 check('D.2 no deja marca de fase ni cerrojo', !fs.readdirSync(datosA).some((n) => /^en_curso-/.test(n)) && !fs.existsSync(path.join(datosA, 'escritor.lock')));
 s = servidor({ madre: madreA, datos: datosA });
 await esperarFin(s.call);
@@ -370,7 +376,7 @@ check('I.1 la carpeta de local.mcpb.robinlawyer.ai.robin-search se recupera', Bo
 await parar(s);
 
 receptor.close();
-fs.rmSync(base, { recursive: true, force: true });
+fs.rmSync(base, { recursive: true, force: true, maxRetries: 10, retryDelay: 300 });
 const ok = results.filter(Boolean).length;
 console.log(`\n${ok}/${results.length} comprobaciones OK`);
 process.exit(ok === results.length ? 0 : 1);

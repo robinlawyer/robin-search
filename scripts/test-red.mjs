@@ -8,10 +8,18 @@
 //
 // La carpeta de red se simula con ROBIN_NETWORK_PATHS (la misma escotilla que sirve para
 // forzar el modo red en un Windows donde la detección automática falle).
-import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { spawn, execFileSync } from 'node:child_process';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 const espera=(ms)=>new Promise(r=>setTimeout(r,ms));
 
@@ -34,7 +42,7 @@ const env={...process.env,ROBIN_TOKEN:'t',
   ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'};
 
-const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
 let buf=''; const w=new Map(); let id=1; let se='';
 c.stderr.on('data',d=>{se+=d.toString();});
 c.stdout.on('data',(d)=>{buf+=d.toString();let i;
@@ -121,7 +129,13 @@ async function main(){
   check('lo que se retira del expediente sale también del índice', fuera);
 
   // 6) La unidad de red se cae. Eso NO es "el expediente está vacío": hay que decirlo.
-  fs.chmodSync(CASO,0o000);
+  // En Windows chmod solo toca el atributo de solo lectura de FICHEROS: se deniega con icacls.
+  // Como root (contenedores) chmod 000 no impide leer: ahí no se puede probar y se dice.
+  const yo=process.platform==='win32'?`${process.env.USERDOMAIN}\\${process.env.USERNAME}`:null;
+  const ilegible=()=>yo?execFileSync('icacls',[CASO,'/deny',`${yo}:(OI)(CI)(RX)`],{stdio:'ignore'}):fs.chmodSync(CASO,0o000);
+  const legible=()=>yo?execFileSync('icacls',[CASO,'/remove:d',yo],{stdio:'ignore'}):fs.chmodSync(CASO,0o755);
+  if(process.getuid?.()===0) console.log('  (omitido) como root no se puede simular una carpeta ilegible');
+  else { ilegible();
   try{
     const r=await call('indexar_carpeta');
     const seQueja = Boolean(r.data.subcarpetas_ilegibles||r.data.carpetas_inaccesibles) && Boolean(r.data.aviso);
@@ -131,11 +145,11 @@ async function main(){
     const l=await call('listar_documentos_indexados');
     check('con la unidad caída NO se vacía el índice del expediente',
       l.data.total>=2, `documentos=${l.data.total}`);
-  } finally { fs.chmodSync(CASO,0o755); }
+  } finally { legible(); } }
 
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
   if(fallos){console.log(se.slice(-2000));process.exitCode=1;}
-  c.kill(); fs.rmSync(base,{recursive:true,force:true});
+  await terminar(c); borrar(base);
 }
 main().catch(e=>{console.error('ERROR:',e);console.error(se.slice(-2000));process.exit(1);});

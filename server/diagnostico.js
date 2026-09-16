@@ -74,8 +74,12 @@ function instalacionId() {
 
 // ── 1. Marca de fase ────────────────────────────────────────────────────────────────────────
 let _marca = null;
+// En un cierre ordenado ya no se escriben marcas: el indexado que sigue unos milisegundos volvía
+// a dejar una y el siguiente arranque la tomaba por caída sobre un fichero sano.
+let _cerrando = false;
 
 export function marcarFase(fase, extra = {}) {
+  if (_cerrando) return;
   _marca = { pid: process.pid, fase, t: new Date().toISOString(), version: VERSION, ...extra };
   try {
     fs.writeFileSync(rutaMarca(), JSON.stringify(_marca));
@@ -121,14 +125,23 @@ export function revisarCaidaAnterior() {
     }
     // Un pid vivo con una marca de más de un día es un pid reciclado por otro programa.
     if (pidVivo(pid) && edad < MARCA_CADUCA_MS) continue;
+    // Claude arranca dos instancias a la vez: las dos veían la misma marca y la contaban, y UNA
+    // caída pasaba por dos (fichero sano apartado, índice rehecho). Solo la cuenta quien consigue
+    // renombrarla primero.
+    const reclamada = `${ruta}.reclamada-${process.pid}`;
+    try {
+      fs.renameSync(ruta, reclamada);
+    } catch {
+      continue;
+    }
     let d = null;
     try {
-      d = JSON.parse(fs.readFileSync(ruta, 'utf8'));
+      d = JSON.parse(fs.readFileSync(reclamada, 'utf8'));
     } catch {
       d = null;
     }
     try {
-      fs.rmSync(ruta, { force: true });
+      fs.rmSync(reclamada, { force: true });
     } catch {
       /* nada */
     }
@@ -141,6 +154,11 @@ export function revisarCaidaAnterior() {
   est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
   guardarEstado(est);
   return { ...caidas[caidas.length - 1], caidasSeguidas: est.caidasSeguidas };
+}
+
+// El índice abrió bien: las caídas anteriores al abrirlo ya no cuentan.
+export function indiceAbierto() {
+  arranqueCompleto();
 }
 
 // El arranque llegó al final (índice abierto, modelo cargado, indexado inicial hecho).
@@ -575,6 +593,7 @@ export function instalarManejadores({ alCerrar } = {}) {
   const salirLimpio = (motivo) => {
     if (cerrando) return;
     cerrando = true;
+    _cerrando = true;
     log.info('Cierre ordenado de RobinSearch', { motivo });
     try {
       alCerrar?.();
@@ -628,6 +647,7 @@ export default {
   finFase,
   faseActual,
   revisarCaidaAnterior,
+  indiceAbierto,
   arranqueCompleto,
   caidasSeguidasEn,
   limpiarTexto,

@@ -19,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { config, VERSION } from '../config.js';
+import { escribirJson, leerJson } from '../persistencia.js';
 
 export const MOTIVO_CAIDA = 'hizo_caer_el_indexador';
 export const MOTIVO_TAMANYO = 'demasiado_grande';
@@ -28,22 +29,35 @@ let _cache = null;
 
 const ruta = () => path.join(config.dataDir, 'apartados.json');
 
-function cargar() {
-  if (_cache) return _cache;
+// Se relee si el fichero cambió (la otra instancia también aparta): con la caché fija, cada una
+// sobrescribía lo de la otra con datos viejos.
+let _mtime = -1;
+function mtimeActual() {
   try {
-    _cache = JSON.parse(fs.readFileSync(ruta(), 'utf8')) || {};
+    return fs.statSync(ruta()).mtimeMs;
   } catch {
-    _cache = {};
+    return 0;
   }
+}
+
+function cargar() {
+  const m = mtimeActual();
+  if (_cache && m === _mtime) return _cache;
+  try {
+    const r = leerJson(ruta());
+    _cache = r.estado === 'ok' ? r.valor : _cache || {};
+  } catch {
+    _cache ??= {};
+  }
+  _mtime = m;
   return _cache;
 }
 
 function guardar() {
   try {
     fs.mkdirSync(config.dataDir, { recursive: true });
-    const tmp = `${ruta()}.${process.pid}.tmp`;
-    fs.writeFileSync(tmp, JSON.stringify(_cache));
-    fs.renameSync(tmp, ruta());
+    escribirJson(ruta(), _cache, { bak: true });
+    _mtime = mtimeActual();
   } catch {
     /* sin disco no hay nada que apartar; el indexado sigue */
   }

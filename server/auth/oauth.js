@@ -17,6 +17,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 
+import { escribirJson, leerJson } from '../persistencia.js';
 import { config, ensureDataDirs } from '../config.js';
 import { log } from '../logger.js';
 import { fail } from '../tools/util.js';
@@ -45,16 +46,14 @@ function challengeFor(verifier) {
 // ---------- persistencia del estado de sesión ---------- //
 function loadAuth() {
   try {
-    return JSON.parse(fs.readFileSync(config.authStatePath, 'utf8'));
+    return leerJson(config.authStatePath, { bak: false }).valor;
   } catch {
     return null;
   }
 }
 function saveAuth(a) {
   ensureDataDirs();
-  const tmp = config.authStatePath + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(a, null, 2), { mode: 0o600 });
-  fs.renameSync(tmp, config.authStatePath);
+  escribirJson(config.authStatePath, a, { indent: 2, mode: 0o600 });
   try {
     fs.chmodSync(config.authStatePath, 0o600);
   } catch {
@@ -74,17 +73,21 @@ function clearTokens() {
 // ---------- discovery ---------- //
 let _disc = null;
 async function discover() {
-  if (_disc) return _disc;
+  if (_disc && !(_disc._convencionHasta < Date.now())) return _disc;
   const issuer = config.oauthIssuer.replace(/\/+$/, '');
   try {
-    const r = await fetch(`${issuer}/.well-known/oauth-authorization-server`);
+    // Con límite: un proxy de despacho que acepta la conexión y no contesta dejaba colgada
+    // cualquier herramienta hasta 5 minutos.
+    const r = await fetch(`${issuer}/.well-known/oauth-authorization-server`, { signal: AbortSignal.timeout(8000) });
     if (r.ok) {
       _disc = await r.json();
       return _disc;
     }
   } catch {
-    /* sin red: usamos los endpoints por convención */
+    /* sin red o respuesta que no es JSON: usamos los endpoints por convención */
   }
+  // Los de convención valen 5 minutos: sin red no se espera en cada herramienta, y en cuanto
+  // vuelva se usa lo que publique el servidor.
   _disc = {
     issuer,
     authorization_endpoint: `${issuer}/oauth/authorize`,
@@ -92,6 +95,7 @@ async function discover() {
     registration_endpoint: `${issuer}/oauth/register`,
     userinfo_endpoint: `${issuer}/oauth/userinfo`,
     revocation_endpoint: `${issuer}/oauth/revoke`,
+    _convencionHasta: Date.now() + 5 * 60 * 1000,
   };
   return _disc;
 }
@@ -218,7 +222,15 @@ export function pickupCode(url, clientId, verifier, deadlineMs, signal, { timeou
   });
 }
 
-async function refresh(a) {
+// Una sola renovación a la vez en el proceso: dos herramientas a la vez con el token caducado
+// gastaban el mismo refresh_token dos veces y la segunda lo daba por revocado.
+let _renovando = null;
+function refresh(a) {
+  if (!_renovando) _renovando = renovar(a).finally(() => { _renovando = null; });
+  return _renovando;
+}
+
+async function renovar(a) {
   if (!a?.refresh_token) return null;
   const disc = await discover();
   const body = new URLSearchParams({
@@ -232,15 +244,36 @@ async function refresh(a) {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body,
+      signal: AbortSignal.timeout(10000),
     });
   } catch {
     return null; // sin red: no invalidamos la sesión, reintentaremos luego
   }
   if (!r.ok) {
-    clearTokens(); // refresh revocado/expirado → hay que volver a iniciar sesión
+    // Solo un rechazo EXPLÍCITO del refresh cierra la sesión. Un 502 durante un despliegue o un
+    // 429 dejaban a todos los abogados sin sesión.
+    let error = null;
+    try {
+      error = (await r.json())?.error ?? null;
+    } catch {
+      error = null;
+    }
+    if ((r.status === 400 || r.status === 401) && (error === 'invalid_grant' || error === null)) {
+      // La otra instancia pudo rotar el refresh_token un instante antes: si en disco ya hay otro,
+      // es la sesión buena y no se borra.
+      const actual = loadAuth();
+      if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
+      clearTokens(); // refresh revocado/expirado → hay que volver a iniciar sesión
+    }
     return null;
   }
-  const merged = { ...a, ...normalizeTokens(await r.json(), a) };
+  let datos;
+  try {
+    datos = await r.json();
+  } catch {
+    return null; // un portal cautivo o proxy devolviendo HTML: no es un rechazo
+  }
+  const merged = { ...a, ...normalizeTokens(datos, a) };
   saveAuth(merged);
   return merged;
 }

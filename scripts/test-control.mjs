@@ -8,12 +8,20 @@
 // local es justo lo que bloquean los antivirus de despacho (10-sep-2026, 12
 // códigos de login emitidos y 0 recogidos). Un socket de dominio UNIX no es
 // tráfico de red y ningún cortafuegos lo ve.
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import net from 'node:net';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 import crypto from 'node:crypto';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 const espera=(ms)=>new Promise(r=>setTimeout(r,ms));
 
@@ -37,7 +45,7 @@ fs.writeFileSync(path.join(DATOS,'ajustes.json'), JSON.stringify({carpetas:[path
 const env={...process.env, ROBIN_DATA_DIR:DATOS,
   ROBIN_TOKEN:'ROBIN-PRUEBA-control', ROBIN_OCR:'false', ROBIN_LOG_LEVEL:'error',
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no', ROBIN_OAUTH_ISSUER:'http://127.0.0.1:9'};
-const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
 let se=''; c.stderr.on('data',d=>{se+=d.toString();});
 c.stdout.on('data',()=>{});
 
@@ -61,7 +69,7 @@ function conectar(){
   });
 }
 
-async function conectarConEspera(intentos=60){
+async function conectarConEspera(intentos=240){
   for(let i=0;i<intentos;i++){
     try { return await conectar(); } catch { await espera(250); }
   }
@@ -109,7 +117,7 @@ async function main(){
   // 12 s la prueba «fallaba» una vez de cada tres con el reindexado terminando
   // bien. El bucle sale en cuanto llega el fin, así que en una máquina rápida
   // sigue tardando lo mismo.
-  for(let i=0;i<400 && !msgs.some(m=>m.tipo==='fin-reindexado');i++) await espera(150);
+  for(let i=0;i<1200 && !msgs.some(m=>m.tipo==='fin-reindexado');i++) await espera(150);
 
   const respuesta=msgs.slice(antes).find(m=>m.tipo==='respuesta'&&m.cmd==='reindexar');
   check('el servidor acepta la orden de reindexar', respuesta?.ok===true);
@@ -126,9 +134,7 @@ async function main(){
 
   // --- Una orden desconocida no puede tumbar el canal ---
   s.write(JSON.stringify({cmd:'haz_lo_que_quieras'})+'\n');
-  await espera(400);
-  s.write(JSON.stringify({cmd:'estado'})+'\n');
-  await espera(600);
+  for(let i=0;i<200 && !msgs.some(m=>m.motivo==='orden_desconocida');i++) await espera(150);
   check('una orden desconocida se rechaza sin cerrar el canal',
     msgs.some(m=>m.motivo==='orden_desconocida') && !s.destroyed);
 
@@ -141,6 +147,10 @@ async function main(){
     const u = msgs.filter((m) => m.tipo === 'estado').at(-1);
     if (u && u.estado !== 'indexando') break;
   }
+  // El canal agrupa los avisos (como mucho uno cada 500 ms) y el fin del indexado anterior
+  // acaba de emitir uno: sin esta pausa, la fase «buscando» de una carpeta pequeña se agrupa
+  // con la siguiente y no llega nunca a la app.
+  await espera(600);
   const RAIZ = path.dirname(MADRE);
   const antesC = msgs.length;
   const t0C = Date.now();
@@ -167,14 +177,14 @@ async function main(){
     finesC.length === 2 && finesC.every((m) => m.ok && m.carpetas?.[0] === RAIZ), `${finesC.length} fines`);
 
   // --- Una segunda instancia no puede robar el canal ---
-  const c2=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:'ignore'});
+  const c2=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:'ignore'});
   await espera(3000);
   s.write(JSON.stringify({cmd:'estado'})+'\n');
   const antes2=msgs.length;
-  await espera(800);
+  for(let i=0;i<200 && msgs.length===antes2;i++) await espera(150);
   check('con dos instancias vivas, el canal del primero sigue sirviendo',
-    msgs.length>antes2, `${antes2} → ${msgs.length}`);
-  c2.kill();
+    msgs.length>antes2 && c2.exitCode===null, `${antes2} → ${msgs.length}`);
+  await terminar(c2);
 
   // --- La carpeta la manda la APP, no la pantalla de configuracion de Claude ---
   // El abogado configura RobinSearch en la app de RobinSearch, en un sitio y no
@@ -186,7 +196,7 @@ async function main(){
   }
   const antesCfg = msgs.length;
   s.write(JSON.stringify({ cmd: 'configurar', carpetas: [path.dirname(MADRE), path.dirname(OTRA)] }) + '\n');
-  for (let i = 0; i < 100 && !msgs.slice(antesCfg).some(m => m.tipo === 'respuesta' && m.cmd === 'configurar'); i++) await espera(150);
+  for (let i = 0; i < 400 && !msgs.slice(antesCfg).some(m => m.tipo === 'respuesta' && m.cmd === 'configurar'); i++) await espera(150);
   const rc = msgs.slice(antesCfg).find(m => m.tipo === 'respuesta' && m.cmd === 'configurar');
   check('el servidor acepta las carpetas que manda la app', rc?.ok === true, JSON.stringify(rc?.carpetas?.length));
   check('y las guarda en SU fichero de ajustes, no en los de Claude',
@@ -194,7 +204,7 @@ async function main(){
   const guardado = JSON.parse(fs.readFileSync(path.join(DATOS, 'ajustes.json'), 'utf8'));
   check('con las dos carpetas dentro', (guardado.carpetas || []).length === 2, JSON.stringify(guardado.carpetas?.length));
 
-  for (let i = 0; i < 100 && !msgs.slice(antesCfg).some(m => m.tipo === 'fin-reindexado'); i++) await espera(150);
+  for (let i = 0; i < 1200 && !msgs.slice(antesCfg).some(m => m.tipo === 'fin-reindexado'); i++) await espera(150);
   const est = msgs.filter(m => m.tipo === 'estado').at(-1);
   check('las aplica EN CALIENTE, sin reiniciar Claude', (est?.carpetas || []).length === 2,
     `${est?.carpetas?.length} carpetas vigiladas`);
@@ -203,11 +213,13 @@ async function main(){
     `indexados=${finCfg?.resumen?.indexados}`);
 
   // --- Al cerrar el servidor, el socket no queda huérfano bloqueando el siguiente arranque ---
-  c.kill();
-  await espera(1500);
-  const c3=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:'ignore'});
+  // ESPERAR a que el primero MUERA. Con «kill + 1,5 s» el primero seguía vivo si estaba
+  // ocupado (la señal no se atiende hasta que el WASM suelta el hilo): la «reconexión» se hacía
+  // con el servidor VIEJO, que moría justo después sin mandar nada → «undefined carpetas».
+  await terminar(c);
+  const c3=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:'ignore'});
   let reconectado=false;
-  for(let i=0;i<40 && !reconectado;i++){
+  for(let i=0;i<240 && !reconectado;i++){
     try { const s3=await conectar(); s3.destroy(); reconectado=true; } catch { await espera(250); }
   }
   check('tras reiniciar el servidor, la app vuelve a conectar', reconectado);
@@ -215,28 +227,31 @@ async function main(){
   if (reconectado) {
     const s4 = await conectar();
     const m4 = lector(s4);
-    for (let i = 0; i < 40 && !m4.length; i++) await espera(150);
+    // El sistema acepta la conexión en cuanto el canal escucha, pero el servidor no la ATIENDE
+    // hasta que suelta el hilo, y justo después de abrir el canal carga el modelo (varios
+    // segundos de WASM síncrono; más de 6 s en un equipo cargado o en CI).
+    for (let i = 0; i < 400 && !m4.length; i++) await espera(150);
     check('y arranca con las carpetas del fichero de ajustes, sin variables de entorno',
       (m4[0]?.carpetas || []).length === 2, `${m4[0]?.carpetas?.length} carpetas`);
     try { s4.destroy(); } catch { /* nada */ }
   }
-  c3.kill();
+  await terminar(c3);
 
   // --- Despliegue de IT: si el entorno fija las carpetas, no se finge ---
-  const cIT=spawn('node',[path.join(REPO,'server/index.js')],
+  const cIT=spawn(process.execPath,[path.join(REPO,'server/index.js')],
     {env:{...env, ROBIN_FOLDERS:path.dirname(MADRE), ROBIN_DATA_DIR:path.join(base,'datos-it')},stdio:'ignore'});
   const huellaIT=crypto.createHash('sha256').update(path.join(base,'datos-it')).digest('hex').slice(0,8);
   const rutaIT=process.platform==='win32'?`\\\\.\\pipe\\robinsearch-${huellaIT}`
                                         :path.join('/tmp',`robinsearch-${huellaIT}.sock`);
   let sIT=null;
-  for(let i=0;i<60 && !sIT;i++){
+  for(let i=0;i<240 && !sIT;i++){
     try { sIT=await new Promise((res,rej)=>{const x=net.connect(rutaIT);x.once('connect',()=>res(x));x.once('error',rej);}); }
     catch { await espera(250); }
   }
   if(sIT){
     const mIT=lector(sIT);
     sIT.write(JSON.stringify({cmd:'configurar',carpetas:[path.dirname(OTRA)]})+'\n');
-    for(let i=0;i<60 && !mIT.some(m=>m.cmd==='configurar');i++) await espera(150);
+    for(let i=0;i<400 && !mIT.some(m=>m.cmd==='configurar');i++) await espera(150);
     const rIT=mIT.find(m=>m.cmd==='configurar');
     check('si las carpetas las fija el entorno (despliegue de IT), se DICE en vez de fingir',
       rIT?.ok===false && rIT.motivo==='fijadas_por_entorno', JSON.stringify(rIT?.motivo));
@@ -244,13 +259,13 @@ async function main(){
   } else {
     check('si las carpetas las fija el entorno, se DICE en vez de fingir', false, 'no se pudo conectar');
   }
-  cIT.kill();
+  await terminar(cIT);
 
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
   if(fallos){console.log(se.slice(-1500));process.exitCode=1;}
   try{s.destroy();}catch{}
-  fs.rmSync(base,{recursive:true,force:true});
+  borrar(base);
 }
 main().catch(e=>{console.error('ERROR:',e);console.error(se.slice(-1500));
   try{c.kill();}catch{} process.exit(1);});

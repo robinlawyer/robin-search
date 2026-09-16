@@ -10,10 +10,18 @@
 //   4. `estado_servidor` publica motor de embedding y resumen del último indexado.
 //   5. `indexar_carpeta({ path })` no revienta con ReferenceError (faltaba `import path`).
 //   6. Con el motor sano, todo lo anterior vuelve a verde y el modelo sale del paquete.
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 
 const base=fs.mkdtempSync(path.join(os.tmpdir(),'rs-diag-'));
@@ -29,7 +37,7 @@ function servidor(extraEnv){
   const env={...process.env,ROBIN_TOKEN:'t',ROBIN_FOLDERS:MADRE,
     ROBIN_DATA_DIR:path.join(base,'datos-'+Math.abs(hash(JSON.stringify(extraEnv)))),
     ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',...extraEnv};
-  const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+  const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
   let buf=''; const w=new Map(); let id=1;
   c.stderr.on('data',()=>{});
   c.stdout.on('data',(d)=>{buf+=d.toString();let i;
@@ -83,7 +91,7 @@ await roto.rpc('initialize',{protocolVersion:'2026-07-28',capabilities:{},client
     /TODOS/.test(idx.data?.aviso||'') && /motor_embedding/.test(idx.data?.aviso||''),
     String(idx.data?.aviso||'').slice(0,80));
 }
-roto.proc.kill();
+await terminar(roto.proc);
 
 // ───────────────────────── B. Motor sano ─────────────────────────
 console.log('\nB. Motor sano: el modelo sale del paquete y el indexado va limpio\n');
@@ -112,7 +120,7 @@ await sano.rpc('initialize',{protocolVersion:'2026-07-28',capabilities:{},client
     fuera.isError && /fuera de las carpetas/.test(fuera.raw) && !/is not defined/.test(fuera.raw),
     fuera.raw.slice(0,70));
 }
-sano.proc.kill();
+await terminar(sano.proc);
 
 // ───────── C. Da igual qué nivel se elija en el diálogo de instalación ─────────
 // El abogado elige "la carpeta" al instalar y no tiene por qué acertar el nivel. Si elegía la
@@ -147,10 +155,10 @@ for (const [etiqueta,carpeta] of [['carpeta del CASO',CASO2],['carpeta MADRE',ba
     !ficheros.includes('pieza.txt') && !b.raw.includes('SECRETO-DE-OTRO-CLIENTE'));
   const lista=await s2.call('listar_documentos_indexados',{});
   check(`[${etiqueta}] listar_documentos_indexados ve los mismos 3`, lista.data?.total===3, `${lista.data?.total}`);
-  s2.proc.kill();
+  await terminar(s2.proc);
 }
 
-fs.rmSync(base,{recursive:true,force:true});
+borrar(base);
 const fallos=results.filter((r)=>!r).length;
 console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
 process.exit(fallos===0?0:1);

@@ -16,6 +16,7 @@ import { bootstrap } from './bootstrap.js';
 import { fail } from './tools/util.js';
 import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
+import * as registry from './indexer/registry.js';
 
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
@@ -48,7 +49,12 @@ async function main() {
   // Salida ordenada (Claude cierra, SIGTERM, stdin cerrado) frente a caída: la primera suelta el
   // índice y borra la marca de fase; una caída deja la marca y el siguiente arranque la atiende.
   // Antes, una promesa rechazada sin capturar tumbaba el proceso en silencio.
-  const { salirLimpio } = diagnostico.instalarManejadores({ alCerrar: () => escritor.soltar() });
+  const { salirLimpio } = diagnostico.instalarManejadores({
+    alCerrar: () => {
+      registry.guardarPendiente();
+      escritor.soltar();
+    },
+  });
 
   const server = new Server(
     { name: 'robin-search', version: VERSION },
@@ -94,10 +100,20 @@ async function main() {
   log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder });
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
-  // desde el primer momento (estado_servidor informará "indexando").
-  bootstrap({ initialIndex: true, watch: true, warmModel: true, control: true }).catch((err) =>
-    log.error('Fallo en bootstrap', { err: String(err) }),
-  );
+  // desde el primer momento (estado_servidor informará "indexando"). Se espera a que Claude
+  // termine el saludo (`initialized`): arrancar antes metía trabajo síncrono entre la llegada de
+  // `initialize` y su respuesta, y con un índice grande Claude cortaba por tiempo. Sin cliente
+  // (pruebas, servicio de IT) se arranca igual a los pocos segundos.
+  let arrancado = false;
+  const arrancar = () => {
+    if (arrancado) return;
+    arrancado = true;
+    bootstrap({ initialIndex: true, watch: true, warmModel: true, control: true }).catch((err) =>
+      log.error('Fallo en bootstrap', { err: String(err) }),
+    );
+  };
+  server.oninitialized = () => setImmediate(arrancar);
+  setTimeout(arrancar, 3000); // sin unref: sin cliente, es lo que mantiene vivo el proceso
 
   // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
   if (process.env.ROBIN_PRUEBA_RECHAZO === '1') {

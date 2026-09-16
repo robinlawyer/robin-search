@@ -22,6 +22,7 @@
 import fs from 'node:fs';
 import { config, ensureDataDirs, expedienteForLogicalPath } from './config.js';
 import { log } from './logger.js';
+import { conCerrojoDeFichero, escribirJson, leerJson } from './persistencia.js';
 import * as registry from './indexer/registry.js';
 import * as expedientes from './expedientes.js';
 
@@ -61,25 +62,38 @@ function mtimeActual() {
 
 // Mismo patrón que el registro: relee si otro proceso lo tocó, para no servir un estado de
 // barrido obsoleto (que se traduciría en revisar dos veces o dar por revisado lo que no).
-function cargar() {
+// Es el ÚNICO ejemplar del trabajo de revisión: un fichero dañado no se toma por vacío (se
+// escribiría encima y se perdería todo); se recupera del .bak o se aparta intacto, y un error de
+// disco se lanza en vez de fingir que no hay nada.
+function cargar({ forzar = false } = {}) {
   ensureDataDirs();
   const m = mtimeActual();
-  if (_cache && m === _mtime) return _cache;
-  try {
-    _cache = JSON.parse(fs.readFileSync(rutaFichero(), 'utf8'));
-  } catch {
-    if (!_cache) _cache = {};
-  }
-  _mtime = m;
+  if (!forzar && _cache && m === _mtime) return _cache;
+  const r = leerJson(rutaFichero());
+  if (r.estado === 'ok') _cache = r.valor;
+  else if (r.estado === 'corrupto') {
+    log.error('anotaciones.json dañado y sin copia: se aparta intacto y se empieza de cero');
+    _cache = {};
+  } else if (!_cache || forzar) _cache = {};
+  _mtime = mtimeActual();
   return _cache;
 }
 
 function persistir() {
   ensureDataDirs();
-  const tmp = `${rutaFichero()}.tmp`;
-  fs.writeFileSync(tmp, JSON.stringify(_cache, null, 0));
-  fs.renameSync(tmp, rutaFichero()); // escritura atómica
+  escribirJson(rutaFichero(), _cache, { bak: true });
   _mtime = mtimeActual();
+}
+
+// Leer lo último del disco, cambiar y guardar sin que otra instancia se cuele en medio.
+function modificar(fn) {
+  ensureDataDirs();
+  return conCerrojoDeFichero(rutaFichero(), () => {
+    const todo = cargar({ forzar: true });
+    const r = fn(todo);
+    persistir();
+    return r;
+  });
 }
 
 // Entradas del registro que caen dentro del expediente pedido (él y lo que cuelga de él).
@@ -189,30 +203,30 @@ export function guardar(expediente, docId, desde, ficha) {
     };
   }
 
-  const todo = cargar();
-  const est = (todo[expediente] ??= { ventana, documentos: {} });
-  est.ventana ??= ventana;
-  const doc = (est.documentos[docId] ??= {
-    ruta_relativa: v.ruta_relativa,
-    size: v.size,
-    mtimeMs: v.mtimeMs,
-    ventanas: {},
+  modificar((todo) => {
+    const est = (todo[expediente] ??= { ventana, documentos: {} });
+    est.ventana ??= ventana;
+    const doc = (est.documentos[docId] ??= {
+      ruta_relativa: v.ruta_relativa,
+      size: v.size,
+      mtimeMs: v.mtimeMs,
+      ventanas: {},
+    });
+    // El documento cambió desde que se anotaron sus otras ventanas: se descartan, porque ya no
+    // describen lo que hay en disco.
+    if (doc.size !== v.size || doc.mtimeMs !== v.mtimeMs) {
+      doc.ventanas = {};
+      doc.size = v.size;
+      doc.mtimeMs = v.mtimeMs;
+    }
+    doc.ruta_relativa = v.ruta_relativa;
+    doc.ventanas[String(desde)] = {
+      desde,
+      hasta: v.hasta,
+      ficha,
+      anotado_en: new Date().toISOString(),
+    };
   });
-  // El documento cambió desde que se anotaron sus otras ventanas: se descartan, porque ya no
-  // describen lo que hay en disco.
-  if (doc.size !== v.size || doc.mtimeMs !== v.mtimeMs) {
-    doc.ventanas = {};
-    doc.size = v.size;
-    doc.mtimeMs = v.mtimeMs;
-  }
-  doc.ruta_relativa = v.ruta_relativa;
-  doc.ventanas[String(desde)] = {
-    desde,
-    hasta: v.hasta,
-    ficha,
-    anotado_en: new Date().toISOString(),
-  };
-  persistir();
   log.info('Ficha de revisión guardada', {
     expediente,
     ruta: v.ruta_relativa,
@@ -281,11 +295,11 @@ export function agrupar(expediente, campo) {
 
 // Borra el barrido de un expediente (volver a empezar).
 export function limpiar(expediente) {
-  const todo = cargar();
-  const habia = Boolean(todo[expediente]);
-  delete todo[expediente];
-  persistir();
-  return habia;
+  return modificar((todo) => {
+    const habia = Boolean(todo[expediente]);
+    delete todo[expediente];
+    return habia;
+  });
 }
 
 export default {

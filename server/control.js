@@ -57,6 +57,7 @@ let servidor = null;
 const clientes = new Set();
 let ultimoEnvio = 0;
 let pendiente = null;
+let ultimaFase; // fase/estado del último envío: un cambio de fase sale siempre, sin esperar
 
 function retrato() {
   return {
@@ -82,11 +83,14 @@ function enviar(socket, objeto) {
 }
 
 // Un indexado grande cambia el estado miles de veces. Se emite como mucho dos
-// veces por segundo: la app pinta una barra, no necesita cada fichero.
+// veces por segundo: la app pinta una barra, no necesita cada fichero. Los CAMBIOS DE FASE
+// (buscando → indexando → fin) salen al momento: agrupados, una fase corta desaparecía y la
+// app no llegaba a saber que había empezado.
 export function anunciar() {
   if (!clientes.size) return;
   const ahora = Date.now();
-  const espera = 500 - (ahora - ultimoEnvio);
+  const fase = `${state.estado}|${state.progreso?.fase ?? ''}`;
+  const espera = fase !== ultimaFase ? 0 : 500 - (ahora - ultimoEnvio);
   if (espera > 0) {
     if (!pendiente) {
       pendiente = setTimeout(() => { pendiente = null; anunciar(); }, espera);
@@ -94,7 +98,12 @@ export function anunciar() {
     }
     return;
   }
+  if (pendiente) {
+    clearTimeout(pendiente);
+    pendiente = null;
+  }
   ultimoEnvio = ahora;
+  ultimaFase = fase;
   const r = retrato();
   for (const c of clientes) enviar(c, r);
 }

@@ -14,6 +14,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import { config } from '../config.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
@@ -42,7 +43,12 @@ export async function extractPdf(filePath, { maxPages }) {
   // "No GlobalWorkerOptions.workerSrc specified". Lo resolvemos al fichero real del worker,
   // que pdfjs carga como "fake worker" en el hilo principal (no hay Web Workers en Node).
   if (!pdfjs.GlobalWorkerOptions.workerSrc) {
-    pdfjs.GlobalWorkerOptions.workerSrc = require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs');
+    // El worker se carga YA en este hilo y se deja en globalThis.pdfjsWorker, que pdfjs usa sin
+    // pasar por ninguna ruta. Con la ruta a pelo, pdfjs hacía `import('C:\\...')` y en Windows
+    // Node lo rechaza (ERR_UNSUPPORTED_ESM_URL_SCHEME): NINGÚN PDF se indexaba. Por si acaso,
+    // workerSrc va como URL file://, que vale en todos los sistemas.
+    globalThis.pdfjsWorker ??= await import('pdfjs-dist/legacy/build/pdf.worker.mjs');
+    pdfjs.GlobalWorkerOptions.workerSrc = pathToFileURL(require.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs')).href;
     if (typeof pdfjs.setVerbosityLevel === 'function') {
       pdfjs.setVerbosityLevel(pdfjs.VerbosityLevel ? pdfjs.VerbosityLevel.ERRORS : 0);
     }

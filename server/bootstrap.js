@@ -67,6 +67,12 @@ async function cotejarRegistro() {
   }
   if (aReindexar.length) registry.removeMany(aReindexar);
   let huerfanos = 0;
+  // Registro vacío o que tuvo que empezar de cero (dañado, sin copia): lo que hay en el índice
+  // NO es huérfano, es lo que el registro ha olvidado. Borrarlo obligaba a reindexar decenas de
+  // miles de ficheros; se deja, y el indexado lo sustituye documento a documento (mismo docId).
+  if (registry.empezadoVacio() || conocidos.size === 0) {
+    return { aReindexar: aReindexar.length, huerfanos: 0, registroOlvidado: store.docIds().length };
+  }
   for (const id of store.docIds()) {
     if (conocidos.has(id)) continue;
     await store.deleteByDoc(id);
@@ -75,48 +81,81 @@ async function cotejarRegistro() {
   return { aReindexar: aReindexar.length, huerfanos };
 }
 
+// Errores de disco pasajeros o ajenos al contenido del índice: el antivirus o la otra instancia
+// tienen un fichero abierto, disco lleno, demasiados ficheros abiertos. Borrar el índice por uno
+// de estos es perder horas de indexado por un problema que se arregla solo.
+const PASAJEROS = new Set(['EPERM', 'EBUSY', 'EACCES', 'ENOSPC', 'EMFILE', 'ENFILE', 'EIO', 'EAGAIN']);
+
+// Caídas SEGUIDAS abriendo el índice antes de rehacerlo. Claude mata el proceso al reiniciar (en
+// Windows sin aviso) y una marca de fase no distingue eso de un índice que tumba el proceso: con
+// 2 bastaba cerrar Claude dos veces mientras abría un índice grande para perderlo entero.
+const CAIDAS_PARA_REHACER = 3;
+
 async function abrirIndice(escribo) {
   const derivar = (ruta) => expedienteForLogicalPath(ruta);
-  if (escribo && diagnostico.caidasSeguidasEn(FASES_INDICE) >= 2) {
-    log.error('Abrir el índice ha tumbado RobinSearch dos arranques seguidos: se rehace desde los documentos');
-    store.borrarTodo();
-    registry.vaciar();
-    diagnostico
-      .informar('indice_irrecuperable', { fase: 'cargando_indice', causa: 'dos caídas seguidas al abrir el índice; se rehace desde los documentos' })
-      .catch(() => {});
-  }
-  diagnostico.marcarFase('cargando_indice');
-  try {
-    const r = await store.abrir({
-      migrar: escribo,
-      derivarExpediente: derivar,
-      alMigrar: () => diagnostico.marcarFase('migrando_indice'),
-    });
-    if (escribo) {
-      // Migración a aislamiento por expediente (1.3.0) de las entradas del registro antiguas.
-      registry.backfillExpediente();
-      const cotejo = await cotejarRegistro();
-      log.info('Índice abierto', {
-        documentos: r.documentos,
-        fragmentos: r.fragmentos,
-        bytes: r.bytes,
-        a_reindexar: cotejo.aReindexar,
-        huerfanos: cotejo.huerfanos,
-        migrado: Boolean(r.migracion),
-      });
-    }
-  } catch (err) {
-    log.error('No se pudo abrir el índice', { err: String(err) });
-    diagnostico.informar('indice_irrecuperable', { fase: 'cargando_indice', causa: String(err?.message ?? err) }).catch(() => {});
-    if (escribo) {
+  if (escribo && diagnostico.caidasSeguidasEn(FASES_INDICE) >= CAIDAS_PARA_REHACER) {
+    log.error('Abrir el índice ha tumbado RobinSearch varios arranques seguidos: se rehace desde los documentos');
+    try {
       store.borrarTodo();
       registry.vaciar();
-      await store.abrir({ migrar: false });
-    } else {
-      setError(err);
+    } catch (err) {
+      log.error('No se pudo rehacer el índice', { err: String(err) });
     }
-  } finally {
-    diagnostico.finFase();
+    diagnostico
+      .informar('indice_irrecuperable', { fase: 'cargando_indice', causa: 'varias caídas seguidas al abrir el índice; se rehace desde los documentos' })
+      .catch(() => {});
+  }
+  for (let intento = 1; ; intento++) {
+    diagnostico.marcarFase('cargando_indice');
+    try {
+      const r = await store.abrir({
+        migrar: escribo,
+        derivarExpediente: derivar,
+        alMigrar: () => diagnostico.marcarFase('migrando_indice'),
+      });
+      // Abrió: las caídas anteriores ya no cuentan para rehacerlo (antes solo se ponían a cero al
+      // terminar el indexado inicial, que en un expediente grande puede no llegar nunca).
+      diagnostico.indiceAbierto();
+      if (escribo) {
+        // Migración a aislamiento por expediente (1.3.0) de las entradas del registro antiguas.
+        registry.backfillExpediente();
+        const cotejo = await cotejarRegistro();
+        log.info('Índice abierto', {
+          documentos: r.documentos,
+          fragmentos: r.fragmentos,
+          bytes: r.bytes,
+          a_reindexar: cotejo.aReindexar,
+          huerfanos: cotejo.huerfanos,
+          registro_olvidado: cotejo.registroOlvidado ?? 0,
+          migrado: Boolean(r.migracion),
+        });
+      }
+      return;
+    } catch (err) {
+      const pasajero = PASAJEROS.has(err?.code);
+      log.error('No se pudo abrir el índice', { err: String(err), code: err?.code ?? null, intento });
+      if (pasajero && intento < 5) {
+        await new Promise((res) => setTimeout(res, 2000 * intento));
+        continue;
+      }
+      diagnostico.informar('indice_irrecuperable', { fase: 'cargando_indice', causa: String(err?.message ?? err) }).catch(() => {});
+      if (!escribo || pasajero) {
+        // Un problema de disco no se arregla borrando: se dice y se busca con lo que haya.
+        setError(err);
+        return;
+      }
+      try {
+        store.borrarTodo();
+        registry.vaciar();
+        await store.abrir({ migrar: false });
+      } catch (err2) {
+        log.error('No se pudo rehacer el índice', { err: String(err2) });
+        setError(err2);
+      }
+      return;
+    } finally {
+      diagnostico.finFase();
+    }
   }
 }
 

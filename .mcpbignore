@@ -5,3 +5,5 @@ node_modules/sharp/
 node_modules/@img/
 node_modules/@napi-rs/
 node_modules/fsevents/
+# CI y pruebas: no pintan nada en casa del abogado
+.github/

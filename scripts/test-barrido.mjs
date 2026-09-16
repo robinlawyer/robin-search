@@ -10,10 +10,18 @@
 //
 // Además: el barrido se reanuda tras cerrar el servidor (el estado vive en disco, no en la
 // conversación) y se invalida solo si un documento cambia en disco.
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 
 const base=fs.mkdtempSync(path.join(os.tmpdir(),'rs-barrido-'));
@@ -43,7 +51,7 @@ function servidor(extra={}){
   const env={...process.env,ROBIN_TOKEN:'t',ROBIN_FOLDERS:MADRE,
     ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
     ROBIN_VENTANA_REVISION:'3',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',...extra};
-  const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+  const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
   let buf='';const w=new Map();let id=1;c.stderr.on('data',()=>{});
   c.stdout.on('data',d=>{buf+=d;let i;while((i=buf.indexOf('\n'))>=0){const l=buf.slice(0,i).trim();buf=buf.slice(i+1);
     if(!l)continue;let m;try{m=JSON.parse(l)}catch{continue}const f=w.get(m.id);if(f){w.delete(m.id);f(m)}}});
@@ -124,7 +132,7 @@ const lista=await s.call('obtener_anotaciones',{limite:200});
 check('tampoco al listar las fichas', !lista.raw.includes('SECRETO-RUIZ'));
 
 // ── 6. Se reanuda tras cerrar el servidor ──
-s.proc.kill(); await espera(600);
+await terminar(s.proc);
 s=servidor();
 await s.rpc('initialize',{protocolVersion:'2026-07-28',capabilities:{},clientInfo:{name:'t',version:'1'}});
 await listo(s.call);
@@ -155,8 +163,8 @@ check('pero conserva intactas las fichas de los documentos que no cambiaron',
 const ajeno=await s.call('anotar',{doc_id:'0000000000000000',desde_fragmento:0,resumen:'x'});
 check('anotar rechaza un doc_id que no es de este expediente', ajeno.isError && /No hay ninguna ventana/.test(ajeno.raw));
 
-s.proc.kill();
-fs.rmSync(base,{recursive:true,force:true});
+await terminar(s.proc);
+borrar(base);
 const fallos=results.filter(r=>!r).length;
 console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
 process.exit(fallos===0?0:1);

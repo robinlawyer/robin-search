@@ -8,12 +8,20 @@
 // Aquí el callback loopback simplemente no se invoca JAMÁS: se prueba que el login termina
 // igual, porque el cliente recoge el código por su conexión de SALIDA (POST /oauth/pickup),
 // identificándose con el code_verifier de PKCE — que solo existe en su máquina.
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import http from 'node:http';
 import crypto from 'node:crypto';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 const b64url=(b)=>Buffer.from(b).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 
@@ -59,7 +67,7 @@ const env={...process.env, ROBIN_FOLDERS:path.dirname(MADRE),
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'};
 delete env.ROBIN_TOKEN;   // sin atajo de licencia: queremos el login del abogado
 
-const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
 let buf=''; const w=new Map(); let id=1; let se='';
 c.stderr.on('data',d=>{se+=d.toString();});
 c.stdout.on('data',(d)=>{buf+=d.toString();let i;
@@ -132,7 +140,7 @@ async function main(){
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
   if(fallos){console.log(se.slice(-2000));process.exitCode=1;}
-  c.kill(); issuer.close(); fs.rmSync(base,{recursive:true,force:true});
+  await terminar(c); issuer.close(); borrar(base);
 }
 main().catch(e=>{console.error('ERROR:',e);console.error(se.slice(-2000));
   try{c.kill();issuer.close();}catch{} process.exit(1);});

@@ -61,6 +61,19 @@ export function modeloEmpaquetado(modelo = config.embeddingModel) {
 }
 
 async function cargarPipeline() {
+  // onnxruntime-web (Emscripten) instala al cargarse manejadores de proceso que RELANZAN toda
+  // promesa rechazada y toda excepción: convertían cualquier fallo menor en la caída del servidor
+  // (el host de Node de Claude sale con cualquier excepción sin capturar). Los nuestros
+  // (diagnostico.js) ya registran y avisan; los que añada la librería se retiran.
+  const previos = {
+    unhandledRejection: new Set(process.listeners('unhandledRejection')),
+    uncaughtException: new Set(process.listeners('uncaughtException')),
+  };
+  const retirarAjenos = () => {
+    for (const [evento, antes] of Object.entries(previos)) {
+      for (const l of process.listeners(evento)) if (!antes.has(l)) process.removeListener(evento, l);
+    }
+  };
   const { pipeline, env } = await import('@xenova/transformers');
   env.allowLocalModels = true;
   if (process.env.ROBIN_MODEL_CACHE) env.cacheDir = process.env.ROBIN_MODEL_CACHE;
@@ -89,6 +102,7 @@ async function cargarPipeline() {
   const extractor = await pipeline('feature-extraction', config.embeddingModel, {
     quantized: config.embeddingQuantized,
   });
+  retirarAjenos();
   log.info('Modelo de embedding listo', { origen: _estado.origen });
   return extractor;
 }

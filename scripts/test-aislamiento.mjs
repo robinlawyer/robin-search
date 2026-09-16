@@ -2,10 +2,18 @@
 // El abogado hace un proyecto de Claude sobre una subcarpeta de caso; al buscar, RobinSearch
 // no puede traer NADA del resto. Se prueba de forma exhaustiva: cada caso contra el secreto
 // de todos los demás, por las CUATRO vías de lectura (buscar / listar / documento / fragmento).
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 // Repo = el directorio padre de scripts/, para poder lanzarlo con `npm run test:aislamiento`.
-const REPO = process.env.REPO || path.resolve(new URL('..', import.meta.url).pathname);
+// fileURLToPath y no `.pathname`: en Windows da «/C:/…» y en cualquier SO rompe con espacios o tildes.
+const REPO = process.env.REPO || fileURLToPath(new URL('..', import.meta.url));
+// Parar un servidor y ESPERAR a que muera: en Windows no hay SIGTERM (kill = TerminateProcess)
+// y en Mac/Linux la señal no se atiende hasta que el bucle de eventos queda libre (WASM síncrono).
+// Borrar su carpeta antes de que muera da EBUSY/EPERM en Windows.
+const terminar=(p)=>p.exitCode!==null||p.signalCode!==null?Promise.resolve():new Promise(r=>{p.once('exit',r);p.kill();
+  setTimeout(()=>{try{p.kill('SIGKILL');}catch{}},15000).unref();});
+const borrar=(d)=>fs.rmSync(d,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const results=[]; const check=(n,c,d='')=>{results.push(c);console.log(`${c?'  OK  ':' FALLO'}  ${n}${d?` — ${d}`:''}`);};
 
 const base=fs.mkdtempSync(path.join(os.tmpdir(),'rs-madre-'));
@@ -48,7 +56,7 @@ const env={...process.env,ROBIN_TOKEN:'t',
   ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'};
 
-const c=spawn('node',[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
+const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
 let buf=''; const w=new Map(); let id=1; let se='';
 c.stderr.on('data',d=>{se+=d.toString();});
 c.stdout.on('data',(d)=>{buf+=d.toString();let i;
@@ -145,6 +153,6 @@ async function main(){
   const fallos=results.filter(r=>!r).length;
   console.log(`\n${results.length-fallos}/${results.length} comprobaciones OK`);
   if(fallos){console.log(se.slice(-2000));process.exitCode=1;}
-  c.kill(); fs.rmSync(base,{recursive:true,force:true});
+  await terminar(c); borrar(base);
 }
 main().catch(e=>{console.error('ERROR:',e);console.error(se.slice(-2000));process.exit(1);});
