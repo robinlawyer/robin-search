@@ -180,16 +180,74 @@ export function caidasSeguidasEn(fases) {
 }
 
 // ── 2. Limpieza: nada de los documentos sale del ordenador ─────────────────────────────────
+//
+// Hasta la 1.4.7 la limpieza iba «a la caza» de rutas y nombres de fichero con expresiones, y se
+// le escapaban: un paréntesis cortaba la expresión («Informe pericial … (definitivo).pdf» salía
+// entero) y una ruta RELATIVA («member Pérez García/escrito.pdf») no se reconocía como ruta.
+// Ahora se razona al revés, por lista blanca:
+//   1. Un mensaje técnico CONOCIDO (lista cerrada) pasa tal cual.
+//   2. Cualquier otro texto se parte en TRAMOS («: », «, », «; », saltos de línea) y todo tramo
+//      con algo que parezca fichero (extensión), ruta (separadores) o texto entre comillas se
+//      sustituye ENTERO. Se pierde algo de detalle técnico; nunca sale un nombre.
+const MENSAJES_TECNICOS = [
+  /^(?:FATAL ERROR: )?Reached heap limit Allocation failed - JavaScript heap out of memory$/,
+  /^(?:(?:Range)?Error: )?Cannot create a string longer than 0x[0-9a-f]+ characters$/i,
+  /^(?:(?:Range)?Error: )?(?:Array buffer allocation failed|Invalid string length|Invalid array length|Maximum call stack size exceeded)$/,
+  /^(?:(?:Abort|Timeout)?Error: )?(?:tiempo agotado|fetch failed|socket hang up|other side closed|The operation was aborted(?: due to timeout)?|This operation was aborted)$/,
+  /^(?:E[A-Z0-9_]{2,}|ERR_[A-Z0-9_]+)$/,
+];
+
 const EXT_DOC =
-  '(?:pdf|docx?|dotx?|odt|rtf|txt|md|html?|pptx?|odp|xlsx?|xlsm|ods|csv|tsv|eml|msg|jpe?g|png|tiff?|bmp|gif|heic|webp|zip|rar|7z|pages|numbers|key|xml)';
+  '(?:pdf|docx?|dotx?|docm|odt|rtf|txt|md|markdown|html?|pptx?|odp|xlsx?|xlsm|ods|fods|csv|tsv|eml|msg|jpe?g|png|tiff?|bmp|gif|heic|heif|webp|zip|rar|7z|pages|numbers|key|xml|json)';
 const PARO = `'"”»\`\n`;
-const RE_COMILLAS_CON_RUTA = /(['"“«`])[^'"”»`\n]*[/\\][^'"”»`\n]*(['"”»`])/g;
-const RE_RUTA_WIN = /(^|[\s([=:,])(?:[A-Za-z]:[\\/]|\\\\)[^\n]*/g;
-const RE_RUTA_POSIX = /(^|[\s([=:,])~?\/[^\s/][^/\n]*\/[^\n]*/g;
-const TROZO = `[^\\s:'"()\\[\\],<>/\\\\._-]+`;
-const RE_FICHERO = new RegExp(`${TROZO}(?:[ ._-]+${TROZO})*\\.${EXT_DOC}\\b`, 'gi');
-const RE_EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
+const RE_EMAIL = /[\p{L}\p{N}._%+-]+@[\p{L}\p{N}-]+(?:\.[\p{L}\p{N}-]+)+/gu;
 const RE_DNI = /\b(?:\d{8}|[XYZxyz]\d{7})[-\s]?[A-Za-z]\b/g;
+// Texto entre comillas (de cualquier tipo). Un apóstrofo DENTRO de una palabra («doesn't») no abre.
+const RE_COMILLAS = /(^|[^\p{L}\p{N}])('[^'\n]*'|"[^"\n]*"|“[^”\n]*”|«[^»\n]*»|‘[^’\n]*’|`[^`\n]*`)(?![\p{L}\p{N}])/gu;
+const RE_CODIGO = /^(?:E[A-Z0-9_]{2,}|ERR_[A-Z0-9_]+|\d+)$/;
+const RE_TRAMO = /(:\s+|;\s+|,\s+|\s*\n\s*|\s+\|\s+)/;
+const RE_EXT_DOC = new RegExp(`[^\\s<]\\.(${EXT_DOC})(?![\\p{L}\\p{N}])`, 'iu');
+// Cualquier «algo.ext» (letra tras el punto): server.js, acta.odg, dominio.es. «1.4.7» no.
+const RE_EXT_OTRA = /[\p{L}\p{N})\]_~-]\.\p{L}[\p{L}\p{N}]{0,5}(?![\p{L}\p{N}])/u;
+// Barras que no son rutas: «i/o», «n/a», «y/o», «3/10».
+const RE_BARRA_INOCUA = /\b(?:i\/o|n\/a|y\/o)\b|\b\d+\/\d+\b/gi;
+const RE_TECNICO = /^(?:[a-z0-9 _#=+<>()-]*|[A-Z][A-Z0-9_]+)$/;
+
+const nfc = (x) => (typeof x === 'string' && x.normalize ? x.normalize('NFC') : x);
+
+function tipoSensible(tramo) {
+  const m = RE_EXT_DOC.exec(tramo);
+  if (m) return `<fichero.${m[1].toLowerCase()}>`;
+  if (/[\\/]/.test(tramo.replace(RE_BARRA_INOCUA, ''))) return '<ruta>';
+  if (RE_EXT_OTRA.test(tramo)) return '<fichero>';
+  return null;
+}
+
+function limpiarTramos(s) {
+  const partes = s.split(RE_TRAMO); // [tramo, separador, tramo, separador, …]
+  const n = Math.ceil(partes.length / 2);
+  const marca = new Array(n).fill(null);
+  for (let i = 0; i < n; i++) marca[i] = tipoSensible(partes[2 * i]);
+  // Una coma puede ser PARTE del nombre («Informe, final.pdf»): lo que va pegado por comas a un
+  // tramo sensible y no tiene pinta técnica se va con él.
+  for (let pasada = 0; pasada < 2; pasada++) {
+    for (let i = 0; i < n; i++) {
+      if (!marca[i]) continue;
+      for (const j of [i - 1, i + 1]) {
+        if (j < 0 || j >= n || marca[j]) continue;
+        const sep = partes[2 * Math.min(i, j) + 1] || '';
+        if (sep.trim() === ',' && !RE_TECNICO.test(partes[2 * j].trim())) marca[j] = marca[i];
+      }
+    }
+  }
+  let out = '';
+  for (let i = 0; i < n; i++) {
+    const sep = i > 0 ? partes[2 * i - 1] : '';
+    if (marca[i] && i > 0 && marca[i - 1] && sep.trim() === ',') continue; // mismo nombre partido
+    out += sep + (marca[i] ?? partes[2 * i]);
+  }
+  return out;
+}
 
 // Literales que NUNCA pueden salir: las carpetas vigiladas y la carpeta personal (rutas), y los
 // nombres de las carpetas y de los expedientes (un «Pérez - Divorcio» ya es dato del cliente).
@@ -198,12 +256,13 @@ export function literalesSensibles() {
   const nombres = new Set();
   const addRuta = (x) => {
     if (typeof x !== 'string' || x.trim().length < 3) return;
-    rutas.add(x);
-    rutas.add(x.replace(/\\/g, '/'));
-    rutas.add(x.replace(/\\/g, '\\\\'));
+    const c = nfc(x);
+    rutas.add(c);
+    rutas.add(c.replace(/\\/g, '/'));
+    rutas.add(c.replace(/\\/g, '\\\\'));
   };
   const addNombre = (x) => {
-    if (typeof x === 'string' && x.trim().length >= 3) nombres.add(x.trim());
+    if (typeof x === 'string' && x.trim().length >= 3) nombres.add(nfc(x.trim()));
   };
   for (const r of config.roots || []) {
     addRuta(r.path);
@@ -225,9 +284,20 @@ export function literalesSensibles() {
   return { rutas: [...rutas].sort(porLargo), nombres: [...nombres].sort(porLargo) };
 }
 
+const MAX_ENTRADA = 4000;
+
 export function limpiarTexto(entrada, lit = literalesSensibles()) {
   if (entrada === null || entrada === undefined) return entrada;
-  let s = String(entrada).slice(0, 4000);
+  let s = nfc(String(entrada));
+  if (s.length > MAX_ENTRADA) {
+    // Cortar a ciegas puede dejar medio nombre SIN su extensión (y entonces no se reconoce):
+    // el último tramo, que es el cortado, se descarta entero.
+    s = s.slice(0, MAX_ENTRADA);
+    const partes = s.split(RE_TRAMO);
+    s = `${partes.slice(0, -1).join('')}<cortado>`;
+  }
+  const recortado = s.trim();
+  if (MENSAJES_TECNICOS.some((re) => re.test(recortado))) return recortado.slice(0, 500);
   // Una ruta conocida se corta desde donde empieza hasta la comilla o el final: lo que sigue a
   // la carpeta del abogado son sus subcarpetas y sus ficheros.
   for (const r of lit.rutas) {
@@ -241,19 +311,30 @@ export function limpiarTexto(entrada, lit = literalesSensibles()) {
   }
   for (const n of lit.nombres) if (s.includes(n)) s = s.split(n).join('<nombre>');
   s = s
-    .replace(RE_COMILLAS_CON_RUTA, '$1<ruta>$2')
-    .replace(RE_RUTA_WIN, '$1<ruta>')
-    .replace(RE_RUTA_POSIX, '$1<ruta>')
-    .replace(RE_FICHERO, (m) => `<fichero${path.extname(m).toLowerCase()}>`)
     .replace(RE_EMAIL, '<email>')
-    .replace(RE_DNI, '<dni>');
-  return s.slice(0, 500);
+    .replace(RE_DNI, '<dni>')
+    .replace(RE_COMILLAS, (_m, antes, citado) => {
+      const dentro = citado.slice(1, -1);
+      return `${antes}${RE_CODIGO.test(dentro) ? citado : `${citado[0]}<texto>${citado[citado.length - 1]}`}`;
+    });
+  return limpiarTramos(s).slice(0, 500);
+}
+
+// Un error, reducido a lo técnico: nombre, código, llamada al sistema y el mensaje limpio.
+export function errorTecnico(err, lit) {
+  if (err === null || err === undefined) return '';
+  if (typeof err !== 'object') return limpiarTexto(String(err), lit);
+  const cabeza = [err.name, err.code, err.syscall]
+    .filter((x) => typeof x === 'string' && /^[A-Za-z0-9_]{1,40}$/.test(x))
+    .join(' ');
+  const msg = limpiarTexto(String(err.message ?? ''), lit);
+  return (cabeza && msg ? `${cabeza}: ${msg}` : cabeza || msg).slice(0, 500);
 }
 
 // Lista blanca de lo que puede viajar de cada línea del registro.
 const CLAVES_TEXTO = new Set([
   'err', 'causa', 'motivo', 'origen', 'model', 'estado', 'fase', 'code', 'ext', 'ubicacion',
-  'version', 'actual', 'disponible', 'tipo', 'cmd', 'protocolo', 'name', 'firma',
+  'version', 'actual', 'disponible', 'tipo', 'cmd', 'protocolo', 'name', 'firma', 'syscall',
 ]);
 const CLAVES_FUERA = new Set([
   'fichero', 'ficheros_ejemplo', 'ruta', 'rutaRelativa', 'ruta_relativa', 'carpeta', 'carpetas',
@@ -390,7 +471,9 @@ export function registroSaneado(lit = literalesSensibles()) {
 function barrera(cuerpo, lit) {
   let s = cuerpo;
   for (const x of [...lit.rutas, ...lit.nombres]) {
-    for (const v of new Set([x, JSON.stringify(x).slice(1, -1)])) {
+    // También en NFD (macOS entrega los nombres de fichero descompuestos: «e» + tilde).
+    const formas = [x, x.normalize('NFD')];
+    for (const v of new Set(formas.flatMap((f) => [f, JSON.stringify(f).slice(1, -1)]))) {
       if (v && s.includes(v)) s = s.split(v).join('<privado>');
     }
   }
@@ -614,7 +697,7 @@ export function instalarManejadores({ alCerrar } = {}) {
   // avisa y el servidor sigue atendiendo.
   process.on('unhandledRejection', (motivo) => {
     log.error('Promesa rechazada sin capturar (el servidor sigue)', { err: String(motivo?.stack || motivo?.message || motivo) });
-    informar('excepcion', { fase: faseActual() || 'en_marcha', causa: String(motivo?.message ?? motivo) }).catch(() => {});
+    informar('excepcion', { fase: faseActual() || 'en_marcha', causa: errorTecnico(motivo) }).catch(() => {});
   });
   // Tras una excepción sin capturar el estado del proceso no es fiable: se deja la marca con la
   // causa (para el siguiente arranque, y para apartar el fichero si fue leyendo uno), se intenta
@@ -632,7 +715,7 @@ export function instalarManejadores({ alCerrar } = {}) {
     const salir = () => process.exit(1);
     informar('excepcion', {
       fase: previa.fase || 'en_marcha',
-      causa: String(err?.message ?? err),
+      causa: errorTecnico(err),
       fichero: previa.ext ? { ext: previa.ext, bytes: previa.bytes } : null,
     })
       .catch(() => {})
@@ -651,6 +734,7 @@ export default {
   arranqueCompleto,
   caidasSeguidasEn,
   limpiarTexto,
+  errorTecnico,
   sanearDatos,
   registroSaneado,
   construirInforme,

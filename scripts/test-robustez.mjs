@@ -339,10 +339,25 @@ const casos = [
   ['falló al leer Contrato arras Gómez.pdf dentro del comprimido', ['Gómez', 'arras']],
   ['aviso para juan.maza@robinlawyer.ai con DNI 12345678Z y NIE X1234567L', ['juan.maza', '12345678Z', 'X1234567L']],
   ['Error: ruta \\\\servidor-despacho\\Expedientes\\Martínez\\acta.pdf no accesible', ['Martínez', 'servidor-despacho', 'acta']],
+  // Casos que se escapaban hasta la 1.4.7 (auditoría 16-sep-2026):
+  ['member Pérez García/escrito de demanda.pdf: invalid entry', ['Pérez', 'García', 'demanda']],
+  ['No se pudo leer Informe pericial Martínez López (definitivo).pdf', ['Informe', 'Martínez', 'López', 'definitivo']],
+  ['error con «Acta de la junta Fernández» al abrir', ['Acta', 'Fernández', 'junta']],
+  ['ilegible: "Notas Ibáñez"', ['Notas', 'Ibáñez']],
+  ["Cannot open 'Burofax Quintana'", ['Burofax', 'Quintana']],
+  ['Caso Ortega/Anexos/Anexo 3', ['Ortega', 'Anexo']],
+  ['{"ruta":"C:\\\\Users\\\\Ana\\\\Clientes\\\\Ruiz Vela\\\\nota.txt"}', ['Ana', 'Ruiz', 'Vela', 'nota']],
+  ['\\\\NAS-DESPACHO\\compartida\\Soler SA\\escrito.odt', ['NAS-DESPACHO', 'Soler', 'escrito']],
+  ['Informe, final Sánchez.docx no se pudo leer', ['Informe', 'Sánchez', 'final']],
+  ['Pe\u0301rez Nun\u0303ez/escrito.pdf', ['Pérez', 'Nuñez', 'Pe\u0301rez', 'escrito']],
+  ['fichero Contrato Lozano.v2.final.xlsx corrupto', ['Contrato', 'Lozano', 'final']],
+  ['fallo en Pleito Ramos.pages', ['Pleito', 'Ramos']],
 ];
 const guardados = [
   'FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory',
   'RangeError: Cannot create a string longer than 0x1fffffe8 characters',
+  'Error: EIO: i/o error, read',
+  "ENOENT: no such file or directory, open '<texto>'",
 ];
 const prog = `
 import { limpiarTexto } from ${JSON.stringify(pathToFileURL(path.join(REPO, 'server/diagnostico.js')).href)};
@@ -358,6 +373,30 @@ casos.forEach(([, fuera], i) => {
   check(`H.${i + 1} ${fuera.join(', ')} → fuera`, fuera.every((x) => !r.includes(x)), r);
 });
 guardados.forEach((g, i) => check(`H.${casos.length + i + 1} lo técnico se conserva`, salidaH[casos.length + i] === g, salidaH[casos.length + i]));
+{
+  // Informe ENTERO con un registro sembrado de nombres: ni en el mensaje, ni en los datos, ni en
+  // la causa de un error con código.
+  const datosH2 = path.join(base, 'datosH2');
+  fs.mkdirSync(path.join(datosH2, 'logs'), { recursive: true });
+  const lineas = [
+    { t: 'x', level: 'error', msg: 'Error indexando fichero', data: { err: 'Error: member Pérez García/escrito de demanda.pdf: bad', fichero: 'Caso/a.pdf', code: 'EBADF' } },
+    { t: 'x', level: 'warn', msg: 'Miembro Informe pericial Martínez López (definitivo).pdf ilegible', data: { motivo: 'Notas «Ibáñez Roca»', syscall: 'open' } },
+    { t: 'x', level: 'error', msg: 'ruta', data: { causa: 'C:\\Users\\Ana\\Soler SA\\x.docx' } },
+  ];
+  fs.writeFileSync(path.join(datosH2, 'logs', 'robin-search.log'), lineas.map((l) => JSON.stringify(l)).join('\n') + '\n');
+  const progInf = `
+import { construirInforme, errorTecnico } from ${JSON.stringify(pathToFileURL(path.join(REPO, 'server/diagnostico.js')).href)};
+const err = Object.assign(new Error("EACCES: permission denied, open 'Quintana Ruiz/Burofax.pdf'"), { code: 'EACCES', syscall: 'open' });
+const { cuerpo } = construirInforme('excepcion', { fase: 'indexando', causa: errorTecnico(err) });
+console.log(cuerpo);`;
+  const cuerpoH = execFileSync(process.execPath, ['--input-type=module', '-e', progInf], {
+    env: { ...process.env, ROBIN_DATA_DIR: datosH2, ROBIN_FOLDERS: madreA, ROBIN_LOG_LEVEL: 'error', HOME: path.join(base, 'casaH'), USERPROFILE: path.join(base, 'casaH'), APPDATA: path.join(base, 'casaH') },
+  }).toString();
+  const fugas = ['Pérez', 'García', 'demanda', 'Martínez', 'López', 'definitivo', 'Ibáñez', 'Ana', 'Soler', 'Quintana', 'Burofax'].filter((x) => cuerpoH.includes(x));
+  check('H.informe el aviso entero (registro + causa) no lleva ningún nombre', fugas.length === 0, fugas.join(', '));
+  const inf = JSON.parse(cuerpoH);
+  check('H.informe y conserva lo técnico (código y llamada al sistema)', /EACCES/.test(inf.causa) && /open/.test(inf.causa) && JSON.stringify(inf.registro).includes('EBADF'), inf.causa);
+}
 
 // ───────────────────────── I. Carpeta configurada en Claude (id nuevo) ─────────────────────────
 console.log('\nI. Quien actualiza sin la app no pierde su carpeta\n');
