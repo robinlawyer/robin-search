@@ -3,7 +3,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { config, VERSION, logicalPath } from '../config.js';
+import { config, VERSION, logicalPath, rootForPath } from '../config.js';
 import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
@@ -111,7 +111,8 @@ export async function handler() {
   // Ficheros que el indexado SE SALTA (cuarentena.js): los que hicieron caer el proceso al
   // leerlos y los que superan el tamaño máximo. Sin esto, «no lo encuentro» sobre un documento
   // apartado sería indistinguible de que no exista.
-  const apartados = cuarentena.lista().filter((a) => fs.existsSync(a.abs));
+  // Solo los de carpetas vigiladas: los de una carpeta quitada no se enseñan (ni su nombre).
+  const apartados = cuarentena.lista().filter((a) => rootForPath(a.abs) && fs.existsSync(a.abs));
   if (apartados.length) {
     respuesta.ficheros_apartados = apartados.map((a) => ({
       ruta: logicalPath(a.abs),
@@ -142,6 +143,19 @@ export async function handler() {
   // errores y un servidor en 'activo' era indistinguible de una carpeta vacía.
   if (state.ultimoIndexado) {
     respuesta.ultimo_indexado = state.ultimoIndexado;
+    // Lo que el recorrido encontró pero no pudo meter: ficheros de iCloud/OneDrive sin descargar,
+    // enlaces o junctions rotos, bucles. Sin esto una carpeta «bajo demanda» daba 0 en silencio.
+    const ni = state.ultimoIndexado.no_indexables;
+    if (ni) {
+      respuesta.no_indexables = ni;
+      respuesta.aviso_no_indexables =
+        'Hay elementos en las carpetas que no se han podido indexar (ver no_indexables): ' +
+        (ni.no_descargados ? `${ni.no_descargados} fichero(s) en la nube sin descargar a este equipo; ` : '') +
+        (ni.enlaces_inaccesibles ? `${ni.enlaces_inaccesibles} enlace(s) o acceso(s) directo(s) que no llevan a nada accesible; ` : '') +
+        (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
+        'lo que se busque no los cubre. Para los de la nube, que el abogado marque la carpeta como ' +
+        '«Mantener siempre en este dispositivo» y vuelva a indexar.';
+    }
     if (state.ultimoIndexado.errores > 0) {
       respuesta.aviso_indexado =
         `El último indexado falló en ${state.ultimoIndexado.errores} fichero(s). ` +

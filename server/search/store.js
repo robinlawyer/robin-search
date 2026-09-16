@@ -390,6 +390,57 @@ export function deleteByDoc(docId) {
   });
 }
 
+// Cambia DÓNDE está archivado un documento (ruta lógica, expediente, raíz) sin volver a leerlo
+// ni a calcular sus vectores: cuando una carpeta vigilada cambia de nombre lógico, o cambia la
+// profundidad de expediente, sus documentos tienen que salir con el nombre nuevo — y NUNCA
+// seguir respondiendo bajo el viejo, que puede pasar a ser el de otra carpeta (otro cliente).
+// Se escribe con una generación NUEVA (copia de los vectores) para que la otra instancia, que
+// guarda los metadatos en memoria por generación, no siga sirviendo los de antes.
+// Devuelve true si había documento que cambiar.
+export function resellar(docId, campos) {
+  return conCerrojo(async () => {
+    if (!esDocIdValido(docId)) return false;
+    asegurarCatalogo();
+    const cab = _cab.get(docId) ?? leerCabecera(docId);
+    if (!cab) return false;
+    const lineas = fs.readFileSync(rutaMeta(docId), 'utf8').split('\n');
+    let cabDisco;
+    try {
+      cabDisco = JSON.parse(lineas[0]);
+    } catch {
+      return false;
+    }
+    if (cabDisco?.gen !== cab.gen) return false;
+    const cambios = {};
+    for (const k of ['rutaRelativa', 'expediente', 'raiz']) if (k in campos) cambios[k] = campos[k];
+    const gen = crypto.randomBytes(6).toString('hex');
+    const nuevas = [JSON.stringify({ ...cabDisco, ...cambios, gen })];
+    for (let i = 1; i < lineas.length; i++) {
+      if (!lineas[i]) continue;
+      let m;
+      try {
+        m = JSON.parse(lineas[i]);
+      } catch {
+        nuevas.push(lineas[i]);
+        continue;
+      }
+      nuevas.push(JSON.stringify({ ...m, ...cambios }));
+    }
+    fs.mkdirSync(dirDocs(), { recursive: true });
+    const destino = rutaVec(docId, gen);
+    conReintentos(() => fs.copyFileSync(rutaVec(docId, cab.gen), `${destino}.tmp`));
+    conReintentos(() => fs.renameSync(`${destino}.tmp`, destino));
+    escribirAtomico(rutaMeta(docId), `${nuevas.join('\n')}\n`); // ← aquí queda confirmado
+    quitar(rutaVec(docId, cab.gen));
+    soltarVectores(docId);
+    _meta.delete(docId);
+    const st = fs.statSync(rutaMeta(docId));
+    _cab.set(docId, { ...cab, ...cambios, gen, mtimeMs: st.mtimeMs, bytes: st.size + cab.n * cab.dim * 4 });
+    _dirMtime = mtimeDir();
+    return true;
+  });
+}
+
 // Búsqueda por similitud coseno. `filter` opcional sobre metadatos ({campo: valor|{$eq|$ne|$in|$nin}}).
 export async function query(vector, topK, filter = undefined) {
   asegurarCatalogo();
@@ -642,6 +693,7 @@ export function borrarTodo() {
 export default {
   upsertChunks,
   deleteByDoc,
+  resellar,
   query,
   getChunk,
   getDocChunks,

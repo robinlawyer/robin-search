@@ -6,6 +6,7 @@
 // elegirlo; nunca cae en "buscar en todo".
 
 import { config } from '../config.js';
+import { rutas } from '../rutas.js';
 import { embedQuery } from '../embedder/embedder.js';
 import * as store from '../search/store.js';
 import { ok, fail } from './util.js';
@@ -91,11 +92,9 @@ export async function handler(args) {
     : { expediente: { $eq: expediente } };
   const raw = await store.query(vector, topK, filtro);
 
-  const dentroDeSubcarpeta = (ruta) => {
-    if (!prefijo) return true;
-    const rel = String(ruta || '').replace(/\\/g, '/');
-    return rel === prefijo || rel.startsWith(`${prefijo}/`);
-  };
+  // Sin distinguir mayúsculas (Windows/macOS) ni forma Unicode: Claude escribe «Pérez» en NFC y
+  // la carpeta puede estar en NFD; con comparación exacta el filtro devolvía 0 sin avisar.
+  const dentroDeSubcarpeta = (ruta) => rutas.bajoPrefijoLogico(ruta, prefijo);
 
   const fragmentos = raw
     .filter((r) => dentroDeSubcarpeta(r.metadata.rutaRelativa))

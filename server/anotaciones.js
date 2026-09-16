@@ -293,6 +293,68 @@ export function agrupar(expediente, campo) {
   return { ok: true, campo, total: filas.length, filas };
 }
 
+// Una carpeta vigilada ha cambiado de nombre lógico: el barrido de sus expedientes se lleva al
+// nombre nuevo (las fichas van por docId, que no cambia). `pares` = [[nombreViejo, nombreNuevo]].
+// Si el nombre nuevo ya tiene barrido propio, no se mezcla: se deja el viejo donde está.
+export function renombrarRaices(pares) {
+  if (!pares.length) return 0;
+  let hayQueTocar = false;
+  try {
+    const todo = cargar();
+    hayQueTocar = Object.keys(todo).some((k) => pares.some(([de]) => k === de || k.startsWith(`${de}/`)));
+  } catch {
+    return 0;
+  }
+  if (!hayQueTocar) return 0;
+  return modificar((todo) => {
+    const destino = (k) => {
+      for (const [de, a] of pares) if (k === de || k.startsWith(`${de}/`)) return a + k.slice(de.length);
+      return k;
+    };
+    const claves = Object.keys(todo);
+    const quietas = claves.filter((k) => destino(k) === k);
+    const movidas = claves.filter((k) => destino(k) !== k);
+    const nuevo = {};
+    for (const k of quietas) nuevo[k] = todo[k];
+    let movidos = 0;
+    for (const k of movidas) {
+      // Choque (improbable): gana lo que ya estaba con ese nombre; el barrido movido se rehace.
+      if (Object.prototype.hasOwnProperty.call(nuevo, destino(k))) continue;
+      nuevo[destino(k)] = todo[k];
+      movidos += 1;
+    }
+    for (const k of claves) delete todo[k];
+    Object.assign(todo, nuevo);
+    return movidos;
+  });
+}
+
+// Fichas de documentos que ya no están en el índice porque su carpeta se QUITÓ de la
+// configuración: son extractos del cliente (partes, importes, fechas) y no pueden quedarse en el
+// fichero de anotaciones. `docIds` = Set de los retirados.
+export function olvidarDocumentos(docIds) {
+  if (!docIds?.size) return 0;
+  let hay = false;
+  try {
+    hay = Object.values(cargar()).some((est) => Object.keys(est?.documentos || {}).some((d) => docIds.has(d)));
+  } catch {
+    return 0;
+  }
+  if (!hay) return 0;
+  return modificar((todo) => {
+    let quitadas = 0;
+    for (const [exp, est] of Object.entries(todo)) {
+      for (const d of Object.keys(est?.documentos || {})) {
+        if (!docIds.has(d)) continue;
+        delete est.documentos[d];
+        quitadas += 1;
+      }
+      if (est && est.documentos && !Object.keys(est.documentos).length) delete todo[exp];
+    }
+    return quitadas;
+  });
+}
+
 // Borra el barrido de un expediente (volver a empezar).
 export function limpiar(expediente) {
   return modificar((todo) => {
@@ -310,6 +372,8 @@ export default {
   todas,
   agrupar,
   limpiar,
+  renombrarRaices,
+  olvidarDocumentos,
   ventanaDe,
   CAMPOS_CRUZABLES,
 };

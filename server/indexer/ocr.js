@@ -10,6 +10,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { extensionDe } from '../rutas.js';
 import { fileURLToPath } from 'node:url';
 import { config, ensureDataDirs } from '../config.js';
 import { log } from '../logger.js';
@@ -151,7 +152,7 @@ export async function terminateOcr() {
 // (libheif en WASM), porque tesseract no lee HEIC directamente.
 // Devuelve [{ page: 1, text }] (una imagen = una "página") o [] si no hay texto legible.
 export async function ocrImage(filePath) {
-  const ext = path.extname(filePath).toLowerCase();
+  const ext = extensionDe(filePath);
   let input;
   if (ext === '.heic' || ext === '.heif') {
     const heicConvert = (await import('heic-convert')).default;

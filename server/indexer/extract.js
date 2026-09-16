@@ -16,6 +16,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { config } from '../config.js';
+import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 
@@ -481,7 +482,7 @@ const ARCHIVE_MAX_MEMBERS = 2000;
 const ARCHIVE_MAX_TOTAL_BYTES = 500 * 1024 * 1024;
 
 export async function extractArchive(filePath, opts) {
-  const ext = path.extname(filePath).toLowerCase();
+  const ext = extensionDe(filePath);
   const depth = opts?.depth ?? 0;
   // No recursamos archivos dentro de archivos (profundidad 1): evita zip-bombs anidadas.
   if (depth >= 1) return { pages: [], sinOcr: false, numPages: null };
@@ -621,7 +622,8 @@ async function extractByExtension(filePath, ext, opts) {
 
 // Dispatcher público por extensión. `opts` incluye maxPages y depth (recursión de contenedores).
 export async function extractFile(filePath, { maxPages } = {}) {
-  const ext = path.extname(filePath).toLowerCase();
+  // extensionDe y no extname a secas: «demanda.pdf » (espacio final) es un PDF.
+  const ext = extensionDe(filePath);
   return extractByExtension(filePath, ext, { maxPages, depth: 0 });
 }
 

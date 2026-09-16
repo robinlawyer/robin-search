@@ -19,10 +19,13 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-import { config, guardarCarpetas, carpetasFijadasPorEntorno } from './config.js';
+import { config, guardarCarpetas, carpetasFijadasPorEntorno, comoConfiguradas } from './config.js';
 import { log } from './logger.js';
 import { state, alCambiar } from './state.js';
 import { indexFolder, indexandoAhora, alTerminarIndexado } from './indexer/indexer.js';
+import { reconciliarCarpetas } from './indexer/reconciliar.js';
+import { rutas } from './rutas.js';
+import * as escritor from './escritor.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 
 // Un nombre por carpeta de datos: dos instalaciones distintas (p. ej. un
@@ -67,7 +70,7 @@ function retrato() {
     progreso: state.progreso,          // { procesados, total, ficheroActual } o null
     ultimoError: state.ultimoError ? String(state.ultimoError.message ?? state.ultimoError) : null,
     ultimoIndexado: state.ultimoIndexado,
-    carpetas: config.watchedFolders,
+    carpetas: comoConfiguradas(config.watchedFolders),
     sinTexto: state.ficherosSinOcr ? state.ficherosSinOcr.size : 0,
     actualizacionDisponible: state.actualizacionDisponible,
     ts: Date.now(),
@@ -115,9 +118,11 @@ let reindexando = false;
 let enCola = null;
 let colaForce = false;
 
+// La app manda la carpeta como la tiene guardada; el servidor puede tenerla escrita como está en
+// disco (otra caja, otra forma Unicode). Es la misma carpeta.
 function carpetaVigilada(carpeta) {
-  const pedida = path.resolve(String(carpeta));
-  return config.watchedFolders.find((c) => path.resolve(c) === pedida) ?? null;
+  const pedida = rutas.claveRuta(path.resolve(String(carpeta)));
+  return config.watchedFolders.find((c) => rutas.claveRuta(path.resolve(c)) === pedida) ?? null;
 }
 
 function encolar(carpetas, force) {
@@ -150,14 +155,14 @@ async function reindexar(socket, { force = false, carpeta = null } = {}) {
   }
   if (reindexando || indexandoAhora()) {
     encolar(carpetas, force);
-    return enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, encolado: true, carpetas: carpetas ?? config.watchedFolders });
+    return enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, encolado: true, carpetas: comoConfiguradas(carpetas ?? config.watchedFolders) });
   }
   return lanzar(socket, carpetas, force);
 }
 
 async function lanzar(socket, carpetas, force) {
   if (carpetas && !carpetas.length) return;
-  const cuales = carpetas ?? config.watchedFolders;
+  const cuales = comoConfiguradas(carpetas ?? config.watchedFolders);
   reindexando = true;
   if (socket) enviar(socket, { tipo: 'respuesta', cmd: 'reindexar', ok: true, iniciado: true, carpetas: cuales });
   try {
@@ -190,17 +195,26 @@ async function configurar(socket, { carpetas }) {
       log.warn('Carpetas guardadas pero NO aplicadas: las fija el entorno', { guardadas: carpetas });
       return enviar(socket, {
         tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: 'fijadas_por_entorno',
-        guardadas: carpetas, vigiladas: config.watchedFolders,
+        guardadas: carpetas, vigiladas: comoConfiguradas(config.watchedFolders),
       });
     }
     log.info('Carpetas de expedientes cambiadas desde la app', { carpetas: aplicadas });
+    // Lo de las carpetas QUITADAS sale del índice ya, antes de que nadie pueda buscar: su nombre
+    // lógico puede heredarlo otra carpeta (otro cliente). Solo la instancia que escribe el índice.
+    if (escritor.soyEscritor()) {
+      try {
+        await reconciliarCarpetas({ motivo: 'configurar' });
+      } catch (err) {
+        log.error('No se pudo ajustar el índice a las carpetas nuevas', { err: String(err) });
+      }
+    }
     try {
       await stopWatcher();          // es asíncrono: sin await se solapan dos vigilantes
       if (aplicadas.length) startWatcher();
     } catch (err) {
       log.warn('No se pudo reiniciar el vigilante de carpetas', { err: String(err) });
     }
-    enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: true, carpetas: aplicadas });
+    enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: true, carpetas: comoConfiguradas(aplicadas) });
     anunciar();
     if (aplicadas.length) reindexar(socket, { force: false });
   } catch (err) {

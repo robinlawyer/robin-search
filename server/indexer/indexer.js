@@ -14,7 +14,10 @@ import {
   rootForPath,
   expedienteForLogicalPath,
   limiteBytes,
+  canonizarRuta,
+  esExtensionSoportada,
 } from '../config.js';
+import { rutas, tipoReal } from '../rutas.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
 import {
@@ -51,12 +54,47 @@ export function normalizarCausa(err) {
 }
 
 function isSupported(filePath) {
-  return SUPPORTED_EXTENSIONS.has(path.extname(filePath).toLowerCase());
+  return esExtensionSoportada(filePath);
+}
+
+// Lo que el recorrido NO ha podido meter en el índice sin que sea un error de lectura: sin esto,
+// una carpeta de OneDrive «bajo demanda» o de iCloud daba 0 documentos sin decir nada. Solo
+// contadores: ni nombres ni rutas (salen en estado_servidor y en el aviso técnico).
+export function nuevaCuentaRecorrido() {
+  return { no_descargados: 0, enlaces_inaccesibles: 0, bucles_evitados: 0 };
+}
+
+// iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
+const RE_ICLOUD = /^\.(.+)\.icloud$/i;
+
+// Identidad de una carpeta para no recorrerla dos veces (enlace o junction que apunta hacia
+// arriba: sin esto, un bucle infinito). dev+ino; donde el sistema no da inodo (0, algunos
+// recursos de red y FAT), la ruta real.
+function identidadCarpeta(dir) {
+  try {
+    const st = fs.statSync(dir, { bigint: true });
+    if (st.ino && st.ino !== 0n) return `${st.dev}:${st.ino}`;
+  } catch {
+    return null;
+  }
+  try {
+    return `r:${rutas.claveRuta(fs.realpathSync.native(dir))}`;
+  } catch {
+    return null;
+  }
 }
 
 // Recorre recursivamente una carpeta y devuelve rutas absolutas de ficheros soportados.
 // Ignora directorios ocultos y el propio directorio de datos por si estuviera anidado.
-function* walk(dir, ilegibles = null) {
+function* walk(dir, ilegibles = null, cuenta = nuevaCuentaRecorrido(), visitadas = new Set()) {
+  const id = identidadCarpeta(dir);
+  if (id) {
+    if (visitadas.has(id)) {
+      cuenta.bucles_evitados += 1;
+      return;
+    }
+    visitadas.add(id);
+  }
   let entries;
   try {
     entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -69,12 +107,17 @@ function* walk(dir, ilegibles = null) {
     return;
   }
   for (const entry of entries) {
-    if (entry.name.startsWith('.')) continue;
+    if (entry.name.startsWith('.')) {
+      const nube = entry.name.match(RE_ICLOUD);
+      if (nube && isSupported(nube[1])) cuenta.no_descargados += 1;
+      continue;
+    }
     const full = path.join(dir, entry.name);
-    if (full === config.dataDir) continue;
-    if (entry.isDirectory()) {
-      yield* walk(full, ilegibles);
-    } else if (entry.isFile() && isSupported(full)) {
+    if (rutas.dentroDe(full, config.dataDir)) continue;
+    const tipo = tipoReal(full, entry, cuenta);
+    if (tipo === 'carpeta') {
+      yield* walk(full, ilegibles, cuenta, visitadas);
+    } else if (tipo === 'fichero' && isSupported(full)) {
       yield full;
     }
   }
@@ -89,6 +132,10 @@ function* walk(dir, ilegibles = null) {
 // arranque, para siempre, y nadie sabía cuál era.
 export async function indexFile(absPath, { force = false } = {}) {
   const abs = path.resolve(absPath);
+  // Nada entra en el índice si no cuelga de una carpeta configurada AHORA. Un indexado que ya
+  // estaba en marcha cuando el abogado quitó la carpeta (o un evento rezagado del vigilante)
+  // volvería a meter documentos de un cliente que ya no se vigila.
+  if (!rootForPath(abs)) return { ruta: path.basename(abs), estado: 'omitido', motivo: 'fuera_de_carpetas' };
   let stat;
   try {
     stat = fs.statSync(abs);
@@ -136,7 +183,9 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
     return { ruta: rutaLogica, estado: 'sin_cambios' };
   }
 
-  const docId = registry.docIdForAbsPath(abs);
+  // El docId que ya tenía (si la clave del registro se reescribió con otra caja, conserva el suyo:
+  // con uno nuevo, los fragmentos viejos quedarían en el índice duplicados).
+  const docId = registry.get(abs)?.docId || registry.docIdForAbsPath(abs);
 
   // Si ya había chunks de este documento (fichero modificado), los borramos antes de reinsertar.
   await store.deleteByDoc(docId);
@@ -264,8 +313,10 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         'mismo. Vuelve a intentarlo en unos segundos.',
     );
   }
+  // Escritas como las escribe el recorrido de la raíz: «indexar_carpeta» con otra caja u otra
+  // forma Unicode metía cada documento dos veces en el registro.
   const roots = folders
-    ? (Array.isArray(folders) ? folders : [folders]).map((f) => path.resolve(f))
+    ? (Array.isArray(folders) ? folders : [folders]).map((f) => canonizarRuta(f))
     : config.watchedFolders;
   if (!roots || roots.length === 0) {
     throw new Error('No hay carpetas de expedientes configuradas (ROBIN_FOLDER / ROBIN_FOLDERS).');
@@ -323,6 +374,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   // salga de verdad.
   const files = [];
   const ilegibles = [];
+  const cuenta = nuevaCuentaRecorrido();
   const causas = new Map();
   const buscando = (carpeta) =>
     setIndexando({
@@ -338,7 +390,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     buscando(root);
     await respirar();
     let desde = Date.now();
-    for (const f of walk(root, ilegibles)) {
+    for (const f of walk(root, ilegibles, cuenta)) {
       files.push(f);
       if (Date.now() - desde > 150) {
         buscando(root);
@@ -348,6 +400,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     }
   }
   if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
+  if (Object.values(cuenta).some((n) => n > 0)) resumen.no_indexables = cuenta;
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
 
   try {
@@ -403,7 +456,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       const presentes = new Set(files);
       for (const [abs] of registry.entries()) {
         if (presentes.has(abs)) continue;
-        const dentro = accesibles.some((r) => abs === r || abs.startsWith(r + path.sep));
+        const dentro = accesibles.some((r) => rutas.dentroDe(abs, r));
         if (!dentro) continue;
         try {
           await removeFilePath(abs);

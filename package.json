@@ -18,6 +18,8 @@
     "cli": "node cli/index.js",
     "test:aislamiento": "node scripts/test-aislamiento.mjs",
     "test:red": "node scripts/test-red.mjs",
+    "test:rutas": "node scripts/test-rutas.mjs",
+    "test:carpetas": "node scripts/test-carpetas.mjs",
     "test:diagnostico": "node scripts/test-diagnostico.mjs",
     "test:barrido": "node scripts/test-barrido.mjs",
     "test:login": "node scripts/test-login.mjs",

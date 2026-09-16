@@ -12,9 +12,11 @@
 //
 // No importa `config.js` a propósito: config no debe depender de nada que toque el sistema.
 
+import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { log } from './logger.js';
+import { rutas } from './rutas.js';
 
 let _letrasRed = null;   // win32: Set de letras mapeadas a red, p. ej. {'Z'}
 let _montajesRed = null; // darwin/linux: rutas de montajes de red, p. ej. ['/Volumes/Expedientes']
@@ -40,14 +42,50 @@ export function parsearNetUse(salida) {
   return out;
 }
 
-// Ídem para la salida de `mount` en macOS/Linux.
+// Tipos de sistema de ficheros que viven en OTRO equipo. Los `fuse.*` se tratan como red salvo
+// los que se sabe que son locales (portal de Flatpak, cifrados sobre el disco…): tratar de red
+// una carpeta local solo cambia avisos por re-escaneo; lo contrario deja el índice desfasado.
+const TIPOS_RED = /^(smbfs|smb3?|cifs|nfs4?|afpfs|webdav|davfs2?|9p|ceph|glusterfs|lustre|afs|sshfs|fuse\.[\w.+-]+)$/i;
+const FUSE_LOCALES = /^fuse\.(portal|lxcfs|gocryptfs|encfs|cryfs|bindfs|mergerfs|ntfs-?3g|appimage.*|doc)$/i;
+export function esTipoDeRed(tipo) {
+  const t = String(tipo || '');
+  return TIPOS_RED.test(t) && !FUSE_LOCALES.test(t);
+}
+
+// Ídem para la salida de `mount`. Dos formatos:
+//   macOS: "//usuario@srv/Expedientes on /Volumes/Expedientes (smbfs, nodev, nosuid, …)"
+//   Linux: "//srv/expedientes on /mnt/expedientes type cifs (rw,relatime,…)"
+// Hasta la 1.4.7 solo se reconocía el de macOS: en Linux ningún montaje salía de red.
 export function parsearMount(salida) {
   const out = [];
   for (const linea of String(salida ?? '').split(/\r?\n/)) {
-    const m = linea.match(/\son\s(.+?)\s\((smbfs|nfs|afpfs|cifs|webdav|fuse\.\w+)[,)]/);
-    if (m) out.push(m[1]);
+    const linux = linea.match(/\son\s(.+?)\stype\s(\S+)\s\(/);
+    const mac = linux ? null : linea.match(/\son\s(.+?)\s\(([\w.+-]+)[,)]/);
+    const m = linux || mac;
+    if (m && esTipoDeRed(m[2])) out.push(m[1]);
   }
   return out;
+}
+
+// /proc/self/mountinfo (Linux): más fiable que `mount` (no depende de que exista el binario ni de
+// su idioma, y los espacios del punto de montaje van escapados como \040). Campos:
+//   36 35 98:0 /raiz /mnt/punto rw,noatime master:1 - cifs //srv/exp rw,…
+export function parsearMountinfo(salida) {
+  const des = (s) => s.replace(/\\([0-7]{3})/g, (_, o) => String.fromCharCode(parseInt(o, 8)));
+  const out = [];
+  for (const linea of String(salida ?? '').split(/\r?\n/)) {
+    const i = linea.indexOf(' - ');
+    if (i < 0) continue;
+    const antes = linea.slice(0, i).split(' ');
+    const tipo = linea.slice(i + 3).split(' ')[0];
+    if (antes.length >= 5 && esTipoDeRed(tipo)) out.push(des(antes[4]));
+  }
+  return out;
+}
+
+// GVFS (Nautilus/Archivos en GNOME monta ahí «smb://servidor/recurso»).
+export function esRutaGvfs(abs) {
+  return /^\/run\/user\/\d+\/gvfs(\/|$)/.test(String(abs || ''));
 }
 
 // Letras de unidad que ESTA sesión de Windows tiene mapeadas a un recurso de red.
@@ -79,9 +117,17 @@ function montajesDeRed() {
   _montajesRed = [];
   if (process.platform === 'win32') return _montajesRed;
   try {
-    const salida = execFileSync('mount', [], { encoding: 'utf8', timeout: 5000 });
-    // "//usuario@servidor/Expedientes on /Volumes/Expedientes (smbfs, nodev, ...)"
-    _montajesRed = parsearMount(salida);
+    let info = null;
+    if (process.platform === 'linux') {
+      try {
+        info = fs.readFileSync('/proc/self/mountinfo', 'utf8');
+      } catch {
+        info = null;
+      }
+    }
+    _montajesRed = info !== null
+      ? parsearMountinfo(info)
+      : parsearMount(execFileSync('mount', [], { encoding: 'utf8', timeout: 5000 }));
     if (_montajesRed.length) log.info('Montajes de red detectados', { montajes: _montajesRed });
   } catch (err) {
     log.warn('No se pudo consultar los montajes de red', { err: String(err) });
@@ -94,15 +140,17 @@ export function esRutaDeRed(p) {
   if (!p) return false;
   const abs = path.resolve(p);
   for (const pref of prefijosForzados()) {
-    if (abs === pref || abs.startsWith(pref + path.sep)) return true;
+    if (rutas.dentroDe(abs, pref)) return true;
   }
   if (process.platform === 'win32') {
     if (abs.startsWith('\\\\')) return true; // ruta UNC: \\servidor\recurso\...
     const m = abs.match(/^([A-Za-z]):/);
     return m ? letrasDeRed().has(m[1].toUpperCase()) : false;
   }
+  if (process.platform === 'linux' && esRutaGvfs(abs)) return true;
   const montajes = montajesDeRed();
-  return montajes.some((mp) => abs === mp || abs.startsWith(mp + path.sep));
+  // dentroDe y no `startsWith(montaje + sep)`: un montaje en «/» o con barra final no casaba.
+  return montajes.some((mp) => rutas.dentroDe(abs, mp));
 }
 
 // Descripción legible para `estado_servidor` (el abogado tiene que poder ver de un vistazo
@@ -111,4 +159,4 @@ export function tipoDeUbicacion(p) {
   return esRutaDeRed(p) ? 'red' : 'local';
 }
 
-export default { esRutaDeRed, tipoDeUbicacion, parsearNetUse, parsearMount };
+export default { esRutaDeRed, tipoDeUbicacion, parsearNetUse, parsearMount, parsearMountinfo, esTipoDeRed, esRutaGvfs };
