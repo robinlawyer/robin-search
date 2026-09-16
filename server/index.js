@@ -114,13 +114,6 @@ async function main() {
   };
   server.oninitialized = () => setImmediate(arrancar);
   setTimeout(arrancar, 3000); // sin unref: sin cliente, es lo que mantiene vivo el proceso
-
-  // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
-  if (process.env.ROBIN_PRUEBA_RECHAZO === '1') {
-    setTimeout(() => {
-      Promise.reject(new Error('rechazo de prueba leyendo /Users/prueba/Expedientes/Pérez - Divorcio/demanda.pdf'));
-    }, 300);
-  }
 }
 
 main().catch((err) => {

@@ -104,6 +104,18 @@ export function guardarPendiente() {
 }
 process.on('exit', guardarPendiente);
 
+// Esta instancia ha dejado de escribir (otra tomó el cerrojo): lo que tuviera sin volcar NO se
+// escribe —pisaría el registro de la que escribe ahora— y se vuelve a leer del disco.
+export function descartarPendiente() {
+  if (_temporizador) {
+    clearTimeout(_temporizador);
+    _temporizador = null;
+  }
+  _sucio = false;
+  _cache = null;
+  _knownMtime = 0;
+}
+
 export function empezadoVacio() {
   load();
   return _empezadoVacio;
@@ -203,4 +215,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, empezadoVacio };
+export default { docIdForAbsPath, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };

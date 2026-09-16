@@ -135,7 +135,9 @@ function drenarCola() {
   const force = colaForce;
   enCola = null;
   colaForce = false;
-  lanzar(null, siguiente === 'todas' ? null : [...siguiente].filter(carpetaVigilada), force);
+  lanzar(null, siguiente === 'todas' ? null : [...siguiente].filter(carpetaVigilada), force).catch((err) =>
+    log.warn('Fallo lanzando el reindexado en cola', { err: String(err) }),
+  );
 }
 
 // `carpeta`: solo esa (el botón «Indexar ahora» de cada carpeta en la app); sin ella, todas.
@@ -202,7 +204,7 @@ async function configurar(socket, { carpetas }) {
     }
     enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: true, carpetas: aplicadas });
     anunciar();
-    if (aplicadas.length) reindexar(socket, { force: false });
+    if (aplicadas.length) reindexar(socket, { force: false }).catch((err) => log.warn('Fallo en el reindexado', { err: String(err) }));
   } catch (err) {
     log.error('Fallo guardando las carpetas', { err: String(err) });
     enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: String(err?.message ?? err) });
@@ -227,8 +229,9 @@ function atender(socket) {
       let msg;
       try { msg = JSON.parse(linea); } catch { continue; }
       if (msg.cmd === 'estado') enviar(socket, retrato());
-      else if (msg.cmd === 'reindexar') reindexar(socket, msg);
-      else if (msg.cmd === 'configurar') configurar(socket, msg);
+      // Sin esperar, pero NUNCA sin catch: una promesa rechazada sin recoger tumba el servidor.
+      else if (msg.cmd === 'reindexar') reindexar(socket, msg).catch((err) => log.warn('Fallo en el reindexado', { err: String(err) }));
+      else if (msg.cmd === 'configurar') configurar(socket, msg).catch((err) => log.warn('Fallo configurando', { err: String(err) }));
       else enviar(socket, { tipo: 'respuesta', ok: false, motivo: 'orden_desconocida' });
     }
   });
@@ -263,7 +266,16 @@ export async function iniciarControl() {
       log.warn('Canal de control no disponible', { err: String(err) });
       servidor = null;
     });
-    await new Promise((resolve) => servidor.listen(ruta, resolve));
+    // Con el 'error' del listen atendido: sin él, un EADDRINUSE (el nombre lo ocupa otra
+    // instancia que arrancó a la vez) dejaba esta promesa colgada para siempre.
+    await new Promise((resolve, reject) => {
+      const alFallar = (err) => reject(err);
+      servidor.once('error', alFallar);
+      servidor.listen(ruta, () => {
+        servidor.off('error', alFallar);
+        resolve();
+      });
+    });
     if (process.platform !== 'win32') {
       // Solo el dueño. Sin esto, otro usuario del mismo equipo podría ver los
       // nombres de fichero de los expedientes.

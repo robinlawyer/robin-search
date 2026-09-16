@@ -16,7 +16,7 @@ import * as cuarentena from './indexer/cuarentena.js';
 import * as store from './search/store.js';
 import * as escritor from './escritor.js';
 import * as diagnostico from './diagnostico.js';
-import { startWatcher } from './watcher/watcher.js';
+import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
 import { iniciarControl } from './control.js';
 
@@ -210,6 +210,15 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
 
+  // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
+  // DESPUÉS de cargar el modelo a propósito: es onnxruntime-web (Emscripten) el que instala el
+  // manejador que relanza los rechazos; antes de cargarlo la prueba no probaba nada.
+  if (process.env.ROBIN_PRUEBA_RECHAZO === '1') {
+    setTimeout(() => {
+      Promise.reject(new Error('rechazo de prueba leyendo /Users/prueba/Expedientes/Pérez - Divorcio/demanda.pdf'));
+    }, 300);
+  }
+
   // 3. Indexado inicial (incremental) y watcher: solo la instancia que escribe.
   const indexar = async () => {
     if (initialIndex && hayCarpetas) {
@@ -234,15 +243,14 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     diagnostico.arranqueCompleto();
   };
 
-  if (escribo) {
-    await indexar();
-  } else if (!watch) {
-    // Modo IT (--silent): no hay relevo que esperar; se dice y se sale.
-    setError('Otra instancia de RobinSearch está usando este mismo directorio de datos. Ciérrala y vuelve a intentarlo.');
-  } else {
-    const relevo = setInterval(() => {
+  // Espera a que la instancia que escribe muera (o suelte el cerrojo) para tomar el relevo.
+  let relevo = null;
+  const esperarRelevo = () => {
+    if (relevo) return;
+    relevo = setInterval(() => {
       if (!escritor.adquirir()) return;
       clearInterval(relevo);
+      relevo = null;
       log.info('Esta instancia toma el relevo del índice');
       // El canal de la app lo servía la instancia muerta: su socket quedó huérfano y
       // iniciarControl lo detecta y lo sustituye.
@@ -252,6 +260,26 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
         .catch((err) => log.error('Fallo al tomar el relevo del índice', { err: String(err) }));
     }, 5000);
     relevo.unref?.();
+  };
+
+  // Otra instancia se ha quedado con el cerrojo mientras esta estaba parada (suspensión, un
+  // lector que bloqueó el proceso más de dos minutos): esta pasa a LECTOR de forma ordenada. Deja
+  // de vigilar, descarta lo que tuviera sin volcar del registro (lo escribiría encima del de la
+  // otra) y el indexado en curso se corta antes de su siguiente escritura (indexer.js).
+  escritor.alPerder(() => {
+    log.warn('Otra instancia de RobinSearch ha tomado el índice: esta pasa a solo buscar');
+    registry.descartarPendiente();
+    stopWatcher().catch((err) => log.warn('No se pudo parar el vigilante', { err: String(err) }));
+    if (watch) esperarRelevo();
+  });
+
+  if (escribo) {
+    await indexar();
+  } else if (!watch) {
+    // Modo IT (--silent): no hay relevo que esperar; se dice y se sale.
+    setError('Otra instancia de RobinSearch está usando este mismo directorio de datos. Ciérrala y vuelve a intentarlo.');
+  } else {
+    esperarRelevo();
   }
 }
 

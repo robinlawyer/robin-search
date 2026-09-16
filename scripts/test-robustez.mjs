@@ -319,15 +319,18 @@ await parar(s);
 console.log('\nG. Una promesa rechazada sin capturar\n');
 antes = recibidos.length;
 s = servidor({ madre: madreF, datos: path.join(base, 'datosG'), env: { ROBIN_PRUEBA_RECHAZO: '1' } });
-await espera(3000);
-const vivo = await conTope(s.call('estado_servidor'), 20000);
-check('G.1 el servidor sigue vivo (en Node ≥15 esto lo tumbaba)', Boolean(vivo?.data?.version));
+// El rechazo se lanza DESPUÉS de cargar el modelo (cuando onnxruntime ya ha puesto su manejador
+// que relanza): primero se espera a que ocurra, y luego se mira si el proceso sigue ahí.
 let avG = null;
-for (let i = 0; i < 10 && !avG; i++) {
+for (let i = 0; i < 120 && !avG; i++) {
   avG = recibidos.slice(antes).find((r) => r.cuerpo?.motivo === 'excepcion');
   if (!avG) await espera(500);
 }
+await espera(1500);
+const vivo = await conTope(s.call('estado_servidor'), 20000);
+check('G.1 el servidor sigue vivo tras el rechazo con el modelo cargado', Boolean(vivo?.data?.version) && s.proc.exitCode === null, `exit=${s.proc.exitCode}`);
 check('G.2 y se avisa a Robin', Boolean(avG));
+check('G.2b el rechazo llegó con el modelo ya cargado (la prueba es real)', vivo?.data?.motor_embedding?.cargado === true);
 check('G.3 con la causa limpia de rutas y nombres', Boolean(avG) && !/Pérez|Divorcio|\/Users\/prueba|demanda/.test(avG.bruto), avG?.cuerpo?.causa);
 await parar(s);
 

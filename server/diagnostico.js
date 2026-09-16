@@ -31,6 +31,7 @@ import { pidVivo } from './escritor.js';
 import * as registry from './indexer/registry.js';
 import * as cuarentena from './indexer/cuarentena.js';
 import { getBearerQuiet } from './auth/oauth.js';
+import { escribirAtomico, escribirJson, conCerrojoDeFichero } from './persistencia.js';
 
 const ENTRE_INFORMES_IGUALES_MS = 12 * 3600 * 1000;
 const MAX_INFORMES_DIA = 20;
@@ -50,14 +51,26 @@ function leerEstado() {
   }
 }
 
-function guardarEstado(est) {
+// Leer-modificar-escribir BAJO CERROJO: Claude arranca dos instancias y las dos cuentan caídas
+// y envíos a la vez; sin cerrojo, la segunda escritura pisaba la primera (una caída contada dos
+// veces o ninguna, dos «instalaciones» distintas). `fn` modifica el estado y devuelve lo que sea.
+function modificarEstado(fn) {
   try {
     fs.mkdirSync(config.dataDir, { recursive: true });
-    const tmp = `${rutaEstado()}.${process.pid}.tmp`;
-    fs.writeFileSync(tmp, JSON.stringify(est));
-    fs.renameSync(tmp, rutaEstado());
+    return conCerrojoDeFichero(
+      rutaEstado(),
+      () => {
+        const est = leerEstado();
+        const r = fn(est);
+        escribirJson(rutaEstado(), est);
+        return r;
+      },
+      { esperaMaxMs: 3000 },
+    );
   } catch {
-    /* sin disco no hay estado; nada más */
+    // Sin disco (o cerrojo ocupado demasiado tiempo) no hay estado: se sigue sin él.
+    const est = leerEstado();
+    return fn(est);
   }
 }
 
@@ -65,11 +78,11 @@ function guardarEstado(est) {
 // deriva de nada de la persona ni del equipo.
 function instalacionId() {
   const est = leerEstado();
-  if (!est.instalacion) {
-    est.instalacion = crypto.randomUUID();
-    guardarEstado(est);
-  }
-  return est.instalacion;
+  if (est.instalacion) return est.instalacion;
+  return modificarEstado((e) => {
+    if (!e.instalacion) e.instalacion = crypto.randomUUID();
+    return e.instalacion;
+  });
 }
 
 // ── 1. Marca de fase ────────────────────────────────────────────────────────────────────────
@@ -82,7 +95,9 @@ export function marcarFase(fase, extra = {}) {
   if (_cerrando) return;
   _marca = { pid: process.pid, fase, t: new Date().toISOString(), version: VERSION, ...extra };
   try {
-    fs.writeFileSync(rutaMarca(), JSON.stringify(_marca));
+    // Atómica: un proceso que muere A MITAD de escribir la marca (justo lo que se quiere
+    // diagnosticar) dejaba un JSON cortado, y el siguiente arranque no sabía ni la fase.
+    escribirAtomico(rutaMarca(), JSON.stringify(_marca));
   } catch {
     /* sin marca no hay diagnóstico de caída, pero el trabajo sigue */
   }
@@ -149,11 +164,12 @@ export function revisarCaidaAnterior() {
   }
   if (!caidas.length) return null;
   caidas.sort((a, b) => String(a.t).localeCompare(String(b.t)));
-  const est = leerEstado();
-  est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t }))].slice(-10);
-  est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
-  guardarEstado(est);
-  return { ...caidas[caidas.length - 1], caidasSeguidas: est.caidasSeguidas };
+  const seguidas = modificarEstado((est) => {
+    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t }))].slice(-10);
+    est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
+    return est.caidasSeguidas;
+  });
+  return { ...caidas[caidas.length - 1], caidasSeguidas: seguidas };
 }
 
 // El índice abrió bien: las caídas anteriores al abrirlo ya no cuentan.
@@ -163,11 +179,10 @@ export function indiceAbierto() {
 
 // El arranque llegó al final (índice abierto, modelo cargado, indexado inicial hecho).
 export function arranqueCompleto() {
-  const est = leerEstado();
-  if (est.caidasSeguidas) {
+  if (!leerEstado().caidasSeguidas) return;
+  modificarEstado((est) => {
     est.caidasSeguidas = 0;
-    guardarEstado(est);
-  }
+  });
 }
 
 // Cuántas de las últimas caídas SEGUIDAS ocurrieron en alguna de estas fases.
@@ -567,13 +582,13 @@ function puedeEnviar(firma) {
 }
 
 function anotarEnvio(firma) {
-  const est = leerEstado();
   const ahora = Date.now();
-  est.enviados = Object.fromEntries(
-    Object.entries({ ...(est.enviados || {}), [firma]: ahora }).filter(([, t]) => ahora - t < 7 * 24 * 3600 * 1000),
-  );
-  est.enviosRecientes = [...(est.enviosRecientes || []).filter((t) => ahora - t < 24 * 3600 * 1000), ahora];
-  guardarEstado(est);
+  modificarEstado((est) => {
+    est.enviados = Object.fromEntries(
+      Object.entries({ ...(est.enviados || {}), [firma]: ahora }).filter(([, t]) => ahora - t < 7 * 24 * 3600 * 1000),
+    );
+    est.enviosRecientes = [...(est.enviosRecientes || []).filter((t) => ahora - t < 24 * 3600 * 1000), ahora];
+  });
 }
 
 function conTope(promesa, ms) {
@@ -695,14 +710,27 @@ export function instalarManejadores({ alCerrar } = {}) {
   }
   // Una promesa rechazada que nadie recoge TUMBA el proceso en Node ≥15. Aquí se registra, se
   // avisa y el servidor sigue atendiendo.
-  process.on('unhandledRejection', (motivo) => {
+  //
+  // Y nadie más puede cambiar eso: los módulos WASM de Emscripten (onnxruntime-web al cargar el
+  // modelo, y cualquier otro que se cargue después) añaden manejadores que RELANZAN el rechazo
+  // o la excepción, y el host de Node de Claude sale con exit(1). Cualquier manejador ajeno de
+  // estos dos eventos se retira en cuanto se añade.
+  const propios = new Set();
+  process.on('newListener', (evento, fn) => {
+    if ((evento === 'unhandledRejection' || evento === 'uncaughtException') && !propios.has(fn)) {
+      queueMicrotask(() => process.removeListener(evento, fn));
+    }
+  });
+  const alRechazo = (motivo) => {
     log.error('Promesa rechazada sin capturar (el servidor sigue)', { err: String(motivo?.stack || motivo?.message || motivo) });
     informar('excepcion', { fase: faseActual() || 'en_marcha', causa: errorTecnico(motivo) }).catch(() => {});
-  });
+  };
+  propios.add(alRechazo);
+  process.on('unhandledRejection', alRechazo);
   // Tras una excepción sin capturar el estado del proceso no es fiable: se deja la marca con la
   // causa (para el siguiente arranque, y para apartar el fichero si fue leyendo uno), se intenta
   // avisar y se sale.
-  process.on('uncaughtException', (err) => {
+  const alExcepcion = (err) => {
     log.error('Excepción no capturada', { err: String(err?.stack || err) });
     const previa = _marca || {};
     marcarFase('excepcion', {
@@ -721,7 +749,9 @@ export function instalarManejadores({ alCerrar } = {}) {
       .catch(() => {})
       .finally(salir);
     setTimeout(salir, 5000).unref?.();
-  });
+  };
+  propios.add(alExcepcion);
+  process.on('uncaughtException', alExcepcion);
   return { salirLimpio };
 }
 

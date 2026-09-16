@@ -533,6 +533,10 @@ function startLogin() {
       disc.robin_code_pickup_endpoint ||
       (disc.issuer || config.oauthIssuer).replace(/\/+$/, '') + '/oauth/pickup';
     const pickP = pickupCode(pickupUrl, a.client_id, verifier, Date.now() + CALLBACK_TIMEOUT_MS, abort.signal);
+    // Si algo falla ANTES de llegar a Promise.any (abrir el navegador), estas dos promesas
+    // rechazarían minutos después sin nadie que las recoja: eso tumba el proceso.
+    codeP.catch(() => {});
+    pickP.catch(() => {});
     openBrowser(authorizeUrl);
     let code;
     try {

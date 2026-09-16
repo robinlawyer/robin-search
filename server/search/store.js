@@ -379,6 +379,20 @@ export function upsertChunks(docId, chunks) {
   });
 }
 
+// Sustituye el documento ENTERO por estos fragmentos, de una vez: hasta que la escritura se
+// confirma, se sigue viendo la versión anterior. Es lo que usa el indexado (a diferencia de
+// upsertChunks, que conserva los fragmentos que no vengan en la lista).
+export function reemplazarDoc(docId, chunks) {
+  return conCerrojo(async () => {
+    if (!esDocIdValido(docId)) throw new Error(`docId no válido: ${docId}`);
+    asegurarCatalogo();
+    escribirDoc(
+      docId,
+      chunks.map((c) => ({ chunkId: c.chunkId, vector: c.vector, metadata: { ...c.metadata } })),
+    );
+  });
+}
+
 // Elimina todos los fragmentos de un documento. Devuelve cuántos había.
 export function deleteByDoc(docId) {
   return conCerrojo(async () => {
@@ -641,6 +655,7 @@ export function borrarTodo() {
 
 export default {
   upsertChunks,
+  reemplazarDoc,
   deleteByDoc,
   query,
   getChunk,
