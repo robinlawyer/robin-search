@@ -3,12 +3,21 @@
 // índice vectorial.
 //
 // Pipeline por fichero:
-//   extractFile → chunkPages → embedPassages (e5-small local) → store.upsertChunks → registry.set
+//   huella → extractFile → chunkPages → embedPassages (e5-small local) → store.reemplazarDoc → registry.set
+//
+// Velocidad (1.5.1, medido el 16-sep-2026): el embedding es ~95 % del tiempo. Por eso, cuando hay
+// hilos de embedding (embedder/pool.js), varios documentos avanzan a la vez: la LECTURA de los
+// ficheros sigue siendo de uno en uno (con su marca de «leyendo este fichero», diagnostico.js) y
+// solo el cálculo de vectores va en paralelo. Sin hilos, todo sigue exactamente en serie.
+// Además: primero lo más útil (documentos de texto recientes; imágenes que piden OCR al final),
+// y un fichero con el mismo contenido que otro ya indexado reutiliza sus vectores.
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import {
   config,
+  VERSION,
   SUPPORTED_EXTENSIONS,
   logicalPath,
   rootForPath,
@@ -31,7 +40,7 @@ import {
 } from '../state.js';
 import { extractFile } from './extract.js';
 import { chunkPages } from './chunk.js';
-import { embedPassages } from '../embedder/embedder.js';
+import { embedPassages, cargaEmbedding, prepararHilos } from '../embedder/embedder.js';
 import * as store from '../search/store.js';
 import * as registry from './registry.js';
 import * as cuarentena from './cuarentena.js';
@@ -137,7 +146,7 @@ function* walk(dir, ilegibles = null, cuenta = nuevaCuentaRecorrido(), visitadas
 // memoria agotada, un comprimido o un PDF que revienta—, la marca sobrevive y el siguiente
 // arranque sabe qué fichero fue. Hasta la 1.4.4 ese fichero tumbaba RobinSearch en CADA
 // arranque, para siempre, y nadie sabía cuál era.
-export async function indexFile(absPath, { force = false } = {}) {
+export async function indexFile(absPath, { force = false, paralelo = false } = {}) {
   const abs = path.resolve(absPath);
   // Nada entra en el índice si no cuelga de una carpeta configurada AHORA. Un indexado que ya
   // estaba en marcha cuando el abogado quitó la carpeta (o un evento rezagado del vigilante)
@@ -163,11 +172,12 @@ export async function indexFile(absPath, { force = false } = {}) {
     if (registry.get(abs)) await removeFilePath(abs);
     return { ruta: logicalPath(abs), estado: 'apartado', motivo: cuarentena.MOTIVO_TAMANYO };
   }
-  diagnostico.marcarFase('indexando', { fichero: abs, ext, bytes: stat.size });
-  // Solo pruebas automáticas: simula un lector que tumba el proceso (como un OOM).
-  if (process.env.ROBIN_PRUEBA_CAER_EN && path.basename(abs) === process.env.ROBIN_PRUEBA_CAER_EN) {
-    process.kill(process.pid, 'SIGKILL');
-  }
+  const marca = { fichero: abs, ext, bytes: stat.size };
+  // En paralelo, la marca cubre solo la LECTURA (que va de una en una, ver `leerEnSerie`): es lo
+  // que puede tumbar el proceso por un fichero concreto. Los vectores se calculan en los hilos de
+  // embedding, fuera del hilo principal: si uno muere, el pool repite su lote y lo repone.
+  if (paralelo) return indexFileSinMarca(abs, { force, marca });
+  marcarLectura(marca);
   try {
     return await indexFileSinMarca(abs, { force });
   } finally {
@@ -175,7 +185,76 @@ export async function indexFile(absPath, { force = false } = {}) {
   }
 }
 
-async function indexFileSinMarca(absPath, { force = false } = {}) {
+function marcarLectura(marca) {
+  diagnostico.marcarFase('indexando', marca);
+  // Solo pruebas automáticas: simula un lector que tumba el proceso (como un OOM).
+  if (process.env.ROBIN_PRUEBA_CAER_EN && path.basename(marca.fichero) === process.env.ROBIN_PRUEBA_CAER_EN) {
+    process.kill(process.pid, 'SIGKILL');
+  }
+}
+
+// Lecturas de fichero de una en una aunque los documentos avancen en paralelo: la marca de
+// diagnóstico nombra UN fichero, y leer varios PDF grandes a la vez multiplicaría la memoria.
+let _lectura = Promise.resolve();
+function leerEnSerie(fn) {
+  const turno = _lectura.then(fn, fn);
+  _lectura = turno.then(
+    () => undefined,
+    () => undefined,
+  );
+  return turno;
+}
+
+// ── Contenido repetido ─────────────────────────────────────────────────────────────────────
+// Huella del CONTENIDO de un fichero más todo lo que decide qué fragmentos salen de él
+// (extensión, troceado, OCR, modelo y versión de RobinSearch, que puede cambiar los lectores).
+// Dos ficheros con la misma huella dan los mismos fragmentos y los mismos vectores.
+async function huellaDe(abs) {
+  const h = crypto.createHash('sha256');
+  await new Promise((resolve, reject) => {
+    fs.createReadStream(abs)
+      .on('data', (d) => h.update(d))
+      .on('end', resolve)
+      .on('error', reject);
+  });
+  const ajustes = [
+    VERSION,
+    path.extname(abs).toLowerCase(),
+    config.embeddingModel,
+    config.embeddingQuantized,
+    config.chunkSizeTokens,
+    config.chunkOverlapTokens,
+    config.maxPagesPerFile,
+    MAX_FRAGMENTOS_POR_DOCUMENTO,
+    config.ocrEnabled,
+    config.ocrLang,
+    config.ocrDpi,
+    config.ocrMaxPages,
+  ].join('|');
+  return `${h.digest('hex')}:${crypto.createHash('sha1').update(ajustes).digest('hex').slice(0, 12)}`;
+}
+
+// Huellas de lo que se está indexando AHORA: la segunda copia de un fichero espera a la primera
+// en vez de calcular lo mismo a la vez.
+const _huellasEnCurso = new Map();
+
+// Un documento ya indexado con esta huella y completo en el índice (o null).
+function origenConHuella(huella, abs) {
+  // Primero el propio fichero (misma ruta, otra fecha), después cualquier otra copia.
+  const candidatos = registry.conHuella(huella).sort((x, y) => (y[0] === abs) - (x[0] === abs));
+  for (const [absOrigen, e] of candidatos) {
+    if (!e?.docId) continue;
+    if (e.numChunks > 0) {
+      const cab = store.cabecera(e.docId);
+      if (cab && cab.n === e.numChunks) return { abs: absOrigen, entrada: e };
+    } else if (absOrigen === abs) {
+      return { abs: absOrigen, entrada: e };
+    }
+  }
+  return null;
+}
+
+async function indexFileSinMarca(absPath, { force = false, marca = null } = {}) {
   const abs = path.resolve(absPath);
   const rutaLogica = logicalPath(abs);
   const root = rootForPath(abs);
@@ -199,13 +278,39 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
   // DESAPARECÍA del índice. Ahora la versión anterior sigue buscable hasta que la nueva está
   // lista, y se sustituye de una vez (store.reemplazarDoc). Como el registro no se actualiza, el
   // fichero sigue «cambiado» y se reintenta en la siguiente pasada.
-  const { pages, sinOcr, numPages } = await extractFile(abs, {
-    maxPages: config.maxPagesPerFile,
-  });
-
   const expediente = expedienteForLogicalPath(rutaLogica);
 
-  const baseEntry = {
+  // Contenido idéntico a algo ya indexado → se reutiliza (salvo reindexado forzado, que es
+  // justo para no fiarse de lo que hay). Una huella que no se puede calcular no impide indexar.
+  let huella = null;
+  if (!force) {
+    try {
+      huella = await huellaDe(abs);
+    } catch {
+      huella = null;
+    }
+  }
+  let alTerminarHuella = null;
+  if (huella) {
+    while (_huellasEnCurso.has(huella)) await _huellasEnCurso.get(huella).catch(() => {});
+    _huellasEnCurso.set(huella, new Promise((r) => (alTerminarHuella = r)));
+  }
+  try {
+    if (huella) {
+      const r = await reutilizar({ abs, stat, huella, docId, root, rutaLogica, expediente });
+      if (r) return r;
+    }
+    return await indexarContenido({ abs, stat, huella, docId, root, rutaLogica, expediente, marca });
+  } finally {
+    if (huella) {
+      _huellasEnCurso.delete(huella);
+      alTerminarHuella();
+    }
+  }
+}
+
+function entradaBase({ abs, stat, docId, root, rutaLogica, expediente }) {
+  return {
     docId,
     raiz: root?.name ?? null,
     rutaRelativa: rutaLogica,
@@ -216,14 +321,75 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
     size: stat.size,
     mtimeMs: stat.mtimeMs,
     indexedAt: new Date().toISOString(),
-    numPages,
   };
+}
+
+// ¿Sigue el fichero como estaba al calcular la huella? Si ha cambiado entretanto, lo indexado no
+// corresponde a esa huella y no se guarda (la siguiente pasada lo vuelve a ver cambiado).
+function mismoFichero(abs, stat) {
+  try {
+    const ahora = fs.statSync(abs);
+    return ahora.size === stat.size && ahora.mtimeMs === stat.mtimeMs;
+  } catch {
+    return false;
+  }
+}
+
+async function reutilizar({ abs, stat, huella, docId, root, rutaLogica, expediente }) {
+  const origen = origenConHuella(huella, abs);
+  if (!origen) return null;
+  const e = origen.entrada;
+  const base = { ...entradaBase({ abs, stat, docId, root, rutaLogica, expediente }), numPages: e.numPages ?? null, huella };
+  if (!(e.numChunks > 0)) {
+    // El mismo fichero, sin cambios de contenido (solo la fecha): ni texto antes ni ahora.
+    if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
+    registry.set(abs, { ...base, numChunks: 0, sinOcr: Boolean(e.sinOcr) });
+    if (e.sinOcr) state.ficherosSinOcr.add(rutaLogica);
+    return { ruta: rutaLogica, estado: e.sinOcr ? 'sin_ocr' : 'vacio', reutilizado: true };
+  }
+  // Mismo fichero con otra fecha (una sincronización de OneDrive que solo la toca) o una copia en
+  // otra ruta: se reescriben sus fragmentos con la ruta, el expediente y la fecha de ESTE fichero.
+  if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
+  const n = await store.copiarDoc(e.docId, docId, {
+    fichero: path.basename(abs),
+    rutaRelativa: rutaLogica,
+    raiz: root?.name ?? null,
+    expediente,
+    fechaModificacion: stat.mtime.toISOString(),
+  });
+  if (n === null) return null;
+  if (!mismoFichero(abs, stat)) delete base.huella;
+  state.ficherosSinOcr.delete(rutaLogica);
+  registry.set(abs, { ...base, numChunks: n, sinOcr: false });
+  return { ruta: rutaLogica, estado: 'indexado', chunks: n, reutilizado: true };
+}
+
+async function indexarContenido({ abs, stat, huella, docId, root, rutaLogica, expediente, marca }) {
+  const leer = () =>
+    extractFile(abs, {
+      maxPages: config.maxPagesPerFile,
+    });
+  const { pages, sinOcr, numPages } = marca
+    ? await leerEnSerie(async () => {
+        marcarLectura(marca);
+        try {
+          return await leer();
+        } finally {
+          diagnostico.finFase();
+        }
+      })
+    : await leer();
+
+  const baseEntry = { ...entradaBase({ abs, stat, docId, root, rutaLogica, expediente }), numPages };
+
+  // La huella solo se guarda si el fichero no ha cambiado mientras se leía.
+  const conHuella = () => (huella && mismoFichero(abs, stat) ? { huella } : {});
 
   if (sinOcr) {
     if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
     await store.deleteByDoc(docId);
     state.ficherosSinOcr.add(rutaLogica);
-    registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: true });
+    registry.set(abs, { ...baseEntry, ...conHuella(), numChunks: 0, sinOcr: true });
     log.warn('PDF sin OCR (no legible), omitido del índice', { ruta: rutaLogica });
     return { ruta: rutaLogica, estado: 'sin_ocr' };
   }
@@ -245,7 +411,7 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
   if (chunks.length === 0) {
     if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
     await store.deleteByDoc(docId);
-    registry.set(abs, { ...baseEntry, numChunks: 0, sinOcr: false });
+    registry.set(abs, { ...baseEntry, ...conHuella(), numChunks: 0, sinOcr: false });
     return { ruta: rutaLogica, estado: 'vacio' };
   }
 
@@ -270,7 +436,7 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
   // Justo antes de escribir: ¿sigue siendo esta la instancia que escribe? (escritor.js)
   if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
   await store.reemplazarDoc(docId, items);
-  registry.set(abs, { ...baseEntry, numChunks: chunks.length, sinOcr: false });
+  registry.set(abs, { ...baseEntry, ...conHuella(), numChunks: chunks.length, sinOcr: false });
 
   return { ruta: rutaLogica, estado: 'indexado', chunks: chunks.length };
 }
@@ -305,6 +471,80 @@ export function indexandoAhora() {
 export function alTerminarIndexado(fn) {
   _alTerminar.add(fn);
   return () => _alTerminar.delete(fn);
+}
+
+// ¿Esperar a que termine algún documento antes de empezar otro? Sin hilos, siempre (en serie,
+// como siempre). Con hilos: como mucho dos documentos por hilo en marcha y no más de dos lotes por
+// hilo esperando. Leer por delante de lo que se puede calcular solo llenaría la memoria de textos.
+function hayQueEsperar(enMarcha) {
+  const carga = cargaEmbedding();
+  if (!carga) return true;
+  return enMarcha >= carga.hilos * 2 + 1 || carga.pendientes >= carga.hilos * carga.lote * 2;
+}
+
+// Orden del indexado: lo que más pronto sirve al abogado, primero.
+//   0 escritos, correos, PDF y presentaciones · 1 hojas de cálculo · 2 comprimidos
+//   3 imágenes (siempre OCR, lo más lento por documento)
+// y dentro de cada grupo, lo modificado más recientemente antes. Los PDF escaneados no se pueden
+// distinguir sin leerlos; van con los demás PDF.
+const PRIORIDAD_EXT = new Map([
+  ...['.xlsx', '.xls', '.xlsm', '.ods', '.fods', '.csv', '.tsv'].map((e) => [e, 1]),
+  ...['.zip', '.rar', '.7z'].map((e) => [e, 2]),
+  ...['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif'].map((e) => [e, 3]),
+]);
+
+async function planificar(files, force = false) {
+  const orden = [];
+  let bytesPendientes = 0;
+  let t = Date.now();
+  for (const abs of files) {
+    let stat = null;
+    try {
+      const st = fs.statSync(abs);
+      const pendiente = force || registry.isStale(abs, st);
+      stat = { size: st.size, mtimeMs: st.mtimeMs, pendiente };
+      if (pendiente) bytesPendientes += st.size;
+    } catch {
+      /* desaparecido: indexFile lo dirá */
+    }
+    orden.push({ abs, stat, prioridad: PRIORIDAD_EXT.get(path.extname(abs).toLowerCase()) ?? 0 });
+    if (Date.now() - t > 30) {
+      await respirar();
+      t = Date.now();
+    }
+  }
+  orden.sort((a, b) => a.prioridad - b.prioridad || (b.stat?.mtimeMs ?? 0) - (a.stat?.mtimeMs ?? 0));
+  return { orden, bytesPendientes };
+}
+
+// Tiempo restante estimado, con el ritmo MEDIDO en este indexado (bytes de ficheros que había
+// que indexar ya terminados por segundo). Es aproximado: un PDF escaneado pesa poco y tarda
+// mucho (OCR), una hoja de cálculo al revés. No se da hasta tener algo de muestra.
+export function nuevaEta(bytesTotales, ahora = () => Date.now()) {
+  const t0 = ahora();
+  let hechos = 0;
+  let ficheros = 0;
+  return {
+    hecho(bytes) {
+      hechos += bytes || 0;
+      ficheros += 1;
+    },
+    estimar() {
+      const s = (ahora() - t0) / 1000;
+      if (!bytesTotales || ficheros < 3 || s < 10 || hechos <= 0) return {};
+      const restante = Math.max(0, bytesTotales - hechos);
+      const eta = Math.round((s * restante) / hechos);
+      return { eta_segundos: eta, eta: textoEta(eta) };
+    },
+  };
+}
+
+function textoEta(seg) {
+  if (seg < 60) return 'menos de un minuto (estimación)';
+  const min = Math.round(seg / 60);
+  if (min < 90) return `unos ${min} min (estimación)`;
+  const h = seg / 3600;
+  return `unas ${h < 10 ? h.toFixed(1).replace('.', ',') : Math.round(h)} h (estimación)`;
 }
 
 export async function indexFolder(opciones = {}) {
@@ -425,25 +665,67 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
   if (Object.values(cuenta).some((n) => n > 0)) resumen.no_indexables = cuenta;
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
+  await respirar();
+  const { orden, bytesPendientes } = await planificar(files, force);
+  const eta = nuevaEta(bytesPendientes);
+  // Con trabajo de verdad por delante, que los hilos de embedding (si los hay) estén arrancando
+  // antes de repartir: decide si los documentos van de uno en uno o varios a la vez.
+  if (bytesPendientes > 0 || orden.some((f) => f.stat?.pendiente)) await prepararHilos();
+
+  const enVuelo = new Set();
+  let empezados = 0;
+  let terminados = 0;
+  const procesar = async (abs, stat) => {
+    try {
+      const r = await indexFile(abs, { force, paralelo: Boolean(cargaEmbedding()) });
+      if (r.estado === 'indexado') {
+        resumen.indexados += 1;
+        resumen.fragmentosNuevos += r.chunks || 0;
+      } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
+      else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
+      else if (r.estado === 'apartado') resumen.apartados += 1;
+      else resumen.omitidos += 1;
+      if (r.reutilizado) resumen.reutilizados = (resumen.reutilizados || 0) + 1;
+    } catch (err) {
+      resumen.errores += 1;
+      // La CAUSA se agrega aquí, no solo en el log: el abogado no va a abrir un fichero de
+      // log, y sin causa un "errores: 680" es indiagnosticable desde el chat.
+      const causa = normalizarCausa(err);
+      const acc = causas.get(causa) || { causa, ficheros: 0, ejemplo: null };
+      acc.ficheros += 1;
+      if (!acc.ejemplo) acc.ejemplo = logicalPath(abs);
+      causas.set(causa, acc);
+      log.error('Error indexando fichero', { fichero: logicalPath(abs), err: String(err) });
+    } finally {
+      terminados += 1;
+      if (stat?.pendiente) eta.hecho(stat.size);
+    }
+    if (onProgress) onProgress(state.progreso, resumen);
+  };
 
   try {
-    let i = 0;
     let ultimoRespiro = Date.now();
-    for (const abs of files) {
+    for (const { abs, stat } of orden) {
+      // Con hilos de embedding, varios documentos a la vez; pero sin acumular más trabajo del que
+      // los hilos pueden despachar (memoria acotada: textos y vectores esperando).
+      while (enVuelo.size && hayQueEsperar(enVuelo.size)) await Promise.race(enVuelo);
       // Otra instancia se quedó con el índice mientras esta estaba parada: se corta aquí, sin
       // una escritura más (escritor.js).
       if (!escritor.soyEscritor()) throw errorSinCerrojo();
-      i += 1;
+      empezados += 1;
       // Por setIndexando y no asignando `state.progreso` a pelo: así el cambio
       // llega a los observadores (canal de control -> app de escritorio). El
       // efecto sobre el estado es idéntico; lo que se gana es el aviso.
       setIndexando({
         fase: 'indexando',
-        procesados: i,
+        // Con documentos en paralelo, «procesados» no puede adelantarse a lo terminado más de lo
+        // que hay en marcha; en serie es lo de siempre (el que se está procesando cuenta).
+        procesados: Math.min(empezados, terminados + 1),
         total: files.length,
         ficheroActual: logicalPath(abs),
         carpeta: rootForPath(abs)?.path ?? null,
         carpetas: accesibles,
+        ...eta.estimar(),
       });
       // Miles de ficheros sin cambios se despachan sin esperar a nada: sin soltar el proceso de
       // vez en cuando, el canal de la app se quedaría mudo hasta el final.
@@ -451,28 +733,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         await respirar();
         ultimoRespiro = Date.now();
       }
-      try {
-        const r = await indexFile(abs, { force });
-        if (r.estado === 'indexado') {
-          resumen.indexados += 1;
-          resumen.fragmentosNuevos += r.chunks || 0;
-        } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
-        else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
-        else if (r.estado === 'apartado') resumen.apartados += 1;
-        else resumen.omitidos += 1;
-      } catch (err) {
-        resumen.errores += 1;
-        // La CAUSA se agrega aquí, no solo en el log: el abogado no va a abrir un fichero de
-        // log, y sin causa un "errores: 680" es indiagnosticable desde el chat.
-        const causa = normalizarCausa(err);
-        const acc = causas.get(causa) || { causa, ficheros: 0, ejemplo: null };
-        acc.ficheros += 1;
-        if (!acc.ejemplo) acc.ejemplo = logicalPath(abs);
-        causas.set(causa, acc);
-        log.error('Error indexando fichero', { fichero: logicalPath(abs), err: String(err) });
-      }
-      if (onProgress) onProgress(state.progreso, resumen);
+      const p = procesar(abs, stat).finally(() => enVuelo.delete(p));
+      enVuelo.add(p);
+      if (!cargaEmbedding()) await p;
     }
+    await Promise.all(enVuelo);
 
     // Documentos que estaban indexados y ya no están en disco. En carpeta local los retira el
     // watcher al vuelo; en una carpeta de RED no hay evento fiable, así que el re-escaneo
@@ -513,6 +778,9 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     }
     setActivo();
   } catch (err) {
+    // Lo que ya estaba en marcha termina (sin escribir si esta instancia ya no escribe:
+    // escritor.confirmar()) antes de dar el indexado por cortado.
+    await Promise.allSettled(enVuelo);
     // Pasar a lector no es un fallo del indexado: lo sigue la otra instancia.
     if (err?.code === 'ROBIN_SIN_CERROJO') setActivo();
     else setError(err);
