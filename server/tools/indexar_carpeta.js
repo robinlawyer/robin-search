@@ -5,7 +5,8 @@
 import path from 'node:path';
 
 import { config, rootForPath } from '../config.js';
-import { indexFolder } from '../indexer/indexer.js';
+import { indexFolder, indexandoAhora, alTerminarIndexado } from '../indexer/indexer.js';
+import { log } from '../logger.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
@@ -50,6 +51,34 @@ export const definition = {
   },
 };
 
+// Con un indexado ya en marcha (el del arranque, un re-escaneo de red, uno pedido desde la app)
+// NO se lanza un segundo encima: se pone en cola, como hace el canal de control, y sale en cuanto
+// termine el actual. null = nada · { todas, carpetas: Set, force }.
+let _cola = null;
+let _drenando = false;
+
+function encolar(folders, force) {
+  _cola ??= { todas: false, carpetas: new Set(), force: false };
+  if (!folders) _cola.todas = true;
+  else for (const f of folders) _cola.carpetas.add(f);
+  _cola.force = _cola.force || force;
+}
+
+function drenar() {
+  if (!_cola || _drenando || indexandoAhora()) return;
+  const c = _cola;
+  _cola = null;
+  _drenando = true;
+  indexFolder({ folders: c.todas ? undefined : [...c.carpetas], force: c.force, reconciliarBorrados: true })
+    .then((resumen) => log.info('Indexado en cola (indexar_carpeta) completado', { indexados: resumen.indexados, errores: resumen.errores }))
+    .catch((err) => log.error('Fallo en el indexado en cola (indexar_carpeta)', { err: String(err) }))
+    .finally(() => {
+      _drenando = false;
+      drenar();
+    });
+}
+alTerminarIndexado(drenar);
+
 export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
@@ -91,6 +120,17 @@ export async function handler(args) {
       );
     }
     folders = [abs];
+  }
+
+  if (indexandoAhora() || _drenando) {
+    encolar(folders, Boolean(args?.forzar));
+    return ok({
+      encolado: true,
+      carpetas: folders ?? config.watchedFolders,
+      mensaje:
+        'Ya hay un indexado en marcha: esta petición queda en cola y empieza sola en cuanto ' +
+        'termine. El progreso (y el resultado) se ven en estado_servidor.',
+    });
   }
 
   const resumen = await indexFolder({

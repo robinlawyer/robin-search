@@ -14,6 +14,7 @@ import {
   rootForPath,
   expedienteForLogicalPath,
   limiteBytes,
+  MAX_FRAGMENTOS_POR_DOCUMENTO,
 } from '../config.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
@@ -180,10 +181,17 @@ async function indexFileSinMarca(absPath, { force = false } = {}) {
 
   state.ficherosSinOcr.delete(rutaLogica);
 
-  const chunks = chunkPages(pages, {
+  let chunks = chunkPages(pages, {
     chunkSizeTokens: config.chunkSizeTokens,
     chunkOverlapTokens: config.chunkOverlapTokens,
   });
+  if (chunks.length > MAX_FRAGMENTOS_POR_DOCUMENTO) {
+    log.warn('Documento con más fragmentos que el tope: se indexa hasta el tope', {
+      fragmentos: chunks.length,
+      tope: MAX_FRAGMENTOS_POR_DOCUMENTO,
+    });
+    chunks = chunks.slice(0, MAX_FRAGMENTOS_POR_DOCUMENTO);
+  }
 
   if (chunks.length === 0) {
     if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };

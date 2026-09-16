@@ -13,6 +13,9 @@ import { config, ensureDataDirs, expedienteForLogicalPath } from '../config.js';
 import { escribirJson, leerJson } from '../persistencia.js';
 
 let _cache = null;
+// docId → ruta absoluta, construido bajo demanda. Las herramientas buscaban la entrada de un
+// documento con all().find(): recorrer 20.000 entradas en cada llamada.
+let _porDocId = null;
 let _knownMtime = 0; // mtime del files.json que refleja _cache
 let _sucio = false; // cambios en memoria aún no volcados
 let _temporizador = null;
@@ -51,6 +54,7 @@ function load() {
     if (_cache) return _cache;
     throw err;
   }
+  _porDocId = null;
   if (r.estado === 'ok') {
     _cache = r.valor;
   } else {
@@ -113,6 +117,7 @@ export function descartarPendiente() {
   }
   _sucio = false;
   _cache = null;
+  _porDocId = null;
   _knownMtime = 0;
 }
 
@@ -139,8 +144,25 @@ export function isStale(absPath, stat) {
 
 export function set(absPath, entry) {
   const reg = load();
+  const previa = reg[absPath];
   reg[absPath] = entry;
+  if (_porDocId) {
+    if (previa?.docId && previa.docId !== entry?.docId) _porDocId.delete(previa.docId);
+    if (entry?.docId) _porDocId.set(entry.docId, absPath);
+  }
   persist();
+}
+
+// Entrada del registro de un documento por su docId (o null).
+export function porDocId(docId) {
+  const reg = load();
+  if (!_porDocId) {
+    _porDocId = new Map();
+    for (const [abs, e] of Object.entries(reg)) if (e?.docId) _porDocId.set(e.docId, abs);
+  }
+  const abs = _porDocId.get(docId);
+  const e = abs ? reg[abs] : null;
+  return e && e.docId === docId ? e : null;
 }
 
 export function remove(absPath) {
@@ -148,6 +170,7 @@ export function remove(absPath) {
   const entry = reg[absPath];
   if (entry) {
     delete reg[absPath];
+    if (_porDocId && entry.docId) _porDocId.delete(entry.docId);
     persist();
   }
   return entry ?? null;
@@ -160,6 +183,7 @@ export function removeMany(absPaths) {
   let quitadas = 0;
   for (const p of absPaths) {
     if (reg[p]) {
+      if (_porDocId && reg[p].docId) _porDocId.delete(reg[p].docId);
       delete reg[p];
       quitadas += 1;
     }
@@ -171,6 +195,7 @@ export function removeMany(absPaths) {
 // Olvidarlo todo (índice irrecuperable que se rehace desde los documentos).
 export function vaciar() {
   _cache = {};
+  _porDocId = null;
   persist({ ya: true });
 }
 
@@ -215,4 +240,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };
+export default { docIdForAbsPath, porDocId, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };

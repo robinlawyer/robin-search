@@ -67,7 +67,7 @@ export async function handler(args) {
   if (!gate.ok) return fail(gate.error, gate.extra);
   const expediente = gate.expediente;
 
-  const entry = registry.all().find((e) => e.docId === docId) || null;
+  const entry = registry.porDocId(docId);
 
   // Barrera de aislamiento: un doc_id de OTRO expediente no devuelve contenido. Sin esto,
   // bastaría arrastrar un identificador de una conversación anterior para leer entero un

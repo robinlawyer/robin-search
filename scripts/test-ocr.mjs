@@ -38,6 +38,33 @@ check('y el OCR sigue leyendo las siguientes', a.r?.[1]==='ok' && a.r?.[3]==='ok
 const b=await lanzar([bueno,bueno],{ROBIN_OCR_TOPE_MS:'1'});
 check('un OCR sin respuesta falla por tiempo en vez de colgar el indexado', b.code===0 && b.r?.every((x)=>/sin respuesta/.test(x)), JSON.stringify(b.r));
 
+// PDF escaneado: tope de páginas (antes 5000), el documento se libera, y el estado del OCR no se
+// lee como fallo antes de usarlo (arranca perezoso).
+{
+  const pdf=path.join(base,'escaneado largo.pdf');
+  const prog=`
+    const fs=await import('node:fs');
+    const mupdf=await import(${JSON.stringify(pathToFileURL(path.join(REPO,'node_modules','mupdf','dist','mupdf.js')).href)});
+    const d=new mupdf.PDFDocument();
+    for(let i=0;i<5;i++) d.insertPage(-1,d.addPage([0,0,200,200],0,d.newDictionary(),''));
+    fs.writeFileSync(${JSON.stringify(pdf)},d.saveToBuffer('').asUint8Array());
+    const m=await import(${JSON.stringify(pathToFileURL(path.join(REPO,'server/indexer/ocr.js')).href)});
+    const antes=m.estadoOcr();
+    const r=await m.ocrPdf(${JSON.stringify(pdf)});
+    const despues=m.estadoOcr();
+    await m.terminateOcr();
+    console.log(JSON.stringify({antes,despues,r}));`;
+  const c=await new Promise((res)=>{
+    const h=spawn(process.execPath,['--input-type=module','-e',prog],{env:{...process.env,ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_LOG_LEVEL:'warn',ROBIN_OCR_MAX_PAGES:'2'},stdio:['ignore','pipe','pipe']});
+    let out='',err='';h.stdout.on('data',(d)=>{out+=d;});h.stderr.on('data',(d)=>{err+=d;});
+    const t=setTimeout(()=>h.kill('SIGKILL'),120000);
+    h.on('exit',(code)=>{clearTimeout(t);let r=null;try{r=JSON.parse(out.trim().split('\n').pop());}catch{}res({code,r,err});});
+  });
+  check('estado del OCR antes de usarlo: «sin_usar», no un fallo', c.r?.antes?.estado==='sin_usar' && c.r?.antes?.listo===false, JSON.stringify(c.r?.antes||c.err.slice(-120)));
+  check('y «listo» después', c.r?.despues?.estado==='listo' && c.r?.despues?.listo===true);
+  check('un PDF escaneado más largo que el tope se lee hasta el tope y lo dice', c.code===0 && /tope de OCR/.test(c.err), c.err.slice(-120));
+}
+
 fs.rmSync(base,{recursive:true,force:true,maxRetries:10,retryDelay:300});
 const ok=results.filter(Boolean).length;
 console.log(`\n${ok}/${results.length} comprobaciones OK`);

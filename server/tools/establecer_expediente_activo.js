@@ -12,6 +12,8 @@ import { esRutaDeRed } from '../net.js';
 import { reescanear } from '../watcher/watcher.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
+const ESPERA_REESCANEO_MS = Number(process.env.ROBIN_ESPERA_REESCANEO_MS) || 20000;
+
 export const definition = {
   name: 'establecer_expediente_activo',
   title: 'Fijar el expediente activo',
@@ -91,10 +93,21 @@ export async function handler(args) {
   // refresca contra el disco AL ABRIRLO. Es el momento exacto en que el abogado va a trabajar
   // sobre el asunto, y sobre SMB no hay evento fiable que nos avise de lo que han dejado ahí
   // los compañeros desde la última vez. Es incremental: solo se re-indexa lo que ha cambiado.
+  //
+  // Pero SIN esperar a que acabe: sobre una carpeta de red con miles de ficheros la pasada dura
+  // horas y Claude cortaba la llamada. Se espera como mucho ESPERA_REESCANEO_MS; si no ha
+  // terminado, sigue en segundo plano (progreso en estado_servidor) y se responde ya.
   const ruta = expedientes.rutaAbsoluta(r.expediente);
   let refresco = null;
+  let actualizandose = false;
   if (config.rescanAlAbrir && ruta && esRutaDeRed(ruta)) {
-    refresco = await reescanear([ruta], { motivo: 'apertura' });
+    const pasada = reescanear([ruta], { motivo: 'apertura' }).catch(() => null);
+    let tope;
+    const SIGUE = Symbol('sigue');
+    const r2 = await Promise.race([pasada, new Promise((res) => (tope = setTimeout(() => res(SIGUE), ESPERA_REESCANEO_MS)))]);
+    clearTimeout(tope);
+    if (r2 === SIGUE) actualizandose = true;
+    else refresco = r2;
   }
 
   // Contadores de TODO el ámbito del caso (él y sus subcarpetas), no solo de su raíz.
@@ -107,6 +120,14 @@ export async function handler(args) {
     ficheros_sin_ocr: ficha.sin_ocr,
   };
 
+  if (actualizandose) {
+    respuesta.ubicacion = 'red';
+    respuesta.actualizandose = true;
+    respuesta.aviso_actualizacion =
+      'La carpeta de red del expediente se está actualizando en segundo plano (tiene muchos ' +
+      'ficheros). Ya se puede buscar sobre lo indexado; lo nuevo o modificado irá apareciendo. ' +
+      'El progreso se ve en estado_servidor.';
+  }
   if (refresco) {
     respuesta.ubicacion = 'red';
     respuesta.actualizado_desde_disco = {

@@ -45,7 +45,7 @@ export const definition = {
 // Texto de una ventana de un documento, con marcadores de página, aplicando la barrera de
 // aislamiento por expediente igual que obtener_documento.
 async function textoVentana(v, expediente) {
-  const entry = registry.all().find((e) => e.docId === v.doc_id) || null;
+  const entry = registry.porDocId(v.doc_id);
   const expDoc = entry ? entry.expediente || expedienteForLogicalPath(entry.rutaRelativa) : null;
   if (entry && !expedientes.enAmbito(expDoc, expediente)) return null;
 

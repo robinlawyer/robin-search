@@ -44,11 +44,18 @@ export function idiomaEmpaquetado(lang = config.ocrLang) {
 }
 
 // Estado del OCR para `estado_servidor` (no fuerza la inicialización).
+//
+// El motor arranca PEREZOSO, con el primer documento escaneado: `listo: false` antes de eso se
+// leía como un fallo. `estado` lo distingue: 'sin_usar' (aún no hizo falta), 'listo' o 'error'.
+// `listo` se mantiene por compatibilidad.
 export function estadoOcr() {
-  if (!config.ocrEnabled) return { activo: false, motivo: 'desactivado (ROBIN_OCR=false)' };
+  if (!config.ocrEnabled) return { activo: false, estado: 'desactivado', motivo: 'desactivado (ROBIN_OCR=false)' };
   const emp = idiomaEmpaquetado();
+  const estado = _estado.error ? 'error' : _estado.listo ? 'listo' : 'sin_usar';
   return {
     activo: true,
+    estado,
+    ...(estado === 'sin_usar' ? { nota: 'Se pone en marcha con el primer documento escaneado; no es un fallo.' } : {}),
     idioma: config.ocrLang,
     listo: _estado.listo,
     origen: _estado.origen,
@@ -124,7 +131,7 @@ async function reconocer(input) {
   } catch (err) {
     if (/sin respuesta/.test(String(err?.message))) {
       if (_workerPromise) _workerPromise = null;
-      _estado = { ..._estado, listo: false };
+      _estado = { ..._estado, listo: false, error: String(err.message) };
       worker.terminate().catch(() => {});
     }
     throw err;
@@ -174,30 +181,47 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
   const mupdf = await import('mupdf');
   const buf = fs.readFileSync(filePath);
   const doc = mupdf.Document.openDocument(buf, 'application/pdf');
-  const total = doc.countPages();
-  const limit = Math.min(total, maxPages ?? config.ocrMaxPages, config.ocrMaxPages);
-
-  await getWorker(); // si el OCR no arranca, falla el fichero antes de rasterizar nada
-  const scale = mupdf.Matrix.scale(dpi / 72, dpi / 72);
   const pages = [];
+  try {
+    const total = doc.countPages();
+    const limit = Math.min(total, maxPages ?? config.ocrMaxPages, config.ocrMaxPages);
+    if (total > limit) log.warn('PDF escaneado con más páginas que el tope de OCR: se lee hasta el tope', { paginas: total, tope: limit });
 
-  for (let i = 0; i < limit; i++) {
-    let page;
-    try {
-      page = doc.loadPage(i);
-      const pix = page.toPixmap(scale, mupdf.ColorSpace.DeviceRGB, false, true);
-      const png = pix.asPNG();
-      const {
-        data: { text },
-      } = await reconocer(Buffer.from(png));
-      const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-      if (clean) pages.push({ page: i + 1, text: clean });
-      pix.destroy?.();
-    } catch (err) {
-      log.warn('OCR falló en una página', { page: i + 1, err: String(err) });
-    } finally {
-      page?.destroy?.();
+    await getWorker(); // si el OCR no arranca, falla el fichero antes de rasterizar nada
+    const scale = mupdf.Matrix.scale(dpi / 72, dpi / 72);
+    const inicio = Date.now();
+
+    for (let i = 0; i < limit; i++) {
+      if (Date.now() - inicio > config.ocrMaxMsPorDocumento) {
+        log.warn('OCR: tope de tiempo por documento alcanzado; se indexa lo leído', { paginas_leidas: i, paginas: total });
+        break;
+      }
+      let page;
+      let pix;
+      try {
+        page = doc.loadPage(i);
+        // Rasterizar es síncrono (WASM): con el proceso ocupado página tras página, Claude no
+        // recibía respuesta y lo daba por muerto. Se suelta el proceso antes de cada página.
+        await new Promise((r) => setImmediate(r));
+        pix = page.toPixmap(scale, mupdf.ColorSpace.DeviceRGB, false, true);
+        const png = pix.asPNG();
+        pix.destroy?.();
+        pix = null;
+        const {
+          data: { text },
+        } = await reconocer(Buffer.from(png));
+        const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+        if (clean) pages.push({ page: i + 1, text: clean });
+      } catch (err) {
+        log.warn('OCR falló en una página', { page: i + 1, err: String(err) });
+      } finally {
+        pix?.destroy?.();
+        page?.destroy?.();
+      }
     }
+  } finally {
+    // Sin esto, cada PDF escaneado dejaba su documento entero reservado en la memoria del WASM.
+    doc.destroy?.();
   }
   return pages;
 }

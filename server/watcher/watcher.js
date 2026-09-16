@@ -104,10 +104,19 @@ export function carpetasDeRed() {
 
 // Re-escaneo incremental de una o varias carpetas. Reconcilia también los borrados, porque
 // en red no hay evento de borrado en el que confiar. Serializado con el resto del trabajo.
+//
+// Uno por conjunto de carpetas: si ya hay uno esperando turno o en marcha, se devuelve ESE. Con
+// miles de ficheros en red una pasada dura más que el intervalo (5 min), y el temporizador iba
+// encolando pasadas sin fin detrás de la que no había terminado.
+const _reescaneos = new Map(); // clave → promesa
+
 export function reescanear(folders, { motivo = 'periodico' } = {}) {
   const lista = (Array.isArray(folders) ? folders : [folders]).filter(Boolean);
   if (lista.length === 0) return Promise.resolve(null);
-  return serializar(async () => {
+  const clave = [...lista].sort().join('\n');
+  const ya = _reescaneos.get(clave);
+  if (ya) return ya;
+  const p = serializar(async () => {
     try {
       const resumen = await indexFolder({ folders: lista, reconciliarBorrados: true });
       const huboCambios =
@@ -125,8 +134,18 @@ export function reescanear(folders, { motivo = 'periodico' } = {}) {
     } catch (err) {
       log.error('Fallo en el re-escaneo de carpeta de red', { carpetas: lista, err: String(err) });
       return null;
+    } finally {
+      _reescaneos.delete(clave);
     }
   });
+  _reescaneos.set(clave, p);
+  return p;
+}
+
+// ¿Hay un re-escaneo de estas carpetas esperando turno o en marcha?
+export function reescaneoEnCurso(folders) {
+  const lista = (Array.isArray(folders) ? folders : [folders]).filter(Boolean);
+  return _reescaneos.has([...lista].sort().join('\n'));
 }
 
 export function startWatcher() {
@@ -158,7 +177,10 @@ export function startWatcher() {
 
   if (red.length > 0) {
     if (config.rescanRedMs > 0) {
-      _rescanTimer = setInterval(() => reescanear(red, { motivo: 'periodico' }), config.rescanRedMs);
+      _rescanTimer = setInterval(() => {
+        if (reescaneoEnCurso(red)) return; // el anterior aún no ha terminado: no se encola otro
+        reescanear(red, { motivo: 'periodico' }).catch(() => {});
+      }, config.rescanRedMs);
       _rescanTimer.unref?.(); // no debe mantener vivo el proceso por sí solo
       log.info('Re-escaneo periódico activo (carpetas de red)', {
         carpetas: red,
@@ -183,4 +205,4 @@ export async function stopWatcher() {
   }
 }
 
-export default { startWatcher, stopWatcher, reescanear, carpetasDeRed };
+export default { startWatcher, stopWatcher, reescanear, reescaneoEnCurso, carpetasDeRed };
