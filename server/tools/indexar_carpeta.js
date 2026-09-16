@@ -111,6 +111,13 @@ export async function handler(args) {
         'sesión tiene credenciales sobre ese recurso.',
     );
   }
+  if (resumen.no_indexables) {
+    avisos.push(
+      'Parte de lo que hay en la carpeta no se ha podido indexar (ver "no_indexables"): ficheros ' +
+        'en la nube sin descargar a este equipo (iCloud, OneDrive, Dropbox) o enlaces que no llevan ' +
+        'a nada accesible. La búsqueda no los cubre.',
+    );
+  }
   // Un recuento de errores SIN causa no se puede diagnosticar desde el chat, y el abogado no
   // va a abrir el fichero de log. Las causas se devuelven agrupadas en `errores_por_causa`.
   if (resumen.errores > 0) {

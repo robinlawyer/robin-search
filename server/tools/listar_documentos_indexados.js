@@ -2,6 +2,7 @@
 // metadatos. Solo lectura. Aislado por expediente, igual que buscar_documentos.
 
 import { expedienteForLogicalPath } from '../config.js';
+import { rutas } from '../rutas.js';
 import * as registry from '../indexer/registry.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
@@ -55,10 +56,8 @@ export async function handler(args) {
   for (const e of registry.all()) {
     const exp = e.expediente || expedienteForLogicalPath(e.rutaRelativa);
     if (!expedientes.enAmbito(exp, expediente)) continue;
-    if (prefijo) {
-      const rel = String(e.rutaRelativa || '').replace(/\\/g, '/');
-      if (rel !== prefijo && !rel.startsWith(`${prefijo}/`)) continue;
-    }
+    // Sin distinguir mayúsculas ni forma Unicode (ver buscar_documentos).
+    if (prefijo && !rutas.bajoPrefijoLogico(e.rutaRelativa, prefijo)) continue;
     documentos.push({
       doc_id: e.docId,
       raiz: e.raiz ?? null,

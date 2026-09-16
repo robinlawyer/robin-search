@@ -14,6 +14,7 @@ import {
   EXPEDIENTE_SIN_CARPETA,
 } from './config.js';
 import * as registry from './indexer/registry.js';
+import { rutas, tipoReal } from './rutas.js';
 import { state } from './state.js';
 
 // Normaliza un nombre para comparar de forma tolerante: sin tildes, minúsculas y con
@@ -68,14 +69,19 @@ export function detectarEnDisco() {
         } catch {
           continue;
         }
-        // Un fichero suelto en este nivel hace que la propia carpeta sea un expediente.
-        if (entries.some((en) => en.isFile() && !en.name.startsWith('.'))) out.add(nodo.id);
+        // tipoReal y no isFile()/isDirectory(): en Windows las carpetas de OneDrive/SharePoint
+        // bajo demanda y las junctions llegan como «enlace» y no salían como expedientes.
+        let haySuelto = false;
         for (const en of entries) {
-          if (!en.isDirectory() || en.name.startsWith('.')) continue;
+          if (en.name.startsWith('.')) continue;
           const abs = path.join(nodo.abs, en.name);
-          if (abs === config.dataDir) continue;
+          const tipo = tipoReal(abs, en);
+          if (tipo === 'fichero') haySuelto = true;
+          if (tipo !== 'carpeta' || rutas.dentroDe(abs, config.dataDir)) continue;
           siguiente.push({ abs, id: `${nodo.id}/${en.name}` });
         }
+        // Un fichero suelto en este nivel hace que la propia carpeta sea un expediente.
+        if (haySuelto) out.add(nodo.id);
       }
       nivel = siguiente;
     }

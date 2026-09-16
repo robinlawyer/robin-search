@@ -7,6 +7,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { escribirJson, leerJson } from './persistencia.js';
+import { rutas, extensionDe, nombreValido } from './rutas.js';
 
 // La versión sale del package.json que viaja en el paquete, NO de una
 // constante a mano: escrita dos veces, se olvida una. El servidor estuvo
@@ -112,21 +113,52 @@ export function rutaAjustes(dataDir) {
 
 // Ajustes cortados (apagón a mitad) no pueden dejar al abogado sin carpetas: se recuperan de la
 // copia .bak que deja cada escritura.
+//
+// Formato de ajustes.json:
+//   { "carpetas": ["/ruta/A", "/ruta/B"], "nombres": { "/ruta/B": "Expedientes-2" } }
+// `carpetas` sigue siendo una lista de RUTAS porque la app de escritorio la lee y la escribe así
+// (y la reescribe entera sin `nombres`). Se acepta también `{ruta, nombre}` en `carpetas`.
+// `fiable` = se ha podido leer (o no existe): con un fichero dañado o bloqueado NO se sabe qué
+// carpetas hay, y entonces nada se puede dar por «quitado de la configuración».
 function leerAjustes(dataDir) {
   try {
     const r = leerJson(rutaAjustes(dataDir));
-    return Array.isArray(r.valor?.carpetas) ? r.valor.carpetas.map(String) : [];
+    const v = r.valor || {};
+    const carpetas = [];
+    const nombres = new Map();
+    for (const c of Array.isArray(v.carpetas) ? v.carpetas : []) {
+      const ruta = c && typeof c === 'object' ? c.ruta : c;
+      if (typeof ruta !== 'string' || !ruta.trim()) continue;
+      carpetas.push(ruta);
+      if (c && typeof c === 'object' && nombreValido(c.nombre)) nombres.set(rutas.claveRuta(path.resolve(ruta.trim())), c.nombre);
+    }
+    if (v.nombres && typeof v.nombres === 'object') {
+      for (const [ruta, nombre] of Object.entries(v.nombres)) {
+        const k = rutas.claveRuta(path.resolve(ruta));
+        if (nombreValido(nombre) && !nombres.has(k)) nombres.set(k, nombre);
+      }
+    }
+    return {
+      carpetas,
+      nombres,
+      fiable: r.estado !== 'corrupto',
+      existe: r.estado !== 'no_existe',
+      tieneCarpetas: Array.isArray(v.carpetas),
+    };
   } catch {
-    return [];
+    return { carpetas: [], nombres: new Map(), fiable: false, existe: true, tieneCarpetas: false };
   }
 }
 
 // Migración de un solo uso: quien ya tenía la carpeta puesta en la pantalla de
 // configuración de Claude no debe perderla al actualizar. Se lee UNA vez el
 // fichero de ajustes de la extensión y se copia al nuestro.
-function migrarDesdeClaude(dataDir) {
+function migrarDesdeClaude(dataDir, ajustes = leerAjustes(dataDir)) {
   try {
-    if (fs.existsSync(rutaAjustes(dataDir))) return [];
+    // Solo si el abogado aún no tiene carpetas propias. Un ajustes.json que solo guarda los
+    // nombres de las carpetas (despliegue por variable de entorno) no cuenta como «ya migrado»;
+    // uno ilegible, sí: no se pisa lo que no se ha podido leer.
+    if (ajustes.existe && (ajustes.tieneCarpetas || !ajustes.fiable)) return [];
     const home = os.homedir();
     const base = process.platform === 'darwin'
       ? path.join(home, 'Library', 'Application Support', 'Claude')
@@ -187,7 +219,9 @@ function parseFolders(dataDir) {
   // de todo; después lo que haya elegido el abogado en la app.
   const multi = firstDefined(process.env.ROBIN_FOLDERS);
   const single = firstDefined(process.env.ROBIN_FOLDER, process.env.ROBIN_WATCHED_FOLDER);
+  const ajustes = dataDir ? leerAjustes(dataDir) : { carpetas: [], nombres: new Map(), fiable: true };
   let list = [];
+  let fiable = true;
   if (multi) {
     const t = multi.trim();
     if (t.startsWith('[')) {
@@ -195,6 +229,7 @@ function parseFolders(dataDir) {
         list = JSON.parse(t);
       } catch {
         list = [];
+        fiable = false;
       }
     } else {
       list = t.split(/[\n;]+/).flatMap(desdoblarPorComa);
@@ -202,36 +237,63 @@ function parseFolders(dataDir) {
   } else if (single) {
     list = [single];
   } else if (dataDir) {
-    list = leerAjustes(dataDir);
-    if (!list.length) list = migrarDesdeClaude(dataDir);
+    list = ajustes.carpetas;
+    fiable = ajustes.fiable;
+    if (!list.length) list = migrarDesdeClaude(dataDir, ajustes);
   }
-  return list.map((s) => String(s).trim()).filter(Boolean);
+  return {
+    lista: (Array.isArray(list) ? list : []).map((s) => String(s).trim()).filter(Boolean),
+    nombres: ajustes.nombres,
+    fiable,
+  };
 }
 
-// Cada carpeta vigilada es una "raíz" con un nombre (por defecto, el nombre de la carpeta).
-// El nombre es el "asa" con la que se filtra la búsqueda y se cita el documento, así que se
-// desduplica si dos carpetas comparten nombre de base.
-function buildRoots(paths) {
-  const roots = [];
-  const used = new Map();
+// Cada carpeta vigilada es una "raíz" con un NOMBRE LÓGICO: el primer segmento del id de sus
+// expedientes («Expedientes/Caso»), con el que se filtra la búsqueda y se cita el documento.
+//
+// El nombre es ESTABLE: se guarda en ajustes.json junto a la ruta y se respeta al quitar o
+// añadir otras carpetas. Antes se recalculaba por orden: con `A/Expedientes` y `B/Expedientes`,
+// B era «Expedientes-2»; al quitar A, B pasaba a «Expedientes» y el expediente «Expedientes/Caso»
+// devolvía los documentos que A había dejado en el índice — los de OTRO cliente.
+//
+// `guardados`: Map claveRuta → nombre. Primero se respetan los guardados; después se nombra lo
+// nuevo por el nombre de la carpeta, desduplicando sin distinguir mayúsculas.
+function buildRoots(paths, guardados = new Map()) {
+  const unicas = [];
+  const vistas = new Set();
   for (const p of paths) {
     const abs = path.resolve(p);
-    let name = path.basename(abs) || abs;
-    if (used.has(name)) {
-      const n = used.get(name) + 1;
-      used.set(name, n);
-      name = `${name}-${n}`;
-    } else {
-      used.set(name, 1);
-    }
-    roots.push({ name, path: abs });
+    const k = rutas.claveRuta(abs);
+    if (vistas.has(k)) continue; // la misma carpeta escrita dos veces
+    vistas.add(k);
+    unicas.push({ path: abs, clave: k });
   }
-  return roots;
+  const usados = new Set();
+  const roots = unicas.map((u) => ({ name: null, path: u.path, clave: u.clave }));
+  for (const r of roots) {
+    const g = guardados.get(r.clave);
+    if (nombreValido(g) && !usados.has(rutas.claveNombre(g))) {
+      r.name = g;
+      r.nombreGuardado = true;
+      usados.add(rutas.claveNombre(g));
+    }
+  }
+  for (const r of roots) {
+    if (r.name) continue;
+    const base = rutas.nombreBase(r.path);
+    let name = base;
+    for (let n = 2; usados.has(rutas.claveNombre(name)); n += 1) name = `${base}-${n}`;
+    r.name = name;
+    r.nombreGuardado = false;
+    usados.add(rutas.claveNombre(name));
+  }
+  return roots.map(({ clave: _k, ...r }) => r);
 }
 
 function buildConfig() {
   const dataDir = firstDefined(process.env.ROBIN_DATA_DIR) || defaultDataDir();
-  const roots = buildRoots(parseFolders(dataDir));
+  const leidas = parseFolders(dataDir);
+  const roots = buildRoots(leidas.lista, leidas.nombres);
 
   const cfg = {
     version: VERSION,
@@ -255,6 +317,9 @@ function buildConfig() {
     watchedFolders: roots.map((r) => r.path),
     // Primera raíz — solo para mensajes/compatibilidad; el código itera watchedFolders/roots.
     watchedFolder: roots[0]?.path ?? null,
+    // ¿Se ha podido leer de verdad la configuración de carpetas? Con ajustes.json dañado no se
+    // puede concluir que una carpeta «se ha quitado» (y retirar sus documentos del índice).
+    carpetasFiables: leidas.fiable,
 
     dataDir,
     // Índice de vectra (≤1.4.4). Ya no se escribe: solo se lee UNA vez para pasarlo al formato
@@ -370,35 +435,36 @@ function urlDiagnostico() {
 }
 
 // Devuelve la raíz (carpeta vigilada) a la que pertenece una ruta absoluta, o null.
-// Ante anidamiento, gana la raíz más específica (prefijo más largo).
-// En Windows y macOS el sistema de ficheros no distingue mayúsculas: "Z:\\Expedientes" y
-// "z:\\expedientes" son la MISMA carpeta. Comparar sensible a mayúsculas dejaba fuera del
-// ámbito una ruta correcta (p. ej. la que escribe Claude con otra caja que la configurada).
-const COMPARA_SIN_CAJA = process.platform === 'win32' || process.platform === 'darwin';
-const paraComparar = (p) => (COMPARA_SIN_CAJA ? p.toLowerCase() : p);
-
+// Ante anidamiento, gana la raíz más específica. La comparación la hace rutas.js: sin distinguir
+// mayúsculas en Windows y macOS ("Z:\Expedientes" y "z:\expedientes" son la MISMA carpeta),
+// y correcta con raíces de unidad (`I:\`) y recursos UNC (`\\srv\exp\`), que ya llevan la barra
+// final y con `startsWith(raíz + sep)` no casaban con nada.
 export function rootForPath(absPath) {
-  const resolved = path.resolve(absPath);
-  const cmp = paraComparar(resolved);
-  let best = null;
-  for (const r of config.roots) {
-    const rc = paraComparar(r.path);
-    if (cmp === rc || cmp.startsWith(rc + path.sep)) {
-      if (!best || r.path.length > best.path.length) best = r;
-    }
-  }
-  return best;
+  return rutas.raizDe(config.roots, absPath)?.raiz ?? null;
 }
 
 // Ruta "lógica" de un fichero = `${nombreRaíz}/${rutaRelativaDentroDeLaRaíz}`. Es lo que se
 // muestra en las citas y contra lo que actúa `carpeta_filtro`, de modo que dos ficheros con
 // la misma ruta relativa en raíces distintas no colisionan.
 export function logicalPath(absPath) {
-  const r = rootForPath(absPath);
-  const resolved = path.resolve(absPath);
-  if (!r) return path.basename(resolved);
-  const rel = path.relative(r.path, resolved).split(path.sep).join('/');
-  return rel ? `${r.name}/${rel}` : r.name;
+  return rutas.rutaLogica(config.roots, absPath) ?? path.basename(path.resolve(absPath));
+}
+
+// Una ruta que entra (la que pide Claude en indexar_carpeta, la de un evento del vigilante)
+// escrita como la escribe el recorrido de la carpeta: raíz tal cual está configurada y el resto
+// con la caja y la forma Unicode del disco. La clave del registro es la ruta: escrita de otra
+// manera, el mismo documento entraba dos veces.
+export function canonizarRuta(absPath, { disco = true } = {}) {
+  return rutas.canonizar(config.roots, absPath, { realpath: disco ? realpathNativo : null });
+}
+
+function realpathNativo(p) {
+  return fs.realpathSync.native(p);
+}
+
+// ¿Se indexa este fichero? Por su extensión, sin distinguir mayúsculas ni espacios finales.
+export function esExtensionSoportada(ruta) {
+  return SUPPORTED_EXTENSIONS.has(extensionDe(ruta));
 }
 
 // ---------------------------------------------------------------------------------------
@@ -427,26 +493,152 @@ export function expedienteForPath(absPath, depth = config.expedienteDepth) {
   return expedienteForLogicalPath(logicalPath(absPath), depth);
 }
 
+// Nombres en uso ahora mismo, por ruta: al releer las carpetas mandan sobre los del fichero. La
+// app de escritorio reescribe ajustes.json SOLO con `carpetas` justo antes de pedir el cambio,
+// así que en ese momento el fichero ya no tiene los nombres y la memoria sí.
+function nombresEnMemoria() {
+  const m = new Map();
+  for (const r of config.roots || []) m.set(rutas.claveRuta(r.path), r.name);
+  return m;
+}
+
+function aplicarRoots(roots) {
+  config.roots = roots;
+  config.watchedFolders = roots.map((r) => r.path);
+  config.watchedFolder = roots[0]?.path ?? null;
+}
+
 // Relee las carpetas sin reiniciar el proceso. Los consumidores leen
 // `config.roots` / `config.watchedFolders` en cada uso, así que basta con
 // actualizar el objeto: no hay copias congeladas por ahí.
 export function recargarCarpetas() {
-  const roots = buildRoots(parseFolders(config.dataDir));
-  config.roots = roots;
-  config.watchedFolders = roots.map((r) => r.path);
-  config.watchedFolder = roots[0]?.path ?? null;
+  const leidas = parseFolders(config.dataDir);
+  const nombres = new Map([...leidas.nombres, ...nombresEnMemoria()]);
+  aplicarRoots(buildRoots(leidas.lista, nombres));
+  config.carpetasFiables = leidas.fiable;
+  refinarCarpetas();
   return config.watchedFolders;
 }
 
-// Guarda las carpetas que ha elegido el abogado en la app y las aplica.
-export function guardarCarpetas(carpetas) {
-  const lista = (Array.isArray(carpetas) ? carpetas : [carpetas])
-    .map((c) => String(c || '').trim())
-    .filter(Boolean)
-    .map((c) => path.resolve(c));
+// La misma ruta con cada segmento escrito como está EN DISCO (caja y forma Unicode), sin seguir
+// enlaces: se busca cada nombre en el listado de su carpeta madre. null si algo no se puede leer.
+function formaEnDisco(abs) {
+  const { root } = path.parse(abs);
+  let actual = /^[a-z]:/.test(root) ? root[0].toUpperCase() + root.slice(1) : root;
+  for (const seg of abs.slice(root.length).split(path.sep).filter(Boolean)) {
+    let nombres;
+    try {
+      nombres = fs.readdirSync(actual);
+    } catch {
+      return null;
+    }
+    const k = rutas.claveRuta(seg);
+    const hit = nombres.includes(seg) ? seg : nombres.find((n) => rutas.claveRuta(n) === k);
+    if (!hit) return null;
+    actual = path.join(actual, hit);
+  }
+  return actual;
+}
+
+// Escribe cada carpeta como está EN DISCO cuando solo cambia la caja o la forma Unicode
+// (configurada «z:\expedientes», en disco «Z:\Expedientes»; o «Pérez» en NFC con la carpeta en
+// NFD). Así las rutas del recorrido, las del vigilante y las del registro coinciden letra a letra,
+// y en macOS el vigilante recibe la ruta que entiende FSEvents (con otra forma Unicode no avisaba
+// de nada). Además se guarda la ruta REAL (sin enlaces: /tmp → /private/tmp) en `real`, para
+// reconocer rutas que lleguen escritas de esa otra forma.
+// No se hace al importar config.js: sobre una unidad de red caída puede tardar, y eso no puede
+// retrasar el saludo con Claude. Lo llama el arranque (y el cambio de carpetas desde la app).
+export function refinarCarpetas() {
+  let cambio = false;
+  for (const r of config.roots) {
+    if (rutas.sinCaja) {
+      const enDisco = formaEnDisco(r.path);
+      if (enDisco && enDisco !== r.path && rutas.claveRuta(enDisco) === rutas.claveRuta(r.path)) {
+        r.configurada ??= r.path;
+        // Un nombre aún no guardado que salió de la ruta mal escrita («CASOS») se escribe también
+        // como en disco («Casos»). Uno ya guardado no se toca: es estable a propósito.
+        const nombreDisco = rutas.nombreBase(enDisco);
+        if (!r.nombreGuardado && r.name === rutas.nombreBase(r.path) && rutas.claveNombre(nombreDisco) === rutas.claveNombre(r.name)) {
+          r.name = nombreDisco;
+        }
+        r.path = enDisco;
+        cambio = true;
+      }
+    }
+    try {
+      const real = fs.realpathSync.native(r.path);
+      if (real !== r.path) r.real = real;
+      else delete r.real;
+    } catch {
+      /* no existe o no responde ahora: se deja como está */
+    }
+  }
+  if (cambio) aplicarRoots(config.roots);
+  return cambio;
+}
+
+// Rutas tal y como las configuró el abogado (la app compara con lo que guardó, letra a letra),
+// aunque internamente se escriban como están en disco.
+export function comoConfiguradas(lista) {
+  return (lista || []).map((p) => config.roots.find((r) => r.path === p)?.configurada ?? p);
+}
+
+// Guarda en ajustes.json el nombre lógico de cada carpeta vigilada, sin tocar el resto del
+// fichero (`carpetas` lo gobierna la app). No escribe si ya está al día ni si el fichero no se ha
+// podido leer (no se pisa lo que no se sabe qué tiene).
+export function guardarNombres() {
+  const ruta = rutaAjustes(config.dataDir);
+  let actual = {};
+  try {
+    const r = leerJson(ruta);
+    if (r.estado === 'corrupto') return false;
+    actual = r.valor || {};
+  } catch {
+    return false;
+  }
+  const nombres = {};
+  for (const r of config.roots) nombres[r.path] = r.name;
+  const previos = actual.nombres && typeof actual.nombres === 'object' ? actual.nombres : {};
+  const iguales = Object.keys(nombres).length === Object.keys(previos).length
+    && Object.entries(nombres).every(([k, v]) => previos[k] === v);
+  if (iguales) return false;
   fs.mkdirSync(config.dataDir, { recursive: true });
-  escribirJson(rutaAjustes(config.dataDir), { carpetas: lista }, { bak: true, indent: 2 });
-  return recargarCarpetas();
+  escribirJson(ruta, { ...actual, nombres }, { bak: true, indent: 2 });
+  for (const r of config.roots) r.nombreGuardado = true;
+  return true;
+}
+
+// Guarda las carpetas que ha elegido el abogado en la app y las aplica. `carpetas` es la lista
+// de rutas que manda la app (se aceptan también objetos `{ruta, nombre}`). Los nombres de las
+// carpetas que siguen se CONSERVAN.
+export function guardarCarpetas(carpetas) {
+  const lista = [];
+  const nombres = {};
+  for (const c of Array.isArray(carpetas) ? carpetas : [carpetas]) {
+    const bruta = c && typeof c === 'object' ? c.ruta : c;
+    const t = String(bruta || '').trim();
+    if (!t) continue;
+    const abs = path.resolve(t);
+    lista.push(abs);
+    if (c && typeof c === 'object' && nombreValido(c.nombre)) nombres[abs] = c.nombre;
+  }
+  const previos = nombresEnMemoria();
+  for (const abs of lista) {
+    if (!nombres[abs] && previos.has(rutas.claveRuta(abs))) nombres[abs] = previos.get(rutas.claveRuta(abs));
+  }
+  fs.mkdirSync(config.dataDir, { recursive: true });
+  const datos = { carpetas: lista };
+  if (Object.keys(nombres).length) datos.nombres = nombres;
+  escribirJson(rutaAjustes(config.dataDir), datos, { bak: true, indent: 2 });
+  const vigiladas = recargarCarpetas();
+  if (!carpetasFijadasPorEntorno()) {
+    try {
+      guardarNombres();
+    } catch {
+      /* se reintenta al reconciliar */
+    }
+  }
+  return vigiladas;
 }
 
 export default config;

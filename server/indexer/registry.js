@@ -141,6 +141,17 @@ export function remove(absPath) {
   return entry ?? null;
 }
 
+// Cambia la CLAVE de una entrada (la misma ruta escrita con otra caja o forma Unicode) sin
+// perder su docId: así no hay que volver a indexar el documento. No pisa una clave existente.
+export function renombrarClave(de, a) {
+  const reg = load();
+  if (de === a || !reg[de] || reg[a]) return false;
+  reg[a] = reg[de];
+  delete reg[de];
+  persist();
+  return true;
+}
+
 // Varias de una vez (una sola escritura de files.json). Lo usa el cotejo registro↔índice del
 // arranque: lo que se quita aquí se vuelve a indexar desde el documento original.
 export function removeMany(absPaths) {
@@ -203,4 +214,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, get, isStale, set, remove, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, empezadoVacio };
+export default { docIdForAbsPath, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, empezadoVacio };

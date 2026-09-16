@@ -6,12 +6,13 @@
 // ella, el siguiente arranque sabe dónde, lo cuenta a Robin sin que el abogado haga nada y, si
 // fue un fichero concreto o el índice, lo aparta o lo rehace para no volver a caer.
 
-import { config, ensureDataDirs, expedienteForLogicalPath } from './config.js';
+import { config, ensureDataDirs, expedienteForLogicalPath, refinarCarpetas } from './config.js';
 import { log } from './logger.js';
 import { setError } from './state.js';
 import { warmup } from './embedder/embedder.js';
 import { indexFolder } from './indexer/indexer.js';
 import * as registry from './indexer/registry.js';
+import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import * as cuarentena from './indexer/cuarentena.js';
 import * as store from './search/store.js';
 import * as escritor from './escritor.js';
@@ -129,6 +130,13 @@ async function abrirIndice(escribo) {
           registro_olvidado: cotejo.registroOlvidado ?? 0,
           migrado: Boolean(r.migracion),
         });
+        // Fuera del índice lo de carpetas que ya no están configuradas, y con su nombre al día lo
+        // de las que siguen (ver indexer/reconciliar.js). Antes de indexar y de buscar nada.
+        try {
+          await reconciliarCarpetas({ motivo: 'arranque' });
+        } catch (err) {
+          log.error('No se pudo ajustar el índice a las carpetas configuradas', { err: String(err) });
+        }
       }
       return;
     } catch (err) {
@@ -161,6 +169,13 @@ async function abrirIndice(escribo) {
 
 export async function bootstrap({ initialIndex = true, watch = true, warmModel = true, control = false } = {}) {
   ensureDataDirs();
+  // Las carpetas, escritas como están en disco (caja y forma Unicode). No se hace al importar la
+  // configuración: sobre una unidad de red caída puede tardar, y el saludo con Claude no espera.
+  try {
+    refinarCarpetas();
+  } catch (err) {
+    log.warn('No se pudieron comprobar las rutas de las carpetas', { err: String(err) });
+  }
   log.info('Arrancando RobinSearch (servidor local)', {
     version: config.version,
     carpetas: config.watchedFolders,
