@@ -3,6 +3,8 @@
 // los documentos del expediente. stdout está reservado para el protocolo JSON-RPC de MCP;
 // todo el logging va a fichero y stderr.
 
+// Antes que nada: con un Node demasiado antiguo se dice claro y se sale (version-node.js).
+import './version-node.js';
 // IMPORTANTE: primero de todo, blindar stdout (redirige console.* de las librerías a stderr).
 import './stdio-guard.js';
 

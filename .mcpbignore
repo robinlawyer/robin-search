@@ -7,3 +7,9 @@ node_modules/@napi-rs/
 node_modules/fsevents/
 # CI y pruebas: no pintan nada en casa del abogado
 .github/
+# Solo los usa sharp al INSTALARSE (tar-fs → bare-*, prebuild-install) o para generar código
+# (protobufjs/cli): nada del servidor los carga en ejecución (comprobado con una traza de
+# resolución de módulos sobre indexado, búsqueda, OCR y comprimidos, 16-sep-2026). ~21 MB menos.
+node_modules/bare-*/
+node_modules/protobufjs/cli/
+node_modules/prebuild-install/

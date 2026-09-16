@@ -11,6 +11,9 @@
 // Los flags --token y --folder rellenan ROBIN_TOKEN y ROBIN_FOLDER. Se procesan ANTES de
 // cargar cualquier módulo que lea la configuración (import dinámico) para que surtan efecto.
 
+// Lo primero: con un Node demasiado antiguo se dice claro y se sale (no lee configuración).
+import '../server/version-node.js';
+
 function parseArgs(argv) {
   const opts = { silent: false, help: false, version: false, folders: [], _: [] };
   for (const arg of argv) {

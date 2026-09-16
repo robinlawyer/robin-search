@@ -77,6 +77,24 @@ const pkg = JSON.parse(fs.readFileSync(path.join(PAQUETE, 'package.json'), 'utf8
 const manifest = JSON.parse(fs.readFileSync(path.join(PAQUETE, 'manifest.json'), 'utf8'));
 console.log(`\nPaquete: ${PAQUETE}\nNode ${process.version} (${process.platform}-${process.arch})\n`);
 
+// Versión mínima de Node: pdfjs-dist pide 20. Paquete y manifest lo dicen, y con un Node más
+// antiguo el arranque lo explica y sale (se simula cambiando la versión que ve el proceso).
+{
+  const pide = (x) => Number(String(x || '').replace(/[^\d.]/g, '').split('.')[0]);
+  check('package.json y manifest piden Node ≥ 20 (lo que exige pdfjs-dist)',
+    pide(pkg.engines?.node) >= 20 && pide(manifest.compatibility?.runtimes?.node) >= 20,
+    `${pkg.engines?.node} / ${manifest.compatibility?.runtimes?.node}`);
+  const viejo = await new Promise((res) => {
+    const prog = `Object.defineProperty(process.versions, 'node', { value: '18.20.0' }); await import(${JSON.stringify(pathToFileURL(path.join(PAQUETE, 'cli', 'index.js')).href)});`;
+    const c = spawn(process.execPath, ['--input-type=module', '-e', prog], { stdio: ['ignore', 'pipe', 'pipe'] });
+    let err = '';
+    c.stderr.on('data', (d) => { err += d; });
+    const t = setTimeout(() => c.kill('SIGKILL'), 30000);
+    c.on('exit', (code) => { clearTimeout(t); res({ code, err }); });
+  });
+  check('con Node 18 el arranque dice qué pasa y sale', viejo.code === 1 && /necesita Node 20/.test(viejo.err), viejo.err.trim().slice(0, 100));
+}
+
 // 2. Carpeta personal con espacios y tildes, y su directorio de datos por defecto.
 const CASA = path.join(base, 'Usuarios', "Inés O'Neill Peña");
 const APPDATA = path.join(CASA, 'AppData', 'Roaming');
