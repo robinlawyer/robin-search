@@ -240,12 +240,17 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
       try {
         const resumen = await indexFolder({ force: false, reconciliarBorrados: true });
         log.info('Indexado inicial completado', resumen);
-        if (resumen.errores > 0) {
-          const top = resumen.errores_por_causa?.[0];
+        // Los errores del propio fichero (vacío o sin descargar de la nube, formato que no es el de
+        // su extensión) no son un fallo de RobinSearch: Claude los cuenta, pero no generan aviso.
+        const deFichero = (resumen.errores_por_causa || [])
+          .filter((c) => String(c.causa).startsWith('ROBIN_FICHERO_'))
+          .reduce((n, c) => n + (c.ficheros || 0), 0);
+        if (resumen.errores - deFichero > 0) {
+          const top = resumen.errores_por_causa?.find((c) => !String(c.causa).startsWith('ROBIN_FICHERO_'));
           diagnostico
             .informar('errores_indexado', {
               fase: 'indexando',
-              causa: top ? `${resumen.errores} ficheros con error; causa principal: ${top.causa}` : `${resumen.errores} ficheros con error`,
+              causa: top ? `${resumen.errores - deFichero} ficheros con error; causa principal: ${top.causa}` : `${resumen.errores - deFichero} ficheros con error`,
             })
             .catch(() => {});
         }

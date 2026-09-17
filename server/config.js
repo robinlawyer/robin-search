@@ -483,7 +483,12 @@ function realpathNativo(p) {
 }
 
 // ¿Se indexa este fichero? Por su extensión, sin distinguir mayúsculas ni espacios finales.
+// Los «~$Demanda.docx» que Word, Excel y PowerPoint dejan junto a un documento ABIERTO no son
+// documentos (unos 160 bytes con el nombre de quien lo tiene abierto): cada vez que el abogado
+// abría un .docx, el vigilante los recogía y salía «Can't find end of central directory» como
+// error de indexado (aviso técnico del 16-sep, 1.6.0).
 export function esExtensionSoportada(ruta) {
+  if (String(ruta).split(/[\\/]/).pop().startsWith('~$')) return false;
   return SUPPORTED_EXTENSIONS.has(extensionDe(ruta));
 }
 

@@ -87,13 +87,15 @@ function instalacionId() {
 
 // ── 1. Marca de fase ────────────────────────────────────────────────────────────────────────
 let _marca = null;
+// Cuándo arrancó ESTE proceso: ata la marca al «Initializing server» de Claude que lo lanzó.
+const INICIO_PROCESO = new Date(Date.now() - process.uptime() * 1000).toISOString();
 // En un cierre ordenado ya no se escriben marcas: el indexado que sigue unos milisegundos volvía
 // a dejar una y el siguiente arranque la tomaba por caída sobre un fichero sano.
 let _cerrando = false;
 
 export function marcarFase(fase, extra = {}) {
   if (_cerrando) return;
-  _marca = { pid: process.pid, fase, t: new Date().toISOString(), version: VERSION, ...extra };
+  _marca = { pid: process.pid, fase, t: new Date().toISOString(), inicio: INICIO_PROCESO, version: VERSION, ...extra };
   try {
     // Atómica: un proceso que muere A MITAD de escribir la marca (justo lo que se quiere
     // diagnosticar) dejaba un JSON cortado, y el siguiente arranque no sabía ni la fase.
@@ -159,6 +161,12 @@ export function revisarCaidaAnterior() {
       fs.rmSync(reclamada, { force: true });
     } catch {
       /* nada */
+    }
+    if (d?.fase && d.fase !== 'excepcion' && claudeLaCerro(d)) {
+      // Claude pidió el cierre (se reinstala o actualiza la extensión, se cierra Claude) y mató el
+      // proceso antes de que atendiera la señal: no es una caída ni el fichero tiene culpa.
+      log.info('La ejecución anterior la cerró Claude: no es una caída', { fase: d.fase });
+      continue;
     }
     if (d?.fase) caidas.push(d);
   }
@@ -349,7 +357,7 @@ export function errorTecnico(err, lit) {
 // Lista blanca de lo que puede viajar de cada línea del registro.
 const CLAVES_TEXTO = new Set([
   'err', 'causa', 'motivo', 'origen', 'model', 'estado', 'fase', 'code', 'ext', 'ubicacion',
-  'version', 'actual', 'disponible', 'tipo', 'cmd', 'protocolo', 'name', 'firma', 'syscall',
+  'version', 'actual', 'disponible', 'tipo', 'cmd', 'protocolo', 'name', 'firma', 'syscall', 'como',
 ]);
 const CLAVES_FUERA = new Set([
   'fichero', 'ficheros_ejemplo', 'ruta', 'rutaRelativa', 'ruta_relativa', 'carpeta', 'carpetas',
@@ -463,6 +471,59 @@ function lineasDeClaude(lit) {
     out.push({ t, level: 'claude', msg: limpiarTexto(resto, lit) });
   }
   return out.slice(-MAX_LINEAS_CLAUDE);
+}
+
+// ¿Terminó la ejecución que dejó la marca porque Claude la cerró? En el registro de Claude, esa
+// ejecución empieza con el «Initializing server» que la lanzó (unos segundos antes de que el
+// proceso arrancase) y lo primero que Claude anota sobre su final es «Shutting down server…» si la
+// cerró él, o «Server transport closed» a secas si el proceso murió solo.
+//
+// Hasta la 1.6.0 una marca huérfana era SIEMPRE una caída. Pero Claude, al cerrar, no siempre da
+// tiempo a atender SIGTERM (proceso ocupado leyendo un PDF): el siguiente arranque avisaba de una
+// «caída» y ponía bajo sospecha un fichero sano (aviso técnico del 16-sep, 1.6.0: 94 ms entre el cierre
+// pedido por Claude y el fin del proceso).
+//
+// Sin el arranque del proceso en la marca (marcas de antes de la 1.6.1) o sin un «Initializing
+// server» que case con él (lanzado por la app, la CLI, una prueba), se sigue contando como caída.
+export function claudeLaCerro(marca, lineas = null) {
+  const inicio = Date.parse(marca?.inicio);
+  if (!Number.isFinite(inicio)) return false;
+  if (!lineas) {
+    let mejor = null;
+    let mt = 0;
+    for (const r of rutasLogClaude()) {
+      try {
+        const st = fs.statSync(r);
+        if (st.mtimeMs > mt) {
+          mt = st.mtimeMs;
+          mejor = r;
+        }
+      } catch {
+        /* no existe */
+      }
+    }
+    if (!mejor) return false;
+    lineas = colaDeFichero(mejor, 256 * 1024).split('\n');
+  }
+  const eventos = [];
+  for (const bruto of lineas) {
+    const m = /^(\d{4}-\d{2}-\d{2}T\S+Z)\s+(.*)$/.exec(bruto.trim());
+    if (!m) continue;
+    const t = Date.parse(m[1]);
+    if (!Number.isFinite(t)) continue;
+    if (/Initializing server/i.test(m[2])) eventos.push({ t, tipo: 'inicio' });
+    else if (/Shutting down server|intentional shutdown/i.test(m[2])) eventos.push({ t, tipo: 'cierre' });
+    else if (/Server transport closed/i.test(m[2])) eventos.push({ t, tipo: 'muerte' });
+  }
+  // El «Initializing server» más cercano ANTES del arranque (el proceso nace tras él), dentro de 30 s.
+  let lanzado = -1;
+  for (let i = 0; i < eventos.length; i++) {
+    const e = eventos[i];
+    if (e.tipo === 'inicio' && e.t <= inicio + 1000 && inicio - e.t <= 30_000) lanzado = i;
+  }
+  if (lanzado < 0) return false;
+  const fin = eventos.slice(lanzado + 1).find((e) => e.tipo !== 'inicio');
+  return fin?.tipo === 'cierre';
 }
 
 export function registroSaneado(lit = literalesSensibles()) {

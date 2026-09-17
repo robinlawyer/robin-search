@@ -27,7 +27,7 @@ import {
   esExtensionSoportada,
   MAX_FRAGMENTOS_POR_DOCUMENTO,
 } from '../config.js';
-import { rutas, tipoReal } from '../rutas.js';
+import { rutas, tipoReal, extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
 import {
@@ -695,7 +695,15 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       acc.ficheros += 1;
       if (!acc.ejemplo) acc.ejemplo = logicalPath(abs);
       causas.set(causa, acc);
-      log.error('Error indexando fichero', { fichero: logicalPath(abs), err: String(err) });
+      // Extensión y tamaño (nunca el nombre) llegan al aviso técnico: sin ellos, «6 ficheros con
+      // error» no decía si eran .docx de Word abierto, fotos o ficheros sin descargar de la nube.
+      log.error('Error indexando fichero', {
+        fichero: logicalPath(abs),
+        ext: extensionDe(abs),
+        bytes: stat?.size ?? null,
+        code: err?.code ? String(err.code) : undefined,
+        err: String(err),
+      });
     } finally {
       terminados += 1;
       if (stat?.pendiente) eta.hecho(stat.size);

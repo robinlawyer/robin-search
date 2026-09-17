@@ -21,6 +21,7 @@ import { config, limiteBytes } from '../config.js';
 import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
+import { tipoReal } from './tipo-real.js';
 
 const require = createRequire(import.meta.url);
 
@@ -889,8 +890,43 @@ function hashName(s) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Dispatcher
 // ─────────────────────────────────────────────────────────────────────────────
-async function extractByExtension(filePath, ext, opts) {
+// Familias binarias: su lector necesita un formato concreto y falla con un mensaje que no dice
+// nada si el contenido es otra cosa. Las de texto (.txt, .csv, .html…) se leen tal cual.
+const EXT_BINARIAS = new Set([
+  '.pdf', '.docx', '.msg', ...EXT_OFFICE_XML, ...EXT_SPREADSHEET, ...EXT_IMAGE, ...EXT_ARCHIVE,
+]);
+
+// Un fichero que no es un fallo nuestro sino del propio fichero. Cuenta como error de indexado
+// (Claude lo dice), pero no dispara el aviso técnico: no hay nada que arreglar en RobinSearch.
+export function errorDeFichero(code, mensaje) {
+  return Object.assign(new Error(mensaje), { code: `ROBIN_FICHERO_${code}` });
+}
+
+// La extensión con la que se lee: la del nombre, salvo que el contenido diga otra cosa.
+function extensionDeLectura(filePath, ext) {
+  if (!EXT_BINARIAS.has(ext)) return ext;
+  const tipo = tipoReal(filePath);
+  if (tipo === 'vacio') {
+    throw errorDeFichero('VACIO', 'Fichero vacío o sin descargar de la nube');
+  }
+  if (tipo === 'avif') throw errorDeFichero('FORMATO', 'Imagen AVIF: el OCR local no la lee');
+  // Las hojas de cálculo no se tocan: SheetJS reconoce solo .xls binario, HTML y XML aunque se
+  // llamen .xlsx (los «Excel» que exportan bancos y juzgados suelen ser HTML).
+  if (EXT_SPREADSHEET.has(ext) || EXT_ARCHIVE.has(ext) || ext === '.msg') return ext;
+  if (tipo === 'pdf' && ext !== '.pdf') return '.pdf';
+  if (tipo === 'rtf') return '.rtf';
+  if (tipo === 'html') return '.html';
+  if ((tipo === 'imagen' || tipo === 'heic') && !EXT_IMAGE.has(ext)) return tipo === 'heic' ? '.heic' : '.png';
+  if (tipo === 'ole' && (ext === '.docx' || EXT_OFFICE_XML.has(ext))) {
+    throw errorDeFichero('FORMATO', `Documento de Office antiguo (binario) con extensión ${ext}: no se puede leer`);
+  }
+  return ext;
+}
+
+async function extractByExtension(filePath, extNombre, opts) {
   const maxPages = opts?.maxPages ?? config.maxPagesPerFile;
+  const ext = extensionDeLectura(filePath, extNombre);
+  if (ext !== extNombre) log.info('El contenido no corresponde a la extensión: se lee como lo que es', { ext: extNombre, como: ext });
   if (ext === '.pdf') return extractPdf(filePath, { maxPages });
   if (ext === '.docx') return extractDocx(filePath);
   if (EXT_TEXT.has(ext)) return extractText(filePath);

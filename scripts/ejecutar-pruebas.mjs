@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ORDEN = [
   'login', 'login-bloqueado', 'sondeo-colgado', 'control', 'aislamiento',
-  'red', 'rutas', 'carpetas', 'diagnostico', 'barrido', 'robustez', 'concurrencia', 'contenedores', 'escala', 'persistencia', 'ocr', 'sin-conexion', 'no-modifica', 'velocidad', 'humo-so',
+  'red', 'rutas', 'carpetas', 'diagnostico', 'barrido', 'robustez', 'concurrencia', 'contenedores', 'escala', 'persistencia', 'ocr', 'formato-real', 'sin-conexion', 'no-modifica', 'velocidad', 'humo-so',
 ];
 const pedidas = process.argv.slice(2);
 const pruebas = pedidas.length ? ORDEN.filter((p) => pedidas.includes(p)) : ORDEN;

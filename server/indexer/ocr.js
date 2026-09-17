@@ -14,6 +14,7 @@ import { extensionDe } from '../rutas.js';
 import { fileURLToPath } from 'node:url';
 import { config, ensureDataDirs } from '../config.js';
 import { log } from '../logger.js';
+import { tipoReal } from './tipo-real.js';
 
 const PKG_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const MODELS_DIR = process.env.ROBIN_MODELS_DIR || path.join(PKG_ROOT, 'models');
@@ -161,7 +162,9 @@ export async function terminateOcr() {
 export async function ocrImage(filePath) {
   const ext = extensionDe(filePath);
   let input;
-  if (ext === '.heic' || ext === '.heif') {
+  // Por contenido, no solo por extensión: una foto de iPhone en HEIC llamada «.jpg» es corriente
+  // y tesseract la rechazaba con «Error attempting to read image.».
+  if (ext === '.heic' || ext === '.heif' || tipoReal(filePath) === 'heic') {
     const heicConvert = (await import('heic-convert')).default;
     const buffer = fs.readFileSync(filePath);
     // A PNG sin pérdida para no degradar el OCR de un documento fotografiado.
