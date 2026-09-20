@@ -65,7 +65,24 @@ export async function extractPdf(filePath, { maxPages }) {
     isEvalSupported: false,
     disableFontFace: true,
   });
-  const pdf = await loadingTask.promise;
+  // Un PDF roto, truncado o cifrado NO es un fallo de RobinSearch: es el fichero. Se marca como
+  // tal para que cuente como error de indexado (Claude lo dice y el abogado sabe que ese
+  // documento no está) pero no dispare el aviso técnico. 19-sep-2026: 56 ficheros de un mismo
+  // despacho con «Invalid PDF structure» llenaron el panel de avisos sin nada que arreglar.
+  let pdf;
+  try {
+    pdf = await loadingTask.promise;
+  } catch (err) {
+    const nombre = String(err?.name || '');
+    const msg = String(err?.message || '');
+    if (/InvalidPDF/i.test(nombre) || /Invalid PDF structure|may not be a PDF file|Invalid or unsupported/i.test(msg)) {
+      throw errorDeFichero('PDF_ROTO', 'El PDF está dañado o incompleto: no se puede leer');
+    }
+    if (/PasswordException/i.test(nombre) || /password/i.test(msg)) {
+      throw errorDeFichero('PDF_PROTEGIDO', 'El PDF está protegido con contraseña: no se puede leer');
+    }
+    throw err;
+  }
   const numPages = pdf.numPages;
   const limit = Math.min(numPages, maxPages);
   const pages = [];
@@ -95,6 +112,12 @@ export async function extractPdf(filePath, { maxPages }) {
   try {
     ocrPages = await ocrPdf(filePath, { maxPages });
   } catch (err) {
+    // Un disco lleno NO es «este PDF no tiene texto»: es un problema del equipo que hay que
+    // decir. Si se tragara aquí, el documento quedaría marcado «sin OCR» para siempre y nadie
+    // sabría por qué (19-sep-2026, el ENOSPC que arrastró el indexado entero de Eduardo).
+    // Igual con la falta de MEMORIA: marcar «sin OCR» sería darlo por ilegible para siempre,
+    // cuando lo único que pasa es que hoy el equipo estaba lleno. Así se reintenta.
+    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
     log.error('OCR falló; el fichero se marca sin OCR', { err: String(err) });
     return { pages: [], sinOcr: true, numPages };
   }

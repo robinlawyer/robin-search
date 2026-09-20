@@ -23,6 +23,7 @@ import { config, guardarCarpetas, carpetasFijadasPorEntorno, comoConfiguradas } 
 import { log } from './logger.js';
 import { state, alCambiar } from './state.js';
 import { indexFolder, indexandoAhora, alTerminarIndexado } from './indexer/indexer.js';
+import { estadoMotor } from './embedder/embedder.js';
 import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import { rutas } from './rutas.js';
 import * as escritor from './escritor.js';
@@ -73,6 +74,21 @@ function retrato() {
     carpetas: comoConfiguradas(config.watchedFolders),
     sinTexto: state.ficherosSinOcr ? state.ficherosSinOcr.size : 0,
     actualizacionDisponible: state.actualizacionDisponible,
+    // Para que la app pueda decir por qué va lento en vez de dejar al abogado mirando una barra
+    // que no avanza (correo de Eduardo, 19-sep-2026: 1 hilo de 4 sin explicación).
+    motor: (() => {
+      try {
+        const m = estadoMotor();
+        const c = m?.calculo || {};
+        return {
+          hilos: c.hilos ?? null,
+          hilosObjetivo: c.hilos_objetivo ?? null,
+          porQueVaLento: c.por_que_va_lento ?? (c.modo === 'hilo_principal' && c.motivo ? `Cálculo en un solo hilo: ${c.motivo}.` : null),
+        };
+      } catch {
+        return null;
+      }
+    })(),
     ts: Date.now(),
   };
 }

@@ -46,6 +46,11 @@ let _respaldoEnCurso = false;
 let _arranqueEscalonado = null;
 let _avisadoMemoria = false;
 let _temporizadorOcio = null;
+// Por qué no hay más hilos de los pedidos. Hasta la 1.6.1 esto solo se escribía en el registro
+// («no hay memoria para otro hilo, libre_mb: 301»): el abogado veía el indexado ir a un cuarto de
+// velocidad y no había forma de saber por qué sin abrir un fichero de log (correo de Eduardo y
+// Juan, 19/20-sep-2026). Ahora sale en estado_servidor y en la app.
+let _limite = null; // { motivo, explicacion, hilos, libre_mb, total_mb }
 
 function avisar(nivel, msg, datos) {
   try {
@@ -62,9 +67,39 @@ function avisar(nivel, msg, datos) {
 //   entrega en cuanto se pide, no entran, y en un Mac en uso normal sale en unos cientos de MB
 //   aunque haya gigas disponibles; allí manda solo el primer límite.
 function cabeOtroHilo(hilosActuales) {
-  if ((hilosActuales + 1) * _memoriaPorHilo > os.totalmem() * 0.3) return false;
-  if (process.platform === 'darwin') return true;
-  return os.freemem() >= _memoriaPorHilo * 1.2;
+  const porHiloMb = Math.round(_memoriaPorHilo / MB);
+  const totalMb = Math.round(os.totalmem() / MB);
+  const libreMb = Math.round(os.freemem() / MB);
+  if ((hilosActuales + 1) * _memoriaPorHilo > os.totalmem() * 0.3) {
+    return {
+      cabe: false,
+      motivo: 'memoria_del_equipo',
+      explicacion:
+        `Se usan ${hilosActuales} hilo(s) de cálculo en vez de ${_opc?.objetivo ?? hilosActuales}: cada uno necesita ` +
+        `unos ${porHiloMb} MB y RobinSearch no pasa del 30 % de la memoria del equipo (${totalMb} MB en total), para ` +
+        'dejarle sitio a Claude, a Word y al resto. El indexado va más lento, pero termina igual; con más memoria RAM iría más rápido.',
+      hilos: hilosActuales,
+      libre_mb: libreMb,
+      total_mb: totalMb,
+      por_hilo_mb: porHiloMb,
+    };
+  }
+  if (process.platform === 'darwin') return { cabe: true };
+  if (os.freemem() < _memoriaPorHilo * 1.2) {
+    return {
+      cabe: false,
+      motivo: 'memoria_libre',
+      explicacion:
+        `Se usan ${hilosActuales} hilo(s) de cálculo en vez de ${_opc?.objetivo ?? hilosActuales}: cada uno necesita ` +
+        `unos ${porHiloMb} MB y ahora mismo quedan ${libreMb} MB libres de ${totalMb} MB. Cerrando alguna aplicación ` +
+        'pesada el indexado irá más rápido; tal cual, va más lento pero termina igual.',
+      hilos: hilosActuales,
+      libre_mb: libreMb,
+      total_mb: totalMb,
+      por_hilo_mb: porHiloMb,
+    };
+  }
+  return { cabe: true };
 }
 
 // Cuántos hilos intentar por defecto: uno por núcleo dejando uno para el sistema y para Claude,
@@ -308,6 +343,10 @@ export function estado() {
     ...(_memoriaPorHilo ? { memoria_por_hilo_mb: Math.round(_memoriaPorHilo / MB) } : {}),
     ...(_muertesTotales ? { hilos_caidos: _muertesTotales } : {}),
     ...(_motivo ? { motivo: _motivo } : {}),
+    // Por qué hay menos hilos de los pedidos: en claro, para que se pueda enseñar tal cual.
+    ...(_limite && _modo === 'hilos' && vivos().length < (_opc?.objetivo ?? 1)
+      ? { limitado_por: _limite.motivo, por_que_va_lento: _limite.explicacion, memoria_libre_mb: _limite.libre_mb }
+      : {}),
   };
 }
 
@@ -354,17 +393,21 @@ function ampliar() {
     await null;
     try {
       while (_modo === 'hilos' && vivos().length < _opc.objetivo && _pasajes.length > 0) {
-        if (_opc.ajustarPorMemoria && !cabeOtroHilo(vivos().length)) {
+        const sitio = _opc.ajustarPorMemoria ? cabeOtroHilo(vivos().length) : { cabe: true };
+        if (!sitio.cabe) {
+          _limite = sitio;
           if (!_avisadoMemoria) {
             _avisadoMemoria = true;
             avisar('info', 'No se cargan más hilos de embedding: no hay memoria para otro', {
-              hilos: vivos().length,
-              libre_mb: Math.round(os.freemem() / MB),
-              total_mb: Math.round(os.totalmem() / MB),
+              motivo: sitio.motivo,
+              hilos: sitio.hilos,
+              libre_mb: sitio.libre_mb,
+              total_mb: sitio.total_mb,
             });
           }
           break;
         }
+        _limite = null;
         const h = crearHilo();
         const rr = await h.cargado;
         if (!rr.ok) {

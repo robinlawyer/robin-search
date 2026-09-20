@@ -9,6 +9,7 @@
 // la promesa rechazada quedaba cacheada y el OCR ya no volvía a intentarlo en toda la sesión.
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { extensionDe } from '../rutas.js';
 import { fileURLToPath } from 'node:url';
@@ -22,6 +23,82 @@ const OCR_DIR = path.join(MODELS_DIR, 'tesseract');
 
 let _workerPromise = null;
 let _estado = { listo: false, origen: null, error: null };
+
+// ── Espacio en disco ───────────────────────────────────────────────────────────────────────
+//
+// 19-sep-2026 (Eduardo, Mac de 8 GB): en el mismo segundo en que empezaron 202 errores de
+// lectura, el registro tenía antes un `ENOSPC: no space left on device` sobre un PDF. El OCR
+// rasteriza CADA página a PNG y con un escaneado de 98 o 114 páginas eso son cientos de MB de
+// temporales; con el disco justo, el propio OCR lo remata y arrastra todo lo demás.
+//
+// Así que se mira antes de empezar, y cada pocas páginas mientras dura.
+const MB = 1024 * 1024;
+const MINIMO_LIBRE_MB = Number(process.env.ROBIN_OCR_MINIMO_LIBRE_MB) || 800;
+const CADA_N_PAGINAS = 10;
+
+// MB libres en el volumen de `dir`, o null si el sistema no lo dice (nunca frena por no saberlo).
+export function espacioLibreMb(dir) {
+  try {
+    const st = fs.statfsSync(dir);
+    return Math.round((Number(st.bavail) * Number(st.bsize)) / MB);
+  } catch {
+    return null;
+  }
+}
+
+function errorDiscoLleno(libreMb) {
+  return Object.assign(
+    new Error(
+      `No hay espacio suficiente en el disco para leer este PDF escaneado (${libreMb} MB libres, hacen ` +
+        `falta al menos ${MINIMO_LIBRE_MB} MB). El OCR convierte cada página a imagen y necesita sitio. ` +
+        'Libera espacio y vuelve a indexar.',
+    ),
+    { code: 'ROBIN_DISCO_LLENO' },
+  );
+}
+
+// ¿Hay sitio para rasterizar? Se comprueba donde se escriben los temporales.
+function comprobarEspacio() {
+  const libre = espacioLibreMb(config.tesseractCache || config.dataDir || os.tmpdir());
+  if (libre !== null && libre < MINIMO_LIBRE_MB) throw errorDiscoLleno(libre);
+  return libre;
+}
+
+// ── Memoria ────────────────────────────────────────────────────────────────────────────────
+//
+// La caída más repetida del panel (16-19 sep-2026) es la misma en tres despachos distintos:
+// el proceso muere LEYENDO UN PDF. Rasterizar una página a 300 ppp son decenas de MB de bitmap
+// dentro del WASM, que no los devuelve hasta terminar el documento; con el equipo ya justo de
+// memoria, esa página es la que remata el proceso y el PDF —sano— acaba en cuarentena.
+//
+// Así que con poca memoria libre no se cae: se baja la resolución, y si ni así, se deja el
+// documento para más tarde en vez de morir. Un PDF sin OCR se puede reintentar; un proceso
+// muerto se lleva por delante el indexado entero y asusta al abogado.
+const MINIMO_LIBRE_RAM_MB = Number(process.env.ROBIN_OCR_MINIMO_RAM_MB) || 400;
+const RAM_PARA_DPI_PLENO_MB = Number(process.env.ROBIN_OCR_RAM_DPI_MB) || 900;
+
+function ramLibreMb() {
+  return Math.round(os.freemem() / MB);
+}
+
+// En macOS `os.freemem()` solo cuenta páginas LIBRES (la memoria inactiva, que el sistema
+// entrega en cuanto se pide, no cuenta): allí la cifra es engañosamente baja y no se frena por
+// ella, igual que hace el pool de embedding.
+function memoriaFiable() {
+  return process.platform !== 'darwin';
+}
+
+function dpiSegunMemoria(dpi) {
+  if (!memoriaFiable()) return dpi;
+  const libre = ramLibreMb();
+  if (libre >= RAM_PARA_DPI_PLENO_MB) return dpi;
+  if (libre >= MINIMO_LIBRE_RAM_MB) {
+    const bajo = Math.max(150, Math.round(dpi * 0.66));
+    log.warn('Poca memoria libre: se rasteriza el PDF escaneado a menos resolución', { libre_mb: libre, dpi: bajo });
+    return bajo;
+  }
+  return null; // ni eso: mejor dejarlo para más tarde que morir en el intento
+}
 
 // ¿Está el idioma empaquetado y con el tamaño que dice el manifiesto?
 export function idiomaEmpaquetado(lang = config.ocrLang) {
@@ -64,6 +141,17 @@ export function estadoOcr() {
     empaquetado: emp.ok,
     ...(emp.ok ? {} : { idioma_empaquetado: emp }),
     ...(_estado.error ? { error: _estado.error } : {}),
+    ...(() => {
+      const libre = espacioLibreMb(config.tesseractCache || config.dataDir);
+      if (libre === null || libre >= MINIMO_LIBRE_MB) return {};
+      return {
+        espacio_libre_mb: libre,
+        aviso_disco:
+          `Quedan ${libre} MB libres en el disco. El OCR de PDFs escaneados convierte cada página a ` +
+          'imagen y necesita sitio: mientras no haya espacio, esos PDFs no se podrán leer (el resto de ' +
+          'documentos sí). Dile al abogado que libere espacio.',
+      };
+    })(),
   };
 }
 
@@ -160,6 +248,7 @@ export async function terminateOcr() {
 // (libheif en WASM), porque tesseract no lee HEIC directamente.
 // Devuelve [{ page: 1, text }] (una imagen = una "página") o [] si no hay texto legible.
 export async function ocrImage(filePath) {
+  comprobarEspacio();
   const ext = extensionDe(filePath);
   let input;
   // Por contenido, no solo por extensión: una foto de iPhone en HEIC llamada «.jpg» es corriente
@@ -192,13 +281,39 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
     if (total > limit) log.warn('PDF escaneado con más páginas que el tope de OCR: se lee hasta el tope', { paginas: total, tope: limit });
 
     await getWorker(); // si el OCR no arranca, falla el fichero antes de rasterizar nada
-    const scale = mupdf.Matrix.scale(dpi / 72, dpi / 72);
+    comprobarEspacio(); // ni una página si no hay sitio para los temporales
+    const dpiReal = dpiSegunMemoria(dpi);
+    if (dpiReal === null) {
+      throw Object.assign(
+        new Error(
+          `No hay memoria suficiente para leer este PDF escaneado (${ramLibreMb()} MB libres). Se ` +
+            'reintentará solo cuando el equipo tenga más memoria; cerrar alguna aplicación pesada ayuda.',
+        ),
+        { code: 'ROBIN_FICHERO_SIN_MEMORIA' },
+      );
+    }
+    const scale = mupdf.Matrix.scale(dpiReal / 72, dpiReal / 72);
     const inicio = Date.now();
 
     for (let i = 0; i < limit; i++) {
       if (Date.now() - inicio > config.ocrMaxMsPorDocumento) {
         log.warn('OCR: tope de tiempo por documento alcanzado; se indexa lo leído', { paginas_leidas: i, paginas: total });
         break;
+      }
+      // Un escaneado de 100 páginas puede llenar el disco a mitad: se vuelve a mirar cada poco y
+      // se para con lo leído en vez de dejar el equipo sin espacio.
+      if (i > 0 && i % CADA_N_PAGINAS === 0) {
+        const libre = espacioLibreMb(config.tesseractCache || config.dataDir);
+        if (libre !== null && libre < MINIMO_LIBRE_MB) {
+          log.error('OCR parado: se está quedando sin espacio en disco; se indexa lo leído', { paginas_leidas: i, libre_mb: libre });
+          break;
+        }
+        // Y la memoria: un escaneado de 100 páginas la va comiendo página a página. Parar con
+        // lo leído es mucho mejor que que el sistema mate el proceso a mitad.
+        if (memoriaFiable() && ramLibreMb() < MINIMO_LIBRE_RAM_MB) {
+          log.error('OCR parado: se está quedando sin memoria; se indexa lo leído', { paginas_leidas: i, libre_mb: ramLibreMb() });
+          break;
+        }
       }
       let page;
       let pix;
@@ -230,4 +345,4 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
   return pages;
 }
 
-export default { ocrPdf, ocrImage, terminateOcr, estadoOcr, idiomaEmpaquetado };
+export default { ocrPdf, ocrImage, terminateOcr, estadoOcr, idiomaEmpaquetado, espacioLibreMb };

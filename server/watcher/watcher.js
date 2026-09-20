@@ -27,6 +27,8 @@ import { esRutaDeRed } from '../net.js';
 import { log } from '../logger.js';
 import { setActivo, setIndexando, setError, clearError } from '../state.js';
 import { indexFile, removeFilePath, indexFolder, normalizarCausa } from '../indexer/indexer.js';
+import * as diagnostico from '../diagnostico.js';
+import * as ausentes from '../carpetas-ausentes.js';
 
 let _watcher = null;
 let _rescanTimer = null;
@@ -57,6 +59,72 @@ function scheduleFlush() {
   flushTimer = setTimeout(() => serializar(drain), DEBOUNCE_MS);
 }
 
+// Ficheros que un evento dio por borrados pero que SIGUEN en disco: un error de lectura no es
+// un borrado. Ver `existeEnDisco` y `filtrarBorradosFalsos`.
+const UMBRAL_BORRADO_MASIVO = Number(process.env.ROBIN_UMBRAL_BORRADO_MASIVO) || 25;
+
+// ¿Existe el fichero AHORA mismo? Tres respuestas, no dos: `true` (está), `false` (no está de
+// verdad, ENOENT) y `null` (no se sabe: la unidad no contesta, permiso denegado, disco lleno).
+// El «no se sabe» es lo que el 19-sep-2026 se tomó por borrado: en el mismo tramo de ENOSPC y
+// ETIMEDOUT del Mac de Eduardo, el vigilante disparó ~90 «eliminado» en 24 ms sobre ficheros que
+// estaban donde siempre, y el expediente se quedó en 43 documentos de 1.150.
+export function existeEnDisco(abs) {
+  try {
+    fs.statSync(abs);
+    return true;
+  } catch (err) {
+    if (err?.code === 'ENOENT' || err?.code === 'ENOTDIR') return false;
+    return null;
+  }
+}
+
+// Antes de retirar del índice: se comprueba en disco uno a uno. Lo que sigue estando se vuelve a
+// indexar (por si el evento era un cambio) y lo que no se sabe se deja como está — el índice se
+// queda algo viejo, que es infinitamente mejor que vaciarle el expediente al abogado.
+// Y si el lote de borrados es MASIVO y casi ninguno resulta ser un borrado real, se descarta
+// entero y se avisa: eso no es el abogado vaciando una carpeta, es el disco portándose mal.
+function filtrarBorradosFalsos(lote) {
+  const borrados = lote.filter(([, j]) => j.tipo === 'remove');
+  if (!borrados.length) return { lote, descartados: 0, dudosos: 0 };
+  let siguen = 0;
+  let dudosos = 0;
+  const salida = [];
+  for (const [abs, job] of lote) {
+    if (job.tipo !== 'remove') {
+      salida.push([abs, job]);
+      continue;
+    }
+    const existe = existeEnDisco(abs);
+    if (existe === true) {
+      siguen += 1;
+      salida.push([abs, { tipo: 'index' }]); // estaba: no es un borrado, es un cambio
+    } else if (existe === null) {
+      dudosos += 1; // no se sabe: ni se retira ni se reindexa
+    } else {
+      salida.push([abs, job]);
+    }
+  }
+  const reales = salida.filter(([, j]) => j.tipo === 'remove').length;
+  if (borrados.length >= UMBRAL_BORRADO_MASIVO && reales > 0 && siguen + dudosos >= borrados.length / 2) {
+    log.error('Borrado masivo NO creíble: la mayoría de los ficheros sigue en disco; no se retira ninguno', {
+      borrados: borrados.length,
+      siguen_en_disco: siguen,
+      sin_respuesta: dudosos,
+    });
+    diagnostico
+      .informar('borrado_masivo_descartado', {
+        fase: 'vigilando',
+        causa: `${borrados.length} borrados en un lote con ${siguen} ficheros todavía en disco y ${dudosos} sin respuesta: se descarta el lote`,
+      })
+      .catch(() => {});
+    return { lote: salida.filter(([, j]) => j.tipo !== 'remove'), descartados: reales, dudosos };
+  }
+  if (siguen || dudosos) {
+    log.warn('Borrados descartados: el fichero sigue en disco o no contesta', { siguen_en_disco: siguen, sin_respuesta: dudosos });
+  }
+  return { lote: salida, descartados: 0, dudosos };
+}
+
 async function drain() {
   if (draining) {
     scheduleFlush();
@@ -71,6 +139,15 @@ async function drain() {
   let ultimaCausa = null;
   try {
     while (pending.size > 0) {
+      // El lote entero pasa por la comprobación en disco ANTES de tocar el índice. Se hace una
+      // vez por LOTE y no por fichero: con 1.000 cambios en cola, comprobarlo en cada vuelta
+      // serían un millón de `stat` sobre una carpeta que ya está teniendo un mal día.
+      if (pending.size && [...pending.values()].some((j) => j.tipo === 'remove')) {
+        const { lote } = filtrarBorradosFalsos([...pending]);
+        pending.clear();
+        for (const [a, j] of lote) pending.set(a, j);
+        if (pending.size === 0) break;
+      }
       const [absPath, job] = pending.entries().next().value;
       pending.delete(absPath);
       const ruta = logicalPath(absPath);
@@ -147,7 +224,14 @@ function eventoNativo(tipoEvento, abs) {
   let st = null;
   try {
     st = fs.statSync(abs);
-  } catch {
+  } catch (err) {
+    // ENOENT (y ENOTDIR, la carpeta que lo contenía ya no está) = de verdad no está. Cualquier
+    // otro error —EIO, ETIMEDOUT de un fichero de iCloud sin descargar, EACCES, ENOSPC— es «no
+    // se ha podido mirar», y hasta la 1.6.1 se trataba igual que un borrado.
+    if (err?.code !== 'ENOENT' && err?.code !== 'ENOTDIR') {
+      log.warn('El vigilante no pudo mirar un fichero: NO se toca el índice', { code: String(err?.code || err) });
+      return;
+    }
     st = null;
   }
   if (!st) {
@@ -280,8 +364,20 @@ export function startWatcher() {
   }
   if (_watcher || _rescanTimer || _nativos.length || _rescanLocalTimer) return _watcher;
 
-  const red = carpetasDeRed();
-  const locales = config.watchedFolders.filter((p) => !red.includes(p));
+  // Una carpeta que ya no existe no se vigila: fs.watch sobre ella falla en cada intento y deja
+  // el servidor en error para siempre (correo de Eduardo, 19-sep-2026). Se mira cada poco por si
+  // vuelve, y entonces el vigilante se reinicia solo.
+  ausentes.revisar({ forzar: true });
+  const vigilables = ausentes.presentes(config.watchedFolders);
+  if (vigilables.length === 0) {
+    log.warn('Watcher no iniciado: ninguna de las carpetas configuradas existe ahora mismo');
+    programarRevisionAusentes();
+    return null;
+  }
+  if (ausentes.hayAusentes()) programarRevisionAusentes();
+
+  const red = carpetasDeRed().filter((p) => vigilables.includes(p));
+  const locales = vigilables.filter((p) => !red.includes(p));
 
   const nativo = process.env.ROBIN_VIGILANTE !== 'chokidar'
     && (process.platform === 'win32' || process.platform === 'darwin');
@@ -337,6 +433,27 @@ export function startWatcher() {
   return _watcher;
 }
 
+// Revisa cada poco si una carpeta ausente ha vuelto. Si vuelve, se reinicia el vigilante y se
+// indexa lo que haya: el abogado no tiene que hacer nada ni reiniciar Claude.
+let _ausentesTimer = null;
+function programarRevisionAusentes() {
+  if (_ausentesTimer) return;
+  _ausentesTimer = setInterval(() => {
+    const antes = ausentes.lista().length;
+    ausentes.revisar({ forzar: true });
+    const ahora = ausentes.lista().length;
+    if (ahora >= antes) return;
+    log.info('Una carpeta ha vuelto: se reinicia el vigilante');
+    stopWatcher()
+      .then(() => {
+        startWatcher();
+        return reescanear(ausentes.presentes(config.watchedFolders), { motivo: 'carpeta_recuperada' });
+      })
+      .catch((err) => log.warn('No se pudo reiniciar el vigilante tras recuperar una carpeta', { err: String(err) }));
+  }, Number(process.env.ROBIN_REVISAR_AUSENTES_MS) || 5 * 60 * 1000);
+  _ausentesTimer.unref?.();
+}
+
 export async function stopWatcher() {
   if (_rescanTimer) {
     clearInterval(_rescanTimer);
@@ -359,11 +476,25 @@ export async function stopWatcher() {
     clearInterval(_rescanLocalTimer);
     _rescanLocalTimer = null;
   }
+  if (_ausentesTimer) {
+    clearInterval(_ausentesTimer);
+    _ausentesTimer = null;
+  }
   _enReescaneo.clear();
   if (_watcher) {
     await _watcher.close();
     _watcher = null;
   }
+}
+
+// Solo pruebas: meter trabajo en la cola del vigilante y drenarla sin esperar al debounce.
+export function _encolarParaPrueba(abs, tipo) {
+  enqueue(abs, tipo);
+}
+export async function _drenarParaPrueba() {
+  if (flushTimer) clearTimeout(flushTimer);
+  flushTimer = null;
+  await serializar(drain);
 }
 
 export default { startWatcher, stopWatcher, reescanear, reescaneoEnCurso, carpetasDeRed };

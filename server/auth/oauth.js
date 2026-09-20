@@ -245,8 +245,19 @@ async function renovar(a) {
   return r;
 }
 
-async function intentarRenovar(a) {
+// La sesión, releída del DISCO. Entre instancias (Claude Desktop y Claude Code, o la sonda que
+// Claude arranca y mata) la de memoria puede estar vieja: la otra ya rotó el refresh_token y el
+// nuestro está gastado. Mirar el disco antes de gastarlo evita el rechazo entero.
+function masFrescaQue(a) {
+  const disco = loadAuth();
+  if (disco?.refresh_token && disco.refresh_token !== a?.refresh_token) return disco;
+  return a;
+}
+
+async function intentarRenovar(aEntrada) {
   _ultimaRenovacion = null;
+  // Siempre con la llave que hay en disco AHORA, no con la que se leyó hace diez minutos.
+  const a = masFrescaQue(aEntrada);
   if (!a?.refresh_token) return null;
   const disc = await discover();
   const body = new URLSearchParams({
@@ -277,7 +288,14 @@ async function intentarRenovar(a) {
     if ((r.status === 400 || r.status === 401) && (error === 'invalid_grant' || error === null)) {
       // La otra instancia pudo rotar el refresh_token un instante antes: si en disco ya hay otro,
       // es la sesión buena y no se borra.
-      const actual = loadAuth();
+      let actual = loadAuth();
+      if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
+      // Y pudo rotarlo un instante DESPUÉS de mirar (las dos instancias salieron con la misma
+      // llave y esta perdió la carrera): se espera un poco y se vuelve a mirar antes de cerrarle
+      // la sesión a nadie. Cerrarla de más es lo que le pasó a Eduardo el 19-sep-2026 —de
+      // autenticado a no autenticado sin tocar nada, con dos instancias compitiendo.
+      await new Promise((res) => setTimeout(res, 1500));
+      actual = loadAuth();
       if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
       _ultimaRenovacion = 'rechazada';
       clearTokens(); // refresh revocado/expirado → hay que volver a iniciar sesión

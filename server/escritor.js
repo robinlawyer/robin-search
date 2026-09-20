@@ -24,7 +24,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { config } from './config.js';
+import { config, VERSION } from './config.js';
 
 const CADUCIDAD_MS = Number(process.env.ROBIN_ESCRITOR_CADUCIDAD_MS) || 2 * 60 * 1000;
 const RENUEVO_MS = Number(process.env.ROBIN_ESCRITOR_RENUEVO_MS) || 30 * 1000;
@@ -60,7 +60,7 @@ function leer() {
   }
   try {
     const d = JSON.parse(fs.readFileSync(ruta(), 'utf8'));
-    return { pid: d?.pid, token: d?.token ?? null, mtimeMs };
+    return { pid: d?.pid, token: d?.token ?? null, version: d?.version ?? null, mtimeMs };
   } catch (err) {
     if (err?.code === 'ENOENT') return null;
     return { pid: null, token: null, mtimeMs, ilegible: true };
@@ -112,7 +112,7 @@ export function confirmar() {
   if (!d) {
     // Nadie lo tiene (lo borró una limpieza, o el antivirus): se recupera si nadie se adelanta.
     try {
-      fs.writeFileSync(ruta(), JSON.stringify({ pid: process.pid, token: _token, desde: new Date().toISOString() }), { flag: 'wx' });
+      fs.writeFileSync(ruta(), JSON.stringify({ pid: process.pid, token: _token, version: VERSION, desde: new Date().toISOString() }), { flag: 'wx' });
       return true;
     } catch {
       /* se adelantó otro */
@@ -144,7 +144,7 @@ export function adquirir() {
   for (let intento = 0; intento < 3; intento++) {
     const token = crypto.randomBytes(12).toString('hex');
     try {
-      fs.writeFileSync(ruta(), JSON.stringify({ pid: process.pid, token, desde: new Date().toISOString() }), { flag: 'wx' });
+      fs.writeFileSync(ruta(), JSON.stringify({ pid: process.pid, token, version: VERSION, desde: new Date().toISOString() }), { flag: 'wx' });
       _soy = true;
       _token = token;
       _visto = null;
@@ -186,6 +186,16 @@ export function otraInstancia() {
   return d.pid;
 }
 
+// La otra instancia viva, con su versión. 19/20-sep-2026: en el registro de Eduardo convivían un
+// «Robin Search» 1.0.0 y un «RobinSearch» 1.6.1 arrancando a la vez, con tres conexiones MCP
+// seguidas en milisegundos — un proceso viejo que el instalador dejó huérfano compitiendo por el
+// mismo canal. Saber que pasa, y con qué versión, es lo que permite decirlo en vez de adivinarlo.
+export function fichaOtraInstancia() {
+  const d = leer();
+  if (!d || d.ilegible || (d.pid === process.pid && d.token === _token) || caducado(d)) return null;
+  return { pid: d.pid, version: d.version ?? null, distintaVersion: Boolean(d.version && d.version !== VERSION) };
+}
+
 export function soltar() {
   if (_renuevo) clearInterval(_renuevo);
   _renuevo = null;
@@ -200,4 +210,4 @@ export function soltar() {
   _token = null;
 }
 
-export default { adquirir, soyEscritor, soltar, otraInstancia, pidVivo, confirmar, alPerder };
+export default { adquirir, soyEscritor, soltar, otraInstancia, fichaOtraInstancia, pidVivo, confirmar, alPerder };

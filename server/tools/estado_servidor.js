@@ -135,6 +135,18 @@ export async function handler() {
   if (state.actualizacionDisponible) {
     respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Descárgala desde robinlawyer.ai/descargas`;
   }
+
+  // Por qué el indexado va más lento de lo que podría. Hasta la 1.6.1 esto solo estaba en el
+  // registro: se veía «1 hilo de 4» y no había manera de saber el motivo sin abrir el log
+  // (correo de Eduardo y Juan, 19/20-sep-2026). Es información para DAR al abogado tal cual.
+  const calculo = respuesta.motor_embedding?.calculo;
+  if (calculo?.por_que_va_lento) {
+    respuesta.aviso_velocidad = calculo.por_que_va_lento;
+  } else if (calculo?.modo === 'hilo_principal' && calculo?.motivo) {
+    respuesta.aviso_velocidad =
+      `El cálculo va en un solo hilo (motivo: ${calculo.motivo}). El indexado es más lento de lo ` +
+      'normal, pero termina igual y las búsquedas funcionan.';
+  }
   if (state.estado === 'indexando' && state.progreso) respuesta.progreso = state.progreso;
   if (state.ultimoError) respuesta.ultimo_error = state.ultimoError;
 
@@ -173,6 +185,16 @@ export async function handler() {
   // errores y un servidor en 'activo' era indistinguible de una carpeta vacía.
   if (state.ultimoIndexado) {
     respuesta.ultimo_indexado = state.ultimoIndexado;
+    // Carpetas configuradas que ya no existen: apartadas, dichas una vez y con lo que hay que
+    // hacer. No son un fallo de RobinSearch y no dejan el servidor en error.
+    if (state.ultimoIndexado.carpetas_ausentes?.length) {
+      respuesta.carpetas_ausentes = state.ultimoIndexado.carpetas_ausentes;
+      respuesta.aviso_carpetas_ausentes =
+        `${state.ultimoIndexado.carpetas_ausentes.length} carpeta(s) configurada(s) ya NO existen en el ` +
+        'ordenador (ver carpetas_ausentes). RobinSearch las ha apartado para no fallar en cada intento ' +
+        'y las vuelve a mirar sola por si reaparecen. Dile al abogado que las quite o corrija su ruta ' +
+        'en la app de RobinSearch; lo que se busque no cubre esas carpetas.';
+    }
     // Lo que el recorrido encontró pero no pudo meter: ficheros de iCloud/OneDrive sin descargar,
     // enlaces o junctions rotos, bucles. Sin esto una carpeta «bajo demanda» daba 0 en silencio.
     const ni = state.ultimoIndexado.no_indexables;

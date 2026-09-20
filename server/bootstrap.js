@@ -23,6 +23,41 @@ import { iniciarControl } from './control.js';
 
 const FASES_INDICE = ['cargando_indice', 'migrando_indice'];
 
+// Cómo se llama cada fase en castellano, para que la causa del aviso se entienda sin abrir el
+// código: es lo que se lee en el panel y en el correo a hola@.
+const FASE_EN_CLARO = {
+  cargando_indice: 'abriendo el índice',
+  migrando_indice: 'migrando el índice',
+  cargando_modelo: 'cargando el modelo de embedding',
+  indexando: 'leyendo un documento para indexarlo',
+  buscando: 'atendiendo una búsqueda',
+  excepcion: 'con una excepción sin capturar',
+  en_marcha: 'en marcha',
+};
+
+function tamanyoEnClaro(bytes) {
+  if (!Number.isFinite(Number(bytes))) return null;
+  const mb = Number(bytes) / 1048576;
+  return mb >= 1 ? `${mb.toFixed(1).replace('.', ',')} MB` : `${Math.round(Number(bytes) / 1024)} KB`;
+}
+
+// La causa de una «caída previa», en una frase. Hasta la 1.6.1 el aviso a hola@ y el panel se
+// quedaban con un guion —la causa solo existe cuando hubo EXCEPCIÓN, y una muerte a secas (OOM,
+// SIGKILL) no la tiene—, mientras el registro sí decía la fase, la extensión, el tamaño y cuántas
+// caídas seguidas iban (correo de Juan, 20-sep-2026: «es un fallo de canalización, no de falta de
+// diagnóstico»). Solo datos técnicos: ni el nombre del fichero ni la ruta, como siempre.
+export function causaDeCaida(caida, fase) {
+  if (caida?.causa) return String(caida.causa);
+  const partes = [`la ejecución anterior se cortó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}`];
+  if (caida?.ext) {
+    const tam = tamanyoEnClaro(caida.bytes);
+    partes.push(`fichero ${String(caida.ext).toLowerCase()}${tam ? ` de ${tam}` : ''}`);
+  }
+  if (caida?.caidasSeguidas > 1) partes.push(`${caida.caidasSeguidas} caídas seguidas`);
+  if (caida?.version) partes.push(`versión ${caida.version}`);
+  return partes.join('; ');
+}
+
 async function atenderCaidaAnterior() {
   const caida = diagnostico.revisarCaidaAnterior();
   if (!caida) return;
@@ -48,7 +83,7 @@ async function atenderCaidaAnterior() {
   // matarlo, el aviso ya ha salido.
   await diagnostico.informar(caida.fase === 'excepcion' ? 'excepcion' : 'caida_previa', {
     fase,
-    causa: caida.causa ?? null,
+    causa: causaDeCaida(caida, fase),
     fichero: caida.ext ? { ext: caida.ext, bytes: caida.bytes } : null,
   });
 }
@@ -196,7 +231,27 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
 
   // 1. Índice. Solo UNA instancia escribe; la otra busca y toma el relevo si la primera muere.
   const escribo = escritor.adquirir();
-  if (!escribo) log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine');
+  const otra = escribo ? null : escritor.fichaOtraInstancia();
+  if (!escribo) {
+    log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine', {
+      version: otra?.version ?? null,
+    });
+    // Dos VERSIONES distintas a la vez es un proceso viejo que el instalador dejó huérfano: no se
+    // arregla solo y explica síntomas que parecen otra cosa (sesión perdida, canal de control
+    // servido por quien no toca). Se dice, para poder cerrarlo (correo de Juan, 20-sep-2026).
+    if (otra?.distintaVersion) {
+      log.error('Hay DOS versiones de RobinSearch corriendo a la vez: cierra Claude del todo y vuelve a abrirlo', {
+        actual: config.version,
+        otra: otra.version,
+      });
+      diagnostico
+        .informar('instancias_duplicadas', {
+          fase: 'arrancando',
+          causa: `dos versiones a la vez: esta ${config.version} y otra ${otra.version} (proceso ${otra.pid ? 'vivo' : 'desconocido'})`,
+        })
+        .catch(() => {});
+    }
+  }
   await abrirIndice(escribo);
 
   // Canal de control para la app de escritorio. Accesorio: si no se puede
@@ -209,7 +264,17 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   checkForUpdate().catch(() => {});
 
   // 2. Modelo. Precarga para no pagar la latencia en la primera búsqueda.
-  if (warmModel) {
+  //
+  // Pero NO en la segunda instancia. Claude Desktop arranca el servidor dos veces (una sonda que
+  // luego mata y el servidor de verdad) y un abogado puede tener Claude Desktop y Claude Code a
+  // la vez: cada precarga reserva ~1,15 GB que el WASM no devuelve nunca. En un portátil de 8 GB
+  // eso es justo la memoria que después falta para los hilos de cálculo (correo de Eduardo,
+  // 19-sep-2026: «1 hilo de los 4 previstos»). La instancia que solo busca carga el modelo en la
+  // primera búsqueda, que es cuando de verdad le hace falta.
+  if (warmModel && !escribo) {
+    log.info('Esta instancia solo busca: el modelo se cargará con la primera búsqueda, no ahora');
+  }
+  if (warmModel && escribo) {
     diagnostico.marcarFase('cargando_modelo');
     try {
       await warmup();
@@ -257,6 +322,13 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
       } catch (err) {
         log.error('Fallo en el indexado inicial', { err: String(err) });
         setError(err);
+        // El disco lleno se avisa aparte: no es un fichero raro, es el equipo, y es la causa de
+        // que todo lo demás empiece a fallar a la vez (19-sep-2026).
+        if (err?.code === 'ROBIN_DISCO_LLENO') {
+          diagnostico
+            .informar('disco_lleno', { fase: 'indexando', causa: 'no queda espacio en el disco: el indexado se ha parado' })
+            .catch(() => {});
+        }
       }
     }
     if (watch && hayCarpetas) startWatcher();

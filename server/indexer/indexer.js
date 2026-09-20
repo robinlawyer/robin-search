@@ -46,6 +46,7 @@ import * as registry from './registry.js';
 import * as cuarentena from './cuarentena.js';
 import * as diagnostico from '../diagnostico.js';
 import * as escritor from '../escritor.js';
+import * as ausentes from '../carpetas-ausentes.js';
 
 // Reduce el mensaje de un error a una CAUSA agrupable. Sin esto, 680 ficheros que fallan por
 // el mismo motivo producían 680 mensajes distintos (cada uno con su ruta) y no se veía que
@@ -61,6 +62,16 @@ export function normalizarCausa(err) {
     .trim()
     .slice(0, 200);
   return code && !limpio.includes(code) ? `${code}: ${limpio}` : limpio;
+}
+
+function errorDiscoLleno() {
+  return Object.assign(
+    new Error(
+      'No queda espacio en el disco del ordenador: el indexado se ha parado para no empeorarlo. ' +
+        'Libera espacio y vuelve a indexar. Lo que ya estaba indexado sigue buscándose con normalidad.',
+    ),
+    { code: 'ROBIN_DISCO_LLENO' },
+  );
 }
 
 function errorSinCerrojo() {
@@ -82,6 +93,38 @@ export function nuevaCuentaRecorrido() {
 
 // iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
 const RE_ICLOUD = /^\.(.+)\.icloud$/i;
+
+// ── Ficheros de la nube que NO están descargados en este equipo ────────────────────────────
+//
+// 19-sep-2026 (Eduardo, Mac con iCloud): 202 ficheros con `ETIMEDOUT: connection timed out, read`.
+// Eran ficheros que iCloud enseña en la carpeta pero cuyo contenido no está en el disco: al
+// abrirlos, el sistema intenta bajarlos y, si no puede, la lectura se agota minutos después. Se
+// perdía el tiempo fichero a fichero y salían como «error de indexado» — y no hay nada roto.
+//
+// Se detectan ANTES de leerlos: un fichero con tamaño pero SIN bloques asignados en disco es un
+// marcador, no un documento (iCloud y OneDrive en Mac/Linux lo dejan así). En Windows el sistema
+// no lo expone por `stat`; allí manda la clasificación del error de lectura, más abajo.
+export function esMarcadorDeNube(stat) {
+  if (process.platform === 'win32') return false;
+  return Number(stat?.size) > 0 && stat?.blocks === 0;
+}
+
+// Errores que NO son un fallo de RobinSearch sino del fichero o de la nube del abogado. No
+// disparan aviso técnico (bootstrap.js filtra por estos prefijos), pero sí se cuentan y se
+// explican en `estado_servidor` con lo que hay que hacer.
+const CODIGOS_NUBE = new Set(['ETIMEDOUT', 'EHOSTDOWN', 'EHOSTUNREACH', 'ENOTCONN', 'ENETDOWN', 'ETIME']);
+
+// Disco lleno: no es un problema de un fichero, es del equipo, y seguir intentando ficheros uno
+// a uno solo hace daño (el propio OCR escribe temporales). Ver `cortarPorDisco`.
+const CODIGOS_DISCO = new Set(['ENOSPC', 'EDQUOT']);
+
+export function claseDeError(err) {
+  const code = String(err?.code || '');
+  if (CODIGOS_DISCO.has(code)) return 'disco';
+  if (CODIGOS_NUBE.has(code)) return 'nube';
+  if (code === 'ENOENT') return 'desaparecido';
+  return null;
+}
 
 // Identidad de una carpeta para no recorrerla dos veces (enlace o junction que apunta hacia
 // arriba: sin esto, un bucle infinito). dev+ino; donde el sistema no da inodo (0, algunos
@@ -160,6 +203,11 @@ export async function indexFile(absPath, { force = false, paralelo = false } = {
   }
   if (!force && !registry.isStale(abs, stat)) {
     return { ruta: logicalPath(abs), estado: 'sin_cambios' };
+  }
+  // Fichero de la nube sin descargar: ni se abre. Abrirlo cuesta un timeout de minutos y acaba
+  // en «error de indexado» sin que haya nada que arreglar (correo de Eduardo, 19-sep-2026).
+  if (esMarcadorDeNube(stat)) {
+    return { ruta: logicalPath(abs), estado: 'no_descargado' };
   }
   const ext = path.extname(abs).toLowerCase();
   const apartado = cuarentena.estaApartado(abs, stat);
@@ -606,8 +654,25 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   setIndexando({ fase: 'buscando', procesados: 0, total: 0, encontrados: 0, carpeta: roots[0] ?? null, carpetas: roots, ficheroActual: null });
   await respirar();
 
+  // Carpetas que ya no existen: se apartan y se dicen UNA vez, en claro y con lo que hay que
+  // hacer, en vez de repetir el mismo ENOENT en cada pasada (correo de Eduardo, 19-sep-2026).
+  ausentes.revisar({ forzar: true });
+
   const accesibles = [];
   for (const root of roots) {
+    if (ausentes.estaAusente(root)) {
+      (resumen.carpetas_ausentes ??= []).push({
+        carpeta: root,
+        motivo: 'ya_no_existe',
+        detalle:
+          'Esta carpeta está configurada pero ya no existe en el ordenador (se ha movido, se ha ' +
+          'renombrado o estaba en un disco que no está conectado). RobinSearch la ha apartado: no ' +
+          'la vigila ni la indexa, y no volverá a dar error por ella. Vuelve a mirarla sola cada ' +
+          'pocos minutos por si reaparece. Para arreglarlo, quítala o corrige su ruta en la app de ' +
+          'RobinSearch; lo que hubiera indexado de ella sigue disponible hasta que se quite.',
+      });
+      continue;
+    }
     try {
       fs.readdirSync(root);
       accesibles.push(root);
@@ -684,9 +749,35 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
       else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
       else if (r.estado === 'apartado') resumen.apartados += 1;
-      else resumen.omitidos += 1;
+      else if (r.estado === 'no_descargado') {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
+        resumen.omitidos += 1;
+      } else resumen.omitidos += 1;
       if (r.reutilizado) resumen.reutilizados = (resumen.reutilizados || 0) + 1;
     } catch (err) {
+      const clase = claseDeError(err);
+      // Desapareció entre el recorrido y la lectura (el abogado lo movió o lo borró mientras se
+      // indexaba): no es un error, es la vida normal de una carpeta de trabajo.
+      if (clase === 'desaparecido' && !fs.existsSync(abs)) {
+        resumen.omitidos += 1;
+        resumen.desaparecidos = (resumen.desaparecidos || 0) + 1;
+        return;
+      }
+      // La nube no entrega el contenido: se cuenta como «sin descargar», no como fallo nuestro.
+      if (clase === 'nube') {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
+        resumen.omitidos += 1;
+        return;
+      }
+      // Disco lleno: se corta la pasada entera. Seguir con los otros 900 ficheros solo alarga el
+      // problema y llena el disco un poco más (el OCR escribe temporales).
+      if (clase === 'disco') {
+        // Bandera y no `throw`: quien llama a `procesar` no siempre está esperando su promesa, y
+        // un rechazo suelto dispararía un aviso técnico falso. El bucle lo mira y corta.
+        resumen.disco_lleno = true;
+        log.error('Disco lleno durante el indexado: se corta la pasada', { code: String(err?.code) });
+        return;
+      }
       resumen.errores += 1;
       // La CAUSA se agrega aquí, no solo en el log: el abogado no va a abrir un fichero de
       // log, y sin causa un "errores: 680" es indiagnosticable desde el chat.
@@ -720,6 +811,9 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // Otra instancia se quedó con el índice mientras esta estaba parada: se corta aquí, sin
       // una escritura más (escritor.js).
       if (!escritor.soyEscritor()) throw errorSinCerrojo();
+      // Disco lleno: se para aquí. Seguir con los ficheros que quedan solo llena el disco un poco
+      // más (el OCR escribe temporales) y llena el informe de errores que son todos el mismo.
+      if (resumen.disco_lleno) throw errorDiscoLleno();
       empezados += 1;
       // Por setIndexando y no asignando `state.progreso` a pelo: así el cambio
       // llega a los observadores (canal de control -> app de escritorio). El
@@ -746,6 +840,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       if (!cargaEmbedding()) await p;
     }
     await Promise.all(enVuelo);
+    if (resumen.disco_lleno) throw errorDiscoLleno();
 
     // Documentos que estaban indexados y ya no están en disco. En carpeta local los retira el
     // watcher al vuelo; en una carpeta de RED no hay evento fiable, así que el re-escaneo
@@ -782,6 +877,8 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
           (top ? `. Causa principal (${top.ficheros}): ${top.causa}` : '.'),
       );
     } else if (!resumen.carpetas_inaccesibles && !resumen.subcarpetas_ilegibles) {
+      // Una carpeta APARTADA por no existir no deja el servidor en error: ya está dicha en claro
+      // en `carpetas_ausentes` y no hay nada roto que arreglar en RobinSearch.
       clearError();
     }
     setActivo();
