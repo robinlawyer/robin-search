@@ -65,6 +65,38 @@ check('otra cuenta no ve la contraseña de esta', (await llavero.leer('otro@desp
     esquemas.every((e) => !/contrasen|contraseñ|password|clave|"token"|credencial/.test(e)));
 }
 
+// ─────────── 1 bis. El llavero DE VERDAD, no el respaldo de fichero ───────────
+//
+// Esto es lo que se nos escapó el 20-sep-2026: todo lo demás se probaba con el respaldo de
+// fichero (ROBIN_CORREO_LLAVERO=fichero) y el camino del llavero real no lo ejercitaba nadie.
+// `security` imprime la contraseña en la PRIMERA línea de stderr y luego vuelca por stdout los
+// atributos del llavero, llenos de comillas: una expresión que cruzara líneas devolvía medio
+// volcado como si fuera la contraseña. Conectar funcionaba (usaba la recién escrita) y todo lo
+// demás fallaba con «el servidor ha rechazado la contraseña», que es el peor mensaje posible
+// porque manda al abogado a mirar donde no es.
+{
+  const antes = process.env.ROBIN_CORREO_LLAVERO;
+  delete process.env.ROBIN_CORREO_LLAVERO;
+  const real = await llavero.respaldo();
+  if (real === 'fichero') {
+    console.log('  ----  llavero del sistema no disponible en esta máquina: prueba omitida');
+  } else {
+    const cuenta = 'rs-prueba-llavero@ejemplo.test';
+    // Las formas que rompen: comillas y barras (security las escapa), acentos (los devuelve en
+    // hexadecimal sin avisar), un espacio final (que es tentador recortar) y una contraseña que
+    // por casualidad solo tiene letras a-f (indistinguible de un hexadecimal).
+    for (const clave of ['sencilla123', 'con "comillas" y \\ barra', 'clave con ñ y tildes áé', 'termina en espacio ', 'abcdef']) {
+      await llavero.guardar(cuenta, clave);
+      const leida = await llavero.leer(cuenta);
+      check(`${real}: la contraseña vuelve clavada (${clave.length} caracteres)`, leida === clave,
+        leida === null ? 'no se pudo leer' : `volvieron ${leida.length}`);
+      await llavero.borrar(cuenta);
+    }
+    check(`${real}: al borrarla, deja de estar`, (await llavero.leer(cuenta)) === null);
+  }
+  if (antes !== undefined) process.env.ROBIN_CORREO_LLAVERO = antes;
+}
+
 // ─────────── 2. Cabeceras de hilo y MIME ───────────
 {
   const original = { messageId: '<abc@cliente.es>', references: ['<raiz@cliente.es>'] };

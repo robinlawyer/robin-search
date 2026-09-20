@@ -71,11 +71,15 @@ const mac = {
     // forma de distinguirlas. Con `-g` la línea trae el prefijo «0x» cuando es hexadecimal.
     const r = await ejecutar('security', ['find-generic-password', '-a', cuenta, '-s', SERVICIO, '-g']);
     if (!r.ok) return null;
-    const texto = `${r.err}\n${r.out}`;
-    const hex = /^password: 0x([0-9A-Fa-f]+)/m.exec(texto);
+    // La contraseña sale por STDERR y en la PRIMERA línea; por stdout vienen detrás todos los
+    // atributos del llavero, llenos de comillas. Se mira solo stderr y solo esa línea: con una
+    // expresión que cruzara líneas, lo «leído» era medio volcado del llavero y el servidor
+    // rechazaba la contraseña sin que se entendiera por qué (20-sep-2026, cuenta de Alonso).
+    const hex = /^password: 0x([0-9A-Fa-f]+)/m.exec(r.err);
     if (hex) return Buffer.from(hex[1], 'hex').toString('utf8');
-    const literal = /^password: "([\s\S]*)"\s*$/m.exec(texto);
-    return literal ? literal[1] : null;
+    const literal = /^password: "([^"\n]*)"[ \t]*$/m.exec(r.err);
+    // En la forma entrecomillada, `security` escapa en octal lo que no es imprimible.
+    return literal ? literal[1].replace(/\\([0-7]{3})/g, (_, o) => String.fromCharCode(parseInt(o, 8))) : null;
   },
   async borrar(cuenta) {
     const r = await ejecutar('security', ['delete-generic-password', '-a', cuenta, '-s', SERVICIO]);
