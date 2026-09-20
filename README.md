@@ -107,6 +107,20 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `siguiente_por_revisar`       | Siguiente trozo del expediente que nadie ha leído, con su texto y el progreso | `readOnlyHint`    |
 | `anotar`                      | Guarda la ficha de hechos de la ventana revisada                | —                 |
 | `obtener_anotaciones`         | Fichas del barrido para la síntesis, con vista cruzada por campo | `readOnlyHint`    |
+| `buscar_correos`              | Busca en el buzón del abogado por remitente, asunto, texto, fechas | `readOnlyHint`    |
+| `leer_correo`                 | Un correo entero en texto plano, con sus adjuntos listados      | `readOnlyHint`    |
+| `guardar_borrador`            | Deja la respuesta redactada en Borradores, dentro del hilo      | —                 |
+| `enviar_correo`               | Envía por SMTP y deja copia en Enviados (**desactivado de fábrica**) | `destructiveHint` |
+
+### El correo del despacho (1.7.0)
+
+Las cuatro últimas son opcionales: solo hacen algo si el abogado conecta su buzón en la app de
+escritorio. **La contraseña se guarda en el llavero de su sistema operativo y no la recibe ninguna
+herramienta MCP** — si la recibiera, acabaría en el contexto del modelo. Ni la contraseña ni el
+contenido de los correos pasan por servidores de RobinLawyer: IMAP y SMTP van directos de su
+ordenador a su proveedor. Lo normal es que Robin **redacte** y el abogado envíe; el envío viene
+desactivado de fábrica. Todo el detalle, incluidos Gmail y Microsoft 365, en
+[docs/CORREO.md](docs/CORREO.md).
 
 ---
 
@@ -205,6 +219,13 @@ secreto profesional del abogado (art. 542.3 LOPJ).
   nombres de carpetas o expedientes: el registro se envía por lista blanca de campos y se limpia de
   rutas y nombres antes de salir (y el servidor lo vuelve a limpiar al recibirlo). Se desactiva con
   `ROBIN_DIAGNOSTICO_URL=off`. Ninguna de las tres envía contenido documental.
+- **Correo del abogado (opcional, 1.7.0):** si conecta su buzón, la contraseña se guarda en el
+  llavero del sistema operativo de su equipo (Llavero de macOS, DPAPI en Windows, GNOME Keyring o
+  KWallet en Linux) y las conexiones IMAP y SMTP van **directas de su ordenador a su proveedor de
+  correo**. Ni la contraseña ni los remitentes, destinatarios, asuntos, cuerpos o adjuntos pasan
+  por servidores de Robin Lawyer, y **no hay tratamiento por nuestra parte de esa correspondencia**
+  (tampoco, por tanto, un encargo de tratamiento nuevo por esta función). El aviso técnico tapa
+  además la dirección y el servidor de correo antes de salir.
 - **Datos que trata Robin Lawyer como responsable del tratamiento:** únicamente los de tu cuenta
   (identidad y estado de suscripción) a efectos de autenticación. Responsable: **Stay Hungry and
   Foolish, S.L.** Ejercicio de derechos: **privacidad@robinlawyer.ai**.

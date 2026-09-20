@@ -23,6 +23,7 @@ import os from 'node:os';
 import path from 'node:path';
 import v8 from 'node:v8';
 import crypto from 'node:crypto';
+import { leerCorreo } from './correo/ajustes.js';
 import { config, VERSION } from './config.js';
 import { log } from './logger.js';
 import { state } from './state.js';
@@ -293,6 +294,17 @@ export function literalesSensibles() {
   }
   addRuta(os.homedir());
   addRuta(config.dataDir);
+  // La cuenta de correo del abogado y su servidor: el aviso técnico ya tapa cualquier dirección
+  // de correo que encuentre, pero el HOST («correoseguro.midespacho.es») identifica al despacho
+  // igual de bien y no tiene forma de email. Se añade como literal para que lo tape la barrera.
+  try {
+    const correo = leerCorreo();
+    addNombre(correo.usuario);
+    addNombre(correo.imap?.host);
+    addNombre(correo.smtp?.host);
+  } catch {
+    /* sin correo configurado */
+  }
   addRuta(os.tmpdir());
   try {
     for (const e of registry.all()) {

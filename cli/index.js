@@ -28,6 +28,10 @@ function parseArgs(argv) {
     } else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
     else if (arg === 'index') opts.silent = true;
     else if (arg === 'serve' || arg === 'login' || arg === 'logout') opts._.push(arg);
+    // `correo` y todo lo que venga detrás es para su propio CLI (server/correo/cli.js): sus
+    // banderas no son carpetas de expedientes.
+    else if (arg === 'correo') { opts.correo = []; opts._.push(arg); }
+    else if (opts.correo) opts.correo.push(arg);
     // Cualquier otro argumento posicional es una CARPETA de expedientes. Así es como el
     // instalador .mcpb pasa las (varias) carpetas: se expanden como argumentos.
     else opts.folders.push(arg);
@@ -43,6 +47,9 @@ Uso:
 Comandos:
   login                 Inicia sesión en Robin Lawyer (abre el navegador). Guarda la sesión.
   logout                Cierra la sesión y borra las credenciales locales.
+  correo                Conecta el buzón del abogado (IMAP/SMTP). «robin-search correo» para la
+                        ayuda. La contraseña se lee por la ENTRADA ESTÁNDAR, nunca como
+                        argumento: en argumento la vería cualquiera con un ps.
 
 Opciones:
   (sin opciones)        Arranca el servidor MCP por stdio (Claude Desktop / Code / Cursor).
@@ -83,6 +90,12 @@ async function run() {
   if (opts._.includes('login') || opts._.includes('logout') || opts.silent) {
     const { usarCertificadosDelSistema } = await import('../server/red-corporativa.js');
     usarCertificadosDelSistema();
+  }
+
+  // Conectar el correo del abogado. No es modo MCP → stdout seguro (devuelve JSON).
+  if (opts._.includes('correo')) {
+    const { ejecutar } = await import('../server/correo/cli.js');
+    process.exit(await ejecutar(opts.correo || []));
   }
 
   // Iniciar / cerrar sesión en Robin Lawyer (OAuth). No es modo MCP → stdout seguro.

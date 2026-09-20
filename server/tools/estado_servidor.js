@@ -9,6 +9,7 @@ import * as registry from '../indexer/registry.js';
 import * as cuarentena from '../indexer/cuarentena.js';
 import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
+import { leerCorreo } from '../correo/ajustes.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
 import { estadoMotor } from '../embedder/embedder.js';
@@ -215,6 +216,27 @@ export async function handler() {
         'no es de los documentos sino del servidor (motor de embedding, permisos o disco).';
     }
   }
+  // Correo (1.7.0). Se dice si hay buzón conectado y si el envío está permitido, para que Claude
+  // no ofrezca lo que no puede hacer ni dé por hecho que puede mandar correos.
+  const correo = leerCorreo();
+  respuesta.correo = {
+    conectado: correo.configurado,
+    cuenta: correo.usuario,
+    servidor_entrante: correo.imap.host,
+    servidor_saliente: correo.smtp.host,
+    carpeta_borradores: correo.carpetas.borradores,
+    envio_permitido: correo.envioPermitido,
+  };
+  respuesta.aviso_correo = correo.configurado
+    ? (correo.envioPermitido
+      ? 'Hay un buzón conectado y el abogado ha permitido el envío. Aun así, lo normal es dejar '
+        + 'el correo en Borradores con guardar_borrador: enviar_correo solo si él lo pide.'
+      : 'Hay un buzón conectado. El ENVÍO está desactivado: Robin puede buscar, leer y dejar '
+        + 'borradores, pero no mandar correos. Es lo correcto por defecto.')
+    : 'No hay ningún buzón conectado: las herramientas de correo no pueden hacer nada todavía. '
+      + 'Se conecta en la app de RobinSearch → Tu correo (la contraseña se guarda en el llavero '
+      + 'de este ordenador y nunca se pide por el chat).';
+
   if (!expedientes.getActivo()) {
     respuesta.aviso_expediente =
       catalogo.length > 0

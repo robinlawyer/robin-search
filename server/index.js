@@ -31,6 +31,10 @@ import estadoServidor from './tools/estado_servidor.js';
 import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
 import obtenerAnotaciones from './tools/obtener_anotaciones.js';
+import buscarCorreos from './tools/buscar_correos.js';
+import leerCorreo from './tools/leer_correo.js';
+import guardarBorrador from './tools/guardar_borrador.js';
+import enviarCorreo from './tools/enviar_correo.js';
 
 const TOOLS = [
   buscarDocumentos,
@@ -44,6 +48,14 @@ const TOOLS = [
   siguientePorRevisar,
   anotar,
   obtenerAnotaciones,
+  // Correo del abogado (1.7.0). Viven aquí, en su ordenador, por la misma razón que los
+  // expedientes: la contraseña del buzón de un despacho es el acceso a su correspondencia
+  // entera, y esa no la custodiamos nosotros. Se ofrecen siempre; si no hay cuenta conectada,
+  // cada una lo dice y explica dónde se conecta.
+  buscarCorreos,
+  leerCorreo,
+  guardarBorrador,
+  enviarCorreo,
 ];
 
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));

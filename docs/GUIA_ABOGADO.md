@@ -69,6 +69,34 @@ instrucciones del proyecto una línea diciendo de qué expediente se trata. Ver
 
 ---
 
+## Tu correo (opcional, desde la 1.7.0)
+
+Si quieres, Robin también puede trabajar con tu buzón. Se conecta en la app de RobinSearch →
+**Tu correo**: escribes tu dirección y tu contraseña una vez y ya está. **La contraseña se queda
+en el llavero de tu ordenador** — no se la pide el chat, no la ve Claude y no llega a
+RobinLawyer. Tus correos van de tu ordenador a tu proveedor, como cuando abres Outlook.
+
+A partir de ahí:
+
+> «¿Ha entrado algo nuevo de Suministros Vidal esta semana?»
+>
+> «Léeme ese y redáctame una respuesta rechazando el aumento, pero **no la envíes**: déjamela
+> guardada.»
+
+El borrador aparece en tu carpeta de Borradores, dentro de la conversación, listo para que lo
+revises y lo mandes tú. **Eso es lo que hace por defecto: redactar.** Si además quieres que pueda
+enviar, hay un interruptor en la app; aun así te pedirá confirmación cada vez.
+
+Lo que no hace: no descarga adjuntos (te dice cuáles hay), no borra ni mueve nada, y no marca
+como leído lo que no has abierto tú.
+
+Funciona con cualquier buzón que hable IMAP: tu propio proveedor, el servidor del despacho o
+Gmail (con una contraseña de aplicación). **Microsoft 365 y Outlook.com, hoy no**: Microsoft
+retiró la conexión con contraseña y exige su propio inicio de sesión, que aún no hacemos. Está
+todo en [CORREO.md](CORREO.md).
+
+---
+
 ## Revisar un expediente ENTERO (due diligence)
 
 Buscar y revisar no son lo mismo. Cuando le preguntas algo, Claude trae los pasajes que
