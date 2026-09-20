@@ -10,13 +10,15 @@
 //
 // Lo NORMAL es guardar_borrador. Esta herramienta es para cuando el abogado dice «mándalo».
 
+// ⚠️ CARGA PEREZOSA. Nada de imapflow, mailparser ni nodemailer arriba: entre los tres son unos
+// 7,5 s de carga de módulos (medido el 21-sep-2026), y eso lo pagaba CADA arranque del servidor,
+// tuviera el abogado el correo conectado o no — que la mayoría no lo tiene. Aquí arriba solo va
+// lo que hace falta para DECLARAR la herramienta y para contestar «no hay cuenta»; lo pesado se
+// importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { conImap, SinCuenta } from '../correo/conexion.js';
-import * as carpetas from '../correo/carpetas.js';
-import { enviarCrudo } from '../correo/smtp.js';
-import { componer, asuntoDeRespuesta, direccionValida } from '../correo/redaccion.js';
 import { leerCorreo } from '../correo/ajustes.js';
+import { SIN_CUENTA } from '../correo/avisos.js';
 import { log } from '../logger.js';
 
 export const definition = {
@@ -50,7 +52,7 @@ export const definition = {
   },
 };
 
-async function original(cliente, uid, bandeja) {
+async function original(carpetas, cliente, uid, bandeja) {
   const p = String(bandeja || '').trim().toLowerCase();
   let ruta = String(bandeja || 'INBOX').trim();
   if (!p || ['entrada', 'inbox', 'bandeja de entrada', 'recibidos'].includes(p)) ruta = 'INBOX';
@@ -78,7 +80,7 @@ export async function handler(args) {
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
   const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(new SinCuenta().message, { motivo: 'sin_cuenta' });
+  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
 
   if (!cfg.envioPermitido) {
     return fail(
@@ -94,12 +96,17 @@ export async function handler(args) {
 
   const cuerpo = typeof args?.cuerpo === 'string' ? args.cuerpo : '';
   if (!cuerpo.trim()) return fail('El correo no puede ir vacío: falta "cuerpo".');
+
+  const { conImap } = await import('../correo/conexion.js');
+  const carpetas = await import('../correo/carpetas.js');
+  const { enviarCrudo } = await import('../correo/smtp.js');
+  const { componer, asuntoDeRespuesta, direccionValida } = await import('../correo/redaccion.js');
   const respondeA = Number.isFinite(parseInt(args?.en_respuesta_a, 10)) ? parseInt(args.en_respuesta_a, 10) : null;
 
   try {
     // El original y la copia en Enviados van por IMAP; el envío, por SMTP.
     const preparado = await conImap(async (cliente) => {
-      const previo = respondeA !== null ? await original(cliente, respondeA, args?.bandeja_original) : null;
+      const previo = respondeA !== null ? await original(carpetas, cliente, respondeA, args?.bandeja_original) : null;
       if (respondeA !== null && !previo) {
         return { error: `No se encuentra el correo con uid ${respondeA} al que responder.`, motivo: 'no_encontrado' };
       }

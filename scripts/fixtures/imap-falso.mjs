@@ -27,9 +27,14 @@ const listaDirecciones = (v) => {
 export class BuzonFalso {
   // `special` = false para simular un servidor viejo que NO anuncia SPECIAL-USE (y obliga a
   // RobinSearch a reconocer la carpeta por su nombre).
-  constructor({ usuario, clave, delimitador = '.', special = true } = {}) {
+  // `token` = entra por XOAUTH2 con ese token de acceso (Microsoft 365, Gmail). Si se da,
+  // el servidor anuncia AUTH=XOAUTH2; con `soloOauth` además anuncia LOGINDISABLED y rechaza
+  // el LOGIN de toda la vida, que es exactamente lo que hacen los servidores de Microsoft.
+  constructor({ usuario, clave, token = null, soloOauth = false, delimitador = '.', special = true } = {}) {
     this.usuario = usuario;
     this.clave = clave;
+    this.token = token;
+    this.soloOauth = soloOauth;
     this.delimitador = delimitador;
     this.special = special;
     this.carpetas = new Map();
@@ -101,6 +106,17 @@ export class BuzonFalso {
   }
 }
 
+// Lo que este servidor dice saber hacer. Se usa en el saludo y en CAPABILITY: tienen que decir
+// lo mismo, como en un servidor real.
+function capacidadesDe(buzon) {
+  return [
+    'IMAP4rev1', 'UIDPLUS', 'NAMESPACE',
+    ...(buzon.special ? ['SPECIAL-USE'] : []),
+    ...(buzon.token ? ['AUTH=XOAUTH2', 'SASL-IR'] : []),
+    ...(buzon.soloOauth ? ['LOGINDISABLED'] : []),
+  ];
+}
+
 export function levantar(buzon) {
   const servidor = net.createServer((socket) => {
     let seleccionada = null;
@@ -111,9 +127,15 @@ export function levantar(buzon) {
     // «UID SEARCH SUBJECT {12}» + los bytes + el resto: con «Señalamiento» (una ñ basta) la
     // búsqueda viajaba así y el servidor de pruebas no la entendía.
     let lineaParcial = '';
+    // Respuestas de un intercambio SASL en curso (XOAUTH2).
+    let pendienteSasl = null;
+    let esperaCierreSasl = null;
 
     const escribir = (t) => { try { socket.write(t.endsWith('\r\n') ? t : `${t}\r\n`); } catch { /* cerrada */ } };
-    escribir('* OK [CAPABILITY IMAP4rev1 UIDPLUS] Servidor de pruebas de RobinSearch');
+    // El saludo lleva la lista de capacidades COMPLETA, como los servidores de verdad: un
+    // cliente decide con ella si puede usar XOAUTH2 y, si no la ve, ni lo intenta («Unsupported
+    // authentication mechanism») sin llegar a preguntar.
+    escribir(`* OK [CAPABILITY ${capacidadesDe(buzon).join(' ')}] Servidor de pruebas de RobinSearch`);
 
     const atender = (linea) => {
       const m = /^(\S+)\s+(\S+)\s*([\s\S]*)$/.exec(linea);
@@ -124,7 +146,7 @@ export function levantar(buzon) {
       if (buzon.cortarEn && orden === buzon.cortarEn) { socket.destroy(); return; }
 
       if (orden === 'CAPABILITY') {
-        escribir(`* CAPABILITY IMAP4rev1 UIDPLUS NAMESPACE${buzon.special ? ' SPECIAL-USE' : ''}`);
+        escribir(`* CAPABILITY ${capacidadesDe(buzon).join(' ')}`);
         return escribir(`${etiqueta} OK CAPABILITY`);
       }
       if (orden === 'ID') return escribir(`* ID NIL\r\n${etiqueta} OK ID`);
@@ -136,7 +158,29 @@ export function levantar(buzon) {
       }
       if (orden === 'NOOP') return escribir(`${etiqueta} OK NOOP`);
       if (orden === 'LOGOUT') { escribir('* BYE'); escribir(`${etiqueta} OK LOGOUT`); return socket.end(); }
+      // XOAUTH2: «AUTHENTICATE XOAUTH2 <base64>», o sin el base64 y con continuación.
+      if (orden === 'AUTHENTICATE') {
+        const [, mecanismo, inicial] = /^(\S+)\s*([\s\S]*)$/.exec(resto) || [];
+        if (String(mecanismo).toUpperCase() !== 'XOAUTH2' || !buzon.token) {
+          return escribir(`${etiqueta} NO mecanismo no soportado`);
+        }
+        const comprobar = (b64) => {
+          let claro = '';
+          try { claro = Buffer.from(String(b64).trim(), 'base64').toString('utf8'); } catch { /* basura */ }
+          const u = /user=([^\u0001]+)/.exec(claro);
+          const t = /auth=Bearer ([^\u0001]+)/.exec(claro);
+          if (u && t && u[1] === buzon.usuario && t[1] === buzon.token) return escribir(`${etiqueta} OK AUTHENTICATE`);
+          // Así responde un servidor de verdad a un token caducado: un reto en base64 que el
+          // cliente tiene que contestar con una línea vacía antes de recibir el NO.
+          escribir(`+ ${Buffer.from(JSON.stringify({ status: '401', schemes: 'Bearer', scope: 'mail' })).toString('base64')}`);
+          esperaCierreSasl = etiqueta;
+        };
+        if (inicial) return comprobar(inicial);
+        pendienteSasl = comprobar;
+        return escribir('+ ');
+      }
       if (orden === 'LOGIN') {
+        if (buzon.soloOauth) return escribir(`${etiqueta} NO [AUTHENTICATIONFAILED] LOGIN is disabled`);
         // Los dos argumentos pueden ir entre comillas Y la contraseña puede acabar en ESPACIO:
         // recortarlo «por si acaso» hacía que una contraseña legítima se rechazara.
         const partes = [...String(resto).matchAll(/"((?:[^"\\]|\\.)*)"|(\S+)/g)]
@@ -315,6 +359,19 @@ export function levantar(buzon) {
         if (lit) {
           literalPendiente = { orden: true, previo: linea.slice(0, lit.index), bytes: Number(lit[1]) };
           escribir('+ adelante');
+          continue;
+        }
+        // Dentro de un intercambio SASL, la línea no es una orden: es la respuesta del cliente.
+        if (esperaCierreSasl) {
+          const t = esperaCierreSasl;
+          esperaCierreSasl = null;
+          escribir(`${t} NO [AUTHENTICATIONFAILED] Invalid credentials (Failure)`);
+          continue;
+        }
+        if (pendienteSasl) {
+          const fn = pendienteSasl;
+          pendienteSasl = null;
+          fn(linea);
           continue;
         }
         atender(linea);

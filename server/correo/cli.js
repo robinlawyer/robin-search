@@ -8,17 +8,23 @@
 // Todo devuelve JSON por stdout (la app lo lee) y nunca imprime la contraseña.
 
 import { detectar, dominioDe, capacidades, exigeOauth } from './autodeteccion.js';
+import { comoEntrar, proveedor as buscarProveedor } from './proveedores.js';
+import * as oauth from './oauth-correo.js';
 import { leerCorreo, guardarCorreo, olvidarCorreo } from './ajustes.js';
 import * as llavero from './llavero.js';
 import * as carpetasMod from './carpetas.js';
-import { probarCredenciales, explicar } from './conexion.js';
+import { probarCredenciales, explicar, credenciales } from './conexion.js';
 import { comprobar as comprobarSmtp } from './smtp.js';
 import { componer } from './redaccion.js';
 
 const AYUDA = `robin-search correo — conectar el buzón del abogado (la contraseña NUNCA va en la orden).
 
   correo estado                     Qué cuenta hay conectada (sin contraseña).
-  correo detectar --direccion=…     Averigua el servidor por el DNS del propio dominio.
+  correo detectar --direccion=…     Averigua el servidor y cómo hay que entrar en él.
+  correo entrar --direccion=…       Dice si esa cuenta va por contraseña o por su proveedor.
+  correo proveedor --proveedor=microsoft|google [--direccion=…]
+                                    Conecta con la cuenta del proveedor (abre el navegador).
+                                    Es la ÚNICA forma con Microsoft 365 y Outlook.com.
   correo conectar --direccion=…     Conecta la cuenta. LA CONTRASEÑA SE LEE POR STDIN:
                                       printf '%s' 'la-contraseña' | robin-search correo conectar --direccion=…
                                     Opciones: --imap-host --imap-puerto --sin-tls
@@ -70,6 +76,8 @@ async function estado() {
     ok: true,
     configurado: c.configurado,
     usuario: c.usuario,
+    auth: c.auth,
+    proveedor: c.proveedor,
     imap: c.imap,
     smtp: c.smtp,
     carpetas: c.carpetas,
@@ -77,13 +85,32 @@ async function estado() {
     configuradoEl: c.configuradoEl,
     llavero: await llavero.respaldo(),
     aviso_llavero: await llavero.aviso(),
-    clave_guardada: c.usuario ? Boolean(await llavero.leer(c.usuario)) : false,
+    clave_guardada: c.usuario
+      ? Boolean(c.auth === 'oauth' ? await oauth.leerPermiso(c.usuario) : await llavero.leer(c.usuario))
+      : false,
   };
 }
 
 async function conectar(o) {
   const direccion = String(o.direccion || o.usuario || '').trim();
   if (!direccion || !dominioDe(direccion)) return salida({ ok: false, motivo: 'direccion', mensaje: 'Hace falta --direccion=tu@despacho.es' });
+  // Antes de nada: ¿esta dirección admite siquiera contraseña? Con Microsoft, no — y dejar que
+  // el abogado teclee tres veces la suya es la peor forma de contárselo.
+  const entrada = await comoEntrar(direccion, { sondearServidor: false });
+  if (entrada.via === 'oauth') {
+    return salida({
+      ok: false, motivo: 'usa_oauth', proveedor: entrada.proveedor,
+      mensaje: `Esa cuenta es de ${buscarProveedor(entrada.proveedor).nombre}: se conecta entrando en tu propia cuenta, no con una contraseña.`,
+    });
+  }
+  if (entrada.via === 'oauth_sin_alta' && entrada.proveedor === 'microsoft') {
+    return salida({
+      ok: false, motivo: 'sin_alta', proveedor: 'microsoft',
+      mensaje: 'Esa cuenta es de Microsoft 365 u Outlook.com, que ya no aceptan contraseña en IMAP, y '
+        + 'todavía no está disponible la conexión con la cuenta de Microsoft. Avísanos y te decimos en cuanto lo esté.',
+    });
+  }
+
   const clave = await leerStdin();
   if (!clave) return salida({ ok: false, motivo: 'sin_clave', mensaje: 'La contraseña se pasa por la entrada estándar, nunca como argumento.' });
 
@@ -141,10 +168,12 @@ async function conectar(o) {
 
   const guardada = await llavero.guardar(direccion, clave);
   if (!guardada) {
-    return salida({ ok: false, motivo: 'llavero', mensaje: 'La contraseña es correcta pero el llavero del sistema no la ha aceptado. Vuelve a intentarlo; si persiste, avisa a RobinLawyer.' });
+    return salida({ ok: false, motivo: 'llavero', mensaje: 'La contraseña es correcta pero el llavero del sistema no la ha aceptado. Vuelve a intentarlo; si persiste, avisa a RobinLawyer.ai.' });
   }
   guardarCorreo({
     usuario: direccion,
+    auth: 'contrasena',
+    proveedor: null,
     imap,
     smtp,
     carpetas: {
@@ -162,13 +191,18 @@ async function conectar(o) {
 async function probar() {
   const cfg = leerCorreo();
   if (!cfg.configurado) return salida({ ok: false, motivo: 'sin_cuenta', mensaje: 'No hay ninguna cuenta conectada.' });
-  const clave = await llavero.leer(cfg.usuario);
-  if (!clave) return salida({ ok: false, motivo: 'sin_clave', mensaje: 'La contraseña no está en el llavero de este ordenador. Vuelve a conectar la cuenta.' });
+  // El secreto puede ser una contraseña del llavero o un token de acceso del proveedor.
+  let secreto;
+  try {
+    secreto = await credenciales(cfg);
+  } catch (err) {
+    return salida({ ok: false, motivo: err?.motivo || 'sin_clave', mensaje: err?.message || 'No hay con qué entrar en el buzón.' });
+  }
 
   const pasos = { entrada: null, carpetas: null, borrador: null, envio: null };
   let cliente;
   try {
-    cliente = await probarCredenciales({ ...cfg.imap, usuario: cfg.usuario, clave });
+    cliente = await probarCredenciales({ ...cfg.imap, usuario: cfg.usuario, clave: secreto.pass, accessToken: secreto.accessToken });
     pasos.entrada = { ok: true };
   } catch (err) {
     pasos.entrada = { ok: false, ...explicar(err) };
@@ -219,11 +253,43 @@ async function probar() {
   }
 
   pasos.envio = cfg.smtp.host
-    ? await comprobarSmtp(cfg, clave)
+    ? await comprobarSmtp(cfg, secreto.accessToken ? { accessToken: secreto.accessToken } : secreto.pass)
     : { ok: false, motivo: 'sin_servidor', mensaje: 'No hay servidor de envío configurado.' };
 
   const ok = pasos.entrada.ok && pasos.borrador?.ok === true;
   return salida({ ok, pasos, estado: await estado() });
+}
+
+// Conectar entrando en la cuenta del propio proveedor (Microsoft, Google). Aquí no hay
+// contraseña que escribir ni que guardar: lo que vuelve es un permiso revocable.
+async function conectarProveedor(o) {
+  const id = String(o.proveedor || '').toLowerCase();
+  const p = buscarProveedor(id);
+  if (!p) return salida({ ok: false, motivo: 'proveedor', mensaje: 'Indica --proveedor=microsoft o --proveedor=google.' });
+
+  let sesion;
+  try {
+    sesion = await oauth.conectar(id, {
+      direccion: String(o.direccion || '').trim() || null,
+      // La URL se imprime por stderr: si el navegador no se abre solo (un servidor, una sesión
+      // remota), el abogado la tiene a la vista.
+      alAbrir: (url) => process.stderr.write(`Abre esta dirección para entrar en tu cuenta:\n${url}\n`),
+    });
+  } catch (err) {
+    return salida({ ok: false, motivo: err?.motivo || 'oauth', mensaje: err?.message || 'No se ha podido conectar con tu proveedor.' });
+  }
+
+  guardarCorreo({
+    usuario: sesion.direccion,
+    auth: 'oauth',
+    proveedor: id,
+    imap: { ...p.imap },
+    smtp: { ...p.smtp },
+    carpetas: { borradores: null, enviados: null },
+    configuradoEl: new Date().toISOString(),
+  });
+  carpetasMod.olvidarCache();
+  return salida({ ok: true, ...(await estado()) });
 }
 
 async function envio(o) {
@@ -234,7 +300,11 @@ async function envio(o) {
 
 async function olvidar() {
   const c = leerCorreo();
-  if (c.usuario) await llavero.borrar(c.usuario);
+  if (c.usuario) {
+    await llavero.borrar(c.usuario);
+    await oauth.olvidarPermiso(c.usuario);
+    oauth.olvidarEnMemoria(c.usuario);
+  }
   olvidarCorreo();
   carpetasMod.olvidarCache();
   return salida({ ok: true, ...(await estado()) });
@@ -249,6 +319,12 @@ export async function ejecutar(argv) {
       const d = await detectar(String(o.direccion || o.usuario || ''));
       return salida({ ok: !d.error, ...d });
     }
+    case 'entrar': {
+      const r = await comoEntrar(String(o.direccion || o.usuario || ''));
+      const p = r.proveedor ? buscarProveedor(r.proveedor) : null;
+      return salida({ ok: true, ...r, nombre_proveedor: p ? p.nombre : null });
+    }
+    case 'proveedor': return conectarProveedor(o);
     case 'conectar':
     case 'configurar': return conectar(o);
     case 'probar': return probar();

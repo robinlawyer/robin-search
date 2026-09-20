@@ -85,8 +85,10 @@ argumento de esta función.
 | Hosting propio (Dinahosting, Arsys, CDmon, OVH, Ionos…) | Sí | La contraseña de siempre |
 | Servidor del despacho (Dovecot, Zimbra, Kerio…) | Sí | Nada especial |
 | Gmail / Google Workspace | Sí | **Contraseña de aplicación** (exige verificación en dos pasos) |
-| Microsoft 365 | **NO, hoy** | Exige OAuth. Ver abajo. |
-| Outlook.com / Hotmail personal | **NO, hoy** | Exige OAuth, igual que Microsoft 365 |
+| Microsoft 365 | Sí, **entrando en tu cuenta de Microsoft** | Nada que escribir: se abre el navegador |
+| Outlook.com / Hotmail personal | Igual que Microsoft 365 | Nada que escribir |
+| iCloud (icloud.com, me.com) | Sí | **Contraseña de aplicación**, desde account.apple.com |
+| Yahoo / AOL | Sí | **Contraseña de aplicación**, desde la seguridad de su cuenta |
 
 ### Gmail
 
@@ -104,7 +106,19 @@ aplicación, y para eso la cuenta necesita la verificación en dos pasos activad
 Que Gmail admite la contraseña de aplicación está comprobado en vivo: `imap.gmail.com` anuncia
 `AUTH=XOAUTH2 AUTH=PLAIN` — no `LOGINDISABLED` —, así que la vía de contraseña sigue abierta.
 
-### Microsoft 365 y Outlook.com: hoy NO
+**Por qué en Gmail NO recomendamos (todavía) entrar con la cuenta de Google**, aunque el código lo
+soporta igual que con Microsoft: el ámbito que hace falta para IMAP y SMTP,
+`https://mail.google.com/`, es de los que Google llama *restricted*. Publicar una aplicación con
+ese ámbito exige verificar la marca y pasar **una evaluación de seguridad anual (CASA)** hecha por
+auditores homologados por Google. Y mientras la aplicación siga en modo *Testing*, Google **caduca
+los permisos a los 7 días** y limita el uso a 100 cuentas de prueba: el abogado tendría que
+reconectar su correo todas las semanas, que es peor que la contraseña de aplicación.
+
+Así que en Gmail el camino recomendado sigue siendo la contraseña de aplicación, y la conexión con
+la cuenta de Google queda lista en el código para el día que se decida pasar por CASA. Es una
+decisión de negocio, no técnica.
+
+### Microsoft 365 y Outlook.com: entrando en la cuenta (1.8.0)
 
 Comprobado en vivo el 20-sep-2026 contra los dos servidores de Microsoft:
 
@@ -120,17 +134,39 @@ todos los inquilinos» y que «ya nadie —ni usted ni el soporte de Microsoft�
 activarla». La misma nota añade que esa retirada **impide también usar contraseñas de
 aplicación**. Afecta igual a la cuenta personal de Outlook.com/Hotmail.
 
-Conclusión, sin ambigüedad: **un despacho con su correo en Microsoft 365 no puede conectarlo a
-RobinSearch hoy.** Hace falta OAuth (XOAUTH2), que es trabajo aparte, previsto para la 1.8.
+Por eso, desde la 1.8.0, con Microsoft **no se pide contraseña**: RobinSearch reconoce la cuenta,
+abre el navegador, el abogado entra en su propia cuenta de Microsoft y autoriza a RobinSearch. Lo
+que se guarda en el llavero de su ordenador no es una contraseña: es un **permiso revocable**, que
+él puede retirar cuando quiera desde su cuenta de Microsoft sin cambiar nada más.
 
-RobinSearch lo detecta y lo dice antes de que el abogado pruebe tres contraseñas: consulta las
-capacidades del servidor y, si ve `LOGINDISABLED`, avisa de que no es cosa de su contraseña.
+Que una dirección es de Microsoft se sabe por los **registros MX de su propio dominio** (`…
+mail.protection.outlook.com`), no preguntándole a nadie. Y si el dominio no se reconoce pero su
+servidor anuncia `LOGINDISABLED`, también se dice, en vez de dejar al abogado probando contraseñas.
+
+**Lo que hace falta por nuestra parte:** un alta de aplicación en Entra ID (antes Azure AD) con los
+permisos delegados `IMAP.AccessAsUser.All`, `SMTP.Send` y `offline_access`, como cliente público
+(sin secreto) y con la redirección `http://localhost/correo`. El `client_id` se inyecta con
+`ROBIN_CORREO_MS_CLIENT_ID`. Algunos inquilinos exigen además que su administrador dé el
+consentimiento una vez, para toda la organización.
 
 > **Ojo con el caso que despista.** Un abogado puede estar usando el Outlook nuevo con su buzón
 > IMAP de su propio proveedor: Outlook espeja ese buzón en una cuenta personal de Microsoft y
 > todo *parece* Microsoft 365. No lo es — y su buzón IMAP sí se conecta. La forma de salir de
 > dudas es mirar dónde está de verdad el buzón (los registros MX del dominio), no qué programa
 > usa para leerlo.
+
+## «Mi contraseña es correcta y me la rechaza»
+
+Es, con diferencia, la incidencia más habitual con el correo, y casi nunca es un fallo: hay
+proveedores que aceptan contraseña **pero no la de la cuenta**. RobinSearch reconoce esos casos por
+el dominio y lo dice ANTES de que el abogado escriba nada:
+
+| Si la cuenta es de… | Lo que hace RobinSearch |
+|---|---|
+| Microsoft 365 / Outlook.com | No pide contraseña: abre el navegador para entrar en su cuenta |
+| Gmail / Workspace | Avisa de que hace falta una contraseña de aplicación y de que exige 2FA |
+| iCloud, Yahoo, AOL | Avisa de la contraseña de aplicación y dice dónde se crea |
+| Cualquier otro servidor que anuncie `LOGINDISABLED` | Avisa de que ese servidor ya no admite contraseña |
 
 ## Qué NO hace la v1
 

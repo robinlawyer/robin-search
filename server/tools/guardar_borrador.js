@@ -10,13 +10,15 @@
 //  2. El hilo. Un borrador de respuesta sin In-Reply-To ni References aparece fuera de la
 //     conversación, sin contexto, y el abogado no sabe ni a qué contesta.
 
+// ⚠️ CARGA PEREZOSA. Nada de imapflow, mailparser ni nodemailer arriba: entre los tres son unos
+// 7,5 s de carga de módulos (medido el 21-sep-2026), y eso lo pagaba CADA arranque del servidor,
+// tuviera el abogado el correo conectado o no — que la mayoría no lo tiene. Aquí arriba solo va
+// lo que hace falta para DECLARAR la herramienta y para contestar «no hay cuenta»; lo pesado se
+// importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { conImap, SinCuenta } from '../correo/conexion.js';
-import * as carpetas from '../correo/carpetas.js';
-import * as mensajes from '../correo/mensajes.js';
-import { componer, asuntoDeRespuesta, direccionValida } from '../correo/redaccion.js';
 import { leerCorreo } from '../correo/ajustes.js';
+import { SIN_CUENTA } from '../correo/avisos.js';
 
 export const definition = {
   name: 'guardar_borrador',
@@ -48,7 +50,7 @@ export const definition = {
   },
 };
 
-async function bandejaReal(cliente, pedida) {
+async function bandejaReal(carpetas, cliente, pedida) {
   const p = String(pedida || '').trim().toLowerCase();
   if (!p || ['entrada', 'inbox', 'bandeja de entrada', 'recibidos'].includes(p)) return 'INBOX';
   if (['enviados', 'sent'].includes(p)) return (await carpetas.resolver(cliente, 'enviados')) || 'INBOX';
@@ -58,8 +60,8 @@ async function bandejaReal(cliente, pedida) {
 
 // Lee del servidor el correo al que se responde: su Message-ID, su cadena de References, su
 // asunto y quién lo mandó. Sin esto no hay hilo posible.
-async function original(cliente, uid, bandeja) {
-  const ruta = await bandejaReal(cliente, bandeja);
+async function original(carpetas, cliente, uid, bandeja) {
+  const ruta = await bandejaReal(carpetas, cliente, bandeja);
   const cerrojo = await cliente.getMailboxLock(ruta, { readOnly: true });
   try {
     const m = await cliente.fetchOne(String(uid), { envelope: true, headers: ['references', 'reply-to'] }, { uid: true });
@@ -88,7 +90,11 @@ export async function handler(args) {
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
   const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(new SinCuenta().message, { motivo: 'sin_cuenta' });
+  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+
+  const { conImap } = await import('../correo/conexion.js');
+  const carpetas = await import('../correo/carpetas.js');
+  const { componer, asuntoDeRespuesta, direccionValida } = await import('../correo/redaccion.js');
 
   const cuerpo = typeof args?.cuerpo === 'string' ? args.cuerpo : '';
   if (!cuerpo.trim()) return fail('El borrador no puede ir vacío: falta "cuerpo".');
@@ -108,7 +114,7 @@ export async function handler(args) {
 
       let previo = null;
       if (respondeA !== null) {
-        previo = await original(cliente, respondeA, args?.bandeja_original);
+        previo = await original(carpetas, cliente, respondeA, args?.bandeja_original);
         if (!previo) {
           return fail(`No se encuentra el correo con uid ${respondeA} para responderle. Vuelve a buscarlo con buscar_correos.`, { motivo: 'no_encontrado' });
         }

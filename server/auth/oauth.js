@@ -1,4 +1,4 @@
-// Autenticación con Robin Lawyer vía OAuth 2.1 + PKCE (el MISMO servidor OAuth que usa el
+// Autenticación con RobinLawyer.ai vía OAuth 2.1 + PKCE (el MISMO servidor OAuth que usa el
 // conector remoto de Claude Desktop). El abogado no pega ningún token: la primera vez que
 // usa una herramienta, se abre el navegador, inicia sesión en robinlawyer.ai y autoriza.
 //
@@ -10,7 +10,7 @@
 //   5. Los tokens se guardan en el dir de datos (fichero 0600), se refrescan solos.
 //
 // Sin sesión válida, las herramientas de búsqueda no devuelven resultados (el motor es local,
-// pero el acceso es una función premium de la suscripción a Robin Lawyer).
+// pero el acceso es una función premium de la suscripción a RobinLawyer.ai).
 
 import http from 'node:http';
 import crypto from 'node:crypto';
@@ -600,11 +600,11 @@ function startLogin() {
     if (user) merged.user = user;
     else delete merged.user;
     saveAuth(merged);
-    log.info('Sesión de Robin Lawyer iniciada', { usuario: user?.email || null });
+    log.info('Sesión de RobinLawyer.ai iniciada', { usuario: user?.email || null });
     return { ok: true, user };
   })()
     .catch((err) => {
-      log.error('Fallo iniciando sesión en Robin Lawyer', { err: String(err) });
+      log.error('Fallo iniciando sesión en RobinLawyer.ai', { err: String(err) });
       return { ok: false, error: String(err?.message ?? err) };
     })
     .finally(() => {
@@ -671,7 +671,7 @@ export function authPromptResult(loginUrl) {
     ? ` Si no se abrió sola, abre este enlace: ${loginUrl}`
     : ' Si no se abrió sola, vuelve a pedírmelo en unos segundos y te doy el enlace.';
   return fail(
-    'Necesitas iniciar sesión en Robin Lawyer para buscar en tus expedientes. He abierto una ' +
+    'Necesitas iniciar sesión en RobinLawyer.ai para buscar en tus expedientes. He abierto una ' +
       'pestaña en tu navegador para que inicies sesión con tu cuenta de Robin.' +
       enlace +
       ' Cuando termines, repite la búsqueda.',
@@ -690,7 +690,7 @@ export async function authStatus() {
 
 // Login interactivo bloqueante para el CLI (`robin-search login`). Imprime a stdout.
 export async function loginInteractive() {
-  process.stdout.write('Abriendo el navegador para iniciar sesión en Robin Lawyer…\n');
+  process.stdout.write('Abriendo el navegador para iniciar sesión en RobinLawyer.ai…\n');
   const res = await startLogin();
   if (_lastAuthorizeUrl) process.stdout.write(`Si no se abrió, entra aquí:\n  ${_lastAuthorizeUrl}\n`);
   if (res.ok) {

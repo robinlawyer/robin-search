@@ -45,7 +45,7 @@ Uso:
   robin-search [comando] [opciones]
 
 Comandos:
-  login                 Inicia sesión en Robin Lawyer (abre el navegador). Guarda la sesión.
+  login                 Inicia sesión en RobinLawyer.ai (abre el navegador). Guarda la sesión.
   logout                Cierra la sesión y borra las credenciales locales.
   correo                Conecta el buzón del abogado (IMAP/SMTP). «robin-search correo» para la
                         ayuda. La contraseña se lee por la ENTRADA ESTÁNDAR, nunca como
@@ -98,7 +98,7 @@ async function run() {
     process.exit(await ejecutar(opts.correo || []));
   }
 
-  // Iniciar / cerrar sesión en Robin Lawyer (OAuth). No es modo MCP → stdout seguro.
+  // Iniciar / cerrar sesión en RobinLawyer.ai (OAuth). No es modo MCP → stdout seguro.
   if (opts._.includes('login')) {
     const { loginInteractive } = await import('../server/auth/oauth.js');
     process.exit((await loginInteractive()) ? 0 : 1);

@@ -9,8 +9,7 @@
 import nodemailer from 'nodemailer';
 import { log } from '../logger.js';
 import { leerCorreo } from './ajustes.js';
-import * as llavero from './llavero.js';
-import { explicar } from './conexion.js';
+import { explicar, credenciales } from './conexion.js';
 
 const CONEXION_MS = 20000;
 const ENVIO_MS = 60000;
@@ -18,14 +17,19 @@ const ENVIO_MS = 60000;
 // `secure: true` es TLS desde el primer byte (465). En 587 se abre en claro y se sube a TLS con
 // STARTTLS: `requireTLS` obliga a que suba — sin él, un servidor que no anuncie STARTTLS se
 // tragaría la contraseña en claro sin decir nada.
-export function opcionesTransporte(cfg, clave) {
+// `secreto` es la contraseña, o `{ accessToken }` cuando se entra con la cuenta del proveedor.
+export function opcionesTransporte(cfg, secreto) {
   const seguridad = cfg.smtp.seguridad;
+  const auth = secreto && typeof secreto === 'object' && secreto.accessToken
+    // XOAUTH2: nodemailer arma él la cadena SASL a partir del token.
+    ? { type: 'OAuth2', user: cfg.usuario, accessToken: secreto.accessToken }
+    : { user: cfg.usuario, pass: secreto };
   return {
     host: cfg.smtp.host,
     port: cfg.smtp.puerto,
     secure: seguridad === 'tls',
     requireTLS: seguridad === 'starttls',
-    auth: { user: cfg.usuario, pass: clave },
+    auth,
     connectionTimeout: CONEXION_MS,
     greetingTimeout: CONEXION_MS,
     socketTimeout: ENVIO_MS,
@@ -41,20 +45,22 @@ async function transporte() {
   if (!cfg.configurado || !cfg.smtp.host) {
     throw Object.assign(new Error('No hay servidor de envío configurado. Ábrelo en la app de RobinSearch → Tu correo.'), { motivo: 'sin_cuenta' });
   }
-  const clave = await llavero.leer(cfg.usuario);
-  if (!clave) {
-    throw Object.assign(new Error('La contraseña del correo no está en el llavero de este ordenador. Vuelve a conectar la cuenta en la app de RobinSearch.'), { motivo: 'sin_cuenta' });
-  }
-  return { transporte: nodemailer.createTransport(opcionesTransporte(cfg, clave)), cfg };
+  const c = await credenciales(cfg);
+  const secreto = c.accessToken ? { accessToken: c.accessToken } : c.pass;
+  return { transporte: nodemailer.createTransport(opcionesTransporte(cfg, secreto)), cfg };
 }
 
 // Comprueba que el servidor de envío acepta las credenciales, sin mandar nada. Es lo que
 // ejecuta el botón «Conectar» de la app.
-export async function comprobar(cfgExplicita = null, claveExplicita = null) {
+export async function comprobar(cfgExplicita = null, secretoExplicito = null) {
   let t;
   try {
     if (cfgExplicita) {
-      t = nodemailer.createTransport(opcionesTransporte(cfgExplicita, claveExplicita));
+      const secreto = secretoExplicito !== null ? secretoExplicito : await (async () => {
+        const c = await credenciales(cfgExplicita);
+        return c.accessToken ? { accessToken: c.accessToken } : c.pass;
+      })();
+      t = nodemailer.createTransport(opcionesTransporte(cfgExplicita, secreto));
     } else {
       ({ transporte: t } = await transporte());
     }

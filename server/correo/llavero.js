@@ -1,7 +1,7 @@
 // Llavero del sistema operativo — donde vive la contraseña del correo del abogado.
 //
 // REGLA DE PRODUCTO: la contraseña del buzón NO sale nunca de este ordenador. No viaja a
-// RobinLawyer, no la recibe ninguna herramienta MCP (acabaría en el contexto del modelo) y no
+// RobinLawyer.ai, no la recibe ninguna herramienta MCP (acabaría en el contexto del modelo) y no
 // se escribe en ajustes.json. Aquí solo se habla con el guardián de credenciales del propio SO.
 //
 // SIN MÓDULOS NATIVOS. `keytar` habría sido lo cómodo, pero es un binario por plataforma y

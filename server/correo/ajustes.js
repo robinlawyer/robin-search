@@ -11,6 +11,11 @@ import { escribirJson, leerJson, conCerrojoDeFichero } from '../persistencia.js'
 
 export const POR_DEFECTO = {
   usuario: null,
+  // Cómo se entra en el buzón: 'contrasena' (la de siempre) o 'oauth' (la cuenta del proveedor).
+  // Microsoft ya no admite la primera; Google la admite a regañadientes, con contraseña de
+  // aplicación. El secreto correspondiente vive en el llavero en los dos casos.
+  auth: 'contrasena',
+  proveedor: null,
   imap: { host: null, puerto: 993, tls: true },
   smtp: { host: null, puerto: 587, seguridad: 'starttls' },
   // Resueltas por SPECIAL-USE la primera vez y recordadas: en Dovecot son «INBOX.Drafts», no
@@ -22,12 +27,28 @@ export const POR_DEFECTO = {
   configuradoEl: null,
 };
 
+// `leerCorreo()` lo llaman estado_servidor y todas las herramientas de correo, y cada llamada
+// leía ajustes.json del disco de forma SÍNCRONA. En medio de un indexado —con el disco a tope y
+// el hilo principal ocupado— eso es latencia metida justo en la herramienta que más se consulta.
+// Se recuerda un par de segundos; quien escribe invalida al momento, así que nadie ve nunca un
+// ajuste viejo por haber pulsado un botón en la app.
+let cache = null;
+const CACHE_MS = 2000;
+
+function olvidarCache() {
+  cache = null;
+}
+
 function leerFichero() {
+  if (cache && Date.now() - cache.el < CACHE_MS) return cache.valor;
+  let valor = {};
   try {
-    return leerJson(rutaAjustes(config.dataDir)).valor || {};
+    valor = leerJson(rutaAjustes(config.dataDir)).valor || {};
   } catch {
-    return {};
+    valor = {};
   }
+  cache = { valor, el: Date.now() };
+  return valor;
 }
 
 const num = (v, porDefecto) => (Number.isInteger(v) && v > 0 && v < 65536 ? v : porDefecto);
@@ -38,6 +59,8 @@ export function leerCorreo() {
   if (!c || typeof c !== 'object') return { ...POR_DEFECTO, configurado: false };
   return {
     usuario: texto(c.usuario),
+    auth: c.auth === 'oauth' ? 'oauth' : 'contrasena',
+    proveedor: texto(c.proveedor),
     imap: {
       host: texto(c.imap?.host),
       puerto: num(c.imap?.puerto, 993),
@@ -77,6 +100,7 @@ export function guardarCorreo(parcial) {
       carpetas: { ...POR_DEFECTO.carpetas, ...(previo.carpetas || {}), ...(parcial.carpetas || {}) },
     };
     escribirJson(ruta, { ...actual, correo }, { bak: true, indent: 2 });
+    olvidarCache();
     return leerCorreo();
   });
 }
@@ -89,8 +113,11 @@ export function olvidarCorreo() {
     const actual = leerFichero();
     delete actual.correo;
     escribirJson(ruta, actual, { bak: true, indent: 2 });
+    olvidarCache();
     return leerCorreo();
   });
 }
 
-export default { leerCorreo, guardarCorreo, olvidarCorreo, POR_DEFECTO };
+export { olvidarCache };
+
+export default { leerCorreo, guardarCorreo, olvidarCorreo, olvidarCache, POR_DEFECTO };

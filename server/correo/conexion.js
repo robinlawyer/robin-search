@@ -16,6 +16,8 @@ import { ImapFlow } from 'imapflow';
 import { log } from '../logger.js';
 import { leerCorreo } from './ajustes.js';
 import * as llavero from './llavero.js';
+import { tokenDeAcceso } from './oauth-correo.js';
+import { SIN_CUENTA, SIN_SECRETO } from './avisos.js';
 
 const CONEXION_MS = 15000;   // abrir el socket
 const SALUDO_MS = 15000;     // que el servidor se presente
@@ -39,9 +41,10 @@ export function explicar(err) {
   if (code === 'AUTHENTICATIONFAILED' || /AUTHENTICATIONFAILED|Invalid credentials|LOGIN failed|authentication fail/i.test(msg)) {
     return {
       motivo: 'credenciales',
-      mensaje: 'El servidor de correo ha rechazado el usuario o la contraseña. Si la cuenta es de '
-        + 'Gmail o de Microsoft 365, la contraseña normal no sirve para IMAP: hace falta una '
-        + 'contraseña de aplicación. Vuelve a conectar la cuenta desde la app de RobinSearch.',
+      mensaje: 'El servidor de correo ha rechazado las credenciales. Si la cuenta es de Microsoft 365 '
+        + 'o de Outlook.com, la contraseña no sirve para IMAP y hay que conectarla con la propia '
+        + 'cuenta de Microsoft; en Gmail hace falta una contraseña de aplicación. Vuelve a conectar '
+        + 'la cuenta desde la app de RobinSearch → Tu correo.',
     };
   }
   if (['ENOTFOUND', 'EAI_AGAIN'].includes(code)) {
@@ -76,21 +79,25 @@ export class FalloDeCorreo extends Error {
   }
 }
 
+// Con qué se entra: la contraseña del llavero, o un token de acceso del proveedor (XOAUTH2).
+// Lo segundo es lo ÚNICO que admiten Microsoft 365 y Outlook.com.
+export async function credenciales(cfg) {
+  if (cfg.auth === 'oauth') {
+    return { user: cfg.usuario, accessToken: await tokenDeAcceso(cfg.usuario) };
+  }
+  const clave = await llavero.leer(cfg.usuario);
+  if (!clave) throw new SinCuenta(SIN_SECRETO);
+  return { user: cfg.usuario, pass: clave };
+}
+
 async function abrir() {
   const cfg = leerCorreo();
   if (!cfg.configurado) throw new SinCuenta();
-  const clave = await llavero.leer(cfg.usuario);
-  if (!clave) {
-    const e = new SinCuenta();
-    e.message = 'La cuenta de correo está configurada pero su contraseña no está en el llavero de este '
-      + 'ordenador. Vuelve a conectarla en la app de RobinSearch → Tu correo.';
-    throw e;
-  }
   const c = new ImapFlow({
     host: cfg.imap.host,
     port: cfg.imap.puerto,
     secure: cfg.imap.tls,
-    auth: { user: cfg.usuario, pass: clave },
+    auth: await credenciales(cfg),
     logger: false,      // ver la cabecera de este fichero: stdout es del JSON-RPC
     emitLogs: false,
     connectionTimeout: CONEXION_MS,
@@ -121,12 +128,17 @@ async function conectar() {
 
 // Todas las operaciones van en fila: IMAP atiende una orden por conexión, y dos herramientas
 // llamadas a la vez (Claude las encadena) se pisaban a mitad de un FETCH.
+// Fallos que YA vienen explicados desde el módulo de OAuth: no hay que traducirlos otra vez, y
+// convertirlos en «no se ha podido hablar con el servidor» perdería lo único útil que dicen —
+// que hay que volver a conectar la cuenta.
+const MOTIVOS_PROPIOS = new Set(['permiso_retirado', 'sin_permiso', 'sin_alta', 'token', 'sin_cuenta']);
+
 export function conImap(fn) {
   const turno = cola.then(async () => {
     try {
       return await fn(await conectar());
     } catch (err) {
-      if (err instanceof SinCuenta) throw err;
+      if (err instanceof SinCuenta || MOTIVOS_PROPIOS.has(err?.motivo)) throw err;
       if (esFatal(err)) {
         // Una sola reconexión: si el servidor cerró por inactividad, el abogado no tiene por qué
         // enterarse. Si vuelve a fallar, se dice.
@@ -135,6 +147,7 @@ export function conImap(fn) {
         try {
           return await fn(await conectar());
         } catch (err2) {
+          if (err2 instanceof SinCuenta || MOTIVOS_PROPIOS.has(err2?.motivo)) throw err2;
           throw new FalloDeCorreo(err2);
         }
       }
@@ -154,10 +167,10 @@ export async function cerrar() {
 }
 
 // Para la app: comprobar unas credenciales SIN tocar la conexión en uso ni guardar nada.
-export async function probarCredenciales({ host, puerto, tls = true, usuario, clave }) {
+export async function probarCredenciales({ host, puerto, tls = true, usuario, clave = null, accessToken = null }) {
   const c = new ImapFlow({
     host, port: puerto, secure: tls,
-    auth: { user: usuario, pass: clave },
+    auth: accessToken ? { user: usuario, accessToken } : { user: usuario, pass: clave },
     logger: false,
     emitLogs: false,
     connectionTimeout: CONEXION_MS,

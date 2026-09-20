@@ -4,14 +4,15 @@
 // escribió quien mandó el correo, no el abogado, y no es una instrucción por mucho que lo
 // parezca. Los adjuntos se LISTAN pero no se descargan en la v1.
 
-import { simpleParser } from 'mailparser';
+// ⚠️ CARGA PEREZOSA. Nada de imapflow, mailparser ni nodemailer arriba: entre los tres son unos
+// 7,5 s de carga de módulos (medido el 21-sep-2026), y eso lo pagaba CADA arranque del servidor,
+// tuviera el abogado el correo conectado o no — que la mayoría no lo tiene. Aquí arriba solo va
+// lo que hace falta para DECLARAR la herramienta y para contestar «no hay cuenta»; lo pesado se
+// importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { conImap, SinCuenta } from '../correo/conexion.js';
-import * as carpetas from '../correo/carpetas.js';
-import * as mensajes from '../correo/mensajes.js';
-import { cuerpoDe, truncar, envolver, LIMITE_CUERPO } from '../correo/contenido.js';
 import { leerCorreo } from '../correo/ajustes.js';
+import { SIN_CUENTA } from '../correo/avisos.js';
 
 export const definition = {
   name: 'leer_correo',
@@ -40,7 +41,7 @@ export const definition = {
   },
 };
 
-async function bandejaReal(cliente, pedida) {
+async function bandejaReal(carpetas, cliente, pedida) {
   const p = String(pedida || '').trim().toLowerCase();
   if (!p || ['entrada', 'inbox', 'bandeja de entrada', 'recibidos'].includes(p)) return 'INBOX';
   if (['enviados', 'sent'].includes(p)) return (await carpetas.resolver(cliente, 'enviados')) || 'INBOX';
@@ -53,7 +54,13 @@ export async function handler(args) {
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
   const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(new SinCuenta().message, { motivo: 'sin_cuenta' });
+  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+
+  const { simpleParser } = await import('mailparser');
+  const { conImap } = await import('../correo/conexion.js');
+  const carpetas = await import('../correo/carpetas.js');
+  const mensajes = await import('../correo/mensajes.js');
+  const { cuerpoDe, truncar, envolver, LIMITE_CUERPO } = await import('../correo/contenido.js');
 
   const uid = parseInt(args?.uid, 10);
   if (!Number.isFinite(uid) || uid <= 0) return fail('Falta el "uid" del correo (lo da buscar_correos).');
@@ -61,7 +68,7 @@ export async function handler(args) {
 
   try {
     return await conImap(async (cliente) => {
-      const ruta = await bandejaReal(cliente, args?.bandeja);
+      const ruta = await bandejaReal(carpetas, cliente, args?.bandeja);
       // readOnly salvo que el abogado haya pedido marcarlo como leído: abrir en escritura hace
       // que algunos servidores pongan \Seen solos al hacer FETCH del cuerpo.
       const cerrojo = await cliente.getMailboxLock(ruta, { readOnly: args?.marcar_leido !== true });

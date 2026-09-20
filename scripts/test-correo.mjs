@@ -261,7 +261,9 @@ carpetas.olvidarCache();
   const s3 = await levantar(b3);
   ajustes.guardarCorreo({ imap: { host: '127.0.0.1', puerto: s3.puerto, tls: false }, carpetas: { borradores: null, enviados: null } });
   const r = datos(await buscarCorreos.handler({}));
-  check('contraseña incorrecta: lo dice en castellano y nombra las contraseñas de aplicación', /rechazado el usuario o la contraseña/i.test(r.error || '') && /contraseña de aplicación/i.test(r.error || ''), r.motivo);
+  check('contraseña incorrecta: lo dice en castellano, y nombra Microsoft y la contraseña de aplicación',
+    r.motivo === 'credenciales' && /rechazado las credenciales/i.test(r.error || '')
+    && /Microsoft 365/i.test(r.error || '') && /contraseña de aplicación/i.test(r.error || ''), r.motivo);
   await conexion.cerrar(); s3.servidor.close();
 }
 {
