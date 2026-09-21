@@ -10,6 +10,12 @@
 //   2. Los nombres de toda la vida (mail./imap./smtp.<dominio>), comprobados de verdad
 //      abriendo el puerto y leyendo el saludo del servidor. Un DNS comodín («*.dominio»)
 //      resuelve cualquier nombre: sin abrir el puerto, la detección se inventaba servidores.
+//   3. Los MX del dominio, que dicen QUIÉN le lleva el correo. 🔴 21-sep-2026 (Eduardo,
+//      @robingoodsolutions.com): un despacho con dominio propio en un hosting no tiene por qué
+//      publicar «mail.su-dominio.com» —ahí ese nombre ni siquiera existe—, pero sus MX sí
+//      señalan a «mx1.hostinger.com», y el buzón está en «imap.hostinger.com». Sin esta vía la
+//      detección se rendía y había que pedirle al abogado unos servidores que estaban a un
+//      registro DNS de distancia. Se mira SU DNS, como las otras dos: no se le pregunta a nadie.
 
 import dns from 'node:dns/promises';
 import net from 'node:net';
@@ -116,6 +122,31 @@ export function capacidades(host, puerto, { esperaMs = ESPERA_MS } = {}) {
 // ¿Este servidor solo admite OAuth? (Microsoft 365 y Outlook.com personal, hoy.)
 export function exigeOauth(caps) {
   return Array.isArray(caps) && caps.includes('LOGINDISABLED') && caps.some((c) => c.startsWith('AUTH=XOAUTH2'));
+}
+
+// Los dominios de quien lleva el correo de este dominio, sacados de sus MX y ordenados por
+// prioridad: de «mx1.hostinger.com» salen «hostinger.com» (quitar la primera etiqueta) y el
+// registrable de siempre. Se queda con los dos primeros: cada candidato cuesta una conexión.
+export function basesDeMx(intercambios, dominio) {
+  const bases = [];
+  for (const x of intercambios || []) {
+    const host = String(x || '').toLowerCase().replace(/\.$/, '');
+    const partes = host.split('.').filter(Boolean);
+    if (partes.length < 3) continue;   // el MX ya es el propio dominio: no aporta nada nuevo
+    for (const b of [partes.slice(1).join('.'), partes.slice(-2).join('.')]) {
+      if (b !== dominio && !bases.includes(b)) bases.push(b);
+    }
+  }
+  return bases.slice(0, 2);
+}
+
+async function basesDeLosMx(dominio) {
+  try {
+    const mx = (await dns.resolveMx(dominio)).sort((a, b) => a.priority - b.priority);
+    return basesDeMx(mx.map((r) => r.exchange), dominio);
+  } catch {
+    return [];
+  }
 }
 
 const esImap = (s) => /^\*\s+OK/i.test(s || '');
@@ -260,6 +291,30 @@ export async function detectar(direccion) {
     if (smtp) via.smtp = smtp.viaCertificado ? 'certificado' : 'convencion';
   }
 
+  // 3. Quien le lleva el correo al dominio (sus MX). Solo si algo sigue sin saberse: es una
+  //    vuelta más de conexiones y la inmensa mayoría de los despachos se resuelve arriba.
+  if (!imap || !smtp) {
+    const bases = await basesDeLosMx(dominio);
+    if (!imap && bases.length) {
+      const candidatos = [];
+      for (const b of bases) for (const p of ['imap', 'mail', null]) candidatos.push({ host: p ? `${p}.${b}` : b, puerto: 993, tls: true, seguro: true });
+      imap = await primeroQueResponda(candidatos, esImap, dominio);
+      if (imap) via.imap = 'mx';
+    }
+    if (!smtp && bases.length) {
+      const candidatos = [];
+      for (const b of bases) {
+        for (const p of ['smtp', 'mail', null]) {
+          const host = p ? `${p}.${b}` : b;
+          candidatos.push({ host, puerto: 587, seguridad: 'starttls', seguro: false });
+          candidatos.push({ host, puerto: 465, seguridad: 'tls', seguro: true });
+        }
+      }
+      smtp = await primeroQueResponda(candidatos, esSmtp, dominio);
+      if (smtp) via.smtp = 'mx';
+    }
+  }
+
   // El saludo del servidor puede llevar su nombre de máquina: no se devuelve hacia arriba.
   return {
     dominio,
@@ -269,4 +324,4 @@ export async function detectar(direccion) {
   };
 }
 
-export default { detectar, dominioDe, saludo, capacidades, exigeOauth };
+export default { detectar, dominioDe, saludo, capacidades, exigeOauth, basesDeMx };

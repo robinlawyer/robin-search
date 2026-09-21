@@ -378,6 +378,18 @@ carpetas.olvidarCache();
     !/autoconfig\.thunderbird|autoconfig\.mozilla|mozilla\.org/i.test(fuente.replace(/\/\/.*$/gm, '')));
   const { dominioDe } = await imp('server/correo/autodeteccion.js');
   check('saca el dominio de la dirección', dominioDe('Juridico <juridico@asesoria-ibc.com>') === null && dominioDe('juridico@asesoria-ibc.com') === 'asesoria-ibc.com');
+
+  // 🔴 21-sep-2026 (Eduardo, @robingoodsolutions.com): el despacho tenía el dominio en un
+  // hosting y «mail.su-dominio.com» ni existía, así que la detección se rendía y había que
+  // pedirle a mano unos servidores que estaban en sus propios MX (mx1.hostinger.com →
+  // imap.hostinger.com). De ahí salen los dominios que hay que probar.
+  const { basesDeMx } = await imp('server/correo/autodeteccion.js');
+  const hostinger = basesDeMx(['mx1.hostinger.com', 'mx2.hostinger.com'], 'robingoodsolutions.com');
+  check('de los MX del dominio salen los dominios de quien lleva el correo', hostinger.includes('hostinger.com'), hostinger.join(' '));
+  check('un MX del propio dominio no propone nada que no se haya probado ya',
+    basesDeMx(['mail.asesoria-ibc.com'], 'asesoria-ibc.com').length === 0);
+  check('nunca más de dos dominios: cada uno cuesta conexiones',
+    basesDeMx(['a.uno.com', 'b.dos.com', 'c.tres.com', 'd.cuatro.com'], 'x.es').length === 2);
 }
 
 // ─────────── 8. Ni rastro en los registros ───────────

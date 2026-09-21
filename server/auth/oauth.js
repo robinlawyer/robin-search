@@ -502,7 +502,7 @@ function awaitCallback(server, port, expectedState) {
         res.end(
           htmlPage(
             'Este enlace ya no es válido',
-            'Corresponde a un intento anterior. Vuelve a Claude, pídele otra vez la búsqueda y abre el enlace NUEVO que te dé.',
+            'Corresponde a un intento anterior. Vuelve a pedir el inicio de sesión donde lo empezaste —RobinDesktop o Claude— y abre el enlace NUEVO que te dé.',
           ),
         );
         return;
@@ -510,7 +510,11 @@ function awaitCallback(server, port, expectedState) {
       finish(
         htmlPage(
           '✓ Conexión establecida con RobinLawyer.ai',
-          'Infraestructura de dirección jurídica vinculada correctamente. Ya puedes cerrar esta pestaña de forma segura y regresar a Claude para trabajar sobre tus expedientes.',
+          // 🔴 21-sep-2026 (Juan): esta pantalla daba por hecho que se venía de Claude
+          // («…y regresar a Claude para trabajar sobre tus expedientes»). La sesión se
+          // inicia también desde RobinDesktop, así que se dice lo único que es cierto en
+          // los dos casos: que ya se puede cerrar la pestaña.
+          'Infraestructura de dirección jurídica vinculada correctamente. Ya puedes cerrar esta pestaña de forma segura.',
         ),
         () => resolve(code),
       );
