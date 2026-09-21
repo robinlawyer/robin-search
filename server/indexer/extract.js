@@ -721,9 +721,12 @@ const ARCHIVE_RATIO_DESDE_BYTES = 32 * 1024 * 1024;
 const ARCHIVE_MAX_ENTRADAS = 200000;
 
 // ¿Se extrae este miembro? Decide con lo DECLARADO en la cabecera, antes de descomprimir nada.
-function admitirMiembro(m, cuenta) {
+function admitirMiembro(m, cuenta, depth = 0) {
   const ext = path.extname(m.name).toLowerCase();
   if (!SUPPORTED_INNER.has(ext)) return null;
+  // Un contenedor dentro de otro no se abre (ver extractArchive): ni siquiera se descomprime,
+  // que es justo lo que busca una bomba zip anidada.
+  if (EXT_ARCHIVE.has(ext) && depth >= 1) return null;
   if (m.cifrado) return 'cifrado';
   if (cuenta.miembros >= ARCHIVE_MAX_MEMBERS) return 'demasiados_miembros';
   if (!Number.isFinite(m.size) || m.size < 0) return 'tamaño_desconocido';
@@ -744,7 +747,7 @@ export async function extractArchive(filePath, opts) {
   const cuenta = { miembros: 0, bytes: 0 };
   const descartes = {};
   const admitir = (m) => {
-    const r = admitirMiembro(m, cuenta);
+    const r = admitirMiembro(m, cuenta, depth);
     if (r === 'ok') {
       cuenta.miembros += 1;
       cuenta.bytes += m.size;

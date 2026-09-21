@@ -9,6 +9,7 @@
 //   · .zip adjunto a un correo (asi llega el expediente de LexNet): se abre y se indexa.
 //   · .txt y .csv de Windows o en UTF-16: se leen con su juego de caracteres, no como UTF-8.
 //   · Documento que la nube no ha bajado: se apunta, se pide la descarga y se indexa al llegar.
+//   · Formato que no leemos (.pages, .key): se DICE en estado_servidor, no se ignora en silencio.
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
 
@@ -17,6 +18,11 @@ const results = []; const check = (n, c, d = '') => { results.push(c); console.l
 const base = fs.mkdtempSync(path.join(os.tmpdir(), 'rs-nada-fuera-'));
 process.env.ROBIN_DATA_DIR = path.join(base, 'datos');
 process.env.ROBIN_LOG_LEVEL = 'error';
+// La carpeta de expedientes se declara ANTES de importar nada: config se lee al cargarse.
+const despacho = path.join(base, 'Despacho');
+const caso = path.join(despacho, 'Caso Nunez');
+fs.mkdirSync(caso, { recursive: true });
+process.env.ROBIN_FOLDER = despacho;
 const imp = (p) => import(pathToFileURL(path.join(REPO, p)).href);
 const fixture = (n) => path.join(REPO, 'scripts', 'fixtures', n);
 const texto = (r) => (r?.pages || []).map((p) => p.text).join('\n');
@@ -143,7 +149,34 @@ fs.rmSync(enLaNube, { force: true });
 nube.apuntar(enLaNube, 'vacio');
 r = await nube.revisar({ forzar: true });
 check('un documento que se borra deja de estar pendiente', nube.cuantos() === 0, JSON.stringify(r));
+
+// Un fichero que estaba vacío DE VERDAD no puede volver a la lista en cada pasada: el número de
+// «pendientes de descarga» dejaría de querer decir nada.
+process.env.ROBIN_NUBE_DIAS_MAX = '0';
+const vacioDeVerdad = path.join(base, 'plantilla-en-blanco.txt');
+fs.writeFileSync(vacioDeVerdad, '');
+const nube2 = await import(`${pathToFileURL(path.join(REPO, 'server/indexer/nube.js')).href}?vacios`);
+nube2.apuntar(vacioDeVerdad, 'vacio');
+r = await nube2.revisar({ forzar: true });
+check('tras un día sin contenido se da por vacío', r.vacios === 1 && nube2.cuantos() === 0, JSON.stringify(r));
+nube2.apuntar(vacioDeVerdad, 'vacio');
+check('y ya no vuelve a la lista de pendientes', nube2.cuantos() === 0);
+nube2._limpiarParaPrueba();
+delete process.env.ROBIN_NUBE_DIAS_MAX;
 nube.parar();
+
+// ── 5. Lo que RobinSearch no lee, se DICE (no se ignora en silencio) ────────────────
+fs.writeFileSync(path.join(caso, 'demanda.txt'), 'Demanda de juicio ordinario por reclamación de cantidad');
+for (const n of ['minuta.pages', 'vista.key', 'planos.dwg']) fs.writeFileSync(path.join(caso, n), 'x');
+for (const n of ['gestion.db', 'instalador.exe', 'estilo.css']) fs.writeFileSync(path.join(caso, n), 'x');
+const { indexFolder } = await imp('server/indexer/indexer.js');
+const resumen = await indexFolder({ force: true });
+const fuera = resumen.no_indexables?.formatos_fuera || {};
+check('los formatos que no leemos se cuentan uno a uno',
+  fuera['.pages'] === 1 && fuera['.key'] === 1 && fuera['.dwg'] === 1, JSON.stringify(fuera));
+check('y lo que no es un documento (bases de datos, ejecutables, hojas de estilo) no se cuenta',
+  !('.db' in fuera) && !('.exe' in fuera) && !('.css' in fuera), JSON.stringify(fuera));
+check('el documento que sí se lee entra igual', resumen.indexados >= 1, `indexados=${resumen.indexados}`);
 
 console.log(`\n${results.filter(Boolean).length}/${results.length} comprobaciones OK`);
 fs.rmSync(base, { recursive: true, force: true });

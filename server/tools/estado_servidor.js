@@ -209,9 +209,22 @@ export async function handler() {
         (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
         (ni.protegidos ? `${ni.protegidos} PDF(s) protegidos con contraseña (RobinSearch prueba las que haya en ROBIN_PDF_CLAVES; si no, el abogado tiene que quitarles la protección o dar la contraseña a quien lo instaló); ` : '') +
         (ni.danados ? `${ni.danados} documento(s) dañados que ni su propio programa abriría (RobinSearch ya ha intentado rescatar su texto); ` : '') +
+        (ni.reintentables ? `${ni.reintentables} escaneado(s) que hoy no cabían en la memoria del equipo (se reintentan solos en la siguiente pasada); ` : '') +
         'lo que se busque no los cubre. Para los de la nube, RobinSearch ya ha pedido su descarga y ' +
         'los indexa solo en cuanto lleguen (ver pendientes_de_descarga); si el abogado tiene prisa, ' +
         'que marque la carpeta como «Mantener siempre en este dispositivo».';
+    }
+    // Formatos que el despacho tiene en sus carpetas y RobinSearch todavía no lee. No es un error
+    // —nunca lo fue— pero callarlo dejaba al abogado creyendo que esos documentos se buscaban.
+    const fuera = state.ultimoIndexado.no_indexables?.formatos_fuera;
+    if (fuera && Object.keys(fuera).length) {
+      const top = Object.entries(fuera).sort((a, b) => b[1] - a[1]).slice(0, 6);
+      respuesta.formatos_no_indexados = fuera;
+      respuesta.aviso_formatos_no_indexados =
+        'En las carpetas hay ficheros de formatos que RobinSearch todavía no lee, y por tanto NO están '
+        + `en las búsquedas: ${top.map(([e, n]) => `${n} ${e}`).join(', ')}. `
+        + 'Si son documentos del expediente (por ejemplo .pages o .key de Mac), dile al abogado que los '
+        + 'exporte a PDF o Word y entrarán solos.';
     }
     // Lo que está esperando a bajar de la nube: se pide su descarga y se reintenta solo. Se dice
     // aquí para que nadie dé por hecho que esos documentos ya están en las búsquedas.

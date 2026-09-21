@@ -13,6 +13,7 @@
 //
 // La lista se guarda en disco: apagar el ordenador no puede perder los documentos que faltaban.
 import fs from 'node:fs';
+import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { config } from '../config.js';
@@ -27,7 +28,11 @@ const SE_DA_POR_VACIO_MS = Number(process.env.ROBIN_NUBE_DIAS_MAX || 1) * 24 * 6
 const POR_TANDA = Number(process.env.ROBIN_NUBE_POR_TANDA || 20);
 const REVISAR_CADA_MS = Number(process.env.ROBIN_NUBE_REVISAR_MS) || 2 * 60 * 1000;
 
-const _pend = new Map();  // clave de ruta → { ruta, motivo, desde, intentos, proximo, pedida }
+const _pend = new Map();    // clave de ruta → { ruta, motivo, desde, intentos, proximo, pedida }
+const _vacios = new Map();  // clave de ruta → hasta cuándo se le deja en paz (estaba vacío de verdad)
+// Una semana sin volver a insistir con un fichero que se dio por vacío. Si el abogado lo rellena,
+// cambia su tamaño y entra por el camino normal, sin esperar a nada.
+const OLVIDAR_VACIO_MS = 7 * 24 * 60 * 60 * 1000;
 let _cargado = false;
 let _timer = null;
 
@@ -46,6 +51,7 @@ function cargar() {
   try {
     const datos = JSON.parse(fs.readFileSync(ruta_lista(), 'utf8'));
     for (const e of datos?.pendientes || []) if (e?.ruta) _pend.set(clave(e.ruta), e);
+    for (const [k, hasta] of Object.entries(datos?.vacios || {})) if (hasta > Date.now()) _vacios.set(k, hasta);
   } catch {
     /* no hay lista todavía */
   }
@@ -54,7 +60,10 @@ function cargar() {
 function guardar() {
   try {
     fs.mkdirSync(config.dataDir, { recursive: true });
-    fs.writeFileSync(ruta_lista(), JSON.stringify({ pendientes: [..._pend.values()] }), 'utf8');
+    fs.writeFileSync(ruta_lista(), JSON.stringify({
+      pendientes: [..._pend.values()],
+      vacios: Object.fromEntries(_vacios),
+    }), 'utf8');
   } catch (err) {
     log.warn('No se pudo guardar la lista de documentos por descargar', { err: String(err?.message ?? err) });
   }
@@ -90,19 +99,24 @@ function pedirDescarga(ruta) {
       return false;
     }
   }
-  // Windows (OneDrive/Dropbox) y Linux: el contenido se trae solo al LEERLO. Se leen unos bytes,
-  // que es justo lo que dispara la descarga bajo demanda, y se deja al sincronizador trabajar.
-  try {
-    const fd = fs.openSync(ruta, 'r');
-    try {
-      fs.readSync(fd, Buffer.alloc(1), 0, 1, 0);
-    } finally {
-      fs.closeSync(fd);
-    }
-    return true;
-  } catch {
-    return false;
-  }
+  // Windows (OneDrive/Dropbox) y Linux: el contenido se trae solo al LEERLO; leer un byte es lo
+  // que dispara la descarga bajo demanda.
+  //
+  // Y se lee SIN ESPERAR. Leer un fichero que todavía está en la nube puede tardar minutos —lo
+  // trae el sincronizador mientras tanto—, y hacerlo con `readSync` dejaría el servidor entero
+  // parado: ni búsquedas, ni Claude, ni nada, y hasta veinte por pasada. Se lanza la lectura en
+  // el hilo de trabajo de Node, se olvida uno de ella y el resultado se ve en la siguiente
+  // pasada, cuando el fichero ya tenga contenido.
+  fsp.open(ruta, 'r')
+    .then(async (fh) => {
+      try {
+        await fh.read(Buffer.alloc(1), 0, 1, 0);
+      } finally {
+        await fh.close().catch(() => {});
+      }
+    })
+    .catch(() => { /* no se ha podido: se reintenta en la siguiente pasada */ });
+  return true;
 }
 
 // Apunta un documento que está en la carpeta pero no en el disco, y pide su descarga.
@@ -111,6 +125,11 @@ export function apuntar(ruta, motivo = 'sin_descargar') {
   const k = clave(ruta);
   const ya = _pend.get(k);
   if (ya) return ya;
+  // Uno que ya se dio por vacío no vuelve a la lista con cada pasada: estaría eternamente en
+  // «pendientes de descarga» y el número no querría decir nada.
+  const hasta = _vacios.get(k);
+  if (hasta && hasta > Date.now()) return null;
+  if (hasta) _vacios.delete(k);
   const e = { ruta, motivo, desde: new Date().toISOString(), intentos: 0, proximo: Date.now(), pedida: false };
   _pend.set(k, e);
   guardar();
@@ -153,6 +172,7 @@ export async function revisar({ indexar = null, forzar = false } = {}) {
     }
     if (ahora - Date.parse(e.desde) > SE_DA_POR_VACIO_MS) {
       _pend.delete(k);
+      _vacios.set(k, ahora + OLVIDAR_VACIO_MS);
       vacios.push(e.ruta);
       continue;
     }
@@ -198,6 +218,7 @@ export function parar() {
 
 export function _limpiarParaPrueba() {
   _pend.clear();
+  _vacios.clear();
   _cargado = false;
   parar();
   try {

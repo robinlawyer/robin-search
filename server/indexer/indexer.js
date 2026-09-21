@@ -89,7 +89,13 @@ function isSupported(filePath) {
 // una carpeta de OneDrive «bajo demanda» o de iCloud daba 0 documentos sin decir nada. Solo
 // contadores: ni nombres ni rutas (salen en estado_servidor y en el aviso técnico).
 export function nuevaCuentaRecorrido() {
-  return { no_descargados: 0, enlaces_inaccesibles: 0, bucles_evitados: 0, protegidos: 0, danados: 0 };
+  return {
+    no_descargados: 0, enlaces_inaccesibles: 0, bucles_evitados: 0, protegidos: 0, danados: 0,
+    // Qué extensiones hay en las carpetas que RobinSearch NO indexa, y cuántas de cada una. Sin
+    // esto, un despacho con 300 documentos en .pages o en un formato de su programa de gestión
+    // creía que estaban en las búsquedas: no fallaba nada, simplemente no estaban.
+    formatos_fuera: {},
+  };
 }
 
 // iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
@@ -177,10 +183,29 @@ function* walk(dir, ilegibles = null, cuenta = nuevaCuentaRecorrido(), visitadas
     const tipo = tipoReal(full, entry, cuenta);
     if (tipo === 'carpeta') {
       yield* walk(full, ilegibles, cuenta, visitadas);
-    } else if (tipo === 'fichero' && isSupported(full)) {
-      yield full;
+    } else if (tipo === 'fichero') {
+      if (isSupported(full)) yield full;
+      else anotarFormatoFuera(cuenta, full);
     }
   }
+}
+
+// Los ficheros que no son documentos (temporales de Office, ejecutables, bases de datos del
+// programa de gestión) no le interesan a nadie: solo se anotan las extensiones que PODRÍAN ser
+// un documento del expediente y hoy no se leen.
+const EXT_NO_DOCUMENTO = new Set([
+  '.exe', '.dll', '.sys', '.msi', '.bat', '.cmd', '.sh', '.lnk', '.url', '.ini', '.log', '.tmp',
+  '.db', '.sqlite', '.dat', '.bak', '.lock', '.ds_store', '.thumbs', '.part', '.crdownload',
+  '.js', '.css', '.map', '.woff', '.woff2', '.ttf', '.otf', '.mp3', '.mp4', '.mov', '.avi', '.wav',
+]);
+const MAX_FORMATOS_FUERA = 12;
+
+function anotarFormatoFuera(cuenta, full) {
+  if (!cuenta?.formatos_fuera) return;
+  const ext = extensionDe(full);
+  if (!ext || EXT_NO_DOCUMENTO.has(ext)) return;
+  if (!(ext in cuenta.formatos_fuera) && Object.keys(cuenta.formatos_fuera).length >= MAX_FORMATOS_FUERA) return;
+  cuenta.formatos_fuera[ext] = (cuenta.formatos_fuera[ext] || 0) + 1;
 }
 
 // Indexa (o re-indexa) un único fichero. Devuelve el resumen de lo procesado.
@@ -731,7 +756,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
     }
   }
   if (ilegibles.length) resumen.subcarpetas_ilegibles = ilegibles;
-  if (Object.values(cuenta).some((n) => n > 0)) resumen.no_indexables = cuenta;
+  // `formatos_fuera` es un objeto, no un contador: se mira aparte (si no, un despacho con 300
+  // .pages y nada más no veía el aviso).
+  const hayCuenta = Object.values(cuenta).some((n) => typeof n === 'number' && n > 0)
+    || Object.keys(cuenta.formatos_fuera || {}).length > 0;
+  if (hayCuenta) resumen.no_indexables = cuenta;
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
   await respirar();
   const { orden, bytesPendientes } = await planificar(files, force);
@@ -791,6 +820,14 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // para lo que sí hay que arreglar aquí.
       if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO') {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).protegidos += 1;
+        resumen.omitidos += 1;
+        return;
+      }
+      // Hoy el equipo no tenía memoria para el OCR de este escaneado. No está dañado ni hay nada
+      // que arreglar: se deja sin indexar y la siguiente pasada lo vuelve a intentar.
+      if (err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).reintentables =
+          ((resumen.no_indexables.reintentables) || 0) + 1;
         resumen.omitidos += 1;
         return;
       }
