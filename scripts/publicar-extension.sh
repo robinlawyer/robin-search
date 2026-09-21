@@ -41,7 +41,7 @@ REMOTA=$(ssh -i "$CLAVE" "$SERVIDOR" "sha256sum $REMOTO/robin-search.mcpb | cut 
 echo "   huella correcta en el servidor"
 
 echo "### 2. Anunciando la versión en la RAÍZ del fichero de versiones"
-ssh -i "$CLAVE" "$SERVIDOR" "V='$V' BASE='$BASE' NOTAS=$(printf %q "$NOTAS") flock /tmp/deploy-frontend.lock bash -s" <<'REMOTO_SH'
+ssh -i "$CLAVE" "$SERVIDOR" "V='$V' BASE='$BASE' HUELLA='$HUELLA' NOTAS=$(printf %q "$NOTAS") flock /tmp/deploy-frontend.lock bash -s" <<'REMOTO_SH'
 set -euo pipefail
 cd /opt/jurix/frontend
 git fetch -q origin main
@@ -54,6 +54,11 @@ d = json.load(open(p), object_pairs_hook=O)
 # Solo la raíz: la sección `app` la gobierna publicar.sh de robin-desktop.
 d["version"] = os.environ["V"]
 d["url"] = os.environ["BASE"] + "robin-search.mcpb"
+# La huella es lo que permite que la APP se baje la extension y la instale
+# sola: sin ella lo unico honesto es abrir la descarga en el navegador, y el
+# abogado se queda con un .mcpb de 250 MB en Descargas sin saber que hacer
+# (Eduardo, 21-sep-2026). Un cliente viejo ignora esta clave sin enterarse.
+d["sha256"] = os.environ["HUELLA"]
 d["notas"] = os.environ["NOTAS"]
 open(p, "w").write(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
 PY
@@ -67,9 +72,12 @@ echo "   publicado: $(git log --oneline -1)"
 REMOTO_SH
 
 echo "### 3. Comprobando desde fuera"
-ANUNCIA=$(curl -sS "${BASE}robin-search-latest.json" | python3 -c "import sys,json;print(json.load(sys.stdin)['version'])")
+RAIZ=$(curl -sS "${BASE}robin-search-latest.json")
+ANUNCIA=$(echo "$RAIZ" | python3 -c "import sys,json;print(json.load(sys.stdin)['version'])")
 [ "$ANUNCIA" = "$V" ] || { echo "   ABORTO: el feed anuncia la $ANUNCIA"; exit 1; }
-echo "   el feed anuncia la extensión $ANUNCIA"
+ANUNCIA_H=$(echo "$RAIZ" | python3 -c "import sys,json;print(json.load(sys.stdin).get('sha256',''))")
+[ "$ANUNCIA_H" = "$HUELLA" ] || { echo "   ABORTO: el feed anuncia otra huella ($ANUNCIA_H)"; exit 1; }
+echo "   el feed anuncia la extensión $ANUNCIA con su huella"
 SERVIDA=$(curl -sS "${BASE}robin-search.mcpb" | shasum -a 256 | cut -d' ' -f1)
 [ "$SERVIDA" = "$HUELLA" ] || { echo "   ABORTO: el .mcpb servido tiene otra huella ($SERVIDA)"; exit 1; }
 echo "   el .mcpb servido es byte a byte el que construimos"
