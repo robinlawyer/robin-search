@@ -91,6 +91,24 @@ async function estado() {
   };
 }
 
+// EL CASO QUE MÁS DUELE al conectar: el servidor lo hemos adivinado nosotros, existe y contesta,
+// pero no es el suyo — en el hosting compartido hay servidores que responden a cualquier dominio.
+// El servidor dice «credenciales incorrectas» y, tal cual, mandaríamos al abogado a dudar de su
+// contraseña, que es correcta. Si el servidor no lo escribió él, se le dicen las DOS
+// posibilidades, con el nombre del que hemos probado, y se le lleva a los ajustes avanzados.
+export function explicarAlConectar(err, { host, deducido }) {
+  const fallo = explicar(err);
+  if (fallo.motivo !== 'credenciales' || !deducido) return fallo;
+  return {
+    motivo: 'credenciales_o_servidor',
+    mensaje: `He buscado tu servidor de correo y he probado con «${host}», pero ha rechazado la `
+      + 'contraseña. Puede ser una de dos cosas: que la contraseña no sea esa, o que ese no sea tu '
+      + 'servidor — lo he deducido del nombre de tu dominio, y no siempre se acierta. Si estás seguro de '
+      + 'la contraseña, pídele a quien lleve la informática del despacho el servidor de entrada (IMAP) y '
+      + 'el de salida (SMTP) y ponlos en Ajustes avanzados.',
+  };
+}
+
 async function conectar(o) {
   const direccion = String(o.direccion || o.usuario || '').trim();
   if (!direccion || !dominioDe(direccion)) return salida({ ok: false, motivo: 'direccion', mensaje: 'Hace falta --direccion=tu@despacho.es' });
@@ -152,12 +170,16 @@ async function conectar(o) {
     }
   }
 
+  // ¿El servidor lo ha puesto el abogado, o lo hemos deducido nosotros? Cambia por completo lo
+  // que hay que decirle si falla.
+  const servidorDeducido = !o['imap-host'];
+
   // Se comprueba ANTES de guardar nada: no se deja una cuenta configurada que no funciona.
   let cliente;
   try {
     cliente = await probarCredenciales({ ...imap, puerto: imap.puerto, usuario: direccion, clave });
   } catch (err) {
-    return salida({ ok: false, ...explicar(err), imap, smtp, deteccion });
+    return salida({ ok: false, ...explicarAlConectar(err, { host: imap.host, deducido: servidorDeducido }), imap, smtp, deteccion, servidor_deducido: servidorDeducido });
   }
   let inventario;
   try {

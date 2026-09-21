@@ -37,6 +37,7 @@ const buscarCorreos = (await imp('server/tools/buscar_correos.js')).default;
 const leerCorreoTool = (await imp('server/tools/leer_correo.js')).default;
 const guardarBorrador = (await imp('server/tools/guardar_borrador.js')).default;
 const enviarCorreo = (await imp('server/tools/enviar_correo.js')).default;
+const leerAdjunto = (await imp('server/tools/leer_adjunto.js')).default;
 
 const datos = (r) => r.structuredContent;
 const CUENTA = 'abogado@despacho.test';
@@ -149,7 +150,16 @@ const uidGordo = buzon.anadir('INBOX', {
   de: 'burofax@correos.test', para: CUENTA, asunto: 'Burofax con adjunto grande', fecha: new Date('2026-09-19T08:00:00Z'),
   mime: Buffer.from(['From: burofax@correos.test', `To: ${CUENTA}`, 'Subject: Burofax con adjunto grande', 'Date: Sat, 19 Sep 2026 08:00:00 GMT', 'Message-ID: <burofax@correos.test>', 'MIME-Version: 1.0', 'Content-Type: multipart/mixed; boundary=limite', '', '--limite', 'Content-Type: text/plain; charset=utf-8', '', 'Le requerimos el pago en diez días.', '--limite--'].join('\r\n'), 'utf8'),
 });
-buzon.carpetas.get('INBOX').mensajes.find((m) => m.uid === uidGordo).multiparte = true;
+{
+  // El correo con el adjunto gigante: el servidor ANUNCIA 20 MB (nadie los descarga, que es
+  // justo lo que se comprueba). Se impone la estructura porque un fichero así no cabe en el
+  // repositorio, y lo que se prueba es la decisión de RobinSearch, no el tamaño del fichero.
+  const m = buzon.carpetas.get('INBOX').mensajes.find((x) => x.uid === uidGordo);
+  m.multiparte = true;
+  m.bodystructure = '(("TEXT" "PLAIN" ("CHARSET" "utf-8") NIL NIL "7BIT" 120 5 NIL NIL NIL NIL)'
+    + '("APPLICATION" "PDF" ("NAME" "burofax.pdf") NIL NIL "BASE64" 20971520 NIL ("ATTACHMENT" ("FILENAME" "burofax.pdf")) NIL NIL)'
+    + ' "MIXED" ("BOUNDARY" "limite") NIL NIL NIL)';
+}
 
 const { servidor, puerto } = await levantar(buzon);
 ajustes.guardarCorreo({
@@ -195,8 +205,40 @@ ajustes.guardarCorreo({
 }
 {
   const r = datos(await leerCorreoTool.handler({ uid: uidGordo }));
-  check('un correo con adjunto: el adjunto se LISTA y no se descarga', r.adjuntos?.some((a) => a.nombre === 'burofax.pdf' && a.bytes > 10e6) && /NO se han descargado/i.test(r.nota_adjuntos || ''));
+  check('un correo con adjunto: se lista con su tamaño y se dice cómo leerlo',
+    r.adjuntos?.some((a) => a.nombre === 'burofax.pdf' && a.bytes > 10e6) && /leer_adjunto/.test(r.nota_adjuntos || ''),
+    r.nota_adjuntos ? '' : 'sin nota');
   check('y se lee solo la parte de texto, no los 20 MB', /Le requerimos el pago/.test(r.cuerpo || ''), r.como_se_leyo);
+}
+
+// ── Los adjuntos: donde está la información de verdad ──
+{
+  // Un correo con un PDF de verdad adjunto (el burofax, la factura, el escrito del juzgado:
+  // en un despacho el cuerpo suele ser «le adjunto lo acordado» y todo lo demás está aquí).
+  const pdf = fs.readFileSync(path.join(REPO, 'scripts/fixtures/requerimiento.pdf'));
+  const limite = 'limite-adjunto';
+  const partes = [
+    `From: procurador@juzgado.test`, `To: ${CUENTA}`, 'Subject: Requerimiento',
+    'Date: Sat, 20 Sep 2026 10:00:00 GMT', 'Message-ID: <req@juzgado.test>', 'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary=${limite}`, '',
+    `--${limite}`, 'Content-Type: text/plain; charset=utf-8', '', 'Le adjunto el requerimiento.', '',
+    `--${limite}`, 'Content-Type: application/pdf; name="requerimiento.pdf"',
+    'Content-Disposition: attachment; filename="requerimiento.pdf"',
+    'Content-Transfer-Encoding: base64', '', pdf.toString('base64'), `--${limite}--`,
+  ].join('\r\n');
+  const conPdf = buzon.anadir('INBOX', { de: 'procurador@juzgado.test', para: CUENTA, asunto: 'Requerimiento', mime: Buffer.from(partes, 'utf8') });
+  const m = buzon.carpetas.get('INBOX').mensajes.find((x) => x.uid === conPdf);
+  m.multiparte = true;
+  m.bodystructurePdf = true;
+
+  const r = datos(await leerAdjunto.handler({ uid: conPdf, adjunto: 'requerimiento.pdf' }));
+  check('el adjunto PDF se lee de verdad, no solo se lista', /12\.480,00/.test(r.contenido || ''), r.error || (r.contenido || '').slice(-80));
+  check('y llega envuelto como contenido de un tercero', /NO FIABLE/.test(r.contenido || ''));
+  check('no queda ningún temporal con el adjunto en el disco',
+    !fs.existsSync(path.join(process.env.ROBIN_DATA_DIR, 'adjuntos-tmp'))
+    || fs.readdirSync(path.join(process.env.ROBIN_DATA_DIR, 'adjuntos-tmp')).length === 0);
+  const noExiste = datos(await leerAdjunto.handler({ uid: conPdf, adjunto: 'no-existe.pdf' }));
+  check('si se pide un adjunto que no está, se dice cuáles hay', /requerimiento\.pdf/.test(noExiste.error || ''));
 }
 
 // ── La pieza difícil: el borrador ──
@@ -286,6 +328,25 @@ carpetas.olvidarCache();
   ajustes.olvidarCorreo();
   const r = datos(await buscarCorreos.handler({}));
   check('sin cuenta conectada: explica dónde se conecta y que la contraseña no se pide por el chat', r.motivo === 'sin_cuenta' && /llavero/i.test(r.error || ''));
+}
+
+// ─────────── 6 ter. Contraseña rechazada: ¿por la contraseña, o por el servidor? ───────────
+//
+// En el hosting compartido hay servidores que contestan a cualquier dominio. Si el servidor lo
+// hemos DEDUCIDO nosotros y rechaza la contraseña, el abogado no puede saber si se equivocó de
+// contraseña o si ese no es su servidor — y lo segundo no lo va a adivinar mirando su contraseña.
+{
+  const { explicarAlConectar } = await imp('server/correo/cli.js');
+  const rechazo = Object.assign(new Error('Invalid credentials'), { code: 'AUTHENTICATIONFAILED' });
+
+  const deducido = explicarAlConectar(rechazo, { host: 'mail.despacho.test', deducido: true });
+  check('servidor DEDUCIDO y contraseña rechazada: se dan las dos posibilidades, con el servidor probado',
+    deducido.motivo === 'credenciales_o_servidor'
+    && /mail\.despacho\.test/.test(deducido.mensaje)
+    && /Ajustes avanzados/.test(deducido.mensaje), deducido.motivo);
+
+  const aMano = explicarAlConectar(rechazo, { host: 'mail.despacho.test', deducido: false });
+  check('servidor puesto A MANO: no se especula, es la contraseña', aMano.motivo === 'credenciales', aMano.motivo);
 }
 
 // ─────────── 6 bis. stdout intacto: es el canal del JSON-RPC ───────────

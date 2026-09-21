@@ -83,7 +83,44 @@ export class BuzonFalso {
     return `(${cita(m.fecha.toUTCString())} ${cita(m.asunto)} ${listaDirecciones(m.de)} ${listaDirecciones(m.de)} ${listaDirecciones(m.de)} ${listaDirecciones(m.para)} NIL NIL NIL ${cita(m.messageId)})`;
   }
 
+  // Trocea un mensaje multipart por su frontera. Devuelve, por cada parte, sus cabeceras y su
+  // cuerpo TAL CUAL viaja (sin deshacer el base64): eso lo hace el cliente, que para eso lee el
+  // Content-Transfer-Encoding de las cabeceras de la parte.
+  partes(m) {
+    if (m._partes) return m._partes;
+    const texto = m.fuente.toString('binary');
+    const frontera = /boundary="?([^";\r\n]+)"?/i.exec(texto)?.[1];
+    if (!frontera) return (m._partes = []);
+    const trozos = texto.split(`--${frontera}`).slice(1, -1);
+    m._partes = trozos.map((t) => {
+      const corte = t.indexOf('\r\n\r\n');
+      const cabeceras = corte < 0 ? '' : t.slice(0, corte + 4).replace(/^\r\n/, '');
+      const cuerpo = corte < 0 ? '' : t.slice(corte + 4).replace(/\r\n$/, '');
+      return { cabeceras: Buffer.from(cabeceras, 'binary'), cuerpo: Buffer.from(cuerpo, 'binary') };
+    });
+    return m._partes;
+  }
+
   bodystructure(m) {
+    // Estructura impuesta a mano: sirve para simular lo que no se puede meter en el repositorio,
+    // como un adjunto de 20 MB (el servidor solo ANUNCIA su tamaño; nadie lo descarga).
+    if (m.bodystructure) return m.bodystructure;
+    // Si no, un mensaje con partes de verdad: se describe lo que hay, no una plantilla.
+    const ps = this.partes(m);
+    if (m.multiparte && ps.length) {
+      const trozos = ps.map((parte) => {
+        const c = parte.cabeceras.toString('utf8');
+        const tipo = (/Content-Type:\s*([^;\r\n]+)/i.exec(c)?.[1] || 'text/plain').trim();
+        const [t1, t2] = tipo.split('/');
+        const nombre = /(?:file)?name="?([^";\r\n]+)"?/i.exec(c)?.[1] || null;
+        const codif = (/Content-Transfer-Encoding:\s*(\S+)/i.exec(c)?.[1] || '7BIT').toUpperCase();
+        const adjunto = /Content-Disposition:\s*attachment/i.test(c);
+        const params = nombre ? `("NAME" ${cita(nombre)})` : '("CHARSET" "utf-8")';
+        const disp = adjunto && nombre ? `("ATTACHMENT" ("FILENAME" ${cita(nombre)}))` : 'NIL';
+        return `(${cita(t1.toUpperCase())} ${cita((t2 || 'plain').toUpperCase())} ${params} NIL NIL ${cita(codif)} ${parte.cuerpo.length} NIL ${disp} NIL NIL)`;
+      });
+      return `(${trozos.join('')} "MIXED" ("BOUNDARY" "x") NIL NIL NIL)`;
+    }
     if (m.multiparte) {
       // text/plain + un adjunto PDF: lo justo para probar que se listan los adjuntos y que se
       // elige la parte de texto correcta.
@@ -272,8 +309,13 @@ export function levantar(buzon) {
           const partes = [...que.matchAll(/BODY(?:\.PEEK)?\[([^\]]*)\](?:<(\d+)\.(\d+)>)?/g)];
           for (const [, parte, desde, largo] of partes) {
             let datos;
+            const mime = /^(\d+)\.MIME$/i.exec(parte);
+            const numero = /^(\d+)$/.exec(parte);
+            const ps = buzon.partes(m);
             if (!parte) datos = m.fuente;
             else if (/^HEADER/i.test(parte)) datos = buzon.cabecerasDe(m);
+            else if (mime && ps[Number(mime[1]) - 1]) datos = ps[Number(mime[1]) - 1].cabeceras;
+            else if (numero && ps[Number(numero[1]) - 1]) datos = ps[Number(numero[1]) - 1].cuerpo;
             else datos = buzon.cuerpoDe(m);
             if (desde !== undefined) datos = datos.slice(Number(desde), Number(desde) + Number(largo));
             // La clave se devuelve EN MINÚSCULAS y sin el «<origen>»: es como la indexa imapflow

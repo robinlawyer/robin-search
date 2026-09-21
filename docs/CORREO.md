@@ -31,6 +31,8 @@ Lo que cambia es que no hay un intermediario nuevo.
 |---|---|---|
 | `buscar_correos` | Busca por remitente, destinatario, asunto, texto, fechas, sin leer o con adjunto | Solo lectura |
 | `leer_correo` | Devuelve un correo entero en texto plano, con sus adjuntos listados | Solo lectura |
+| `leer_adjunto` | Devuelve el **texto de un adjunto**: PDF, Word, Excel, escaneados con OCR | Solo lectura |
+| `archivar_correo` | Deja el correo (y, si se quiere, un adjunto suelto) **en la carpeta del expediente** | Escribe, previa confirmación |
 | `guardar_borrador` | Deja la respuesta redactada en Borradores, dentro del hilo | Escribe un borrador |
 | `enviar_correo` | Envía de verdad y deja copia en Enviados | **Desactivado de fábrica** |
 
@@ -168,13 +170,66 @@ el dominio y lo dice ANTES de que el abogado escriba nada:
 | iCloud, Yahoo, AOL | Avisa de la contraseña de aplicación y dice dónde se crea |
 | Cualquier otro servidor que anuncie `LOGINDISABLED` | Avisa de que ese servidor ya no admite contraseña |
 
-## Qué NO hace la v1
+## Los adjuntos
 
-- **No descarga adjuntos.** Los lista con su nombre y su tamaño. Si el abogado quiere trabajar
-  con uno, que lo guarde en la carpeta del expediente: ahí se indexa como cualquier documento.
-- **No vuelca correos al expediente indexado.** El correo es de la *cuenta*, no del expediente, y
-  meter la correspondencia de un cliente en el expediente de otro sería el peor fallo posible.
-  Está previsto para la 1.1, con el abogado eligiendo a mano qué va a qué expediente.
+En un despacho la información está **en el adjunto**: el burofax, la factura, el escrito del
+juzgado, el contrato. El cuerpo del correo suele ser «le adjunto lo acordado». Por eso
+`leer_adjunto` devuelve su TEXTO, con el mismo motor que lee los expedientes: PDF, Word, Excel,
+presentaciones, imágenes y **escaneados con OCR**.
+
+> «Léeme el requerimiento que viene adjunto.»
+
+Tres cosas que conviene saber:
+
+- **No se guarda nada.** El adjunto se baja a un temporal del directorio de datos —nunca dentro de
+  una carpeta vigilada, donde el vigilante lo indexaría y acabaría mezclado con el expediente de
+  otro cliente—, se lee y se borra siempre, también si falla.
+- **Si venía escaneado, se dice.** La respuesta avisa de que se ha leído por reconocimiento óptico
+  y de que importes, fechas y números de cuenta hay que comprobarlos en el original. En un plazo
+  procesal, «el OCR casi siempre acierta» no vale.
+- **Hay tope por tamaño**, el mismo que en el indexado: un adjunto enorme no puede dejar sin
+  memoria al proceso con el que el abogado está trabajando. Si se pasa, se dice y se propone
+  guardarlo en el expediente.
+
+Leer un adjunto no lo archiva: para que quede en el caso está `archivar_correo` (abajo).
+
+## La correspondencia, dentro del expediente (1.8.1)
+
+Leer el correo en vivo no basta para un expediente: si el correo no es un **fichero de la
+carpeta**, `buscar_documentos` no lo alcanza y el abogado tiene que acordarse de buscarlo aparte,
+contra el buzón. Para algo que se vende como «todo el expediente en un mismo sitio», dejar la
+correspondencia fuera del índice es un hueco raro. `archivar_correo` lo cierra.
+
+> «Guarda este correo en el expediente.»
+
+- **Se guarda el `.eml` original**, no un resumen: conserva las cabeceras completas —que es lo que
+  pesa como prueba—, se abre con doble clic en cualquier cliente de correo, y no hace falta
+  ningún lector nuevo: RobinSearch ya indexa `.eml` y, al hacerlo, desmonta cabecera, cuerpo y **el
+  texto de cada adjunto que lleve dentro**, de forma recursiva. Archivar el correo deja el burofax
+  buscable sin sacarlo a fichero suelto. `.msg` queda para cuando haya que preservar algo propio
+  de Outlook.
+- **Va a `Comunicaciones/`** dentro de la carpeta del expediente, con el nombre
+  `AAAA-MM-DD HHMM - remitente - asunto.eml`, para que la carpeta se lea en orden cronológico.
+  Con `"que": "todo"` se saca además el adjunto a fichero suelto, para cuando el abogado quiere el
+  PDF a mano.
+- **Nunca automático y nunca adivinando.** Va al expediente **activo** de la sesión (el mismo
+  mecanismo de `establecer_expediente_activo`); si no hay ninguno, se pregunta. Y no escribe nada
+  sin `confirmar: true`: primero devuelve la frase que hay que enseñarle al abogado, con el
+  remitente y el expediente destino **juntos** —«¿Guardo el correo «Requerimiento de pago», de
+  Suministros Vidal, en el expediente «Pérez - Divorcio»?»—, para que un cruce de clientes se vea
+  antes de decir que sí, no después. El spam, la facturación y la agenda no pintan nada en el
+  expediente de un cliente: por eso se archiva correo a correo.
+- **No se duplica y no se pisa nada.** Si ese mismo contenido ya está en el expediente, aunque el
+  fichero se llame de otra forma, se dice con qué nombre está y no se deja una copia repetida
+  (`aunque_este_repetido: true` si el abogado insiste). Y si el nombre está cogido, el nuevo se
+  escribe al lado con un « (2)»: RobinSearch **no modifica ni sustituye** ningún documento del
+  despacho.
+- **Se indexa al momento**, así que lo siguiente que busque el abogado ya lo encuentra.
+
+## Qué NO hace
+- **No vuelca el buzón al expediente.** No hay «archiva toda esta carpeta»: un correo, una
+  confirmación. Meter la correspondencia de un cliente en el expediente de otro sería el peor
+  fallo posible, y es más probable cuanto más automático sea el trasvase.
 - **No toca lo que hay en el buzón**: no borra, no mueve y no marca como leído salvo que se le
   pida expresamente.
 

@@ -25,6 +25,7 @@
     "test:incidencias-sep": "node scripts/test-incidencias-sep.mjs",
     "test:correo": "node scripts/test-correo.mjs",
     "test:correo-oauth": "node scripts/test-correo-oauth.mjs",
+    "test:archivo-expediente": "node scripts/test-archivo-expediente.mjs",
     "test:barrido": "node scripts/test-barrido.mjs",
     "test:login": "node scripts/test-login.mjs",
     "test:login-bloqueado": "node scripts/test-login-bloqueado.mjs",

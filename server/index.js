@@ -33,6 +33,8 @@ import anotar from './tools/anotar.js';
 import obtenerAnotaciones from './tools/obtener_anotaciones.js';
 import buscarCorreos from './tools/buscar_correos.js';
 import leerCorreo from './tools/leer_correo.js';
+import leerAdjunto from './tools/leer_adjunto.js';
+import archivarCorreo from './tools/archivar_correo.js';
 import guardarBorrador from './tools/guardar_borrador.js';
 import enviarCorreo from './tools/enviar_correo.js';
 
@@ -54,6 +56,8 @@ const TOOLS = [
   // cada una lo dice y explica dónde se conecta.
   buscarCorreos,
   leerCorreo,
+  leerAdjunto,
+  archivarCorreo,
   guardarBorrador,
   enviarCorreo,
 ];

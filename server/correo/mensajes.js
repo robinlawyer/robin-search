@@ -57,8 +57,9 @@ export async function textoDe(cliente, uid, parte, { maxBytes = 256 * 1024 } = {
   return parte.tipo === 'text/html' ? htmlATexto(texto) : texto;
 }
 
-// Los adjuntos, LISTADOS pero no descargados (v1). Saber que hay un «burofax.pdf» de 1,2 MB es
-// lo que el abogado necesita para decidir; traérselo al contexto es otra conversación.
+// Los adjuntos que trae el correo: nombre, tipo, tamaño y la PARTE MIME donde vive cada uno.
+// Esto solo los describe —es lo que necesita el abogado para decidir—; bajarlos es cosa de quien
+// llama: leer_adjunto trae el texto de uno y archivar_correo lo deja en el expediente.
 export function adjuntosDe(nodo) {
   const out = [];
   const recorrer = (n) => {

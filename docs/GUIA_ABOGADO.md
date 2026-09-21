@@ -87,13 +87,34 @@ El borrador aparece en tu carpeta de Borradores, dentro de la conversación, lis
 revises y lo mandes tú. **Eso es lo que hace por defecto: redactar.** Si además quieres que pueda
 enviar, hay un interruptor en la app; aun así te pedirá confirmación cada vez.
 
-Lo que no hace: no descarga adjuntos (te dice cuáles hay), no borra ni mueve nada, y no marca
-como leído lo que no has abierto tú.
+Y los adjuntos los lee: el burofax, la factura o el escrito del juzgado que venga en el correo,
+aunque sea un PDF escaneado. Basta con pedírselo:
+
+> «Léeme el requerimiento que viene adjunto.»
+
+Si venía escaneado te lo dirá, para que compruebes los importes y las fechas en el original.
+
+Y si ese correo es del caso, puedes dejarlo **dentro del expediente**:
+
+> «Guárdalo en el expediente.»
+
+Antes de escribir nada te preguntará, con el remitente y el expediente en la misma frase —«¿Guardo
+el correo «Requerimiento de pago», de Suministros Vidal, en el expediente «Pérez - Divorcio»?»—,
+para que veas a tiempo si se ha equivocado de cliente. Se guarda el correo original (un `.eml`, se
+abre con doble clic) en una carpeta **Comunicaciones** dentro del expediente, y desde ese momento
+se busca junto al resto del caso: también por lo que decía el PDF que traía adjunto. Si ese
+documento ya lo tenías guardado, aunque con otro nombre, te lo dice en vez de dejarte una copia
+repetida; y nunca sobrescribe un fichero tuyo.
+
+Lo que no hace: no vuelca el buzón entero al expediente (correo a correo, y preguntando), no borra
+ni mueve nada, y no marca como leído lo que no has abierto tú.
 
 Funciona con cualquier buzón que hable IMAP: tu propio proveedor, el servidor del despacho o
-Gmail (con una contraseña de aplicación). **Microsoft 365 y Outlook.com, hoy no**: Microsoft
-retiró la conexión con contraseña y exige su propio inicio de sesión, que aún no hacemos. Está
-todo en [CORREO.md](CORREO.md).
+Gmail (con una contraseña de aplicación). **Y desde la 1.8.0 también Microsoft 365 y
+Outlook.com**: Microsoft retiró la conexión con contraseña, así que ahí no se escribe ninguna —
+se abre el navegador, entras en tu cuenta de Microsoft como siempre, y lo que queda en el llavero
+de tu ordenador es un permiso que puedes retirar cuando quieras desde tu propia cuenta. Está todo
+en [CORREO.md](CORREO.md).
 
 ---
 
