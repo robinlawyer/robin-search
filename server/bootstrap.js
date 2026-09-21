@@ -338,8 +338,14 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     // Los documentos que la nube todavía no había traído no se quedan fuera: se pide su descarga
     // y se vuelve a mirar hasta indexarlos (nube.js). Solo la instancia que escribe.
     if (hayCarpetas) {
-      nube.arrancar({ indexar: (ruta) => indexFile(ruta, { force: true }) });
-      nube.revisar({ indexar: (ruta) => indexFile(ruta, { force: true }), forzar: true })
+      // El cerrojo se comprueba en el momento de indexar, no al programar: entre una pasada y la
+      // siguiente pueden pasar horas y el índice puede haber cambiado de dueño.
+      const indexarSiEscribo = async (ruta) => {
+        if (!escritor.soyEscritor()) return;
+        await indexFile(ruta, { force: true });
+      };
+      nube.arrancar({ indexar: indexarSiEscribo });
+      nube.revisar({ indexar: indexarSiEscribo, forzar: true })
         .catch((err) => log.warn('No se pudo revisar lo que falta por descargar', { err: String(err?.message ?? err) }));
     }
     diagnostico.arranqueCompleto();
@@ -372,6 +378,9 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     log.warn('Otra instancia de RobinSearch ha tomado el índice: esta pasa a solo buscar');
     registry.descartarPendiente();
     stopWatcher().catch((err) => log.warn('No se pudo parar el vigilante', { err: String(err) }));
+    // Y se deja de perseguir lo que falta por bajar de la nube: escribe en el índice, y el índice
+    // ya no es de esta instancia. Al tomar el relevo se vuelve a arrancar con el resto.
+    nube.parar();
     if (watch) esperarRelevo();
   });
 
