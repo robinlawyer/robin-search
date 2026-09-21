@@ -46,8 +46,6 @@ const EXT_ARCHIVE = new Set(['.zip', '.rar', '.7z']);
 // ─────────────────────────────────────────────────────────────────────────────
 // PDF (con detección de escaneado → OCR local)
 // ─────────────────────────────────────────────────────────────────────────────
-// Prueba las contraseñas configuradas, una a una, sobre un PDF cifrado. Devuelve el documento
-// abierto o null. Las contraseñas no se registran nunca, ni siquiera cuál ha funcionado.
 // Segundo intento sobre un PDF que pdfjs da por roto: mupdf rehace su tabla de objetos. Devuelve
 // el contrato de páginas de siempre, o null si tampoco hay nada que leer.
 async function rescatarPdfConMupdf(filePath, { maxPages }) {
@@ -83,6 +81,8 @@ async function rescatarPdfConMupdf(filePath, { maxPages }) {
   }
 }
 
+// Prueba las contraseñas configuradas, una a una, sobre un PDF cifrado. Devuelve el documento
+// abierto o null. Las contraseñas no se registran nunca, ni siquiera cuál ha funcionado.
 async function conContrasenya(abrir) {
   for (const clave of config.pdfClaves) {
     try {
@@ -526,6 +526,11 @@ function odfTextRuns(xml) {
     .replace(/<\/text:p>/g, '\n')
     .replace(/<\/a:p>/g, '\n')
     .replace(/<a:br\/?>/g, '\n')
+    // Word (OOXML): párrafo, salto de línea y tabulador. Hacen falta para el texto que se rescata
+    // de un .docx con el ZIP roto, que no pasa por mammoth.
+    .replace(/<\/w:p>/g, '\n')
+    .replace(/<w:br\s*\/?>/g, '\n')
+    .replace(/<w:tab\s*\/?>/g, '\t')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')

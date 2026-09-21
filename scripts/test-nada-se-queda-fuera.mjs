@@ -41,6 +41,16 @@ const copia = (fix, nombre) => { const p = path.join(base, nombre); fs.copyFileS
 x = await intenta(copia('escrito-97.doc', 'renombrado.docx'));
 check('un .doc guardado como .docx se lee como lo que es', /embargo preventivo/.test(texto(x.r)), x.e ? String(x.e.message) : '');
 
+// Un .doc a medias no puede tumbar nada: el lector va byte a byte por dentro del fichero.
+const medio = path.join(base, 'a-medias.doc');
+fs.writeFileSync(medio, fs.readFileSync(fixture('escrito-97.doc')).subarray(0, 3000));
+x = await intenta(medio);
+check('un .doc cortado da error de fichero, nunca una excepción sin capturar',
+  x.e ? String(x.e.code).startsWith('ROBIN_FICHERO_') : true, x.e ? String(x.e.code) : 'lo ha leído igual');
+fs.writeFileSync(path.join(base, 'ruido.doc'), Buffer.from(Array.from({ length: 4096 }, (_, i) => (i * 37) % 256)));
+x = await intenta(path.join(base, 'ruido.doc'));
+check('y un fichero de ruido con extensión .doc, también', Boolean(x.e) && String(x.e.code).startsWith('ROBIN_FICHERO_'), String(x.e?.code));
+
 const { esExtensionSoportada } = await imp('server/config.js');
 check('los .doc y .ppt del despacho entran en el indexado',
   esExtensionSoportada('/x/Pérez/demanda.doc') && esExtensionSoportada('/x/Pérez/vista.ppt'));
