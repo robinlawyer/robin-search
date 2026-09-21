@@ -131,8 +131,25 @@ export async function extractPdf(filePath, { maxPages }) {
 // DOCX no tiene paginación fiable → todo el documento como un único bloque (page: null).
 export async function extractDocx(filePath) {
   const mammoth = (await import('mammoth')).default ?? (await import('mammoth'));
-  const { value } = await mammoth.extractRawText({ path: filePath });
-  return pagesFromText((value || '').replace(/\r\n/g, '\n'));
+  try {
+    const { value } = await mammoth.extractRawText({ path: filePath });
+    return pagesFromText((value || '').replace(/\r\n/g, '\n'));
+  } catch (err) {
+    throw siEsZipRoto(err, '.docx');
+  }
+}
+
+// Un .docx/.odt/.odp/.pptx cuyo ZIP está truncado (descarga a medias, copia interrumpida) empieza
+// igual que uno sano: solo se sabe al abrirlo. El mensaje del lector no dice nada al abogado y no
+// hay nada que arreglar aquí, así que sale como error DEL FICHERO y no dispara el aviso técnico.
+const RE_ZIP_ROTO = /end of central directory|END header|invalid or unsupported zip|corrupt|not a zip|crc32|multi-volume/i;
+function siEsZipRoto(err, ext) {
+  const msg = String(err?.message ?? err);
+  if (err?.code?.startsWith?.('ROBIN_')) return err;
+  if (RE_ZIP_ROTO.test(msg)) {
+    return errorDeFichero('FORMATO', `El ${ext} está dañado o incompleto: no se puede abrir`);
+  }
+  return err;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -191,7 +208,28 @@ export function normalizeWhatsApp(text) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractHtml(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
-  return pagesFromText(htmlToText(raw));
+  return pagesFromText(htmlToText(desdeMime(raw)));
+}
+
+// «Página web de un solo archivo» (Word y Outlook la ofrecen al guardar como .doc/.docx): el HTML
+// va dentro de un MIME y, casi siempre, en quoted-printable. Sin deshacerlo, el texto sale con
+// «=E9» donde hay una tilde y cortado cada 76 caracteres.
+function desdeMime(raw) {
+  if (!/^(mime-version:|content-type:\s*(multipart\/related|text\/html))/i.test(raw.trimStart())) return raw;
+  let cuerpo = raw;
+  if (/content-transfer-encoding:\s*quoted-printable/i.test(raw)) {
+    // El quoted-printable son BYTES: se deshace sobre latin1 y luego se interpreta con el juego de
+    // caracteres que declara el fichero; si no, «=C3=B3» sale como «Ã³» en vez de «ó».
+    const utf8 = /charset\s*=\s*"?utf-?8/i.test(raw);
+    const bytes = cuerpo.replace(/=\r?\n/g, '').replace(/=([0-9A-Fa-f]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+    cuerpo = utf8 ? Buffer.from(bytes, 'latin1').toString('utf8') : bytes;
+  }
+  // Fuera las cabeceras MIME y los separadores de parte: no son el documento.
+  return cuerpo
+    .split(/\r?\n/)
+    .filter((l) => !/^(mime-version|content-type|content-transfer-encoding|content-location|content-id|content-disposition|x-mimeole|date|from|subject|to|boundary)\s*:/i.test(l)
+      && !/^--[-=_A-Za-z0-9.]+(--)?$/.test(l.trim()))
+    .join('\n');
 }
 
 function htmlToText(html) {
@@ -305,9 +343,13 @@ function rtfToTextFallback(rtf) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractOfficeXml(filePath) {
   const AdmZip = (await import('adm-zip')).default;
-  const zip = new AdmZip(filePath);
-  const entries = zip.getEntries();
   const ext = path.extname(filePath).toLowerCase();
+  let entries;
+  try {
+    entries = new AdmZip(filePath).getEntries();
+  } catch (err) {
+    throw siEsZipRoto(err, ext);
+  }
 
   const wantedXml = (name) => {
     if (ext === '.pptx') {
@@ -470,9 +512,26 @@ async function assembleEmail(header, body, attachments, opts) {
   const depth = opts?.depth ?? 0;
   if (depth < 1) {
     for (const att of attachments) {
-      const inner = await extractBufferByName(att.filename, att.content, { ...opts, depth: depth + 1 });
+      pages.push({ page: null, text: `[adjunto: ${att.filename}]` });
+      // Un adjunto que no se puede leer NO invalida el correo. Hasta la 1.8.1, la firma en .css de
+      // un correo corporativo o un Word antiguo adjunto lanzaban «Formato no soportado» desde aquí
+      // y el mensaje ENTERO —cabecera, cuerpo y el resto de adjuntos— se contaba como fichero con
+      // error (17 de los 24 del aviso del 21-sep). Se decide como en los contenedores: por lo que
+      // se sabe ANTES de leer (extensión y tamaño), y lo que falle al leerse se anota y se sigue.
+      const ext = path.extname(att.filename || '').toLowerCase();
+      if (!SUPPORTED_INNER.has(ext)) continue;
+      if (att.content.length > limiteBytes(ext)) {
+        log.info('Adjunto de correo demasiado grande: se deja fuera', { ext, bytes: att.content.length });
+        continue;
+      }
+      let inner = null;
+      try {
+        inner = await extractBufferByName(att.filename, att.content, { ...opts, depth: depth + 1 });
+      } catch (err) {
+        log.warn('Adjunto de correo ilegible (el correo sí se indexa)', { ext, err: String(err?.message ?? err) });
+        continue;
+      }
       if (inner?.pages?.length) {
-        pages.push({ page: null, text: `[adjunto: ${att.filename}]` });
         for (const pg of inner.pages) pages.push({ page: null, text: pg.text });
       }
     }
@@ -929,6 +988,9 @@ export function errorDeFichero(code, mensaje) {
 function extensionDeLectura(filePath, ext) {
   if (!EXT_BINARIAS.has(ext)) return ext;
   const tipo = tipoReal(filePath);
+  // No se ha podido ni mirar la cabecera: no se decide nada por el contenido, que el lector de la
+  // extensión dé el error de verdad (EPERM del antivirus, unidad de red caída…).
+  if (tipo === 'ilegible') return ext;
   if (tipo === 'vacio') {
     throw errorDeFichero('VACIO', 'Fichero vacío o sin descargar de la nube');
   }
@@ -938,10 +1000,17 @@ function extensionDeLectura(filePath, ext) {
   if (EXT_SPREADSHEET.has(ext) || EXT_ARCHIVE.has(ext) || ext === '.msg') return ext;
   if (tipo === 'pdf' && ext !== '.pdf') return '.pdf';
   if (tipo === 'rtf') return '.rtf';
-  if (tipo === 'html') return '.html';
+  if (tipo === 'html' || tipo === 'mhtml') return '.html';
   if ((tipo === 'imagen' || tipo === 'heic') && !EXT_IMAGE.has(ext)) return tipo === 'heic' ? '.heic' : '.png';
   if (tipo === 'ole' && (ext === '.docx' || EXT_OFFICE_XML.has(ext))) {
     throw errorDeFichero('FORMATO', `Documento de Office antiguo (binario) con extensión ${ext}: no se puede leer`);
+  }
+  // .docx/.odt/.odp/.pptx son un ZIP. Si el contenido no lo es, el lector muere con un mensaje que
+  // no dice nada («ADM-ZIP: No END header found», «Can't find end of central directory») y eso se
+  // contaba como fallo NUESTRO: aviso técnico por un fichero que el propio Word no abriría
+  // (avisos del 18 y 21-sep). El de .docx ya se atajaba por otro lado; .odt, .odp y .pptx no.
+  if ((ext === '.docx' || EXT_OFFICE_XML.has(ext)) && tipo !== 'zip') {
+    throw errorDeFichero('FORMATO', `El contenido no es un ${ext} de verdad: está dañado o incompleto`);
   }
   return ext;
 }

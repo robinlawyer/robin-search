@@ -32,7 +32,7 @@ function marcasFtyp(buf) {
   return marcas;
 }
 
-// Devuelve 'vacio' | 'pdf' | 'zip' | 'ole' | 'rtf' | 'html' | 'heic' | 'avif' | 'imagen' |
+// Devuelve 'vacio' | 'pdf' | 'zip' | 'ole' | 'rtf' | 'html' | 'mhtml' | 'heic' | 'avif' | 'imagen' |
 // 'rar' | '7z' | null (texto u otra cosa que no se reconoce: se deja al lector de la extensión).
 export function tipoDeCabecera(buf) {
   if (!buf || buf.length === 0 || buf.every((b) => b === 0)) return 'vacio';
@@ -61,10 +61,18 @@ export function tipoDeCabecera(buf) {
   // %PDF puede ir tras basura inicial (lo admite el estándar dentro de los primeros 1024 bytes).
   if (s.startsWith('%PDF-') || buf.indexOf('%PDF-', 0, 'latin1') >= 0) return 'pdf';
   if (s.startsWith('{\\rtf')) return 'rtf';
-  if (/^(<!doctype html|<html|<\?xml[^>]*>\s*<html)/i.test(s)) return 'html';
+  // «Página web de un solo archivo» de Word/Outlook: MIME con el HTML dentro (a menudo guardada
+  // con extensión .doc o .docx). Antes caía en el lector de ZIP y moría sin decir nada.
+  if (/^(mime-version:|content-type:\s*(multipart\/related|text\/html))/i.test(s)) return 'mhtml';
+  // Los HTML que exporta Word empiezan por un comentario, un <?xml o un <meta, no por <html.
+  const sinComentarios = s.replace(/^(?:<!--[\s\S]*?-->|<\?xml[^>]*\?>|\s)+/i, '');
+  if (/^(<!doctype html|<html|<head|<body|<meta\s|<table[\s>])/i.test(sinComentarios)) return 'html';
   return null;
 }
 
+// 'ilegible' y no null: no es lo mismo «he mirado y no lo reconozco» (null) que «no he podido
+// mirar» (el antivirus lo tiene abierto, la unidad de red se cayó). Quien decida por el contenido
+// no puede sacar conclusiones de lo segundo; quien lo lea después dará el error de verdad.
 export function tipoReal(ruta) {
   let fd;
   try {
@@ -73,7 +81,7 @@ export function tipoReal(ruta) {
     const n = fs.readSync(fd, buf, 0, CABECERA, 0);
     return tipoDeCabecera(buf.subarray(0, n));
   } catch {
-    return null; // quien lo lea después dará el error de verdad
+    return 'ilegible';
   } finally {
     if (fd !== undefined) {
       try {

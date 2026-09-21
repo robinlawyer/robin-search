@@ -174,7 +174,7 @@ export function revisarCaidaAnterior() {
   if (!caidas.length) return null;
   caidas.sort((a, b) => String(a.t).localeCompare(String(b.t)));
   const seguidas = modificarEstado((est) => {
-    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t }))].slice(-10);
+    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t, version: c.version ?? null }))].slice(-10);
     est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
     return est.caidasSeguidas;
   });
@@ -194,12 +194,19 @@ export function arranqueCompleto() {
   });
 }
 
-// Cuántas de las últimas caídas SEGUIDAS ocurrieron en alguna de estas fases.
+// Cuántas de las últimas caídas SEGUIDAS ocurrieron en alguna de estas fases, Y con esta misma
+// versión. Lo segundo importa porque la única reacción a esta cuenta es REHACER el índice: el
+// 21-sep un despacho con 37.910 documentos llegó a la 1.8.0 arrastrando dos caídas de la 1.6.1 y
+// a una sola de perder el índice entero por un fallo que la versión nueva podía haber arreglado.
+// Al actualizar, la cuenta empieza de cero; una caída de verdad vuelve a sumar enseguida.
 export function caidasSeguidasEn(fases) {
   const est = leerEstado();
   const seguidas = est.caidasSeguidas ? (est.caidas || []).slice(-est.caidasSeguidas) : [];
   let n = 0;
-  for (let i = seguidas.length - 1; i >= 0 && fases.includes(seguidas[i].fase); i--) n += 1;
+  for (let i = seguidas.length - 1; i >= 0 && fases.includes(seguidas[i].fase); i--) {
+    if (seguidas[i].version !== VERSION) break;
+    n += 1;
+  }
   return n;
 }
 
@@ -527,15 +534,25 @@ export function claudeLaCerro(marca, lineas = null) {
     else if (/Shutting down server|intentional shutdown/i.test(m[2])) eventos.push({ t, tipo: 'cierre' });
     else if (/Server transport closed/i.test(m[2])) eventos.push({ t, tipo: 'muerte' });
   }
-  // El «Initializing server» más cercano ANTES del arranque (el proceso nace tras él), dentro de 30 s.
+  // Por tiempo, no por orden en el fichero: Claude escribe estas líneas desde varios sitios y en
+  // el mismo milisegundo salen cambiadas («Server transport closed» antes que el «Shutting down»
+  // que lo provocó). Leído en bruto, un cierre ordenado pasaba por muerte del proceso.
+  eventos.sort((a, b) => a.t - b.t);
+  // El «Initializing server» más cercano ANTES del arranque (el proceso nace tras él), dentro de 60 s
+  // (en Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan segundos).
   let lanzado = -1;
   for (let i = 0; i < eventos.length; i++) {
     const e = eventos[i];
-    if (e.tipo === 'inicio' && e.t <= inicio + 1000 && inicio - e.t <= 30_000) lanzado = i;
+    if (e.tipo === 'inicio' && e.t <= inicio + 1000 && inicio - e.t <= 60_000) lanzado = i;
   }
   if (lanzado < 0) return false;
-  const fin = eventos.slice(lanzado + 1).find((e) => e.tipo !== 'inicio');
-  return fin?.tipo === 'cierre';
+  const resto = eventos.slice(lanzado + 1).filter((e) => e.tipo !== 'inicio');
+  const fin = resto[0];
+  if (!fin) return false;
+  if (fin.tipo === 'cierre') return true;
+  // El cierre y la muerte que lo acompaña llegan juntos: si hay un «Shutting down» pegado al final
+  // (±2 s), lo cerró Claude. Una caída de verdad no trae ninguno.
+  return resto.some((e) => e.tipo === 'cierre' && Math.abs(e.t - fin.t) <= 2000);
 }
 
 export function registroSaneado(lit = literalesSensibles()) {

@@ -58,6 +58,34 @@ x = await intenta(escribir('nube.pdf', Buffer.alloc(4096)));
 check('a ceros (sin descargar de la nube) → error de fichero claro', x.e?.code === 'ROBIN_FICHERO_VACIO', String(x.e?.code));
 x = await intenta(escribir('antiguo.docx', Buffer.concat([Buffer.from('d0cf11e0a1b11ae1', 'hex'), Buffer.alloc(600, 1)])));
 check('Word binario antiguo como .docx → error de fichero claro', x.e?.code === 'ROBIN_FICHERO_FORMATO', String(x.e?.code));
+// ── Avisos del 18 y 21-sep (1.6.1/1.8.0): lo que NO es un fallo de RobinSearch ──
+x = await intenta(escribir('presentacion.pptx', Buffer.from('no soy un zip, soy basura'.repeat(20))));
+check('.pptx que no es un ZIP → error de fichero, no aviso técnico', x.e?.code === 'ROBIN_FICHERO_FORMATO', String(x.e?.code ?? texto(x.r)));
+x = await intenta(escribir('escrito.odt', Buffer.concat([Buffer.from('PK\x03\x04', 'latin1'), Buffer.alloc(400, 7)])));
+check('.odt con el ZIP truncado → error de fichero, no aviso técnico', x.e?.code === 'ROBIN_FICHERO_FORMATO', String(x.e?.code ?? texto(x.r)));
+x = await intenta(escribir('word.docx', ['MIME-Version: 1.0', 'Content-Type: text/html; charset="utf-8"',
+  'Content-Transfer-Encoding: quoted-printable', '', '<html><body><p>Dilig=\r\nencia de ordenaci=C3=B3n</p></body></html>'].join('\r\n')));
+check('«página web de un solo archivo» guardada como .docx se lee', /Diligencia de ordenación/.test(texto(x.r)), x.e ? String(x.e.message) : texto(x.r));
+x = await intenta(escribir('exportado.docx', '<!-- saved from url=(0014)about:internet -->\n<meta charset="utf-8"><p>Decreto de admisión</p>'));
+check('HTML de Word que no empieza por <html> se lee', /Decreto de admisi/.test(texto(x.r)), x.e ? String(x.e.message) : texto(x.r));
+
+// ── Aviso del 21-sep: un adjunto ilegible no puede tumbar el correo entero ──
+const correo = [
+  'From: juzgado@ejemplo.es', 'To: despacho@ejemplo.es', 'Subject: Notificacion',
+  'MIME-Version: 1.0', 'Content-Type: multipart/mixed; boundary="X"', '',
+  '--X', 'Content-Type: text/plain; charset="utf-8"', '', 'Se acompana diligencia de embargo.', '',
+  '--X', 'Content-Type: text/css; name="firma.css"', 'Content-Disposition: attachment; filename="firma.css"', '',
+  'body { color: #000; }', '',
+  '--X', 'Content-Type: application/msword; name="escrito.doc"', 'Content-Disposition: attachment; filename="escrito.doc"', '',
+  'contenido binario', '',
+  '--X', 'Content-Type: text/plain; name="anexo.txt"', 'Content-Disposition: attachment; filename="anexo.txt"', '',
+  'Anexo: tasacion de costas', '', '--X--', ''].join('\r\n');
+x = await intenta(escribir('notificacion.eml', correo));
+check('adjunto .css/.doc no tumba el correo: cuerpo y adjunto legible se indexan',
+  !x.e && /diligencia de embargo/i.test(texto(x.r)) && /tasacion de costas/i.test(texto(x.r)),
+  x.e ? String(x.e.message) : texto(x.r).slice(0, 120));
+check('y el correo deja constancia de los adjuntos que no se leen', /firma\.css/.test(texto(x.r)), texto(x.r).slice(0, 200));
+
 x = await intenta(escribir('foto iphone.jpg', heic));
 check('foto HEIC llamada .jpg pasa por OCR', /RECURSO/i.test(texto(x.r)), x.e ? String(x.e.message) : JSON.stringify(x.r));
 await terminateOcr();
@@ -83,6 +111,15 @@ check('caída de la instancia que arrancó DESPUÉS del cierre sí es caída', c
 check('sin registro de Claude, se sigue contando como caída', claudeLaCerro({ inicio: '2026-09-16T17:35:31.000Z' }, []) === false);
 check('proceso no lanzado por Claude (app, CLI, prueba): caída aunque Claude cerrase otro', claudeLaCerro({ inicio: '2026-09-16T18:00:00.000Z', t: '2026-09-16T18:35:10.000Z' }, juan) === false);
 check('marca antigua sin arranque: caída', claudeLaCerro({ t: '2026-09-16T18:35:10.000Z' }, juan) === false);
+// 21-sep: Claude escribe estas líneas desde varios sitios y en el mismo milisegundo salen del
+// revés; leídas en bruto, el cierre ordenado pasaba por muerte del proceso.
+const desordenado = [
+  '2026-09-21T07:47:24.040Z [RobinSearch] [info] Initializing server... { metadata: undefined }',
+  '2026-09-21T07:47:29.029Z [RobinSearch] [info] Server transport closed { metadata: undefined }',
+  '2026-09-21T07:47:29.025Z [RobinSearch] [info] Shutting down server... { metadata: undefined }',
+  '2026-09-21T07:47:29.030Z [RobinSearch] [info] Initializing server... { metadata: undefined }',
+];
+check('cierre de Claude con las líneas desordenadas tampoco es caída', claudeLaCerro({ inicio: '2026-09-21T07:47:24.500Z', t: '2026-09-21T07:47:28.000Z' }, desordenado) === true);
 
 fs.rmSync(base, { recursive: true, force: true });
 const ok = results.every(Boolean);

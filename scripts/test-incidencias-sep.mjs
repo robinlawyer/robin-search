@@ -134,6 +134,30 @@ try { await extractFile(roto); } catch (e) { err = e; }
 check('PDF dañado → ROBIN_FICHERO_* (no dispara aviso técnico)',
   Boolean(err) && String(err.code || '').startsWith('ROBIN_FICHERO_'), String(err && (err.code || err.message)).slice(0, 80));
 
+// ── 7b. Aviso del 21-sep: las caídas de la versión ANTERIOR no rehacen el índice ───────────
+//
+// Un despacho con 37.910 documentos llegó a la 1.8.0 arrastrando dos caídas de la 1.6.1: a una
+// sola de que RobinSearch diera el índice por irrecuperable y volviera a indexarlo entero, por un
+// fallo que la versión nueva podía haber arreglado. La cuenta es POR VERSIÓN.
+const diag = await imp('server/diagnostico.js');
+const { VERSION } = await imp('server/config.js');
+const rutaEstado = path.join(process.env.ROBIN_DATA_DIR, 'diagnostico.json');
+fs.mkdirSync(path.dirname(rutaEstado), { recursive: true });
+const ponerCaidas = (versiones) => fs.writeFileSync(rutaEstado, JSON.stringify({
+  caidasSeguidas: versiones.length,
+  caidas: versiones.map((v, i) => ({ fase: 'cargando_indice', t: `2026-09-21T08:0${i}:00.000Z`, version: v })),
+}));
+ponerCaidas(['1.6.1', '1.6.1']);
+check('caídas de una versión anterior no cuentan para rehacer el índice',
+  diag.caidasSeguidasEn(['cargando_indice', 'migrando_indice']) === 0);
+ponerCaidas([VERSION, VERSION]);
+check('caídas de ESTA versión sí cuentan',
+  diag.caidasSeguidasEn(['cargando_indice', 'migrando_indice']) === 2);
+ponerCaidas(['1.6.1', VERSION]);
+check('tras actualizar, la cuenta empieza de cero y la caída nueva suma',
+  diag.caidasSeguidasEn(['cargando_indice', 'migrando_indice']) === 1);
+fs.rmSync(rutaEstado, { force: true });
+
 // ── 8. El OCR sabe cuánto espacio queda ────────────────────────────────────────────────────
 const { espacioLibreMb } = await imp('server/indexer/ocr.js');
 const libre = espacioLibreMb(base);
