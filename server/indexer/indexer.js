@@ -572,6 +572,10 @@ const PRIORIDAD_EXT = new Map([
 async function planificar(files, force = false) {
   const orden = [];
   let bytesPendientes = 0;
+  // Bytes pendientes POR EXTENSIÓN: con ellos, el tiempo restante se estima en FRAGMENTOS (el
+  // trabajo de verdad) y no en bytes. Un .docx de 37 KB puede llevar dentro el mismo texto que
+  // un .txt de 3 KB: contando bytes, el mismo trabajo parece diez veces más.
+  const pendientesPorExt = new Map();
   let t = Date.now();
   for (const abs of files) {
     let stat = null;
@@ -579,7 +583,11 @@ async function planificar(files, force = false) {
       const st = fs.statSync(abs);
       const pendiente = force || registry.isStale(abs, st);
       stat = { size: st.size, mtimeMs: st.mtimeMs, pendiente };
-      if (pendiente) bytesPendientes += st.size;
+      if (pendiente) {
+        bytesPendientes += st.size;
+        const ext = path.extname(abs).toLowerCase();
+        pendientesPorExt.set(ext, (pendientesPorExt.get(ext) || 0) + st.size);
+      }
     } catch {
       /* desaparecido: indexFile lo dirá */
     }
@@ -590,26 +598,87 @@ async function planificar(files, force = false) {
     }
   }
   orden.sort((a, b) => a.prioridad - b.prioridad || (b.stat?.mtimeMs ?? 0) - (a.stat?.mtimeMs ?? 0));
-  return { orden, bytesPendientes };
+  return { orden, bytesPendientes, pendientesPorExt };
 }
 
-// Tiempo restante estimado, con el ritmo MEDIDO en este indexado (bytes de ficheros que había
-// que indexar ya terminados por segundo). Es aproximado: un PDF escaneado pesa poco y tarda
-// mucho (OCR), una hoja de cálculo al revés. No se da hasta tener algo de muestra.
-export function nuevaEta(bytesTotales, ahora = () => Date.now()) {
+// Tiempo restante estimado, con el ritmo MEDIDO en este indexado.
+//
+// EN FRAGMENTOS, NO EN BYTES (21-sep-2026). Antes se estimaba proyectando bytes de fichero: en un
+// despacho de verdad eso se equivoca por mucho, porque los bytes de un fichero no dicen cuánto
+// trabajo lleva dentro. Un .docx es un ZIP con su andamiaje XML —37 KB para 3 KB de texto— y un
+// .txt es texto puro; a igualdad de bytes, el .txt da diez veces más fragmentos que embeber. Con
+// el lote de prueba del 21-sep la estimación decía «8 minutos» cuando iban a ser cuarenta.
+//
+// Ahora se cuenta lo que de verdad cuesta: FRAGMENTOS embebidos por segundo. Lo que queda se
+// estima aprendiendo, DURANTE esta misma pasada, cuántos fragmentos sale por byte de cada
+// extensión (.docx, .pdf, .txt…), y aplicando esa proporción a los bytes que faltan de cada una.
+// Un documento reutilizado (mismo contenido que otro ya indexado) no cuenta como trabajo: no se
+// vuelve a embeber.
+//
+// Sigue siendo aproximado y se dice: un PDF escaneado pasa por OCR y tarda mucho más que sus
+// fragmentos, y la primera pasada de un ordenador cargado va más lenta que la siguiente.
+// Cuánto TEXTO lleva dentro un byte de cada formato, aproximadamente. Un .docx es un ZIP con su
+// andamiaje XML (unos 37 KB para 3,5 KB de texto: 0,10); un .txt es texto puro (1,0); un PDF
+// arrastra fuentes y estructura (0,25). Sirve para estimar el trabajo de un formato del que
+// TODAVÍA no ha terminado ningún documento en esta pasada; en cuanto termina alguno, manda lo
+// medido y esta tabla deja de usarse para él. Medido sobre documentos reales el 21-sep-2026.
+const TEXTO_POR_BYTE = new Map([
+  ['.txt', 1], ['.md', 1], ['.csv', 0.9], ['.tsv', 0.9], ['.json', 0.6], ['.eml', 0.5],
+  ['.html', 0.4], ['.htm', 0.4], ['.rtf', 0.3], ['.pdf', 0.25], ['.doc', 0.2], ['.odt', 0.15],
+  ['.docx', 0.1], ['.pptx', 0.08], ['.ppt', 0.1], ['.xlsx', 0.05], ['.xls', 0.05], ['.msg', 0.3],
+]);
+// Lo que no está en la tabla: ni lo más denso ni lo más hueco. Las imágenes y los escaneados van
+// por OCR, que no se parece a nada de esto: ahí la estimación es la que es, y por eso se dice
+// siempre que es aproximada.
+const TEXTO_POR_BYTE_DEFECTO = 0.3;
+const densidad = (ext) => TEXTO_POR_BYTE.get(ext) ?? TEXTO_POR_BYTE_DEFECTO;
+
+export function nuevaEta(bytesTotales, pendientesPorExt = new Map(), ahora = () => Date.now()) {
   const t0 = ahora();
-  let hechos = 0;
+  const hechoPorExt = new Map();   // ext -> { bytes, fragmentos }
+  let bytesHechos = 0;
+  let fragmentosHechos = 0;
   let ficheros = 0;
   return {
-    hecho(bytes) {
-      hechos += bytes || 0;
+    hecho(bytes, fragmentos = 0, ext = '') {
+      const b = bytes || 0;
+      bytesHechos += b;
+      fragmentosHechos += fragmentos || 0;
       ficheros += 1;
+      const acc = hechoPorExt.get(ext) || { bytes: 0, fragmentos: 0 };
+      acc.bytes += b;
+      acc.fragmentos += fragmentos || 0;
+      hechoPorExt.set(ext, acc);
     },
     estimar() {
       const s = (ahora() - t0) / 1000;
-      if (!bytesTotales || ficheros < 3 || s < 10 || hechos <= 0) return {};
-      const restante = Math.max(0, bytesTotales - hechos);
-      const eta = Math.round((s * restante) / hechos);
+      if (!bytesTotales || ficheros < 3 || s < 10) return {};
+      // Sin un solo fragmento embebido (todo reutilizado o ilegible) no hay ritmo que medir:
+      // se cae al cálculo por bytes de siempre, que para eso vale.
+      if (fragmentosHechos <= 0) {
+        if (bytesHechos <= 0) return {};
+        const eta = Math.round((s * Math.max(0, bytesTotales - bytesHechos)) / bytesHechos);
+        return { eta_segundos: eta, eta: textoEta(eta) };
+      }
+      // Ritmo global medido en «bytes de texto» (byte de fichero × densidad del formato), que sí
+      // es comparable entre formatos: así lo aprendido con .docx sirve para estimar los .txt que
+      // faltan, que es justo lo que antes salía diez veces mal.
+      let unidadesHechas = 0;
+      for (const [ext, v] of hechoPorExt) unidadesHechas += v.bytes * densidad(ext);
+      const porUnidad = fragmentosHechos / Math.max(1, unidadesHechas);
+      let fragmentosRestantes = 0;
+      for (const [ext, bytesDeEsaExt] of pendientesPorExt) {
+        const visto = hechoPorExt.get(ext);
+        const restantes = Math.max(0, bytesDeEsaExt - (visto?.bytes || 0));
+        if (!restantes) continue;
+        // Si de ese formato ya ha terminado algo, manda lo MEDIDO. Si no, la densidad de la
+        // tabla, puesta en la misma moneda con el ritmo global.
+        fragmentosRestantes += visto && visto.bytes > 0 && visto.fragmentos > 0
+          ? restantes * (visto.fragmentos / visto.bytes)
+          : restantes * densidad(ext) * porUnidad;
+      }
+      const porSegundo = fragmentosHechos / s;
+      const eta = Math.round(fragmentosRestantes / porSegundo);
       return { eta_segundos: eta, eta: textoEta(eta) };
     },
   };
@@ -763,8 +832,8 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   if (hayCuenta) resumen.no_indexables = cuenta;
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
   await respirar();
-  const { orden, bytesPendientes } = await planificar(files, force);
-  const eta = nuevaEta(bytesPendientes);
+  const { orden, bytesPendientes, pendientesPorExt } = await planificar(files, force);
+  const eta = nuevaEta(bytesPendientes, pendientesPorExt);
   // Con trabajo de verdad por delante, que los hilos de embedding (si los hay) estén arrancando
   // antes de repartir: decide si los documentos van de uno en uno o varios a la vez.
   if (bytesPendientes > 0 || orden.some((f) => f.stat?.pendiente)) await prepararHilos();
@@ -773,8 +842,12 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   let empezados = 0;
   let terminados = 0;
   const procesar = async (abs, stat) => {
+    let fragmentosDelFichero = 0;
     try {
       const r = await indexFile(abs, { force, paralelo: Boolean(cargaEmbedding()) });
+      // Lo que ha costado de verdad: los fragmentos EMBEBIDOS. Un documento reutilizado copia
+      // vectores que ya estaban, así que como trabajo no cuenta.
+      if (r.estado === 'indexado' && !r.reutilizado) fragmentosDelFichero = r.chunks || 0;
       if (r.estado === 'indexado') {
         resumen.indexados += 1;
         resumen.fragmentosNuevos += r.chunks || 0;
@@ -867,7 +940,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       });
     } finally {
       terminados += 1;
-      if (stat?.pendiente) eta.hecho(stat.size);
+      if (stat?.pendiente) eta.hecho(stat.size, fragmentosDelFichero, path.extname(abs).toLowerCase());
     }
     if (onProgress) onProgress(state.progreso, resumen);
   };

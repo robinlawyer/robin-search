@@ -30,7 +30,7 @@ const MAX_INTENTOS = 3; // por lote, contando el primero
 const VENTANA_MUERTES_MS = 60 * 1000;
 const MAX_MUERTES_EN_VENTANA = 6;
 const MB = 1024 * 1024;
-const MEMORIA_POR_HILO = 1150 * MB;
+const MEMORIA_POR_HILO = 800 * MB;
 
 let _opc = null; // { objetivo, datosHilo, topeCargaMs, respaldo, avisar }
 let _hilos = [];
@@ -371,10 +371,17 @@ export async function iniciar({ objetivo, datosHilo, topeCargaMs = 180000, ajust
     return false;
   }
   _modo = 'hilos';
-  // Lo que ocupa un hilo: ~0,25 GB el tokenizador, ~0,45 GB la sesión WASM y ~0,45 GB más que crece
-  // la memoria del WASM al calcular un lote de 16 fragmentos de 512 tokens y ya no devuelve
-  // (medido el 16-sep-2026). Una cifra fija y no el RSS medido al cargar: con el sistema paginando,
-  // la medida bailaba cientos de MB y con ella el número de hilos.
+  // Lo que ocupa un hilo: el tokenizador, la sesión WASM y lo que crece la memoria del WASM al
+  // calcular y ya no devuelve. Una cifra fija y no el RSS medido al cargar: con el sistema
+  // paginando, la medida bailaba cientos de MB y con ella el número de hilos.
+  //
+  // 800 MB, no 1150 (21-sep-2026). El 1150 era una suma a ojo (0,25 + 0,45 + 0,45) y se quedó
+  // un 70 % por encima de lo que gasta de verdad: medido el peor caso posible —ocho rondas de
+  // lotes de 16 fragmentos de 512 tokens, el tope del troceado—, el PICO del proceso fue de
+  // 678 MB. Con 800 quedan ~120 MB de margen sobre ese pico, y en un equipo de 8 GB caben tres
+  // hilos en vez de dos sin tocar el límite del 30 %: en el Mac de Alonso, 521 documentos a un
+  // hilo iban a 0,2 documentos por segundo. El límite del 30 % NO se toca: el sitio para Claude,
+  // Word y el resto sigue siendo sagrado.
   _memoriaPorHilo = MEMORIA_POR_HILO;
   avisar('info', 'Hilo de embedding listo', { ms: r.ms, memoria_por_hilo_mb: Math.round(_memoriaPorHilo / MB) });
   _opc.ajustarPorMemoria = ajustarPorMemoria;
@@ -382,17 +389,32 @@ export async function iniciar({ objetivo, datosHilo, topeCargaMs = 180000, ajust
   return true;
 }
 
+// ¿Hace falta otro hilo? Hay demanda si queda algún lote esperando O si TODOS los hilos vivos
+// están ocupados: en los dos casos, un hilo más adelantaría trabajo.
+//
+// 🔴 ANTES SE MIRABA SOLO LA COLA, Y ASÍ EL POOL NO CRECÍA NUNCA (21-sep-2026, medido en el Mac de
+// Alonso: 521 documentos indexándose con UN hilo, más de media hora, sin una sola línea de «Hilo
+// de embedding listo»). El motivo: `calcular()` llama primero a `repartir()`, que entrega el lote
+// al hilo libre y lo SACA de la cola, y después a `ampliar()`, que se encontraba la cola vacía y
+// se volvía por donde había venido. Con un solo hilo, el indexador manda los documentos de uno en
+// uno —porque mira cuántos hilos hay—, así que nunca se acumulaba cola: el pool no crecía porque
+// era pequeño y era pequeño porque no crecía.
+export function hayDemanda({ cola = _pasajes.length, hilos = vivos() } = {}) {
+  if (cola > 0) return true;
+  return hilos.length > 0 && hilos.every((h) => h.lote);
+}
+
 // Más hilos SOLO cuando hay indexado que hacer: la instancia que solo busca (Claude arranca dos) o
 // un servidor con todo al día se queda con uno, que ocupa lo mismo que el modelo en el hilo
 // principal de antes.
 function ampliar() {
-  if (_arranqueEscalonado || _modo !== 'hilos' || vivos().length >= _opc.objetivo || !_pasajes.length) return;
+  if (_arranqueEscalonado || _modo !== 'hilos' || vivos().length >= _opc.objetivo || !hayDemanda()) return;
   _arranqueEscalonado = (async () => {
     // Soltar antes de empezar: sin esto, si el bucle no entra, el `finally` corre antes de que
     // se asigne _arranqueEscalonado y la promesa ya resuelta lo dejaba bloqueado para siempre.
     await null;
     try {
-      while (_modo === 'hilos' && vivos().length < _opc.objetivo && _pasajes.length > 0) {
+      while (_modo === 'hilos' && vivos().length < _opc.objetivo && hayDemanda()) {
         const sitio = _opc.ajustarPorMemoria ? cabeOtroHilo(vivos().length) : { cabe: true };
         if (!sitio.cabe) {
           _limite = sitio;
