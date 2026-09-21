@@ -10,6 +10,7 @@ import * as cuarentena from '../indexer/cuarentena.js';
 import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
 import { leerCorreo } from '../correo/ajustes.js';
+import nube from '../indexer/nube.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
 import { estadoMotor } from '../embedder/embedder.js';
@@ -206,8 +207,21 @@ export async function handler() {
         (ni.no_descargados ? `${ni.no_descargados} fichero(s) en la nube sin descargar a este equipo; ` : '') +
         (ni.enlaces_inaccesibles ? `${ni.enlaces_inaccesibles} enlace(s) o acceso(s) directo(s) que no llevan a nada accesible; ` : '') +
         (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
-        'lo que se busque no los cubre. Para los de la nube, que el abogado marque la carpeta como ' +
-        '«Mantener siempre en este dispositivo» y vuelva a indexar.';
+        (ni.protegidos ? `${ni.protegidos} PDF(s) protegidos con contraseña (RobinSearch prueba las que haya en ROBIN_PDF_CLAVES; si no, el abogado tiene que quitarles la protección o dar la contraseña a quien lo instaló); ` : '') +
+        (ni.danados ? `${ni.danados} documento(s) dañados que ni su propio programa abriría (RobinSearch ya ha intentado rescatar su texto); ` : '') +
+        'lo que se busque no los cubre. Para los de la nube, RobinSearch ya ha pedido su descarga y ' +
+        'los indexa solo en cuanto lleguen (ver pendientes_de_descarga); si el abogado tiene prisa, ' +
+        'que marque la carpeta como «Mantener siempre en este dispositivo».';
+    }
+    // Lo que está esperando a bajar de la nube: se pide su descarga y se reintenta solo. Se dice
+    // aquí para que nadie dé por hecho que esos documentos ya están en las búsquedas.
+    const porDescargar = nube.cuantos();
+    if (porDescargar > 0) {
+      respuesta.pendientes_de_descarga = porDescargar;
+      respuesta.aviso_pendientes_de_descarga =
+        `${porDescargar} documento(s) están en las carpetas pero su contenido todavía no está en este ` +
+        'ordenador (iCloud, OneDrive o Dropbox). RobinSearch ha pedido su descarga y los indexa solo ' +
+        'en cuanto lleguen; hasta entonces NO están en las búsquedas.';
     }
     if (state.ultimoIndexado.errores > 0) {
       respuesta.aviso_indexado =

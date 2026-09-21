@@ -22,6 +22,8 @@ import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 import { tipoReal } from './tipo-real.js';
+import { textoDeDoc, textoDePpt } from './office-antiguo.js';
+import { entradasRecuperadas } from './zip-roto.js';
 
 const require = createRequire(import.meta.url);
 
@@ -33,6 +35,9 @@ const MIN_CHARS_PER_PAGE = 12;
 const EXT_TEXT = new Set(['.txt', '.md', '.markdown']);
 const EXT_HTML = new Set(['.html', '.htm']);
 const EXT_OFFICE_XML = new Set(['.odt', '.odp', '.pptx']); // ZIP + XML (como DOCX)
+// Office anterior a 2007 (OLE binario). El .xls lo lee SheetJS con los demás: aquí van los que
+// necesitan su propio lector (server/indexer/office-antiguo.js).
+const EXT_OFFICE_OLE = new Set(['.doc', '.dot', '.ppt', '.pps', '.pot']);
 const EXT_SPREADSHEET = new Set(['.xlsx', '.xls', '.ods', '.xlsm', '.fods']);
 const EXT_CSV = new Set(['.csv', '.tsv']);
 const EXT_IMAGE = new Set(['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif']);
@@ -41,6 +46,56 @@ const EXT_ARCHIVE = new Set(['.zip', '.rar', '.7z']);
 // ─────────────────────────────────────────────────────────────────────────────
 // PDF (con detección de escaneado → OCR local)
 // ─────────────────────────────────────────────────────────────────────────────
+// Prueba las contraseñas configuradas, una a una, sobre un PDF cifrado. Devuelve el documento
+// abierto o null. Las contraseñas no se registran nunca, ni siquiera cuál ha funcionado.
+// Segundo intento sobre un PDF que pdfjs da por roto: mupdf rehace su tabla de objetos. Devuelve
+// el contrato de páginas de siempre, o null si tampoco hay nada que leer.
+async function rescatarPdfConMupdf(filePath, { maxPages }) {
+  let doc = null;
+  try {
+    const mupdf = await import('mupdf');
+    doc = mupdf.Document.openDocument(fs.readFileSync(filePath), 'application/pdf');
+    if (doc.needsPassword?.()) {
+      const abierto = config.pdfClaves.some((c) => doc.authenticatePassword(c));
+      if (!abierto) return null;
+    }
+    const total = doc.countPages();
+    const limite = Math.min(total, maxPages ?? total);
+    const pages = [];
+    for (let i = 0; i < limite; i++) {
+      let pagina = null;
+      try {
+        pagina = doc.loadPage(i);
+        const t = String(pagina.toStructuredText().asText() || '').replace(/[ \t]+/g, ' ').trim();
+        if (t) pages.push({ page: i + 1, text: t });
+      } catch {
+        /* esa página no se puede rehacer: se sigue con las demás */
+      } finally {
+        try { pagina?.destroy?.(); } catch { /* nada */ }
+      }
+    }
+    if (!pages.length) return null;
+    return { pages, sinOcr: false, numPages: total, viaOcr: false };
+  } catch {
+    return null;
+  } finally {
+    try { doc?.destroy?.(); } catch { /* nada */ }
+  }
+}
+
+async function conContrasenya(abrir) {
+  for (const clave of config.pdfClaves) {
+    try {
+      const doc = await abrir(clave).promise;
+      log.info('PDF protegido abierto con una de las contraseñas configuradas');
+      return doc;
+    } catch {
+      /* esa no era */
+    }
+  }
+  return null;
+}
+
 export async function extractPdf(filePath, { maxPages }) {
   const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
   // En Node (y dentro del .mcpb) pdfjs necesita un workerSrc explícito o lanza
@@ -58,13 +113,17 @@ export async function extractPdf(filePath, { maxPages }) {
     }
   }
   const { getDocument } = pdfjs;
-  const data = new Uint8Array(fs.readFileSync(filePath));
-  const loadingTask = getDocument({
-    data,
+  const datos = fs.readFileSync(filePath);
+  // Cada intento consume su copia: pdfjs se queda con el buffer (lo deja «detached») y reusarlo
+  // en el intento siguiente daría un PDF vacío.
+  const abrir = (password) => getDocument({
+    data: new Uint8Array(datos),
+    password,
     useSystemFonts: true,
     isEvalSupported: false,
     disableFontFace: true,
   });
+  const loadingTask = abrir(undefined);
   // Un PDF roto, truncado o cifrado NO es un fallo de RobinSearch: es el fichero. Se marca como
   // tal para que cuente como error de indexado (Claude lo dice y el abogado sabe que ese
   // documento no está) pero no dispare el aviso técnico. 19-sep-2026: 56 ficheros de un mismo
@@ -76,12 +135,30 @@ export async function extractPdf(filePath, { maxPages }) {
     const nombre = String(err?.name || '');
     const msg = String(err?.message || '');
     if (/InvalidPDF/i.test(nombre) || /Invalid PDF structure|may not be a PDF file|Invalid or unsupported/i.test(msg)) {
+      // Antes se acababa aquí, y con ella 19 documentos de un mismo despacho el 21-sep. pdfjs es
+      // estricto con la tabla de objetos; mupdf (que ya viene para el OCR) la REHACE, que es lo
+      // que hace Acrobat al abrir un PDF que se copió a medias. Si él tampoco puede, entonces sí
+      // está roto de verdad.
+      const rescatado = await rescatarPdfConMupdf(filePath, { maxPages });
+      if (rescatado) {
+        log.info('PDF con la estructura rota: se ha rescatado su texto', { fichero: path.basename(filePath) });
+        return rescatado;
+      }
       throw errorDeFichero('PDF_ROTO', 'El PDF está dañado o incompleto: no se puede leer');
     }
     if (/PasswordException/i.test(nombre) || /password/i.test(msg)) {
-      throw errorDeFichero('PDF_PROTEGIDO', 'El PDF está protegido con contraseña: no se puede leer');
+      // Protegido. Antes se acababa aquí. Ahora se prueban las contraseñas que el despacho haya
+      // puesto en ROBIN_PDF_CLAVES: el juzgado o el banco que manda cien notificaciones cifradas
+      // usa siempre la misma, y con ella los cien documentos entran en las búsquedas.
+      pdf = await conContrasenya(abrir);
+      if (!pdf) {
+        const rescatado = await rescatarPdfConMupdf(filePath, { maxPages });
+        if (rescatado) return rescatado;
+        throw errorDeFichero('PDF_PROTEGIDO', 'El PDF está protegido con contraseña: hace falta la contraseña para leerlo');
+      }
+    } else {
+      throw err;
     }
-    throw err;
   }
   const numPages = pdf.numPages;
   const limit = Math.min(numPages, maxPages);
@@ -135,7 +212,26 @@ export async function extractDocx(filePath) {
     const { value } = await mammoth.extractRawText({ path: filePath });
     return pagesFromText((value || '').replace(/\r\n/g, '\n'));
   } catch (err) {
+    const rescatado = rescatarZip(filePath, (n) => /^word\/(document|footnotes|endnotes|header\d*|footer\d*)\.xml$/i.test(n));
+    if (rescatado) {
+      const texto = [...rescatado.values()].map((b) => odfTextRuns(b.toString('utf8'))).join('\n').trim();
+      if (texto) {
+        log.info('Documento con el ZIP roto: se ha rescatado su texto', { ext: '.docx', partes: rescatado.size });
+        return pagesFromText(texto);
+      }
+    }
     throw siEsZipRoto(err, '.docx');
+  }
+}
+
+// Último intento antes de dar un documento por perdido: leer el ZIP saltándose el índice que le
+// falta (zip-roto.js). Devuelve null si tampoco así sale nada.
+function rescatarZip(filePath, quiero) {
+  try {
+    const r = entradasRecuperadas(fs.readFileSync(filePath), quiero);
+    return r.size ? r : null;
+  } catch {
+    return null;
   }
 }
 
@@ -150,6 +246,22 @@ function siEsZipRoto(err, ext) {
     return errorDeFichero('FORMATO', `El ${ext} está dañado o incompleto: no se puede abrir`);
   }
   return err;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Word y PowerPoint anteriores a 2007 (.doc / .ppt, OLE binario)
+// ─────────────────────────────────────────────────────────────────────────────
+export async function extractOfficeOle(filePath, ext) {
+  const buf = fs.readFileSync(filePath);
+  let texto = null;
+  try {
+    texto = ext === '.ppt' || ext === '.pps' || ext === '.pot' ? textoDePpt(buf) : textoDeDoc(buf);
+  } catch (err) {
+    throw errorDeFichero('FORMATO', `El ${ext} está dañado: no se puede leer (${String(err?.message ?? err).slice(0, 60)})`);
+  }
+  // Sin texto no se lanza: un .ppt de puras imágenes o un .doc vacío no son un error, son un
+  // documento sin nada que indexar (y el OCR de sus imágenes es otra historia).
+  return pagesFromText(texto || '');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -344,13 +456,6 @@ function rtfToTextFallback(rtf) {
 export async function extractOfficeXml(filePath) {
   const AdmZip = (await import('adm-zip')).default;
   const ext = path.extname(filePath).toLowerCase();
-  let entries;
-  try {
-    entries = new AdmZip(filePath).getEntries();
-  } catch (err) {
-    throw siEsZipRoto(err, ext);
-  }
-
   const wantedXml = (name) => {
     if (ext === '.pptx') {
       return /^ppt\/slides\/slide\d+\.xml$/i.test(name) || /^ppt\/notesSlides\/notesSlide\d+\.xml$/i.test(name);
@@ -358,6 +463,20 @@ export async function extractOfficeXml(filePath) {
     // .odt / .odp → content.xml (todo el cuerpo).
     return /(^|\/)content\.xml$/i.test(name);
   };
+
+  let entries;
+  try {
+    entries = new AdmZip(filePath).getEntries();
+  } catch (err) {
+    const rescatado = rescatarZip(filePath, wantedXml);
+    if (rescatado) {
+      log.info('Documento con el ZIP roto: se ha rescatado su texto', { ext, partes: rescatado.size });
+      entries = [...rescatado.entries()]
+        .map(([entryName, data]) => ({ entryName, isDirectory: false, getData: () => data }));
+    } else {
+      throw siEsZipRoto(err, ext);
+    }
+  }
 
   // Para PPTX, cada slide es una "página" natural.
   const parts = entries
@@ -945,8 +1064,8 @@ function pagesFromText(text) {
 
 // Extensiones que tiene sentido extraer DENTRO de un contenedor o adjunto de correo.
 const SUPPORTED_INNER = new Set([
-  '.pdf', '.docx', '.txt', '.md', '.markdown', '.html', '.htm', '.rtf',
-  '.odt', '.odp', '.pptx', '.xlsx', '.xls', '.ods', '.xlsm', '.fods', '.csv', '.tsv',
+  '.pdf', '.docx', '.doc', '.dot', '.txt', '.md', '.markdown', '.html', '.htm', '.rtf',
+  '.odt', '.odp', '.pptx', '.ppt', '.pps', '.pot', '.xlsx', '.xls', '.ods', '.xlsm', '.fods', '.csv', '.tsv',
   '.eml', '.msg', '.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif',
 ]);
 
@@ -975,7 +1094,7 @@ function hashName(s) {
 // Familias binarias: su lector necesita un formato concreto y falla con un mensaje que no dice
 // nada si el contenido es otra cosa. Las de texto (.txt, .csv, .html…) se leen tal cual.
 const EXT_BINARIAS = new Set([
-  '.pdf', '.docx', '.msg', ...EXT_OFFICE_XML, ...EXT_SPREADSHEET, ...EXT_IMAGE, ...EXT_ARCHIVE,
+  '.pdf', '.docx', '.msg', ...EXT_OFFICE_XML, ...EXT_OFFICE_OLE, ...EXT_SPREADSHEET, ...EXT_IMAGE, ...EXT_ARCHIVE,
 ]);
 
 // Un fichero que no es un fallo nuestro sino del propio fichero. Cuenta como error de indexado
@@ -1002,9 +1121,14 @@ function extensionDeLectura(filePath, ext) {
   if (tipo === 'rtf') return '.rtf';
   if (tipo === 'html' || tipo === 'mhtml') return '.html';
   if ((tipo === 'imagen' || tipo === 'heic') && !EXT_IMAGE.has(ext)) return tipo === 'heic' ? '.heic' : '.png';
-  if (tipo === 'ole' && (ext === '.docx' || EXT_OFFICE_XML.has(ext))) {
-    throw errorDeFichero('FORMATO', `Documento de Office antiguo (binario) con extensión ${ext}: no se puede leer`);
-  }
+  // Office antiguo con extensión nueva (.docx que es un .doc de 2003, .pptx que es un .ppt): desde
+  // la 1.8.1 se LEE como lo que es en vez de darlo por ilegible.
+  if (tipo === 'ole' && (ext === '.docx' || ext === '.dot')) return '.doc';
+  if (tipo === 'ole' && (ext === '.pptx' || ext === '.odp')) return '.ppt';
+  if (tipo === 'ole' && ext === '.odt') return '.doc';
+  // Y al revés: un .doc que en realidad es un .docx de 2007 (renombrado a mano, muy común al
+  // reenviar por correo) se lee como .docx.
+  if (tipo === 'zip' && EXT_OFFICE_OLE.has(ext)) return ext === '.ppt' || ext === '.pps' || ext === '.pot' ? '.pptx' : '.docx';
   // .docx/.odt/.odp/.pptx son un ZIP. Si el contenido no lo es, el lector muere con un mensaje que
   // no dice nada («ADM-ZIP: No END header found», «Can't find end of central directory») y eso se
   // contaba como fallo NUESTRO: aviso técnico por un fichero que el propio Word no abriría
@@ -1021,6 +1145,7 @@ async function extractByExtension(filePath, extNombre, opts) {
   if (ext !== extNombre) log.info('El contenido no corresponde a la extensión: se lee como lo que es', { ext: extNombre, como: ext });
   if (ext === '.pdf') return extractPdf(filePath, { maxPages });
   if (ext === '.docx') return extractDocx(filePath);
+  if (EXT_OFFICE_OLE.has(ext)) return extractOfficeOle(filePath, ext);
   if (EXT_TEXT.has(ext)) return extractText(filePath);
   if (EXT_HTML.has(ext)) return extractHtml(filePath);
   if (ext === '.rtf') return extractRtf(filePath);

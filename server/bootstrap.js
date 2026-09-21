@@ -10,7 +10,8 @@ import { config, ensureDataDirs, expedienteForLogicalPath, refinarCarpetas } fro
 import { log } from './logger.js';
 import { setError } from './state.js';
 import { warmup } from './embedder/embedder.js';
-import { indexFolder } from './indexer/indexer.js';
+import { indexFolder, indexFile } from './indexer/indexer.js';
+import nube from './indexer/nube.js';
 import * as registry from './indexer/registry.js';
 import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import * as cuarentena from './indexer/cuarentena.js';
@@ -305,8 +306,10 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
       try {
         const resumen = await indexFolder({ force: false, reconciliarBorrados: true });
         log.info('Indexado inicial completado', resumen);
-        // Los errores del propio fichero (vacío o sin descargar de la nube, formato que no es el de
-        // su extensión) no son un fallo de RobinSearch: Claude los cuenta, pero no generan aviso.
+        // `resumen.errores` es ya solo lo que hay que ARREGLAR aquí: desde la 1.8.1, el documento
+        // protegido, dañado o sin descargar no es un error sino un `no_indexables`, con su
+        // explicación y su reintento (indexer.js, nube.js). Por si acaso queda alguno de los
+        // antiguos, se siguen descontando los ROBIN_FICHERO_*.
         const deFichero = (resumen.errores_por_causa || [])
           .filter((c) => String(c.causa).startsWith('ROBIN_FICHERO_'))
           .reduce((n, c) => n + (c.ficheros || 0), 0);
@@ -332,6 +335,13 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
       }
     }
     if (watch && hayCarpetas) startWatcher();
+    // Los documentos que la nube todavía no había traído no se quedan fuera: se pide su descarga
+    // y se vuelve a mirar hasta indexarlos (nube.js). Solo la instancia que escribe.
+    if (hayCarpetas) {
+      nube.arrancar({ indexar: (ruta) => indexFile(ruta, { force: true }) });
+      nube.revisar({ indexar: (ruta) => indexFile(ruta, { force: true }), forzar: true })
+        .catch((err) => log.warn('No se pudo revisar lo que falta por descargar', { err: String(err?.message ?? err) }));
+    }
     diagnostico.arranqueCompleto();
   };
 

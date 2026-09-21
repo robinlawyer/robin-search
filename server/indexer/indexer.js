@@ -28,6 +28,7 @@ import {
   MAX_FRAGMENTOS_POR_DOCUMENTO,
 } from '../config.js';
 import { rutas, tipoReal, extensionDe } from '../rutas.js';
+import nube from './nube.js';
 import { log } from '../logger.js';
 import { esRutaDeRed } from '../net.js';
 import {
@@ -88,7 +89,7 @@ function isSupported(filePath) {
 // una carpeta de OneDrive «bajo demanda» o de iCloud daba 0 documentos sin decir nada. Solo
 // contadores: ni nombres ni rutas (salen en estado_servidor y en el aviso técnico).
 export function nuevaCuentaRecorrido() {
-  return { no_descargados: 0, enlaces_inaccesibles: 0, bucles_evitados: 0 };
+  return { no_descargados: 0, enlaces_inaccesibles: 0, bucles_evitados: 0, protegidos: 0, danados: 0 };
 }
 
 // iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
@@ -207,6 +208,8 @@ export async function indexFile(absPath, { force = false, paralelo = false } = {
   // Fichero de la nube sin descargar: ni se abre. Abrirlo cuesta un timeout de minutos y acaba
   // en «error de indexado» sin que haya nada que arreglar (correo de Eduardo, 19-sep-2026).
   if (esMarcadorDeNube(stat)) {
+    // Apuntado, no olvidado: se pide la descarga y se vuelve a mirar hasta que esté (nube.js).
+    nube.apuntar(abs, 'sin_descargar');
     return { ruta: logicalPath(abs), estado: 'no_descargado' };
   }
   const ext = path.extname(abs).toLowerCase();
@@ -746,6 +749,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       if (r.estado === 'indexado') {
         resumen.indexados += 1;
         resumen.fragmentosNuevos += r.chunks || 0;
+        nube.olvidar(abs);
       } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
       else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
       else if (r.estado === 'apartado') resumen.apartados += 1;
@@ -764,9 +768,38 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         return;
       }
       // La nube no entrega el contenido: se cuenta como «sin descargar», no como fallo nuestro.
+      // Y se apunta para pedir la descarga y volver a mirar: que no lo entregue HOY no puede
+      // dejar al abogado sin ese documento para siempre (nube.js).
       if (clase === 'nube') {
+        nube.apuntar(abs, 'sin_descargar');
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
         resumen.omitidos += 1;
+        return;
+      }
+      // Vacío o a ceros. En Windows es lo único que se ve de un fichero de OneDrive que aún no ha
+      // bajado (allí `stat` no distingue el marcador): 72 en un solo despacho el 21-sep. Se trata
+      // igual —descarga y reintento—, y si después de un día sigue a cero, es que está vacío.
+      if (err?.code === 'ROBIN_FICHERO_VACIO') {
+        nube.apuntar(abs, 'vacio');
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
+        resumen.omitidos += 1;
+        return;
+      }
+      // Protegido con contraseña o dañado sin arreglo posible (ya se ha intentado rescatar su
+      // texto). No es un error DE RobinSearch, pero tampoco se calla: va a `no_indexables`, que
+      // `estado_servidor` explica uno a uno con lo que el abogado puede hacer. «errores» queda
+      // para lo que sí hay que arreglar aquí.
+      if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO') {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).protegidos += 1;
+        resumen.omitidos += 1;
+        return;
+      }
+      if (String(err?.code || '').startsWith('ROBIN_FICHERO_')) {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).danados += 1;
+        resumen.omitidos += 1;
+        log.warn('Documento que no se ha podido leer', {
+          fichero: logicalPath(abs), ext: extensionDe(abs), bytes: stat?.size ?? null, code: String(err.code),
+        });
         return;
       }
       // Disco lleno: se corta la pasada entera. Seguir con los otros 900 ficheros solo alarga el

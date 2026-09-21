@@ -48,6 +48,31 @@ ocupa ~1,1 GB mientras indexa; terminado el indexado, los hilos de más se suelt
 
 El índice y los resultados de búsqueda son idénticos con cualquier valor.
 
+### PDF protegidos con contraseña
+
+Muchos juzgados, bancos y aseguradoras mandan sus PDF cifrados, siempre con la misma contraseña.
+RobinSearch no la guarda ni la pide nunca por el chat: se pone en el entorno del servicio y se
+prueba al abrir un PDF cifrado.
+
+| Variable           | Efecto                                                                    |
+| ------------------ | ------------------------------------------------------------------------- |
+| `ROBIN_PDF_CLAVES` | Contraseñas a probar, separadas por `;` o salto de línea. No se registran. |
+
+Sin ella, esos documentos no fallan «por un error»: salen en `estado_servidor` como
+`no_indexables.protegidos`, con lo que el abogado tiene que hacer.
+
+### Documentos que la nube todavía no ha bajado
+
+Un fichero de iCloud, OneDrive o Dropbox que está en la carpeta pero no en el disco no se cuenta
+como error: RobinSearch **pide su descarga** y lo vuelve a mirar con espera creciente (2 min, 5,
+15, 45, 2 h…) hasta indexarlo. Si tras un día sigue sin contenido, se da por vacío.
+
+| Variable                 | Efecto                                                        |
+| ------------------------ | ------------------------------------------------------------- |
+| `ROBIN_NUBE_POR_TANDA`   | Cuántas descargas se piden por pasada (por defecto 20).        |
+| `ROBIN_NUBE_REVISAR_MS`  | Cada cuánto se revisa la lista (por defecto 2 min).            |
+| `ROBIN_NUBE_DIAS_MAX`    | Días insistiendo antes de darlo por vacío (por defecto 1).     |
+
 ### Directorios de datos (para respaldo/limpieza)
 
 | SO      | Ruta                                                             |

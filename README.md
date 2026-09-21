@@ -17,8 +17,8 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 - **Índice vectorial:** `vectra` (local, sin proceso separado).
 - **Formatos (v1.1):** un expediente real no son solo PDF/DOCX limpios. RobinSearch indexa,
   todo en local y con librerías 100 % JS/WASM (sin binarios nativos):
-  - **Texto / histórico:** `.pdf` (texto y escaneado vía OCR), `.docx`, `.rtf`, `.odt`, `.txt`, `.md`, `.html`.
-  - **Presentaciones:** `.pptx`, `.odp`.
+  - **Texto / histórico:** `.pdf` (texto y escaneado vía OCR), `.docx`, `.doc` (Word 97-2003), `.rtf`, `.odt`, `.txt`, `.md`, `.html`.
+  - **Presentaciones:** `.pptx`, `.ppt`, `.odp`.
   - **Matrices financieras/concursales:** `.xlsx`, `.xls`, `.ods`, `.csv`, `.tsv`.
   - **Comunicaciones y evidencias:** `.eml`, `.msg` (Outlook, con adjuntos) y **volcados de WhatsApp** (`.txt`).
   - **Peritajes gráficos (OCR local):** `.jpg`, `.png`, `.tiff`, `.bmp`, `.gif`, `.heic` (fotos de iPhone).

@@ -34,15 +34,15 @@ export const UPDATE_CHECK_URL =
 // Formatos soportados. Un expediente real no son solo PDF/DOCX limpios: es un ecosistema
 // de pruebas, comunicaciones y archivos técnicos. RobinSearch los indexa TODOS en local
 // (RGPD / secreto profesional), con extractores 100% JS/WASM (sin binarios nativos):
-//   · Texto / histórico documental: .pdf .docx .rtf .odt .txt .md .html
-//   · Presentaciones: .pptx .odp
+//   · Texto / histórico documental: .pdf .docx .doc .rtf .odt .txt .md .html
+//   · Presentaciones: .pptx .ppt .odp
 //   · Matrices financieras/concursales: .xlsx .xls .ods .csv .tsv
 //   · Comunicaciones y evidencias: .eml .msg (Outlook) + volcados de WhatsApp (.txt)
 //   · Peritajes gráficos (OCR local): .jpg .jpeg .png .tiff .bmp .gif .heic
 //   · Contenedores judiciales (LexNet / Justizia.eus): .zip .rar .7z
 export const SUPPORTED_EXTENSIONS = new Set([
-  '.pdf', '.docx', '.rtf', '.odt', '.txt', '.md', '.markdown', '.html', '.htm',
-  '.pptx', '.odp',
+  '.pdf', '.docx', '.doc', '.dot', '.rtf', '.odt', '.txt', '.md', '.markdown', '.html', '.htm',
+  '.pptx', '.ppt', '.pps', '.pot', '.odp',
   '.xlsx', '.xls', '.xlsm', '.ods', '.fods', '.csv', '.tsv',
   '.eml', '.msg',
   '.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif',
@@ -343,6 +343,14 @@ function buildConfig() {
     maxPagesPerFile: toInt(process.env.ROBIN_MAX_PAGES, 100000),
 
     nResultsDefault: toInt(process.env.ROBIN_N_RESULTS, 5),
+
+    // Contraseñas de los PDF protegidos del despacho (muchos juzgados y bancos mandan siempre
+    // con la misma). RobinSearch NO las guarda ni las pide por el chat: las pone quien despliega,
+    // en el entorno, y se prueban al abrir un PDF cifrado. Separadas por salto de línea o «;».
+    pdfClaves: String(process.env.ROBIN_PDF_CLAVES || '')
+      .split(/[\n;]/)
+      .map((c) => c.trim())
+      .filter(Boolean),
 
     // Aislamiento por expediente. `expedienteDepth` = cuántos niveles de subcarpeta por
     // debajo de cada carpeta vigilada delimitan un expediente:

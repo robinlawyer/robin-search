@@ -650,6 +650,22 @@ function indiceResumen() {
 }
 
 const RE_NUBE = /(Mobile Documents|CloudStorage|iCloud|OneDrive|Dropbox|Google Drive|GoogleDrive|Box Sync)/i;
+
+// Por el nombre no basta: cuando OneDrive se queda con «Documentos» o «Escritorio» (lo que
+// Microsoft llama «copia de seguridad de carpetas»), la ruta no lleva «OneDrive» por ningún lado
+// y una carpeta de la nube pasaba por carpeta local. Windows sí lo dice en el entorno. 21-sep-2026:
+// un despacho con 72 ficheros sin bajar salía en el informe con «carpetas en la nube: 0».
+function raicesDeNubeDelEntorno() {
+  return ['OneDrive', 'OneDriveCommercial', 'OneDriveConsumer', 'iCloudDrive']
+    .map((v) => process.env[v])
+    .filter((v) => v && v.length > 3);
+}
+
+function esDeLaNube(p) {
+  if (RE_NUBE.test(p)) return true;
+  const ruta = String(p).toLowerCase();
+  return raicesDeNubeDelEntorno().some((raiz) => ruta.startsWith(raiz.toLowerCase()));
+}
 function carpetasResumen() {
   const lista = config.watchedFolders || [];
   const red = lista.filter((p) => {
@@ -659,7 +675,7 @@ function carpetasResumen() {
       return false;
     }
   }).length;
-  return { total: lista.length, red, nube: lista.filter((p) => RE_NUBE.test(p)).length };
+  return { total: lista.length, red, nube: lista.filter(esDeLaNube).length };
 }
 
 function puedeEnviar(firma) {

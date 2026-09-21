@@ -171,7 +171,12 @@ fs.writeFileSync(contrato, 'esto ya no es un docx');
 const futuro = new Date(Date.now() + 5000);
 fs.utimesSync(contrato, futuro, futuro);
 const idx = await s.call('indexar_carpeta', { forzar: true });
-check('A.2 el reindexado da el error del fichero', idx.data?.errores === 1, `errores=${idx.data?.errores}`);
+// Desde la 1.8.1 un documento ilegible NO es un «error» del indexado (eso queda para lo que hay
+// que arreglar en RobinSearch): es un documento dañado, se cuenta aparte y estado_servidor dice
+// qué hacer con él. Lo que importa aquí sigue igual: el índice no pierde la versión buena.
+check('A.2 el reindexado lo cuenta como documento dañado, no como error del servidor',
+  idx.data?.errores === 0 && idx.data?.no_indexables?.danados === 1,
+  `errores=${idx.data?.errores} danados=${idx.data?.no_indexables?.danados}`);
 b = await buscar();
 check('A.3 y la versión anterior SIGUE en el índice (antes desaparecía)', b.data?.fragmentos?.[0]?.fichero === 'contrato.docx', b.raw.slice(0, 80));
 await docx(contrato, 'Contrato de compraventa de maquinaria industrial');
