@@ -6,6 +6,8 @@
 //   · .docx/.odt con el ZIP truncado: se rescata su texto en vez de darlos por perdidos.
 //   · PDF cifrado: se prueban las contraseñas del despacho (ROBIN_PDF_CLAVES).
 //   · PDF con la estructura rota: se rehace con mupdf en vez de darlo por ilegible.
+//   · .zip adjunto a un correo (asi llega el expediente de LexNet): se abre y se indexa.
+//   · .txt y .csv de Windows o en UTF-16: se leen con su juego de caracteres, no como UTF-8.
 //   · Documento que la nube no ha bajado: se apunta, se pide la descarga y se indexa al llegar.
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path';
@@ -87,6 +89,36 @@ const cortado = path.join(base, 'nada.pdf');
 fs.writeFileSync(cortado, '%PDF-1.4\nesto no es un PDF de verdad, está cortado\n');
 x = await intenta(cortado);
 check('y uno que no tiene nada dentro sigue siendo un fichero dañado', x.e?.code === 'ROBIN_FICHERO_PDF_ROTO', String(x.e?.code));
+
+// ── 3b. El expediente que llega en un .zip adjunto al correo (LexNet) ────────────────
+const zLex = new AdmZip();
+zLex.addFile('auto.txt', Buffer.from('Auto de despacho de ejecución por importe de 34.000 euros'));
+const rutaZip = path.join(base, 'expediente.zip');
+fs.writeFileSync(rutaZip, zLex.toBuffer());
+const correoConZip = [
+  'From: lexnet@justicia.es', 'To: despacho@ejemplo.es', 'Subject: Notificacion de auto',
+  'MIME-Version: 1.0', 'Content-Type: multipart/mixed; boundary="Z"', '',
+  '--Z', 'Content-Type: text/plain; charset="utf-8"', '', 'Se adjunta el expediente.', '',
+  '--Z', 'Content-Type: application/zip; name="expediente.zip"',
+  'Content-Disposition: attachment; filename="expediente.zip"',
+  'Content-Transfer-Encoding: base64', '',
+  fs.readFileSync(rutaZip).toString('base64').replace(/(.{76})/g, '$1\r\n'), '', '--Z--', ''].join('\r\n');
+const rutaCorreo = path.join(base, 'notificacion-lexnet.eml');
+fs.writeFileSync(rutaCorreo, correoConZip);
+x = await intenta(rutaCorreo);
+check('el .zip adjunto a un correo se abre y su contenido se indexa',
+  /despacho de ejecución por importe/.test(texto(x.r)), x.e ? String(x.e.message) : texto(x.r).slice(0, 120));
+
+// ── 3c. Textos antiguos de Windows ───────────────────────────────────────────
+const enCp1252 = path.join(base, 'nota-1998.txt');
+fs.writeFileSync(enCp1252, Buffer.from('Ejecución hipotecaria del señor Núñez — 12 % de interés', 'latin1'));
+x = await intenta(enCp1252);
+check('un .txt hecho en Windows se lee con sus tildes (antes: «Ã³»)',
+  /Ejecución hipotecaria del señor Núñez/.test(texto(x.r)), x.e ? String(x.e.message) : texto(x.r));
+const enUtf16 = path.join(base, 'nota-utf16.txt');
+fs.writeFileSync(enUtf16, Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from('Diligencia de embargo de la cuenta corriente', 'utf16le')]));
+x = await intenta(enUtf16);
+check('y uno guardado en UTF-16 también', /Diligencia de embargo/.test(texto(x.r)), x.e ? String(x.e.message) : texto(x.r));
 
 // ── 4. Lo que la nube no ha bajado se pide y se reintenta ──────────────────────────────────
 const nube = (await imp('server/indexer/nube.js')).default;

@@ -22,7 +22,7 @@ import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 import { tipoReal } from './tipo-real.js';
-import { textoDeDoc, textoDePpt } from './office-antiguo.js';
+import { textoDeDoc, textoDePpt, deCp1252 } from './office-antiguo.js';
 import { entradasRecuperadas } from './zip-roto.js';
 
 const require = createRequire(import.meta.url);
@@ -267,8 +267,29 @@ export async function extractOfficeOle(filePath, ext) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Texto plano, Markdown y volcados de WhatsApp (.txt / .md)
 // ─────────────────────────────────────────────────────────────────────────────
+// Lee un fichero de texto con el juego de caracteres que de verdad tiene.
+//
+// Node supone UTF-8 siempre, y un .txt o un .csv hechos en Windows —que es la mitad de lo que hay
+// en un despacho: volcados de banco, notas de hace quince años, exportaciones de la aplicación de
+// gestión— salen con «Ã³» donde va una «ó». No es un error visible en ninguna parte: simplemente
+// el documento se indexa mal y no aparece al buscar «ejecución».
+export function leerTexto(filePath) {
+  const buf = fs.readFileSync(filePath);
+  if (buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xfe) return buf.subarray(2).toString('utf16le');
+  if (buf.length >= 2 && buf[0] === 0xfe && buf[1] === 0xff) {
+    const le = Buffer.from(buf.subarray(2));
+    le.swap16();
+    return le.toString('utf16le');
+  }
+  if (buf.length >= 3 && buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf) return buf.subarray(3).toString('utf8');
+  const utf8 = buf.toString('utf8');
+  // El carácter de reemplazo solo aparece si los bytes NO eran UTF-8 válido.
+  if (!utf8.includes('\ufffd')) return utf8;
+  return deCp1252(buf);
+}
+
 export async function extractText(filePath) {
-  let text = fs.readFileSync(filePath, 'utf8');
+  let text = leerTexto(filePath);
   // Los volcados de WhatsApp se exportan como .txt: si detectamos su formato de línea,
   // lo normalizamos (unimos mensajes multilínea) para que cada mensaje sea un bloque
   // coherente y la búsqueda semántica no se rompa en los saltos de línea.
@@ -319,7 +340,7 @@ export function normalizeWhatsApp(text) {
 // HTML (correos guardados, exportaciones) → texto
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractHtml(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8');
+  const raw = leerTexto(filePath);
   return pagesFromText(htmlToText(desdeMime(raw)));
 }
 
@@ -544,7 +565,7 @@ export async function extractSpreadsheet(filePath) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractCsv(filePath) {
   const Papa = (await import('papaparse')).default ?? (await import('papaparse'));
-  const raw = fs.readFileSync(filePath, 'utf8');
+  const raw = leerTexto(filePath);
   const delimiter = path.extname(filePath).toLowerCase() === '.tsv' ? '\t' : '';
   const parsed = Papa.parse(raw, { skipEmptyLines: true, delimiter });
   const rows = Array.isArray(parsed.data) ? parsed.data : [];
@@ -715,8 +736,9 @@ function admitirMiembro(m, cuenta) {
 export async function extractArchive(filePath, opts) {
   const ext = extensionDe(filePath);
   const depth = opts?.depth ?? 0;
-  // No recursamos archivos dentro de archivos (profundidad 1): evita zip-bombs anidadas.
-  if (depth >= 1) return { pages: [], sinOcr: false, numPages: null };
+  // Un contenedor DENTRO de otro contenedor no se abre: evita las bombas zip anidadas. Sí se abre
+  // el que viene adjunto a un correo (profundidad 1), que es como llega el expediente de LexNet.
+  if (depth >= 2) return { pages: [], sinOcr: false, numPages: null };
 
   const pages = [];
   const cuenta = { miembros: 0, bytes: 0 };
@@ -1067,6 +1089,10 @@ const SUPPORTED_INNER = new Set([
   '.pdf', '.docx', '.doc', '.dot', '.txt', '.md', '.markdown', '.html', '.htm', '.rtf',
   '.odt', '.odp', '.pptx', '.ppt', '.pps', '.pot', '.xlsx', '.xls', '.ods', '.xlsm', '.fods', '.csv', '.tsv',
   '.eml', '.msg', '.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.heic', '.heif',
+  // LexNet y los juzgados mandan el expediente en un .zip adjunto al correo: su contenido es
+  // justo lo que el abogado buscará. Dentro de un contenedor, otro contenedor NO se abre
+  // (extractArchive corta a la segunda vuelta): eso sigue cerrado a las bombas zip.
+  '.zip', '.rar', '.7z',
 ]);
 
 // Extrae texto de un buffer en memoria (adjunto de correo o miembro de contenedor) escribiendo
