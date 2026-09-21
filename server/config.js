@@ -380,6 +380,24 @@ function buildConfig() {
     })(),
     rescanAlAbrir: process.env.ROBIN_RESCAN_ON_OPEN !== 'false',
 
+    // 🔴 RED DE SEGURIDAD DE LAS CARPETAS LOCALES (21-sep-2026, Eduardo: «meto documentos
+    // nuevos y no los indexa»). Una carpeta local se vigila con el vigilante del sistema
+    // (FSEvents en Mac, ReadDirectoryChangesW en Windows) y eso basta casi siempre — pero
+    // «casi» aquí no vale. FSEvents se pierde cambios de verdad: carpetas sincronizadas por
+    // iCloud / Drive / Dropbox (el fichero aparece como marcador y se materializa después),
+    // discos externos que se desmontan y vuelven, el equipo suspendido, o una copia enorme
+    // que desborda la cola del sistema. Cuando eso pasa, hasta ahora NADIE volvía a mirar:
+    // el documento se quedaba fuera del índice para siempre y el abogado buscaba creyendo
+    // tenerlo. Así que además del vigilante se repasa la carpeta cada `rescanLocalMs`. Es
+    // incremental (compara tamaño y fecha contra el registro): sobre una carpeta al día es
+    // un recorrido de directorios y nada más. ROBIN_RESCAN_LOCAL_MS=0 lo desactiva.
+    rescanLocalMs: (() => {
+      const raw = process.env.ROBIN_RESCAN_LOCAL_MS;
+      if (raw === undefined || raw === '') return 15 * 60 * 1000;
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 0 ? n : 15 * 60 * 1000;
+    })(),
+
     logLevel: firstDefined(process.env.ROBIN_LOG_LEVEL) || 'info',
   };
   cfg.tesseractCache = path.join(cfg.dataDir, 'tesseract');

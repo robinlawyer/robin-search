@@ -34,6 +34,7 @@ let _watcher = null;
 let _rescanTimer = null;
 let _nativos = []; // fs.watch recursivos (Windows y macOS)
 let _rescanLocalTimer = null; // re-escaneo de carpetas locales cuando no se pueden vigilar
+let _redSeguridadTimer = null; // repaso periódico de las carpetas locales SÍ vigiladas (ver abajo)
 const pending = new Map(); // absPath → { absPath, tipo: 'index'|'remove' }
 let flushTimer = null;
 let draining = false;
@@ -331,7 +332,7 @@ export function reescanear(folders, { motivo = 'periodico' } = {}) {
       const huboCambios =
         resumen.indexados > 0 || resumen.eliminados > 0 || resumen.carpetas_inaccesibles;
       if (huboCambios) {
-        log.info('Re-escaneo de carpeta de red', {
+        log.info(motivo === 'red_de_seguridad' ? 'Repaso de carpeta local (red de seguridad)' : 'Re-escaneo de carpeta de red', {
           motivo,
           carpetas: lista,
           indexados: resumen.indexados,
@@ -362,7 +363,7 @@ export function startWatcher() {
     log.warn('Watcher no iniciado: sin carpetas configuradas');
     return null;
   }
-  if (_watcher || _rescanTimer || _nativos.length || _rescanLocalTimer) return _watcher;
+  if (_watcher || _rescanTimer || _nativos.length || _rescanLocalTimer || _redSeguridadTimer) return _watcher;
 
   // Una carpeta que ya no existe no se vigila: fs.watch sobre ella falla en cada intento y deja
   // el servidor en error para siempre (correo de Eduardo, 19-sep-2026). Se mira cada poco por si
@@ -379,9 +380,18 @@ export function startWatcher() {
   const red = carpetasDeRed().filter((p) => vigilables.includes(p));
   const locales = vigilables.filter((p) => !red.includes(p));
 
+  // ROBIN_VIGILANTE=ninguno: sin vigilante de eventos, solo el repaso periódico. Es la palanca
+  // para un equipo donde el vigilante del sistema da problemas (una carpeta sincronizada que
+  // dispara miles de eventos, un montaje raro) y lo que usan las pruebas para comprobar que el
+  // repaso, por sí solo, acaba encontrando el documento nuevo.
+  const sinVigilante = process.env.ROBIN_VIGILANTE === 'ninguno';
   const nativo = process.env.ROBIN_VIGILANTE !== 'chokidar'
     && (process.platform === 'win32' || process.platform === 'darwin');
-  if (locales.length > 0 && nativo) {
+  if (locales.length > 0 && sinVigilante) {
+    log.warn('Vigilante de eventos desactivado (ROBIN_VIGILANTE=ninguno): las carpetas locales solo se repasan periódicamente', {
+      carpetas: locales,
+    });
+  } else if (locales.length > 0 && nativo) {
     vigilarNativo(locales);
     log.info('Watcher activo (carpetas locales, vigilante del sistema)', { carpetas: locales });
   } else if (locales.length > 0) {
@@ -412,6 +422,25 @@ export function startWatcher() {
       });
 
     log.info('Watcher activo (carpetas locales)', { carpetas: locales });
+  }
+
+  // RED DE SEGURIDAD de las carpetas locales YA vigiladas. El vigilante del sistema no es
+  // infalible —iCloud/Drive materializando un fichero después de crearlo, un disco externo que
+  // se va y vuelve, el equipo suspendido, una copia masiva que desborda su cola— y cuando se
+  // pierde un cambio, hasta la 1.8.0 nadie volvía a mirar: ese documento se quedaba fuera del
+  // índice para siempre (Eduardo, 21-sep-2026). Así que se repasa la carpeta cada tanto, de
+  // forma incremental. No sustituye al vigilante: es la red debajo.
+  if (locales.length > 0 && config.rescanLocalMs > 0) {
+    _redSeguridadTimer = setInterval(() => {
+      const aRepasar = ausentes.presentes(locales).filter((c) => !_enReescaneo.has(c));
+      if (aRepasar.length === 0 || reescaneoEnCurso(aRepasar)) return;
+      reescanear(aRepasar, { motivo: 'red_de_seguridad' }).catch(() => {});
+    }, config.rescanLocalMs);
+    _redSeguridadTimer.unref?.();
+    log.info('Repaso periódico de las carpetas locales (red de seguridad del vigilante)', {
+      carpetas: locales,
+      cada_minutos: Math.round(config.rescanLocalMs / 60000),
+    });
   }
 
   if (red.length > 0) {
@@ -475,6 +504,10 @@ export async function stopWatcher() {
   if (_rescanLocalTimer) {
     clearInterval(_rescanLocalTimer);
     _rescanLocalTimer = null;
+  }
+  if (_redSeguridadTimer) {
+    clearInterval(_redSeguridadTimer);
+    _redSeguridadTimer = null;
   }
   if (_ausentesTimer) {
     clearInterval(_ausentesTimer);
