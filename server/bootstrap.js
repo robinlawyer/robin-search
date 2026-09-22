@@ -49,7 +49,11 @@ function tamanyoEnClaro(bytes) {
 // diagnóstico»). Solo datos técnicos: ni el nombre del fichero ni la ruta, como siempre.
 export function causaDeCaida(caida, fase) {
   if (caida?.causa) return String(caida.causa);
-  const partes = [`la ejecución anterior se cortó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}`];
+  const partes = [
+    caida?.incierta
+      ? `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y sin registro de Claude en este equipo no se sabe si se cayó o si la cerró Claude`
+      : `la ejecución anterior se cortó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}`,
+  ];
   if (caida?.ext) {
     const tam = tamanyoEnClaro(caida.bytes);
     partes.push(`fichero ${String(caida.ext).toLowerCase()}${tam ? ` de ${tam}` : ''}`);
@@ -63,13 +67,21 @@ async function atenderCaidaAnterior() {
   const caida = diagnostico.revisarCaidaAnterior();
   if (!caida) return;
   const fase = caida.fase === 'excepcion' ? caida.faseOriginal || 'excepcion' : caida.fase;
-  log.error('La ejecución anterior de RobinSearch se cortó sin cerrar', {
-    fase,
-    ext: caida.ext ?? null,
-    bytes: caida.bytes ?? null,
-    caidas_seguidas: caida.caidasSeguidas,
-  });
-  if (caida.fichero && fase === 'indexando') {
+  log[caida.incierta ? 'warn' : 'error'](
+    caida.incierta
+      ? 'La ejecución anterior terminó sin cerrar; sin registro de Claude no se sabe si fue una caída'
+      : 'La ejecución anterior de RobinSearch se cortó sin cerrar',
+    {
+      fase,
+      ext: caida.ext ?? null,
+      bytes: caida.bytes ?? null,
+      caidas_seguidas: caida.caidasSeguidas,
+    },
+  );
+  // Incierta: no hay registro de Claude en este equipo, así que no se sabe si se cayó o si
+  // Claude cerró el servidor para reabrirlo. Apartar el documento que estaba leyendo (y con dos
+  // «caídas» dejarlo FUERA del índice) es demasiado caro para una sospecha sin pruebas.
+  if (caida.fichero && fase === 'indexando' && !caida.incierta) {
     // Con una excepción vista no hay duda de qué fichero fue: se aparta a la primera.
     const e = cuarentena.anotarCaida(caida.fichero, { seguro: caida.fase === 'excepcion' });
     if (e) {
@@ -82,7 +94,8 @@ async function atenderCaidaAnterior() {
   }
   // Se espera al aviso (con tope) ANTES de la fase que pudo matar el proceso: si vuelve a
   // matarlo, el aviso ya ha salido.
-  await diagnostico.informar(caida.fase === 'excepcion' ? 'excepcion' : 'caida_previa', {
+  const motivo = caida.fase === 'excepcion' ? 'excepcion' : caida.incierta ? 'caida_incierta' : 'caida_previa';
+  await diagnostico.informar(motivo, {
     fase,
     causa: causaDeCaida(caida, fase),
     fichero: caida.ext ? { ext: caida.ext, bytes: caida.bytes } : null,

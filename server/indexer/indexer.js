@@ -48,6 +48,7 @@ import * as cuarentena from './cuarentena.js';
 import * as diagnostico from '../diagnostico.js';
 import * as escritor from '../escritor.js';
 import * as ausentes from '../carpetas-ausentes.js';
+import { OCUPADO } from '../persistencia.js';
 
 // Reduce el mensaje de un error a una CAUSA agrupable. Sin esto, 680 ficheros que fallan por
 // el mismo motivo producían 680 mensajes distintos (cada uno con su ruta) y no se veía que
@@ -131,6 +132,19 @@ export function claseDeError(err) {
   if (CODIGOS_NUBE.has(code)) return 'nube';
   if (code === 'ENOENT') return 'desaparecido';
   return null;
+}
+
+// Windows: el antivirus —o la otra ventana de Claude— tiene abierto medio segundo un fichero
+// NUESTRO (el índice, el registro, los vectores) y el renombrado atómico acaba en EPERM/EBUSY
+// pese a los reintentos de persistencia.js. Eso NO es un defecto del documento del abogado: el
+// 22-sep-2026 un .xlsx sano de un despacho salió como «1 fichero con error», con su aviso
+// técnico, y se quedó fuera del índice. Se distingue por la RUTA del fichero que estaba ocupado.
+export function esIndiceOcupado(err) {
+  if (!OCUPADO.has(String(err?.code || ''))) return false;
+  for (const p of [err?.path, err?.dest]) {
+    if (p && rutas.dentroDe(String(p), config.dataDir)) return true;
+  }
+  return false;
 }
 
 // Identidad de una carpeta para no recorrerla dos veces (enlace o junction que apunta hacia
@@ -716,9 +730,14 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   // Una sola instancia escribe en el índice (escritor.js): Claude arranca el servidor dos veces
   // y dos indexados a la vez sobre el mismo directorio de datos se pisarían.
   if (!escritor.soyEscritor() && !escritor.adquirir()) {
-    throw new Error(
-      'Otra instancia de RobinSearch (por ejemplo, otra ventana de Claude) está indexando ahora ' +
-        'mismo. Vuelve a intentarlo en unos segundos.',
+    // Con código: para quien llama esto NO es un fallo, es que indexa la otra ventana de Claude
+    // (el repaso periódico lo daba por «Fallo en el re-escaneo» y llenaba el informe técnico).
+    throw Object.assign(
+      new Error(
+        'Otra instancia de RobinSearch (por ejemplo, otra ventana de Claude) está indexando ahora ' +
+          'mismo. Vuelve a intentarlo en unos segundos.',
+      ),
+      { code: 'ROBIN_OTRA_INSTANCIA' },
     );
   }
   // Escritas como las escribe el recorrido de la raíz: «indexar_carpeta» con otra caja u otra
@@ -902,6 +921,19 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).reintentables =
           ((resumen.no_indexables.reintentables) || 0) + 1;
         resumen.omitidos += 1;
+        return;
+      }
+      // Lo que estaba ocupado es NUESTRO fichero, no el documento. El documento está sano y
+      // simplemente no ha llegado a entrar: como no queda en el registro, la pasada siguiente
+      // vuelve a intentarlo sola. Contarlo como error mandaba un aviso técnico por un fichero
+      // del abogado que no tenía nada (22-sep-2026).
+      if (esIndiceOcupado(err)) {
+        (resumen.no_indexables ??= nuevaCuentaRecorrido()).reintentables =
+          ((resumen.no_indexables.reintentables) || 0) + 1;
+        resumen.omitidos += 1;
+        log.warn('El índice estaba ocupado al guardar este documento: se reintenta en la pasada siguiente', {
+          ext: extensionDe(abs), bytes: stat?.size ?? null, code: String(err.code),
+        });
         return;
       }
       if (String(err?.code || '').startsWith('ROBIN_FICHERO_')) {

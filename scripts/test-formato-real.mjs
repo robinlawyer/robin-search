@@ -108,7 +108,7 @@ const caida = [
 check('muerte del proceso sí es caída', claudeLaCerro({ inicio: '2026-09-16T17:35:31.000Z', t: '2026-09-16T18:35:10.000Z' }, caida) === false);
 const reinicio = [...juan, '2026-09-16T18:36:00.000Z [RobinSearch] [info] Server transport closed { metadata: undefined }'];
 check('caída de la instancia que arrancó DESPUÉS del cierre sí es caída', claudeLaCerro({ inicio: '2026-09-16T18:35:14.000Z', t: '2026-09-16T18:35:50.000Z' }, reinicio) === false);
-check('sin registro de Claude, se sigue contando como caída', claudeLaCerro({ inicio: '2026-09-16T17:35:31.000Z' }, []) === false);
+check('registro de Claude vacío (no menciona ese arranque): caída', claudeLaCerro({ inicio: '2026-09-16T17:35:31.000Z' }, []) === false);
 check('proceso no lanzado por Claude (app, CLI, prueba): caída aunque Claude cerrase otro', claudeLaCerro({ inicio: '2026-09-16T18:00:00.000Z', t: '2026-09-16T18:35:10.000Z' }, juan) === false);
 check('marca antigua sin arranque: caída', claudeLaCerro({ t: '2026-09-16T18:35:10.000Z' }, juan) === false);
 // 21-sep: Claude escribe estas líneas desde varios sitios y en el mismo milisegundo salen del

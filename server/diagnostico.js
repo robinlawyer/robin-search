@@ -24,13 +24,15 @@ import path from 'node:path';
 import v8 from 'node:v8';
 import crypto from 'node:crypto';
 import { leerCorreo } from './correo/ajustes.js';
-import { config, VERSION } from './config.js';
+import { config, VERSION, rootForPath } from './config.js';
 import { log } from './logger.js';
 import { state } from './state.js';
 import { esRutaDeRed } from './net.js';
+import { rutas } from './rutas.js';
 import { pidVivo } from './escritor.js';
 import * as registry from './indexer/registry.js';
 import * as cuarentena from './indexer/cuarentena.js';
+import nube from './indexer/nube.js';
 import { getBearerQuiet } from './auth/oauth.js';
 import { escribirAtomico, escribirJson, conCerrojoDeFichero } from './persistencia.js';
 
@@ -163,18 +165,24 @@ export function revisarCaidaAnterior() {
     } catch {
       /* nada */
     }
-    if (d?.fase && d.fase !== 'excepcion' && claudeLaCerro(d)) {
+    const cerroClaude = d?.fase && d.fase !== 'excepcion' ? claudeLaCerro(d) : false;
+    if (cerroClaude === true) {
       // Claude pidió el cierre (se reinstala o actualiza la extensión, se cierra Claude) y mató el
       // proceso antes de que atendiera la señal: no es una caída ni el fichero tiene culpa.
       log.info('La ejecución anterior la cerró Claude: no es una caída', { fase: d.fase });
       continue;
     }
+    // `null` = no hay registro de Claude que consultar. Pudo ser una caída o pudo ser Claude
+    // cerrando el servidor para reabrirlo; se anota como INCIERTA: ni se aparta el documento que
+    // estaba leyendo (estaba sano) ni cuenta para rehacer el índice, que son las dos reacciones
+    // caras. Se sigue avisando, pero dicho como lo que es.
+    if (cerroClaude === null && d) d.incierta = true;
     if (d?.fase) caidas.push(d);
   }
   if (!caidas.length) return null;
   caidas.sort((a, b) => String(a.t).localeCompare(String(b.t)));
   const seguidas = modificarEstado((est) => {
-    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t, version: c.version ?? null }))].slice(-10);
+    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t, version: c.version ?? null, incierta: c.incierta === true }))].slice(-10);
     est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
     return est.caidasSeguidas;
   });
@@ -205,6 +213,10 @@ export function caidasSeguidasEn(fases) {
   let n = 0;
   for (let i = seguidas.length - 1; i >= 0 && fases.includes(seguidas[i].fase); i--) {
     if (seguidas[i].version !== VERSION) break;
+    // Una caída INCIERTA (sin registro de Claude que la confirme) no puede disparar el rehacer
+    // del índice: en un equipo donde ese registro no se lee, cada reapertura de Claude sumaba
+    // una y tres seguidas reindexaban 39.000 documentos (22-sep-2026).
+    if (seguidas[i].incierta) break;
     n += 1;
   }
   return n;
@@ -434,7 +446,10 @@ function lineaPropia(j, lit) {
 
 // Registro de Claude sobre NUESTRO proceso: ahí queda lo que el proceso escribió al morir
 // (p. ej. «FATAL ERROR: Reached heap limit»), que nuestro propio registro no llega a ver.
-function rutasLogClaude() {
+function dirsLogClaude() {
+  // Salida de emergencia para soporte (y para las pruebas): dónde tiene Claude sus registros en
+  // este equipo, si estuvieran en un sitio que no sabemos encontrar.
+  if (process.env.ROBIN_CLAUDE_LOGS_DIR) return [process.env.ROBIN_CLAUDE_LOGS_DIR];
   const home = os.homedir();
   const dirs = [];
   if (process.platform === 'darwin') dirs.push(path.join(home, 'Library', 'Logs', 'Claude'));
@@ -442,32 +457,80 @@ function rutasLogClaude() {
     const appdata = process.env.APPDATA || path.join(home, 'AppData', 'Roaming');
     const local = process.env.LOCALAPPDATA || path.join(home, 'AppData', 'Local');
     dirs.push(path.join(appdata, 'Claude', 'logs'));
-    for (const p of ['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t']) {
-      dirs.push(path.join(local, 'Packages', p, 'LocalCache', 'Roaming', 'Claude', 'logs'));
+    // Claude instalado desde la Tienda (MSIX) escribe bajo `Packages\<familia>\LocalCache`. La
+    // familia lleva un sufijo que cambia con la firma del paquete, así que NO se puede escribir a
+    // mano: se buscan las carpetas que empiecen por «Claude» o acaben en «.Claude_…».
+    const packages = path.join(local, 'Packages');
+    let familias = [];
+    try {
+      familias = fs.readdirSync(packages).filter((n) => /(^|\.)Claude[._]/i.test(n) || /^Claude_/i.test(n));
+    } catch {
+      familias = ['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t'];
     }
+    for (const f of familias) dirs.push(path.join(packages, f, 'LocalCache', 'Roaming', 'Claude', 'logs'));
   } else dirs.push(path.join(home, '.config', 'Claude', 'logs'));
-  const out = [];
-  for (const d of dirs) for (const n of ['mcp-server-RobinSearch.log', 'mcp-server-Robin Search.log']) out.push(path.join(d, n));
-  return out;
+  return dirs;
+}
+
+// El nombre del fichero lo pone CLAUDE con el nombre que tenga la extensión instalada
+// («mcp-server-RobinSearch.log», «mcp-server-Robin Search.log», «mcp-server-robin-search.log»…).
+// Hasta la 1.8.3 se probaban DOS nombres exactos: donde no coincidía, no había registro de Claude
+// que leer, y sin él toda reapertura del servidor pasaba por CAÍDA (22-sep-2026, un despacho con
+// tres «caídas» en diez minutos y un .xlsx sano apartado). Ahora se listan los
+// «mcp-server-*.log» de la carpeta y se reconoce el nuestro sin puntuación ni mayúsculas.
+export const esLogNuestro = (n) =>
+  /^mcp-server-.*\.log$/i.test(n) && /robinsearch/.test(n.toLowerCase().replace(/[^a-z0-9]/g, ''));
+
+// Estado de la última búsqueda del registro de Claude: para dejar de adivinar por qué en un
+// equipo no lo encontramos (viaja en el informe, nunca la ruta).
+let _estadoLogClaude = 'sin_mirar';
+export function estadoLogClaude() {
+  if (_estadoLogClaude === 'sin_mirar') rutaLogClaude();
+  return _estadoLogClaude;
+}
+
+// El fichero de registro de Claude sobre NUESTRO servidor, o null si no lo hay. Se queda con el
+// más reciente: al reinstalar la extensión con otro nombre quedan los dos.
+function rutaLogClaude() {
+  let mejor = null;
+  let mt = 0;
+  let vistoDir = false;
+  let sinPermiso = false;
+  for (const d of dirsLogClaude()) {
+    let nombres;
+    try {
+      nombres = fs.readdirSync(d);
+      vistoDir = true;
+    } catch (err) {
+      // En el equipo del 22-sep el sistema devolvía EPERM hasta al listar carpetas. Si es eso,
+      // se dice: «no lo encuentro» y «no me dejan mirar» piden cosas distintas a soporte.
+      if (err?.code === 'EPERM' || err?.code === 'EACCES') sinPermiso = true;
+      else if (err?.code !== 'ENOENT') vistoDir = true;
+      continue;
+    }
+    for (const n of nombres) {
+      if (!esLogNuestro(n)) continue;
+      const r = path.join(d, n);
+      try {
+        const st = fs.statSync(r);
+        if (st.mtimeMs > mt) {
+          mt = st.mtimeMs;
+          mejor = r;
+        }
+      } catch {
+        /* desaparecido entre el listado y el stat */
+      }
+    }
+  }
+  _estadoLogClaude = mejor ? 'leido' : sinPermiso ? 'sin_permiso' : vistoDir ? 'sin_fichero' : 'sin_carpeta';
+  return mejor;
 }
 
 const RE_CLAUDE_UTIL =
   /(error|fatal|heap|memory|memoria|abort|signal|sigkill|sigabrt|exit|crash|disconnect|killed|terminat|transport closed|initializing server|shutting down|robin-search:)/i;
 
 function lineasDeClaude(lit) {
-  let mejor = null;
-  let mt = 0;
-  for (const r of rutasLogClaude()) {
-    try {
-      const st = fs.statSync(r);
-      if (st.mtimeMs > mt) {
-        mt = st.mtimeMs;
-        mejor = r;
-      }
-    } catch {
-      /* no existe */
-    }
-  }
+  const mejor = rutaLogClaude();
   if (!mejor) return [];
   const out = [];
   for (const bruto of colaDeFichero(mejor, 64 * 1024).split('\n')) {
@@ -508,20 +571,9 @@ export function claudeLaCerro(marca, lineas = null) {
   const inicio = Date.parse(marca?.inicio);
   if (!Number.isFinite(inicio)) return false;
   if (!lineas) {
-    let mejor = null;
-    let mt = 0;
-    for (const r of rutasLogClaude()) {
-      try {
-        const st = fs.statSync(r);
-        if (st.mtimeMs > mt) {
-          mt = st.mtimeMs;
-          mejor = r;
-        }
-      } catch {
-        /* no existe */
-      }
-    }
-    if (!mejor) return false;
+    const mejor = rutaLogClaude();
+    // Sin registro de Claude no se sabe si la cerró él o se cayó: `null`, nunca «se cayó».
+    if (!mejor) return null;
     lineas = colaDeFichero(mejor, 256 * 1024).split('\n');
   }
   const eventos = [];
@@ -545,6 +597,8 @@ export function claudeLaCerro(marca, lineas = null) {
     const e = eventos[i];
     if (e.tipo === 'inicio' && e.t <= inicio + 1000 && inicio - e.t <= 60_000) lanzado = i;
   }
+  // El registro existe y no menciona el arranque de esa ejecución: no la lanzó ESTE Claude (la
+  // lanzó la app, el CLI o una prueba), así que Claude no pudo cerrarla.
   if (lanzado < 0) return false;
   const resto = eventos.slice(lanzado + 1).filter((e) => e.tipo !== 'inicio');
   const fin = resto[0];
@@ -666,6 +720,26 @@ function esDeLaNube(p) {
   const ruta = String(p).toLowerCase();
   return raicesDeNubeDelEntorno().some((raiz) => ruta.startsWith(raiz.toLowerCase()));
 }
+// Una carpeta con documentos que la nube todavía no ha bajado ES una carpeta de la nube, diga lo
+// que diga su ruta. Es la prueba que no se puede discutir, y la que faltaba: el 22-sep-2026 un
+// informe traía 72 ficheros «sin descargar de la nube» y, a la vez, «carpetas en la nube: 0»
+// (OneDrive con las carpetas redirigidas, sin «OneDrive» en la ruta ni en el entorno de ESTE
+// proceso). Sin esto, el diagnóstico apunta al sitio equivocado.
+function raicesConPendientesDeNube() {
+  const out = new Set();
+  try {
+    for (const e of nube.lista()) {
+      const r = e?.ruta && rootForPath(e.ruta);
+      if (r?.path) out.add(rutas.claveRuta(r.path));
+    }
+  } catch {
+    /* sin lista de pendientes se decide solo por la ruta */
+  }
+  return out;
+}
+
+export const carpetasResumenParaPruebas = () => carpetasResumen();
+
 function carpetasResumen() {
   const lista = config.watchedFolders || [];
   const red = lista.filter((p) => {
@@ -675,7 +749,12 @@ function carpetasResumen() {
       return false;
     }
   }).length;
-  return { total: lista.length, red, nube: lista.filter(esDeLaNube).length };
+  const conPendientes = raicesConPendientesDeNube();
+  return {
+    total: lista.length,
+    red,
+    nube: lista.filter((p) => esDeLaNube(p) || conPendientes.has(rutas.claveRuta(p))).length,
+  };
 }
 
 function puedeEnviar(firma) {
@@ -740,6 +819,9 @@ export function construirInforme(motivo, datos = {}) {
     causa,
     fichero,
     caidas_seguidas: leerEstado().caidasSeguidas || 0,
+    // Si el registro de Claude se ha podido leer en este equipo o no: de ello depende que una
+    // marca huérfana se sepa distinguir de un cierre de Claude, y hasta hoy lo adivinábamos.
+    claude_log: estadoLogClaude(),
     registro: registroSaneado(lit),
   };
   let cuerpo = barrera(JSON.stringify(informe), lit);

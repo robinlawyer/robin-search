@@ -342,7 +342,16 @@ export function reescanear(folders, { motivo = 'periodico' } = {}) {
       }
       return resumen;
     } catch (err) {
-      log.error('Fallo en el re-escaneo de carpeta de red', { carpetas: lista, err: String(err) });
+      // Que el índice lo tenga la otra ventana de Claude no es un fallo: ella hace el trabajo y
+      // este repaso vuelve a pasar solo. Como «error» ensuciaba el registro y viajaba en el
+      // informe técnico como si algo estuviera roto (22-sep-2026). Y el repaso de una carpeta
+      // LOCAL no es «de red»: se dice cuál de los dos es.
+      const que = motivo === 'red_de_seguridad' ? 'repaso de carpeta local' : 're-escaneo de carpeta de red';
+      if (err?.code === 'ROBIN_OTRA_INSTANCIA' || err?.code === 'ROBIN_SIN_CERROJO') {
+        log.info(`El ${que} lo deja a la otra instancia, que tiene el índice`, { motivo });
+      } else {
+        log.error(`Fallo en el ${que}`, { carpetas: lista, err: String(err) });
+      }
       return null;
     } finally {
       _reescaneos.delete(clave);
