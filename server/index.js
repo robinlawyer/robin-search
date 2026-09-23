@@ -124,6 +124,14 @@ async function main() {
     if (huboCliente) salirLimpio('stdin_cerrado');
   });
   log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder });
+  // HUELLA en el registro de Claude (23-sep-2026). Claude guarda lo que el servidor
+  // escribe por stderr en «mcp-server-<nombre>.log», y ese <nombre> lo pone la
+  // instalación: en tres equipos Windows de la 1.8.4 no había NINGÚN fichero cuyo
+  // nombre contuviera «robinsearch» (claude_log: sin_fichero), así que toda
+  // reapertura volvía a quedar como caída INCIERTA. Con esta línea nuestro registro
+  // se reconoce por lo que DICE y no por cómo se llame el fichero. stderr es seguro
+  // en MCP stdio: stdout está reservado al protocolo JSON-RPC.
+  process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
   // desde el primer momento (estado_servidor informará "indexando"). Se espera a que Claude

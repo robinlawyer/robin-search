@@ -491,11 +491,31 @@ export function estadoLogClaude() {
 
 // El fichero de registro de Claude sobre NUESTRO servidor, o null si no lo hay. Se queda con el
 // más reciente: al reinstalar la extensión con otro nombre quedan los dos.
+// Nuestra huella en el registro: la línea que el servidor escribe por stderr al quedar listo
+// (ver server/index.js). Es lo que permite reconocer NUESTRO registro por lo que dice y no por
+// cómo se llame el fichero.
+export const HUELLA_PROPIA = 'robin-search:';
+
+// ¿Este «mcp-server-*.log» es el nuestro aunque no lo diga su nombre? Se mira la cola, que es lo
+// único que leemos de un registro ajeno, y solo se busca NUESTRA huella: nada de ese fichero sale
+// del equipo si no es nuestro.
+function logLlevaNuestraHuella(ruta) {
+  try {
+    return colaDeFichero(ruta, 64 * 1024).includes(HUELLA_PROPIA);
+  } catch {
+    return false;
+  }
+}
+
 function rutaLogClaude() {
   let mejor = null;
   let mt = 0;
+  let porContenido = false;
   let vistoDir = false;
   let sinPermiso = false;
+  // Candidatos por CONTENIDO, por si ningún nombre casa: se resuelven solo entonces, para no
+  // leerle la cola a un registro ajeno sin necesidad.
+  const ajenos = [];
   for (const d of dirsLogClaude()) {
     let nombres;
     try {
@@ -509,20 +529,45 @@ function rutaLogClaude() {
       continue;
     }
     for (const n of nombres) {
-      if (!esLogNuestro(n)) continue;
+      if (!/^mcp-server-.*\.log$/i.test(n)) continue;
       const r = path.join(d, n);
+      let st;
       try {
-        const st = fs.statSync(r);
+        st = fs.statSync(r);
+      } catch {
+        continue; /* desaparecido entre el listado y el stat */
+      }
+      if (esLogNuestro(n)) {
         if (st.mtimeMs > mt) {
           mt = st.mtimeMs;
           mejor = r;
         }
-      } catch {
-        /* desaparecido entre el listado y el stat */
-      }
+      } else ajenos.push([r, st.mtimeMs]);
     }
   }
-  _estadoLogClaude = mejor ? 'leido' : sinPermiso ? 'sin_permiso' : vistoDir ? 'sin_fichero' : 'sin_carpeta';
+  if (!mejor) {
+    // POR CONTENIDO (23-sep-2026). El nombre del fichero lo pone la instalación y en tres equipos
+    // Windows de la 1.8.4 no había ninguno que contuviera «robinsearch»: `sin_fichero`, y con él
+    // toda reapertura del servidor volvía a quedar como caída INCIERTA. Nuestro registro se
+    // reconoce ahora por la huella que el servidor deja en stderr al quedar listo.
+    ajenos.sort((a, b) => b[1] - a[1]);
+    for (const [r, m] of ajenos) {
+      if (!logLlevaNuestraHuella(r)) continue;
+      mejor = r;
+      mt = m;
+      porContenido = true;
+      break;
+    }
+  }
+  _estadoLogClaude = mejor
+    ? porContenido
+      ? 'leido_por_contenido'
+      : 'leido'
+    : sinPermiso
+      ? 'sin_permiso'
+      : vistoDir
+        ? 'sin_fichero'
+        : 'sin_carpeta';
   return mejor;
 }
 
