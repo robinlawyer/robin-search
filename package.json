@@ -1,6 +1,6 @@
 {
   "name": "@robinlawyer/robin-search",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "RobinSearch — servidor MCP local que indexa los expedientes del despacho y los hace buscables semánticamente sin que ningún documento salga del ordenador del abogado.",
   "type": "module",
   "license": "MIT",
@@ -30,6 +30,7 @@
     "test:archivo-expediente": "node scripts/test-archivo-expediente.mjs",
     "test:barrido": "node scripts/test-barrido.mjs",
     "test:login": "node scripts/test-login.mjs",
+    "test:login-en-app": "node scripts/test-login-en-app.mjs",
     "test:login-bloqueado": "node scripts/test-login-bloqueado.mjs",
     "test:robustez": "node scripts/test-robustez.mjs",
     "test": "node scripts/ejecutar-pruebas.mjs",
@@ -41,6 +42,8 @@
     "patch:wasm": "node scripts/patch-wasm.mjs",
     "pack:mcpb": "node scripts/patch-wasm.mjs && node scripts/fetch-model.mjs && npx @anthropic-ai/mcpb pack . dist/robin-search.mcpb",
     "test:control": "node scripts/test-control.mjs",
+    "banco:nombres": "node scripts/banco-nombres/banco.mjs",
+    "banco:nombres-reglas": "node scripts/banco-nombres/banco.mjs --solo-reglas",
     "test:nada-se-queda-fuera": "node scripts/test-nada-se-queda-fuera.mjs",
     "test:sondeo-colgado": "node scripts/test-sondeo-colgado.mjs"
   },

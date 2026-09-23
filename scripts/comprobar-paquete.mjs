@@ -51,6 +51,20 @@ const PROHIBIDOS = ['node_modules/onnxruntime-node/', 'node_modules/sharp/', 'no
 const colados = PROHIBIDOS.filter((p) => nombres.some((n) => n.startsWith(p)));
 check('.mcpbignore ha dejado fuera los módulos nativos', colados.length === 0, colados.join(', '));
 // Lo que solo sirve para instalar sharp o generar código (sin uso en ejecución).
+// 🔴 23-sep-2026: un banco de pruebas dejo 615 MB de modelos en `scripts/` y el
+// .mcpb paso de 255 MB a 730 SIN QUE NADIE LO NOTARA — se publico asi. El
+// tamaño es ahora una comprobacion mas: lo que se le manda al abogado por su
+// linea no puede engordar a escondidas. Si un dia hace falta mas sitio de
+// verdad, se sube el techo A PROPOSITO, en un commit que lo diga.
+const TECHO_MB = Number(process.env.ROBIN_TECHO_MCPB_MB || 300);
+const tamMB = fs.statSync(fichero).size / (1024 * 1024);
+check(`el paquete no ha engordado a escondidas (≤ ${TECHO_MB} MB)`, tamMB <= TECHO_MB, `${tamMB.toFixed(0)} MB`);
+
+// Herramientas de desarrollo: nada de `scripts/` se carga en ejecucion (el punto
+// de entrada es cli/index.js) y ahi es donde se colaron los 615 MB.
+const desarrollo = nombres.filter((n) => n.startsWith('scripts/'));
+check('las herramientas de desarrollo (scripts/) se quedan fuera', desarrollo.length === 0, desarrollo.slice(0, 3).join(', '));
+
 const SOBRANTES = [/^node_modules\/bare-[^/]+\//, /^node_modules\/protobufjs\/cli\//, /^node_modules\/prebuild-install\//];
 const sobrantes = [...new Set(nombres.filter((n) => SOBRANTES.some((re) => re.test(n))).map((n) => n.split('/').slice(0, 3).join('/')))];
 check('.mcpbignore ha dejado fuera bare-*, protobufjs/cli y prebuild-install', sobrantes.length === 0, sobrantes.slice(0, 5).join(', '));

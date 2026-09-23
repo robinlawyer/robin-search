@@ -7,6 +7,12 @@ node_modules/@napi-rs/
 node_modules/fsevents/
 # CI y pruebas: no pintan nada en casa del abogado
 .github/
+# 🔴 23-sep-2026: `scripts/` son herramientas de desarrollo (empaquetar, publicar,
+# la bateria de pruebas) y NADA de ahi se carga en ejecucion — el punto de entrada
+# es cli/index.js. Iban dentro, y con ellas se colo `scripts/banco-nombres/.modelos/`:
+# 615 MB de modelos de un banco de pruebas, que dejaron el .mcpb en 730 MB (de 255).
+# Se quedan fuera enteras, y comprobar-paquete.mjs vigila el tamaño.
+scripts/
 # Solo los usa sharp al INSTALARSE (tar-fs → bare-*, prebuild-install) o para generar código
 # (protobufjs/cli): nada del servidor los carga en ejecución (comprobado con una traza de
 # resolución de módulos sobre indexado, búsqueda, OCR y comprimidos, 16-sep-2026). ~21 MB menos.

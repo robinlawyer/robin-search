@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ORDEN = [
-  'login', 'login-bloqueado', 'sondeo-colgado', 'control', 'aislamiento',
+  'login', 'login-en-app', 'login-bloqueado', 'sondeo-colgado', 'control', 'aislamiento',
   'red', 'vigilante-local', 'rutas', 'carpetas', 'diagnostico', 'incidencias-sep', 'incidencias-22sep', 'incidencias-23sep', 'nada-se-queda-fuera', 'correo', 'correo-oauth', 'archivo-expediente', 'barrido', 'robustez', 'concurrencia', 'contenedores', 'escala', 'persistencia', 'ocr', 'formato-real', 'sin-conexion', 'no-modifica', 'velocidad', 'humo-so',
 ];
 const pedidas = process.argv.slice(2);

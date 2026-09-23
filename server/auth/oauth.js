@@ -695,14 +695,25 @@ export async function authStatus() {
 // Login interactivo bloqueante para el CLI (`robin-search login`). Imprime a stdout.
 export async function loginInteractive() {
   process.stdout.write('Abriendo el navegador para iniciar sesión en RobinLawyer.ai…\n');
-  const res = await startLogin();
+  const res = startLogin();
+  // 🔴 23-sep-2026: el enlace de autorización se publica AQUÍ, en cuanto existe,
+  // y no al final. RobinDesktop lanza este mismo `login` con ROBIN_NO_BROWSER=1 y
+  // abre el enlace en una ventana SUYA, para que la sesión quede iniciada también
+  // dentro de la app (su panel embebido tiene su propio almacén de cookies, como
+  // cualquier navegador; sin esto, licencias, guía, manual y catálogo pedían
+  // entrar otra vez aunque el abogado acabara de hacerlo). Una línea de máquina,
+  // fácil de leer desde fuera; la de siempre se sigue imprimiendo para quien lo
+  // use a mano.
+  const enlace = await awaitAuthorizeUrl();
+  if (enlace) process.stdout.write(`ROBIN_LOGIN_URL ${enlace}\n`);
+  const hecho = await res;
   if (_lastAuthorizeUrl) process.stdout.write(`Si no se abrió, entra aquí:\n  ${_lastAuthorizeUrl}\n`);
-  if (res.ok) {
+  if (hecho.ok) {
     const a = loadAuth();
     process.stdout.write(`✓ Sesión iniciada como ${a?.user?.email || a?.user?.name || 'usuario de Robin'}.\n`);
     return true;
   }
-  process.stderr.write(`✗ No se pudo iniciar sesión: ${res.error || 'error desconocido'}\n`);
+  process.stderr.write(`✗ No se pudo iniciar sesión: ${hecho.error || 'error desconocido'}\n`);
   return false;
 }
 

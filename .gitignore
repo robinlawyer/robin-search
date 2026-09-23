@@ -8,3 +8,4 @@ data/
 # Modelos ONNX cacheados por @xenova/transformers
 .cache/
 models/
+scripts/banco-nombres/.modelos/
