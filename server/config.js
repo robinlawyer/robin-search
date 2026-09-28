@@ -106,7 +106,7 @@ function desdoblarPorComa(trozo) {
 
 // Carpetas elegidas desde la app de escritorio. Viven en NUESTRO directorio de
 // datos, no en los ajustes de Claude: el abogado configura RobinSearch en la
-// app de RobinSearch, y no en dos sitios distintos.
+// app de escritorio (RobinDesktop), y no en dos sitios distintos.
 export function rutaAjustes(dataDir) {
   return path.join(dataDir, 'ajustes.json');
 }

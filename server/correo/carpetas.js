@@ -61,11 +61,15 @@ function porConvencion(buzones, clase) {
 
 // Resuelve una carpeta especial. `clase` = 'borradores' | 'enviados'.
 // Orden: lo que el abogado haya fijado a mano → SPECIAL-USE → convención → null.
+// Con varias cuentas, cada una tiene SUS carpetas: la cuenta sale de la propia conexión
+// (conexion.js la marca al abrirla) y la memoria se guarda por cuenta.
 export async function resolver(cliente, clase) {
-  const cfg = leerCorreo();
+  const cuenta = cliente?.robinCuenta || null;
+  const cfg = leerCorreo(cuenta);
   const fijada = cfg.carpetas?.[clase];
   if (fijada) return fijada;
-  const enMemoria = cache.get(clase);
+  const clave = `${String(cfg.usuario || '').toLowerCase()}|${clase}`;
+  const enMemoria = cache.get(clave);
   if (enMemoria) return enMemoria;
 
   const buzones = await listar(cliente);
@@ -77,11 +81,11 @@ export async function resolver(cliente, clase) {
     log.warn('El servidor de correo no declara la carpeta especial', { clase, via: 'ninguna' });
     return null;
   }
-  cache.set(clase, ruta);
+  cache.set(clave, ruta);
   // Se recuerda en ajustes.json para no volver a hacer el LIST en el próximo arranque. El
   // nombre de una carpeta del sistema no es contenido del abogado.
   try {
-    guardarCorreo({ carpetas: { ...cfg.carpetas, [clase]: ruta } });
+    if (cfg.usuario) guardarCorreo({ carpetas: { ...cfg.carpetas, [clase]: ruta } }, cfg.usuario);
   } catch (err) {
     log.warn('No se pudo recordar la carpeta especial', { clase, err: String(err?.message ?? err) });
   }

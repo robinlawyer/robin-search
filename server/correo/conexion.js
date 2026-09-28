@@ -23,9 +23,16 @@ const CONEXION_MS = 15000;   // abrir el socket
 const SALUDO_MS = 15000;     // que el servidor se presente
 const OPERACION_MS = 60000;  // una búsqueda en un buzón grande puede tardar
 
-let cliente = null;
-let conectando = null;
-let cola = Promise.resolve();
+// Una conexión POR CUENTA (26-sep-2026, varias cuentas): cada buzón tiene su cliente, su
+// conexión en curso y su propia fila de órdenes. Buscar en la del despacho no espera a que
+// termine un FETCH lento en la personal.
+const puestos = new Map();   // dirección en minúsculas → { cliente, conectando, cola }
+
+function puestoDe(usuario) {
+  const k = String(usuario || '').trim().toLowerCase();
+  if (!puestos.has(k)) puestos.set(k, { cliente: null, conectando: null, cola: Promise.resolve() });
+  return puestos.get(k);
+}
 
 // Un fallo del que no se vuelve: la conexión se tira y la siguiente llamada abre otra.
 function esFatal(err) {
@@ -44,14 +51,14 @@ export function explicar(err) {
       mensaje: 'El servidor de correo ha rechazado las credenciales. Si la cuenta es de Microsoft 365 '
         + 'o de Outlook.com, la contraseña no sirve para IMAP y hay que conectarla con la propia '
         + 'cuenta de Microsoft; en Gmail hace falta una contraseña de aplicación. Vuelve a conectar '
-        + 'la cuenta desde la app de RobinSearch → Tu correo.',
+        + 'la cuenta desde RobinDesktop → Correo electrónico.',
     };
   }
   if (['ENOTFOUND', 'EAI_AGAIN'].includes(code)) {
-    return { motivo: 'sin_conexion', mensaje: 'No se encuentra el servidor de correo. Comprueba que este ordenador tiene conexión y que el nombre del servidor es correcto (app de RobinSearch → Tu correo → Ajustes avanzados).' };
+    return { motivo: 'sin_conexion', mensaje: 'No se encuentra el servidor de correo. Comprueba que este ordenador tiene conexión y que el nombre del servidor es correcto (RobinDesktop → Correo electrónico → Ajustes avanzados).' };
   }
   if (code === 'ECONNREFUSED') {
-    return { motivo: 'puerto', mensaje: 'El servidor de correo rechaza la conexión en ese puerto. Revísalo en la app de RobinSearch → Tu correo → Ajustes avanzados.' };
+    return { motivo: 'puerto', mensaje: 'El servidor de correo rechaza la conexión en ese puerto. Revísalo en RobinDesktop → Correo electrónico → Ajustes avanzados.' };
   }
   if (['ETIMEDOUT', 'ECONNABORTED'].includes(code) || /tiempo agotado|timed? ?out/i.test(msg)) {
     return { motivo: 'tiempo', mensaje: 'El servidor de correo no responde. Puede ser la conexión, la VPN del despacho o el propio servidor.' };
@@ -64,10 +71,29 @@ export function explicar(err) {
 
 export class SinCuenta extends Error {
   constructor() {
-    super('Todavía no hay ninguna cuenta de correo conectada. Ábrela en la app de RobinSearch → Tu correo. '
+    super('Todavía no hay ninguna cuenta de correo conectada. Ábrela en RobinDesktop → Correo electrónico. '
       + 'La contraseña se guarda en el llavero de este ordenador; RobinSearch nunca la pide por el chat.');
     this.motivo = 'sin_cuenta';
   }
+}
+
+// Se ha pedido una cuenta por su dirección y no es ninguna de las conectadas. NUNCA se cae en la
+// principal: sería leer o escribir en el buzón de otra persona.
+export class CuentaDesconocida extends Error {
+  constructor(pedida, conectadas = []) {
+    super(`La cuenta «${pedida}» no está conectada en este ordenador.`
+      + (conectadas.length ? ` Las conectadas son: ${conectadas.join(', ')}.` : ' No hay ninguna conectada.'));
+    this.motivo = 'cuenta_desconocida';
+    this.cuentas = conectadas;
+  }
+}
+
+// La configuración de la cuenta pedida (o de la principal), o el error que toca.
+export function cuentaPedida(cuenta = null) {
+  const cfg = leerCorreo(cuenta || null);
+  if (cuenta && cfg.desconocida) throw new CuentaDesconocida(cuenta, cfg.cuentas || []);
+  if (!cfg.configurado) throw new SinCuenta();
+  return cfg;
 }
 
 export class FalloDeCorreo extends Error {
@@ -90,9 +116,7 @@ export async function credenciales(cfg) {
   return { user: cfg.usuario, pass: clave };
 }
 
-async function abrir() {
-  const cfg = leerCorreo();
-  if (!cfg.configurado) throw new SinCuenta();
+async function abrir(cfg, puesto) {
   const c = new ImapFlow({
     host: cfg.imap.host,
     port: cfg.imap.puerto,
@@ -108,22 +132,25 @@ async function abrir() {
   // ImapFlow emite 'error' por su cuenta; sin oyente, un corte de red tumbaría el proceso.
   c.on('error', (err) => {
     log.warn('Conexión de correo caída', { code: err?.code || null });
-    if (cliente === c) cliente = null;
+    if (puesto.cliente === c) puesto.cliente = null;
   });
-  c.on('close', () => { if (cliente === c) cliente = null; });
+  c.on('close', () => { if (puesto.cliente === c) puesto.cliente = null; });
+  // De qué cuenta es esta conexión: lo lee carpetas.resolver() para no mezclar los Borradores
+  // de un buzón con los de otro.
+  c.robinCuenta = cfg.usuario;
   await c.connect();
   return c;
 }
 
-async function conectar() {
-  if (cliente?.usable) return cliente;
-  if (!conectando) {
-    conectando = abrir()
-      .then((c) => { cliente = c; return c; })
-      .catch((err) => { cliente = null; throw err; })
-      .finally(() => { conectando = null; });
+async function conectar(cfg, puesto) {
+  if (puesto.cliente?.usable) return puesto.cliente;
+  if (!puesto.conectando) {
+    puesto.conectando = abrir(cfg, puesto)
+      .then((c) => { puesto.cliente = c; return c; })
+      .catch((err) => { puesto.cliente = null; throw err; })
+      .finally(() => { puesto.conectando = null; });
   }
-  return conectando;
+  return puesto.conectando;
 }
 
 // Todas las operaciones van en fila: IMAP atiende una orden por conexión, y dos herramientas
@@ -131,21 +158,25 @@ async function conectar() {
 // Fallos que YA vienen explicados desde el módulo de OAuth: no hay que traducirlos otra vez, y
 // convertirlos en «no se ha podido hablar con el servidor» perdería lo único útil que dicen —
 // que hay que volver a conectar la cuenta.
-const MOTIVOS_PROPIOS = new Set(['permiso_retirado', 'sin_permiso', 'sin_alta', 'token', 'sin_cuenta']);
+const MOTIVOS_PROPIOS = new Set(['permiso_retirado', 'sin_permiso', 'sin_alta', 'token', 'sin_cuenta', 'cuenta_desconocida']);
 
-export function conImap(fn) {
-  const turno = cola.then(async () => {
+// `fn(cliente, cfg)`: `cfg` es la cuenta sobre la que se está trabajando, para quien necesite su
+// dirección o sus carpetas. `cuenta` es la dirección pedida; sin ella, la principal.
+export async function conImap(fn, cuenta = null) {
+  const cfg = cuentaPedida(cuenta);
+  const puesto = puestoDe(cfg.usuario);
+  const turno = puesto.cola.then(async () => {
     try {
-      return await fn(await conectar());
+      return await fn(await conectar(cfg, puesto), cfg);
     } catch (err) {
       if (err instanceof SinCuenta || MOTIVOS_PROPIOS.has(err?.motivo)) throw err;
       if (esFatal(err)) {
         // Una sola reconexión: si el servidor cerró por inactividad, el abogado no tiene por qué
         // enterarse. Si vuelve a fallar, se dice.
-        try { cliente?.close(); } catch { /* ya cerrada */ }
-        cliente = null;
+        try { puesto.cliente?.close(); } catch { /* ya cerrada */ }
+        puesto.cliente = null;
         try {
-          return await fn(await conectar());
+          return await fn(await conectar(cfg, puesto), cfg);
         } catch (err2) {
           if (err2 instanceof SinCuenta || MOTIVOS_PROPIOS.has(err2?.motivo)) throw err2;
           throw new FalloDeCorreo(err2);
@@ -155,15 +186,21 @@ export function conImap(fn) {
     }
   });
   // La cola sigue aunque este turno falle.
-  cola = turno.then(() => undefined, () => undefined);
+  puesto.cola = turno.then(() => undefined, () => undefined);
   return turno;
 }
 
-export async function cerrar() {
-  const c = cliente;
-  cliente = null;
-  if (!c) return;
-  try { await c.logout(); } catch { try { c.close(); } catch { /* nada */ } }
+// Cierra la conexión de una cuenta (al desconectarla) o las de todas.
+export async function cerrar(cuenta = null) {
+  const claves = cuenta ? [String(cuenta).trim().toLowerCase()] : [...puestos.keys()];
+  for (const k of claves) {
+    const p = puestos.get(k);
+    if (!p) continue;
+    const c = p.cliente;
+    p.cliente = null;
+    if (!c) continue;
+    try { await c.logout(); } catch { try { c.close(); } catch { /* nada */ } }
+  }
 }
 
 // Para la app: comprobar unas credenciales SIN tocar la conexión en uso ni guardar nada.
@@ -182,4 +219,4 @@ export async function probarCredenciales({ host, puerto, tls = true, usuario, cl
   return c;
 }
 
-export default { conImap, cerrar, explicar, probarCredenciales, SinCuenta, FalloDeCorreo };
+export default { conImap, cerrar, explicar, probarCredenciales, cuentaPedida, SinCuenta, CuentaDesconocida, FalloDeCorreo };

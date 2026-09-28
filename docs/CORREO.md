@@ -42,11 +42,25 @@ vez.
 
 ## Configurarlo (5 minutos, una vez)
 
-1. Abrir la app **RobinSearch** → tarjeta **«Tu correo»** (paso 4, opcional).
+1. Abrir **RobinDesktop** → **«Correo electrónico»** en la barra lateral.
 2. Escribir la dirección de correo y su contraseña.
 3. **Conectar**. RobinSearch averigua solo el servidor, comprueba que entra, mira la bandeja y
    crea y borra un borrador de prueba. Responde en una frase qué ha podido hacer.
 4. Si se quiere, activar **«Permitir además que envíe correos»**. No hace falta.
+
+### Varias cuentas (1.9.0)
+
+Como en Expedientes, donde se vigilan varias carpetas, se pueden conectar **varias cuentas**
+(Juan, 26-sep-2026): «Añadir otra cuenta» debajo de la lista. La primera es la **principal**.
+Cada cuenta tiene su contraseña en el llavero y su propio interruptor de envío. Con más de una:
+
+- `buscar_correos` sin `cuenta` busca en **todas**, y cada correo dice de cuál es (`cuenta`).
+- Lo que va por `uid` —`leer_correo`, `leer_adjunto`, `archivar_correo`, responder— **exige** la
+  `cuenta`: un uid solo vale dentro de su buzón, y el mismo número en otro buzón es otro correo.
+- `enviar_correo` **exige** la `cuenta` desde la que sale. Un borrador nuevo sin `cuenta` va a la
+  principal, y la respuesta dice cuál.
+
+Las cuentas de la 1.8.x se leen tal cual al actualizar: nadie tiene que volver a conectarlas.
 
 Si el servidor no se encuentra solo, en **Ajustes avanzados** se ponen a mano el servidor de
 entrada (IMAP, casi siempre puerto 993) y el de salida (SMTP, 587 o 465). Es el dato que tiene
@@ -59,9 +73,11 @@ cualquiera con un `ps` y quedaría en el historial de la shell:
 
 ```sh
 printf '%s' 'la-contraseña' | robin-search correo conectar --direccion=abogado@despacho.es
-robin-search correo probar
-robin-search correo envio --permitir      # opcional
-robin-search correo olvidar               # borra la cuenta y la contraseña del llavero
+printf '%s' 'otra-contraseña' | robin-search correo conectar --direccion=personal@correo.es   # otra más
+robin-search correo probar [--cuenta=…]
+robin-search correo envio --permitir [--cuenta=…]   # opcional; sin --cuenta, la principal
+robin-search correo olvidar --cuenta=…    # borra esa cuenta y su contraseña del llavero
+robin-search correo olvidar               # borra TODAS
 ```
 
 ## Dónde está la contraseña
@@ -69,7 +85,7 @@ robin-search correo olvidar               # borra la cuenta y la contraseña del
 | Sistema | Dónde se guarda |
 |---|---|
 | macOS | Llavero del sistema (`security`), servicio **«RobinSearch correo»** |
-| Windows | Cifrada con DPAPI de usuario, en `%APPDATA%\RobinLawyer\robin-search\correo.cred` |
+| Windows | Cifrada con DPAPI de usuario, un fichero por cuenta: `%APPDATA%\RobinLawyer\robin-search\correo-<resumen>.cred` (hasta la 1.8.x, `correo.cred`, que se sigue leyendo) |
 | Linux | GNOME Keyring / KWallet, vía `secret-tool` |
 | Linux sin llavero | Fichero `0600` — **y la app lo dice con todas las letras** |
 

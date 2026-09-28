@@ -6,11 +6,11 @@
 // cuenta conectada» no hace falta nada de eso, así que ese texto vive aquí.
 
 export const SIN_CUENTA =
-  'Todavía no hay ninguna cuenta de correo conectada. Ábrela en la app de RobinSearch → Tu correo. '
+  'Todavía no hay ninguna cuenta de correo conectada. Ábrela en RobinDesktop → Correo electrónico. '
   + 'La contraseña se guarda en el llavero de este ordenador; RobinSearch nunca la pide por el chat.';
 
 export const SIN_SECRETO =
   'La cuenta de correo está configurada pero su contraseña no está en el llavero de este '
-  + 'ordenador. Vuelve a conectarla en la app de RobinSearch → Tu correo.';
+  + 'ordenador. Vuelve a conectarla en RobinDesktop → Correo electrónico.';
 
 export default { SIN_CUENTA, SIN_SECRETO };

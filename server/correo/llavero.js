@@ -13,6 +13,7 @@
 // entrada estándar del proceso hijo y no se registra en ningún sitio.
 
 import { spawn } from 'node:child_process';
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -93,7 +94,29 @@ const mac = {
 // SESIÓN del usuario, de modo que el blob no lo puede descifrar ni otro usuario del equipo ni
 // el mismo fichero copiado a otra máquina. El guion de PowerShell va por -EncodedCommand (no es
 // secreto) y la contraseña por stdin (sí lo es): así no aparece en la línea de órdenes.
-const RUTA_WIN = () => path.join(config.dataDir, 'correo.cred');
+//
+// VARIAS CUENTAS (26-sep-2026): hasta la 1.8.x había UN fichero, `correo.cred`, y conectar una
+// segunda cuenta habría pisado la contraseña de la primera. Ahora cada cuenta tiene el suyo,
+// nombrado por un resumen de su dirección (la dirección en claro no va en el nombre de un
+// fichero). El viejo se sigue leyendo si es de esa cuenta, y se retira al guardar la nueva.
+const RUTA_WIN_VIEJA = () => path.join(config.dataDir, 'correo.cred');
+const huella = (cuenta) => crypto.createHash('sha256').update(String(cuenta).trim().toLowerCase()).digest('hex').slice(0, 20);
+const RUTA_WIN = (cuenta) => path.join(config.dataDir, `correo-${huella(cuenta)}.cred`);
+
+function esDeLaViejaWin(cuenta) {
+  try {
+    const guardada = fs.readFileSync(`${RUTA_WIN_VIEJA()}.cuenta`, 'utf8').trim();
+    return Boolean(guardada) && guardada.toLowerCase() === String(cuenta).trim().toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
+function borrarViejaWin() {
+  for (const f of [RUTA_WIN_VIEJA(), `${RUTA_WIN_VIEJA()}.cuenta`]) {
+    try { fs.rmSync(f, { force: true }); } catch { /* ya no está */ }
+  }
+}
 
 function psCodificado(guion) {
   return Buffer.from(guion, 'utf16le').toString('base64');
@@ -136,27 +159,26 @@ function powershell(guion) {
 const win = {
   async guardar(cuenta, clave) {
     fs.mkdirSync(config.dataDir, { recursive: true });
-    const [cmd, args] = powershell(psProteger(RUTA_WIN()));
+    const [cmd, args] = powershell(psProteger(RUTA_WIN(cuenta)));
     const r = await ejecutar(cmd, args, clave);
     if (!r.ok) return false;
-    // El fichero solo guarda la contraseña de ESTA cuenta: el usuario se contrasta al leer.
-    try { fs.writeFileSync(`${RUTA_WIN()}.cuenta`, cuenta, 'utf8'); } catch { /* el contraste es un extra */ }
+    if (esDeLaViejaWin(cuenta)) borrarViejaWin();
     return true;
   },
   async leer(cuenta) {
-    if (!fs.existsSync(RUTA_WIN())) return null;
-    try {
-      const guardada = fs.readFileSync(`${RUTA_WIN()}.cuenta`, 'utf8').trim();
-      if (guardada && guardada !== cuenta) return null;
-    } catch { /* sin marca de cuenta: se sigue */ }
-    const [cmd, args] = powershell(psDesproteger(RUTA_WIN()));
+    let ruta = RUTA_WIN(cuenta);
+    if (!fs.existsSync(ruta)) {
+      // La de antes de la 1.9.0, solo si es de ESTA cuenta.
+      if (!fs.existsSync(RUTA_WIN_VIEJA()) || !esDeLaViejaWin(cuenta)) return null;
+      ruta = RUTA_WIN_VIEJA();
+    }
+    const [cmd, args] = powershell(psDesproteger(ruta));
     const r = await ejecutar(cmd, args);
     return r.ok && r.out ? r.out : null;
   },
-  async borrar() {
-    for (const f of [RUTA_WIN(), `${RUTA_WIN()}.cuenta`]) {
-      try { fs.rmSync(f, { force: true }); } catch { /* ya no está */ }
-    }
+  async borrar(cuenta) {
+    try { fs.rmSync(RUTA_WIN(cuenta), { force: true }); } catch { /* ya no está */ }
+    if (esDeLaViejaWin(cuenta)) borrarViejaWin();
     return true;
   },
 };
@@ -185,23 +207,49 @@ const linux = {
 // hay llavero de verdad: si allí falla, falla y se avisa.
 const RUTA_FICHERO = () => path.join(config.dataDir, 'correo.clave');
 
+// Varias cuentas: `{ claves: { cuenta: clave } }`. Hasta la 1.8.x era `{ cuenta, clave }` y se
+// sigue leyendo.
+function leerMapa() {
+  try {
+    const d = JSON.parse(fs.readFileSync(RUTA_FICHERO(), 'utf8'));
+    if (d && d.claves && typeof d.claves === 'object') return { ...d.claves };
+    if (d && typeof d.cuenta === 'string' && typeof d.clave === 'string') return { [d.cuenta]: d.clave };
+  } catch { /* no hay fichero */ }
+  return {};
+}
+
+function escribirMapa(claves) {
+  if (!Object.keys(claves).length) {
+    try { fs.rmSync(RUTA_FICHERO(), { force: true }); } catch { /* ya no está */ }
+    return;
+  }
+  fs.mkdirSync(config.dataDir, { recursive: true });
+  fs.writeFileSync(RUTA_FICHERO(), JSON.stringify({ claves }), { mode: 0o600 });
+  try { fs.chmodSync(RUTA_FICHERO(), 0o600); } catch { /* sistema de ficheros sin permisos POSIX */ }
+}
+
+const deLaCuenta = (claves, cuenta) => Object.keys(claves)
+  .find((k) => k.toLowerCase() === String(cuenta).trim().toLowerCase());
+
 const fichero = {
   async guardar(cuenta, clave) {
-    fs.mkdirSync(config.dataDir, { recursive: true });
-    fs.writeFileSync(RUTA_FICHERO(), JSON.stringify({ cuenta, clave }), { mode: 0o600 });
-    try { fs.chmodSync(RUTA_FICHERO(), 0o600); } catch { /* sistema de ficheros sin permisos POSIX */ }
+    const claves = leerMapa();
+    const previa = deLaCuenta(claves, cuenta);
+    if (previa) delete claves[previa];
+    claves[cuenta] = clave;
+    escribirMapa(claves);
     return true;
   },
   async leer(cuenta) {
-    try {
-      const d = JSON.parse(fs.readFileSync(RUTA_FICHERO(), 'utf8'));
-      return d?.cuenta === cuenta && typeof d.clave === 'string' ? d.clave : null;
-    } catch {
-      return null;
-    }
+    const claves = leerMapa();
+    const k = deLaCuenta(claves, cuenta);
+    return k && typeof claves[k] === 'string' ? claves[k] : null;
   },
-  async borrar() {
-    try { fs.rmSync(RUTA_FICHERO(), { force: true }); } catch { /* ya no está */ }
+  async borrar(cuenta) {
+    const claves = leerMapa();
+    const k = deLaCuenta(claves, cuenta);
+    if (k) delete claves[k];
+    escribirMapa(claves);
     return true;
   },
 };
@@ -275,7 +323,7 @@ export async function borrar(cuenta) {
 
 // Para las pruebas: rutas que toca el respaldo de fichero (hay que poder limpiarlas).
 export function rutasDeRespaldo() {
-  return { win: RUTA_WIN(), fichero: RUTA_FICHERO(), dataDir: config.dataDir, home: os.homedir() };
+  return { win: RUTA_WIN_VIEJA(), winDe: RUTA_WIN, fichero: RUTA_FICHERO(), dataDir: config.dataDir, home: os.homedir() };
 }
 
 export default { guardar, leer, borrar, respaldo, aviso, SERVICIO, rutasDeRespaldo };

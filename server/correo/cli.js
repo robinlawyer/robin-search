@@ -10,7 +10,7 @@
 import { detectar, dominioDe, capacidades, exigeOauth } from './autodeteccion.js';
 import { comoEntrar, proveedor as buscarProveedor } from './proveedores.js';
 import * as oauth from './oauth-correo.js';
-import { leerCorreo, guardarCorreo, olvidarCorreo } from './ajustes.js';
+import { leerCorreo, leerCuentas, guardarCorreo, olvidarCorreo } from './ajustes.js';
 import * as llavero from './llavero.js';
 import * as carpetasMod from './carpetas.js';
 import { probarCredenciales, explicar, credenciales } from './conexion.js';
@@ -19,20 +19,25 @@ import { componer } from './redaccion.js';
 
 const AYUDA = `robin-search correo — conectar el buzón del abogado (la contraseña NUNCA va en la orden).
 
-  correo estado                     Qué cuenta hay conectada (sin contraseña).
+  correo estado                     Qué cuentas hay conectadas (sin contraseñas).
   correo detectar --direccion=…     Averigua el servidor y cómo hay que entrar en él.
   correo entrar --direccion=…       Dice si esa cuenta va por contraseña o por su proveedor.
   correo proveedor --proveedor=microsoft|google [--direccion=…]
                                     Conecta con la cuenta del proveedor (abre el navegador).
                                     Es la ÚNICA forma con Microsoft 365 y Outlook.com.
-  correo conectar --direccion=…     Conecta la cuenta. LA CONTRASEÑA SE LEE POR STDIN:
+  correo conectar --direccion=…     Conecta una cuenta (otra más, si ya hay alguna; la misma
+                                    dirección se actualiza). LA CONTRASEÑA SE LEE POR STDIN:
                                       printf '%s' 'la-contraseña' | robin-search correo conectar --direccion=…
                                     Opciones: --imap-host --imap-puerto --sin-tls
                                               --smtp-host --smtp-puerto --smtp-seguridad=starttls|tls|ninguna
                                               --carpeta-borradores --carpeta-enviados
-  correo probar                     Comprueba entrada, borradores y envío contra el servidor.
-  correo envio --permitir|--bloquear   Permite o bloquea que Robin envíe (de fábrica: bloqueado).
-  correo olvidar                    Borra la cuenta y su contraseña del llavero.
+  correo probar [--cuenta=…]        Comprueba entrada, borradores y envío contra el servidor.
+  correo envio --permitir|--bloquear [--cuenta=…]
+                                    Permite o bloquea que Robin envíe desde esa cuenta (de fábrica:
+                                    bloqueado).
+  correo olvidar [--cuenta=…]       Borra esa cuenta y su contraseña del llavero (sin --cuenta, todas).
+
+  Sin --cuenta, probar y envio actúan sobre la principal (la primera que se conectó).
 `;
 
 function banderas(argv) {
@@ -69,9 +74,33 @@ const entero = (v, pordefecto) => {
   return Number.isFinite(n) && n > 0 && n < 65536 ? n : pordefecto;
 };
 
-// Resumen de la cuenta SIN nada secreto: es lo que pinta la app.
+async function claveGuardada(c) {
+  if (!c.usuario) return false;
+  return Boolean(c.auth === 'oauth' ? await oauth.leerPermiso(c.usuario) : await llavero.leer(c.usuario));
+}
+
+// Una cuenta SIN nada secreto.
+async function ficha(c) {
+  return {
+    usuario: c.usuario,
+    auth: c.auth,
+    proveedor: c.proveedor,
+    imap: c.imap,
+    smtp: c.smtp,
+    carpetas: c.carpetas,
+    envioPermitido: c.envioPermitido,
+    configuradoEl: c.configuradoEl,
+    clave_guardada: await claveGuardada(c),
+  };
+}
+
+// Lo que pinta la app. Desde la 1.9.0, `cuentas` con todas (Juan, 26-sep-2026: varias cuentas,
+// como varias carpetas). Los campos sueltos de siempre son los de la PRINCIPAL, para que una
+// app anterior siga pintando algo cierto con esta extensión.
 async function estado() {
   const c = leerCorreo();
+  const cuentas = [];
+  for (const x of leerCuentas()) cuentas.push(await ficha(x));
   return {
     ok: true,
     configurado: c.configurado,
@@ -85,10 +114,19 @@ async function estado() {
     configuradoEl: c.configuradoEl,
     llavero: await llavero.respaldo(),
     aviso_llavero: await llavero.aviso(),
-    clave_guardada: c.usuario
-      ? Boolean(c.auth === 'oauth' ? await oauth.leerPermiso(c.usuario) : await llavero.leer(c.usuario))
-      : false,
+    clave_guardada: await claveGuardada(c),
+    cuentas,
+    varias_cuentas: true,   // esta extensión sabe de varias: la app puede ofrecer «Añadir otra»
   };
+}
+
+// La cuenta sobre la que actúa una orden: la de --cuenta, o la principal. Una dirección que no
+// está conectada es un error, nunca «la principal».
+function cuentaDe(o) {
+  const pedida = typeof o.cuenta === 'string' && o.cuenta.trim() ? o.cuenta.trim() : null;
+  const cfg = leerCorreo(pedida);
+  if (pedida && cfg.desconocida) return { error: { ok: false, motivo: 'cuenta_desconocida', mensaje: `La cuenta «${pedida}» no está conectada.` } };
+  return { cfg };
 }
 
 // EL CASO QUE MÁS DUELE al conectar: el servidor lo hemos adivinado nosotros, existe y contesta,
@@ -210,8 +248,10 @@ async function conectar(o) {
 
 // La prueba de fuego: entrar, mirar la bandeja, crear un borrador de verdad y borrarlo, y
 // comprobar el envío sin mandar nada. Es lo que ejecuta el botón «Conectar» de la app.
-async function probar() {
-  const cfg = leerCorreo();
+async function probar(o = {}) {
+  const elegida = cuentaDe(o);
+  if (elegida.error) return salida(elegida.error);
+  const cfg = elegida.cfg;
   if (!cfg.configurado) return salida({ ok: false, motivo: 'sin_cuenta', mensaje: 'No hay ninguna cuenta conectada.' });
   // El secreto puede ser una contraseña del llavero o un token de acceso del proveedor.
   let secreto;
@@ -316,18 +356,27 @@ async function conectarProveedor(o) {
 
 async function envio(o) {
   if (!o.permitir && !o.bloquear) return salida({ ok: false, mensaje: 'Usa --permitir o --bloquear.' });
-  guardarCorreo({ envioPermitido: Boolean(o.permitir) });
+  const elegida = cuentaDe(o);
+  if (elegida.error) return salida(elegida.error);
+  if (!elegida.cfg.configurado) return salida({ ok: false, motivo: 'sin_cuenta', mensaje: 'No hay ninguna cuenta conectada.' });
+  guardarCorreo({ envioPermitido: Boolean(o.permitir) }, elegida.cfg.usuario);
   return salida({ ok: true, ...(await estado()) });
 }
 
-async function olvidar() {
-  const c = leerCorreo();
-  if (c.usuario) {
+async function olvidar(o = {}) {
+  const pedida = typeof o.cuenta === 'string' && o.cuenta.trim() ? o.cuenta.trim() : null;
+  if (pedida && leerCorreo(pedida).desconocida) {
+    return salida({ ok: false, motivo: 'cuenta_desconocida', mensaje: `La cuenta «${pedida}» no está conectada.` });
+  }
+  // Sin --cuenta, TODAS (lo que hacía «Desconectar» cuando solo había una).
+  const cuales = pedida ? [leerCorreo(pedida)] : leerCuentas();
+  for (const c of cuales) {
+    if (!c.usuario) continue;
     await llavero.borrar(c.usuario);
     await oauth.olvidarPermiso(c.usuario);
     oauth.olvidarEnMemoria(c.usuario);
   }
-  olvidarCorreo();
+  olvidarCorreo(pedida ? cuales[0].usuario : null);
   carpetasMod.olvidarCache();
   return salida({ ok: true, ...(await estado()) });
 }
@@ -349,9 +398,9 @@ export async function ejecutar(argv) {
     case 'proveedor': return conectarProveedor(o);
     case 'conectar':
     case 'configurar': return conectar(o);
-    case 'probar': return probar();
+    case 'probar': return probar(o);
     case 'envio': return envio(o);
-    case 'olvidar': return olvidar();
+    case 'olvidar': return olvidar(o);
     default:
       process.stdout.write(AYUDA);
       return sub ? 2 : 0;

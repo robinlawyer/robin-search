@@ -111,7 +111,7 @@ function esperarCodigo(servidor, estado, esperaMs = ESPERA_NAVEGADOR_MS) {
       };
       // El `state` es lo que impide que otra página del navegador nos cuele un código suyo.
       if (url.searchParams.get('state') !== estado) {
-        responder('Algo no cuadra', 'Esta respuesta no corresponde a la conexión que se estaba haciendo. Vuelve a intentarlo desde la app de RobinSearch.');
+        responder('Algo no cuadra', 'Esta respuesta no corresponde a la conexión que se estaba haciendo. Vuelve a intentarlo desde RobinDesktop.');
         return;
       }
       const error = url.searchParams.get('error');
@@ -123,7 +123,7 @@ function esperarCodigo(servidor, estado, esperaMs = ESPERA_NAVEGADOR_MS) {
       }
       const code = url.searchParams.get('code');
       if (!code) {
-        responder('Falta algo', 'La respuesta ha llegado incompleta. Vuelve a intentarlo desde la app de RobinSearch.');
+        responder('Falta algo', 'La respuesta ha llegado incompleta. Vuelve a intentarlo desde RobinDesktop.');
         return;
       }
       responder('Correo conectado', 'Ya puedes cerrar esta pestaña y volver a RobinSearch.');
@@ -151,8 +151,8 @@ async function pedirTokens(p, cuerpo) {
     const retirado = datos.error === 'invalid_grant';
     const e = new Error(retirado
       ? 'Tu proveedor ya no acepta el permiso que dio RobinSearch para leer tu correo: puede que lo '
-        + 'hayas retirado desde tu cuenta, o que haya caducado. Vuelve a conectar la cuenta en la app '
-        + 'de RobinSearch → Tu correo.'
+        + 'hayas retirado desde tu cuenta, o que haya caducado. Vuelve a conectar la cuenta en '
+        + 'RobinDesktop → Correo electrónico.'
       : (datos.error_description || datos.error || `el proveedor ha respondido HTTP ${r.status}`));
     e.motivo = retirado ? 'permiso_retirado' : 'token';
     e.error = datos.error || null;
@@ -202,7 +202,7 @@ export async function tokenDeAcceso(direccion, { forzar = false } = {}) {
 
   const permiso = await leerPermiso(direccion);
   if (!permiso) {
-    throw Object.assign(new Error('Esta cuenta está conectada con la de tu proveedor, pero el permiso ya no está en este ordenador. Vuelve a conectarla en la app de RobinSearch.'), { motivo: 'sin_permiso' });
+    throw Object.assign(new Error('Esta cuenta está conectada con la de tu proveedor, pero el permiso ya no está en este ordenador. Vuelve a conectarla en RobinDesktop.'), { motivo: 'sin_permiso' });
   }
   const p = proveedor(permiso.proveedor);
   const clientId = p?.clientId();

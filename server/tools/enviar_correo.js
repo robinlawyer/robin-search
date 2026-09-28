@@ -17,8 +17,7 @@
 // importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { leerCorreo } from '../correo/ajustes.js';
-import { SIN_CUENTA } from '../correo/avisos.js';
+import { elegirCuenta, PROPIEDAD_CUENTA } from '../correo/elegir.js';
 import { log } from '../logger.js';
 
 export const definition = {
@@ -33,6 +32,7 @@ export const definition = {
   inputSchema: {
     type: 'object',
     properties: {
+      cuenta: PROPIEDAD_CUENTA,
       para: { type: 'array', items: { type: 'string' }, description: 'Destinatarios.' },
       cc: { type: 'array', items: { type: 'string' }, description: 'En copia.' },
       cco: { type: 'array', items: { type: 'string' }, description: 'En copia oculta.' },
@@ -79,14 +79,15 @@ export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
-  const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+  const elegida = elegirCuenta(args, { exigeSiVarias: true, porque: 'un correo enviado desde la cuenta equivocada no se puede recoger' });
+  if (elegida.error) return fail(elegida.error, elegida.extra);
+  const cfg = elegida.cfg;
 
   if (!cfg.envioPermitido) {
     return fail(
-      'El envío de correo está desactivado en este ordenador: RobinSearch solo puede dejar '
-      + 'borradores. El abogado puede permitirlo en la app de RobinSearch → Tu correo → «Permitir '
-      + 'además que envíe correos». Mientras tanto, usa guardar_borrador.',
+      `El envío de correo está desactivado para ${cfg.usuario}: RobinSearch solo puede dejar `
+      + 'borradores. El abogado puede permitirlo en RobinDesktop → Correo electrónico, marcando «Puede '
+      + 'enviar» en la fila de esa cuenta. Mientras tanto, usa guardar_borrador.',
       { motivo: 'envio_no_permitido' },
     );
   }
@@ -97,7 +98,9 @@ export async function handler(args) {
   const cuerpo = typeof args?.cuerpo === 'string' ? args.cuerpo : '';
   if (!cuerpo.trim()) return fail('El correo no puede ir vacío: falta "cuerpo".');
 
-  const { conImap } = await import('../correo/conexion.js');
+  const { conImap: conImapDe } = await import('../correo/conexion.js');
+  // Todo lo de esta llamada, en el buzón de la cuenta elegida.
+  const conImap = (fn) => conImapDe(fn, cfg.usuario);
   const carpetas = await import('../correo/carpetas.js');
   const { enviarCrudo } = await import('../correo/smtp.js');
   const { componer, asuntoDeRespuesta, direccionValida } = await import('../correo/redaccion.js');
@@ -127,7 +130,7 @@ export async function handler(args) {
     if (preparado.error) return fail(preparado.error, { motivo: preparado.motivo });
 
     const todos = [...preparado.destinatarios, ...preparado.cc, ...preparado.cco];
-    const envio = await enviarCrudo({ raw: preparado.raw, de: cfg.usuario, destinatarios: todos });
+    const envio = await enviarCrudo({ raw: preparado.raw, de: cfg.usuario, destinatarios: todos, cuenta: cfg.usuario });
 
     // Copia en Enviados. Que falle NO significa que el correo no haya salido: el abogado tiene
     // que saber exactamente qué pasó, porque lo que ya salió no vuelve.
@@ -145,6 +148,7 @@ export async function handler(args) {
 
     return ok({
       enviado: true,
+      cuenta: cfg.usuario,
       destinatarios: preparado.destinatarios.length,
       cc: preparado.cc.length,
       cco: preparado.cco.length,

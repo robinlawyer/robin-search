@@ -9,7 +9,7 @@ import * as registry from '../indexer/registry.js';
 import * as cuarentena from '../indexer/cuarentena.js';
 import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
-import { leerCorreo } from '../correo/ajustes.js';
+import { leerCorreo, leerCuentas } from '../correo/ajustes.js';
 import nube from '../indexer/nube.js';
 import { ok } from './util.js';
 import { authStatus } from '../auth/oauth.js';
@@ -195,7 +195,7 @@ export async function handler() {
         `${state.ultimoIndexado.carpetas_ausentes.length} carpeta(s) configurada(s) ya NO existen en el ` +
         'ordenador (ver carpetas_ausentes). RobinSearch las ha apartado para no fallar en cada intento ' +
         'y las vuelve a mirar sola por si reaparecen. Dile al abogado que las quite o corrija su ruta ' +
-        'en la app de RobinSearch; lo que se busque no cubre esas carpetas.';
+        'en RobinDesktop; lo que se busque no cubre esas carpetas.';
     }
     // Lo que el recorrido encontró pero no pudo meter: ficheros de iCloud/OneDrive sin descargar,
     // enlaces o junctions rotos, bucles. Sin esto una carpeta «bajo demanda» daba 0 en silencio.
@@ -245,7 +245,10 @@ export async function handler() {
   }
   // Correo (1.7.0). Se dice si hay buzón conectado y si el envío está permitido, para que Claude
   // no ofrezca lo que no puede hacer ni dé por hecho que puede mandar correos.
+  // Varias cuentas (1.9.0): se listan todas; `cuenta` sigue siendo la principal, la que usan
+  // las herramientas cuando no se les dice otra.
   const correo = leerCorreo();
+  const cuentasCorreo = leerCuentas();
   respuesta.correo = {
     conectado: correo.configurado,
     cuenta: correo.usuario,
@@ -253,15 +256,28 @@ export async function handler() {
     servidor_saliente: correo.smtp.host,
     carpeta_borradores: correo.carpetas.borradores,
     envio_permitido: correo.envioPermitido,
+    cuentas: cuentasCorreo.map((c) => ({
+      cuenta: c.usuario,
+      servidor_entrante: c.imap.host,
+      servidor_saliente: c.smtp.host,
+      envio_permitido: c.envioPermitido,
+    })),
   };
+  if (cuentasCorreo.length > 1) {
+    respuesta.aviso_cuentas_correo = `Hay ${cuentasCorreo.length} cuentas de correo conectadas. `
+      + 'buscar_correos sin "cuenta" busca en todas; leer_correo, leer_adjunto, archivar_correo, '
+      + 'responder y enviar_correo necesitan la "cuenta" de cada correo. El envío se permite o no '
+      + 'por cuenta.';
+  }
+  const algunaEnvia = cuentasCorreo.some((c) => c.envioPermitido);
   respuesta.aviso_correo = correo.configurado
-    ? (correo.envioPermitido
+    ? (algunaEnvia
       ? 'Hay un buzón conectado y el abogado ha permitido el envío. Aun así, lo normal es dejar '
         + 'el correo en Borradores con guardar_borrador: enviar_correo solo si él lo pide.'
       : 'Hay un buzón conectado. El ENVÍO está desactivado: Robin puede buscar, leer y dejar '
         + 'borradores, pero no mandar correos. Es lo correcto por defecto.')
     : 'No hay ningún buzón conectado: las herramientas de correo no pueden hacer nada todavía. '
-      + 'Se conecta en la app de RobinSearch → Tu correo (la contraseña se guarda en el llavero '
+      + 'Se conecta en RobinDesktop → Correo electrónico (la contraseña se guarda en el llavero '
       + 'de este ordenador y nunca se pide por el chat).';
 
   if (!expedientes.getActivo()) {

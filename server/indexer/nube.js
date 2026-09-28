@@ -170,7 +170,9 @@ export async function revisar({ indexar = null, forzar = false } = {}) {
       listos.push(e.ruta);
       continue;
     }
-    if (ahora - Date.parse(e.desde) > SE_DA_POR_VACIO_MS) {
+    // `>=` y no `>`: con el umbral a cero (las pruebas) apuntar y revisar pueden caer en el MISMO
+    // milisegundo, y con `>` la prueba fallaba de vez en cuando sin que nada estuviera mal.
+    if (ahora - Date.parse(e.desde) >= SE_DA_POR_VACIO_MS) {
       _pend.delete(k);
       _vacios.set(k, ahora + OLVIDAR_VACIO_MS);
       vacios.push(e.ruta);

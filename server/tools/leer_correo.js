@@ -12,8 +12,7 @@
 // importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { leerCorreo } from '../correo/ajustes.js';
-import { SIN_CUENTA } from '../correo/avisos.js';
+import { elegirCuenta, PROPIEDAD_CUENTA } from '../correo/elegir.js';
 import * as expedientes from '../expedientes.js';
 
 export const definition = {
@@ -29,6 +28,7 @@ export const definition = {
   inputSchema: {
     type: 'object',
     properties: {
+      cuenta: PROPIEDAD_CUENTA,
       uid: { type: 'integer', description: 'uid del correo, tal y como lo devolvió buscar_correos.' },
       bandeja: { type: 'string', description: 'Carpeta donde está: "entrada" (por defecto), "enviados", "borradores" o el nombre exacto.' },
       desde: { type: 'integer', description: 'Seguir leyendo desde este carácter (para continuar un correo que se cortó).', default: 0, minimum: 0 },
@@ -56,11 +56,14 @@ export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
-  const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+  const elegida = elegirCuenta(args, { exigeSiVarias: true, porque: 'el uid de un correo solo vale dentro de su propio buzón' });
+  if (elegida.error) return fail(elegida.error, elegida.extra);
+  const cfg = elegida.cfg;
 
   const { simpleParser } = await import('mailparser');
-  const { conImap } = await import('../correo/conexion.js');
+  const { conImap: conImapDe } = await import('../correo/conexion.js');
+  // Todo lo de esta llamada, en el buzón de la cuenta elegida.
+  const conImap = (fn) => conImapDe(fn, cfg.usuario);
   const carpetas = await import('../correo/carpetas.js');
   const mensajes = await import('../correo/mensajes.js');
   const { cuerpoDe, truncar, envolver, LIMITE_CUERPO } = await import('../correo/contenido.js');

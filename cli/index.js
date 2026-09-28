@@ -27,7 +27,7 @@ function parseArgs(argv) {
       for (const f of arg.slice('--folders='.length).split(/[\n;]+/)) if (f.trim()) opts.folders.push(f.trim());
     } else if (arg.startsWith('--data-dir=')) opts.dataDir = arg.slice('--data-dir='.length);
     else if (arg === 'index') opts.silent = true;
-    else if (arg === 'serve' || arg === 'login' || arg === 'logout') opts._.push(arg);
+    else if (arg === 'serve' || arg === 'login' || arg === 'logout' || arg === 'token') opts._.push(arg);
     // `correo` y todo lo que venga detrás es para su propio CLI (server/correo/cli.js): sus
     // banderas no son carpetas de expedientes.
     else if (arg === 'correo') { opts.correo = []; opts._.push(arg); }
@@ -47,6 +47,8 @@ Uso:
 Comandos:
   login                 Inicia sesión en RobinLawyer.ai (abre el navegador). Guarda la sesión.
   logout                Cierra la sesión y borra las credenciales locales.
+  token                 Devuelve (JSON) un token de acceso VIGENTE, renovándolo si hace falta.
+                        Lo usa RobinDesktop para su cuadro de mando; nunca abre el navegador.
   correo                Conecta el buzón del abogado (IMAP/SMTP). «robin-search correo» para la
                         ayuda. La contraseña se lee por la ENTRADA ESTÁNDAR, nunca como
                         argumento: en argumento la vería cualquiera con un ps.
@@ -87,7 +89,7 @@ async function run() {
   }
 
   // Los certificados raíz del sistema (proxy/antivirus del despacho) antes de cualquier conexión.
-  if (opts._.includes('login') || opts._.includes('logout') || opts.silent) {
+  if (opts._.includes('login') || opts._.includes('logout') || opts._.includes('token') || opts.silent) {
     const { usarCertificadosDelSistema } = await import('../server/red-corporativa.js');
     usarCertificadosDelSistema();
   }
@@ -96,6 +98,18 @@ async function run() {
   if (opts._.includes('correo')) {
     const { ejecutar } = await import('../server/correo/cli.js');
     process.exit(await ejecutar(opts.correo || []));
+  }
+
+  // Un token vigente para RobinDesktop (26-sep-2026, cuadro de mando con las cifras del área
+  // privada). La renovación es la MISMA que usa el servidor —con su cerrojo y su lectura del
+  // disco—, así que la app no rota el refresh_token por su cuenta y no se pisan. Si no hay
+  // sesión, se dice; nunca se lanza un inicio de sesión desde aquí.
+  if (opts._.includes('token')) {
+    const { getBearerQuiet } = await import('../server/auth/oauth.js');
+    let token = null;
+    try { token = await getBearerQuiet(); } catch { token = null; }
+    process.stdout.write(`${JSON.stringify(token ? { ok: true, access_token: token } : { ok: false, motivo: 'sin_sesion' })}\n`);
+    process.exit(token ? 0 : 1);
   }
 
   // Iniciar / cerrar sesión en RobinLawyer.ai (OAuth). No es modo MCP → stdout seguro.

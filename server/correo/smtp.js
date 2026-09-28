@@ -40,10 +40,15 @@ export function opcionesTransporte(cfg, secreto) {
   };
 }
 
-async function transporte() {
-  const cfg = leerCorreo();
+// `cuenta`: la dirección desde la que se envía; sin ella, la principal. Una dirección que no está
+// conectada no cae en otra: el correo saldría a nombre de quien no es.
+async function transporte(cuenta = null) {
+  const cfg = leerCorreo(cuenta);
+  if (cuenta && cfg.desconocida) {
+    throw Object.assign(new Error(`La cuenta «${cuenta}» no está conectada en este ordenador.`), { motivo: 'cuenta_desconocida' });
+  }
   if (!cfg.configurado || !cfg.smtp.host) {
-    throw Object.assign(new Error('No hay servidor de envío configurado. Ábrelo en la app de RobinSearch → Tu correo.'), { motivo: 'sin_cuenta' });
+    throw Object.assign(new Error('No hay servidor de envío configurado. Ábrelo en RobinDesktop → Correo electrónico.'), { motivo: 'sin_cuenta' });
   }
   const c = await credenciales(cfg);
   const secreto = c.accessToken ? { accessToken: c.accessToken } : c.pass;
@@ -75,8 +80,8 @@ export async function comprobar(cfgExplicita = null, secretoExplicito = null) {
 
 // Envía un mensaje ya compuesto en crudo. `sobre` fija quién manda y a quién va de verdad
 // (el SMTP no mira las cabeceras): así el Cco no acaba visible en las cabeceras.
-export async function enviarCrudo({ raw, de, destinatarios }) {
-  const { transporte: t } = await transporte();
+export async function enviarCrudo({ raw, de, destinatarios, cuenta = null }) {
+  const { transporte: t } = await transporte(cuenta || de || null);
   try {
     const info = await t.sendMail({ envelope: { from: de, to: destinatarios }, raw });
     // Ni destinatarios ni asunto: solo que salió y cuántos aceptó el servidor.

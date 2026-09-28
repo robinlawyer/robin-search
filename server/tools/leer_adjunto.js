@@ -18,8 +18,7 @@ import crypto from 'node:crypto';
 
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { leerCorreo } from '../correo/ajustes.js';
-import { SIN_CUENTA } from '../correo/avisos.js';
+import { elegirCuenta, PROPIEDAD_CUENTA } from '../correo/elegir.js';
 import { config, limiteBytes, esExtensionSoportada } from '../config.js';
 import { log } from '../logger.js';
 
@@ -36,6 +35,7 @@ export const definition = {
   inputSchema: {
     type: 'object',
     properties: {
+      cuenta: PROPIEDAD_CUENTA,
       uid: { type: 'integer', description: 'uid del correo que trae el adjunto.' },
       adjunto: { type: 'string', description: 'Nombre del adjunto (o parte de él). Si se omite, el primero.' },
       numero: { type: 'integer', description: 'Alternativa al nombre: su posición en la lista de leer_correo, empezando por 1.', minimum: 1 },
@@ -65,13 +65,16 @@ export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
-  const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+  const elegida = elegirCuenta(args, { exigeSiVarias: true, porque: 'el uid de un correo solo vale dentro de su propio buzón' });
+  if (elegida.error) return fail(elegida.error, elegida.extra);
+  const cfg = elegida.cfg;
 
   const uid = parseInt(args?.uid, 10);
   if (!Number.isFinite(uid) || uid <= 0) return fail('Falta el "uid" del correo (lo da buscar_correos).');
 
-  const { conImap } = await import('../correo/conexion.js');
+  const { conImap: conImapDe } = await import('../correo/conexion.js');
+  // Todo lo de esta llamada, en el buzón de la cuenta elegida.
+  const conImap = (fn) => conImapDe(fn, cfg.usuario);
   const carpetas = await import('../correo/carpetas.js');
   const mensajes = await import('../correo/mensajes.js');
   const { truncar, envolver, LIMITE_CUERPO } = await import('../correo/contenido.js');

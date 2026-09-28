@@ -17,8 +17,7 @@
 // importa dentro del handler, la primera vez que alguien usa el correo de verdad.
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-import { leerCorreo } from '../correo/ajustes.js';
-import { SIN_CUENTA } from '../correo/avisos.js';
+import { elegirCuenta, PROPIEDAD_CUENTA } from '../correo/elegir.js';
 
 export const definition = {
   name: 'guardar_borrador',
@@ -32,6 +31,7 @@ export const definition = {
   inputSchema: {
     type: 'object',
     properties: {
+      cuenta: PROPIEDAD_CUENTA,
       para: { type: 'array', items: { type: 'string' }, description: 'Destinatarios. Si es respuesta y se omite, se usa quien envió el original.' },
       cc: { type: 'array', items: { type: 'string' }, description: 'En copia.' },
       asunto: { type: 'string', description: 'Asunto. Si es respuesta y se omite, «Re: » + el asunto del original.' },
@@ -89,10 +89,17 @@ export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
-  const cfg = leerCorreo();
-  if (!cfg.configurado) return fail(SIN_CUENTA, { motivo: 'sin_cuenta' });
+  const respondeA0 = Number.isFinite(parseInt(args?.en_respuesta_a, 10));
+  const elegida = elegirCuenta(args, {
+    exigeSiVarias: respondeA0,
+    porque: 'el uid del correo al que se responde solo vale dentro de su propio buzón',
+  });
+  if (elegida.error) return fail(elegida.error, elegida.extra);
+  const cfg = elegida.cfg;
 
-  const { conImap } = await import('../correo/conexion.js');
+  const { conImap: conImapDe } = await import('../correo/conexion.js');
+  // El borrador, en el buzón de la cuenta elegida (sin decir cuál, la principal).
+  const conImap = (fn) => conImapDe(fn, cfg.usuario);
   const carpetas = await import('../correo/carpetas.js');
   const { componer, asuntoDeRespuesta, direccionValida } = await import('../correo/redaccion.js');
 
@@ -106,7 +113,7 @@ export async function handler(args) {
       if (!destino) {
         return fail(
           'Tu servidor de correo no dice cuál es su carpeta de Borradores y no hay ninguna con un '
-          + 'nombre reconocible. Ponla a mano en la app de RobinSearch → Tu correo → Ajustes '
+          + 'nombre reconocible. Ponla a mano en RobinDesktop → Correo electrónico → Ajustes '
           + 'avanzados; si no, el borrador acabaría en una carpeta suelta que no mira nadie.',
           { motivo: 'sin_carpeta_borradores' },
         );
@@ -145,6 +152,7 @@ export async function handler(args) {
 
       return ok({
         guardado: true,
+        cuenta: cfg.usuario,
         carpeta: destino,
         uid: r?.uid ?? null,
         asunto,
@@ -154,7 +162,7 @@ export async function handler(args) {
         en_hilo: Boolean(cabeceras.inReplyTo),
         in_reply_to: cabeceras.inReplyTo,
         referencias: cabeceras.references.length,
-        nota: `El borrador está en «${destino}». El abogado lo verá en su programa de correo `
+        nota: `El borrador está en «${destino}»${(cfg.cuentas || []).length > 1 ? `, de la cuenta ${cfg.usuario}` : ''}. El abogado lo verá en su programa de correo `
           + '(puede tardar unos segundos en sincronizarse) y podrá revisarlo antes de enviarlo. '
           + 'RobinSearch no lo ha enviado.',
       });
