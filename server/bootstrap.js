@@ -21,6 +21,7 @@ import * as diagnostico from './diagnostico.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
 import { iniciarControl } from './control.js';
+import { neutralizarVersionesAntiguas } from './version-antigua.js';
 
 const FASES_INDICE = ['cargando_indice', 'migrando_indice'];
 
@@ -175,6 +176,17 @@ async function abrirIndice(escribo) {
       // Abrió: las caídas anteriores ya no cuentan para rehacerlo (antes solo se ponían a cero al
       // terminar el indexado inicial, que en un expediente grande puede no llegar nunca).
       diagnostico.indiceAbierto();
+      if (r.migracion?.apartado && escribo) {
+        // Lo que la versión antigua indexó en su index.json es el contenido NUEVO de esos
+        // ficheros (y en el índice actual está el de antes): se reindexan desde el original.
+        const ids = new Set(r.migracion.docIdsAReindexar || []);
+        const aReindexar = [];
+        for (const [abs, e] of registry.entries()) if (e?.docId && ids.has(e.docId)) aReindexar.push(abs);
+        if (aReindexar.length) registry.removeMany(aReindexar);
+        log.warn('Documentos que la versión antigua había reindexado: se vuelven a leer desde el original', {
+          documentos: aReindexar.length,
+        });
+      }
       if (r.migracion?.repetida) {
         log.error('Una versión antigua de RobinSearch (anterior a la 1.4.5) sigue viva y escribiendo el índice antiguo', {
           documentos: r.migracion.documentos ?? null,
@@ -193,6 +205,8 @@ async function abrirIndice(escribo) {
         registry.backfillExpediente();
         const cotejo = await cotejarRegistro();
         log.info('Índice abierto', {
+          ms_catalogo: r.apertura?.ms ?? null,
+          cabeceras_leidas: r.apertura?.cabecerasLeidas ?? null,
           documentos: r.documentos,
           fragmentos: r.fragmentos,
           bytes: r.bytes,
@@ -236,6 +250,47 @@ async function abrirIndice(escribo) {
       diagnostico.finFase();
     }
   }
+}
+
+// Busca y desactiva, sin pedir nada al abogado, los lanzadores de RobinSearch ANTERIORES a la 1.4.5
+// (tarea programada, extensión vieja de Claude, entrada MCP que apunta a una copia vieja): ver
+// version-antigua.js. Un rato después de arrancar y en segundo plano; solo la instancia que
+// escribe (dos a la vez tocando la misma configuración se pisarían).
+const ESPERA_REVISION_MS = Number(process.env.ROBIN_VERSIONES_ANTIGUAS_ESPERA_MS) || 20 * 1000;
+let _revisionProgramada = false;
+function programarRevisionVersionesAntiguas() {
+  if (_revisionProgramada || process.env.ROBIN_NO_TOCAR_VERSIONES_ANTIGUAS === '1') return;
+  _revisionProgramada = true;
+  const t = setTimeout(async () => {
+    try {
+      const r = await neutralizarVersionesAntiguas();
+      const antiguas = r.vistos.filter((v) => v.nuestro && v.version).map((v) => `${v.tipo} ${v.version}`);
+      if (r.desactivados.length) {
+        const que = r.desactivados.map((d) => `${d.tipo} (RobinSearch ${d.version})`).join(', ');
+        log.warn('Desactivada una versión antigua de RobinSearch que seguía arrancando en este equipo', { desactivados: r.desactivados });
+        diagnostico
+          .informar('version_antigua_desactivada', {
+            fase: 'arrancando',
+            causa: `desactivado sin intervención del abogado: ${que}; copia de lo que había en la carpeta de datos (version-antigua)`,
+          })
+          .catch(() => {});
+      }
+      if (r.fallos.length) {
+        log.error('No se pudo desactivar una versión antigua de RobinSearch', { fallos: r.fallos, vistos: antiguas });
+        diagnostico
+          .informar('version_antigua_viva', {
+            fase: 'arrancando',
+            causa: `no se pudo desactivar: ${r.fallos.map((f) => `${f.tipo}${f.version ? ` ${f.version}` : ''} (${f.code ?? 'error'})`).join(', ')}`,
+          })
+          .catch(() => {});
+      } else if (antiguas.length) {
+        log.info('Lanzadores de RobinSearch vistos en este equipo', { vistos: antiguas });
+      }
+    } catch (err) {
+      log.warn('No se pudo revisar si hay versiones antiguas de RobinSearch', { err: String(err?.message ?? err) });
+    }
+  }, ESPERA_REVISION_MS);
+  t.unref?.();
 }
 
 export async function bootstrap({ initialIndex = true, watch = true, warmModel = true, control = false } = {}) {
@@ -289,6 +344,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
   await abrirIndice(escribo);
+  if (escribo) programarRevisionVersionesAntiguas();
 
   // Canal de control para la app de escritorio. Accesorio: si no se puede
   // abrir, se registra y seguimos — el servidor MCP no depende de él.
@@ -407,6 +463,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
       // iniciarControl lo detecta y lo sustituye.
       if (control) iniciarControl().catch((err) => log.warn('Canal de control no iniciado', { err: String(err) }));
       abrirIndice(true)
+        .then(() => programarRevisionVersionesAntiguas())
         .then(indexar)
         .catch((err) => log.error('Fallo al tomar el relevo del índice', { err: String(err) }));
     }, 5000);

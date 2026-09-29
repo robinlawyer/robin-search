@@ -144,6 +144,44 @@ function leerCabecera(docId) {
   }
 }
 
+const LECTURAS_EN_PARALELO = 16;
+
+async function leerPrimeraLineaAsync(ruta) {
+  const fh = await fs.promises.open(ruta, 'r');
+  try {
+    const trozos = [];
+    const buf = Buffer.alloc(4096);
+    let pos = 0;
+    for (;;) {
+      const { bytesRead: n } = await fh.read(buf, 0, buf.length, pos);
+      if (n <= 0) break;
+      const i = buf.subarray(0, n).indexOf(10);
+      if (i >= 0) {
+        trozos.push(Buffer.from(buf.subarray(0, i)));
+        break;
+      }
+      trozos.push(Buffer.from(buf.subarray(0, n)));
+      pos += n;
+      if (pos > 4 * 1024 * 1024) throw new Error('cabecera de documento demasiado larga');
+    }
+    return Buffer.concat(trozos).toString('utf8');
+  } finally {
+    await fh.close();
+  }
+}
+
+async function leerCabeceraAsync(docId) {
+  try {
+    const cab = JSON.parse(await leerPrimeraLineaAsync(rutaMeta(docId)));
+    if (!cab || cab.docId !== docId || !Number.isInteger(cab.n) || !Number.isInteger(cab.dim) || !cab.gen) return null;
+    const [st, vst] = await Promise.all([fs.promises.stat(rutaMeta(docId)), fs.promises.stat(rutaVec(docId, cab.gen))]);
+    if (vst.size !== cab.n * cab.dim * 4) return null;
+    return { ...cab, mtimeMs: st.mtimeMs, bytes: st.size + vst.size };
+  } catch {
+    return null;
+  }
+}
+
 function soltarVectores(docId) {
   const e = _vec.get(docId);
   if (e) {
@@ -160,26 +198,267 @@ function nombresDocs() {
   }
 }
 
-function cabeceraAlDia(nombre, nuevo) {
-  if (!nombre.endsWith('.jsonl')) return;
-  const docId = nombre.slice(0, -'.jsonl'.length);
-  if (!esDocIdValido(docId)) return;
-  let mt;
-  try {
-    mt = fs.statSync(rutaMeta(docId)).mtimeMs;
-  } catch {
-    return;
-  }
-  const previa = _cab?.get(docId);
-  if (previa && previa.mtimeMs === mt) {
-    nuevo.set(docId, previa);
-    return;
-  }
-  const cab = leerCabecera(docId);
-  if (cab) nuevo.set(docId, cab);
+// ── El catálogo (las cabeceras de todos los documentos) ───────────────────────────────────
+//
+// Hasta la 1.9.0 el catálogo se reconstruía ABRIENDO cada .jsonl: un stat, un open, una lectura
+// y un close por documento, más el stat de su .vec. Con 45.000 documentos en Windows y el
+// antivirus mirando cada fichero que se abre, abrir el índice costaba de 4 a 8 minutos (informes
+// de gh-asesores, 29-sep-2026: «Otra instancia tiene el índice» 07:27:39 → «Índice abierto»
+// 07:32:55). Y la instancia que solo busca, cada vez que la otra escribía un documento, volvía
+// a hacer 45.000 stat SÍNCRONOS: el proceso parado mientras tanto.
+//
+// Ahora:
+//   · La escritora guarda el catálogo entero en UN fichero (indice/catalogo.json) al abrir y
+//     poco después de cada tanda de cambios, y lo relee cualquiera al arrancar.
+//   · Lo que dice ese fichero se coteja con UN listado de la carpeta (readdir: un solo recorrido,
+//     sin abrir ningún fichero). Cada escritura de un documento, sea cual sea, estrena generación
+//     y con ella un .vec de nombre NUEVO (<docId>.<gen>.vec), y el borrado quita el .jsonl. Así
+//     que el listado basta para saber qué documentos siguen exactamente como estaban: los que
+//     tienen su .jsonl y UN solo .vec, el de la generación que se recuerda. Solo se abren los
+//     demás (nuevos, reescritos, o a medio escribir).
+//   · Un catálogo guardado viejo, cortado o ausente no es un error: solo hace que se abran más
+//     cabeceras (en la 1.ª apertura tras actualizar, todas, una vez).
+//   · La lectora refresca en segundo plano (readdir asíncrono y cediendo el proceso): las
+//     funciones síncronas contestan con la foto que hay y piden el refresco; las asíncronas
+//     (buscar, leer) lo esperan sin bloquear el proceso.
+const rutaCatalogo = () => path.join(dirIndice(), 'catalogo.jsonl');
+const CATALOGO_GUARDAR_TRAS_MS = Number(process.env.ROBIN_CATALOGO_GUARDAR_MS) || 60 * 1000;
+let _catalogoSucio = false;
+let _tGuardado = null;
+// Cambios hechos por ESTE proceso: un refresco que empezó antes de uno de ellos no puede pisarlo.
+let _cambiosLocales = 0;
+let _refresco = null;
+// Cifras de la última apertura y de los refrescos (para el registro y las pruebas).
+let _ultimaApertura = null;
+const _cuentas = { completas: 0, incrementales: 0, cabecerasReleidas: 0 };
+export function estadisticasCatalogo() {
+  return { ..._cuentas, ultimaApertura: _ultimaApertura, diario: { pos: _diarioPos, id: _diarioId } };
 }
 
-function aplicarCatalogo(nuevo) {
+function filaCatalogo(c) {
+  return [c.docId, c.n, c.dim, c.gen, c.expediente ?? null, c.rutaRelativa ?? null, c.fichero ?? null, c.raiz ?? null, c.bytes || 0];
+}
+
+// Formato: 1.ª línea {"v":2,"t":…}; después, una línea por documento con su fila (array JSON).
+// Por líneas y no un solo JSON: con 45.000 documentos un JSON.parse de golpe paraba el proceso
+// ~0,3 s; así se lee a trozos y cediendo.
+function filaACabecera(f) {
+  if (!Array.isArray(f)) return null;
+  const [docId, n, dim, gen, expediente, rutaRelativa, fichero, raiz, bytes] = f;
+  if (!esDocIdValido(docId) || !Number.isInteger(n) || !Number.isInteger(dim) || typeof gen !== 'string' || !gen) return null;
+  return { v: 1, docId, n, dim, gen, expediente, rutaRelativa, fichero, raiz, bytes: Number(bytes) || 0 };
+}
+
+async function leerCatalogoGuardado({ ceder = true } = {}) {
+  let texto;
+  try {
+    texto = await fs.promises.readFile(rutaCatalogo(), 'utf8');
+  } catch {
+    return null; // no está (1.ª vez tras actualizar): se reconstruye abriendo cabeceras
+  }
+  return parsearCatalogo(texto, ceder);
+}
+
+function leerCatalogoGuardadoSincrono() {
+  try {
+    return parsearCatalogoSincrono(fs.readFileSync(rutaCatalogo(), 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function cabeceraCatalogo(texto) {
+  const fin = texto.indexOf('\n');
+  if (fin < 0) return -1;
+  try {
+    const cab = JSON.parse(texto.slice(0, fin));
+    // El catálogo solo vale si lo cierra su última línea: uno cortado a medias se descarta
+    // entero (sería un catálogo al que le faltan documentos sin que nada lo diga).
+    if (cab?.v !== 2 || !Number.isInteger(cab.docs) || !texto.endsWith('\n#fin\n')) return -1;
+    return fin + 1;
+  } catch {
+    return -1;
+  }
+}
+
+async function parsearCatalogo(texto, ceder) {
+  let pos = cabeceraCatalogo(texto);
+  if (pos < 0) return null;
+  const m = new Map();
+  let t = Date.now();
+  let k = 0;
+  const fin = texto.length - '#fin\n'.length;
+  while (pos < fin) {
+    let nl = texto.indexOf('\n', pos);
+    if (nl < 0) nl = fin;
+    try {
+      const c = filaACabecera(JSON.parse(texto.slice(pos, nl)));
+      if (c) m.set(c.docId, c);
+    } catch {
+      /* línea ilegible: ese documento se abre a mano */
+    }
+    pos = nl + 1;
+    if (ceder && (++k & 255) === 0 && Date.now() - t > 15) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  }
+  return m;
+}
+
+function parsearCatalogoSincrono(texto) {
+  let pos = cabeceraCatalogo(texto);
+  if (pos < 0) return null;
+  const m = new Map();
+  const fin = texto.length - '#fin\n'.length;
+  while (pos < fin) {
+    let nl = texto.indexOf('\n', pos);
+    if (nl < 0) nl = fin;
+    try {
+      const c = filaACabecera(JSON.parse(texto.slice(pos, nl)));
+      if (c) m.set(c.docId, c);
+    } catch {
+      /* ilegible */
+    }
+    pos = nl + 1;
+  }
+  return m;
+}
+
+function guardarCatalogo() {
+  if (_tGuardado) clearTimeout(_tGuardado);
+  _tGuardado = null;
+  if (!_cab) return false;
+  try {
+    const lineas = [JSON.stringify({ v: 2, t: new Date().toISOString(), docs: _cab.size })];
+    for (const c of _cab.values()) lineas.push(JSON.stringify(filaCatalogo(c)));
+    lineas.push('#fin', '');
+    escribirAtomico(rutaCatalogo(), lineas.join('\n'));
+    _catalogoSucio = false;
+    rotarDiarioSiHaceFalta();
+    return true;
+  } catch (err) {
+    // Sin catálogo guardado solo se pierde velocidad en el próximo arranque.
+    log.warn('No se pudo guardar el catálogo del índice', { err: String(err?.message ?? err), code: err?.code ?? null });
+    return false;
+  }
+}
+
+// Tras un cambio propio: guardar al cabo de un rato (una tanda de indexado es un solo guardado).
+function catalogoCambiado(docId) {
+  _cambiosLocales += 1;
+  _catalogoSucio = true;
+  if (docId) anotarDiario(docId);
+  if (_tGuardado) return;
+  _tGuardado = setTimeout(guardarCatalogo, CATALOGO_GUARDAR_TRAS_MS);
+  _tGuardado.unref?.();
+}
+
+// Al salir: lo que quede sin guardar (síncrono, vale en el manejador de 'exit').
+export function guardarCatalogoPendiente() {
+  if (_catalogoSucio) guardarCatalogo();
+}
+process.on('exit', () => {
+  try {
+    guardarCatalogoPendiente();
+    cerrarDiario();
+  } catch {
+    /* saliendo */
+  }
+});
+
+// Nombres de la carpeta → { jsonl: [docId], vecs: Map(docId → gen | [gen, …]) }. El docId se
+// valida al usarlo (leerCabecera), no aquí: con 90.000 nombres cada microsegundo cuenta.
+function clasificarUno(nombre, jsonl, vecs) {
+  const n = nombre.length;
+  // «.jsonl» / «.vec» por su último carácter antes de comparar nada más.
+  if (nombre.charCodeAt(n - 1) === 108 /* l */ && nombre.endsWith('.jsonl')) {
+    jsonl.push(nombre.slice(0, n - 6));
+  } else if (nombre.charCodeAt(n - 1) === 99 /* c */ && nombre.endsWith('.vec')) {
+    const i = nombre.lastIndexOf('.', n - 5);
+    if (i <= 0) return;
+    const docId = nombre.slice(0, i);
+    const gen = nombre.slice(i + 1, n - 4);
+    const previo = vecs.get(docId);
+    if (previo === undefined) vecs.set(docId, gen);
+    else vecs.set(docId, Array.isArray(previo) ? [...previo, gen] : [previo, gen]);
+  }
+}
+
+async function clasificarNombres(nombres, ceder = false) {
+  const jsonl = [];
+  const vecs = new Map();
+  let t = Date.now();
+  for (let k = 0; k < nombres.length; k++) {
+    clasificarUno(nombres[k], jsonl, vecs);
+    if (ceder && (k & 255) === 0 && Date.now() - t > 15) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  }
+  return { jsonl, vecs };
+}
+
+function clasificarNombresSincrono(nombres) {
+  const jsonl = [];
+  const vecs = new Map();
+  for (const n of nombres) clasificarUno(n, jsonl, vecs);
+  return { jsonl, vecs };
+}
+
+// ¿Se puede dar por buena, solo con el listado, la cabecera que se recuerda? Sí si el documento
+// tiene UN solo .vec y es el de la generación recordada.
+const intacto = (c, gens) => c !== undefined && gens !== undefined && gens === c.gen;
+
+// Coteja un catálogo de partida con el listado de la carpeta. Solo abre las cabeceras de los
+// documentos que no se pueden dar por buenos con el listado. `ceder`: soltar el proceso cada
+// pocos milisegundos.
+async function conciliar(base, nombres, ceder) {
+  const { jsonl, vecs } = await clasificarNombres(nombres, ceder);
+  const nuevo = new Map();
+  const aLeer = [];
+  let t = Date.now();
+  for (let k = 0; k < jsonl.length; k++) {
+    const docId = jsonl[k];
+    const c = base.get(docId);
+    if (intacto(c, vecs.get(docId))) nuevo.set(docId, c);
+    else if (esDocIdValido(docId)) aLeer.push(docId);
+    if (ceder && (k & 255) === 0 && Date.now() - t > 15) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  }
+  // Las cabeceras que hay que abrir, varias a la vez y fuera del hilo principal: en Windows lo
+  // caro de cada una es la apertura (el antivirus), y en paralelo se solapan.
+  let i = 0;
+  const trabajador = async () => {
+    while (i < aLeer.length) {
+      const docId = aLeer[i++];
+      const cab = await leerCabeceraAsync(docId);
+      if (cab) nuevo.set(docId, cab);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(LECTURAS_EN_PARALELO, aLeer.length) }, trabajador));
+  return { nuevo, leidas: aLeer.length };
+}
+
+function conciliarSincrono(base, nombres) {
+  const { jsonl, vecs } = clasificarNombresSincrono(nombres);
+  const nuevo = new Map();
+  let leidas = 0;
+  for (const docId of jsonl) {
+    const c = base.get(docId);
+    if (intacto(c, vecs.get(docId))) nuevo.set(docId, c);
+    else if (esDocIdValido(docId)) {
+      leidas += 1;
+      const cab = leerCabecera(docId);
+      if (cab) nuevo.set(docId, cab);
+    }
+  }
+  return { nuevo, leidas };
+}
+
+function aplicarCatalogo(nuevo, mtime) {
   for (const [id, e] of [..._vec]) {
     const c = nuevo.get(id);
     if (!c || c.gen !== e.gen) soltarVectores(id);
@@ -189,36 +468,237 @@ function aplicarCatalogo(nuevo) {
     if (!c || c.gen !== e.gen) quitarMeta(id);
   }
   _cab = nuevo;
-  _dirMtime = mtimeDir();
+  // La fecha de la carpeta de ANTES de listarla: lo que cambie mientras se listaba provoca otro
+  // refresco (hasta la 1.9.0 se tomaba después y ese cambio podía quedarse sin ver).
+  _dirMtime = mtime;
 }
 
-// Relee las cabeceras del disco. Solo vuelve a abrir los documentos que han cambiado.
-function escanear() {
-  const nuevo = new Map();
-  for (const nombre of nombresDocs()) cabeceraAlDia(nombre, nuevo);
-  aplicarCatalogo(nuevo);
+// Sin catálogo en memoria y desde una función síncrona (no debería pasar: abrir() va antes).
+function cargarSincrono() {
+  const m = mtimeDir();
+  const d = estadoDiario();
+  const base = _cab ?? leerCatalogoGuardadoSincrono() ?? new Map();
+  const { nuevo } = conciliarSincrono(base, nombresDocs());
+  aplicarCatalogo(nuevo, m);
+  _diarioPos = d?.size ?? 0;
+  _diarioId = d?.id ?? null;
+  _ultimaCompleta = Date.now();
 }
 
-// Lo mismo al ABRIR, soltando el proceso cada pocos milisegundos: con 20.000 documentos (y un
-// antivirus mirando cada fichero) la primera lectura pasa del minuto, y si el proceso no atiende
-// a Claude mientras tanto, Claude lo da por muerto («Server disconnected»).
-async function escanearCediendo() {
-  const nuevo = new Map();
-  let t = Date.now();
-  for (const nombre of nombresDocs()) {
-    cabeceraAlDia(nombre, nuevo);
-    if (Date.now() - t > 30) {
-      await new Promise((r) => setImmediate(r));
-      t = Date.now();
-    }
+
+// ── Diario de cambios (para la instancia que solo busca) ──────────────────────────────────
+//
+// La escritora anota en indice/diario.log el docId de cada documento que escribe, resella o
+// borra, DESPUÉS de confirmarlo. La lectora sigue el diario desde donde se quedó y solo vuelve a
+// abrir las cabeceras de esos documentos: con 45.000 documentos y la otra instancia indexando,
+// cada cambio le costaba 45.000 stat síncronos (hasta la 1.9.0). El diario solo ACELERA: si
+// falta (una escritora de otra versión, un corte entre la confirmación y la anotación), un
+// listado completo de la carpeta —en segundo plano y como mucho cada COMPLETA_CADA_MS— pone la
+// foto al día; y un documento que la lectora recuerde con una generación que ya no existe no se
+// sirve nunca mezclado (vectoresDe y metadatosDe comprueban la generación).
+const rutaDiario = () => path.join(dirIndice(), 'diario.log');
+const DIARIO_MAX_BYTES = 4 * 1024 * 1024;
+const COMPLETA_CADA_MS = Number(process.env.ROBIN_CATALOGO_COMPLETA_MS) || 60 * 1000;
+let _fdDiario = null;
+let _diarioPos = 0;
+let _diarioId = null;
+let _ultimaCompleta = 0;
+let _tCompleta = null;
+let _forzarCompleta = false;
+
+function estadoDiario() {
+  try {
+    const st = fs.statSync(rutaDiario());
+    return { size: st.size, id: `${st.ino}:${st.birthtimeMs}` };
+  } catch {
+    return null;
   }
-  aplicarCatalogo(nuevo);
 }
 
-// Otra instancia (la que indexa) puede haber escrito documentos: si el directorio ha cambiado
-// desde el último vistazo, se refrescan las cabeceras.
+function anotarDiario(docId) {
+  try {
+    if (_fdDiario === null) {
+      _fdDiario = fs.openSync(rutaDiario(), 'a');
+      // La escritora es la única que anota: lo que ella anota ya está en su catálogo, así que
+      // su posición en el diario avanza con cada anotación (no tiene que releerse a sí misma).
+      const st = fs.fstatSync(_fdDiario);
+      const id = `${st.ino}:${st.birthtimeMs}`;
+      if (id !== _diarioId) {
+        _diarioId = id;
+        _diarioPos = st.size;
+      }
+    }
+    const linea = `${docId}\n`;
+    fs.writeSync(_fdDiario, linea);
+    _diarioPos += Buffer.byteLength(linea);
+  } catch {
+    // Sin diario la lectora se entera igual, con el listado completo (más tarde y más caro).
+    cerrarDiario();
+  }
+}
+
+function cerrarDiario() {
+  if (_fdDiario === null) return;
+  try {
+    fs.closeSync(_fdDiario);
+  } catch {
+    /* ya cerrado */
+  }
+  _fdDiario = null;
+}
+
+// Tras guardar el catálogo: si el diario ha crecido mucho, se empieza uno nuevo. Las lectoras ven
+// otro fichero (otro id) y hacen UNA conciliación completa.
+function rotarDiarioSiHaceFalta() {
+  const d = estadoDiario();
+  if (!d || d.size < DIARIO_MAX_BYTES) return;
+  cerrarDiario();
+  try {
+    conReintentos(() => fs.rmSync(rutaDiario(), { force: true }));
+  } catch {
+    /* se intenta en el próximo guardado */
+  }
+}
+
+async function leerDiario(desde, hasta) {
+  const fh = await fs.promises.open(rutaDiario(), 'r');
+  try {
+    const buf = Buffer.alloc(hasta - desde);
+    let leido = 0;
+    while (leido < buf.length) {
+      const { bytesRead } = await fh.read(buf, leido, buf.length - leido, desde + leido);
+      if (bytesRead <= 0) break;
+      leido += bytesRead;
+    }
+    // Solo líneas completas: la última puede estar a medio escribir.
+    const fin = buf.subarray(0, leido).lastIndexOf(10);
+    if (fin < 0) return { ids: [], pos: desde };
+    const ids = new Set(buf.toString('utf8', 0, fin).split('\n').filter(esDocIdValido));
+    return { ids: [...ids], pos: desde + fin + 1 };
+  } finally {
+    await fh.close();
+  }
+}
+
+// Relee la cabecera de cada documento anotado (la verdad está en su .jsonl; sin él, ya no existe).
+async function releerCabeceras(ids) {
+  const leidas = new Map();
+  let i = 0;
+  const trabajador = async () => {
+    while (i < ids.length) {
+      const docId = ids[i++];
+      leidas.set(docId, await leerCabeceraAsync(docId));
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(LECTURAS_EN_PARALELO, ids.length) }, trabajador));
+  return leidas;
+}
+
+async function conciliacionCompleta() {
+  const m = mtimeDir();
+  const d = estadoDiario(); // ANTES de listar: lo anotado después se aplica en la vuelta siguiente
+  const antes = _cambiosLocales;
+  let nombres;
+  try {
+    nombres = await fs.promises.readdir(dirDocs());
+  } catch {
+    nombres = [];
+  }
+  const { nuevo, leidas } = await conciliar(_cab ?? (await leerCatalogoGuardado()) ?? new Map(), nombres, true);
+  if (antes !== _cambiosLocales) return false;
+  _cuentas.completas += 1;
+  _cuentas.cabecerasReleidas += leidas;
+  aplicarCatalogo(nuevo, m);
+  _diarioPos = d?.size ?? 0;
+  _diarioId = d?.id ?? null;
+  _ultimaCompleta = Date.now();
+  return true;
+}
+
+// Refresco sin bloquear el proceso. Uno a la vez; si este proceso escribe mientras tanto, el
+// resultado se descarta y se vuelve a mirar.
+function refrescar() {
+  if (_refresco) return _refresco;
+  _refresco = (async () => {
+    // Sin esto, un refresco que termina sin esperar nada ejecutaba su `finally` ANTES de que
+    // `_refresco` quedara asignado, y se quedaba para siempre apuntando a una promesa resuelta:
+    // ningún refresco posterior llegaba a hacerse.
+    await null;
+    try {
+      for (let vuelta = 0; vuelta < 8; vuelta++) {
+        const m = mtimeDir();
+        const d = estadoDiario();
+        const diarioIgual = d ? d.id === _diarioId && d.size === _diarioPos : _diarioId === null;
+        if (_cab && m === _dirMtime && diarioIgual && !_forzarCompleta) return;
+        // Un diario que no existía cuando se miró por última vez se lee desde el principio: todo
+        // lo que tiene se anotó DESPUÉS de aquel vistazo (lo de antes lo vio el listado).
+        if (_cab && d && _diarioId === null && _diarioPos === 0) _diarioId = d.id;
+        if (_cab && !_forzarCompleta && d && d.id === _diarioId && d.size > _diarioPos) {
+          // Lo normal: la otra instancia ha escrito unos documentos y los ha anotado.
+          const antes = _cambiosLocales;
+          const { ids, pos } = await leerDiario(_diarioPos, d.size);
+          const leidas = await releerCabeceras(ids);
+          if (antes !== _cambiosLocales) continue;
+          _cuentas.incrementales += 1;
+          _cuentas.cabecerasReleidas += ids.length;
+          for (const [docId, cab] of leidas) {
+            const previa = _cab.get(docId);
+            if (previa && (!cab || previa.gen !== cab.gen)) {
+              soltarVectores(docId);
+              quitarMeta(docId);
+            }
+            if (cab) _cab.set(docId, cab);
+            else _cab.delete(docId);
+          }
+          const avanzo = pos > _diarioPos;
+          _diarioPos = pos;
+          _dirMtime = m;
+          if (!avanzo) return; // una línea a medio escribir: en la próxima consulta
+          continue;
+        }
+        const diarioNuevo = !_cab || (d ? d.id !== _diarioId || d.size < _diarioPos : _diarioId !== null);
+        if (diarioNuevo || _forzarCompleta) {
+          _forzarCompleta = false;
+          await conciliacionCompleta();
+          continue;
+        }
+        // La carpeta ha cambiado sin nada anotado: el temporal de una escritura en curso (se
+        // anotará al confirmarse), restos que se limpian, o una escritora sin diario. Se mira
+        // entero cuando toque, sin repetir el listado en cada consulta.
+        // Si para entonces el diario ha avanzado, era una escritura anotada y basta con él.
+        _dirMtime = m;
+        if (!_tCompleta) {
+          const visto = d ? `${d.id}|${d.size}` : null;
+          _tCompleta = setTimeout(() => {
+            _tCompleta = null;
+            const d2 = estadoDiario();
+            if (!(d2 && visto && d2.id === d.id && d2.size > d.size)) _forzarCompleta = true;
+            refrescar().catch(() => {});
+          }, Math.max(1000, COMPLETA_CADA_MS - (Date.now() - _ultimaCompleta)));
+          _tCompleta.unref?.();
+        }
+        return;
+      }
+    } finally {
+      _refresco = null;
+    }
+  })();
+  return _refresco;
+}
+
+// Síncrona: contesta con la foto que hay y, si la carpeta ha cambiado (la otra instancia ha
+// escrito), pide el refresco en segundo plano. NUNCA relee el catálogo entero parando el proceso.
 function asegurarCatalogo() {
-  if (!_cab || mtimeDir() !== _dirMtime) escanear();
+  if (!_cab) {
+    cargarSincrono();
+    return;
+  }
+  if (_forzarCompleta || mtimeDir() !== _dirMtime) refrescar().catch(() => {});
+}
+
+// Asíncrona: espera a tener el catálogo al día (sin bloquear el proceso).
+async function catalogoAlDia() {
+  if (!_cab || _forzarCompleta || mtimeDir() !== _dirMtime) await refrescar();
 }
 
 function vectoresDe(cab) {
@@ -390,6 +870,7 @@ function escribirDoc(docId, lista) {
   const st = fs.statSync(rutaMeta(docId));
   _cab.set(docId, { ...cab, mtimeMs: st.mtimeMs, bytes: st.size + f.byteLength });
   _dirMtime = mtimeDir();
+  catalogoCambiado(docId);
 }
 
 function borrarDoc(docId, cab = _cab?.get(docId) ?? leerCabecera(docId)) {
@@ -399,6 +880,7 @@ function borrarDoc(docId, cab = _cab?.get(docId) ?? leerCabecera(docId)) {
   quitarMeta(docId);
   _cab?.delete(docId);
   _dirMtime = mtimeDir();
+  catalogoCambiado(docId);
   return cab?.n ?? 0;
 }
 
@@ -433,7 +915,7 @@ function partirFiltro(filter) {
 export function upsertChunks(docId, chunks) {
   return conCerrojo(async () => {
     if (!esDocIdValido(docId)) throw new Error(`docId no válido: ${docId}`);
-    asegurarCatalogo();
+    await catalogoAlDia();
     let lista = chunks.map((c) => ({ chunkId: c.chunkId, vector: c.vector, metadata: { ...c.metadata } }));
     const cab = _cab.get(docId);
     if (cab) {
@@ -450,7 +932,7 @@ export function upsertChunks(docId, chunks) {
 export function reemplazarDoc(docId, chunks) {
   return conCerrojo(async () => {
     if (!esDocIdValido(docId)) throw new Error(`docId no válido: ${docId}`);
-    asegurarCatalogo();
+    await catalogoAlDia();
     escribirDoc(
       docId,
       chunks.map((c) => ({ chunkId: c.chunkId, vector: c.vector, metadata: { ...c.metadata } })),
@@ -462,7 +944,7 @@ export function reemplazarDoc(docId, chunks) {
 export function deleteByDoc(docId) {
   return conCerrojo(async () => {
     if (!esDocIdValido(docId)) return 0;
-    asegurarCatalogo();
+    await catalogoAlDia();
     const cab = _cab.get(docId) ?? leerCabecera(docId);
     if (!cab && !fs.existsSync(rutaMeta(docId))) return 0;
     return borrarDoc(docId, cab);
@@ -479,7 +961,7 @@ export function deleteByDoc(docId) {
 export function resellar(docId, campos) {
   return conCerrojo(async () => {
     if (!esDocIdValido(docId)) return false;
-    asegurarCatalogo();
+    await catalogoAlDia();
     const cab = _cab.get(docId) ?? leerCabecera(docId);
     if (!cab) return false;
     const lineas = fs.readFileSync(rutaMeta(docId), 'utf8').split('\n');
@@ -516,6 +998,7 @@ export function resellar(docId, campos) {
     const st = fs.statSync(rutaMeta(docId));
     _cab.set(docId, { ...cab, ...cambios, gen, mtimeMs: st.mtimeMs, bytes: st.size + cab.n * cab.dim * 4 });
     _dirMtime = mtimeDir();
+    catalogoCambiado(docId);
     return true;
   });
 }
@@ -531,7 +1014,7 @@ export function resellar(docId, campos) {
 export function copiarDoc(origen, destino, { fichero, rutaRelativa, raiz, expediente, fechaModificacion }) {
   return conCerrojo(async () => {
     if (!esDocIdValido(origen) || !esDocIdValido(destino)) return null;
-    asegurarCatalogo();
+    await catalogoAlDia();
     const cab = _cab.get(origen);
     if (!cab) return null;
     const trozos = leerDocCompleto(cab);
@@ -549,7 +1032,7 @@ export function copiarDoc(origen, destino, { fichero, rutaRelativa, raiz, expedi
 
 // Búsqueda por similitud coseno. `filter` opcional sobre metadatos ({campo: valor|{$eq|$ne|$in|$nin}}).
 export async function query(vector, topK, filter = undefined) {
-  asegurarCatalogo();
+  await catalogoAlDia();
   const K = Math.max(1, topK | 0);
   const q = vector instanceof Float32Array ? vector : Float32Array.from(vector);
   let qn = 0;
@@ -622,7 +1105,7 @@ export async function query(vector, topK, filter = undefined) {
 // Devuelve un fragmento concreto por (docId, chunkId).
 export async function getChunk(docId, chunkId) {
   if (!esDocIdValido(docId)) return null;
-  asegurarCatalogo();
+  await catalogoAlDia();
   const cab = _cab.get(docId);
   if (!cab) return null;
   const metas = metadatosDe(cab) || [];
@@ -632,7 +1115,7 @@ export async function getChunk(docId, chunkId) {
 // Devuelve TODOS los fragmentos de un documento, ordenados por chunkId (lectura íntegra).
 export async function getDocChunks(docId) {
   if (!esDocIdValido(docId)) return [];
-  asegurarCatalogo();
+  await catalogoAlDia();
   const cab = _cab.get(docId);
   if (!cab) return [];
   return (metadatosDe(cab) || []).filter(Boolean).sort((a, b) => (a.chunkId ?? 0) - (b.chunkId ?? 0));
@@ -640,7 +1123,7 @@ export async function getDocChunks(docId) {
 
 // Compatibilidad: el sellado de `expediente` (1.3.0) lo hace ahora `abrir()` al migrar.
 export async function backfillExpediente() {
-  asegurarCatalogo();
+  await catalogoAlDia();
   return { sellados: 0, total: resumen().fragmentos };
 }
 
@@ -676,12 +1159,13 @@ export function docIds() {
 
 // Restos de escrituras cortadas (.tmp) y vectores de generaciones ya sustituidas. Solo los
 // viejos: uno reciente puede ser una escritura en curso.
-function limpiarRestos() {
-  let nombres = [];
-  try {
-    nombres = fs.readdirSync(dirDocs());
-  } catch {
-    return 0;
+function limpiarRestos(nombres = null) {
+  if (!nombres) {
+    try {
+      nombres = fs.readdirSync(dirDocs());
+    } catch {
+      return 0;
+    }
   }
   const vivos = new Set([..._cab.values()].map((c) => `${c.docId}.${c.gen}.vec`));
   const ahora = Date.now();
@@ -711,7 +1195,7 @@ async function migrarDesdeVectra(ruta, derivarExpediente) {
     /* sin tamaño */
   }
   log.info('Pasando el índice al formato por documento (una sola vez)', { bytes });
-  if (!_cab) escanear();
+  if (!_cab) await refrescar();
   const info = {};
   const escritos = new Set();
   let actual = null;
@@ -778,48 +1262,161 @@ async function migrarDesdeVectra(ruta, derivarExpediente) {
   return r;
 }
 
+// ── Versiones anteriores a la 1.4.5 que sigan vivas en el equipo ──────────────────────────
+//
+// 27-sep-2026, Mac de Eduardo: una RobinSearch 1.4.0 (índice vectra en UN index.json) seguía
+// arrancando cada noche a las 01:30 en modo `--silent` (tarea programada) y desde Claude, y
+// volvía a crear index/index.json. La 1.8.3 lo «pasaba al formato por documento (una sola vez)»
+// en CADA arranque, y un arranque que se lo encontró a medio escribir dio el índice por roto.
+//
+// Dos defensas que no dependen de encontrar a la versión antigua:
+//   1. CEPO: una vez pasado el índice al formato actual, index/index.json pasa a ser una CARPETA
+//      (con un LEEME dentro). vectra da el índice por creado (fs.access) y todo lo que intenta
+//      leer o escribir en él falla con EISDIR: la versión antigua ya no puede crear un índice
+//      paralelo, ni tocar el registro por un documento que no ha podido indexar (su indexado
+//      borra en el índice ANTES de apuntar nada en files.json).
+//   2. Si aun así aparece un index.json después de la migración (cepo quitado a mano, o creado
+//      entre medias), NO se vuelve a migrar: se aparta y se devuelven los docId que traía, para
+//      que el arranque los reindexe DESDE LOS ORIGINALES (lo que la versión antigua indexó es
+//      el contenido nuevo de esos ficheros; lo que hay en el índice actual de ellos, el viejo).
+const LEEME_CEPO =
+  'Esta carpeta la pone RobinSearch a proposito (no es un error y no hay que borrarla).\n' +
+  'Las versiones de RobinSearch anteriores a la 1.4.5 guardaban aqui el indice en un solo fichero\n' +
+  '«index.json». El indice actual vive en la carpeta «indice». Con esta carpeta en su lugar, una\n' +
+  'version antigua que siga instalada en el equipo no puede volver a escribir un indice paralelo.\n';
+
+function esFichero(ruta) {
+  try {
+    return fs.statSync(ruta).isFile();
+  } catch {
+    return false;
+  }
+}
+
+export function ponerCepo() {
+  const ruta = rutaVectraAntigua();
+  try {
+    if (fs.statSync(ruta).isDirectory()) return true;
+    return false; // hay un index.json de verdad: primero se migra o se aparta
+  } catch {
+    /* no existe: se pone */
+  }
+  try {
+    fs.mkdirSync(ruta, { recursive: true });
+    fs.writeFileSync(path.join(ruta, 'LEEME.txt'), LEEME_CEPO);
+    return true;
+  } catch (err) {
+    log.warn('No se pudo proteger la ruta del índice antiguo', { code: err?.code ?? null });
+    return false;
+  }
+}
+
+async function apartarIndiceAntiguo(ruta) {
+  const docIds = new Set();
+  const info = {};
+  let bytes = 0;
+  try {
+    bytes = fs.statSync(ruta).size;
+  } catch {
+    /* sin tamaño */
+  }
+  try {
+    for await (const it of itemsVectra(ruta, info)) {
+      const m = it?.metadata && typeof it.metadata === 'object' ? it.metadata : {};
+      const docId = m.docId ?? String(it?.id ?? '').split('::')[0];
+      if (esDocIdValido(docId)) docIds.add(docId);
+    }
+  } catch (err) {
+    if (err?.code !== 'ENOENT') log.warn('No se pudo leer el índice antiguo que ha vuelto a aparecer', { code: err?.code ?? null });
+  }
+  // Una sola copia (la última), por si hiciera falta mirarla: es un derivado, los originales
+  // siguen en su carpeta.
+  const destino = path.join(path.dirname(ruta), 'apartado-por-version-antigua.json');
+  try {
+    conReintentos(() => fs.renameSync(ruta, destino));
+  } catch (err) {
+    try {
+      conReintentos(() => fs.rmSync(ruta, { force: true }));
+    } catch {
+      log.warn('No se pudo apartar el índice antiguo', { code: err?.code ?? null });
+    }
+  }
+  log.warn('Una versión antigua de RobinSearch ha vuelto a escribir el índice antiguo: se aparta sin migrarlo y sus documentos se reindexan desde los originales', {
+    bytes,
+    documentos: docIds.size,
+  });
+  return { apartado: true, repetida: true, docIdsAReindexar: [...docIds], documentos: docIds.size, bytes };
+}
+
 // Abre el índice. `migrar` solo en la instancia que escribe (escritor.js).
 export async function abrir({ migrar = true, derivarExpediente = null, alMigrar = null } = {}) {
+  const t0 = Date.now();
   fs.mkdirSync(dirDocs(), { recursive: true });
   let migracion = null;
   const viejo = rutaVectraAntigua();
-  if (migrar && fs.existsSync(viejo)) {
+  if (migrar && esFichero(viejo)) {
     alMigrar?.();
-    // El paso a este formato es de UNA vez. Si el index.json antiguo vuelve a aparecer después,
-    // es que una versión anterior a la 1.4.5 SIGUE VIVA en el equipo y escribiendo en él (27-sep-
-    // 2026: una 1.4.0 lanzada cada noche y desde Claude en el Mac de Eduardo, con la 1.8.3
-    // «pasando el índice (una sola vez)» en cada arranque). Se sigue pasando —lo que escribió es
-    // del abogado— pero se dice, para que alguien la quite.
     const repetida = fs.existsSync(rutaMigrado());
-    try {
-      migracion = await conCerrojo(() => migrarDesdeVectra(viejo, derivarExpediente));
-      migracion.repetida = repetida;
+    if (repetida) {
+      // Ya se pasó una vez: esto lo ha escrito una versión antigua que sigue viva. Se aparta.
+      migracion = await conCerrojo(() => apartarIndiceAntiguo(viejo));
+    } else {
       try {
-        escribirAtomico(rutaMigrado(), JSON.stringify({ t: new Date().toISOString() }));
-      } catch {
-        /* sin testigo solo se pierde el aviso de la próxima vez */
+        migracion = await conCerrojo(() => migrarDesdeVectra(viejo, derivarExpediente));
+        migracion.repetida = false;
+        try {
+          escribirAtomico(rutaMigrado(), JSON.stringify({ t: new Date().toISOString() }));
+        } catch {
+          /* sin testigo solo se pierde el aviso de la próxima vez */
+        }
+      } catch (err) {
+        // El index.json antiguo desapareció a mitad (lo ha pasado y borrado otra instancia, o la
+        // versión antigua lo está reescribiendo). Eso NO es un índice dañado: hasta la 1.9.0 este
+        // ENOENT subía hasta abrirIndice como «índice irrecuperable» y se BORRABA el índice entero.
+        if (err?.code !== 'ENOENT') throw err;
+        log.warn('El índice antiguo desapareció mientras se pasaba al formato nuevo: se sigue con el actual', {
+          code: 'ENOENT',
+        });
+        migracion = { desaparecido: true, repetida };
       }
-    } catch (err) {
-      // El index.json antiguo desapareció a mitad (lo ha pasado y borrado otra instancia, o la
-      // versión antigua lo está reescribiendo). Eso NO es un índice dañado: hasta la 1.9.0 este
-      // ENOENT subía hasta abrirIndice como «índice irrecuperable» y se BORRABA el índice entero.
-      if (err?.code !== 'ENOENT') throw err;
-      log.warn('El índice antiguo desapareció mientras se pasaba al formato nuevo: se sigue con el actual', {
-        code: 'ENOENT',
-      });
-      migracion = { desaparecido: true, repetida };
     }
   }
-  await escanearCediendo();
+  if (migrar) ponerCepo();
+
+  // El catálogo: el guardado (si lo hay) cotejado con UN listado de la carpeta.
+  const m = mtimeDir();
+  const diario = estadoDiario(); // antes de listar: lo que se anote después se aplica luego
+  const guardado = _cab ? null : await leerCatalogoGuardado();
+  const base = _cab ?? guardado ?? new Map();
+  let nombres;
+  try {
+    nombres = await fs.promises.readdir(dirDocs());
+  } catch {
+    nombres = [];
+  }
+  const { nuevo, leidas } = await conciliar(base, nombres, true);
+  aplicarCatalogo(nuevo, m);
+  _diarioPos = diario?.size ?? 0;
+  _diarioId = diario?.id ?? null;
+  _ultimaCompleta = Date.now();
+  _forzarCompleta = false;
   if (migrar) {
     // Quitar restos cambia la fecha de la carpeta y, sin esto, la PRIMERA consulta del catálogo
-    // (el cotejo con el registro, justo después) lo releía ENTERO de forma síncrona: en Windows,
-    // con 40.000 documentos y el antivirus, minutos con el proceso parado — sin renovar el
-    // cerrojo de escritor, que otra instancia daba por caducado y le quitaba (24 y 29-sep-2026).
-    // Los restos no son documentos del catálogo: la foto sigue valiendo.
-    if (limpiarRestos() > 0) _dirMtime = mtimeDir();
+    // (el cotejo con el registro, justo después) lo releía. Los restos no son documentos del
+    // catálogo: la foto sigue valiendo.
+    if (limpiarRestos(nombres) > 0) _dirMtime = mtimeDir();
+    // Lo abierto a mano (1.ª vez tras actualizar, o cambios desde el último guardado) se guarda
+    // ya: el próximo arranque no tiene que volver a abrirlo.
+    if (leidas > 0 || !guardado || guardado.size !== nuevo.size || migracion) guardarCatalogo();
   }
-  return { ...resumen(), migracion };
+  _ultimaApertura = { ms: Date.now() - t0, documentos: nuevo.size, cabecerasLeidas: leidas, desdeCatalogo: Boolean(guardado) };
+  log.info('Catálogo del índice cargado', {
+    ms: _ultimaApertura.ms,
+    documentos: nuevo.size,
+    cabeceras_leidas: leidas,
+    desde_catalogo: Boolean(guardado),
+  });
+  return { ...resumen(), migracion, apertura: _ultimaApertura };
 }
 
 // Testigo de que el índice antiguo (vectra) ya se pasó una vez a este formato.
@@ -840,6 +1437,7 @@ function borrarCarpetaPropia(dir) {
 }
 
 export function borrarTodo() {
+  cerrarDiario();
   borrarCarpetaPropia(dirIndice());
   borrarCarpetaPropia(path.dirname(rutaVectraAntigua()));
   _cab = new Map();
@@ -849,6 +1447,9 @@ export function borrarTodo() {
   _metaBytes = 0;
   fs.mkdirSync(dirDocs(), { recursive: true });
   _dirMtime = mtimeDir();
+  _cambiosLocales += 1;
+  ponerCepo();
+  guardarCatalogo();
 }
 
 export default {
@@ -867,6 +1468,9 @@ export default {
   docIds,
   abrir,
   borrarTodo,
+  guardarCatalogoPendiente,
+  ponerCepo,
+  estadisticasCatalogo,
   dirIndice,
   esDocIdValido,
 };

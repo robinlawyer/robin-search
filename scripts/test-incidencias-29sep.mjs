@@ -184,6 +184,9 @@ const store = await import(url('server/search/store.js'));
 const vectra = (docs) => {
   const items = [];
   for (const [docId, texto] of docs) items.push({ id: `${docId}::0`, vector: [0.1, 0.2, 0.3, 0.4], metadata: { docId, chunkId: 0, text: texto, rutaRelativa: `Expedientes/${docId}.txt` } });
+  // Si está el cepo (la carpeta que pone la versión actual), se quita: es el caso de un index.json
+  // que vuelve a aparecer a pesar de todo.
+  fs.rmSync(path.join(datos, 'index', 'index.json'), { recursive: true, force: true });
   fs.mkdirSync(path.join(datos, 'index'), { recursive: true });
   fs.writeFileSync(path.join(datos, 'index', 'index.json'), JSON.stringify({ version: 1, metadata_config: {}, items }));
 };
@@ -192,10 +195,13 @@ let r = await store.abrir({ migrar: true });
 check('5.1 primer paso del índice antiguo: no es repetido', r.migracion && r.migracion.repetida === false && r.documentos === 2);
 vectra([['ccc', 'tres']]);
 r = await store.abrir({ migrar: true });
-check('5.2 el índice antiguo REAPARECE: se pasa y se marca como versión antigua viva', r.migracion?.repetida === true && r.documentos === 3);
+check('5.2 el índice antiguo REAPARECE: NO se vuelve a pasar; se aparta, se marca como versión antigua viva y se piden sus documentos para reindexar',
+  r.migracion?.repetida === true && r.migracion.apartado === true && r.documentos === 2 && r.migracion.docIdsAReindexar?.includes('ccc'), JSON.stringify(r.migracion));
 
-// El index.json existe al mirar y desaparece al abrirlo (otra instancia lo acaba de pasar).
+// El index.json existe al mirar y desaparece al abrirlo (otra instancia lo acaba de pasar). Sin
+// el testigo del primer paso, para que sea el paso de verdad y no el apartado.
 vectra([['ddd', 'cuatro']]);
+fs.rmSync(path.join(datos, 'indice', 'migrado-desde-vectra.json'), { force: true });
 const crsOriginal = fs.createReadStream;
 fs.createReadStream = (p, o) => crsOriginal(String(p).endsWith('index.json') ? `${p}.desaparecido` : p, o);
 let err = null;
@@ -205,7 +211,7 @@ try {
   err = e;
 }
 fs.createReadStream = crsOriginal;
-check('5.3 ENOENT a mitad del paso: el índice se abre igual, sin error', !err && r?.migracion?.desaparecido === true && r.documentos === 3, String(err?.message ?? ''));
+check('5.3 ENOENT a mitad del paso: el índice se abre igual, sin error', !err && r?.migracion?.desaparecido === true && r.documentos === 2, String(err?.message ?? ''));
 const boot = fs.readFileSync(path.join(REPO, 'server/bootstrap.js'), 'utf8');
 check('5.4 y abrirIndice trata ENOENT como pasajero (nunca borra el índice por él)', /const PASAJEROS = new Set\(\[[^\]]*'ENOENT'/.test(boot));
 fs.rmSync(path.join(datos, 'index'), { recursive: true, force: true });

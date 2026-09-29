@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ORDEN = [
   'login', 'login-en-app', 'login-bloqueado', 'sondeo-colgado', 'control', 'aislamiento',
-  'red', 'vigilante-local', 'rutas', 'carpetas', 'diagnostico', 'incidencias-sep', 'incidencias-22sep', 'incidencias-23sep', 'incidencias-29sep', 'nada-se-queda-fuera', 'correo', 'correo-oauth', 'correo-cuentas', 'archivo-expediente', 'barrido', 'robustez', 'concurrencia', 'contenedores', 'escala', 'persistencia', 'ocr', 'formato-real', 'sin-conexion', 'no-modifica', 'velocidad', 'humo-so',
+  'red', 'vigilante-local', 'rutas', 'carpetas', 'diagnostico', 'incidencias-sep', 'incidencias-22sep', 'incidencias-23sep', 'incidencias-29sep', 'version-antigua', 'nada-se-queda-fuera', 'correo', 'correo-oauth', 'correo-cuentas', 'archivo-expediente', 'barrido', 'robustez', 'concurrencia', 'contenedores', 'escala', 'persistencia', 'ocr', 'formato-real', 'sin-conexion', 'no-modifica', 'velocidad', 'humo-so',
 ];
 const pedidas = process.argv.slice(2);
 const pruebas = pedidas.length ? ORDEN.filter((p) => pedidas.includes(p)) : ORDEN;
@@ -24,8 +24,8 @@ const DIR = process.env.ROBIN_REGISTROS_PRUEBAS || path.join(os.tmpdir(), 'robin
 const TOPE_MS = Number(process.env.ROBIN_PRUEBA_MAX_MIN || 20) * 60 * 1000;
 fs.mkdirSync(DIR, { recursive: true });
 
-// Ninguna prueba puede mandar avisos técnicos a producción.
-const env = { ...process.env, ROBIN_DIAGNOSTICO_URL: 'off', ROBIN_REGISTROS_PRUEBAS: DIR };
+// Ninguna prueba puede mandar avisos técnicos a producción, ni desactivar lanzadores del equipo en que corre.
+const env = { ...process.env, ROBIN_DIAGNOSTICO_URL: 'off', ROBIN_REGISTROS_PRUEBAS: DIR, ROBIN_NO_TOCAR_VERSIONES_ANTIGUAS: '1' };
 
 function ejecutar(nombre) {
   return new Promise((resolve) => {

@@ -1,6 +1,6 @@
 {
   "name": "@robinlawyer/robin-search",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "RobinSearch — servidor MCP local que indexa los expedientes del despacho y los hace buscables semánticamente sin que ningún documento salga del ordenador del abogado.",
   "type": "module",
   "license": "MIT",
@@ -25,6 +25,7 @@
     "test:incidencias-sep": "node scripts/test-incidencias-sep.mjs",
     "test:incidencias-22sep": "node scripts/test-incidencias-22sep.mjs",
     "test:incidencias-23sep": "node scripts/test-incidencias-23sep.mjs",
+    "test:version-antigua": "node scripts/test-version-antigua.mjs",
     "test:correo": "node scripts/test-correo.mjs",
     "test:correo-oauth": "node scripts/test-correo-oauth.mjs",
     "test:correo-cuentas": "node scripts/test-correo-cuentas.mjs",
