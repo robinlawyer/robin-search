@@ -166,7 +166,9 @@ function aVectra(datos) {
       items.push({ id: `${cab.docId}::${m.chunkId}`, metadata: m, vector: Array.from(v.subarray(j * cab.dim, (j + 1) * cab.dim)), norm: 1 });
     });
   }
+  // Una carpeta de datos de una 1.4.4 o anterior: sin «indice/» y sin el cepo que pone la actual.
   fs.rmSync(path.join(datos, 'indice'), { recursive: true, force: true });
+  fs.rmSync(path.join(datos, 'index'), { recursive: true, force: true });
   fs.mkdirSync(path.join(datos, 'index'), { recursive: true });
   fs.writeFileSync(path.join(datos, 'index', 'index.json'), JSON.stringify({ version: 1, metadata_config: {}, items }));
   return items.length;
@@ -191,7 +193,8 @@ s = servidor({ madre: madreA, datos: datosA });
 e = await esperarFin(s.call);
 let b = await s.call('buscar_documentos', { query: 'pensión de alimentos y vivienda', expediente: 'Expedientes/Pérez - Divorcio' });
 check('A.1 tras migrar un index.json de vectra, busca igual', b.data?.fragmentos?.[0]?.fichero === '02 convenio.txt', `items=${nItems} primero=${b.data?.fragmentos?.[0]?.fichero}`);
-check('A.2 el índice viejo se borra y los contadores cuadran', !fs.existsSync(path.join(datosA, 'index')) && e?.fragmentos_totales === fragmentosA);
+check('A.2 el índice viejo se borra (queda el cepo: index.json es una carpeta) y los contadores cuadran',
+  fs.statSync(path.join(datosA, 'index', 'index.json')).isDirectory() && e?.fragmentos_totales === fragmentosA);
 check('A.3 la migración queda en el registro', /Índice pasado al formato por documento/.test(leerLog(datosA)));
 await parar(s);
 
