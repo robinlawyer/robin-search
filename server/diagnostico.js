@@ -23,6 +23,7 @@ import os from 'node:os';
 import path from 'node:path';
 import v8 from 'node:v8';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import { leerCuentas } from './correo/ajustes.js';
 import { config, VERSION, rootForPath } from './config.js';
 import { log } from './logger.js';
@@ -96,9 +97,31 @@ const INICIO_PROCESO = new Date(Date.now() - process.uptime() * 1000).toISOStrin
 // a dejar una y el siguiente arranque la tomaba por caída sobre un fichero sano.
 let _cerrando = false;
 
-export function marcarFase(fase, extra = {}) {
-  if (_cerrando) return;
-  _marca = { pid: process.pid, fase, t: new Date().toISOString(), inicio: INICIO_PROCESO, version: VERSION, ...extra };
+// LATIDO de la marca (29-sep-2026). Sin él, de una marca huérfana solo se sabía cuándo EMPEZÓ la
+// fase, no cuándo murió el proceso ni con cuánta memoria: dos equipos Windows de 16 GB «caídos»
+// en pleno OCR con 400-700 MB libres —y 5-6 GB libres al volver— sin poder decir si el proceso
+// murió de memoria o lo cerró Claude. Mientras hay una fase abierta, la marca se reescribe cada
+// pocos segundos con la hora y la memoria del proceso: el siguiente arranque sabe CUÁNDO murió
+// (± un latido) y cómo estaba. Solo números.
+const LATIDO_MS = Number(process.env.ROBIN_LATIDO_MS) || 5000;
+let _latido = null;
+
+function memoriaAhora() {
+  const MB = 1048576;
+  try {
+    const m = process.memoryUsage();
+    return {
+      rss_mb: Math.round(m.rss / MB),
+      heap_mb: Math.round(m.heapUsed / MB),
+      externa_mb: Math.round((m.external || 0) / MB),
+      libre_mb: Math.round(os.freemem() / MB),
+    };
+  } catch {
+    return {};
+  }
+}
+
+function escribirMarca() {
   try {
     // Atómica: un proceso que muere A MITAD de escribir la marca (justo lo que se quiere
     // diagnosticar) dejaba un JSON cortado, y el siguiente arranque no sabía ni la fase.
@@ -108,8 +131,27 @@ export function marcarFase(fase, extra = {}) {
   }
 }
 
+function latir() {
+  if (!_marca || _cerrando) return;
+  _marca = { ..._marca, latido: new Date().toISOString(), ...memoriaAhora() };
+  escribirMarca();
+}
+
+export function marcarFase(fase, extra = {}) {
+  if (_cerrando) return;
+  const ahora = new Date().toISOString();
+  _marca = { pid: process.pid, fase, t: ahora, inicio: INICIO_PROCESO, version: VERSION, latido: ahora, ...memoriaAhora(), ...extra };
+  escribirMarca();
+  if (!_latido) {
+    _latido = setInterval(latir, LATIDO_MS);
+    _latido.unref?.();
+  }
+}
+
 export function finFase() {
   _marca = null;
+  if (_latido) clearInterval(_latido);
+  _latido = null;
   try {
     fs.rmSync(rutaMarca(), { force: true });
   } catch {
@@ -172,6 +214,17 @@ export function revisarCaidaAnterior() {
       log.info('La ejecución anterior la cerró Claude: no es una caída', { fase: d.fase });
       continue;
     }
+    if (d?.fase && d.fase !== 'excepcion' && cerradaPorActualizacion(d)) {
+      // Sin registro de Claude (o sin que lo mencione) también se sabe: la versión que murió no
+      // es esta, y esta se instaló justo cuando aquella dejó de latir. Al actualizar una
+      // extensión Claude la cierra para cambiarla; en Windows, sin aviso (24 y 29-sep-2026: dos
+      // «caídas» abriendo el índice que eran la actualización a la 1.8.6 y a la 1.9.0).
+      log.info('La ejecución anterior la cerró Claude al actualizar la extensión: no es una caída', {
+        fase: d.fase,
+        version: String(d.version),
+      });
+      continue;
+    }
     // `null` = no hay registro de Claude que consultar. Pudo ser una caída o pudo ser Claude
     // cerrando el servidor para reabrirlo; se anota como INCIERTA: ni se aparta el documento que
     // estaba leyendo (estaba sano) ni cuenta para rehacer el índice, que son las dos reacciones
@@ -187,6 +240,50 @@ export function revisarCaidaAnterior() {
     return est.caidasSeguidas;
   });
   return { ...caidas[caidas.length - 1], caidasSeguidas: seguidas };
+}
+
+// Cuándo se instaló ESTA versión en el disco: el cambio (ctime) más reciente de la carpeta de la
+// extensión y de su package.json. ctime y no mtime: el descompresor puede conservar la fecha del
+// paquete en mtime, pero ctime la pone el sistema al escribir.
+export function instalacionMs() {
+  const raiz = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+  let ms = NaN;
+  for (const p of [raiz, path.join(raiz, 'package.json')]) {
+    try {
+      const st = fs.statSync(p);
+      const t = Math.max(st.ctimeMs || 0, st.mtimeMs || 0);
+      if (!(ms >= t)) ms = t;
+    } catch {
+      /* sin dato */
+    }
+  }
+  return ms;
+}
+
+// Margen entre la última señal de vida de la versión anterior y la instalación de esta.
+const MARGEN_ACTUALIZACION_MS = 60_000;
+
+// ¿Murió la ejecución de la marca porque Claude instaló otra versión de la extensión? Solo con
+// marcas que LATEN (desde la 1.9.1): sin latido no se sabe cuándo murió, y una caída seguida de
+// una actualización hecha a mano no puede pasar por cierre de Claude.
+export function cerradaPorActualizacion(marca, instaladaMs = instalacionMs()) {
+  if (!marca?.version || marca.version === VERSION) return false;
+  const vivo = Date.parse(marca.latido || '');
+  if (!Number.isFinite(vivo) || !Number.isFinite(instaladaMs)) return false;
+  return Math.abs(instaladaMs - vivo) <= MARGEN_ACTUALIZACION_MS;
+}
+
+// Lo técnico de la marca que ayuda a distinguir una caída de un cierre, para el registro (solo
+// números y la versión): cuánto hacía que no latía al arrancar esta, y su memoria en ese latido.
+export function datosDeMarca(marca, ahora = Date.now()) {
+  const vivo = Date.parse(marca?.latido || marca?.t || '');
+  const inicio = Date.parse(INICIO_PROCESO);
+  const out = {};
+  if (Number.isFinite(vivo)) out.sin_latir_s = Math.max(0, Math.round((Math.min(ahora, inicio) - vivo) / 1000));
+  out.con_latido = Boolean(marca?.latido);
+  for (const k of ['rss_mb', 'heap_mb', 'externa_mb', 'libre_mb']) if (Number.isFinite(marca?.[k])) out[k] = marca[k];
+  if (marca?.version) out.version = String(marca.version);
+  return out;
 }
 
 // El índice abrió bien: las caídas anteriores al abrirlo ya no cuentan.
@@ -485,43 +582,75 @@ export const esLogNuestro = (n) =>
 // Estado de la última búsqueda del registro de Claude: para dejar de adivinar por qué en un
 // equipo no lo encontramos (viaja en el informe, nunca la ruta).
 let _estadoLogClaude = 'sin_mirar';
+let _detalleLogClaude = null;
 export function estadoLogClaude() {
-  if (_estadoLogClaude === 'sin_mirar') rutaLogClaude();
+  if (_estadoLogClaude === 'sin_mirar') fuenteLogClaude();
   return _estadoLogClaude;
 }
 
-// El fichero de registro de Claude sobre NUESTRO servidor, o null si no lo hay. Se queda con el
-// más reciente: al reinstalar la extensión con otro nombre quedan los dos.
-// Nuestra huella en el registro: la línea que el servidor escribe por stderr al quedar listo
-// (ver server/index.js). Es lo que permite reconocer NUESTRO registro por lo que dice y no por
-// cómo se llame el fichero.
+// Qué se vio al buscarlo, en números (29-sep-2026). Tres equipos Windows siguen trayendo
+// `sin_fichero` con la 1.9.0 y no se sabía ni si la carpeta que miramos es la que Claude usa
+// (MSIX redirige %APPDATA%\Claude a su paquete). Viaja en el registro: nunca nombres ni rutas.
+export function detalleLogClaude() {
+  if (_estadoLogClaude === 'sin_mirar') fuenteLogClaude();
+  return _detalleLogClaude;
+}
+
+// Nuestra huella: la línea que el servidor escribe por stderr al quedar listo (server/index.js).
+// 🔴 29-sep-2026: con el Node que trae Claude (UtilityProcess), lo que el servidor escribe por
+// stderr NO va a «mcp-server-<nombre>.log» sino a main.log («[UtilityProcess stderr] …»), así que
+// reconocer el registro por esta huella (1.8.5) no casaba nunca. Se conserva por si Claude vuelve
+// a guardarla ahí, pero lo que reconoce un registro por su contenido es la ETIQUETA con la que
+// Claude firma cada línea sobre nuestro servidor: «[RobinSearch]».
 export const HUELLA_PROPIA = 'robin-search:';
 
-// ¿Este «mcp-server-*.log» es el nuestro aunque no lo diga su nombre? Se mira la cola, que es lo
-// único que leemos de un registro ajeno, y solo se busca NUESTRA huella: nada de ese fichero sale
-// del equipo si no es nuestro.
-function logLlevaNuestraHuella(ruta) {
+// ¿Habla esta línea de NUESTRO servidor? Claude pone el nombre del servidor entre corchetes.
+export function lineaEsNuestra(linea) {
+  for (const m of String(linea).matchAll(/\[([^\]\n]{1,80})\]/g)) {
+    if (/robinsearch/.test(m[1].toLowerCase().replace(/[^a-z0-9]/g, ''))) return true;
+  }
+  return false;
+}
+
+// ¿Este registro ajeno es, por lo que DICE, el nuestro? Se mira solo la cola, y solo se busca lo
+// nuestro: nada de un fichero ajeno sale del equipo.
+function colaEsNuestra(ruta) {
   try {
-    return colaDeFichero(ruta, 64 * 1024).includes(HUELLA_PROPIA);
+    const cola = colaDeFichero(ruta, 64 * 1024);
+    if (cola.includes(HUELLA_PROPIA)) return true;
+    return cola.split('\n').some((l) => /(Initializing server|Shutting down server|transport closed)/i.test(l) && lineaEsNuestra(l));
   } catch {
     return false;
   }
 }
 
-function rutaLogClaude() {
+// El registro de Claude sobre NUESTRO servidor: `{ ruta, soloNuestras }` o null. Por orden:
+//   1. «mcp-server-*.log» cuyo NOMBRE lo diga (el más reciente: al reinstalar quedan dos);
+//   2. «mcp-server-*.log» cuyo CONTENIDO lo diga (el nombre lo pone la instalación);
+//   3. «mcp.log», el registro común de todos los servidores, quedándose solo con NUESTRAS líneas
+//      (las lleva igual, con la misma hora UTC): si falta el fichero propio, está este.
+function fuenteLogClaude() {
   let mejor = null;
   let mt = 0;
-  let porContenido = false;
+  let estado = null;
   let vistoDir = false;
   let sinPermiso = false;
-  // Candidatos por CONTENIDO, por si ningún nombre casa: se resuelven solo entonces, para no
-  // leerle la cola a un registro ajeno sin necesidad.
+  const det = { carpetas_probadas: 0, carpetas_legibles: 0, logs_mcp_server: 0, mcp_log: false, main_log: false, reciente_min: null };
   const ajenos = [];
-  for (const d of dirsLogClaude()) {
+  const comunes = [];
+  const dirs = dirsLogClaude();
+  det.carpetas_probadas = dirs.length;
+  if (process.platform === 'win32') {
+    det.msix_familias = dirs.filter((d) => /[\\/]Packages[\\/]/i.test(d)).length;
+    det.claude_empaquetado = /[\\/]WindowsApps[\\/]/i.test(process.execPath || '');
+  }
+  let masReciente = 0;
+  for (const d of dirs) {
     let nombres;
     try {
       nombres = fs.readdirSync(d);
       vistoDir = true;
+      det.carpetas_legibles += 1;
     } catch (err) {
       // En el equipo del 22-sep el sistema devolvía EPERM hasta al listar carpetas. Si es eso,
       // se dice: «no lo encuentro» y «no me dejan mirar» piden cosas distintas a soporte.
@@ -530,7 +659,7 @@ function rutaLogClaude() {
       continue;
     }
     for (const n of nombres) {
-      if (!/^mcp-server-.*\.log$/i.test(n)) continue;
+      if (!/\.log$/i.test(n)) continue;
       const r = path.join(d, n);
       let st;
       try {
@@ -538,48 +667,63 @@ function rutaLogClaude() {
       } catch {
         continue; /* desaparecido entre el listado y el stat */
       }
+      if (st.mtimeMs > masReciente) masReciente = st.mtimeMs;
+      if (/^main\.log$/i.test(n)) det.main_log = true;
+      if (/^mcp\.log$/i.test(n)) {
+        det.mcp_log = true;
+        comunes.push([r, st.mtimeMs]);
+        continue;
+      }
+      if (!/^mcp-server-.*\.log$/i.test(n)) continue;
+      det.logs_mcp_server += 1;
       if (esLogNuestro(n)) {
         if (st.mtimeMs > mt) {
           mt = st.mtimeMs;
-          mejor = r;
+          mejor = { ruta: r, soloNuestras: false };
+          estado = 'leido';
         }
       } else ajenos.push([r, st.mtimeMs]);
     }
   }
+  if (masReciente) det.reciente_min = Math.max(0, Math.round((Date.now() - masReciente) / 60000));
   if (!mejor) {
-    // POR CONTENIDO (23-sep-2026). El nombre del fichero lo pone la instalación y en tres equipos
-    // Windows de la 1.8.4 no había ninguno que contuviera «robinsearch»: `sin_fichero`, y con él
-    // toda reapertura del servidor volvía a quedar como caída INCIERTA. Nuestro registro se
-    // reconoce ahora por la huella que el servidor deja en stderr al quedar listo.
     ajenos.sort((a, b) => b[1] - a[1]);
-    for (const [r, m] of ajenos) {
-      if (!logLlevaNuestraHuella(r)) continue;
-      mejor = r;
-      mt = m;
-      porContenido = true;
+    for (const [r] of ajenos) {
+      if (!colaEsNuestra(r)) continue;
+      mejor = { ruta: r, soloNuestras: false };
+      estado = 'leido_por_contenido';
       break;
     }
   }
-  _estadoLogClaude = mejor
-    ? porContenido
-      ? 'leido_por_contenido'
-      : 'leido'
-    : sinPermiso
-      ? 'sin_permiso'
-      : vistoDir
-        ? 'sin_fichero'
-        : 'sin_carpeta';
+  if (!mejor) {
+    comunes.sort((a, b) => b[1] - a[1]);
+    for (const [r] of comunes) {
+      if (!colaEsNuestra(r)) continue;
+      mejor = { ruta: r, soloNuestras: true };
+      estado = 'leido_mcp_log';
+      break;
+    }
+  }
+  _estadoLogClaude = estado || (sinPermiso ? 'sin_permiso' : vistoDir ? 'sin_fichero' : 'sin_carpeta');
+  _detalleLogClaude = det;
   return mejor;
+}
+
+// Las líneas del registro de Claude que hablan de nuestro servidor (todas, si el fichero es solo
+// nuestro; solo las etiquetadas, si es el común).
+function lineasFuente(fuente, bytes) {
+  const lineas = colaDeFichero(fuente.ruta, bytes).split('\n');
+  return fuente.soloNuestras ? lineas.filter(lineaEsNuestra) : lineas;
 }
 
 const RE_CLAUDE_UTIL =
   /(error|fatal|heap|memory|memoria|abort|signal|sigkill|sigabrt|exit|crash|disconnect|killed|terminat|transport closed|initializing server|shutting down|robin-search:)/i;
 
 function lineasDeClaude(lit) {
-  const mejor = rutaLogClaude();
-  if (!mejor) return [];
+  const fuente = fuenteLogClaude();
+  if (!fuente) return [];
   const out = [];
-  for (const bruto of colaDeFichero(mejor, 64 * 1024).split('\n')) {
+  for (const bruto of lineasFuente(fuente, 64 * 1024)) {
     const l = bruto.trim();
     // Los mensajes del protocolo pueden llevar lo que el abogado pidió: fuera, siempre.
     if (!l || /Message from (client|server)/i.test(l) || !RE_CLAUDE_UTIL.test(l)) continue;
@@ -617,10 +761,10 @@ export function claudeLaCerro(marca, lineas = null) {
   const inicio = Date.parse(marca?.inicio);
   if (!Number.isFinite(inicio)) return false;
   if (!lineas) {
-    const mejor = rutaLogClaude();
+    const fuente = fuenteLogClaude();
     // Sin registro de Claude no se sabe si la cerró él o se cayó: `null`, nunca «se cayó».
-    if (!mejor) return null;
-    lineas = colaDeFichero(mejor, 256 * 1024).split('\n');
+    if (!fuente) return null;
+    lineas = lineasFuente(fuente, 256 * 1024);
   }
   const eventos = [];
   for (const bruto of lineas) {
@@ -636,13 +780,22 @@ export function claudeLaCerro(marca, lineas = null) {
   // el mismo milisegundo salen cambiadas («Server transport closed» antes que el «Shutting down»
   // que lo provocó). Leído en bruto, un cierre ordenado pasaba por muerte del proceso.
   eventos.sort((a, b) => a.t - b.t);
-  // El «Initializing server» más cercano ANTES del arranque (el proceso nace tras él), dentro de 60 s
-  // (en Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan segundos).
+  // El «Initializing server» que lanzó el proceso es el más cercano ANTES de su arranque, dentro de
+  // 60 s (en Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan
+  // segundos). 🔴 29-sep-2026: se admitía también uno hasta 1 s DESPUÉS del arranque y, al
+  // recorrerlos todos, ganaba el último: Claude cerró un proceso a los 0,3 s de nacer y lo relanzó
+  // 23 ms después; el «Initializing» del RELANZAMIENTO caía dentro de ese segundo, se tomaba por el
+  // del proceso muerto, detrás no había cierre y el cierre ordenado pasaba por CAÍDA. Uno posterior
+  // al arranque solo vale si no hay ninguno anterior (desfase de reloj de milisegundos).
   let lanzado = -1;
+  let posterior = -1;
   for (let i = 0; i < eventos.length; i++) {
     const e = eventos[i];
-    if (e.tipo === 'inicio' && e.t <= inicio + 1000 && inicio - e.t <= 60_000) lanzado = i;
+    if (e.tipo !== 'inicio') continue;
+    if (e.t <= inicio && inicio - e.t <= 60_000) lanzado = i;
+    else if (e.t > inicio && e.t <= inicio + 1000 && posterior < 0) posterior = i;
   }
+  if (lanzado < 0) lanzado = posterior;
   // El registro existe y no menciona el arranque de esa ejecución: no la lanzó ESTE Claude (la
   // lanzó la app, el CLI o una prueba), así que Claude no pudo cerrarla.
   if (lanzado < 0) return false;

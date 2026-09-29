@@ -274,6 +274,12 @@ function atender(socket) {
 // no es motivo para fallar.
 export async function iniciarControl() {
   const ruta = rutaCanal();
+  // Ya lo sirve ESTE proceso. Al tomar el relevo del índice se vuelve a llamar (por si el canal
+  // lo servía la instancia muerta), y hasta la 1.9.0 abría un SEGUNDO servidor sobre el nombre que
+  // él mismo ocupaba: en Windows «listen EADDRINUSE» dos veces por relevo (29-sep-2026), en macOS
+  // «ya servido por otra instancia» sobre sí mismo; y el fallo dejaba `servidor` a null con el
+  // canal bueno aún abierto, sin nadie que lo cerrara al salir.
+  if (servidor?.listening) return ruta;
   try {
     if (process.platform !== 'win32' && fs.existsSync(ruta)) {
       // ¿Socket huérfano de un proceso muerto? Se comprueba conectando.
@@ -291,27 +297,39 @@ export async function iniciarControl() {
       try { fs.unlinkSync(ruta); } catch { /* seguimos */ }
     }
 
-    servidor = net.createServer(atender);
-    servidor.on('error', (err) => {
-      log.warn('Canal de control no disponible', { err: String(err) });
-      servidor = null;
-    });
+    const nuevo = net.createServer(atender);
     // Con el 'error' del listen atendido: sin él, un EADDRINUSE (el nombre lo ocupa otra
     // instancia que arrancó a la vez) dejaba esta promesa colgada para siempre.
-    await new Promise((resolve, reject) => {
-      const alFallar = (err) => reject(err);
-      servidor.once('error', alFallar);
-      servidor.listen(ruta, () => {
-        servidor.off('error', alFallar);
-        resolve();
+    try {
+      await new Promise((resolve, reject) => {
+        const alFallar = (err) => reject(err);
+        nuevo.once('error', alFallar);
+        nuevo.listen(ruta, () => {
+          nuevo.off('error', alFallar);
+          resolve();
+        });
       });
+    } catch (err) {
+      try { nuevo.close(); } catch { /* nada */ }
+      // En Windows la tubería con nombre no deja rastro en disco que comprobar antes: que la ocupe
+      // otra instancia VIVA es lo normal (Claude arranca dos) y no un fallo.
+      if (err?.code === 'EADDRINUSE') {
+        log.info('Canal de control ya servido por otra instancia', { ruta });
+        return null;
+      }
+      throw err;
+    }
+    servidor = nuevo;
+    nuevo.on('error', (err) => {
+      log.warn('Canal de control no disponible', { err: String(err) });
+      if (servidor === nuevo) servidor = null;
     });
     if (process.platform !== 'win32') {
       // Solo el dueño. Sin esto, otro usuario del mismo equipo podría ver los
       // nombres de fichero de los expedientes.
       try { fs.chmodSync(ruta, 0o600); } catch { /* best-effort */ }
     }
-    if (servidor.unref) servidor.unref();  // nunca debe impedir que el proceso cierre
+    if (nuevo.unref) nuevo.unref();        // nunca debe impedir que el proceso cierre
     alCambiar(anunciar);                   // cada cambio de estado llega a la app
     alTerminarIndexado(drenarCola);        // lo encolado sale cuando acaba el indexado en curso
     log.info('Canal de control abierto', { ruta });

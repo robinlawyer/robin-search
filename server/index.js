@@ -131,6 +131,9 @@ async function main() {
   // reapertura volvía a quedar como caída INCIERTA. Con esta línea nuestro registro
   // se reconoce por lo que DICE y no por cómo se llame el fichero. stderr es seguro
   // en MCP stdio: stdout está reservado al protocolo JSON-RPC.
+  // 🔴 29-sep-2026: con el Node que trae Claude (UtilityProcess) stderr acaba en main.log,
+  // no en «mcp-server-<nombre>.log»; el registro se reconoce sobre todo por la ETIQUETA
+  // con que Claude firma nuestras líneas (diagnostico.js, fuenteLogClaude).
   process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde

@@ -249,6 +249,10 @@ export async function terminateOcr() {
 // Devuelve [{ page: 1, text }] (una imagen = una "página") o [] si no hay texto legible.
 export async function ocrImage(filePath) {
   comprobarEspacio();
+  // La misma barrera de memoria que el PDF escaneado. Hasta la 1.9.0 la imagen suelta (y la de
+  // dentro de un .zip) iba al motor de OCR sin mirar nada: en dos equipos Windows de 16 GB el
+  // proceso murió en plena tanda de fotos con 400-700 MB libres (23 y 28-sep-2026).
+  if (memoriaFiable() && ramLibreMb() < MINIMO_LIBRE_RAM_MB) throw errorSinMemoria();
   const ext = extensionDe(filePath);
   let input;
   // Por contenido, no solo por extensión: una foto de iPhone en HEIC llamada «.jpg» es corriente
@@ -261,11 +265,39 @@ export async function ocrImage(filePath) {
   } else {
     input = fs.readFileSync(filePath);
   }
-  const {
-    data: { text },
-  } = await reconocer(input);
+  let text;
+  try {
+    ({
+      data: { text },
+    } = await reconocer(input));
+  } finally {
+    input = null;
+    await soltarMotorSiFaltaMemoria();
+  }
   const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
   return clean ? [{ page: 1, text: clean }] : [];
+}
+
+function errorSinMemoria() {
+  return Object.assign(
+    new Error(
+      `No hay memoria suficiente para el OCR de este documento (${ramLibreMb()} MB libres). Se ` +
+        'reintentará solo cuando el equipo tenga más memoria; cerrar alguna aplicación pesada ayuda.',
+    ),
+    { code: 'ROBIN_FICHERO_SIN_MEMORIA' },
+  );
+}
+
+// La memoria de un motor WASM crece con la imagen más grande que ha leído y NO se devuelve nunca
+// mientras el motor viva: tras una foto de 48 Mpx el trabajador de OCR se queda con ella para
+// siempre, sumada a la del modelo de embedding. Con el equipo justo de memoria, se cierra el
+// motor al acabar cada documento y el siguiente arranca uno limpio (medio segundo).
+async function soltarMotorSiFaltaMemoria() {
+  if (!memoriaFiable() || !_workerPromise) return;
+  const libre = ramLibreMb();
+  if (libre >= RAM_PARA_DPI_PLENO_MB) return;
+  log.info('Poca memoria libre: se cierra el motor de OCR para devolverla', { libre_mb: libre });
+  await terminateOcr();
 }
 
 // Rasteriza y aplica OCR a un PDF escaneado. Devuelve [{ page, text }] igual que el
@@ -283,15 +315,7 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
     await getWorker(); // si el OCR no arranca, falla el fichero antes de rasterizar nada
     comprobarEspacio(); // ni una página si no hay sitio para los temporales
     const dpiReal = dpiSegunMemoria(dpi);
-    if (dpiReal === null) {
-      throw Object.assign(
-        new Error(
-          `No hay memoria suficiente para leer este PDF escaneado (${ramLibreMb()} MB libres). Se ` +
-            'reintentará solo cuando el equipo tenga más memoria; cerrar alguna aplicación pesada ayuda.',
-        ),
-        { code: 'ROBIN_FICHERO_SIN_MEMORIA' },
-      );
-    }
+    if (dpiReal === null) throw errorSinMemoria();
     const scale = mupdf.Matrix.scale(dpiReal / 72, dpiReal / 72);
     const inicio = Date.now();
 
@@ -341,6 +365,7 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
   } finally {
     // Sin esto, cada PDF escaneado dejaba su documento entero reservado en la memoria del WASM.
     doc.destroy?.();
+    await soltarMotorSiFaltaMemoria();
   }
   return pages;
 }

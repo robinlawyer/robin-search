@@ -673,6 +673,8 @@ async function assembleEmail(header, body, attachments, opts) {
       try {
         inner = await extractBufferByName(att.filename, att.content, { ...opts, depth: depth + 1 });
       } catch (err) {
+        // Sin memoria o sin disco hoy: el correo entero se reintenta, no se indexa sin su adjunto.
+        if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
         log.warn('Adjunto de correo ilegible (el correo sí se indexa)', { ext, err: String(err?.message ?? err) });
         continue;
       }
@@ -697,6 +699,9 @@ export async function extractImage(filePath) {
   try {
     pages = await ocrImage(filePath);
   } catch (err) {
+    // Igual que en el PDF escaneado: sin memoria o sin disco HOY no es «imagen ilegible para
+    // siempre»; sube para que se reintente en la pasada siguiente.
+    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
     log.error('OCR de imagen falló; se marca sin OCR', { fichero: path.basename(filePath), err: String(err) });
     return { pages: [], sinOcr: true, numPages: 1 };
   }
@@ -771,6 +776,9 @@ export async function extractArchive(filePath, opts) {
         for (const pg of inner.pages) pages.push({ page: pg.page, text: pg.text });
       }
     } catch (err) {
+      // Falta de memoria o de disco: el contenedor ENTERO se deja para la pasada siguiente. Antes
+      // se saltaba ese miembro y el .zip quedaba indexado sin él, para siempre.
+      if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
       log.warn('Miembro del contenedor ilegible', { ext: path.extname(name).toLowerCase(), err: String(err?.message ?? err) });
     }
   };
@@ -780,6 +788,7 @@ export async function extractArchive(filePath, opts) {
     else if (ext === '.rar') await recorrerRar(filePath, admitir, alMiembro, descartes);
     else if (ext === '.7z') await recorrer7z(filePath, admitir, alMiembro, descartes);
   } catch (err) {
+    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
     log.error('No se pudo abrir el contenedor', { fichero: path.basename(filePath), err: String(err) });
     return { pages, sinOcr: pages.length === 0, numPages: null };
   }

@@ -76,8 +76,14 @@ async function atenderCaidaAnterior() {
       ext: caida.ext ?? null,
       bytes: caida.bytes ?? null,
       caidas_seguidas: caida.caidasSeguidas,
+      // Cuándo dejó de latir y con cuánta memoria (solo números): lo que separa una muerte por
+      // memoria de un cierre de Claude cuando no hay registro de Claude que lo diga.
+      ...diagnostico.datosDeMarca(caida),
     },
   );
+  // Sin registro de Claude, qué se vio al buscarlo (cuántas carpetas, cuántos registros de
+  // servidores, si está el común): para localizar dónde lo guarda Claude en ese equipo.
+  if (caida.incierta) log.warn('Registro de Claude no encontrado', diagnostico.detalleLogClaude() || {});
   // Incierta: no hay registro de Claude en este equipo, así que no se sabe si se cayó o si
   // Claude cerró el servidor para reabrirlo. Apartar el documento que estaba leyendo (y con dos
   // «caídas» dejarlo FUERA del índice) es demasiado caro para una sospecha sin pruebas.
@@ -134,7 +140,10 @@ async function cotejarRegistro() {
 // Errores de disco pasajeros o ajenos al contenido del índice: el antivirus o la otra instancia
 // tienen un fichero abierto, disco lleno, demasiados ficheros abiertos. Borrar el índice por uno
 // de estos es perder horas de indexado por un problema que se arregla solo.
-const PASAJEROS = new Set(['EPERM', 'EBUSY', 'EACCES', 'ENOSPC', 'EMFILE', 'ENFILE', 'EIO', 'EAGAIN']);
+// ENOENT también (29-sep-2026): un fichero que desaparece MIENTRAS se abre el índice es otra
+// instancia (o una versión antigua aún viva) moviendo el suyo, no un índice roto. Con él fuera de
+// esta lista, el Mac de Eduardo daba el índice por irrecuperable y lo BORRABA para rehacerlo.
+const PASAJEROS = new Set(['EPERM', 'EBUSY', 'EACCES', 'ENOSPC', 'EMFILE', 'ENFILE', 'EIO', 'EAGAIN', 'ENOENT']);
 
 // Caídas SEGUIDAS abriendo el índice antes de rehacerlo. Claude mata el proceso al reiniciar (en
 // Windows sin aviso) y una marca de fase no distingue eso de un índice que tumba el proceso: con
@@ -166,6 +175,19 @@ async function abrirIndice(escribo) {
       // Abrió: las caídas anteriores ya no cuentan para rehacerlo (antes solo se ponían a cero al
       // terminar el indexado inicial, que en un expediente grande puede no llegar nunca).
       diagnostico.indiceAbierto();
+      if (r.migracion?.repetida) {
+        log.error('Una versión antigua de RobinSearch (anterior a la 1.4.5) sigue viva y escribiendo el índice antiguo', {
+          documentos: r.migracion.documentos ?? null,
+        });
+        diagnostico
+          .informar('version_antigua_viva', {
+            fase: 'migrando_indice',
+            causa:
+              'el índice antiguo (anterior a la 1.4.5) ha vuelto a aparecer después de haberse pasado al formato actual: ' +
+              'una versión antigua de RobinSearch sigue instalada y en marcha en este equipo (otra extensión, la CLI o una tarea programada)',
+          })
+          .catch(() => {});
+      }
       if (escribo) {
         // Migración a aislamiento por expediente (1.3.0) de las entradas del registro antiguas.
         registry.backfillExpediente();
@@ -336,6 +358,14 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
             .catch(() => {});
         }
       } catch (err) {
+        if (err?.code === 'ROBIN_OTRA_INSTANCIA') {
+          // Otra instancia se ha quedado con el índice mientras esta lo abría: no es un fallo ni
+          // un error que enseñar en `estado_servidor` (hasta la 1.9.0 salía como «Fallo en el
+          // indexado inicial» y dejaba el servidor en error). Esta pasa a solo buscar.
+          log.info('El índice lo ha tomado otra instancia mientras esta lo abría: esta solo busca');
+          if (watch) esperarRelevo();
+          return;
+        }
         log.error('Fallo en el indexado inicial', { err: String(err) });
         setError(err);
         // El disco lleno se avisa aparte: no es un fichero raro, es el equipo, y es la causa de

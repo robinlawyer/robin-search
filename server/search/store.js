@@ -785,12 +785,45 @@ export async function abrir({ migrar = true, derivarExpediente = null, alMigrar 
   const viejo = rutaVectraAntigua();
   if (migrar && fs.existsSync(viejo)) {
     alMigrar?.();
-    migracion = await conCerrojo(() => migrarDesdeVectra(viejo, derivarExpediente));
+    // El paso a este formato es de UNA vez. Si el index.json antiguo vuelve a aparecer después,
+    // es que una versión anterior a la 1.4.5 SIGUE VIVA en el equipo y escribiendo en él (27-sep-
+    // 2026: una 1.4.0 lanzada cada noche y desde Claude en el Mac de Eduardo, con la 1.8.3
+    // «pasando el índice (una sola vez)» en cada arranque). Se sigue pasando —lo que escribió es
+    // del abogado— pero se dice, para que alguien la quite.
+    const repetida = fs.existsSync(rutaMigrado());
+    try {
+      migracion = await conCerrojo(() => migrarDesdeVectra(viejo, derivarExpediente));
+      migracion.repetida = repetida;
+      try {
+        escribirAtomico(rutaMigrado(), JSON.stringify({ t: new Date().toISOString() }));
+      } catch {
+        /* sin testigo solo se pierde el aviso de la próxima vez */
+      }
+    } catch (err) {
+      // El index.json antiguo desapareció a mitad (lo ha pasado y borrado otra instancia, o la
+      // versión antigua lo está reescribiendo). Eso NO es un índice dañado: hasta la 1.9.0 este
+      // ENOENT subía hasta abrirIndice como «índice irrecuperable» y se BORRABA el índice entero.
+      if (err?.code !== 'ENOENT') throw err;
+      log.warn('El índice antiguo desapareció mientras se pasaba al formato nuevo: se sigue con el actual', {
+        code: 'ENOENT',
+      });
+      migracion = { desaparecido: true, repetida };
+    }
   }
   await escanearCediendo();
-  if (migrar) limpiarRestos();
+  if (migrar) {
+    // Quitar restos cambia la fecha de la carpeta y, sin esto, la PRIMERA consulta del catálogo
+    // (el cotejo con el registro, justo después) lo releía ENTERO de forma síncrona: en Windows,
+    // con 40.000 documentos y el antivirus, minutos con el proceso parado — sin renovar el
+    // cerrojo de escritor, que otra instancia daba por caducado y le quitaba (24 y 29-sep-2026).
+    // Los restos no son documentos del catálogo: la foto sigue valiendo.
+    if (limpiarRestos() > 0) _dirMtime = mtimeDir();
+  }
   return { ...resumen(), migracion };
 }
+
+// Testigo de que el índice antiguo (vectra) ya se pasó una vez a este formato.
+const rutaMigrado = () => path.join(dirIndice(), 'migrado-desde-vectra.json');
 
 // Rehacer desde cero (índice irrecuperable). Los documentos originales siguen en su carpeta: se
 // vuelven a indexar desde ellos.
