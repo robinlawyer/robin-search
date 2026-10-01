@@ -165,19 +165,49 @@ export async function extractPdf(filePath, { maxPages }) {
   const pages = [];
   let totalChars = 0;
 
+  // 🔴 29 y 30-sep-2026: «Page dictionary kid reference points to wrong type of object.» Un PDF
+  // cuyo árbol de páginas tiene una rama que no apunta a una página abre bien, pero pdfjs no pasa
+  // de esa rama y la excepción de UNA página tumbaba el documento entero (y salía como fallo
+  // nuestro en cada pasada). Ahora una página que no se deja leer no para las demás, y si hay
+  // alguna así, mupdf —que rehace el árbol recorriendo los objetos, como Acrobat— lee el
+  // documento y se queda la lectura con más texto.
+  let paginasRotas = 0;
+  let errorDePagina = null;
   for (let p = 1; p <= limit; p++) {
-    const page = await pdf.getPage(p);
-    const content = await page.getTextContent();
-    const text = content.items
-      .map((it) => (typeof it.str === 'string' ? it.str : ''))
-      .join(' ')
-      .replace(/[ \t]+/g, ' ')
-      .trim();
-    totalChars += text.length;
-    if (text) pages.push({ page: p, text });
-    page.cleanup();
+    let page = null;
+    try {
+      page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      const text = content.items
+        .map((it) => (typeof it.str === 'string' ? it.str : ''))
+        .join(' ')
+        .replace(/[ \t]+/g, ' ')
+        .trim();
+      totalChars += text.length;
+      if (text) pages.push({ page: p, text });
+    } catch (err) {
+      paginasRotas += 1;
+      errorDePagina ??= err;
+    } finally {
+      try { page?.cleanup(); } catch { /* nada */ }
+    }
   }
   await pdf.destroy();
+
+  if (paginasRotas > 0) {
+    const rescatado = await rescatarPdfConMupdf(filePath, { maxPages });
+    const charsRescatados = rescatado ? rescatado.pages.reduce((s, x) => s + x.text.length, 0) : 0;
+    log.info('PDF con páginas que pdfjs no puede leer: se lee con mupdf', {
+      paginas_rotas: paginasRotas,
+      paginas: limit,
+      rescatado: Boolean(rescatado),
+    });
+    if (rescatado && charsRescatados >= totalChars && charsRescatados / limit >= MIN_CHARS_PER_PAGE) return rescatado;
+    // Ni pdfjs ni mupdf sacan nada y no es un escaneado que el OCR (mupdf) pueda leer: roto de verdad.
+    if (!pages.length && paginasRotas === limit && !rescatado && !config.ocrEnabled) {
+      throw errorDeFichero('PDF_ROTO', `El PDF está dañado: no se puede leer (${String(errorDePagina?.message ?? errorDePagina).slice(0, 80)})`);
+    }
+  }
 
   const escaneado = limit > 0 && totalChars / limit < MIN_CHARS_PER_PAGE;
   if (!escaneado) return { pages, sinOcr: false, numPages, viaOcr: false };

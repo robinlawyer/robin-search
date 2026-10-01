@@ -555,6 +555,9 @@ function dirsLogClaude() {
     const appdata = process.env.APPDATA || path.join(home, 'AppData', 'Roaming');
     const local = process.env.LOCALAPPDATA || path.join(home, 'AppData', 'Local');
     dirs.push(path.join(appdata, 'Claude', 'logs'));
+    // Tres equipos Windows con `sin_fichero` (24-sep a 1-oct-2026): por si esa instalación los
+    // deja en Local y no en Roaming. Mirar una carpeta que no existe no cuesta nada.
+    dirs.push(path.join(local, 'Claude', 'logs'));
     // Claude instalado desde la Tienda (MSIX) escribe bajo `Packages\<familia>\LocalCache`. La
     // familia lleva un sufijo que cambia con la firma del paquete, así que NO se puede escribir a
     // mano: se buscan las carpetas que empiecen por «Claude» o acaben en «.Claude_…».
@@ -624,20 +627,29 @@ function colaEsNuestra(ruta) {
   }
 }
 
-// El registro de Claude sobre NUESTRO servidor: `{ ruta, soloNuestras }` o null. Por orden:
+// El registro de Claude sobre NUESTRO servidor: `{ ruta, soloNuestras, main, mtimeMs }` o null.
+// Por orden:
 //   1. «mcp-server-*.log» cuyo NOMBRE lo diga (el más reciente: al reinstalar quedan dos);
 //   2. «mcp-server-*.log» cuyo CONTENIDO lo diga (el nombre lo pone la instalación);
 //   3. «mcp.log», el registro común de todos los servidores, quedándose solo con NUESTRAS líneas
 //      (las lleva igual, con la misma hora UTC): si falta el fichero propio, está este.
+// Y además, `main`: el «main.log» de Claude si habla de nuestro servidor (ver eventoDeLinea).
+// 🔴 2-oct-2026: Claude Desktop lanza el servidor por DOS caminos. El de los chats deja su
+// «Initializing server» / «Shutting down server» en el registro del servidor; el de las sesiones
+// de Cowork y Code (LocalMcpServerManager, al abrir la aplicación) SOLO escribe en main.log. Un
+// proceso lanzado por el segundo y cerrado por Claude no aparecía en ningún registro que
+// leyéramos, y se daba por CAÍDA (no incierta: caída, con documento apartado) — Mac de Eduardo,
+// 1-oct, «se cortó sin cerrar cargando el modelo».
 function fuenteLogClaude() {
   let mejor = null;
   let mt = 0;
   let estado = null;
   let vistoDir = false;
   let sinPermiso = false;
-  const det = { carpetas_probadas: 0, carpetas_legibles: 0, logs_mcp_server: 0, mcp_log: false, main_log: false, reciente_min: null };
+  const det = { carpetas_probadas: 0, carpetas_legibles: 0, logs_mcp_server: 0, mcp_log: false, main_log: false, main_log_nuestro: false, reciente_min: null };
   const ajenos = [];
   const comunes = [];
+  const principales = [];
   const dirs = dirsLogClaude();
   det.carpetas_probadas = dirs.length;
   if (process.platform === 'win32') {
@@ -668,7 +680,11 @@ function fuenteLogClaude() {
         continue; /* desaparecido entre el listado y el stat */
       }
       if (st.mtimeMs > masReciente) masReciente = st.mtimeMs;
-      if (/^main\.log$/i.test(n)) det.main_log = true;
+      if (/^main\.log$/i.test(n)) {
+        det.main_log = true;
+        principales.push([r, st.mtimeMs]);
+        continue;
+      }
       if (/^mcp\.log$/i.test(n)) {
         det.mcp_log = true;
         comunes.push([r, st.mtimeMs]);
@@ -679,7 +695,7 @@ function fuenteLogClaude() {
       if (esLogNuestro(n)) {
         if (st.mtimeMs > mt) {
           mt = st.mtimeMs;
-          mejor = { ruta: r, soloNuestras: false };
+          mejor = { ruta: r, soloNuestras: false, mtimeMs: st.mtimeMs };
           estado = 'leido';
         }
       } else ajenos.push([r, st.mtimeMs]);
@@ -688,32 +704,64 @@ function fuenteLogClaude() {
   if (masReciente) det.reciente_min = Math.max(0, Math.round((Date.now() - masReciente) / 60000));
   if (!mejor) {
     ajenos.sort((a, b) => b[1] - a[1]);
-    for (const [r] of ajenos) {
+    for (const [r, m] of ajenos) {
       if (!colaEsNuestra(r)) continue;
-      mejor = { ruta: r, soloNuestras: false };
+      mejor = { ruta: r, soloNuestras: false, mtimeMs: m };
       estado = 'leido_por_contenido';
       break;
     }
   }
   if (!mejor) {
     comunes.sort((a, b) => b[1] - a[1]);
-    for (const [r] of comunes) {
+    for (const [r, m] of comunes) {
       if (!colaEsNuestra(r)) continue;
-      mejor = { ruta: r, soloNuestras: true };
+      mejor = { ruta: r, soloNuestras: true, mtimeMs: m };
       estado = 'leido_mcp_log';
       break;
     }
+  }
+  // main.log: el más reciente que hable de nuestro servidor (lanzamientos y cierres).
+  principales.sort((a, b) => b[1] - a[1]);
+  for (const [r, m] of principales) {
+    if (!colaDeFichero(r, BYTES_MAIN_LOG).split('\n').some((l) => eventoDeLinea(l, { soloNuestras: true }))) continue;
+    det.main_log_nuestro = true;
+    if (mejor) {
+      mejor.main = r;
+      mejor.mtimeMs = Math.max(mejor.mtimeMs || 0, m);
+    } else {
+      mejor = { ruta: null, soloNuestras: true, main: r, mtimeMs: m };
+      estado = 'leido_main_log';
+    }
+    break;
   }
   _estadoLogClaude = estado || (sinPermiso ? 'sin_permiso' : vistoDir ? 'sin_fichero' : 'sin_carpeta');
   _detalleLogClaude = det;
   return mejor;
 }
 
+// main.log crece deprisa (todo Claude escribe ahí): se lee más cola que de los otros.
+const BYTES_MAIN_LOG = 1024 * 1024;
+
 // Las líneas del registro de Claude que hablan de nuestro servidor (todas, si el fichero es solo
 // nuestro; solo las etiquetadas, si es el común).
 function lineasFuente(fuente, bytes) {
+  if (!fuente.ruta) return [];
   const lineas = colaDeFichero(fuente.ruta, bytes).split('\n');
   return fuente.soloNuestras ? lineas.filter(lineaEsNuestra) : lineas;
+}
+
+// Las líneas de main.log que son lanzamientos o cierres de NUESTRO servidor. Con un registro de
+// servidor delante, de main.log solo hace falta el camino que ese registro no ve (Cowork/Code);
+// sin él, los dos.
+function lineasMain(fuente) {
+  if (!fuente.main) return [];
+  const soloLocal = Boolean(fuente.ruta);
+  return colaDeFichero(fuente.main, BYTES_MAIN_LOG)
+    .split('\n')
+    .filter((l) => {
+      const e = eventoDeLinea(l, { soloNuestras: true });
+      return e && (!soloLocal || e.canal === 'local');
+    });
 }
 
 const RE_CLAUDE_UTIL =
@@ -742,7 +790,61 @@ function lineasDeClaude(lit) {
     }
     out.push({ t, level: 'claude', msg: limpiarTexto(resto, lit) });
   }
+  // De main.log, solo los lanzamientos y cierres de nuestro servidor, con la hora pasada a UTC.
+  for (const bruto of lineasMain(fuente).slice(-MAX_LINEAS_CLAUDE)) {
+    const h = horaDeLinea(bruto.trim());
+    if (!h) continue;
+    out.push({ t: new Date(h.t).toISOString(), level: 'claude', msg: limpiarTexto(`[main] ${h.resto}`, lit) });
+  }
   return out.slice(-MAX_LINEAS_CLAUDE);
+}
+
+// Hora de una línea de un registro de Claude. Los de servidor (mcp-server-*.log, mcp.log) van en
+// UTC con milisegundos («2026-10-01T16:41:01.893Z …»); main.log va en hora LOCAL y al segundo
+// («2026-10-01 18:40:49 [info] …»).
+export function horaDeLinea(linea) {
+  let m = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)\s+(.*)$/.exec(linea);
+  if (m) {
+    const t = Date.parse(m[1]);
+    return Number.isFinite(t) ? { t, resto: m[2] } : null;
+  }
+  m = /^\[?(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?)\]?\s+(.*)$/.exec(linea);
+  if (!m) return null;
+  // Sin zona, Date.parse de «AAAA-MM-DDTHH:MM:SS» es hora LOCAL: la del equipo, como la escribe Claude.
+  const t = Date.parse(`${m[1]}T${m[2]}`);
+  return Number.isFinite(t) ? { t, resto: m[3] } : null;
+}
+
+const esNombreNuestro = (s) => /robinsearch/.test(String(s).toLowerCase().replace(/[^a-z0-9]/g, ''));
+
+// Qué cuenta una línea de Claude del ciclo de vida de NUESTRO servidor: `{ t, tipo, canal }` o null.
+//   tipo:  inicio · cierre (lo pidió Claude) · muerte (el proceso terminó solo) · sondeo
+//   canal: 'chat' (el lanzador de las conversaciones) o 'local' (LocalMcpServerManager, el de las
+//          sesiones de Cowork y Code). Un cierre solo vale para un proceso de SU canal.
+// `soloNuestras`: el registro es común a varios servidores y la línea tiene que nombrar el nuestro.
+export function eventoDeLinea(linea, { soloNuestras = false } = {}) {
+  const h = horaDeLinea(String(linea).trim());
+  if (!h) return null;
+  const { t, resto } = h;
+  const ev = (tipo, canal, nombre) => (nombre === undefined || esNombreNuestro(nombre) ? { t, tipo, canal } : null);
+  let m;
+  // main.log
+  if ((m = /\[LocalMcpServerManager\] Connecting to (.+?)\s*$/.exec(resto))) return ev('inicio', 'local', m[1]);
+  if ((m = /\[LocalMcpServerManager\] Closing (.+?)\s*$/.exec(resto))) return ev('cierre', 'local', m[1]);
+  if ((m = /\[LocalMcpServerManager\] (.+?) connected after closeAll; reaping/.exec(resto))) return ev('cierre', 'local', m[1]);
+  if ((m = /\[LocalMcpServerManager\] (.+?) disconnected\s*$/.exec(resto))) return ev('muerte', 'local', m[1]);
+  if ((m = /Launching MCP Server: (.+?)\s*$/.exec(resto))) return ev('inicio', 'chat', m[1]);
+  if ((m = /Shutting down MCP [Ss]erver:? (.+?)(?: for extension .*)?\s*$/.exec(resto))) return ev('cierre', 'chat', m[1]);
+  // Registros de servidor (mcp-server-*.log; mcp.log con la etiqueta del servidor)
+  if (soloNuestras && !lineaEsNuestra(resto)) return null;
+  if (/Initializing server/i.test(resto)) return ev('inicio', 'chat');
+  if (/Shutting down server|intentional shutdown/i.test(resto)) return ev('cierre', 'chat');
+  if (/Server transport closed/i.test(resto)) return ev('muerte', 'chat');
+  // Al lanzar, Claude arranca un proceso de SONDEO; si no completa el intercambio («legacy»), lo
+  // descarta y lanza otro. El descartado no deja «Shutting down» (Mac de Alonso, 1-oct-2026:
+  // «Initializing» 16:41:01.89, proceso, «Era probe verdict: legacy» 16:41:06.15, otro proceso).
+  if (/Era probe verdict: legacy/i.test(resto)) return ev('sondeo', 'chat');
+  return null;
 }
 
 // ¿Terminó la ejecución que dejó la marca porque Claude la cerró? En el registro de Claude, esa
@@ -755,8 +857,8 @@ function lineasDeClaude(lit) {
 // «caída» y ponía bajo sospecha un fichero sano (aviso técnico del 16-sep, 1.6.0: 94 ms entre el cierre
 // pedido por Claude y el fin del proceso).
 //
-// Sin el arranque del proceso en la marca (marcas de antes de la 1.6.1) o sin un «Initializing
-// server» que case con él (lanzado por la app, la CLI, una prueba), se sigue contando como caída.
+// Sin el arranque del proceso en la marca (marcas de antes de la 1.6.1) o sin un lanzamiento que
+// case con él (lanzado por la app, la CLI, una prueba), se sigue contando como caída.
 export function claudeLaCerro(marca, lineas = null) {
   const inicio = Date.parse(marca?.inicio);
   if (!Number.isFinite(inicio)) return false;
@@ -764,29 +866,28 @@ export function claudeLaCerro(marca, lineas = null) {
     const fuente = fuenteLogClaude();
     // Sin registro de Claude no se sabe si la cerró él o se cayó: `null`, nunca «se cayó».
     if (!fuente) return null;
-    lineas = lineasFuente(fuente, 256 * 1024);
+    // Un registro que Claude no ha tocado desde ANTES de lanzar ese proceso (el lanzamiento se
+    // anota como mucho un minuto antes de que arranque) no puede contar cómo terminó: es de otra
+    // instalación o de otra época. Su silencio no prueba nada.
+    if (Number.isFinite(fuente.mtimeMs) && fuente.mtimeMs < inicio - 60_000) return null;
+    lineas = [...lineasFuente(fuente, 256 * 1024), ...lineasMain(fuente)];
   }
   const eventos = [];
-  for (const bruto of lineas) {
-    const m = /^(\d{4}-\d{2}-\d{2}T\S+Z)\s+(.*)$/.exec(bruto.trim());
-    if (!m) continue;
-    const t = Date.parse(m[1]);
-    if (!Number.isFinite(t)) continue;
-    if (/Initializing server/i.test(m[2])) eventos.push({ t, tipo: 'inicio' });
-    else if (/Shutting down server|intentional shutdown/i.test(m[2])) eventos.push({ t, tipo: 'cierre' });
-    else if (/Server transport closed/i.test(m[2])) eventos.push({ t, tipo: 'muerte' });
+  for (const l of lineas) {
+    const e = eventoDeLinea(l);
+    if (e) eventos.push(e);
   }
   // Por tiempo, no por orden en el fichero: Claude escribe estas líneas desde varios sitios y en
   // el mismo milisegundo salen cambiadas («Server transport closed» antes que el «Shutting down»
   // que lo provocó). Leído en bruto, un cierre ordenado pasaba por muerte del proceso.
   eventos.sort((a, b) => a.t - b.t);
-  // El «Initializing server» que lanzó el proceso es el más cercano ANTES de su arranque, dentro de
-  // 60 s (en Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan
-  // segundos). 🔴 29-sep-2026: se admitía también uno hasta 1 s DESPUÉS del arranque y, al
-  // recorrerlos todos, ganaba el último: Claude cerró un proceso a los 0,3 s de nacer y lo relanzó
-  // 23 ms después; el «Initializing» del RELANZAMIENTO caía dentro de ese segundo, se tomaba por el
-  // del proceso muerto, detrás no había cierre y el cierre ordenado pasaba por CAÍDA. Uno posterior
-  // al arranque solo vale si no hay ninguno anterior (desfase de reloj de milisegundos).
+  // El lanzamiento del proceso es el más cercano ANTES de su arranque, dentro de 60 s (en
+  // Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan segundos).
+  // 🔴 29-sep-2026: se admitía también uno hasta 1 s DESPUÉS del arranque y, al recorrerlos todos,
+  // ganaba el último: Claude cerró un proceso a los 0,3 s de nacer y lo relanzó 23 ms después; el
+  // «Initializing» del RELANZAMIENTO caía dentro de ese segundo, se tomaba por el del proceso
+  // muerto, detrás no había cierre y el cierre ordenado pasaba por CAÍDA. Uno posterior al
+  // arranque solo vale si no hay ninguno anterior (desfase de reloj de milisegundos).
   let lanzado = -1;
   let posterior = -1;
   for (let i = 0; i < eventos.length; i++) {
@@ -799,10 +900,18 @@ export function claudeLaCerro(marca, lineas = null) {
   // El registro existe y no menciona el arranque de esa ejecución: no la lanzó ESTE Claude (la
   // lanzó la app, el CLI o una prueba), así que Claude no pudo cerrarla.
   if (lanzado < 0) return false;
-  const resto = eventos.slice(lanzado + 1).filter((e) => e.tipo !== 'inicio');
+  const canal = eventos[lanzado].canal;
+  // Solo cuenta lo que le pasó a SU canal; y un veredicto de sondeo anterior al arranque es de
+  // otro proceso (el relanzado nace después del veredicto).
+  const resto = eventos
+    .slice(lanzado + 1)
+    .filter((e) => e.tipo !== 'inicio' && e.canal === canal && !(e.tipo === 'sondeo' && e.t <= inicio));
   const fin = resto[0];
   if (!fin) return false;
   if (fin.tipo === 'cierre') return true;
+  // Nació entre el lanzamiento y el veredicto del sondeo: era el proceso de sondeo, y Claude lo
+  // descartó para lanzar otro.
+  if (fin.tipo === 'sondeo') return true;
   // El cierre y la muerte que lo acompaña llegan juntos: si hay un «Shutting down» pegado al final
   // (±2 s), lo cerró Claude. Una caída de verdad no trae ninguno.
   return resto.some((e) => e.tipo === 'cierre' && Math.abs(e.t - fin.t) <= 2000);
