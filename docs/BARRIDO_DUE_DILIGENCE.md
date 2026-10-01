@@ -22,13 +22,14 @@ que haber leído los dos.
 Cada ventana del expediente se lee **entera, una sola vez**, y deja una ficha de hechos con su
 página. La revisión final se hace sobre las fichas.
 
-## Las tres herramientas
+## Las herramientas
 
 | Tool | Qué hace |
 | --- | --- |
 | `siguiente_por_revisar` | Devuelve el siguiente trozo que **nadie ha leído**, con su texto y el progreso. |
 | `anotar` | Guarda la ficha de hechos de ese trozo. |
 | `obtener_anotaciones` | Devuelve las fichas para la síntesis, con vista cruzada por campo. |
+| `cambios_expediente` | El **delta** del data room respecto de lo ya revisado: nuevos, modificados, a medias, retirados y sin texto. |
 
 Se usan **en bucle**: `siguiente_por_revisar` → `anotar` → `siguiente_por_revisar` → … hasta
 que `completado` sea `true`.
@@ -67,6 +68,25 @@ obtener_anotaciones({ agrupar_por: "afirmaciones" })
 Devuelve todas las afirmaciones de **todo** el expediente, con su documento y su página, una
 debajo de otra. Campos cruzables: `afirmaciones`, `fechas`, `importes`, `partes`,
 `obligaciones`, `clausulas_atipicas`, `alertas`.
+
+## Data room vivo: qué ha cambiado (1.10.0)
+
+En una operación viva el data room no está quieto: entran documentos y versiones nuevas. El
+vigilante de RobinSearch los indexa solos, y `cambios_expediente` dice qué ha cambiado
+respecto de lo ya revisado, tomando como referencia el último barrido completo (o la fecha que
+se le pase en `desde`):
+
+- **nuevos** — sin ninguna ficha;
+- **modificados** — tenían fichas, pero el fichero cambió en disco después; sus fichas viejas ya
+  no valen y el barrido los vuelve a servir;
+- **a medias** — revisados en parte;
+- **retirados** — revisados y ya fuera del índice (una retirada es en sí misma un hallazgo);
+- **sin texto** — llegados y no legibles: zona ciega.
+
+Después basta seguir con `siguiente_por_revisar`: solo sirve lo nuevo y lo cambiado; lo que
+estaba revisado y no ha cambiado conserva sus fichas. Es local por diseño: el delta sale del
+índice y del registro de revisión del propio equipo, no de un proveedor de VDR ni de la nube.
+`npm run test:cambios-expediente` lo prueba de punta a punta.
 
 ## Lo que sigue sin resolver
 

@@ -31,6 +31,7 @@ import estadoServidor from './tools/estado_servidor.js';
 import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
 import obtenerAnotaciones from './tools/obtener_anotaciones.js';
+import cambiosExpediente from './tools/cambios_expediente.js';
 import buscarCorreos from './tools/buscar_correos.js';
 import leerCorreo from './tools/leer_correo.js';
 import leerAdjunto from './tools/leer_adjunto.js';
@@ -50,6 +51,8 @@ const TOOLS = [
   siguientePorRevisar,
   anotar,
   obtenerAnotaciones,
+  // Delta del data room respecto de lo revisado (1-oct-2026).
+  cambiosExpediente,
   // Correo del abogado (1.7.0). Viven aquí, en su ordenador, por la misma razón que los
   // expedientes: la contraseña del buzón de un despacho es el acceso a su correspondencia
   // entera, y esa no la custodiamos nosotros. Se ofrecen siempre; si no hay cuenta conectada,

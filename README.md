@@ -107,6 +107,7 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `siguiente_por_revisar`       | Siguiente trozo del expediente que nadie ha leído, con su texto y el progreso | `readOnlyHint`    |
 | `anotar`                      | Guarda la ficha de hechos de la ventana revisada                | —                 |
 | `obtener_anotaciones`         | Fichas del barrido para la síntesis, con vista cruzada por campo | `readOnlyHint`    |
+| `cambios_expediente`          | Qué ha cambiado en el expediente desde la última revisión (data room vivo) | `readOnlyHint`    |
 | `buscar_correos`              | Busca en el buzón del abogado por remitente, asunto, texto, fechas | `readOnlyHint`    |
 | `leer_correo`                 | Un correo entero en texto plano, con sus adjuntos listados      | `readOnlyHint`    |
 | `guardar_borrador`            | Deja la respuesta redactada en Borradores, dentro del hilo      | —                 |

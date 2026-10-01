@@ -233,7 +233,91 @@ export function guardar(expediente, docId, desde, ficha) {
     desde,
     hasta: v.hasta,
   });
+  // Sello del barrido COMPLETO: es la referencia del delta (cambios_expediente). Se pone cada
+  // vez que el expediente queda al 100 %, también tras revisar lo que cambió.
+  if (estadoBarrido(expediente).completado) {
+    modificar((todo) => {
+      if (todo[expediente]) todo[expediente].ultima_revision_completa = new Date().toISOString();
+    });
+  }
   return { ok: true, ventana: v };
+}
+
+function ultimaFicha(doc) {
+  const fechas = Object.values(doc?.ventanas || {}).map((f) => f.anotado_en).filter(Boolean);
+  return fechas.length ? fechas.sort().at(-1) : null;
+}
+
+// El DELTA del data room (P6 del informe de Juan, 1-oct-2026): qué ha cambiado en el expediente
+// respecto de lo que ya se revisó. Un data room vivo recibe ficheros nuevos y versiones nuevas
+// de los que había; el vigilante los indexa solos, y aquí se dice cuáles son:
+//   · nuevos       — documentos sin ninguna ficha (o, con `desde`, llegados después);
+//   · modificados  — tenían fichas, pero el fichero cambió en disco después (las fichas viejas ya
+//                    no valen y el barrido los vuelve a servir);
+//   · a_medias     — revisados en parte;
+//   · retirados    — tenían fichas y ya no están en el índice (se borraron o se movieron fuera);
+//   · sin_texto    — llegados y no legibles (escaneados sin OCR): zona ciega, se dice.
+// La referencia por defecto es el último barrido COMPLETO del expediente.
+export function delta(expediente, { desde = null } = {}) {
+  const est = cargar()[expediente] || null;
+  const docs = est?.documentos || {};
+  const ventana = ventanaDe(expediente);
+  const referencia = desde || est?.ultima_revision_completa || null;
+  const corte = referencia ? Date.parse(referencia) : null;
+  if (desde && !Number.isFinite(corte)) {
+    return { ok: false, error: `"desde" no es una fecha válida (AAAA-MM-DD): ${desde}` };
+  }
+  const posterior = (e) =>
+    corte == null ||
+    (e.mtimeMs != null && e.mtimeMs >= corte) ||
+    (e.indexedAt && Date.parse(e.indexedAt) >= corte);
+  const nuevos = [];
+  const modificados = [];
+  const aMedias = [];
+  const sinTexto = [];
+  const vigentes = new Set();
+  for (const e of entradasDe(expediente)) {
+    vigentes.add(e.docId);
+    const base = {
+      doc_id: e.docId,
+      ruta_relativa: e.rutaRelativa,
+      modificado_en: e.mtimeMs != null ? new Date(e.mtimeMs).toISOString() : null,
+      indexado_en: e.indexedAt || null,
+      paginas: e.numPages ?? null,
+    };
+    const d = docs[e.docId];
+    if (e.sinOcr || !e.numChunks) {
+      if (!d && posterior(e)) sinTexto.push({ ...base, motivo: e.sinOcr ? 'sin_texto_legible' : 'sin_fragmentos' });
+      continue;
+    }
+    if (!d) {
+      if (posterior(e) || !est) nuevos.push(base);
+      continue;
+    }
+    if (d.size !== e.size || d.mtimeMs !== e.mtimeMs) {
+      modificados.push({ ...base, revisado_en: ultimaFicha(d) });
+      continue;
+    }
+    const totales = Math.ceil(e.numChunks / ventana);
+    const hechas = Object.keys(d.ventanas || {}).length;
+    if (hechas < totales) aMedias.push({ ...base, ventanas_revisadas: hechas, ventanas_totales: totales });
+  }
+  const retirados = Object.entries(docs)
+    .filter(([id]) => !vigentes.has(id))
+    .map(([id, d]) => ({ doc_id: id, ruta_relativa: d.ruta_relativa, revisado_en: ultimaFicha(d) }));
+  return {
+    ok: true,
+    expediente,
+    hay_barrido: Boolean(est),
+    referencia,
+    ultima_revision_completa: est?.ultima_revision_completa || null,
+    nuevos,
+    modificados,
+    a_medias: aMedias,
+    retirados,
+    sin_texto: sinTexto,
+    hay_cambios: Boolean(nuevos.length || modificados.length || aMedias.length || retirados.length || sinTexto.length),
+  };
 }
 
 // Todas las fichas válidas del expediente, en orden de lectura. Paginado: en un expediente
@@ -365,6 +449,7 @@ export function limpiar(expediente) {
 }
 
 export default {
+  delta,
   plan,
   estadoBarrido,
   siguiente,
