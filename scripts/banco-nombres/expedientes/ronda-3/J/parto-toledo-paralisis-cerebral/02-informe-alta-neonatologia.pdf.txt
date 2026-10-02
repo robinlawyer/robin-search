@@ -1,0 +1,64 @@
+HOSPITAL UNIVERSITARIO DE TOLEDO
+Servicio de Pediatría — Unidad de Neonatología y UCI Neonatal
+Avda. del Río Guadiana, s/n · 45007 Toledo
+
+INFORME DE ALTA HOSPITALARIA
+
+Paciente: ESCALONA VILLALOBOS, HUGO               NHC: 2104588
+Fecha de nacimiento: 14/03/2024                   Sexo: varón
+Madre: Nerea Villalobos Cañete (NHC 2087431)
+Padre: Rubén Escalona Mateos
+Fecha de ingreso: 14/03/2024 (16:20)              Fecha de alta: 19/04/2024
+Médico responsable: Dr. Fernando Ochaíta Brea (Neonatología)
+
+MOTIVO DE INGRESO
+Recién nacido a término (40+6 s) con depresión neonatal grave tras cesárea urgente por bradicardia fetal mantenida. Acidosis metabólica grave en sangre de cordón (pH arterial 6,84; EB −19,2). Apgar 1/3/5. Precisó reanimación avanzada en paritorio con IOT, masaje cardiaco y dos dosis de adrenalina.
+
+ANTECEDENTES PERINATALES
+Madre de 30 años, G2A1. DG controlada con dieta. Hipotiroidismo subclínico (levotiroxina). SGB positivo con profilaxis completa. Inducción con prostaglandinas y oxitocina. Líquido amniótico meconial. Fiebre materna intraparto 37,9 ºC. RCTG patológico durante más de dos horas según registro (ver partograma). Peso al nacer 3.720 g (p70). Longitud 51 cm. PC 35 cm.
+
+EVOLUCIÓN POR APARATOS
+Neurológico: a su llegada, encefalopatía hipóxico-isquémica moderada-grave (estadio III de Sarnat a las 6 h: hipotonía generalizada, ausencia de succión, pupilas mióticas poco reactivas). Se inicia HIPOTERMIA TERAPÉUTICA corporal total a 33,5 ºC a las 2 h 40 min de vida, mantenida 72 h, con recalentamiento progresivo sin incidencias. Monitorización con aEEG: trazado de bajo voltaje y discontinuo con crisis eléctricas en las primeras 24 h. Crisis convulsivas clínicas (clónicas multifocales) a las 9 h de vida, tratadas con fenobarbital (carga 20 mg/kg) y posteriormente levetiracetam (Keppra) 40 mg/kg/día por persistencia de crisis eléctricas. A los 7 días, aEEG con ciclos sueño-vigilia inmaduros.
+RM cerebral (día 6): lesiones bilaterales y simétricas en ganglios basales y tálamos (patrón de afectación profunda), con restricción en difusión en brazo posterior de la cápsula interna; afectación cortical parasagital. Espectroscopia: pico de lactato y descenso de NAA/Cho. Hallazgos compatibles con lesión hipóxico-isquémica grave de patrón ganglios basales-tálamo, de MAL PRONÓSTICO NEUROLÓGICO.
+Respiratorio: ventilación mecánica convencional 5 días; síndrome de aspiración meconial con HTPP leve que precisó óxido nítrico inhalado 36 h. Extubado el día 6, gafas nasales 4 días.
+Cardiovascular: disfunción miocárdica hipóxica, soporte con dobutamina 3 días. Troponina máx. 0,9 ng/ml.
+Renal: insuficiencia renal aguda prerrenal (creatinina máx. 1,6 mg/dl), oliguria las primeras 48 h; normalizada al alta.
+Hepático/digestivo: elevación de transaminasas (GOT 410, GPT 188). Coagulopatía que precisó plasma fresco. Nutrición enteral iniciada día 5. Disfagia orofaríngea con succión débil e incoordinada: precisa sonda nasogástrica para alimentación parcial; valorado por logopedia.
+Infeccioso: hemocultivo negativo. PCR máx. 38 mg/l. Ampicilina + gentamicina 7 días por sospecha de sepsis precoz (madre con fiebre y SGB+).
+Metabólico: hipoglucemia inicial (32 mg/dl) corregida con suero glucosado.
+Oftalmológico: fondo de ojo normal. Potenciales evocados visuales con latencias alargadas.
+Auditivo: otoemisiones no superadas; PEATC: hipoacusia neurosensorial bilateral leve-moderada a confirmar.
+Cribado metabólico neonatal: normal. Cariotipo y array-CGH solicitados para descartar causa genética coincidente: 46,XY, array sin variantes patogénicas.
+
+Se realiza bautismo en la unidad por el capellán del hospital a petición de la abuela materna el día 2 de ingreso, ante la gravedad del cuadro.
+
+EXPLORACIÓN AL ALTA
+Peso 3.980 g. Irritable, llanto agudo. Hipertonía de miembros con hipotonía axial, reflejos osteotendinosos exaltados, clonus aquíleo bilateral agotable. Pulgares incluidos. No fija la mirada ni sigue objetos. Succión débil.
+
+JUICIO CLÍNICO
+1. Encefalopatía hipóxico-isquémica grave (Sarnat III) por asfixia perinatal. Tratado con hipotermia.
+2. Lesión de ganglios basales y tálamos bilateral en RM.
+3. Crisis neonatales sintomáticas.
+4. Síndrome de aspiración meconial. HTPP.
+5. Fallo multiorgánico resuelto (miocárdico, renal, hepático).
+6. Disfagia orofaríngea. Alimentación mixta oral/SNG.
+7. Hipoacusia neurosensorial bilateral pendiente de confirmación.
+8. Alto riesgo de parálisis cerebral discinética/espástica.
+
+TRATAMIENTO AL ALTA
+- Levetiracetam (Keppra solución oral 100 mg/ml) 0,6 ml cada 12 h.
+- Fenobarbital: suspendido.
+- Omeprazol 1 mg/kg/día.
+- Vitamina D3 400 UI/día.
+- Alimentación: lactancia materna diferida (extracción) + fórmula espesada; SNG para completar tomas.
+
+SEGUIMIENTO
+- Consulta de Neurología Infantil (Dra. Sonia Bermejo Laguna) en 3 semanas.
+- Rehabilitación Infantil y Atención Temprana: derivado al Centro Base y al CDIAT.
+- ORL infantil: PEATC de confirmación en 1 mes.
+- Seguimiento de Neonatología a los 3, 6, 12 y 24 meses (Bayley-III).
+- Se ofrece apoyo psicológico a los padres (la madre refiere insomnio y llanto diario; se contacta con Psiquiatría de Enlace).
+
+Toledo, 19 de abril de 2024
+Fdo.: Dr. Fernando Ochaíta Brea · Col. 45/0912377
+Neonatología, Hospital Universitario de Toledo

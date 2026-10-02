@@ -1,0 +1,1062 @@
+{
+  "fecha": "2026-09-24",
+  "tamaños": {
+    "trabajo": {
+      "frag": 44,
+      "spans": 293,
+      "ocr": 5
+    },
+    "validacion": {
+      "frag": 24,
+      "spans": 154,
+      "ocr": 4
+    }
+  },
+  "corridas": [
+    {
+      "candidato": null,
+      "trabajo": {
+        "pesoMB": 0,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 6,
+            "cubiertas": 6
+          },
+          "CIF": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "CORREO": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DIRECCION": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DNI": {
+            "oro": 17,
+            "cubiertas": 17
+          },
+          "IBAN": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "MATRICULA": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "NIE": {
+            "oro": 2,
+            "cubiertas": 2
+          },
+          "NUSS": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "PERSONA": {
+            "oro": 87,
+            "cubiertas": 86
+          },
+          "TELEFONO": {
+            "oro": 6,
+            "cubiertas": 6
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 68,
+            "cubiertas": 68
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 6
+          }
+        },
+        "porCapa": {
+          "contexto": 77,
+          "determinista": 54,
+          "propagacion": 9,
+          "domicilio": 8,
+          "especial": 6
+        },
+        "escapadas": [
+          {
+            "frag": "correo-cliente-consulta",
+            "clase": "correo",
+            "tipo": "PERSONA",
+            "valor": "Sonia Belmonte Tirado"
+          }
+        ],
+        "intocables": {
+          "oro": 135,
+          "sobreBruto": 10,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 1
+        },
+        "idaVuelta": {
+          "ok": 39,
+          "canonico": 3,
+          "ko": 2,
+          "fallos": [
+            {
+              "frag": "dos-perez-mismo-pleito",
+              "enPos": 163,
+              "esperado": "idos de letrado.\n\nInterrogado Pérez Alcaraz sobre el origen de los fon",
+              "obtenido": "idos de letrado.\n\nInterrogado Manuel Pérez Alcaraz sobre el origen de "
+            },
+            {
+              "frag": "convenio-regulador",
+              "enPos": 214,
+              "esperado": "a de los hijos menores Daniel Zamarreño Alcaine, nacido el 7 de junio ",
+              "obtenido": "a de los hijos menores Daniel Iván Zamarreño Paredes Nuria Alcaine Bos"
+            }
+          ]
+        },
+        "latencia": {
+          "msPorFragmento": 0,
+          "respuesta60Ms": 0
+        }
+      },
+      "validacion": {
+        "pesoMB": 0,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 11,
+            "cubiertas": 11
+          },
+          "CIF": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "CORREO": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "DIRECCION": {
+            "oro": 4,
+            "cubiertas": 4
+          },
+          "DNI": {
+            "oro": 10,
+            "cubiertas": 10
+          },
+          "IBAN": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "MATRICULA": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "NIE": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "PERSONA": {
+            "oro": 47,
+            "cubiertas": 45
+          },
+          "TELEFONO": {
+            "oro": 4,
+            "cubiertas": 4
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 28,
+            "cubiertas": 27
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 6
+          }
+        },
+        "porCapa": {
+          "contexto": 41,
+          "determinista": 29,
+          "especial": 11,
+          "domicilio": 4,
+          "propagacion": 4
+        },
+        "escapadas": [
+          {
+            "frag": "v-correo-interno",
+            "clase": "correo",
+            "tipo": "PERSONA",
+            "valor": "Macarena Ordóñez Pelayo"
+          },
+          {
+            "frag": "v-apellidos-traicioneros",
+            "clase": "nativo",
+            "tipo": "PERSONA",
+            "valor": "Lorenzo Guardia Civil"
+          }
+        ],
+        "intocables": {
+          "oro": 60,
+          "sobreBruto": 5,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 0
+        },
+        "idaVuelta": {
+          "ok": 21,
+          "canonico": 3,
+          "ko": 0,
+          "fallos": []
+        },
+        "latencia": {
+          "msPorFragmento": 0,
+          "respuesta60Ms": 0
+        }
+      }
+    },
+    {
+      "candidato": {
+        "id": "distilbert-multi-hrl",
+        "modelo": "Xenova/distilbert-base-multilingual-cased-ner-hrl",
+        "nota": "DistilBERT multilingüe destilado, 10 idiomas de alto recurso, español incluido. El ligero.",
+        "pesoMB": 144.5
+      },
+      "trabajo": {
+        "pesoMB": 144.5,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 6,
+            "cubiertas": 6
+          },
+          "CIF": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "CORREO": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DIRECCION": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DNI": {
+            "oro": 17,
+            "cubiertas": 17
+          },
+          "IBAN": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "MATRICULA": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "NIE": {
+            "oro": 2,
+            "cubiertas": 2
+          },
+          "NUSS": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "PERSONA": {
+            "oro": 87,
+            "cubiertas": 87
+          },
+          "TELEFONO": {
+            "oro": 6,
+            "cubiertas": 6
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 68,
+            "cubiertas": 68
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 77,
+          "determinista": 54,
+          "domicilio": 8,
+          "propagacion": 6,
+          "especial": 6,
+          "modelo": 4
+        },
+        "escapadas": [],
+        "intocables": {
+          "oro": 135,
+          "sobreBruto": 67,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 1
+        },
+        "idaVuelta": {
+          "ok": 40,
+          "canonico": 3,
+          "ko": 1,
+          "fallos": [
+            {
+              "frag": "dos-perez-mismo-pleito",
+              "enPos": 163,
+              "esperado": "idos de letrado.\n\nInterrogado Pérez Alcaraz sobre el origen de los fon",
+              "obtenido": "idos de letrado.\n\nInterrogado Manuel Pérez Alcaraz sobre el origen de "
+            }
+          ]
+        },
+        "latencia": {
+          "msPorFragmento": 366.4290763636363,
+          "respuesta60Ms": 21985.744581818177
+        }
+      },
+      "validacion": {
+        "pesoMB": 144.5,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 11,
+            "cubiertas": 11
+          },
+          "CIF": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "CORREO": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "DIRECCION": {
+            "oro": 4,
+            "cubiertas": 4
+          },
+          "DNI": {
+            "oro": 10,
+            "cubiertas": 10
+          },
+          "IBAN": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "MATRICULA": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "NIE": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "PERSONA": {
+            "oro": 47,
+            "cubiertas": 46
+          },
+          "TELEFONO": {
+            "oro": 4,
+            "cubiertas": 4
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 28,
+            "cubiertas": 27
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 41,
+          "determinista": 29,
+          "especial": 11,
+          "domicilio": 4,
+          "propagacion": 4,
+          "modelo": 1
+        },
+        "escapadas": [
+          {
+            "frag": "v-apellidos-traicioneros",
+            "clase": "nativo",
+            "tipo": "PERSONA",
+            "valor": "Lorenzo Guardia Civil"
+          }
+        ],
+        "intocables": {
+          "oro": 60,
+          "sobreBruto": 25,
+          "sobreConGuardia": 1,
+          "ejemplos": [
+            {
+              "frag": "v-apellidos-traicioneros",
+              "tipo": "ORGANISMO",
+              "valor": "Guardia Civil de Almazán"
+            }
+          ]
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 0
+        },
+        "idaVuelta": {
+          "ok": 21,
+          "canonico": 3,
+          "ko": 0,
+          "fallos": []
+        },
+        "latencia": {
+          "msPorFragmento": 285.5536727916671,
+          "respuesta60Ms": 17133.220367500027
+        }
+      }
+    },
+    {
+      "candidato": {
+        "id": "bert-base-multi-hrl",
+        "modelo": "Xenova/bert-base-multilingual-cased-ner-hrl",
+        "nota": "mBERT base, mismo entrenamiento que el anterior sin destilar. El que Alonso teme por peso.",
+        "pesoMB": 195.6
+      },
+      "trabajo": {
+        "pesoMB": 195.6,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 6,
+            "cubiertas": 6
+          },
+          "CIF": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "CORREO": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DIRECCION": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DNI": {
+            "oro": 17,
+            "cubiertas": 17
+          },
+          "IBAN": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "MATRICULA": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "NIE": {
+            "oro": 2,
+            "cubiertas": 2
+          },
+          "NUSS": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "PERSONA": {
+            "oro": 87,
+            "cubiertas": 87
+          },
+          "TELEFONO": {
+            "oro": 6,
+            "cubiertas": 6
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 68,
+            "cubiertas": 68
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 77,
+          "determinista": 54,
+          "domicilio": 8,
+          "propagacion": 6,
+          "especial": 6,
+          "modelo": 4
+        },
+        "escapadas": [],
+        "intocables": {
+          "oro": 135,
+          "sobreBruto": 61,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 1
+        },
+        "idaVuelta": {
+          "ok": 40,
+          "canonico": 3,
+          "ko": 1,
+          "fallos": [
+            {
+              "frag": "dos-perez-mismo-pleito",
+              "enPos": 163,
+              "esperado": "idos de letrado.\n\nInterrogado Pérez Alcaraz sobre el origen de los fon",
+              "obtenido": "idos de letrado.\n\nInterrogado Manuel Pérez Alcaraz sobre el origen de "
+            }
+          ]
+        },
+        "latencia": {
+          "msPorFragmento": 785.0067847727271,
+          "respuesta60Ms": 47100.40708636362
+        }
+      },
+      "validacion": {
+        "pesoMB": 195.6,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 11,
+            "cubiertas": 11
+          },
+          "CIF": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "CORREO": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "DIRECCION": {
+            "oro": 4,
+            "cubiertas": 4
+          },
+          "DNI": {
+            "oro": 10,
+            "cubiertas": 10
+          },
+          "IBAN": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "MATRICULA": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "NIE": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "PERSONA": {
+            "oro": 47,
+            "cubiertas": 46
+          },
+          "TELEFONO": {
+            "oro": 4,
+            "cubiertas": 4
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 28,
+            "cubiertas": 27
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 41,
+          "determinista": 29,
+          "especial": 11,
+          "domicilio": 4,
+          "propagacion": 4,
+          "modelo": 1
+        },
+        "escapadas": [
+          {
+            "frag": "v-apellidos-traicioneros",
+            "clase": "nativo",
+            "tipo": "PERSONA",
+            "valor": "Lorenzo Guardia Civil"
+          }
+        ],
+        "intocables": {
+          "oro": 60,
+          "sobreBruto": 25,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 0
+        },
+        "idaVuelta": {
+          "ok": 21,
+          "canonico": 3,
+          "ko": 0,
+          "fallos": []
+        },
+        "latencia": {
+          "msPorFragmento": 684.6029027499999,
+          "respuesta60Ms": 41076.17416499999
+        }
+      }
+    },
+    {
+      "candidato": {
+        "id": "bert-small-pii",
+        "modelo": "onnx-community/bert-small-pii-detection-ONNX",
+        "nota": "BERT pequeño entrenado directamente en PII, no en NER genérico. El mini.",
+        "pesoMB": 30.7
+      },
+      "trabajo": {
+        "pesoMB": 30.7,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 6,
+            "cubiertas": 6
+          },
+          "CIF": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "CORREO": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DIRECCION": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DNI": {
+            "oro": 17,
+            "cubiertas": 17
+          },
+          "IBAN": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "MATRICULA": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "NIE": {
+            "oro": 2,
+            "cubiertas": 2
+          },
+          "NUSS": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "PERSONA": {
+            "oro": 87,
+            "cubiertas": 87
+          },
+          "TELEFONO": {
+            "oro": 6,
+            "cubiertas": 6
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 68,
+            "cubiertas": 68
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 77,
+          "determinista": 54,
+          "domicilio": 8,
+          "propagacion": 6,
+          "especial": 6,
+          "modelo": 4
+        },
+        "escapadas": [],
+        "intocables": {
+          "oro": 135,
+          "sobreBruto": 126,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 3
+        },
+        "idaVuelta": {
+          "ok": 41,
+          "canonico": 2,
+          "ko": 1,
+          "fallos": [
+            {
+              "frag": "propagacion-01-continuacion",
+              "enPos": 33,
+              "esperado": "UNDO.— El 14 de marzo de 2023 Pérez Gómez remitió burofax a Construcci",
+              "obtenido": "UNDO.— El 14 de marzo de 2023 Juan Pérez Gómez remitió burofax a Const"
+            }
+          ]
+        },
+        "latencia": {
+          "msPorFragmento": 146.27955334090902,
+          "respuesta60Ms": 8776.773200454541
+        }
+      },
+      "validacion": {
+        "pesoMB": 30.7,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 11,
+            "cubiertas": 11
+          },
+          "CIF": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "CORREO": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "DIRECCION": {
+            "oro": 4,
+            "cubiertas": 4
+          },
+          "DNI": {
+            "oro": 10,
+            "cubiertas": 10
+          },
+          "IBAN": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "MATRICULA": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "NIE": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "PERSONA": {
+            "oro": 47,
+            "cubiertas": 46
+          },
+          "TELEFONO": {
+            "oro": 4,
+            "cubiertas": 4
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 28,
+            "cubiertas": 27
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 7
+          }
+        },
+        "porCapa": {
+          "contexto": 41,
+          "determinista": 29,
+          "especial": 11,
+          "domicilio": 4,
+          "propagacion": 4,
+          "modelo": 1
+        },
+        "escapadas": [
+          {
+            "frag": "v-apellidos-traicioneros",
+            "clase": "nativo",
+            "tipo": "PERSONA",
+            "valor": "Lorenzo Guardia Civil"
+          }
+        ],
+        "intocables": {
+          "oro": 60,
+          "sobreBruto": 58,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 3
+        },
+        "idaVuelta": {
+          "ok": 21,
+          "canonico": 3,
+          "ko": 0,
+          "fallos": []
+        },
+        "latencia": {
+          "msPorFragmento": 110.86646633333112,
+          "respuesta60Ms": 6651.987979999867
+        }
+      }
+    },
+    {
+      "candidato": {
+        "id": "multilang-pii-ner",
+        "modelo": "onnx-community/multilang-pii-ner-ONNX",
+        "nota": "PII multilingüe de tamaño grande. El techo de acierto, y el techo de peso.",
+        "pesoMB": 295.8
+      },
+      "trabajo": {
+        "pesoMB": 295.8,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 6,
+            "cubiertas": 6
+          },
+          "CIF": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "CORREO": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DIRECCION": {
+            "oro": 8,
+            "cubiertas": 8
+          },
+          "DNI": {
+            "oro": 17,
+            "cubiertas": 17
+          },
+          "IBAN": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "MATRICULA": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "NIE": {
+            "oro": 2,
+            "cubiertas": 2
+          },
+          "NUSS": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "PERSONA": {
+            "oro": 87,
+            "cubiertas": 86
+          },
+          "TELEFONO": {
+            "oro": 6,
+            "cubiertas": 6
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 68,
+            "cubiertas": 68
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 6
+          }
+        },
+        "porCapa": {
+          "contexto": 77,
+          "determinista": 54,
+          "propagacion": 9,
+          "domicilio": 8,
+          "especial": 6
+        },
+        "escapadas": [
+          {
+            "frag": "correo-cliente-consulta",
+            "clase": "correo",
+            "tipo": "PERSONA",
+            "valor": "Sonia Belmonte Tirado"
+          }
+        ],
+        "intocables": {
+          "oro": 135,
+          "sobreBruto": 23,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 1
+        },
+        "idaVuelta": {
+          "ok": 39,
+          "canonico": 3,
+          "ko": 2,
+          "fallos": [
+            {
+              "frag": "dos-perez-mismo-pleito",
+              "enPos": 163,
+              "esperado": "idos de letrado.\n\nInterrogado Pérez Alcaraz sobre el origen de los fon",
+              "obtenido": "idos de letrado.\n\nInterrogado Manuel Pérez Alcaraz sobre el origen de "
+            },
+            {
+              "frag": "convenio-regulador",
+              "enPos": 214,
+              "esperado": "a de los hijos menores Daniel Zamarreño Alcaine, nacido el 7 de junio ",
+              "obtenido": "a de los hijos menores Daniel Iván Zamarreño Paredes Nuria Alcaine Bos"
+            }
+          ]
+        },
+        "latencia": {
+          "msPorFragmento": 1552.3147042045473,
+          "respuesta60Ms": 93138.88225227284
+        }
+      },
+      "validacion": {
+        "pesoMB": 295.8,
+        "porTipo": {
+          "CAT_ESPECIAL": {
+            "oro": 11,
+            "cubiertas": 11
+          },
+          "CIF": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "CORREO": {
+            "oro": 5,
+            "cubiertas": 5
+          },
+          "DIRECCION": {
+            "oro": 4,
+            "cubiertas": 4
+          },
+          "DNI": {
+            "oro": 10,
+            "cubiertas": 10
+          },
+          "IBAN": {
+            "oro": 3,
+            "cubiertas": 3
+          },
+          "MATRICULA": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "NIE": {
+            "oro": 1,
+            "cubiertas": 1
+          },
+          "PERSONA": {
+            "oro": 47,
+            "cubiertas": 45
+          },
+          "TELEFONO": {
+            "oro": 4,
+            "cubiertas": 4
+          }
+        },
+        "porClase": {
+          "nativo": {
+            "oro": 28,
+            "cubiertas": 27
+          },
+          "ocr": {
+            "oro": 12,
+            "cubiertas": 12
+          },
+          "correo": {
+            "oro": 7,
+            "cubiertas": 6
+          }
+        },
+        "porCapa": {
+          "contexto": 41,
+          "determinista": 29,
+          "especial": 11,
+          "domicilio": 4,
+          "propagacion": 4
+        },
+        "escapadas": [
+          {
+            "frag": "v-correo-interno",
+            "clase": "correo",
+            "tipo": "PERSONA",
+            "valor": "Macarena Ordóñez Pelayo"
+          },
+          {
+            "frag": "v-apellidos-traicioneros",
+            "clase": "nativo",
+            "tipo": "PERSONA",
+            "valor": "Lorenzo Guardia Civil"
+          }
+        ],
+        "intocables": {
+          "oro": 60,
+          "sobreBruto": 6,
+          "sobreConGuardia": 0,
+          "ejemplos": []
+        },
+        "perifrasis": {
+          "oro": 3,
+          "cogidas": 0
+        },
+        "idaVuelta": {
+          "ok": 21,
+          "canonico": 3,
+          "ko": 0,
+          "fallos": []
+        },
+        "latencia": {
+          "msPorFragmento": 786.5232409166698,
+          "respuesta60Ms": 47191.39445500019
+        }
+      }
+    }
+  ]
+}

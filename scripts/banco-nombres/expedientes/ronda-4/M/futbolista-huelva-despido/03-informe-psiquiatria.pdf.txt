@@ -1,0 +1,59 @@
+SERVICIO ANDALUZ DE SALUD
+Área de Gestión Sanitaria Huelva
+Hospital Universitario Juan Ramón Jiménez
+Unidad de Gestión Clínica de Salud Mental — Unidad de Trastornos de la Conducta Alimentaria (UTCA)
+
+INFORME CLÍNICO
+
+Paciente: GARRIDO MANTERO, ROCÍO
+NUHSA: AN0631224587          NHC: 4587221
+Fecha de nacimiento: 11/04/1999          Sexo: mujer
+Domicilio: C/ Rábida Alta, 23, 3.º izq. — 21003 Huelva
+Teléfono de contacto: 654 218 937
+Facultativo: Dra. Elena Mairena Cid — FEA Psiquiatría
+Fecha: 22/07/2026
+Motivo: informe a petición de la paciente para su aportación a procedimiento judicial
+
+ANTECEDENTES PERSONALES
+Somáticos: NAMC. Plastia de LCA derecho (2021). Anemia ferropénica en tratamiento. Amenorrea secundaria desde octubre de 2025. Gestación de 11 semanas interrumpida espontáneamente el 17/05/2026, con legrado; G2 A2 (una IVE en 2019, a las 7 semanas, en clínica acreditada de Sevilla).
+Psiquiátricos: episodio de restricción alimentaria a los 15 años, no tratado. Sin ingresos previos. Sin intentos autolíticos previos.
+Tóxicos: niega. Consumo esporádico de alcohol (fines de semana, «dos o tres copas»).
+Familiares: madre diagnosticada de trastorno bipolar tipo I, estable con Plenur (carbonato de litio) 400 mg/12 h, con dos ingresos en la UHSM en 2008 y 2014. Abuelo paterno fallecido por cirrosis enólica. Una hermana menor (Alba, 22 años) en tratamiento por TDAH con metilfenidato (Concerta).
+
+ENFERMEDAD ACTUAL
+Futbolista profesional de 27 años, derivada por su médico de Atención Primaria y por el médico de su club en marzo de 2026 por pérdida ponderal de unos 9 kg en seis meses, amenorrea y conductas purgativas. Refiere que la restricción comenzó «cuando el preparador físico empezó a pesarnos delante de todas y a poner las cifras en la pizarra del vestuario». Describe miedo intenso a engordar, distorsión de la imagen corporal («me veo las piernas gordas aunque la gente me diga que estoy en los huesos»), restricción calórica severa (en torno a 900 kcal/día) con ejercicio compensatorio fuera del horario de entrenamiento, vómitos autoinducidos 3-4 veces por semana y uso de laxantes estimulantes (Dulcolaxo, hasta 6 comprimidos/día).
+
+Tras la pérdida gestacional de mayo empeoramiento anímico claro: tristeza, anhedonia, culpa («creo que lo perdí por no comer»), insomnio de conciliación y de mantenimiento, ideación de muerte pasiva sin planificación ni intencionalidad autolítica. La paciente vincula también el empeoramiento a la presión del club: refiere que, tras comunicar el aborto, el director deportivo le dijo que «a ver si se centraba, que esto no es una guardería». Desde el despido (30/06/2026) refiere rumiación constante, crisis de ansiedad con taquicardia y sensación de ahogo (3-4 por semana) y aislamiento social.
+
+EXPLORACIÓN PSICOPATOLÓGICA
+Consciente y orientada. Abordable y colaboradora. Aspecto delgado, cuidado. Discurso coherente, bradipsíquico por momentos, centrado en la comida, el peso y la situación laboral. Ánimo hipotímico con reactividad conservada; llanto durante la entrevista. Ansiedad psíquica y somática moderada. Ideas sobrevaloradas de peso e imagen corporal. Ideación de muerte pasiva, sin ideación autolítica estructurada. No alteraciones sensoperceptivas. Juicio de realidad conservado. Insomnio mixto. Conciencia parcial de enfermedad.
+
+EXPLORACIÓN FÍSICA Y COMPLEMENTARIAS
+Peso 45,2 kg; talla 166 cm; IMC 16,4 kg/m². TA 90/56; FC 46 lpm.
+Analítica (15/07/2026): K+ 3,3 mEq/L; fósforo 2,6 mg/dL; Hb 11,2 g/dL; ferritina 14 ng/mL.
+Escalas: EAT-26: 41 (punto de corte 20). BDI-II: 29 (depresión moderada). STAI-E: percentil 85. Escala de Columbia (C-SSRS): ideación pasiva, riesgo bajo.
+Densitometría ósea (DEXA): Z-score columna lumbar −1,8 (baja masa ósea para la edad).
+
+JUICIO CLÍNICO
+1. Anorexia nerviosa, tipo con atracones/purgas (F50.02, CIE-10-ES), gravedad moderada según DSM-5-TR.
+2. Episodio depresivo moderado (F32.1), reactivo, en el contexto de duelo perinatal complicado.
+3. Trastorno de ansiedad, con crisis de pánico secundarias a estresor laboral.
+4. Baja masa ósea secundaria a amenorrea hipotalámica funcional.
+
+TRATAMIENTO ACTUAL
+- Fluoxetina 40 mg (Prozac 20 mg, 2 cápsulas en el desayuno).
+- Olanzapina 2,5 mg (Zyprexa), 1 comprimido por la noche.
+- Lorazepam 1 mg (Orfidal) si ansiedad intensa, máximo 2 al día.
+- Suplementos de calcio y vitamina D (Ideos), hierro oral.
+- Plan de renutrición pautado por Endocrinología (objetivo IMC ≥ 18,5) con suplementos hiperproteicos.
+- Psicoterapia cognitivo-conductual mejorada (TCC-E) semanal en la UTCA y seguimiento psicológico del duelo perinatal.
+- Recomendación de no realizar actividad deportiva de alta intensidad mientras el IMC sea inferior a 17,5.
+
+PRONÓSTICO Y VALORACIÓN
+La paciente presenta un trastorno de la conducta alimentaria de gravedad moderada, con buena adherencia al tratamiento y conciencia de enfermedad creciente. En mi opinión clínica, los factores precipitantes y mantenedores del cuadro guardan relación directa con las prácticas de control de peso del entorno deportivo, y el despido ha actuado como estresor añadido que ha agravado la sintomatología depresiva y ansiosa. Se estima un periodo de recuperación no inferior a 9-12 meses. Precisa continuar en situación de incapacidad temporal.
+
+Lo que se informa a petición de la interesada, a los efectos oportunos.
+
+Fdo.: Dra. Elena Mairena Cid
+Facultativa Especialista de Área de Psiquiatría
+N.º colegiada 21/04412 — Ilustre Colegio Oficial de Médicos de Huelva

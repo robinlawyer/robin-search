@@ -1,0 +1,1599 @@
+{
+ "01-carta-despido.pdf.txt": {
+  "oro": [
+   [
+    "CIF",
+    "A21567890"
+   ],
+   [
+    "PERSONA",
+    "Rocío Garrido Mantero"
+   ],
+   [
+    "DNI",
+    "29487316-K"
+   ],
+   [
+    "DIRECCION",
+    "C/ Rábida Alta, n.º 23, 3.º izquierda, 21003 Huelva"
+   ],
+   [
+    "NORMA",
+    "artículo 13.h) del Real Decreto 1006/1985, de 26 de junio"
+   ],
+   [
+    "NORMA",
+    "artículo 54.2.e) del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "Convenio Colectivo para las futbolistas que prestan sus servicios en clubes de la Primera División Femenina de Fútbol"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "descenso del VO2 máx. de 52,1 a 41,3 ml/kg/min",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de peso de 7,4 kg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "justificantes de asistencia a consulta médica",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Brenes"
+   ],
+   [
+    "PERSONA",
+    "Mauricio Peláez Arenas"
+   ],
+   [
+    "PERSONA",
+    "Juan Manuel Robles Ortega"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su afiliación a la Asociación de Futbolistas Españoles",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por el descuento de la cuota sindical en su nómina",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegada sindical de AFE en la plantilla",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Nerea Olmedo Sáez"
+   ],
+   [
+    "NORMA",
+    "artículo 55.1 del Estatuto de los Trabajadores"
+   ],
+   [
+    "IBAN",
+    "ES21 0049 1876 5421 0987 6543"
+   ],
+   [
+    "MATRICULA",
+    "4821 LKP"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Ojeda Lorenzo"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-medico-club.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío Garrido Mantero"
+   ],
+   [
+    "NUSS",
+    "HC-2023-0147"
+   ],
+   [
+    "NUSS",
+    "21/10456789/33"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Brenes Castaño"
+   ],
+   [
+    "PERSONA",
+    "Mauricio Peláez"
+   ],
+   [
+    "PERSONA",
+    "Mauricio Peláez Arenas"
+   ],
+   [
+    "PERSONA",
+    "Juan Manuel Robles Ortega"
+   ],
+   [
+    "PERSONA",
+    "Mairena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No AMC (alergias medicamentosas conocidas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rotura del LCA de rodilla derecha en 2021, intervenida mediante plastia HTH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin inestabilidad residual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esguince de tobillo izquierdo grado II",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anemia ferropénica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratada con Ferro Sanol 100 mg/día durante tres meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumadora ocasional en el pasado, niega consumo actual. Consumo de alcohol social. Niega otros tóxicos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con trastorno bipolar en tratamiento con litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre con HTA y DM2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "peso de 54,6 kg para una talla de 1,66 m (IMC 19,8), con porcentaje graso del 18 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exploración cardiovascular normal, ECG en ritmo sinusal a 58 lpm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de peso progresiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "peso 48,9 kg, IMC 17,7, porcentaje graso 11,2 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "amenorrea secundaria de cinco meses de evolución, cansancio, mareos al incorporarse y calambres nocturnos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 10,8 g/dL; ferritina 9 ng/mL; K+ 3,1 mEq/L (hipopotasemia leve); amilasa 162 U/L; TSH 1,9; T3 libre baja (1,8 pg/mL); estradiol < 15 pg/mL; glucosa 68 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Test de embarazo en orina: negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia sinusal a 44 lpm, hipotensión ortostática (TA 92/58 en decúbito, 84/50 en bipedestación), erosiones del esmalte en caras palatinas de incisivos superiores y callosidad en el dorso de la mano derecha (signo de Russell)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "compatibles con conductas purgativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vómitos autoinducidos «algunas veces después de las comidas del club» y uso de laxantes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome de déficit energético relativo en el deporte (RED-S)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sospecha de trastorno de la conducta alimentaria (TCA), probable anorexia nerviosa de subtipo purgativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipopotasemia secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "limitación de la carga de entrenamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "derivación preferente",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Costa de la Luz"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Comunitaria"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Trastornos de la Conducta Alimentaria del Hospital Universitario Juan Ramón Jiménez"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Juan Ramón Jiménez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un problema de salud que limita el rendimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha sido atendida en urgencias de Ginecología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida gestacional de 11 semanas (aborto espontáneo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "legrado evacuador bajo sedación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta y parte de baja por IT de 14 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no había comunicado el embarazo al club",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se pauta reincorporación progresiva a partir del 01/06/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "peso 45,2 kg (IMC 16,4)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Persiste amenorrea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo bajo, llanto fácil durante la consulta, refiere insomnio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de Psiquiatría, y que toma fluoxetina y olanzapina",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "AMA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuadro de déficit energético relativo con TCA en tratamiento especializado, anemia y amenorrea hipotalámica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el episodio obstétrico reciente con repercusión anímica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se encuentra en condiciones de competir al máximo nivel a corto plazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pronóstico incierto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la recuperación del peso y de la función menstrual suele requerir entre 6 y 12 meses",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-psiquiatria.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Gestión Sanitaria Huelva"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Juan Ramón Jiménez"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Gestión Clínica de Salud Mental"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Trastornos de la Conducta Alimentaria (UTCA)"
+   ],
+   [
+    "ORGANISMO",
+    "UTCA"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio Oficial de Médicos de Huelva"
+   ],
+   [
+    "PERSONA",
+    "GARRIDO MANTERO, ROCÍO"
+   ],
+   [
+    "NUSS",
+    "AN0631224587"
+   ],
+   [
+    "NUSS",
+    "4587221"
+   ],
+   [
+    "DIRECCION",
+    "C/ Rábida Alta, 23, 3.º izq. — 21003 Huelva"
+   ],
+   [
+    "TELEFONO",
+    "654 218 937"
+   ],
+   [
+    "PERSONA",
+    "Elena Mairena Cid"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NAMC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Plastia de LCA derecho (2021)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anemia ferropénica en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Amenorrea secundaria desde octubre de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación de 11 semanas interrumpida espontáneamente el 17/05/2026, con legrado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2 A2 (una IVE en 2019, a las 7 semanas, en clínica acreditada de Sevilla)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio de restricción alimentaria a los 15 años, no tratado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin ingresos previos. Sin intentos autolíticos previos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "niega. Consumo esporádico de alcohol (fines de semana, «dos o tres copas»)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre diagnosticada de trastorno bipolar tipo I, estable con Plenur (carbonato de litio) 400 mg/12 h, con dos ingresos en la UHSM en 2008 y 2014",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abuelo paterno fallecido por cirrosis enólica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento por TDAH con metilfenidato (Concerta)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida ponderal de unos 9 kg en seis meses, amenorrea y conductas purgativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere que la restricción comenzó",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "miedo intenso a engordar, distorsión de la imagen corporal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«me veo las piernas gordas aunque la gente me diga que estoy en los huesos»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "restricción calórica severa (en torno a 900 kcal/día) con ejercicio compensatorio fuera del horario de entrenamiento, vómitos autoinducidos 3-4 veces por semana y uso de laxantes estimulantes (Dulcolaxo, hasta 6 comprimidos/día)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tras la pérdida gestacional de mayo empeoramiento anímico claro: tristeza, anhedonia, culpa («creo que lo perdí por no comer»), insomnio de conciliación y de mantenimiento, ideación de muerte pasiva sin planificación ni intencionalidad autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras comunicar el aborto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rumiación constante, crisis de ansiedad con taquicardia y sensación de ahogo (3-4 por semana) y aislamiento social",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aspecto delgado, cuidado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso coherente, bradipsíquico por momentos, centrado en la comida, el peso y la situación laboral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo hipotímico con reactividad conservada; llanto durante la entrevista",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad psíquica y somática moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ideas sobrevaloradas de peso e imagen corporal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ideación de muerte pasiva, sin ideación autolítica estructurada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alteraciones sensoperceptivas. Juicio de realidad conservado. Insomnio mixto. Conciencia parcial de enfermedad.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 45,2 kg; talla 166 cm; IMC 16,4 kg/m². TA 90/56; FC 46 lpm.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "K+ 3,3 mEq/L; fósforo 2,6 mg/dL; Hb 11,2 g/dL; ferritina 14 ng/mL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EAT-26: 41 (punto de corte 20). BDI-II: 29 (depresión moderada). STAI-E: percentil 85. Escala de Columbia (C-SSRS): ideación pasiva, riesgo bajo.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Densitometría ósea (DEXA): Z-score columna lumbar −1,8 (baja masa ósea para la edad)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anorexia nerviosa, tipo con atracones/purgas (F50.02, CIE-10-ES), gravedad moderada según DSM-5-TR",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodio depresivo moderado (F32.1), reactivo, en el contexto de duelo perinatal complicado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno de ansiedad, con crisis de pánico secundarias a estresor laboral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baja masa ósea secundaria a amenorrea hipotalámica funcional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fluoxetina 40 mg (Prozac 20 mg, 2 cápsulas en el desayuno)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Olanzapina 2,5 mg (Zyprexa), 1 comprimido por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam 1 mg (Orfidal) si ansiedad intensa, máximo 2 al día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Suplementos de calcio y vitamina D (Ideos), hierro oral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Plan de renutrición pautado por Endocrinología (objetivo IMC ≥ 18,5) con suplementos hiperproteicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Psicoterapia cognitivo-conductual mejorada (TCC-E) semanal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "seguimiento psicológico del duelo perinatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Recomendación de no realizar actividad deportiva de alta intensidad mientras el IMC sea inferior a 17,5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno de la conducta alimentaria de gravedad moderada, con buena adherencia al tratamiento y conciencia de enfermedad creciente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha agravado la sintomatología depresiva y ansiosa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "periodo de recuperación no inferior a 9-12 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Precisa continuar en situación de incapacidad temporal",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-urgencias-ginecologia.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICI0 ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARI0 JUAN RAMON JIMENEZ - HUELVA"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICIO DE URGENCIAS - AREA DE OBSTETRICIA Y GINEC0LOGIA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME DE ALTA DE URGENCIAS",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "GARRIDO MANTERO, ROCIO"
+   ],
+   [
+    "NUSS",
+    "4587221"
+   ],
+   [
+    "NUSS",
+    "AN0631224587"
+   ],
+   [
+    "PERSONA",
+    "DANIEL ESCOBAR RUIZ"
+   ],
+   [
+    "TELEFONO",
+    "677 902 145"
+   ],
+   [
+    "PERSONA",
+    "P. VALLEJO ROMERO"
+   ],
+   [
+    "PERSONA",
+    "S. CORDERO LUQUE"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SANGRADO VAGINAL ABUNDANTE Y DOLOR ABDO-",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MINAL TIPO COLICO DE 6 HORAS DE EVOLUCION",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NAMC. NO HTA, NO DM. IQ: PLASTIA LCA RODILLA DCHA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2 P0 A1 (IVE 2019). FUR: 26/02/2026. GESTACION ACTUAL NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CONTR0LADA EN AP. GRUPO SANGUINE0: 0 RH NEGATIVO. REFIERE TRASTORNO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DE LA C0NDUCTA ALIMENTARIA EN TTO CON FLUOXETINA 20 MG.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BEG. CONSCIENTE Y ORIENTADA. PALIDEZ CUTANEA. TA 98/6l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FC 92 LPM. T 36,4. ABDOMEN BLAND0, DEPRESIBLE, D0LOROSO EN HIPO-",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GASTRIO. ESPECULOSCOPIA: SANGRADO ACTIVO M0DERADO CON COAGULOS, CERVIX",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PERMEABLE CON RESTOS EN CANAL.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "UTER0 EN AVF. SAC0 GESTACIONAL IRREGULAR, DESCENDIDO,",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CON EMBRION DE LCC 18 MM (ACORDE A 8+2 SEM) SIN LATIDO CARDIACO.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANEJOS NORMALES. NO LIQUID0 LIBRE.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BHCG 8.420 MUI/ML. HEMOGRAMA: HB 9,6 G/DL,",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTO 29 %, PLAQUETAS 212.000. COAGULACION NORMAL. TEST DE COOMBS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INDIRECTO NEGATIV0.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AB0RTO ESPONTANEO INCOMPLETO EN GESTACION DE ll+2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SEMANAS P0R FUR (EMBRION NO EVOLUTIVO DESDE 8+2).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANEMIA M0DERADA.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LEGRADO EVACUADOR BAJO SEDACI0N (PROPOFOL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SIN INCIDENCIAS. SE ENVIAN RESTOS A ANATOMIA PATOLOGICA. ADMINISTRADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GAMMAGLOBULINA ANTI-D 300 MCG IM P0R RH NEGATIVO. PROFILAXIS ANTIBIO-",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TICA CON DOXICICLINA 100 MG.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IBUPROFENO 600 MG / 8 H SI DOLOR.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIERRO ORAL (TARDYFER0N 80 MG) 1 COMP / DIA 3 MESES.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REPOSO RELATIVO. ABSTINENCIA SEXUAL 2 SEMANAS.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CONTINUAR CON SU TRATAMIENTO PSIQUIATRICO HABITUAL.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SE OFRECE APOYO PSICOLOGICO (PROGRAMA DE DUELO GESTACIONAL).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REVISION EN CONSULTA DE GINECOLOGIA EN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SE EMITE PARTE DE BAJA (IT)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "O03.4 AB0RTO ESPONTANEO INCOMPLETO SIN COMPLICACION.",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-nominas-marzo-mayo-junio.pdf.txt": {
+  "oro": [
+   [
+    "CIF",
+    "A21567890"
+   ],
+   [
+    "PERSONA",
+    "GARRIDO MANTERO, ROCÍO"
+   ],
+   [
+    "DNI",
+    "29487316-K"
+   ],
+   [
+    "NUSS",
+    "21/10456789/33"
+   ],
+   [
+    "IBAN",
+    "ES21 0049 1876 5421 0987 6543"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuota sindical AFE (1 %)",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prestación IT enfermedad común — pago delegado (días 20 a 31)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Complemento IT hasta 100 % salario",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "art. 28 Convenio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Días 17 a 19: periodo de carencia IT sin complemento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de IT por contingencias comunes desde el 17/05/2026 (parte de baja de 17/05/2026",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "C.S. El Torrejón"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alta médica prevista: 31/05/2026",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correos-agente.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío Garrido"
+   ],
+   [
+    "PERSONA",
+    "Rocío"
+   ],
+   [
+    "CORREO",
+    "rocigm9@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Gonzalo Arjona"
+   ],
+   [
+    "PERSONA",
+    "Gonzalo Arjona Barroso"
+   ],
+   [
+    "PERSONA",
+    "Gonza"
+   ],
+   [
+    "CORREO",
+    "gonzalo@arjonasports.es"
+   ],
+   [
+    "PERSONA",
+    "Marina Toscano Bellido"
+   ],
+   [
+    "PERSONA",
+    "Marina"
+   ],
+   [
+    "CORREO",
+    "mtoscano@toscanoabogados.es"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la del sindicato de AFE",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde enero estoy mal",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Jaime"
+   ],
+   [
+    "PERSONA",
+    "la Flaca"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Empece a no comer casi nada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Luego vomitaba despues de las comidas del club, y tomaba laxantes",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Brenes"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me dijo que tenia anorexia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me mando a la unidad de TCA",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Juan Ramon"
+   ],
+   [
+    "PERSONA",
+    "Pelaez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo mio de la comida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del bebe",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Daniel"
+   ],
+   [
+    "PERSONA",
+    "Sheila"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le pasó lo mismo hace 2 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El 17 de mayo de madrugada empece a sangrar muchisimo y lo perdi, me hicieron un legrado en urgencias y me dieron la baja 2 semanas",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Begoña"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ahora esta de baja por depresion",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Mairena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de psiquiatria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el Prozac (2 por la mañana) y la olanzapina por la noche que me deja k.o., y el Orfidal cuando me da el ataque de ansiedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 45 y algo. No me viene la regla desde octubre.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi madre que es bipolar esta fatal con todo esto, ha vuelto a dejarse el litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi hermana con lo suyo del TDAH",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Mauricio Peláez"
+   ],
+   [
+    "PERSONA",
+    "Peláez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una tía que se queda preñada y encima está mal de la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la anorexia lo sabe todo el vestuario",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "lo condenaron en 2017 en Jerez por lesiones a su ex mujer y por eso lo echaron del Xerez"
+   ],
+   [
+    "DATO_PENAL",
+    "en 2019 me condenaron por conducir con 0,9 en el alcoholímetro y estuve un año sin carnet"
+   ],
+   [
+    "PERSONA",
+    "Lorena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se pasó media temporada con lo de la diabetes descompensada y la bomba de insulina",
+    "salud"
+   ],
+   [
+    "DIRECCION",
+    "C/ Vázquez López, 8, 1.º — 21001 Huelva"
+   ],
+   [
+    "TELEFONO",
+    "689 451 302"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-whatsapp-companeras.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío"
+   ],
+   [
+    "PERSONA",
+    "Pelaez"
+   ],
+   [
+    "PERSONA",
+    "Peláez"
+   ],
+   [
+    "PERSONA",
+    "Lore Vázquez"
+   ],
+   [
+    "PERSONA",
+    "Lore"
+   ],
+   [
+    "PERSONA",
+    "Samira"
+   ],
+   [
+    "PERSONA",
+    "Ro"
+   ],
+   [
+    "PERSONA",
+    "Carmela"
+   ],
+   [
+    "PERSONA",
+    "Nerea AFE"
+   ],
+   [
+    "PERSONA",
+    "nere"
+   ],
+   [
+    "PERSONA",
+    "Gonza"
+   ],
+   [
+    "PERSONA",
+    "Jaime"
+   ],
+   [
+    "PERSONA",
+    "Mairena"
+   ],
+   [
+    "PERSONA",
+    "Paula"
+   ],
+   [
+    "PERSONA",
+    "Begoña"
+   ],
+   [
+    "PERSONA",
+    "Marina Toscano"
+   ],
+   [
+    "PERSONA",
+    "Marina"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si te has pasado media temporada entre el hospital y el psiquiatra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como delegada",
+    "sindical"
+   ],
+   [
+    "ORGANISMO",
+    "los servicios juridicos de la AFE"
+   ],
+   [
+    "ORGANISMO",
+    "con la AFE"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me midieron la glucosa delante de todas en el vestuario como si fuera un mono de feria, con el sensor y la bomba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la diabética",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las gitanas no sabemos lo que es una dieta",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "A mí en ramadán no me dejaron cambiar el entreno de tarde",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "llevo 3 dias sin vomitar y hoy me dan ganas otra vez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si te viene el bajón fuerte",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Virgen Macarena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tu novia es un sol",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tú estabas embarazada cuando faltaste en mayo?",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si. de 11 semanas. lo perdi el 17.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "porque la llame desde urgencias",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "lo condenaron por pegarle a la mujer en Jerez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sigue de baja, con lo de la depre y las pastillas para dormir está fatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "R.G. 49,1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mañana tengo cita con la psiquiatra",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-despido-nulo.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE HUELVA"
+   ],
+   [
+    "ORGANO",
+    "Juzgados de lo Social de Huelva"
+   ],
+   [
+    "PERSONA",
+    "Marina Toscano Bellido"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Huelva"
+   ],
+   [
+    "DIRECCION",
+    "Plaza de las Monjas, 6, 2.º, 21001 Huelva"
+   ],
+   [
+    "PERSONA",
+    "ROCÍO GARRIDO MANTERO"
+   ],
+   [
+    "DNI",
+    "29487316-K"
+   ],
+   [
+    "NORMA",
+    "artículo 18 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social"
+   ],
+   [
+    "CIF",
+    "A21567890"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "NORMA",
+    "artículo 177.3 LRJS"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 1006/1985, de 26 de junio"
+   ],
+   [
+    "NORMA",
+    "Convenio Colectivo para las futbolistas que prestan sus servicios en clubes de la Primera División Femenina de Fútbol"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Afiliación sindical. La actora está afiliada a la Asociación de Futbolistas Españoles (AFE)",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por el descuento de la cuota en nómina",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Jaime Cordón Villalba"
+   ],
+   [
+    "OBJETO",
+    "trastorno de la conducta alimentaria"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Brenes Castaño"
+   ],
+   [
+    "PERSONA",
+    "Brenes"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«sospecha de TCA, probable anorexia nerviosa de subtipo purgativo», con amenorrea, anemia ferropénica e hipopotasemia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Trastornos de la Conducta Alimentaria del Hospital Universitario Juan Ramón Jiménez"
+   ],
+   [
+    "PERSONA",
+    "Elena Mairena Cid"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anorexia nerviosa con atracones/purgas de gravedad moderada y un episodio depresivo moderado, en tratamiento con fluoxetina 40 mg, olanzapina 2,5 mg y lorazepam a demanda",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "Estado de gestación"
+   ],
+   [
+    "OBJETO",
+    "estado de gestación"
+   ],
+   [
+    "OBJETO",
+    "aborto espontáneo"
+   ],
+   [
+    "OBJETO",
+    "En marzo de 2026 la actora quedó embarazada"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en la semana 11 de gestación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fue atendida en urgencias e intervenida mediante legrado evacuador, permaneciendo en situación de IT del 17 al 31 de mayo de 2026",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Begoña Calleja Ramos"
+   ],
+   [
+    "PERSONA",
+    "Mauricio Peláez Arenas"
+   ],
+   [
+    "PERSONA",
+    "Peláez"
+   ],
+   [
+    "PERSONA",
+    "Gonzalo Arjona Barroso"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una tía que se queda preñada y encima está mal de la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "justificadas por asistencia a consultas médicas",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "UTCA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por la IT derivada del",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "continúa en tratamiento psiquiátrico y en situación de IT desde el 1 de julio de 2026, con un IMC de 16,4, crisis de ansiedad e ideación de muerte pasiva sin planificación autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno bipolar, TDAH",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 90.4 LRJS"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Mediación, Arbitraje y Conciliación de Huelva"
+   ],
+   [
+    "AUTOS",
+    "21/2026/003418"
+   ],
+   [
+    "NORMA",
+    "artículos 2.a), 6 y 10.1 LRJS"
+   ],
+   [
+    "NORMA",
+    "arts. 103 y ss. LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 184 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 55.5 del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "artículo 108.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 2.1 de la Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "artículo 26"
+   ],
+   [
+    "NORMA",
+    "art. 14 CE"
+   ],
+   [
+    "NORMA",
+    "arts. 3 y 8 de la Ley Orgánica 3/2007, de 22 de marzo"
+   ],
+   [
+    "NORMA",
+    "STC 92/2008, de 21 de julio"
+   ],
+   [
+    "NORMA",
+    "STC 182/2005, de 4 de julio"
+   ],
+   [
+    "NORMA",
+    "artículo 10 de la Directiva 92/85/CEE"
+   ],
+   [
+    "NORMA",
+    "STJUE de 11 de abril de 2013, HK Danmark, asuntos acumulados C-335/11 y C-337/11"
+   ],
+   [
+    "ECLI",
+    "ECLI:EU:C:2013:222"
+   ],
+   [
+    "NORMA",
+    "art. 18.1 CE"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4 de la Ley 31/1995, de Prevención de Riesgos Laborales"
+   ],
+   [
+    "NORMA",
+    "artículo 9 del Reglamento (UE) 2016/679"
+   ],
+   [
+    "NORMA",
+    "arts. 96.1 y 181.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 183 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 40.1.c) de la LISOS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el agravamiento documentado del cuadro clínico de la actora",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "art. 15 RD 1006/1985"
+   ],
+   [
+    "NORMA",
+    "artículo 90.2 LRJS"
+   ],
+   [
+    "PERSONA",
+    "Nerea Olmedo Sáez"
+   ],
+   [
+    "PERSONA",
+    "Lorena Vázquez Pino"
+   ],
+   [
+    "PERSONA",
+    "Carmen Fernández Amador"
+   ],
+   [
+    "PERSONA",
+    "Samira El Idrissi Benali"
+   ],
+   [
+    "PERITO",
+    "Inmaculada Vides Toscano"
+   ],
+   [
+    "NORMA",
+    "art. 232 LOPJ"
+   ],
+   [
+    "NORMA",
+    "art. 90.4 LRJS"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

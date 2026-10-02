@@ -1,0 +1,1379 @@
+{
+ "01-poliza-cuestionario-salud.pdf.txt": {
+  "oro": [
+   [
+    "CIF",
+    "A-58316702"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Mercantil de Barcelona"
+   ],
+   [
+    "ORGANISMO",
+    "DGSFP"
+   ],
+   [
+    "PERSONA",
+    "ORIOL VENTOSA RIBERA"
+   ],
+   [
+    "PERSONA",
+    "Ramon Pujades Coll"
+   ],
+   [
+    "PERSONA",
+    "Oriol Ventosa"
+   ],
+   [
+    "PERSONA",
+    "R. Pujades"
+   ],
+   [
+    "PERSONA",
+    "A. Mestres"
+   ],
+   [
+    "DNI",
+    "46738215-T"
+   ],
+   [
+    "DIRECCION",
+    "C/ de Sant Antoni Maria Claret, 271, 4.º 2.ª, 08041 Barcelona"
+   ],
+   [
+    "TELEFONO",
+    "659 204 718"
+   ],
+   [
+    "CORREO",
+    "oriol.ventosa79@gmail.com"
+   ],
+   [
+    "IBAN",
+    "ES21 2100 0813 6102 0047 3318"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CUESTIONARIO DE SALUD (cumplimentado en la oficina de la agencia el 14/01/2021)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso: 129 kg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC calculado por la compañía: 41,6",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tensión alta, toma enalapril 20 mg. Ronca mucho.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apendicitis (1998). Rodilla derecha, menisco (2012).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sobrepeso. Azúcar algo alto en la analítica de empresa, sin tratamiento.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumador de 10 cig./día. Alcohol social.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Madre diabética (insulina) e infarto a los 61. Padre fallecido de ictus a los 70.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC > 40. HTA. Prediabetes. Probable SAHS.",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-carta-rechazo-aseguradora.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Oriol Ventosa Ribera"
+   ],
+   [
+    "PERSONA",
+    "Ventosa"
+   ],
+   [
+    "PERSONA",
+    "Núria Cortada Vilalta"
+   ],
+   [
+    "PERSONA",
+    "Pere Garriga Solé"
+   ],
+   [
+    "PERSONA",
+    "Garriga"
+   ],
+   [
+    "PERSONA",
+    "Albert Mestres Riba"
+   ],
+   [
+    "DIRECCION",
+    "C/ de Sant Antoni Maria Claret, 271, 4.º 2.ª"
+   ],
+   [
+    "ORGANISMO",
+    "Clínica Diagonal Nord"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad del Sueño"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Reclamaciones de la Dirección General de Seguros y Fondos de Pensiones"
+   ],
+   [
+    "NORMA",
+    "artículo 10 de la Ley 50/1980, de 8 de octubre, de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "Orden ECO/734/2004, de 11 de marzo"
+   ],
+   [
+    "NORMA",
+    "Ley 7/2017, de 2 de noviembre"
+   ],
+   [
+    "OBJETO",
+    "cirugía bariátrica"
+   ],
+   [
+    "OBJETO",
+    "obesidad mórbida"
+   ],
+   [
+    "OBJETO",
+    "depresión"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gastrectomía vertical laparoscópica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Programa de hospital de día psiquiátrico (8 semanas) y tratamiento con estimulación magnética transcraneal (EMT, 30 sesiones)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un peso de 129 kg y una talla de 1,76 m",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apnea del sueño, diabetes tipo 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un primer episodio depresivo en el año 2015, tratado con fluoxetina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "seguimiento de su apnea",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-endocrinologia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "CLÍNICA DIAGONAL NORD"
+   ],
+   [
+    "ORGANISMO",
+    "Unitat d'Obesitat i Cirurgia Metabòlica"
+   ],
+   [
+    "ORGANISMO",
+    "Servei d'Endocrinologia i Nutrició"
+   ],
+   [
+    "ORGANISMO",
+    "CAP Sant Martí - Provençals"
+   ],
+   [
+    "ORGANISMO",
+    "Unitat del Son"
+   ],
+   [
+    "ORGANISMO",
+    "CatSalut"
+   ],
+   [
+    "ORGANISMO",
+    "SECO"
+   ],
+   [
+    "PERSONA",
+    "Oriol Ventosa Ribera"
+   ],
+   [
+    "PERSONA",
+    "Núria Cortada Vilalta"
+   ],
+   [
+    "PERSONA",
+    "Garriga"
+   ],
+   [
+    "PERSONA",
+    "Laia Bassols Pi"
+   ],
+   [
+    "NUSS",
+    "DN-0098214"
+   ],
+   [
+    "NUSS",
+    "VERI 1790619 007"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Valoració per a cirurgia bariàtrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Obesitat des de l'adolescència, amb increment ponderal progressiu (+28 kg en els darrers 6 anys)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Múltiples intents dietètics fracassats supervisats",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "liraglutida (Saxenda) 3 mg/dia durant 9 mesos el 2022 amb pèrdua de 7 kg i recuperació posterior",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "semaglutida (Ozempic) 1 mg setmanal des de maig de 2023, amb intolerància digestiva (nàusees i vòmits)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipertensió arterial (HTA) des de 2018: enalapril 20 mg + amlodipina 5 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetis mellitus tipus 2 (DM2) diagnosticada el 2022: metformina 850 mg/12 h + semaglutida. HbA1c 7,9 %.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome d'apnees-hipopnees del son (SAHS) greu: polisomnografia (09/2023) amb IAH de 52/h, saturació mínima 74 %, T90 del 31 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En tractament amb CPAP a 11 cm H2O, amb mala adherència (< 3 h/nit) per claustrofòbia i ferides nasals",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esteatosi hepàtica (fetge gras) amb transaminases elevades (GPT 78) i FibroScan F2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gonartrosi bilateral, meniscectomia dreta (2012). Dolor que limita la marxa a 300 m.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Depressió en seguiment per psiquiatria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vortioxetina (Brintellix)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L'estat d'ànim afecta l'adherència a la dieta i fa ingestes compulsives nocturnes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumador des de 2023 (10 cig./dia, IPA 25). Consum d'alcohol actualment nul",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apendicectomia (1998)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mare amb DM2 insulinodependent i cardiopatia isquèmica (IAM als 61 anys). Pare mort d'un AVC als 70 anys. Germana amb obesitat grau II.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pes 138,4 kg. Talla 1,76 m. IMC 44,7 kg/m². Perímetre de cintura 141 cm. TA 148/94 mmHg. Acantosi nigricans a coll i aixelles. Edemes mal·leolars bilaterals.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "glucosa 162 mg/dl, HbA1c 7,9 %, colesterol total 236, LDL 151, triglicèrids 289, HDL 34, GPT 78, GGT 112, àcid úric 8,4, vitamina D 14 ng/ml, ferritina normal. TSH 2,1.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estudi genètic d'obesitat monogènica (panell de 42 gens, inclosos MC4R, LEPR i POMC): no s'identifiquen variants patogèniques.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esteatosi hepàtica greu; colelitiasi no complicada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hèrnia de hiat petita, sense esòfag de Barrett. Helicobacter pylori negatiu.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Valoració psicològica prequirúrgica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apte, amb recomanació de mantenir el seguiment psiquiàtric",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Obesitat mòrbida (grau III, IMC 44,7) amb comorbiditats greus.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SAHS greu amb mala tolerància a la CPAP.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 mal controlada malgrat tractament amb agonistes de GLP-1.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA de difícil control.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esteatosi hepàtica amb fibrosi moderada.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorn depressiu en tractament.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cirurgia bariàtrica (IMC > 40, o > 35 amb comorbiditats)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fracàs documentat del tractament mèdic durant més de 5 anys",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GASTRECTOMIA VERTICAL LAPAROSCÒPICA (sleeve), amb colecistectomia simultània",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tractament de la seva obesitat mòrbida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "remissió de la DM2 en un 60-70 %, la millora o resolució del SAHS i de l'HTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apnees greus sense tractament eficaç, progressió de la fibrosi hepàtica i un risc cardiovascular estimat (REGICOR) elevat",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-psiquiatria.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Pere Garriga Solé"
+   ],
+   [
+    "PERSONA",
+    "Oriol Ventosa Ribera"
+   ],
+   [
+    "PERSONA",
+    "Laia Bassols Pi"
+   ],
+   [
+    "PERSONA",
+    "Xavier Montaner Bosch"
+   ],
+   [
+    "PERSONA",
+    "Cortada"
+   ],
+   [
+    "DNI",
+    "46738215-T"
+   ],
+   [
+    "DIRECCION",
+    "Rambla de Catalunya, 88, pral. 1a"
+   ],
+   [
+    "TELEFONO",
+    "932 154 370"
+   ],
+   [
+    "ORGANISMO",
+    "COMB"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME PSIQUIÀTRIC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "clínica depressiva de mesos d'evolució",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tristesa persistent, anhedònia, insomni de manteniment (es desperta a les 4 h), astènia intensa, dificultats de concentració, sentiments de culpa i de fracàs relacionats amb el pes, aïllament social i idees passives de mort",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de vegades penso que tothom estaria millor sense mi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sense ideació autolítica estructurada ni intents previs",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sertralina fins a 150 mg/dia durant 4 mesos, amb resposta parcial i disfunció sexual que va motivar el canvi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "venlafaxina retard fins a 225 mg/dia (Vandral) durant 5 mesos, sense remissió",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vortioxetina (Brintellix) 20 mg/dia + mirtazapina 15 mg nocturna, més trazodona (Deprax) 100 mg si insomni",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "18 sessions de psicoteràpia cognitivoconductual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escala de Hamilton (HDRS-17): 24 a l'inici; 21 en la darrera visita (12/02/2025). PHQ-9: 19.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Primer episodi depressiu el 2015, reactiu a una ruptura sentimental, tractat pel metge de família amb fluoxetina (Prozac) 20 mg durant uns 6 mesos, amb remissió completa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consum d'alcohol de risc entre 2014 i 2017 (4-6 UBE/dia els caps de setmana)",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "L'any 2017 va ser condemnat per un delicte contra la seguretat viària per conduir amb una taxa d'alcoholèmia de 0,78 mg/l, amb retirada del permís durant 14 mesos i treballs en benefici de la comunitat"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Des de llavors, abstinent",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GGT elevada atribuïble a l'esteatosi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consum puntual de cànnabis a la joventut",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Obesitat mòrbida, SAHS greu, DM2 i HTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Delegat sindical d'USTEC·STEs al seu centre des de 2020",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Home homosexual",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la disminució de la libido",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "té una diabetis amb complicacions",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurs coherent, bradipsíquic",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estat d'ànim marcadament deprimit, amb anhedònia i desesperança. Ansietat associada. Idees de mort passives sense pla.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insomni mixt. Hiperfàgia nocturna.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consciència de malaltia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorn depressiu major, episodi recurrent, greu sense símptomes psicòtics (F33.2), resistent a dos antidepressius a dosi i temps adequats.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorn per consum d'alcohol en remissió sostinguda (F10.21).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "obesitat mòrbida, SAHS, DM2, HTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "programa d'hospital de dia psiquiàtric (8 setmanes) i estimulació magnètica transcranial repetitiva (EMTr, 30 sessions sobre el còrtex prefrontal dorsolateral esquerre)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cirurgia bariàtrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apnea del son",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "remissió depressiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esketamina intranasal (Spravato)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el quadre actual (iniciat el 2023) és un episodi nou",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-correo-cliente-abogada.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Oriol Ventosa"
+   ],
+   [
+    "PERSONA",
+    "Ingrid Soler"
+   ],
+   [
+    "PERSONA",
+    "Ingrid"
+   ],
+   [
+    "PERSONA",
+    "Ramon"
+   ],
+   [
+    "PERSONA",
+    "Cortada"
+   ],
+   [
+    "PERSONA",
+    "Gemma"
+   ],
+   [
+    "PERSONA",
+    "Garriga"
+   ],
+   [
+    "PERSONA",
+    "Xavier"
+   ],
+   [
+    "PERSONA",
+    "Oriol Ventosa Ribera"
+   ],
+   [
+    "CORREO",
+    "oriol.ventosa79@gmail.com"
+   ],
+   [
+    "CORREO",
+    "ingrid.soler@solerpons-advocats.cat"
+   ],
+   [
+    "TELEFONO",
+    "659 204 718"
+   ],
+   [
+    "ORGANISMO",
+    "Clinica Diagonal Nord"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la obesidad ya la tenia cuando firmé",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en 2015 tome prozac",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la depresión de hace años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tenia la tension alta y que roncaba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el azucar a 7,9 de hemoglobina glicosilada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las apneas que tengo (52 por hora, me paro de respirar mientras duermo y la maquina de la CPAP no la soporto)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me estaba jugando un infarto como mi madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me hicieron el sleeve (la gastrectomia vertical)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me quitaron la vesicula que tenia piedras",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tres dias ingresado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya he perdido 9 kilos, solo tomo liquidos y purés, y me han quitado la metformina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la cabeza va regular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sigo con el Brintellix y la mirtazapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la estimulacion magnetica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hay dias que no me levanto de la cama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy de baja desde el 10 de marzo (depresión, me la ha dado la metgessa del CAP)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las elecciones sindicales de USTEC en el centro, que me tocaba a mi como delegado",
+    "sindical"
+   ],
+   [
+    "DATO_PENAL",
+    "me condenaron en 2017 por lo de la alcoholemia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde entonces no bebo nada, ni una cerveza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no podia ni subir las escaleras del metro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la depresion",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estamos juntos desde 2019",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi madre esta fatal con la diabetes, ahora le van a cortar un dedo del pie",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reza por mi cada domingo en la parroquia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "seccion local de ERC (soy el secretario",
+    "politica"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-reclamacion-dgsfp.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO DE RECLAMACIONES DE LA DIRECCIÓN GENERAL DE SEGUROS Y FONDOS DE PENSIONES"
+   ],
+   [
+    "ORGANISMO",
+    "Il·lustre Col·legi de l'Advocacia de Barcelona"
+   ],
+   [
+    "ORGANISMO",
+    "DGSFP"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Atención al Cliente"
+   ],
+   [
+    "ORGANISMO",
+    "Clínica Diagonal Nord"
+   ],
+   [
+    "ORGANISMO",
+    "Sala Primera"
+   ],
+   [
+    "PERSONA",
+    "Oriol Ventosa Ribera"
+   ],
+   [
+    "PERSONA",
+    "Ingrid Soler Pons"
+   ],
+   [
+    "PERSONA",
+    "Ventosa"
+   ],
+   [
+    "PERSONA",
+    "Ramon Pujades Coll"
+   ],
+   [
+    "PERSONA",
+    "Núria Cortada Vilalta"
+   ],
+   [
+    "PERSONA",
+    "Pere Garriga Solé"
+   ],
+   [
+    "PERSONA",
+    "Garriga"
+   ],
+   [
+    "DNI",
+    "46738215-T"
+   ],
+   [
+    "CIF",
+    "A-58316702"
+   ],
+   [
+    "DIRECCION",
+    "C/ de Sant Antoni Maria Claret, 271, 4.º 2.ª, 08041 Barcelona"
+   ],
+   [
+    "DIRECCION",
+    "Via Augusta, 59, 3.º, 08006 Barcelona"
+   ],
+   [
+    "TELEFONO",
+    "934 157 220"
+   ],
+   [
+    "CORREO",
+    "ingrid.soler@solerpons-advocats.cat"
+   ],
+   [
+    "AUTOS",
+    "SAC-25-04417"
+   ],
+   [
+    "NORMA",
+    "art. 3 de la Ley 50/1980, de 8 de octubre, de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "STS 402/2015, de 14 de julio"
+   ],
+   [
+    "NORMA",
+    "STS 58/2019, de 29 de enero"
+   ],
+   [
+    "NORMA",
+    "art. 10 LCS"
+   ],
+   [
+    "NORMA",
+    "STS 333/2020, de 22 de junio"
+   ],
+   [
+    "NORMA",
+    "art. 12 de la Ley 26/2006, de 17 de julio"
+   ],
+   [
+    "NORMA",
+    "art. 146 del Real Decreto-ley 3/2020, de 4 de febrero"
+   ],
+   [
+    "OBJETO",
+    "cirugía bariátrica"
+   ],
+   [
+    "OBJETO",
+    "obesidad mórbida"
+   ],
+   [
+    "OBJETO",
+    "depresión"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un peso de 129 kg para una talla de 1,76 m",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un IMC de 41,6",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la hipertensión en tratamiento con enalapril, el ronquido, el «azúcar algo alto» y el tabaquismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC > 40. HTA. Prediabetes. Probable SAHS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una gastrectomía vertical laparoscópica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC de 44,7",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de apnea del sueño grave (IAH 52/h) con intolerancia a la CPAP, una diabetes tipo 2 mal controlada pese a la semaglutida (HbA1c 7,9 %), hipertensión y esteatosis hepática con fibrosis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un programa de hospital de día psiquiátrico y estimulación magnética transcraneal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la falta de respuesta a sertralina y a venlafaxina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo de 2015",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el episodio de 2015, tratado por el médico de familia durante seis meses y resuelto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se ha sometido a la intervención",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El cuadro depresivo actual es un episodio nuevo, iniciado en 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un antiguo consumo de alcohol",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "una condena de tráfico de 2017"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psiquiátrico prescrito",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-factura-clinica.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "CLINICA DIAGONAL N0RD"
+   ],
+   [
+    "ORGANISMO",
+    "CIRURGIA GENERAL I DIGESTIVA - UNITAT D 0BESITAT"
+   ],
+   [
+    "CIF",
+    "B-6l482093"
+   ],
+   [
+    "PERSONA",
+    "VENT0SA RIBERA, 0RI0L"
+   ],
+   [
+    "PERSONA",
+    "ANDREU FELIU 0LIVERAS"
+   ],
+   [
+    "PERSONA",
+    "M0NTSERRAT CASALS"
+   ],
+   [
+    "DNI",
+    "46738215-T"
+   ],
+   [
+    "DIRECCION",
+    "C/ DE SANT ANT0NI MARIA CLARET, 27l, 4 2, 08041 BARCEL0NA"
+   ],
+   [
+    "NUSS",
+    "DN-00982l4"
+   ],
+   [
+    "IBAN",
+    "ES2l 2l00 08l3 6l02 0047 33l8"
+   ],
+   [
+    "NORMA",
+    "ART. 20.U.3 LLEI 37/l992"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "H0SPITALITZACI0 QUIRURGICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0BESITAT M0RBIDA (IMC 44,7) - SAHS GREU - DM2 - C0LELITIASI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GASTRECT0MIA VERTICAL LAPAR0SC0PICA + C0LECISTECT0MIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REANIMACI0 P0STQUIRURGICA (URPA) + M0NIT0RITZACI0 CPAP",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FARMACIA H0SPITALARIA (ENOXAPARINA, ANALGESIA, IBP)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VAL0RACI0 NUTRICI0NAL I PAUTA DIETA P0SQUIRURGICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRANSIT ESOFAG0GASTRIC (C0NTRAST)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANAT0MIA PAT0L0GICA (PECA GASTRICA + VESICULA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0RTAD0R DE CPAP DURANT L EST ADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AL·LERGIES: N0 C0NEGUDES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PREVISI0 RE0PERACI0 PER EXCES DE PELL (ABD0MIN0PLASTIA)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-juicio-ordinario.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE BARCELONA"
+   ],
+   [
+    "PERSONA",
+    "EULÀLIA ROCA MARTÍ"
+   ],
+   [
+    "PERSONA",
+    "ORIOL VENTOSA RIBERA"
+   ],
+   [
+    "PERSONA",
+    "INGRID SOLER PONS"
+   ],
+   [
+    "PERSONA",
+    "Ramon Pujades Coll"
+   ],
+   [
+    "PERSONA",
+    "Albert Mestres Riba"
+   ],
+   [
+    "PERSONA",
+    "Ventosa"
+   ],
+   [
+    "PERSONA",
+    "Xavier Montaner Bosch"
+   ],
+   [
+    "PERSONA",
+    "Ingrid Soler Pons"
+   ],
+   [
+    "PERSONA",
+    "Eulàlia Roca Martí"
+   ],
+   [
+    "PERITO",
+    "Núria Cortada Vilalta"
+   ],
+   [
+    "PERITO",
+    "Pere Garriga Solé"
+   ],
+   [
+    "DNI",
+    "46738215-T"
+   ],
+   [
+    "CIF",
+    "A-58316702"
+   ],
+   [
+    "DIRECCION",
+    "C/ de Sant Antoni Maria Claret, 271, 4.º 2.ª, 08041"
+   ],
+   [
+    "ORGANISMO",
+    "ICAB"
+   ],
+   [
+    "ORGANISMO",
+    "SECO"
+   ],
+   [
+    "ORGANISMO",
+    "IFSO"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Atención al Cliente"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Seguros y Fondos de Pensiones"
+   ],
+   [
+    "ORGANISMO",
+    "Clínica Diagonal Nord"
+   ],
+   [
+    "AUTOS",
+    "R-2025/08812"
+   ],
+   [
+    "NORMA",
+    "arts. 45 y 51.1 de la LEC"
+   ],
+   [
+    "NORMA",
+    "art. 24 LCS"
+   ],
+   [
+    "NORMA",
+    "arts. 249.1.5.º y 249.2 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 3 LCS"
+   ],
+   [
+    "NORMA",
+    "STS 402/2015, de 14 de julio"
+   ],
+   [
+    "NORMA",
+    "STS 58/2019, de 29 de enero"
+   ],
+   [
+    "NORMA",
+    "STS 421/2020, de 14 de julio"
+   ],
+   [
+    "NORMA",
+    "art. 10 LCS"
+   ],
+   [
+    "NORMA",
+    "STS 333/2020, de 22 de junio"
+   ],
+   [
+    "NORMA",
+    "STS 53/2023, de 16 de enero"
+   ],
+   [
+    "NORMA",
+    "arts. 5 y 7 de la Ley 7/1998, de 13 de abril, sobre Condiciones Generales de la Contratación"
+   ],
+   [
+    "NORMA",
+    "art. 1288 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "art. 80 del Real Decreto Legislativo 1/2007, de 16 de noviembre"
+   ],
+   [
+    "NORMA",
+    "art. 20 LCS"
+   ],
+   [
+    "OBJETO",
+    "cirugía bariátrica"
+   ],
+   [
+    "OBJETO",
+    "obesidad mórbida"
+   ],
+   [
+    "OBJETO",
+    "depresión"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "129 kg de peso y 1,76 m de talla, su hipertensión con enalapril, que roncaba, que tenía «el azúcar algo alto» y que fumaba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC > 40. HTA. Prediabetes. Probable SAHS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de grado III (IMC 44,7)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de apneas-hipopneas del sueño grave (IAH 52/h, saturación mínima del 74 %) que no tolera la CPAP, una diabetes mellitus tipo 2 mal controlada (HbA1c 7,9 %) pese a la metformina, a la liraglutida (Saxenda) y a la semaglutida (Ozempic), hipertensión de difícil control y esteatosis hepática con fibrosis F2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El estudio genético de obesidad monogénica fue negativo",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una gastrectomía vertical laparoscópica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mayor recurrente, grave, resistente a dos antidepresivos (sertralina y venlafaxina), con insomnio, anhedonia e ideas pasivas de muerte, en tratamiento con vortioxetina y mirtazapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un programa de hospital de día y estimulación magnética transcraneal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo de 2015, tratado con fluoxetina por el médico de cabecera durante seis meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gastrectomía vertical y colecistectomía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha perdido 21 kg, se ha retirado la metformina y la poligrafía de control muestra un IAH de 18/h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psiquiátrico prescrito",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un consumo de alcohol en el pasado",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "una condena por alcoholemia de 2017"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pareja del actor",
+    "sexual"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

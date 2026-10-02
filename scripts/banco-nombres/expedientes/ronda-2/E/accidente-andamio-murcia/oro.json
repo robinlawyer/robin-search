@@ -1,0 +1,1942 @@
+{
+  "01-parte-accidente-empresa.pdf.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "ALBALADEJO SÁNCHEZ, GINÉS"
+      ],
+      [
+        "PERSONA",
+        "Francisco Meroño Lax"
+      ],
+      [
+        "PERSONA",
+        "José Antonio Ruiz Abellán"
+      ],
+      [
+        "PERSONA",
+        "Antonio Cánovas Pina"
+      ],
+      [
+        "PERSONA",
+        "Juan Pedro Segura Hellín"
+      ],
+      [
+        "DNI",
+        "23284917K"
+      ],
+      [
+        "NUSS",
+        "30 1048372215"
+      ],
+      [
+        "DIRECCION",
+        "C/ Mayor, 47, 2.º B"
+      ],
+      [
+        "DIRECCION",
+        "30120"
+      ],
+      [
+        "TELEFONO",
+        "659 21 43 08"
+      ],
+      [
+        "TELEFONO",
+        "618 40 22 97"
+      ],
+      [
+        "CIF",
+        "B73519846"
+      ],
+      [
+        "AUTOS",
+        "30/2025/000318744"
+      ],
+      [
+        "NORMA",
+        "Orden TAS/2926/2002"
+      ],
+      [
+        "ORGANISMO",
+        "MINISTERIO DE TRABAJO Y ECONOMÍA SOCIAL"
+      ],
+      [
+        "ORGANISMO",
+        "IBERMUTUA, Mutua Colaboradora con la Seguridad Social n.º 274"
+      ],
+      [
+        "ORGANISMO",
+        "Hospital Clínico Universitario Virgen de la Arrixaca"
+      ],
+      [
+        "ORGANISMO",
+        "Servicio de Urgencias HCUV Arrixaca"
+      ],
+      [
+        "ORGANISMO",
+        "Fundación Laboral de la Construcción"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Traumatismo craneoencefálico grave. Fracturas múltiples (pierna derecha, muñeca izquierda, columna lumbar). Traumatismo torácico.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "120 — Fracturas cerradas / 052 — Conmoción y lesiones internas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "GRAVE",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "18 — Lesiones múltiples / 11 — Cabeza",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hospitalaria",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "SÍ — ingreso en UCI",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "desde el día siguiente a la baja",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "APTO CON RESTRICCIONES por hipertensión arterial en tratamiento y diabetes tipo 2",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "evitar trabajos en altura superiores a 2 m sin supervisión",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "02-informe-inspeccion-trabajo.pdf.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "Ginés Albaladejo Sánchez"
+      ],
+      [
+        "PERSONA",
+        "Francisco Meroño Lax"
+      ],
+      [
+        "PERSONA",
+        "Andrés Olmos Gil"
+      ],
+      [
+        "PERSONA",
+        "José Antonio Ruiz Abellán"
+      ],
+      [
+        "PERSONA",
+        "Juan Pedro Segura Hellín"
+      ],
+      [
+        "PERSONA",
+        "Antonio Cánovas Pina"
+      ],
+      [
+        "PERSONA",
+        "Rocío Bernal Ortuño"
+      ],
+      [
+        "DNI",
+        "23284917K"
+      ],
+      [
+        "NUSS",
+        "30 1048372215"
+      ],
+      [
+        "CIF",
+        "B73519846"
+      ],
+      [
+        "AUTOS",
+        "30/0004127/25"
+      ],
+      [
+        "AUTOS",
+        "RP 30/2025/0211"
+      ],
+      [
+        "AUTOS",
+        "I302025000123456"
+      ],
+      [
+        "ORGANISMO",
+        "MINISTERIO DE TRABAJO Y ECONOMÍA SOCIAL"
+      ],
+      [
+        "ORGANISMO",
+        "INSPECCIÓN PROVINCIAL DE TRABAJO Y SEGURIDAD SOCIAL DE MURCIA"
+      ],
+      [
+        "ORGANISMO",
+        "Dirección Provincial del Instituto Nacional de la Seguridad Social de Murcia"
+      ],
+      [
+        "ORGANISMO",
+        "Instituto de Seguridad y Salud Laboral de la Región de Murcia"
+      ],
+      [
+        "ORGANISMO",
+        "Dirección Provincial del INSS"
+      ],
+      [
+        "ORGANISMO",
+        "Comité de Seguridad y Salud"
+      ],
+      [
+        "NORMA",
+        "art. 164 del texto refundido de la Ley General de la Seguridad Social, aprobado por Real Decreto Legislativo 8/2015, de 30 de octubre"
+      ],
+      [
+        "NORMA",
+        "apartado 4.3.7 del Anexo II del Real Decreto 1215/1997, de 18 de julio"
+      ],
+      [
+        "NORMA",
+        "art. 22.4 de la Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+      ],
+      [
+        "NORMA",
+        "Art. 14, 15.1 y 17.1 de la Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+      ],
+      [
+        "NORMA",
+        "Anexo IV, parte C, apartado 3 del Real Decreto 1627/1997, de 24 de octubre"
+      ],
+      [
+        "NORMA",
+        "Anexo II, apartados 4.3.3 a 4.3.7 del Real Decreto 1215/1997, de 18 de julio"
+      ],
+      [
+        "NORMA",
+        "Art. 12.16.b) y 13.10 del texto refundido de la Ley sobre Infracciones y Sanciones en el Orden Social (Real Decreto Legislativo 5/2000, de 4 de agosto)"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "designado por la sección sindical de CCOO de Construcción y Servicios",
+        "sindical"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Grave (posteriormente, con secuelas incapacitantes)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "apto con restricciones",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el resultado de etanol en sangre fue negativo y no consta consumo de sustancias por el trabajador",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "traumatismo craneoencefálico grave con hematoma subdural agudo que precisó craneotomía urgente, fractura de meseta tibial derecha, fractura vertebral de L1 y fractura de radio distal izquierdo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ingreso de 12 días en la UCI y 39 días de hospitalización total",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Continúa en situación de incapacidad temporal",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "03-informe-alta-hospitalaria.pdf.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "ALBALADEJO SÁNCHEZ, GINÉS"
+      ],
+      [
+        "PERSONA",
+        "Fulgencio Marín Cascales"
+      ],
+      [
+        "PERSONA",
+        "Lucía Pagán Martínez"
+      ],
+      [
+        "NUSS",
+        "1187342"
+      ],
+      [
+        "NUSS",
+        "MRSA730711004"
+      ],
+      [
+        "NUSS",
+        "25-0074213"
+      ],
+      [
+        "ORGANISMO",
+        "Servicio Murciano de Salud"
+      ],
+      [
+        "ORGANISMO",
+        "HOSPITAL CLÍNICO UNIVERSITARIO VIRGEN DE LA ARRIXACA"
+      ],
+      [
+        "ORGANISMO",
+        "SERVICIO DE NEUROCIRUGÍA"
+      ],
+      [
+        "ORGANISMO",
+        "Centro de Salud El Palmar"
+      ],
+      [
+        "ORGANISMO",
+        "Ibermutua"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "INFORME DE ALTA HOSPITALARIA",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fecha de ingreso: 14/03/2025 (vía Urgencias, traslado por 061)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fecha de alta: 22/04/2025",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Servicios: UCI (14/03 – 26/03) → Neurocirugía (26/03 – 22/04), con interconsultas a Traumatología y Cirugía Ortopédica, Cirugía Torácica, Endocrinología y Psiquiatría de enlace.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "politraumatizado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "GCS 7 (O1 V2 M4), anisocoria con midriasis izquierda, otorragia izquierda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Intubación orotraqueal in situ",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Alergia a penicilina (exantema)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "HTA de 8 años de evolución en tto. con enalapril 20 mg/24 h",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "DM2 diagnosticada en 2019, en tto. con metformina 850 mg/12 h (Dianben)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Mal control: HbA1c 7,8 %",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Dislipemia en tratamiento con atorvastatina 20 mg",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hepatitis C crónica genotipo 1b, tratada con sofosbuvir/velpatasvir (Epclusa) en 2018, con respuesta viral sostenida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Exfumador de 20 paq./año desde 2016",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Exenolismo: consumo perjudicial de alcohol hasta 2017, en abstinencia desde entonces (seguimiento en el Centro de Atención a Drogodependencias de Murcia hasta 2019)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Apendicectomía en la infancia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "independiente para ABVD",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Testigo de Jehová: NO (se confirma con la familia que acepta hemoderivados; se registró inicialmente por error en el triaje)",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Familia refiere que acude a la Iglesia Evangélica de Filadelfia",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TA 92/54 mmHg, FC 118 lpm, SatO2 89 % con FiO2 0,5",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Pupila izquierda midriática arreactiva",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hipoventilación en hemitórax izquierdo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Deformidad y crepitación en pierna derecha y muñeca izquierda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "eFAST negativo para líquido libre",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "hematoma subdural agudo frontoparietal izquierdo de 14 mm de grosor con desviación de línea media de 9 mm; contusiones hemorrágicas frontobasales bilaterales; hemorragia subaracnoidea traumática en surcos de convexidad; fractura lineal temporal izquierda que se extiende a peñasco",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "fracturas costales 5.ª a 8.ª izquierdas con hemoneumotórax izquierdo; fractura-acuñamiento de L1 (AO A3) con pérdida de altura del 35 % sin compromiso del canal; fractura conminuta de meseta tibial derecha (Schatzker V); fractura de extremidad distal de radio izquierdo (AO 23-C2)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hb 8,9 g/dl; leucocitos 18.300; plaquetas 142.000; glucemia 212 mg/dl; lactato 4,1 mmol/l; CK 3.240 U/l; etanol en sangre < 10 mg/dl (negativo); tóxicos en orina negativos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "lesión axonal difusa grado II (focos de microsangrado en cuerpo calloso y sustancia blanca frontal), encefalomalacia frontal izquierda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "actividad epileptiforme frontotemporal izquierda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se realiza craneotomía urgente frontoparietal izquierda con evacuación del hematoma subdural y colocación de sensor de PIC (14/03)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Drenaje torácico izquierdo (14/03)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Transfusión de 4 concentrados de hematíes",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Estancia en UCI con sedación profunda, ventilación mecánica 9 días y traqueostomía percutánea (19/03), decanulado el 02/04",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Osteosíntesis de meseta tibial derecha con doble placa (Traumatología, 28/03)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Reducción y osteosíntesis de radio distal izquierdo con placa volar (28/03)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fractura de L1: tratamiento conservador con corsé tipo Jewett",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "presenta dos crisis comiciales focales con generalización secundaria (05/04 y 09/04), por lo que se inicia levetiracetam",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Cuadro de agitación psicomotriz y desorientación (síndrome confusional postraumático)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "valorado por Psiquiatría de enlace, que pauta quetiapina a dosis bajas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hiperglucemias de difícil control que requieren insulina en pauta basal-bolo, posteriormente reconvertida a antidiabéticos orales",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "consciente, orientado en persona, parcialmente en tiempo; amnesia postraumática que se prolonga 21 días; bradipsiquia, fallos de memoria reciente, desinhibición verbal",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Anosmia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Moviliza 4 extremidades; deambula con andador sin carga en MID",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Traumatismo craneoencefálico grave (GCS 7) con hematoma subdural agudo frontoparietal izquierdo intervenido; contusiones frontales bilaterales; HSA traumática; lesión axonal difusa grado II.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Epilepsia postraumática sintomática",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Síndrome confusional postraumático resuelto parcialmente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fractura de meseta tibial derecha Schatzker V intervenida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fractura-acuñamiento de L1 (A3), tratamiento ortopédico",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fractura de radio distal izquierdo intervenida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fracturas costales 5.ª-8.ª izquierdas con hemoneumotórax, drenado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Anemia posthemorrágica",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "DM2 descompensada. HTA.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Keppra (levetiracetam) 500 mg: 1 comp. cada 12 h",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Quetiapina 25 mg: 1 comp. por la noche",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Clexane (enoxaparina) 40 mg sc cada 24 h durante 30 días",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Zaldiar (tramadol 37,5 mg / paracetamol 325 mg): 1 comp. cada 8 h si dolor",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Omeprazol 20 mg en ayunas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Metformina 850 mg cada 12 h y sitagliptina 100 mg/24 h",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Enalapril 20 mg/24 h. Atorvastatina 20 mg.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Corsé de Jewett en bipedestación durante 3 meses. Férula antebraquial 4 semanas.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No conducir. No consumir alcohol.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Revisión en consultas externas de Neurocirugía en 6 semanas con TC de control",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Traumatología en 4 semanas con radiografías",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se remite a Rehabilitación (mutua) y a Unidad de Daño Cerebral para valoración neuropsicológica",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "04-informe-rehabilitacion.pdf.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "Ginés Albaladejo Sánchez"
+      ],
+      [
+        "PERSONA",
+        "Inmaculada Soler Navarro"
+      ],
+      [
+        "NUSS",
+        "30 1048372215"
+      ],
+      [
+        "AUTOS",
+        "AT-30-2025-004819"
+      ],
+      [
+        "ORGANISMO",
+        "IBERMUTUA — Mutua Colaboradora con la Seguridad Social n.º 274"
+      ],
+      [
+        "ORGANISMO",
+        "Servicio de Rehabilitación y Medicina Física"
+      ],
+      [
+        "ORGANISMO",
+        "HCUV Arrixaca"
+      ],
+      [
+        "ORGANISMO",
+        "Unidad de Neuropsicología"
+      ],
+      [
+        "ORGANISMO",
+        "Equipo de Valoración de Incapacidades"
+      ],
+      [
+        "ORGANISMO",
+        "Atención Primaria"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "INFORME DE REHABILITACIÓN (propuesta de alta por agotamiento de posibilidades terapéuticas)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Inicio de tratamiento rehabilitador: 05/05/2025",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "politraumatismo por caída de altura, con TCE grave intervenido, fractura de meseta tibial derecha intervenida, fractura de L1 con tratamiento ortopédico y fractura de radio distal izquierdo intervenida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ha realizado 128 sesiones de fisioterapia (cinesiterapia, hidroterapia, electroterapia analgésica, reeducación de la marcha) y 46 sesiones de terapia ocupacional",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "20 sesiones de logopedia por disartria leve y dificultades de evocación",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el paciente se negaba a acudir y tenía «ataques de rabia»",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tras ajuste de tratamiento psiquiátrico mejora la adherencia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "acude al culto en su iglesia evangélica",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "claudicante, con apoyo de un bastón inglés en mano derecha",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No tolera marcha prolongada (> 300 m) ni terreno irregular",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Imposible la marcha en puntillas y talones con MID",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No sube escaleras sin pasamanos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "cicatriz quirúrgica de 22 cm en cara anterolateral, adherida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Balance articular: flexión 85º (contralateral 135º), extensión −10º",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Derrame articular leve",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Inestabilidad en varo 1+",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Atrofia de cuádriceps de 3,5 cm a 10 cm del polo superior de la rótula",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Balance muscular (Daniels): cuádriceps 3+/5, isquiotibiales 4/5",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "dolor a la palpación de apófisis espinosa L1-L2, EVA 6/10",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Flexión limitada (dedos-suelo 38 cm)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Lasègue negativo bilateral",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Contractura paravertebral bilateral",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "flexión palmar 40º, extensión 35º, desviación cubital 15º",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Pérdida de fuerza de prensión: dinamometría Jamar 18 kg (derecha 41 kg)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Parestesias en territorio del nervio mediano; EMG compatible con síndrome del túnel carpiano izquierdo postraumático leve-moderado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Romberg inestable. Escala de Berg 41/56 (riesgo moderado de caídas)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Índice de Barthel: 85/100 (precisa ayuda para baño y escaleras)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Escala de Lawton y Brody: 3/8 (no maneja dinero ni medicación, no utiliza transporte público solo)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No conduce desde el accidente por indicación de Neurología (epilepsia postraumática)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Lentitud de procesamiento, olvida las pautas de ejercicios de una sesión a otra y necesita cuaderno de apoyo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Irritabilidad, baja tolerancia a la frustración; en dos ocasiones abandona la sesión llorando",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Refiere insomnio y «pensamientos negros»",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ánimo deprimido",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "refiere estar también en tratamiento por ansiedad",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Levetiracetam 500 mg/12 h, sertralina 100 mg/día (desde junio), quetiapina 25 mg nocturna, pregabalina 75 mg/12 h (Lyrica) por dolor neuropático, metformina/sitagliptina (Janumet 50/1000) cada 12 h, enalapril 20 mg, atorvastatina 20 mg",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ha dejado el tramadol por somnolencia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Secuelas de TCE grave: síndrome postconmocional con deterioro cognitivo y trastorno del ánimo (pendiente de valoración neuropsicológica)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Gonartrosis postraumática derecha con limitación de la movilidad, tras fractura de meseta tibial Schatzker V",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Lumbalgia crónica postraumática tras fractura-acuñamiento de L1 consolidada con cifosis local de 18º",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Rigidez de muñeca izquierda y túnel carpiano postraumático",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Inestabilidad de la marcha con riesgo de caídas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ha alcanzado la estabilización lesional y ha agotado las posibilidades de mejoría con tratamiento rehabilitador",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Las limitaciones funcionales descritas son INCOMPATIBLES con su profesión habitual de oficial de albañilería",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se propone el alta en rehabilitación y el inicio de expediente de incapacidad permanente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se recomienda programa domiciliario de ejercicios",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "05-informe-neuropsicologico.pdf.txt": {
+    "oro": [
+      [
+        "PERITO",
+        "Elena Gallego Sarabia"
+      ],
+      [
+        "PERSONA",
+        "Encarnación Martínez Pastor"
+      ],
+      [
+        "PERSONA",
+        "Ginés Albaladejo Sánchez"
+      ],
+      [
+        "PERSONA",
+        "Carmen Cortés Heredia"
+      ],
+      [
+        "PERSONA",
+        "Raúl Albaladejo Cortés"
+      ],
+      [
+        "DIRECCION",
+        "Gran Vía Escultor Salzillo, 21, 4.º"
+      ],
+      [
+        "ORGANISMO",
+        "Consejo General de la Psicología de España"
+      ],
+      [
+        "ORGANISMO",
+        "Servicio de Neurocirugía del HCUV Arrixaca"
+      ],
+      [
+        "ORGANISMO",
+        "Ibermutua"
+      ],
+      [
+        "ORGANISMO",
+        "Unidad de Salud Mental de El Palmar"
+      ],
+      [
+        "NORMA",
+        "Real Decreto 1971/1999"
+      ],
+      [
+        "NORMA",
+        "tabla VI de la Ley 35/2015"
+      ],
+      [
+        "NORMA",
+        "art. 335.2 de la Ley de Enjuiciamiento Civil"
+      ],
+      [
+        "OBJETO",
+        "expediente de incapacidad permanente"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "INFORME PERICIAL NEUROPSICOLÓGICO",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "valoración del estado cognitivo, emocional y conductual del peritado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Informe de alta",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "RM cerebral de 08/04/2025 y TC de control de 03/06/2025",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Informe de Rehabilitación",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "seguimiento desde julio de 2025",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Sin antecedentes psiquiátricos previos al accidente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "un trastorno por consumo de alcohol en remisión sostenida desde 2017, que superó con apoyo de Alcohólicos Anónimos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "y de su congregación evangélica",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "de etnia gitana",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "en la iglesia, donde predicaba algunos domingos",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "MoCA (Montreal Cognitive Assessment): 17/30 (punto de corte 26)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TAVEC (aprendizaje verbal): ensayo 1: 3; total ensayos 1-5: 29 (Pc 4); recuerdo libre a largo plazo: 4 (Pc 2)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Muchas intrusiones y perseveraciones",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Figura compleja de Rey: copia 28/36 (Pc 10); memoria a los 3 minutos: 7/36 (Pc 3)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Trail Making Test: TMT-A 78 s (Pc 5); TMT-B abandonado a los 300 s tras 9 errores",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Test de Stroop: interferencia −14 (Pc 3)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fluidez verbal: fonémica (P) 6 palabras/min; semántica (animales) 11",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "WAIS-IV: Comprensión Verbal 81; Razonamiento Perceptivo 76; Memoria de Trabajo 69; Velocidad de Procesamiento 62; CI Total estimado 70 (rango límite)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "BADS (síndrome disejecutivo): perfil 9/24, «deficiente»",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Inventario de Depresión de Beck (BDI-II): 31 (depresión grave)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Escala de Ansiedad de Hamilton (HARS): 24",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Escala de Irritabilidad, Depresión y Ansiedad (IDA): irritabilidad externa elevada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Neuropsychiatric Inventory (NPI), informado por la esposa: desinhibición, agitación/agresividad, apatía y alteraciones del sueño",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TOMM (validez del esfuerzo): ensayo 2: 49/50; no hay indicios de simulación",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "con bastón",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Aspecto descuidado respecto a lo que describe la familia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Habla enlentecida, con anomia y circunloquios",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se desorienta en fecha (dice estar «en el veinticuatro»)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Labilidad emocional marcada: llora al hablar de que «ya no sirvo pa ná», y a los pocos minutos se ríe de forma inapropiada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tiene un episodio de irritabilidad con gritos porque no entiende una instrucción",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Anosmia completa referida («no huelo ni la comida»)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "disfunción eréctil",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "pérdida total de la libido desde el accidente, lo que ha provocado tensiones de pareja",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ideas pasivas de muerte, sin plan estructurado («a veces pienso que mejor me hubiera matao»)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ha tenido dos crisis epilépticas en casa en octubre de 2025 pese al Keppra",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ha vuelto a pedir «una cervecita» en reuniones familiares, lo que la tiene muy preocupada por el riesgo de recaída en la bebida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "un trastorno de ansiedad en tratamiento con escitalopram y lorazepam pautados por su médica de familia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Trastorno neurocognitivo mayor debido a traumatismo craneoencefálico, de gravedad moderada, con alteración conductual (F02.81 / 6D85.Y)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Afectación predominante de memoria episódica, funciones ejecutivas, velocidad de procesamiento y atención sostenida, con patrón compatible con lesión frontal izquierda y axonal difusa",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Cambio de personalidad debido a TCE, tipo desinhibido y agresivo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Trastorno depresivo debido a otra afección médica, con características de episodio depresivo mayor",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Riesgo de recaída en trastorno por consumo de alcohol (antecedente en remisión)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Anosmia postraumática",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "deterioro de las funciones cerebrales superiores integradas de grado moderado-grave; trastorno orgánico de la personalidad moderado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "El perfil descrito impide el desempeño de cualquier actividad laboral con un mínimo de exigencia de atención, memoria, planificación o seguridad propia y ajena",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Requiere supervisión para la toma de medicación, la gestión económica y los desplazamientos fuera del barrio",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el peritado necesita la asistencia de otra persona para varias actividades instrumentales y algunas básicas de la vida diaria (supervisión en el baño por riesgo de crisis)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "eventual grado de gran invalidez",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Transcurridos 10 meses desde el TCE, el margen de recuperación espontánea es reducido",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se recomienda rehabilitación cognitiva en unidad de daño cerebral, tratamiento psiquiátrico continuado y apoyo psicológico a la cuidadora principal",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "06-reclamacion-recargo-prestaciones.docx.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "GINÉS ALBALADEJO SÁNCHEZ"
+      ],
+      [
+        "PERSONA",
+        "Encarnación Martínez Pastor"
+      ],
+      [
+        "PERSONA",
+        "Rocío Bernal Ortuño"
+      ],
+      [
+        "PERSONA",
+        "Albaladejo"
+      ],
+      [
+        "PERSONA",
+        "Francisco Meroño Lax"
+      ],
+      [
+        "PERSONA",
+        "Juan Pedro"
+      ],
+      [
+        "PERITO",
+        "Elena Gallego Sarabia"
+      ],
+      [
+        "DNI",
+        "23284917K"
+      ],
+      [
+        "NUSS",
+        "30 1048372215"
+      ],
+      [
+        "DIRECCION",
+        "C/ Mayor, 47, 2.º B, 30120"
+      ],
+      [
+        "DIRECCION",
+        "C/ Trapería, 8, 1.º, 30001 Murcia"
+      ],
+      [
+        "TELEFONO",
+        "968 21 77 40"
+      ],
+      [
+        "CORREO",
+        "encarna.martinez@martinezpastorabogados.es"
+      ],
+      [
+        "AUTOS",
+        "RP 30/2025/0211"
+      ],
+      [
+        "AUTOS",
+        "30/2025/IP/008841"
+      ],
+      [
+        "AUTOS",
+        "I302025000123456"
+      ],
+      [
+        "ORGANISMO",
+        "DIRECCIÓN PROVINCIAL DEL INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL DE MURCIA"
+      ],
+      [
+        "ORGANISMO",
+        "Inspección Provincial de Trabajo y Seguridad Social de Murcia"
+      ],
+      [
+        "ORGANISMO",
+        "Ilustre Colegio de la Abogacía de Murcia"
+      ],
+      [
+        "ORGANISMO",
+        "Dirección Provincial"
+      ],
+      [
+        "ORGANISMO",
+        "Ibermutua"
+      ],
+      [
+        "ORGANISMO",
+        "EVI"
+      ],
+      [
+        "ORGANISMO",
+        "Comité de Seguridad y Salud"
+      ],
+      [
+        "ORGANISMO",
+        "Tesorería General de la Seguridad Social"
+      ],
+      [
+        "NORMA",
+        "artículos 14, 15 y 17 de la Ley 31/1995"
+      ],
+      [
+        "NORMA",
+        "Anexo IV, parte C, del Real Decreto 1627/1997"
+      ],
+      [
+        "NORMA",
+        "Anexo II del Real Decreto 1215/1997"
+      ],
+      [
+        "NORMA",
+        "art. 25 LPRL"
+      ],
+      [
+        "NORMA",
+        "STS, Sala 4.ª, de 20 de enero de 2010, rec. 1239/2009"
+      ],
+      [
+        "NORMA",
+        "STS 4.ª de 4 de mayo de 2015, rec. 1238/2014"
+      ],
+      [
+        "NORMA",
+        "art. 96.2 de la Ley 36/2011, reguladora de la jurisdicción social"
+      ],
+      [
+        "NORMA",
+        "art. 164.1 LGSS"
+      ],
+      [
+        "OBJETO",
+        "incapacidad permanente absoluta"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "traumatismo craneoencefálico grave con hematoma subdural agudo que precisó craneotomía, lesión axonal difusa, epilepsia postraumática, fractura de meseta tibial derecha, fractura vertebral de L1 y fractura de radio distal izquierdo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "permaneciendo 39 días hospitalizado, 12 de ellos en la UCI",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "incapacidad temporal",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "trastorno neurocognitivo mayor post-TCE con síndrome disejecutivo y alteración conductual; epilepsia postraumática en tratamiento; gonartrosis postraumática derecha con flexión de 85º; lumbalgia crónica tras fractura L1 con cifosis residual; rigidez de muñeca izquierda; trastorno depresivo secundario",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "denegación del grado de gran invalidez",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "por sus antecedentes de salud y que pudo sufrir un mareo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "La analítica del ingreso descartó la presencia de alcohol y de tóxicos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Los antecedentes de mi mandante en esa materia, superados hace ocho años",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "restricciones médicas para trabajos en altura",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "necesita supervisión para tomar la medicación y no puede salir solo del barrio",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "informe pericial neuropsicológico",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "trastorno neurocognitivo mayor debido a TCE, cambio de personalidad de tipo desinhibido y agresivo y trastorno depresivo con ideación pasiva de muerte, con un CI total estimado de 70 tras el accidente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el informe de Rehabilitación",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "07-correo-hijo-trabajador.eml.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "Raúl Albaladejo"
+      ],
+      [
+        "PERSONA",
+        "Raúl Albaladejo Cortés"
+      ],
+      [
+        "PERSONA",
+        "Encarna Martínez Pastor"
+      ],
+      [
+        "PERSONA",
+        "Encarna"
+      ],
+      [
+        "PERSONA",
+        "Carmen"
+      ],
+      [
+        "PERSONA",
+        "Jose Antonio"
+      ],
+      [
+        "PERSONA",
+        "Paco"
+      ],
+      [
+        "CORREO",
+        "raulalba.c93@gmail.com"
+      ],
+      [
+        "CORREO",
+        "encarna.martinez@martinezpastorabogados.es"
+      ],
+      [
+        "TELEFONO",
+        "636 55 81 20"
+      ],
+      [
+        "TELEFONO",
+        "677 30 19 84"
+      ],
+      [
+        "ORGANISMO",
+        "Arrixaca"
+      ],
+      [
+        "ORGANISMO",
+        "servicios sociales"
+      ],
+      [
+        "OBJETO",
+        "lo de la incapacidad"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "no se acuerda de lo que ha comido",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Le preguntas una cosa y a los dos minutos te lo vuelve a preguntar",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se pierde",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "sin saber volver",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ya no le dejamos salir solo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Se enfada por nada, grita, el otro dia le tiro un plato a mi madre (no le dio)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Luego se pone a llorar como un niño y dice que se quiere morir, que es una carga",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "El psiquiatra de la salud mental de El Palmar le ha subido la sertralina y le da tambien la quetiapina pa dormir pero duerme fatal igual",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Tambien le dan ataques, convulsiones, el epileptico ese",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Toma el Keppra dos veces al dia pero en septiembre le dio uno en el salon y se mordio la lengua y se hizo pis encima",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Mi madre se quedo en shock",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Le tuvieron que llevar a urgencias otra vez y le hicieron un tac",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "La pierna la tiene mal, anda con la muleta y cojea mucho, y de la espalda se queja todo el dia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "de la mano izquierda no puede ni abrir un bote",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "mi padre hace mas de ocho años que no bebe, lo dejo con los de Alcoholicos Anonimos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "nosotros somos evangelicos de la iglesia de Filadelfia y el hasta predicaba",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "pide cerveza en los cumpleaños y hay que estar encima",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "mi padre iba bebido",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "en el hospital le hicieron analisis y no tenia nada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tiene ansiedad, le han dado pastillas el lorazepam ese y otra",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Mi mujer esta embarazada de 5 meses",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "mi padre esta afiliado a CCOO desde hace muchos años, paga la cuota y eso",
+        "sindical"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el delegado en la obra (tambien de CCOO)",
+        "sindical"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la ayuda de la ley de dependencia que hemos pedido",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "le podian dar un grado 2",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "aunque no se acuerde de tu nombre",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "08-whatsapp-encargado.whatsapp.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "Paco Encargado"
+      ],
+      [
+        "PERSONA",
+        "Paco"
+      ],
+      [
+        "PERSONA",
+        "paco"
+      ],
+      [
+        "PERSONA",
+        "Raúl"
+      ],
+      [
+        "PERSONA",
+        "Raul"
+      ],
+      [
+        "PERSONA",
+        "Jose Antonio"
+      ],
+      [
+        "PERSONA",
+        "Juan Pedro"
+      ],
+      [
+        "PERSONA",
+        "Bernal"
+      ],
+      [
+        "PERSONA",
+        "Toni"
+      ],
+      [
+        "PERSONA",
+        "Fina"
+      ],
+      [
+        "TELEFONO",
+        "622 18 07 45"
+      ],
+      [
+        "DATO_PENAL",
+        "tiene antecedentes por lo de los robos de cobre y estuvo en Campos del Rio año y medio"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "q es el de CCOO",
+        "sindical"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la UGT q estoy afiliado desde la crisis",
+        "sindical"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "En la uci. Lo han operao de la cabeza esta noche. Esta intubao",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ni bebia ni nada, eso lo sabe toda la obra q lleva años sin probarlo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tomaba las pastillas de la tension y de la azucar",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ya ha despertao",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "no conoce bien",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Le han dado convulsiones y le dan el keppra ese",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tiene daño en la parte de delante del cerebro",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No duermo, me han dado orfidal y estoy de baja por ansiedad desde el lunes",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Cada vez q cierro los ojos veo a tu padre en el suelo encima de las bovedillas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la Fina reza por tu padre todos los dias en la misa de San Pedro",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Nosotros tb oramos en la iglesia por el",
+        "religion"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "09-sentencia-tsj-murcia.pdf.txt": {
+    "oro": [
+      [
+        "ORGANO",
+        "TRIBUNAL SUPERIOR DE JUSTICIA DE LA REGIÓN DE MURCIA"
+      ],
+      [
+        "ORGANO",
+        "SALA DE LO SOCIAL"
+      ],
+      [
+        "ORGANO",
+        "Tribunal de Instancia de Murcia, Sección de lo Social, Plaza n.º 7"
+      ],
+      [
+        "ORGANO",
+        "Sala de lo Social del Tribunal Superior de Justicia de la Región de Murcia"
+      ],
+      [
+        "ORGANO",
+        "Sección de lo Social del Tribunal de Instancia de Murcia, Plaza n.º 7"
+      ],
+      [
+        "ORGANO",
+        "Sala Cuarta del Tribunal Supremo"
+      ],
+      [
+        "ORGANO",
+        "Sala de lo Social del Tribunal Supremo"
+      ],
+      [
+        "ORGANISMO",
+        "Fiscalía del Tribunal Superior de Justicia"
+      ],
+      [
+        "ORGANISMO",
+        "INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL"
+      ],
+      [
+        "ORGANISMO",
+        "TESORERÍA GENERAL DE LA SEGURIDAD SOCIAL"
+      ],
+      [
+        "ORGANISMO",
+        "IBERMUTUA, MCSS n.º 274"
+      ],
+      [
+        "ORGANISMO",
+        "Dirección Provincial del INSS de Murcia"
+      ],
+      [
+        "ORGANISMO",
+        "Inspección de Trabajo"
+      ],
+      [
+        "ORGANISMO",
+        "Comité de Seguridad y Salud"
+      ],
+      [
+        "AUTOS",
+        "30030 44 4 2026 0001873"
+      ],
+      [
+        "AUTOS",
+        "RSU RECURSO SUPLICACIÓN 512/2026"
+      ],
+      [
+        "AUTOS",
+        "Seguridad Social 845/2025"
+      ],
+      [
+        "AUTOS",
+        "autos 845/2025"
+      ],
+      [
+        "AUTOS",
+        "1043/2026"
+      ],
+      [
+        "ECLI",
+        "ECLI:ES:TSJMU:2026:2287"
+      ],
+      [
+        "ROJ",
+        "STSJ MU 2287/2026"
+      ],
+      [
+        "PONENTE",
+        "Mariano Gascón Valero"
+      ],
+      [
+        "PONENTE",
+        "Pilar Ródenas Garre"
+      ],
+      [
+        "PONENTE",
+        "Joaquín Abellán Soriano"
+      ],
+      [
+        "LAJ",
+        "María Dolores Navarro Sánchez"
+      ],
+      [
+        "PERSONA",
+        "Ignacio Barba Moreno"
+      ],
+      [
+        "PERSONA",
+        "Encarnación Martínez Pastor"
+      ],
+      [
+        "PERSONA",
+        "GINÉS ALBALADEJO SÁNCHEZ"
+      ],
+      [
+        "PERSONA",
+        "Ginés Albaladejo Sánchez"
+      ],
+      [
+        "DNI",
+        "23284917K"
+      ],
+      [
+        "NORMA",
+        "art. 193.b LRJS"
+      ],
+      [
+        "NORMA",
+        "art. 9 del Reglamento (UE) 2016/679"
+      ],
+      [
+        "NORMA",
+        "art. 236 bis LOPJ"
+      ],
+      [
+        "NORMA",
+        "art. 164 LGSS"
+      ],
+      [
+        "NORMA",
+        "art. 193.c LRJS"
+      ],
+      [
+        "NORMA",
+        "SSTS de 12 de junio de 2013, rcud 793/2012; de 4 de mayo de 2015, rcud 1238/2014; y de 20 de marzo de 2019, rcud 2918/2017"
+      ],
+      [
+        "NORMA",
+        "art. 15.4 LPRL"
+      ],
+      [
+        "NORMA",
+        "art. 96.2 LRJS"
+      ],
+      [
+        "NORMA",
+        "art. 235.1 LRJS"
+      ],
+      [
+        "NORMA",
+        "arts. 220 y 221 LRJS"
+      ],
+      [
+        "OBJETO",
+        "incapacidad permanente absoluta"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "traumatismo craneoencefálico grave con hematoma subdural agudo intervenido y lesión axonal difusa, fracturas de meseta tibial derecha, de L1 y de radio distal izquierdo, y fracturas costales con hemoneumotórax",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ha quedado con trastorno neurocognitivo mayor, cambio de personalidad, epilepsia postraumática y trastorno depresivo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "La analítica practicada al ingreso hospitalario arrojó resultado negativo en alcohol y tóxicos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "fue declarado apto con restricciones por hipertensión arterial y diabetes mellitus tipo 2, y presentaba antecedentes de alcoholismo crónico",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el antecedente de consumo de alcohol, remitido desde 2017 según la documental médica",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "dado el resultado negativo de la analítica",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "mareo",
+        "salud"
+      ]
+    ],
+    "ambiguo": []
+  }
+}

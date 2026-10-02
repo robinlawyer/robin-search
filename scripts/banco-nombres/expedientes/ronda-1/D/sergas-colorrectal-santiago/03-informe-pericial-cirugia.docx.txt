@@ -1,0 +1,48 @@
+INFORME MÉDICO PERICIAL
+
+Perito: Dr. Anxo Vilariño Seoane
+Licenciado en Medicina y Cirugía. Especialista en Cirugía General y del Aparato Digestivo. Máster en Valoración del Daño Corporal. Ex jefe de sección de cirugía colorrectal del Hospital Universitario Lucus Augusti de Lugo.
+Colegiado en el Colexio Oficial de Médicos da Coruña.
+
+Solicitado por: Dña. Beatriz Couceiro Mosquera, letrada, en nombre de la familia de D. Xosé Manuel Outeiro Barreiro.
+Objeto: valorar si la asistencia prestada entre febrero de 2022 y abril de 2023 se ajustó a la lex artis y, en su caso, qué consecuencias tuvo el retraso en el diagnóstico del cáncer colorrectal.
+
+1. DOCUMENTACIÓN EXAMINADA
+- Historia clínica de Atención Primaria (IANUS) del Centro de Saúde de Conxo, 2018-2025.
+- Informe de colonoscopia de 12/04/2023 y informes de anatomía patológica (biopsia y pieza quirúrgica).
+- TAC toracoabdominopélvico de 19/04/2023 y de febrero de 2024.
+- Informe de alta de Cirugía General (mayo de 2023) y hojas de tratamiento de Oncología.
+- Resumen de historia clínica firmado por la Dra. Gestido Mariño el 03/03/2025.
+- Entrevista con la viuda, Dña. Carmen Rivas Fandiño, y con la hija, Dña. Uxía Outeiro, el 14/10/2025.
+No se ha explorado al paciente, fallecido el 12/01/2025.
+
+2. CONSIDERACIONES MÉDICAS PREVIAS
+El cáncer colorrectal es la neoplasia más frecuente en España si se suman ambos sexos. Su pronóstico depende de forma casi lineal del estadio en el momento del diagnóstico: la supervivencia a cinco años ronda el 90 % en estadio I, el 80 % en estadio II, el 65-70 % en estadio III y cae por debajo del 15 % en estadio IV. Por eso los programas de cribado con test de sangre oculta en heces se justifican: adelantar el diagnóstico salva vidas.
+Las guías de la Asociación Española de Gastroenterología y el propio protocolo del programa gallego consideran signos de alarma que obligan a una colonoscopia preferente (menos de 4-8 semanas): la rectorragia con cambio del ritmo deposicional en mayores de 50 años, la anemia ferropénica sin causa aparente en varones y el test inmunológico positivo. Los antecedentes familiares de primer grado refuerzan la indicación.
+
+3. ANÁLISIS DEL CASO
+3.1. Primera consulta (09/02/2022). El paciente, de 60 años, refiere rectorragia de dos meses y alternancia de estreñimiento y diarrea. En la historia figura el antecedente paterno de carcinoma de colon. No consta tacto rectal ni anuscopia. El juicio de "hemorroides" sin explorar es, a mi juicio, un error de diagnóstico no justificable: ante esos síntomas y ese antecedente, la derivación debió ser inmediata.
+3.2. Analítica (22/03/2022). Hb 10,9 g/dl, VCM 76 fl, ferritina 9 ng/ml. Una ferropenia en un varón sin pérdidas evidentes es, mientras no se demuestre lo contrario, de origen digestivo. Se trató con hierro sin estudiar la causa.
+3.3. SOH positivo (17/05/2022). 312 ng/ml, muy por encima del punto de corte (20 µg Hb/g). La petición de colonoscopia se cursó como "ordinaria". Es el punto crítico: el resultado positivo del cribado, por sí solo, exige prioridad.
+3.4. Reconsultas (11/10/2022 y 23/01/2023). Consta pérdida de 7 kg, astenia y anorexia. Nadie reclama la prueba ni la reprioriza. La Dra. Pena Lorenzo anota "pendiente colono", sin más.
+3.5. Diagnóstico (abril de 2023). Adenocarcinoma de sigma con dos metástasis hepáticas (estadio IV, M1a inicial, M1c tras la progresión pulmonar de 2024).
+
+4. RELACIÓN DE CAUSALIDAD Y PÉRDIDA DE OPORTUNIDAD
+El tiempo de duplicación de un adenocarcinoma de colon es variable, pero la literatura sitúa la progresión de un estadio II-III a un estadio IV con afectación hepática en un horizonte de entre 6 y 18 meses en tumores con mutación de KRAS como el de este paciente. Con un diagnóstico en febrero-junio de 2022, lo más probable (≥ 70 %) es que el tumor se hubiera encontrado sin metástasis; la cirugía con intención curativa más quimioterapia adyuvante (CAPOX tres meses) ofrecía una probabilidad de curación cercana al 65 %.
+Se perdió, por tanto, una oportunidad real y cuantificable de curación, y se le impuso además un tratamiento paliativo mucho más agresivo: colostomía de Hartmann en lugar de una resección con anastomosis primaria (la obstrucción obligó a ella), 24 ciclos entre primera y segunda línea y una polineuropatía sensitiva por oxaliplatino grado 2-3 que le acompañó hasta la muerte.
+
+5. SECUELAS Y PADECIMIENTOS (a efectos orientativos)
+- Colostomía terminal permanente con hernia paraestomal.
+- Neuropatía periférica sensitiva por oxaliplatino.
+- Trastorno adaptativo con ánimo depresivo durante la enfermedad (tratado con sertralina).
+- Perjuicio por pérdida de calidad de vida muy grave en los últimos ocho meses (dependencia para el aseo y curas del estoma realizadas por su esposa).
+- En cuanto a la viuda, consta que tras el fallecimiento inició seguimiento en Salud Mental por un cuadro depresivo mayor con insomnio, llanto diario y abandono de su actividad habitual. No es objeto de este informe valorarla, pero lo dejo apuntado por la relación temporal evidente.
+
+6. CONCLUSIONES
+Primera.— La asistencia en Atención Primaria entre febrero de 2022 y enero de 2023 no se ajustó a la lex artis: no se exploró, no se priorizó la colonoscopia ante un SOH positivo y no se reaccionó ante la anemia y la pérdida de peso.
+Segunda.— El retraso fue de unos 10-14 meses atribuibles al sistema.
+Tercera.— Con alta probabilidad, el diagnóstico en plazo habría permitido un tratamiento con intención curativa. Estimo la pérdida de oportunidad en no menos de un 60-70 %.
+
+Lo que firmo en A Coruña, a 2 de diciembre de 2025, declarando bajo juramento que he actuado con la mayor objetividad posible (art. 335.2 de la Ley de Enjuiciamiento Civil).
+
+Fdo.: Dr. Anxo Vilariño Seoane

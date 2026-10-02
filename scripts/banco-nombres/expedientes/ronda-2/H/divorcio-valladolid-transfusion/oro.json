@@ -1,0 +1,1431 @@
+{
+ "01-correo-clienta-primera-consulta.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Nerea Calvo"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Paloma Ibarra"
+   ],
+   [
+    "PERSONA",
+    "Paloma"
+   ],
+   [
+    "PERSONA",
+    "Ruben"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Teodoro"
+   ],
+   [
+    "PERSONA",
+    "Adoracion"
+   ],
+   [
+    "PERSONA",
+    "Rocio Montoya"
+   ],
+   [
+    "PERSONA",
+    "Maribel"
+   ],
+   [
+    "CORREO",
+    "nereacalvo84@hotmail.com"
+   ],
+   [
+    "CORREO",
+    "paloma.ibarra@ibarramunoz-abogados.es"
+   ],
+   [
+    "TELEFONO",
+    "644 382 917"
+   ],
+   [
+    "ORGANISMO",
+    "centro de salud de Delicias"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del cancer de mama, la operaron en noviembre y esta con quimio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "unas cajas de pastillas que se llaman Biktarvy",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las cajas de Biktarvy",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es para el VIH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me reconocio que lo sabe desde 2017",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo tiene controlado, \"indetectable\" dice",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nunca usamos nada porque yo queria otro hijo",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me hice las pruebas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me dio negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "repitiera a los tres meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy fatal, no duermo, me tomo un Lexatin por la noche que me receto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tengo el estomago cerrado desde navidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "son testigos de Jehova de toda la vida",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fue de pequeño aunque ahora no va al salon del reino",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la tarjetita esa de que no quieren sangre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Jehova decide, no los medicos",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esferocitosis hereditaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es de familia",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos analiticas este año por anemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el hematologo dijo que a lo mejor de mayor le quitan el bazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no le dejen poner sangre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe del hematologo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como es gitana",
+    "etnia"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-correo-despacho-respuesta.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Paloma Ibarra Ruiz"
+   ],
+   [
+    "PERSONA",
+    "Paloma"
+   ],
+   [
+    "PERSONA",
+    "Nerea Calvo"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Diego Santamaría León"
+   ],
+   [
+    "PERSONA",
+    "Diego"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "PERSONA",
+    "Rocío Montoya"
+   ],
+   [
+    "PERSONA",
+    "Maribel"
+   ],
+   [
+    "CORREO",
+    "paloma.ibarra@ibarramunoz-abogados.es"
+   ],
+   [
+    "CORREO",
+    "nereacalvo84@hotmail.com"
+   ],
+   [
+    "CORREO",
+    "diego.santamaria@ibarramunoz-abogados.es"
+   ],
+   [
+    "DIRECCION",
+    "Calle Gamazo, 14, 3.º A"
+   ],
+   [
+    "DIRECCION",
+    "Calle Santiago, 21, 2.º"
+   ],
+   [
+    "DIRECCION",
+    "C/ Santiago, 21, 2.º · 47001 Valladolid"
+   ],
+   [
+    "TELEFONO",
+    "983 214 560"
+   ],
+   [
+    "NORMA",
+    "art. 773 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 97 CC"
+   ],
+   [
+    "NORMA",
+    "art. 173.2 CP"
+   ],
+   [
+    "NORMA",
+    "art. 9.6 de la Ley 41/2002"
+   ],
+   [
+    "ORGANO",
+    "Juzgados de Primera Instancia de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Enfermedades Infecciosas del Hospital Clínico"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Atención a la Mujer del Ayuntamiento"
+   ],
+   [
+    "ORGANISMO",
+    "ICAVA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la salud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su estado serológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ocultación, sin contagio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "repite la serología a los tres meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consulta de PrEP y de asesoramiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del Lexatin",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la transfusión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la esferocitosis que tiene diagnosticada y la posibilidad de una esplenectomía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un informe actualizado con el diagnóstico y lo de la posible esplenectomía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tus suegros son testigos de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no va contra su fe",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la quimio",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-hospital-transfusion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SACYL — Junta de Castilla y León"
+   ],
+   [
+    "ORGANISMO",
+    "HOSPITAL CLÍNICO UNIVERSITARIO DE VALLADOLID"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Pediatría · Unidad de Cuidados Intensivos Pediátricos"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Tordesillas"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Hematología"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Guardia de Valladolid"
+   ],
+   [
+    "PERSONA",
+    "Nerea Calvo Ortega"
+   ],
+   [
+    "PERSONA",
+    "Hugo Gallardo Calvo"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Herrero Gil"
+   ],
+   [
+    "PERSONA",
+    "Sonia Vaquero Alonso"
+   ],
+   [
+    "PERSONA",
+    "Rubén Gallardo Sanz"
+   ],
+   [
+    "PERSONA",
+    "Teodoro Gallardo Pastor"
+   ],
+   [
+    "PERSONA",
+    "Adoración Sanz Merino"
+   ],
+   [
+    "PERSONA",
+    "Lidia Pascual Benito"
+   ],
+   [
+    "NUSS",
+    "1 087 336"
+   ],
+   [
+    "NUSS",
+    "CL 3409 1188 72"
+   ],
+   [
+    "NORMA",
+    "art. 9.6 de la Ley 41/2002"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO SOBRE INDICACIÓN Y ADMINISTRACIÓN DE TRANSFUSIÓN EN MENOR",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Urgencias 14/03/2026 → UCIP 15/03/2026 → Planta 18/03/2026 → Alta 24/03/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trasladado en UVI móvil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "caída de bicicleta con traumatismo abdominal en hipocondrio izquierdo (impacto con el manillar)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esferocitosis hereditaria diagnosticada en 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mutación heterocigota en el gen ANK1, estudio genético realizado",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "herencia autosómica dominante, padre no estudiado, abuelo paterno afecto",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esplenomegalia leve conocida. Seguimiento en consulta de Hematología infantil. Hemoglobina basal habitual 10,5-11 g/dl. Vacunación al día. Sin alergias medicamentosas conocidas.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "palidez cutáneo-mucosa intensa, taquicardia de 148 lpm, TA 78/40, relleno capilar de 4 segundos, dolor y defensa abdominal en hemiabdomen izquierdo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ecografía FAST positiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TC abdominal con contraste: laceración esplénica grado III-IV (escala AAST) con hemoperitoneo moderado, sin extravasación activa de contraste en el momento del estudio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemoglobina 6,2 g/dl a las 23:15 h; 5,4 g/dl a las 01:30 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "descenso de hemoglobina, la inestabilidad hemodinámica pese a la expansión con cristaloides (2 bolos de 20 ml/kg de suero fisiológico) y la anemia hemolítica crónica de base",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "indicación de transfusión urgente de concentrado de hematíes, por existir riesgo vital inminente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "posibilidad de esplenectomía de urgencia si fracasaba el manejo conservador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "son Testigos de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por sus convicciones religiosas, se oponían a cualquier transfusión de sangre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su documento de directrices médicas anticipadas y una tarjeta en la que consta «No sangre»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Solicitaron alternativas (eritropoyetina, hierro intravenoso, recuperador de sangre)",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no quería ir contra su familia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sangre de extraños",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ser VIH positivo en tratamiento antirretroviral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Transfusión de 2 concentrados de hematíes (grupo A Rh positivo, 10 ml/kg cada uno), a las 03:20 h y 05:10 h, sin reacciones transfusionales.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento conservador de la lesión esplénica en UCIP: reposo absoluto, monitorización, controles seriados de hemoglobina.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Analgesia: paracetamol iv y cloruro mórfico en perfusión las primeras 24 h.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No fue necesaria la esplenectomía.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemoglobina post-transfusión: 9,1 g/dl. Al alta: 9,8 g/dl.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "firmó su conformidad con la transfusión y con el tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Traumatismo abdominal cerrado con laceración esplénica grado III-IV y hemoperitoneo, manejado de forma conservadora.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Shock hemorrágico compensado al ingreso.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anemia aguda sobre anemia hemolítica crónica por esferocitosis hereditaria.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reposo relativo durante 6 semanas, sin deportes de contacto ni bicicleta durante 3 meses. Control en consulta de Hematología infantil en 15 días con hemograma.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se plantea esplenectomía programada parcial a partir de los 8-9 años, con vacunación previa frente a neumococo, meningococo y Haemophilus.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo hematológico de base del menor",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-auto-juzgado-guardia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE INSTRUCCIÓN N.º 2 DE VALLADOLID"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 2 de Valladolid"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia en funciones de familia"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Indeterminadas n.º 214/2026"
+   ],
+   [
+    "AUTOS",
+    "47186 43 2 2026 0003390"
+   ],
+   [
+    "PONENTE",
+    "Álvaro Represa Llorente"
+   ],
+   [
+    "LAJ",
+    "Marta Cuadrado Rojo"
+   ],
+   [
+    "PERSONA",
+    "Sonia Vaquero Alonso"
+   ],
+   [
+    "PERSONA",
+    "Hugo Gallardo Calvo"
+   ],
+   [
+    "PERSONA",
+    "HUGO GALLARDO CALVO"
+   ],
+   [
+    "PERSONA",
+    "Rubén Gallardo Sanz"
+   ],
+   [
+    "PERSONA",
+    "Nerea Calvo Ortega"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Herrero Gil"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Arranz Polo"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Pediatría del Hospital Clínico Universitario de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Clínico Universitario de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "NORMA",
+    "artículo 9.3.c) de la Ley 41/2002, de 14 de noviembre"
+   ],
+   [
+    "NORMA",
+    "artículo 158 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 2 de la Ley Orgánica 1/1996, de 15 de enero"
+   ],
+   [
+    "NORMA",
+    "artículo 16 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "STC 154/2002, de 18 de julio"
+   ],
+   [
+    "NORMA",
+    "Circular de la Fiscalía General del Estado 1/2012"
+   ],
+   [
+    "NORMA",
+    "artículo 158 CC"
+   ],
+   [
+    "OBJETO",
+    "transfusión urgente de concentrado de hematíes"
+   ],
+   [
+    "OBJETO",
+    "la transfusión sanguínea"
+   ],
+   [
+    "OBJETO",
+    "la indicación médica de la transfusión"
+   ],
+   [
+    "OBJETO",
+    "la intervención quirúrgica que resulte precisa, incluida la esplenectomía"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra ingresado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "traumatismo abdominal con laceración esplénica y hemoperitoneo, hemoglobina de 5,4 g/dl e inestabilidad hemodinámica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se oponen por motivos religiosos al ser Testigos de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe clínico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece esferocitosis hereditaria con anemia hemolítica crónica de base",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no puede decir que sí por respeto a sus padres",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya no practica",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La libertad religiosa de los abuelos y, en su caso, del progenitor",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-certificado-congregacion.escaneo.txt": {
+  "oro": [
+   [
+    "CAT_ESPECIAL",
+    "C0NGREGACI0N VALLAD0LID-DELICIAS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TESTIG0S CRISTIAN0S DE JEH0VA",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "FL0RENCI0 MERIN0 ARRANZ"
+   ],
+   [
+    "PERSONA",
+    "JULIAN BERMEJ0 CID"
+   ],
+   [
+    "PERSONA",
+    "RUBEN GALLARD0 SANZ"
+   ],
+   [
+    "PERSONA",
+    "HUG0 GALLARD0 CALV0"
+   ],
+   [
+    "PERSONA",
+    "TE0D0R0 GALLARD0 PAST0R"
+   ],
+   [
+    "PERSONA",
+    "AD0RACI0N SANZ MERIN0"
+   ],
+   [
+    "PERSONA",
+    "TE0D0R0"
+   ],
+   [
+    "DNI",
+    "12398765-M"
+   ],
+   [
+    "DIRECCION",
+    "CALLE REAL, 9, TORDESILLAS (VALLAD0LID)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SECRETARI0 Y C00RDINAD0R DEL CUERP0 DE ANCIAN0S DE ESTA C0NGREGACI0N",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FUE BAUTIZAD0 C0M0 TESTIG0 DE JEH0VA",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EN LA ASAMBLEA DE DISTRIT0",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 C0NSTA C0M0 PUBLICAD0R ACTIV0, N0 ASISTE",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "A LAS REUNI0NES DE LA C0NGREGACI0N NI INF0RMA DE ACTIVIDAD DE PREDICACI0N, SIN QUE HAYA SID0",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0BJET0 DE EXPULSI0N NI HAYA PRESENTAD0 CARTA DE DESASOCIACI0N",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"INACTIV0\"",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "D0CUMENT0 DE DIRECTRICES MEDICAS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANTICIPADAS (DPA)",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TARJETA DE IDENTIDAD DEL MEN0R (\"N0 SANGRE\")",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "S0N PUBLICAD0RES BAUTIZAD0S Y ACTIV0S",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DE ESTA C0NGREGACI0N DESDE 1981",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SIRVI0 C0M0 SIERV0 MINISTERIAL",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0R M0TIV0S DE SALUD (INSUFICIENCIA RENAL EN HEM0DIALISIS)",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 DE ENTIDADES RELIGI0SAS DEL MINISTERI0 DE JUSTICIA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0S DE VALLAD0LID"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-clienta-tras-hospital.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "N. C. O."
+   ],
+   [
+    "PERSONA",
+    "Paloma Ibarra Ruiz"
+   ],
+   [
+    "PERSONA",
+    "Paloma"
+   ],
+   [
+    "PERSONA",
+    "Diego"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "hugo"
+   ],
+   [
+    "PERSONA",
+    "Lidia"
+   ],
+   [
+    "PERSONA",
+    "Ruben"
+   ],
+   [
+    "PERSONA",
+    "Aurelio Villanueva"
+   ],
+   [
+    "PERSONA",
+    "Begoña"
+   ],
+   [
+    "PERSONA",
+    "Raquel"
+   ],
+   [
+    "PERSONA",
+    "Maribel Escudero Lozano"
+   ],
+   [
+    "PERSONA",
+    "Rocio"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "CORREO",
+    "nerea.libre26@gmail.com"
+   ],
+   [
+    "CORREO",
+    "paloma.ibarra@ibarramunoz-abogados.es"
+   ],
+   [
+    "CORREO",
+    "diego.santamaria@ibarramunoz-abogados.es"
+   ],
+   [
+    "TELEFONO",
+    "655 019 284"
+   ],
+   [
+    "TELEFONO",
+    "633 870 115"
+   ],
+   [
+    "DIRECCION",
+    "calle Puente Colgante 37, 5º B"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de la Mujer"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiene la cicatriz del drenaje pequeñita",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el hematologo dice que en dos semanas otra analitica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de quitarle el bazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe del hospital",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le habian puesto la sangre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Su madre estaba en el pasillo rezando con la biblia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "habian \"profanado\" al niño",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que solo \"no firmo\"",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un certificado de la congregacion",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esta \"inactivo\" y que no es testigo practicante",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "va al salon del reino",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no le dejaron poner el arbol",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me repeti la prueba del VIH el jueves y otra vez negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Llore en la consulta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me hice un test de embarazo porque tenia un retraso y salio negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estoy yendo a la psicologa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tengo ataques de ansiedad y un poco de estres postraumatico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del Lexatin lo vaya dejando poco a poco con la medica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que es concejala de Vox en Tordesillas",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es delegado de UGT en la fabrica",
+    "sindical"
+   ],
+   [
+    "DATO_PENAL",
+    "en 2015 lo detuvieron por una pelea en las fiestas de San Lorenzo, le hicieron un juicio rapido y le condenaron a una multa"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-divorcio.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Carmen Alonso de la Fuente"
+   ],
+   [
+    "PERSONA",
+    "NEREA CALVO ORTEGA"
+   ],
+   [
+    "PERSONA",
+    "Paloma Ibarra Ruiz"
+   ],
+   [
+    "PERSONA",
+    "RUBÉN GALLARDO SANZ"
+   ],
+   [
+    "PERSONA",
+    "HUGO GALLARDO CALVO"
+   ],
+   [
+    "PERSONA",
+    "Angelines Ortega Rubio"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Teodoro Gallardo Pastor"
+   ],
+   [
+    "PERSONA",
+    "Adoración Sanz Merino"
+   ],
+   [
+    "DNI",
+    "71284539-S"
+   ],
+   [
+    "DNI",
+    "12398765-M"
+   ],
+   [
+    "DIRECCION",
+    "Calle Gamazo, 14, 3.º A, 47004 Valladolid"
+   ],
+   [
+    "DIRECCION",
+    "Calle Gamazo, 14, 3.º A"
+   ],
+   [
+    "IBAN",
+    "ES76 0049 5432 1102 3344 5566"
+   ],
+   [
+    "MATRICULA",
+    "4821 MHZ"
+   ],
+   [
+    "AUTOS",
+    "AJG-47/2026/01893"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Indeterminadas n.º 214/2026"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE VALLADOLID (FAMILIA)"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 2 de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Comisión de Asistencia Jurídica Gratuita"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Civil de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Atención a la Mujer del Ayuntamiento de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "consulta de Hematología infantil del Hospital Clínico Universitario de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "SACYL"
+   ],
+   [
+    "NORMA",
+    "Auto de 15 de marzo de 2026"
+   ],
+   [
+    "NORMA",
+    "artículo 769 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 770 y 773 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 81 y 86 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "Ley 15/2005, de 8 de julio"
+   ],
+   [
+    "NORMA",
+    "artículos 90 a 97, 103 y 158 CC"
+   ],
+   [
+    "NORMA",
+    "artículo 2 LO 1/1996"
+   ],
+   [
+    "NORMA",
+    "artículo 9 de la Ley 41/2002"
+   ],
+   [
+    "NORMA",
+    "artículo 97 CC"
+   ],
+   [
+    "NORMA",
+    "STS 120/2018, de 7 de marzo"
+   ],
+   [
+    "NORMA",
+    "Ley Orgánica 1/2004, de 28 de diciembre"
+   ],
+   [
+    "NORMA",
+    "Convenio de Estambul, artículo 3"
+   ],
+   [
+    "NORMA",
+    "artículo 773 LEC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical de UGT en la factoría",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento de quimioterapia por un carcinoma de mama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sigue tratamiento psicológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por un cuadro de ansiedad con síntomas de estrés postraumático",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "determinadas circunstancias de salud del demandado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece una esferocitosis hereditaria, diagnosticada en 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sigue controles periódicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está prevista una esplenectomía parcial a partir de los ocho o nueve años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sufrió una caída de bicicleta con laceración esplénica y hemorragia interna que requirió una transfusión urgente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que son Testigos de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se opusieron a la transfusión por sus convicciones religiosas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "respeta las creencias de la familia paterna",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo hematológico de base del menor",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-convenio-regulador.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Nerea Calvo Ortega"
+   ],
+   [
+    "PERSONA",
+    "Rubén Gallardo Sanz"
+   ],
+   [
+    "PERSONA",
+    "Hugo Gallardo Calvo"
+   ],
+   [
+    "PERSONA",
+    "Teodoro Gallardo Pastor"
+   ],
+   [
+    "PERSONA",
+    "Adoración Sanz Merino"
+   ],
+   [
+    "PERSONA",
+    "Gallardo"
+   ],
+   [
+    "PERSONA",
+    "Calvo"
+   ],
+   [
+    "DNI",
+    "71284539-S"
+   ],
+   [
+    "DNI",
+    "12398765-M"
+   ],
+   [
+    "DIRECCION",
+    "Calle Gamazo, 14, 3.º A, 47004 Valladolid"
+   ],
+   [
+    "DIRECCION",
+    "Calle Gamazo, 14, 3.º A"
+   ],
+   [
+    "MATRICULA",
+    "4821 MHZ"
+   ],
+   [
+    "NORMA",
+    "artículo 90 del Código Civil"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Clínico Universitario de Valladolid"
+   ],
+   [
+    "ORGANISMO",
+    "SACYL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "periodo de recuperación del menor tras el traumatismo de marzo de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "control hematológico de junio de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el menor no practicará ciclismo ni deportes de contacto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Salud del menor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece esferocitosis hereditaria con anemia hemolítica crónica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es portador de una mutación en el gen ANK1",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "puede precisar transfusiones en caso de crisis hemolítica, infección o traumatismo, así como una esplenectomía parcial programada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Su grupo sanguíneo es A Rh positivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "son Testigos de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "documento anexo de no oposición a las decisiones médicas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedentes familiares de esferocitosis (abuelo paterno afecto, en hemodiálisis)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al estudio genético familiar",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cursando la asignatura de Religión católica en el colegio",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "celebraciones o reuniones religiosas de una confesión distinta",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los derivados de la esplenectomía y su postoperatorio",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

@@ -1,0 +1,1636 @@
+{
+ "01-atestado-guardia-civil.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GUARDIA CIVIL"
+   ],
+   [
+    "ORGANISMO",
+    "Comandancia de Ourense"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto Principal de Barbadás"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo Mujer-Menor (EMUME)"
+   ],
+   [
+    "ORGANISMO",
+    "Central Operativa de Servicios (COS)"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias del Complexo Hospitalario Universitario de Ourense (CHUO)"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Central de Penados"
+   ],
+   [
+    "ORGANISMO",
+    "Sistema VioGén"
+   ],
+   [
+    "AUTOS",
+    "ATESTADO N.º 2026-003214-00000178"
+   ],
+   [
+    "AGENTE",
+    "Xosé Manuel Outeiro Seoane"
+   ],
+   [
+    "AGENTE",
+    "Lorena Pazos Rivas"
+   ],
+   [
+    "AGENTE",
+    "Pazos"
+   ],
+   [
+    "TIP",
+    "R-38204-Q"
+   ],
+   [
+    "TIP",
+    "M-51273-F"
+   ],
+   [
+    "TIP",
+    "H-60418-K"
+   ],
+   [
+    "TIP",
+    "D-47715-S"
+   ],
+   [
+    "PERSONA",
+    "Noa Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Antía Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Brais Gulías Pereiro"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "DNI",
+    "34987215P"
+   ],
+   [
+    "DNI",
+    "44658102J"
+   ],
+   [
+    "DNI",
+    "34987216D"
+   ],
+   [
+    "TELEFONO",
+    "611 482 093"
+   ],
+   [
+    "MATRICULA",
+    "2389 LPB"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de Ourense, 52, 1.º B, 32890 Barbadás"
+   ],
+   [
+    "DIRECCION",
+    "lugar de Sobral, 9, 32890 Barbadás"
+   ],
+   [
+    "OBJETO",
+    "presunto delito de lesiones y maltrato habitual en el ámbito de la violencia sobre la mujer"
+   ],
+   [
+    "OBJETO",
+    "delito de lesiones en el ámbito de la violencia de género"
+   ],
+   [
+    "OBJETO",
+    "delito de amenazas"
+   ],
+   [
+    "NORMA",
+    "art. 153.1 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "art. 171.4 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 520 de la Ley de Enjuiciamiento Criminal"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Violencia sobre la Mujer n.º 1 de Ourense"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta sangrado por la ceja izquierda, el pómulo inflamado y marcas rojizas en el cuello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ao bebé",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estar embarazada de unas catorce semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dolor en la zona abdominal baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con fuerte olor a alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta los nudillos de la mano derecha enrojecidos y una pequeña herida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que vaia ao psiquiatra coma a irmá",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "prueba de detección alcohólica con resultado de 0,72 mg/l en aire espirado (primera prueba) y 0,69 mg/l (segunda)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haber consumido «unhas raias» de cocaína esa noche",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "cuenta con antecedentes policiales y con una condena por delito contra la salud pública (tráfico de drogas) de 2021"
+   ],
+   [
+    "DATO_PENAL",
+    "antecedentes penales del agresor"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de lesiones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«está pasando una mala racha» con su depresión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bolleira de merda",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "medio tola coas pastillas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en tratamiento con el psiquiatra desde hace dos años y toma «sertralina e outra para durmir»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo de alcohol y drogas del agresor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "embarazo de la víctima",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-parte-lesiones-urgencias.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVIZO GALEGO DE SAÚDE (SERGAS)"
+   ],
+   [
+    "ORGANISMO",
+    "Complexo Hospitalario Universitario de Ourense (CHUO)"
+   ],
+   [
+    "ORGANISMO",
+    "Servizo de Urxencias"
+   ],
+   [
+    "ORGANISMO",
+    "Guardia Civil"
+   ],
+   [
+    "ORGANISMO",
+    "CIM de Ourense"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Guardia de Ourense"
+   ],
+   [
+    "NORMA",
+    "art. 262 LECrim"
+   ],
+   [
+    "PERSONA",
+    "DOVAL CARBALLO, ANTÍA"
+   ],
+   [
+    "PERSONA",
+    "Sabela Novoa Iglesias"
+   ],
+   [
+    "PERSONA",
+    "Anxo Lamas Rúa"
+   ],
+   [
+    "DNI",
+    "34987215P"
+   ],
+   [
+    "NUSS",
+    "1.204.877"
+   ],
+   [
+    "NUSS",
+    "OUAN960811-3027"
+   ],
+   [
+    "DIRECCION",
+    "Avda. de Ourense, 52, 1.º B – 32890 Barbadás"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARTE DE LESIONES / INFORME DE ASISTENCIA EN URGENCIAS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestante de 14+2 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dolor facial, cervical y en hipogastrio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NAMC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestante 14+2 s (G2 P0 A1: IVE en 2023)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Seguimiento obstétrico en su centro de salud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Asma extrínseca leve, Ventolin a demanda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo en tratamiento con Eutirox 50 mcg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No hábitos tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere episodio de ansiedad en enero tratado por MAP con lorazepam a demanda, que abandonó al conocer el embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estado de embriaguez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin pérdida de conocimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 128/82, FC 104 lpm, SatO2 99 %, Tª 36,4 ºC. Consciente y orientada, GCS 15. Ansiosa, llanto frecuente.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Herida inciso-contusa de 2,5 cm en región supraciliar izquierda, sangrante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hematoma y edema en región malar izquierda, doloroso a la palpación. No crepitación ni escalón óseo.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eritema lineal en cara anterolateral del cuello, bilateral, compatible con presión digital. No petequias. Voz normal, deglución conservada.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión en codo derecho con erosión superficial de 3 x 2 cm.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abdomen blando, depresible, dolor leve a la palpación en hipogastrio, sin signos de irritación peritoneal.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rx de huesos propios y órbita: sin trazos de fractura.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ecografía obstétrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gestación intrauterina única, LCR acorde a 14+2 s, latido fetal positivo, placenta normoinserta, sin signos de desprendimiento. Cérvix cerrado.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Analítica: Hb 11,9 g/dl. Grupo sanguíneo 0 Rh negativo (se administra inmunoglobulina anti-D, Rhophylac 300 mcg IM).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sutura de herida supraciliar con 4 puntos (seda 5/0). Frío local. Paracetamol 1 g/8 h si dolor (se evitan AINE por la gestación). Retirar puntos en 7 días en su centro de salud.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Herida inciso-contusa supraciliar izquierda que precisa sutura.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión malar izquierda.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión cervical por intento de estrangulación (eritema por presión digital).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión de codo derecho.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Traumatismo abdominal leve en gestante de 14 semanas, sin repercusión obstétrica.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reacción aguda a estrés.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Control en consulta de Obstetricia en 48 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "posibilidad de valoración psicológica",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-declaracion-victima-galego.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "XULGADO DE VIOLENCIA SOBRE A MULLER N.º 1 DE OURENSE"
+   ],
+   [
+    "AUTOS",
+    "Dilixencias previas n.º 412/2026"
+   ],
+   [
+    "AUTOS",
+    "32054 43 2 2026 0002317"
+   ],
+   [
+    "PONENTE",
+    "Carmen Lourido Vilar"
+   ],
+   [
+    "LAJ",
+    "Andrés Cid Fernández"
+   ],
+   [
+    "PERSONA",
+    "Marta Bóveda Sánchez"
+   ],
+   [
+    "PERSONA",
+    "Iria Castro Bouzas"
+   ],
+   [
+    "PERSONA",
+    "Manuel Vázquez Novo"
+   ],
+   [
+    "PERSONA",
+    "Antía Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Xosé"
+   ],
+   [
+    "PERSONA",
+    "Maruxa"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "PERSONA",
+    "Noa"
+   ],
+   [
+    "PERSONA",
+    "Sara"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Garda Civil"
+   ],
+   [
+    "DNI",
+    "34987215P"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de Ourense, 52, 1.º B, 32890 Barbadás"
+   ],
+   [
+    "TELEFONO",
+    "698 331 207"
+   ],
+   [
+    "NORMA",
+    "artigo 416 da Lei de axuizamento criminal"
+   ],
+   [
+    "NORMA",
+    "artigo 231 da Lei orgánica do poder xudicial"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "empezou a beber máis e a «meterse coca» os fins de semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "prometeu que ía ir á UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sen durmir, e o médico de cabeceira deulle unhas pastillas para a ansiedade",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba embarazada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiña que pensar no bebé",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bébedo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bateu na barriga co pomo da porta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ao bebé",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está pasando unha depresión moi forte desde o verán",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "polo da súa moza",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "polas pastillas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "non pode durmir, que cada vez que oe un coche pensa que é el, que ten pesadelos e que se sobresalta con calquera ruído",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "xa tivo un aborto voluntario hai tres anos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "este bebé o quere ter",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "leva o embarazo no centro de saúde de Barbadás e que a matrona lle dixo que estaba todo ben",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a seguen do embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "salvo «a da tiroide» e o ácido fólico",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "xa estivo no cárcere uns meses por drogas"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-hoja-antecedentes-penales.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MINISTERI0 DE LA PRESIDENCIA, JUSTICIA Y RELACI0NES C0N LAS C0RTES"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 CENTRAL DE PENAD0S"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE VI0LENCIA S0BRE LA MUJER N l DE 0URENSE"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE L0 PENAL N 2 DE 0URENSE"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE INSTRUCCI0N N 3 DE 0URENSE"
+   ],
+   [
+    "AUTOS",
+    "DILIGENCIAS PREVIAS 4l2/2026"
+   ],
+   [
+    "AUTOS",
+    "2026/RCP/0874l29"
+   ],
+   [
+    "AUTOS",
+    "PR0CEDIMIENT0 ABREVIAD0 l86/2020"
+   ],
+   [
+    "AUTOS",
+    "l42/202l"
+   ],
+   [
+    "AUTOS",
+    "DILIGENCIAS URGENTES JUICI0 RAPID0 9l/20l8"
+   ],
+   [
+    "AUTOS",
+    "77/20l8"
+   ],
+   [
+    "PERSONA",
+    "GULIAS PEREIR0"
+   ],
+   [
+    "PERSONA",
+    "BRAIS"
+   ],
+   [
+    "PERSONA",
+    "MANUEL"
+   ],
+   [
+    "PERSONA",
+    "ROSA"
+   ],
+   [
+    "DNI",
+    "44658l02J"
+   ],
+   [
+    "DATO_PENAL",
+    "C0NTRA LA SALUD PUBLICA (SUSTANCIAS QUE CAUSAN GRAVE"
+   ],
+   [
+    "DATO_PENAL",
+    "DAN0 A LA SALUD)"
+   ],
+   [
+    "DATO_PENAL",
+    "PRISI0N l AN0 Y 6 MESES. MULTA 2.400 EUR0S"
+   ],
+   [
+    "DATO_PENAL",
+    "INHABILITACI0N ESPECIAL DERECH0 SUFRAGI0 PASIV0"
+   ],
+   [
+    "DATO_PENAL",
+    "PENA CUMPLIDA EN FECHA ll/l0/2022"
+   ],
+   [
+    "DATO_PENAL",
+    "C0NTRA LA SEGURIDAD VIAL - C0NDUCCI0N BAJ0 LA INFLUENCIA"
+   ],
+   [
+    "DATO_PENAL",
+    "DE BEBIDAS ALC0H0LICAS"
+   ],
+   [
+    "DATO_PENAL",
+    "MULTA 6 MESES CU0TA 6 EUR0S. PRIVACI0N DEL DERECH0 A"
+   ],
+   [
+    "DATO_PENAL",
+    "C0NDUCIR VEHICUL0S A M0T0R 1 AN0 Y l DIA"
+   ],
+   [
+    "DATO_PENAL",
+    "CANCELABLE"
+   ],
+   [
+    "DATO_PENAL",
+    "(C0NF0RMIDAD)"
+   ],
+   [
+    "NORMA",
+    "ART. 368 CP"
+   ],
+   [
+    "NORMA",
+    "ART. 379.2 CP"
+   ],
+   [
+    "NORMA",
+    "ART. l7 RD 95/2009"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-auto-orden-proteccion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE VIOLENCIA SOBRE LA MUJER N.º 1 DE OURENSE"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Violencia sobre la Mujer n.º 1 de Ourense"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Ourense"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 412/2026"
+   ],
+   [
+    "AUTOS",
+    "Pieza de Orden de Protección n.º 412.01/2026"
+   ],
+   [
+    "AUTOS",
+    "32054 43 2 2026 0002317"
+   ],
+   [
+    "AUTOS",
+    "n.º 2026-003214-00000178"
+   ],
+   [
+    "AUTOS",
+    "AUTO N.º 97/2026"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto Principal de Barbadás"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias del CHUO"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Barbadás"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Central para la Protección de las Víctimas de la Violencia Doméstica y de Género"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Coordinación contra la Violencia sobre la Mujer de la Subdelegación del Gobierno en Ourense"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto Principal de la Guardia Civil de Barbadás"
+   ],
+   [
+    "ORGANISMO",
+    "Punto de Coordinación de las Órdenes de Protección de Galicia"
+   ],
+   [
+    "PERSONA",
+    "Brais Gulías Pereiro"
+   ],
+   [
+    "PERSONA",
+    "Antía Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Iria Castro Bouzas"
+   ],
+   [
+    "PERSONA",
+    "Manuel Vázquez Novo"
+   ],
+   [
+    "PERSONA",
+    "Marta Bóveda Sánchez"
+   ],
+   [
+    "PERSONA",
+    "Noa Doval Carballo"
+   ],
+   [
+    "PONENTE",
+    "Carmen Lourido Vilar"
+   ],
+   [
+    "LAJ",
+    "Andrés Cid Fernández"
+   ],
+   [
+    "NORMA",
+    "artículo 544 ter de la Ley de Enjuiciamiento Criminal"
+   ],
+   [
+    "NORMA",
+    "artículo 173.2 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 148.4 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 171.4 del Código Penal"
+   ],
+   [
+    "OBJETO",
+    "delito de lesiones"
+   ],
+   [
+    "OBJETO",
+    "delito de amenazas"
+   ],
+   [
+    "OBJETO",
+    "delito de maltrato habitual"
+   ],
+   [
+    "DATO_PENAL",
+    "antecedentes penales por un delito contra la salud pública y otro contra la seguridad vial"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "herida supraciliar izquierda que requirió cuatro puntos de sutura, una contusión malar, un eritema cervical compatible con presión digital y un traumatismo abdominal leve en una gestante de catorce semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de lesiones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psiquiátrico por un trastorno depresivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padezca una enfermedad mental",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intento de estrangulación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el consumo de alcohol y cocaína del investigado esa noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historial de consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ao bebé",
+    "salud"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de Ourense, 52, 1.º B, 32890 Barbadás"
+   ],
+   [
+    "DIRECCION",
+    "lugar de Sobral, 9, 32890 Barbadás"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-informe-medico-forense.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "INSTITUTO DE MEDICINA LEGAL DE GALICIA (IMELGA)"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Clínica Médico-Forense"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Valoración Forense Integral (UVFI)"
+   ],
+   [
+    "ORGANISMO",
+    "CHUO"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Barbadás"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Información á Muller (CIM) de Ourense"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental III del CHUO"
+   ],
+   [
+    "ORGANISMO",
+    "CIM"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Violencia sobre la Mujer n.º 1 de Ourense"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 412/2026"
+   ],
+   [
+    "PERSONA",
+    "Antía Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Novoa"
+   ],
+   [
+    "PERSONA",
+    "Laura Gómez Prado"
+   ],
+   [
+    "PERSONA",
+    "Iago Barreiro Sanmartín"
+   ],
+   [
+    "PERITO",
+    "Ramón Feijoo Lamas"
+   ],
+   [
+    "PERITO",
+    "Olalla Rei Montero"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME MÉDICO-FORENSE DE SANIDAD Y VALORACIÓN PSICOLÓGICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Parte de lesiones e informe de urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de Obstetricia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica de Atención Primaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Herida inciso-contusa de 2,5 cm en región supraciliar izquierda, suturada con 4 puntos en urgencias.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión con hematoma malar izquierdo.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eritema cervical bilateral por presión digital (estrangulación manual), sin lesiones laríngeas.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión-erosión en codo derecho.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Traumatismo abdominal leve en gestante de 14+2 semanas, sin repercusión obstétrica (ecografías de control normales).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la herida supraciliar precisó tratamiento quirúrgico (sutura)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento médico-quirúrgico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "12 días de perjuicio personal básico, de los cuales 7 de perjuicio particular moderado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cicatriz lineal de 2,2 cm en región supraciliar izquierda, levemente hipercrómica, visible a distancia conversacional. Perjuicio estético ligero (2 puntos).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin antecedentes psiquiátricos previos relevantes salvo un episodio de ansiedad en enero de 2026, tratado con lorazepam a demanda por su médica de familia y abandonado al conocer la gestación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo en tratamiento con levotiroxina.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega consumo de tóxicos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Interrupción voluntaria del embarazo en 2023.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hermana con trastorno depresivo mayor recurrente en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padre fallecido por cáncer de páncreas en 2020",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con diabetes tipo 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gestante de 39 semanas en el momento del último reconocimiento, con parto previsto para finales de septiembre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baja laboral (camarera) desde marzo, primero por la situación psicológica y después por el embarazo de riesgo (amenaza de parto prematuro en julio, tratada con reposo y progesterona vaginal).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso coherente, con llanto al relatar el episodio del 22 de marzo. Ánimo bajo, ansiedad elevada.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipervigilancia (se sienta de cara a la puerta, refiere comprobar varias veces el cierre).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pesadillas recurrentes con el episodio de estrangulación, reexperimentación ante estímulos (olor a alcohol, el sonido de un motor diésel parecido al del coche del investigado), conductas de evitación (no ha vuelto al domicilio de la Avenida de Ourense). Insomnio de mantenimiento. Sentimientos de culpa por no haber denunciado en enero. Ideas de muerte pasivas en abril, sin ideación autolítica estructurada en la actualidad.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EGS-R (Escala de Gravedad de Síntomas del Trastorno de Estrés Postraumático revisada): 38 puntos (punto de corte 20). BDI-II: 27 (depresión moderada). STAI-E: percentil 90. SIMS: sin indicios de simulación.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "seguimiento por psiquiatría",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "psicoterapia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sertralina 50 mg/día (pautada tras valoración del riesgo-beneficio en la gestación y compatible con la lactancia). Ha rechazado tratamiento hipnótico.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sanidad: 12 días, 7 de ellos de perjuicio particular moderado.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "perjuicio estético ligero (2 puntos) por cicatriz supraciliar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno de estrés postraumático (TEPT) (CIE-10 F43.1) de intensidad moderada, con un trastorno depresivo reactivo asociado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno de estrés postraumático moderado (6 puntos)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-whatsapp-hermanas.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Antía"
+   ],
+   [
+    "PERSONA",
+    "Noa"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "PERSONA",
+    "Tito"
+   ],
+   [
+    "PERSONA",
+    "Sara"
+   ],
+   [
+    "PERSONA",
+    "Iria"
+   ],
+   [
+    "ORGANISMO",
+    "CHUO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vai rezar por ti no Salón do Reino coma sempre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Coas pastillas novas non durmo nada, a psiquiatra dixo que as primeiras semanas é así",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que é a coca e o alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Di que vai ir á UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fun á médica polo de non durmir e deume lorazepam. Tomo medio pola noite",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "eu estiven enganchada ao orfidal un ano",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dei positivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vas ser nai!!",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Primeiro vai á matrona. E deixa o lorazepam xa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Despois do de 2023 non o podería soportar outra vez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Agora estás ti e o bebé",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "á lesbiana da túa irmá",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "o da CIG da conserveira",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "O delegado ese",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "teño a cabeza fatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Levo as miñas pastillas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Como tes o pescozo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Doe. Pero o bebé está ben, vino na eco. Ten o corazón a mil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estou tola",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se tomo medicación para a depresión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estar enferma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me doe a cara",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingresáronme. Contraccións. Dixéronme ameaza de parto prematuro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Puxéronme algo para paralas e progesterona. Hai que estar en repouso",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-escrito-acusacion-particular.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE VIOLENCIA SOBRE LA MUJER N.º 1 DE OURENSE"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 2 de Ourense"
+   ],
+   [
+    "AUTOS",
+    "Procedimiento Abreviado n.º 412/2026"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 412/2026"
+   ],
+   [
+    "AUTOS",
+    "32054 43 2 2026 0002317"
+   ],
+   [
+    "AUTOS",
+    "atestado n.º 2026-003214-00000178"
+   ],
+   [
+    "PERSONA",
+    "Rosalía Penas Ferro"
+   ],
+   [
+    "PERSONA",
+    "Antía Doval Carballo"
+   ],
+   [
+    "PERSONA",
+    "Iria Castro Bouzas"
+   ],
+   [
+    "PERSONA",
+    "Brais Gulías Pereiro"
+   ],
+   [
+    "PERSONA",
+    "Doval"
+   ],
+   [
+    "PERSONA",
+    "Noa Doval Carballo"
+   ],
+   [
+    "AGENTE",
+    "Xosé Manuel Outeiro Seoane"
+   ],
+   [
+    "AGENTE",
+    "Lorena Pazos Rivas"
+   ],
+   [
+    "TIP",
+    "R-38204-Q"
+   ],
+   [
+    "TIP",
+    "H-60418-K"
+   ],
+   [
+    "TIP",
+    "D-47715-S"
+   ],
+   [
+    "PERITO",
+    "Ramón Feijoo Lamas"
+   ],
+   [
+    "PERITO",
+    "Olalla Rei Montero"
+   ],
+   [
+    "PERITO",
+    "Sabela Novoa Iglesias"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Ourense"
+   ],
+   [
+    "DNI",
+    "44658102J"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de Ourense, 52, 1.º B, 32890 Barbadás"
+   ],
+   [
+    "NORMA",
+    "artículo 781 de la Ley de Enjuiciamiento Criminal"
+   ],
+   [
+    "NORMA",
+    "artículo 544 ter LECrim"
+   ],
+   [
+    "NORMA",
+    "artículo 173.2 y 3 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 148.4 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 169.2 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 28 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 23 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 56 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 576 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 2.e) de la Ley 4/2015, de 27 de abril, del Estatuto de la víctima del delito"
+   ],
+   [
+    "OBJETO",
+    "delito de maltrato habitual"
+   ],
+   [
+    "OBJETO",
+    "delito de lesiones"
+   ],
+   [
+    "OBJETO",
+    "delito de amenazas"
+   ],
+   [
+    "OBJETO",
+    "trato vejatorio y de dominación continuado"
+   ],
+   [
+    "DATO_PENAL",
+    "fue condenado por sentencia firme de 14 de abril de 2021"
+   ],
+   [
+    "DATO_PENAL",
+    "por un delito contra la salud pública a la pena de 1 año y 6 meses de prisión"
+   ],
+   [
+    "DATO_PENAL",
+    "por sentencia de 26 de junio de 2018 por un delito de conducción bajo la influencia de bebidas alcohólicas"
+   ],
+   [
+    "DATO_PENAL",
+    "hoja histórico-penal del acusado"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que estaba embarazada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "á lesbiana da túa irmá",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se golpeó el abdomen contra el pomo de la puerta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "embarazada de catorce semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "herida inciso-contusa supraciliar izquierda, contusión malar izquierda, eritema cervical por presión digital, contusión en el codo derecho y traumatismo abdominal leve sin repercusión obstétrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento quirúrgico consistente en sutura con cuatro puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curaron en 12 días, 7 de ellos de perjuicio particular moderado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una cicatriz supraciliar de 2,2 cm (perjuicio estético ligero, 2 puntos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece un trastorno de estrés postraumático moderado con un trastorno depresivo reactivo asociado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psiquiátrico con sertralina y psicoterapia, valorado como secuela en 6 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "amenaza de parto prematuro que precisó ingreso hospitalario de dos días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«bolleira de merda»",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«tola coas pastillas»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su orientación sexual",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enfermedad depresiva por la que está en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bebidas alcohólicas (0,72 mg/l en aire espirado) y cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin que ello mermara de forma apreciable sus facultades",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "5 días de perjuicio básico y 7 días de perjuicio particular moderado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por el perjuicio estético",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por la secuela psíquica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psicológico futuro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "temor sufrido durante la gestación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de lesiones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informes del CHUO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnóstico de TEPT de aquella y la depresión de esta",
+    "salud"
+   ]
+  ],
+  "ambiguo": [
+   "Doval"
+  ]
+ }
+}

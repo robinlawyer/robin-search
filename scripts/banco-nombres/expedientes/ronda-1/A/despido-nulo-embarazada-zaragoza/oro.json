@@ -1,0 +1,1497 @@
+{
+ "01-chat-con-la-encargada.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Nerea Lasheras"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Vane"
+   ],
+   [
+    "PERSONA",
+    "Leti"
+   ],
+   [
+    "PERSONA",
+    "Nacho"
+   ],
+   [
+    "PERSONA",
+    "Pili"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "PERSONA",
+    "Dani"
+   ],
+   [
+    "OBJETO",
+    "Estoy embarazada"
+   ],
+   [
+    "OBJETO",
+    "lo del embarazo"
+   ],
+   [
+    "OBJETO",
+    "otra preñada"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos años con lo de la FIV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de 7 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nada de coger más de 10 kilos ni turno de noche, y que la carretilla mejor no por las vibraciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se cogió la baja nada más quedarse",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la reducción por lactancia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el papel de la gine",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está otra vez con lo de su azúcar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de baja por la espalda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me lo ha prohibido el médico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy en urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "He sangrado esta mañana subida a la carretilla",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es una amenaza de aborto, tengo un hematoma pero el corazón le late",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me mandan reposo y me dan la baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el parte de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El parte de confirmación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el hematoma se ha reabsorbido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya estoy de 13 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sigo con la progesterona por las noches (el Utrogestan) hasta la semana 16",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el crío con el TDAH y la psicóloga",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servet"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-urgencias-ginecologia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ARAGONÉS DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Sector Zaragoza II"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Materno-Infantil"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Obstetricia y Ginecología"
+   ],
+   [
+    "ORGANISMO",
+    "Urgencias de Obstetricia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Reproducción Humana Asistida del HUMS"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Consejo Genético"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Reproducción"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME DE ALTA DE URGENCIAS",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "LASHERAS TOMÉ, NEREA"
+   ],
+   [
+    "NUSS",
+    "2184773"
+   ],
+   [
+    "NUSS",
+    "ARLT880412-07"
+   ],
+   [
+    "DIRECCION",
+    "C/ Tomás Bretón 47, 3.º izda., 50005 Zaragoza"
+   ],
+   [
+    "TELEFONO",
+    "654 21 87 39"
+   ],
+   [
+    "PERSONA",
+    "Alberto Lahuerta Pardos"
+   ],
+   [
+    "PERSONA",
+    "Sofía Gimeno Anadón"
+   ],
+   [
+    "PERSONA",
+    "Elena Bescós Lacambra"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nivel de triaje: 3 (amarillo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sangrado vaginal de inicio brusco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dolor hipogástrico tipo cólico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NAMC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo subclínico en tto. con levotiroxina (Eutirox 50 mcg/día)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome de ovario poliquístico (SOP)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esterilidad primaria de 3 años de evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación actual conseguida mediante FIV-ICSI con transferencia de embrión único en día 5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dos ciclos previos de FIV no exitosos (2024 y 2025), con un aborto bioquímico en 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodio depresivo leve en 2025 tras el segundo ciclo fallido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sertralina 50 mg durante 6 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apendicectomía (2006)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Laparoscopia diagnóstica (2024): endometriosis mínima, estadio I",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumadora (5 cig/día) desde 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2 A1 V0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Madre intervenida de carcinoma ductal infiltrante de mama a los 52 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "portadora de mutación BRCA2",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre con DM2 y cardiopatía isquémica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestante de 9+3 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ecografía de 7 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "metrorragia escasa-moderada de color rojo de unas 2 horas de evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dolor tipo cólico en hipogastrio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 118/72 mmHg · FC 88 lpm · Tª 36,4 ºC · SatO2 99 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "doloroso a la palpación profunda en hipogastrio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sangrado escaso procedente de cavidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gestación intrauterina única",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Embrión con LCN de 25 mm acorde a 9+2 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LCF positivo (168 lpm)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hematoma subcoriónico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 12,1 g/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hto 36 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "β-hCG: 64.300 mUI/mL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0 Rh negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Coombs indirecto negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TSH: 2,1 mUI/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Amenaza de aborto en gestación de 9+3 semanas (CIE-10 O20.0)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación conseguida por técnica de reproducción asistida (FIV-ICSI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación de alto riesgo obstétrico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestante Rh negativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reposo relativo domiciliario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abstinencia de relaciones sexuales hasta nueva valoración",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Progesterona natural micronizada (Utrogestan 200 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eutirox 50 mcg en ayunas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ácido fólico + yoduro potásico (Yodofolin)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inmunoglobulina anti-D (Rhophylac 300 mcg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "baja laboral (IT)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se desaconseja durante toda la gestación la manipulación de cargas de más de 5 kg, la bipedestación prolongada, el trabajo nocturno y la conducción de carretilla elevadora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Control en consulta de Alto Riesgo Obstétrico",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-nominas-aportadas-por-la-empresa.pdf.txt": {
+  "oro": [
+   [
+    "CIF",
+    "B50987412"
+   ],
+   [
+    "NORMA",
+    "Convenio colectivo del sector de Logística, Paquetería y Actividades Anexas al Transporte"
+   ],
+   [
+    "PERSONA",
+    "NEREA LASHERAS TOMÉ"
+   ],
+   [
+    "DNI",
+    "73104588J"
+   ],
+   [
+    "NUSS",
+    "50/10458832/27"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prestación IT enfermedad común (pago delegado, 18-31/03)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Complemento empresa hasta 100 % IT",
+    "salud"
+   ],
+   [
+    "IBAN",
+    "ES21 2085 5202 7103 3012 4581"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Situación de IT por contingencias comunes desde 18/03/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diagnóstico según parte: O20.0",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "SERGIO ABADÍA LORENTE"
+   ],
+   [
+    "DNI",
+    "25187344W"
+   ],
+   [
+    "NUSS",
+    "50/10023458/91"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Horas sindicales",
+    "sindical"
+   ],
+   [
+    "NORMA",
+    "art. 68 e ET"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reducción jornada 1/8 cuidado hijo con cáncer (CUME)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuota sindical UGT-FeSMC",
+    "sindical"
+   ],
+   [
+    "NORMA",
+    "art. 11.2 LOLS"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 12 de Zaragoza"
+   ],
+   [
+    "AUTOS",
+    "Ejec. 233/2025"
+   ],
+   [
+    "IBAN",
+    "ES62 0182 5567 4102 0158 3390"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prestación CUME",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 1148/2011"
+   ],
+   [
+    "ORGANISMO",
+    "MAZ Mutua n.º 11"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Delegado de personal elegido en la candidatura de UGT",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Sergio Abadía"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su cuota sindical",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la reducción por el niño",
+    "salud"
+   ],
+   [
+    "AUTOS",
+    "612/2026"
+   ],
+   [
+    "PERSONA",
+    "M. G."
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-carta-de-despido.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Nerea Lasheras Tomé"
+   ],
+   [
+    "PERSONA",
+    "Lasheras"
+   ],
+   [
+    "DIRECCION",
+    "C/ Tomás Bretón 47, 3.º izda."
+   ],
+   [
+    "DIRECCION",
+    "50005 Zaragoza"
+   ],
+   [
+    "NORMA",
+    "artículo 54.2.e) del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "artículo 62.3.f) del Convenio colectivo del sector de Logística, Paquetería y Actividades Anexas al Transporte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Vanesa Royo Calvo"
+   ],
+   [
+    "ORGANISMO",
+    "SEPE"
+   ],
+   [
+    "NORMA",
+    "artículo 55.1 del Estatuto de los Trabajadores"
+   ],
+   [
+    "PERSONA",
+    "Sergio Abadía Lorente"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado de personal por UGT",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Marín Laborda"
+   ],
+   [
+    "PERSONA",
+    "José Luis Pemán Ayerbe"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-acta-conciliacion-smac.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GOBIERN0 DE ARAGON"
+   ],
+   [
+    "ORGANISMO",
+    "DEPARTAMENTO DE EC0NOMIA, EMPLEO E INDUSTRIA"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCION GENERAL DE TRABAJO, AUT0NOMOS Y EC0NOMIA SOCIAL"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICI0 DE MEDIACION, ARBITRAJE Y CONCILIACI0N (SMAC) - ZARAG0ZA"
+   ],
+   [
+    "AUTOS",
+    "50/2026/C/003871"
+   ],
+   [
+    "PERSONA",
+    "MARIA J0SE ALBAS GRACIA"
+   ],
+   [
+    "PERSONA",
+    "NEREA LASHERAS T0ME"
+   ],
+   [
+    "DNI",
+    "73l04588-J"
+   ],
+   [
+    "DIRECCION",
+    "C/ T0MAS BRET0N 47, 3 IZDA, 5OOO5 ZARAG0ZA"
+   ],
+   [
+    "PERSONA",
+    "MARTA GIL ARRUEB0"
+   ],
+   [
+    "ORGANISMO",
+    "REICAZ"
+   ],
+   [
+    "CIF",
+    "B5O987412"
+   ],
+   [
+    "PERSONA",
+    "JAVIER PUEY0 LAH0Z"
+   ],
+   [
+    "OBJETO",
+    "HALLANDOSE LA TRABAJAD0RA EMBARAZADA"
+   ],
+   [
+    "NORMA",
+    "ART. 14 CE"
+   ],
+   [
+    "OBJETO",
+    "ESTAD0 DE GESTACI0N"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ESTUV0 DE BAJA MEDICA DEL 18 DE MARZ0 AL 14 DE ABRIL DE 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA BAJA LO FUE P0R AMENAZA DE AB0RT0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EL PARTE ENTREGAD0",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "VANESA R0Y0"
+   ],
+   [
+    "NORMA",
+    "ART. 55.5.B) DEL ESTATUT0 DE L0S TRABAJAD0RES"
+   ],
+   [
+    "ORGANISMO",
+    "G0BIERN0 DE ARAG0N - SMAC ZARAG0ZA"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-demanda-despido-nulo.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE ZARAGOZA"
+   ],
+   [
+    "PERSONA",
+    "NEREA LASHERAS TOMÉ"
+   ],
+   [
+    "PERSONA",
+    "Nerea Lasheras Tomé"
+   ],
+   [
+    "PERSONA",
+    "Lasheras"
+   ],
+   [
+    "DNI",
+    "73104588-J"
+   ],
+   [
+    "NUSS",
+    "50/10458832/27"
+   ],
+   [
+    "DIRECCION",
+    "calle Tomás Bretón n.º 47, 3.º izquierda, 50005 Zaragoza"
+   ],
+   [
+    "TELEFONO",
+    "654 21 87 39"
+   ],
+   [
+    "PERSONA",
+    "MARTA GIL ARRUEBO"
+   ],
+   [
+    "PERSONA",
+    "Marta Gil Arruebo"
+   ],
+   [
+    "ORGANISMO",
+    "Real e Ilustre Colegio de Abogados de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "ReICAZ"
+   ],
+   [
+    "CORREO",
+    "mgil@gilarruebo-abogados.es"
+   ],
+   [
+    "CIF",
+    "B50987412"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "NORMA",
+    "Convenio colectivo del sector de Logística, Paquetería y Actividades Anexas al Transporte"
+   ],
+   [
+    "OBJETO",
+    "embarazo"
+   ],
+   [
+    "OBJETO",
+    "embarazada"
+   ],
+   [
+    "OBJETO",
+    "estado de gestación"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un largo proceso de reproducción asistida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tres años de esterilidad primaria, dos ciclos de fecundación in vitro fallidos y un aborto bioquímico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una transferencia embrionaria el 21 de enero de 2026",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Reproducción Humana Asistida del Hospital Universitario Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "PERSONA",
+    "Vanesa Royo Calvo"
+   ],
+   [
+    "PERSONA",
+    "Royo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no manipular cargas de más de 10 kilos, no realizar turno de noche y no conducir carretilla elevadora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de la ginecóloga",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Marín Laborda"
+   ],
+   [
+    "PERSONA",
+    "Nacho"
+   ],
+   [
+    "PERSONA",
+    "Marín"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baja médica por amenaza de aborto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sufrió una metrorragia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una amenaza de aborto con hematoma subcoriónico en gestación de 9+3 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reposo y progesterona micronizada (Utrogestan 200 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que no manipulara cargas ni condujera carretilla durante toda la gestación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal por contingencias comunes desde el 18 de marzo hasta el 14 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Los partes de baja y de confirmación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el código diagnóstico del parte (O20.0), que corresponde a la amenaza de aborto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya de 13 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento de reproducción asistida (estimulación ovárica, punción folicular el 16 de enero y transferencia el 21 de enero)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con las molestias propias del mismo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pilar Ezquerra Gracia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "varias ausencias por descompensaciones de su diabetes tipo 1 y que porta bomba de insulina",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rubén Gállego Sanz"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en situación de IT desde febrero de 2026 por una hernia discal L4-L5 intervenida quirúrgicamente",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Leti"
+   ],
+   [
+    "PERSONA",
+    "Leticia Navarro Clemente"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reincorporarse de la suspensión por nacimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la reducción de jornada por lactancia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Mediación, Arbitraje y Conciliación (SMAC) de Zaragoza"
+   ],
+   [
+    "AUTOS",
+    "50/2026/C/003871"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "plena gestación de riesgo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un largo proceso de fecundación in vitro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una intensa angustia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ansiedad e insomnio",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lorazepam a demanda",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Artículos 1, 2.a), 6 y 10.1 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social (LRJS)"
+   ],
+   [
+    "NORMA",
+    "Artículos 103 y siguientes LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 63 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 59.3 del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "artículo 55.5.b) del Real Decreto Legislativo 2/2015, de 23 de octubre"
+   ],
+   [
+    "NORMA",
+    "artículo 108.2.b) LRJS"
+   ],
+   [
+    "NORMA",
+    "STC 92/2008, de 21 de julio"
+   ],
+   [
+    "NORMA",
+    "STC 124/2009, de 18 de mayo"
+   ],
+   [
+    "ORGANO",
+    "Sala Cuarta del Tribunal Supremo"
+   ],
+   [
+    "NORMA",
+    "artículo 14 de la Constitución Española"
+   ],
+   [
+    "NORMA",
+    "artículos 3 y 8 de la Ley Orgánica 3/2007, de 22 de marzo, para la igualdad efectiva de mujeres y hombres"
+   ],
+   [
+    "NORMA",
+    "artículos 96.1 y 181.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "Artículos 182.1.d) y 183 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 40.1.c) del Real Decreto Legislativo 5/2000, de 4 de agosto (LISOS)"
+   ],
+   [
+    "NORMA",
+    "artículo 8.12 de dicha norma"
+   ],
+   [
+    "NORMA",
+    "Artículo 55.6 ET y 113 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 90.3 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2 LRJS"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-de-la-clienta.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Nerea Lasheras"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "CORREO",
+    "nerea.lasheras88@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Marta Gil Arruebo"
+   ],
+   [
+    "PERSONA",
+    "Marta Gil"
+   ],
+   [
+    "PERSONA",
+    "Marta"
+   ],
+   [
+    "CORREO",
+    "mgil@gilarruebo-abogados.es"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no duermo nada últimamente",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Leti"
+   ],
+   [
+    "PERSONA",
+    "Leticia Navarro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "volver de la baja de maternidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pidió la hora de lactancia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba con depresion postparto",
+    "salud"
+   ],
+   [
+    "TELEFONO",
+    "626 90 14 52"
+   ],
+   [
+    "ORGANISMO",
+    "Mercazaragoza"
+   ],
+   [
+    "PERSONA",
+    "Pili"
+   ],
+   [
+    "PERSONA",
+    "Pilar Ezquerra"
+   ],
+   [
+    "OBJETO",
+    "otra preñada"
+   ],
+   [
+    "PERSONA",
+    "Nacho"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es diabetica desde pequeña y lleva la bomba de insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si falta por las hipoglucemias",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se a operado de la hernia en mayo, sigue de baja",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Óscar"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esta en Proyecto Hombre por lo de la coca desde marzo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Vane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba con los pinchazos de la estimulacion (Gonal y Cetrotide)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la punción el dia 16",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el de la transferencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con los ovarios como pelotas",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Dani"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo estoy afiliada a CCOO desde 2019",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi cuñado que es de CCOO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ya estoy de 20 semanas y es niña",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El cribado del primer trimestre salio de bajo riesgo para Down",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no me han tenido que hacer la amniocentesis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ecografia de la semana 20 todo normal",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Bescós"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del tiroides y lo del Rh",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el estrés no me viene nada bien",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me receto lorazepam para dormir",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "SEPE"
+   ],
+   [
+    "TELEFONO",
+    "654 21 87 39"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-sentencia-juzgado-social-4.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL N.º 4 DE ZARAGOZA"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Social n.º 4 de Zaragoza"
+   ],
+   [
+    "AUTOS",
+    "50297 44 4 2026 0004318"
+   ],
+   [
+    "AUTOS",
+    "DESPIDOS / CESES EN GENERAL 612/2026"
+   ],
+   [
+    "AUTOS",
+    "389/2026"
+   ],
+   [
+    "PERSONA",
+    "NEREA LASHERAS TOMÉ"
+   ],
+   [
+    "PERSONA",
+    "Nerea Lasheras Tomé"
+   ],
+   [
+    "PERSONA",
+    "MARTA GIL ARRUEBO"
+   ],
+   [
+    "PERSONA",
+    "JAVIER PUEYO LAHOZ"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "PONENTE",
+    "Ana Isabel Sancho Mur"
+   ],
+   [
+    "ORGANO",
+    "Decanato"
+   ],
+   [
+    "PERSONA",
+    "Vanesa Royo Calvo"
+   ],
+   [
+    "PERSONA",
+    "Pilar Ezquerra Gracia"
+   ],
+   [
+    "PERSONA",
+    "José Luis Pemán Ayerbe"
+   ],
+   [
+    "DNI",
+    "73104588-J"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento de fecundación in vitro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "transferencia embrionaria el 21 de enero de 2026",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "embarazada"
+   ],
+   [
+    "OBJETO",
+    "embarazo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de unas 14 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de su ginecóloga con las restricciones laborales",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Royo"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Marín Laborda"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sufrió una amenaza de aborto con hematoma subcoriónico",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Permaneció en IT del 18 de marzo al 14 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El código diagnóstico",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Marín Laborda"
+   ],
+   [
+    "PERSONA",
+    "Marín"
+   ],
+   [
+    "PERSONA",
+    "Ezquerra"
+   ],
+   [
+    "ORGANISMO",
+    "SMAC"
+   ],
+   [
+    "PERSONA",
+    "Pemán"
+   ],
+   [
+    "NORMA",
+    "artículo 55.5.b) del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "artículo 108.2.b) LRJS"
+   ],
+   [
+    "NORMA",
+    "STC 92/2008, de 21 de julio"
+   ],
+   [
+    "NORMA",
+    "artículo 14 CE"
+   ],
+   [
+    "NORMA",
+    "artículos 182.1.d) y 183 LRJS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "embarazo de riesgo",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículos 8.12 y 40.1.c)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la entidad del daño psíquico",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 191 LRJS"
+   ],
+   [
+    "ORGANO",
+    "Sala de lo Social del Tribunal Superior de Justicia de Aragón"
+   ],
+   [
+    "LAJ",
+    "Fernando Alcalá Riva"
+   ],
+   [
+    "NORMA",
+    "LISOS"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

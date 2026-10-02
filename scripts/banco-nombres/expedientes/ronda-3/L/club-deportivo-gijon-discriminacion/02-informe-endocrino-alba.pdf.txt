@@ -1,0 +1,61 @@
+SERVICIO DE SALUD DEL PRINCIPADO DE ASTURIAS (SESPA)
+Área Sanitaria V — Hospital Universitario de Cabueñes (Gijón)
+Servicio de Pediatría — Unidad de Endocrinología y Diabetes Pediátrica
+
+INFORME CLÍNICO
+
+Paciente: Alba Suárez Cueto
+Fecha de nacimiento: 14/03/2016 (9 años)
+NHC: 2287416          TIS: ASTU160314SUAR0004
+Fecha: 25/11/2025
+Motivo: informe para la familia, a petición de la madre, sobre la compatibilidad de la actividad deportiva y de las salidas con pernocta con su enfermedad, y pautas de actuación para monitores y entrenadores.
+
+ANTECEDENTES
+- Diabetes mellitus tipo 1 diagnosticada el 02/02/2021 (4 años y 11 meses), debut con cetoacidosis diabética moderada (pH 7,18, HCO3 9 mmol/L, glucemia 486 mg/dL), con ingreso de 5 días en UCI pediátrica.
+- Autoinmunidad: anticuerpos anti-GAD 65 positivos (> 250 UI/mL), anti-IA2 positivos. Tipaje HLA DR3/DR4.
+- Celiaquía diagnosticada en cribado en 2022 (anti-transglutaminasa IgA > 128 U/mL, biopsia duodenal Marsh 3b). Dieta sin gluten estricta.
+- Tiroiditis autoinmune con función normal (anti-TPO positivos, TSH 3,1 µUI/mL). Sin tratamiento.
+- Antecedentes familiares: abuelo paterno con DM tipo 2; tía materna con hipotiroidismo. Hermano de 11 años en seguimiento en esta misma Unidad por otro motivo.
+
+TRATAMIENTO ACTUAL
+- Sistema de asa cerrada híbrida avanzada (AHCL): bomba de insulina Medtronic MiniMed 780G con sensor Guardian 4, en modo SmartGuard (objetivo 100 mg/dL), con insulina aspart (Fiasp®) en el reservorio. Dosis total diaria media: 21,4 UI (0,68 UI/kg/día); basal automática 44 %.
+- Ratio insulina/HC: 1 UI/12 g en desayuno, 1 UI/15 g resto de comidas. Factor de sensibilidad 110 mg/dL.
+- Glucagón intranasal (Baqsimi® 3 mg) para hipoglucemia grave.
+- Glucosa rápida (zumo 200 ml, pastillas de glucosa Glucosport® 4 g) para hipoglucemias leves.
+
+DATOS DE CONTROL (descarga de CareLink, últimos 90 días)
+| Indicador | Resultado | Objetivo |
+|---|---|---|
+| HbA1c (laboratorio, 18/11/2025) | 6,9 % | < 7 % |
+| GMI | 6,8 % | |
+| Tiempo en rango 70-180 mg/dL (TIR) | 78 % | > 70 % |
+| Tiempo por debajo de 70 mg/dL (TBR) | 3 % | < 4 % |
+| Tiempo por debajo de 54 mg/dL | 0,4 % | < 1 % |
+| Tiempo por encima de 180 mg/dL (TAR) | 19 % | < 25 % |
+| Coeficiente de variación | 33,1 % | ≤ 36 % |
+| Hipoglucemias graves en el último año | 0 | |
+| Uso del sensor | 96 % | > 70 % |
+
+EXPLORACIÓN
+Peso 31,2 kg (p55), talla 136 cm (p60). IMC 16,9. Tanner I. Lugares de inserción sin lipohipertrofias. Resto normal.
+
+JUICIO CLÍNICO
+1. Diabetes mellitus tipo 1 con buen control metabólico, en tratamiento con sistema AHCL.
+2. Enfermedad celíaca en dieta sin gluten.
+3. Tiroiditis autoinmune eutiroidea.
+
+VALORACIÓN SOBRE LA ACTIVIDAD DEPORTIVA
+La práctica deportiva regular está ESPECIALMENTE RECOMENDADA en niños con diabetes tipo 1. Alba puede participar en entrenamientos, partidos, torneos y salidas con pernocta en las mismas condiciones que el resto de su equipo, sin necesidad de acompañamiento por sus progenitores, siempre que haya un adulto responsable con conocimientos básicos. La mayor parte de la gestión es automática. El adulto responsable solo debe:
+1. Verificar en la app MiniMed Mobile (o en el teléfono de la niña) las alarmas del sensor.
+2. Si la glucosa es inferior a 70 mg/dL: dar 15 g de hidratos de absorción rápida (un zumo pequeño) y repetir a los 15 minutos si persiste.
+3. Antes de ejercicio intenso: activar el objetivo temporal (150 mg/dL) 1-2 horas antes; la propia niña sabe hacerlo.
+4. En caso de hipoglucemia grave con pérdida de conciencia (situación excepcional): administrar Baqsimi 3 mg en una fosa nasal y llamar al 112.
+5. Recordar que sigue dieta sin gluten.
+
+Desde esta Unidad, en colaboración con la Asociación de Diabéticos de Asturias, se ofrece formación gratuita (1 hora) al personal de clubes y centros escolares. Esta formación se ofreció al CD Natahoyo el 05/11/2025 sin que hasta la fecha se haya obtenido respuesta.
+
+Excluir a una niña con diabetes tipo 1 bien controlada de actividades deportivas o exigir la presencia de un progenitor no tiene justificación clínica.
+
+Fdo.: Dra. Begoña Riera Llaneza
+FEA Pediatría — Endocrinología Pediátrica. N.º col. 33/3307 4512
+Hospital Universitario de Cabueñes

@@ -1,0 +1,50 @@
+INSTITUTO DE MEDICINA LEGAL DE ARAGÓN
+Subdirección de Huesca — Servicio de Patología Forense
+
+INFORME MÉDICO-FORENSE DE AUTOPSIA
+
+Órgano judicial: Juzgado de Primera Instancia e Instrucción n.º 2 de Huesca
+Procedimiento: Diligencias Previas 214/2026
+NIG: 22125 41 2 2026 0000987
+Referencia IMLA: HU-A-2026/038
+Fallecida: Dña. Pilar Lasierra Coscolla, de 88 años
+DNI: 18004417-W
+Fecha y hora del fallecimiento: 19/02/2026, 04:25 h (Hospital Universitario San Jorge, Servicio de Medicina Interna)
+Fecha de la autopsia: 20/02/2026, 10:00 h
+
+Médico forense: Dr. Andrés Lacasta Bielsa
+
+I. ANTECEDENTES
+Se practica autopsia judicial por orden del Juzgado de guardia, al tratarse de una muerte producida tras una caída en centro residencial, con denuncia del hijo de la fallecida, D. Samuel Abad Lasierra, presentada en la Comisaría Provincial de Huesca el 15/02/2026, y atestado n.º 1.247/2026 instruido por el agente de la Policía Nacional con carné profesional n.º 118.442.
+
+Según la documentación clínica remitida (historia del Hospital Universitario San Jorge y evolutivo de enfermería de la residencia), la fallecida padecía demencia tipo Alzheimer (GDS 6), diabetes mellitus tipo 2 en tratamiento con insulina glargina y pauta de insulina rápida, fibrilación auricular anticoagulada con apixabán, hipertensión arterial, osteoporosis e insuficiencia renal crónica estadio 3b. Fue hallada en el suelo de su habitación el 14/02/2026 a las 06:10 h, con una glucemia capilar de 48 mg/dL. En el hospital se diagnosticó fractura pertrocantérea de fémur izquierdo (clasificación AO 31-A2) y hematoma subdural agudo frontoparietal izquierdo de 11 mm con desviación de la línea media de 4 mm (TC craneal de 14/02/2026, 08:12 h). Se revirtió el efecto anticoagulante con complejo protrombínico. Se desestimó la intervención quirúrgica de cadera y neurocirugía por la situación basal. Evolucionó con deterioro progresivo del nivel de conciencia (Glasgow 14 → 8), neumonía broncoaspirativa en base derecha y fallecimiento el día 19.
+
+II. EXAMEN EXTERNO
+Cadáver de mujer de constitución delgada (peso 49 kg, talla 152 cm). Herida contusa suturada de 3,5 cm en región frontal izquierda, con equimosis periorbitaria bilateral («en anteojos») y equimosis extensa en cara lateral del muslo y cadera izquierda. Hematoma en fase de resolución (coloración amarillo-verdosa) en antebrazo derecho, de 4 x 3 cm, compatible con una data de cuatro a seis semanas. Úlcera por presión de grado II en sacro. No se observan lesiones de defensa, ni marcas de sujeción en muñecas, tobillos o abdomen, ni otras lesiones sugestivas de violencia de terceros.
+
+III. EXAMEN INTERNO
+- Cabeza: hematoma subdural agudo-subagudo frontoparietal izquierdo de 90 ml, con herniación subfalcina. Contusión hemorrágica cortical frontal izquierda. Atrofia cortical difusa severa con dilatación ventricular (compatible con enfermedad de Alzheimer avanzada; se remite muestra a Neuropatología).
+- Tórax: condensación en lóbulo inferior derecho con material alimentario en bronquios. Cardiomegalia (corazón de 460 g), dilatación auricular izquierda.
+- Abdomen: riñones de superficie granular (nefroangiosclerosis). Páncreas sin hallazgos macroscópicos.
+- Aparato locomotor: fractura pertrocantérea de fémur izquierdo no intervenida. Fractura antigua consolidada de radio distal derecho y aplastamientos vertebrales D11-D12 por osteoporosis.
+
+IV. ESTUDIOS COMPLEMENTARIOS (Instituto Nacional de Toxicología y Ciencias Forenses, Departamento de Barcelona)
+- Glucosa en humor vítreo: 41 mg/dL (valor de escasa fiabilidad tras cinco días de hospitalización).
+- HbA1c en sangre: 6,0 %.
+- Quetiapina en sangre: 0,03 mg/L (rango terapéutico bajo). Lorazepam: no detectado. Etanol: negativo.
+- Apixabán: 18 ng/mL (compatible con la última dosis administrada en el hospital antes de la reversión).
+
+V. CONSIDERACIONES MÉDICO-FORENSES
+1. La causa fundamental de la muerte es el traumatismo craneoencefálico con hematoma subdural agudo, producido en la caída del 14/02/2026, en una paciente anticoagulada. La fractura de cadera, la inmovilización y la neumonía broncoaspirativa actuaron como causas intermedias. Causa inmediata: insuficiencia respiratoria aguda.
+2. Etiología médico-legal: accidental.
+3. La glucemia capilar de 48 mg/dL hallada a las 06:15 h es compatible con un episodio de hipoglucemia nocturna que pudo favorecer la caída, en una paciente con ingesta escasa la tarde anterior, con aumento reciente de la dosis de insulina basal (de 18 a 22 UI el 10/02/2026) y con función renal disminuida que reduce el aclaramiento de la insulina. No puede establecerse con certeza la hora exacta de la caída: el grado de coagulación de la sangre en la herida frontal descrita por el personal y la evolución del hematoma son compatibles con un intervalo de entre dos y cuatro horas entre la caída y el hallazgo.
+4. El hematoma de antebrazo en fase de resolución es compatible con la caída registrada el 09/01/2026.
+5. No existen signos de maltrato ni de violencia ajena.
+
+VI. CONCLUSIONES
+Muerte de etiología médico-legal accidental. Causa fundamental: traumatismo craneoencefálico con hematoma subdural agudo secundario a caída, en paciente anticoagulada. Factor coadyuvante probable: hipoglucemia nocturna. Intervalo caída-hallazgo estimado: dos a cuatro horas.
+
+Huesca, 30 de abril de 2026
+
+EL MÉDICO FORENSE
+Fdo.: Andrés Lacasta Bielsa

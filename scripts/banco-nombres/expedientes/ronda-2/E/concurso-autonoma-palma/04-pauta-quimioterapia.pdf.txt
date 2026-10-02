@@ -1,0 +1,54 @@
+HOSPITAL UNIVERSITARI SON ESPASES — HOSPITAL DE DIA ONCOHEMATOLÒGIC
+Servei de Farmàcia Hospitalària · Unitat de Preparació de Citostàtics
+
+FULL DE PRESCRIPCIÓ I ADMINISTRACIÓ DE QUIMIOTERÀPIA
+
+Pacient: Margalida Bennàsser Coll       NHC: 2093381
+Pes: 58,4 kg   Talla: 164 cm   SC (Mosteller): 1,63 m²
+Creatinina sèrica: 0,71 mg/dl   FG estimat (Cockcroft-Gault): 94 ml/min
+Diagnòstic: Carcinoma seros d'alt grau d'ovari FIGO IIIC — BRCA1 mutat
+Esquema: CBDCA-TAXOL (carboplatí AUC 5 + paclitaxel 175 mg/m²) cada 21 dies
+Intenció: neoadjuvant (cicles 1-3) / adjuvant (cicles 4-6)
+Oncòloga prescriptora: Dra. N. Ferrà Garau
+Infermera responsable de l'administració: Joana Maria Font Salom
+
+CICLE 5 — Data prevista: 24/06/2024 — Data real: 01/07/2024 (ajornat 7 dies per neutropènia)
+
+Analítica pre-cicle (01/07/2024): Hb 10,8 g/dl · Leucòcits 3.900/mm³ · Neutròfils 1.620/mm³ · Plaquetes 168.000/mm³ · GOT 22 · GPT 31 · Bilirubina 0,6 · Magnesi 1,7 mg/dl.
+Criteri d'administració: neutròfils ≥ 1.500 i plaquetes ≥ 100.000 → APTE.
+Reducció de dosi: 20 % (neutropènia grau 3 i neutropènia febril al cicle 4).
+
+PREMEDICACIÓ (30 min abans)
+1. Dexametasona 20 mg IV en 100 ml SF 0,9 % — 15 min
+2. Dexclorfeniramina (Polaramine) 5 mg IV directe
+3. Famotidina 20 mg IV en 50 ml SF
+4. Ondansetró 8 mg IV en 50 ml SF
+5. Aprepitant (Emend) 125 mg VO
+
+CITOSTÀTICS
+6. Paclitaxel 228 mg (140 mg/m², dosi reduïda) en 500 ml SF 0,9 %, amb filtre de 0,22 µm, durant 3 hores. Vigilar reacció d'hipersensibilitat durant els primers 15 minuts.
+7. Carboplatí 470 mg (AUC 4 per Calvert, dosi reduïda) en 250 ml SG 5 %, durant 60 minuts.
+
+POSTMEDICACIÓ I TRACTAMENT A DOMICILI
+— Pegfilgrastim (Neulasta) 6 mg SC a les 24 h (profilaxi primària després de neutropènia febril). Ho administra la infermera del Centre de Salut Son Pisà.
+— Ondansetró 8 mg VO cada 12 h, dies 2-3.
+— Aprepitant 80 mg VO dies 2 i 3.
+— Dexametasona 4 mg VO cada 12 h, dies 2-3.
+— Metoclopramida (Primperan) 10 mg si nàusees.
+— Omeprazol 20 mg en dejú.
+— Loperamida si diarrea > 3 deposicions/dia.
+— Sertralina 100 mg i lorazepam 1 mg segons pauta de Psiquiatria (no modificar).
+— Levotiroxina 50 mcg en dejú.
+
+REGISTRE D'ADMINISTRACIÓ
+09:10 Canalització del port-a-cath (reservori subcutani a subclàvia dreta, col·locat el 20/02/2024). Retorn venós correcte.
+09:20-09:50 Premedicació sense incidències.
+09:55 Inici de paclitaxel. 10:08 La pacient refereix rubefacció facial, opressió toràcica i sensació de calor. TA 148/92, FC 112, SatO2 95 %. S'atura la perfusió. S'administra hidrocortisona 100 mg IV. Resolució en 20 minuts. Es reprèn a velocitat del 50 % sense incidències.
+13:30 Fi de paclitaxel. 13:35 Inici de carboplatí. 14:40 Fi de carboplatí.
+14:50 Heparinització del reservori i retirada de l'agulla. Alta del Hospital de Dia.
+
+Observacions d'infermeria: pacient molt plorosa durant tota la sessió; comenta que ha hagut de tancar la perruqueria aquesta setmana i que té por de perdre el pis. S'avisa a la treballadora social de l'Hospital de Dia (Sra. Montserrat Riera Pujol) i a la psicooncòloga. Va acompanyada de la seva germana Aina, que comenta que «a ca nostra ja no hi ha doblers ni per a les medicines». La pacient demana que l'esperin perquè vol anar a missa a l'església de Santa Eulàlia abans de tornar a casa, «perquè és lo únic que em dona pau».
+
+Pròxim cicle (6): 22/07/2024, prèvia analítica el 19/07/2024 al Centre de Salut.
+
+Signat: Dra. N. Ferrà Garau / Inf. Joana Maria Font Salom / Farm. Guillem Cabot Oliver

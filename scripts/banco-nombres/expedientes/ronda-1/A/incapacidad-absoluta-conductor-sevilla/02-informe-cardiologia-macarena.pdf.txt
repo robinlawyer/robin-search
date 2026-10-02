@@ -1,0 +1,65 @@
+SERVICIO ANDALUZ DE SALUD
+JUNTA DE ANDALUCÍA · Consejería de Sanidad, Presidencia y Emergencias
+Hospital Universitario Virgen Macarena
+Unidad de Gestión Clínica del Área del Corazón · Consulta de Cardiopatía Isquémica e Insuficiencia Cardiaca
+
+INFORME CLÍNICO DE CONSULTA EXTERNA
+
+Paciente: MANUEL JESÚS CARMONA RUIZ
+NUHSA: AN0283947561          NHC: 1092384
+Fecha de nacimiento: 07/11/1967
+Fecha de consulta: 03/03/2026
+Médico: Dr. Francisco Javier Romero Lucena
+
+Motivo de consulta: revisión tras ingreso por insuficiencia cardiaca descompensada (19-26/02/2026). Paciente remitido además por su MAP para informe a efectos de valoración de incapacidad.
+
+ANTECEDENTES PERSONALES
+- Factores de riesgo cardiovascular: HTA de larga evolución; DM2 desde 2012, insulinizado desde 2024; dislipemia; obesidad (IMC 33-34); exfumador desde febrero de 2025 (IPA 40 paquetes/año). Bebedor moderado hasta 2025 (3-4 cervezas/día), actualmente abstinente.
+- Cardiopatía isquémica: IAM inferoposterior con elevación del ST (14/02/2025), Killip I. Coronariografía urgente: enfermedad de 2 vasos. ACTP primaria con implante de stent farmacoactivo en CD proximal. Lesión moderada (60-70 %) en DA media, manejo conservador inicialmente.
+- EPOC GOLD 3 (seguimiento en Neumología del Hospital Universitario Virgen del Rocío, Dr. Ángel Moreno Sotillo).
+- SAOS moderado (IAH 28/h) en tratamiento con CPAP nocturna.
+- Trastorno depresivo mayor, episodio único, moderado, en seguimiento por la USMC Macarena Norte.
+- Retinopatía diabética no proliferativa leve bilateral.
+- Hiperplasia benigna de próstata (tamsulosina).
+
+ENFERMEDAD ACTUAL
+Paciente de 58 años que desde el alta del IAM refiere disnea progresiva, actualmente a esfuerzos ligeros (subir un piso, caminar 100 metros en llano, ducharse), con episodios de opresión torácica con esfuerzos moderados, ortopnea de 2 almohadas y edemas maleolares vespertinos. Ingreso en febrero de 2026 por insuficiencia cardiaca descompensada en contexto de infección respiratoria, con buena respuesta a diurético intravenoso. Desde el alta, clase funcional NYHA II-III. Refiere 2 episodios de presíncope en los últimos 3 meses, uno de ellos conduciendo su vehículo particular.
+
+EXPLORACIÓN FÍSICA
+TA 132/80 mmHg. FC 62 lpm, rítmico. SatO2 basal 93 %. Peso 103 kg. IVY a 45º. AC: rítmica, soplo sistólico II/VI en foco mitral. AP: murmullo vesicular disminuido, crepitantes finos bibasales. Edemas con fóvea hasta tercio medio de ambas piernas.
+
+PRUEBAS COMPLEMENTARIAS
+- ECG: ritmo sinusal a 62 lpm. Q en II, III y aVF. T negativas en cara inferior. QRS 118 ms.
+- Ecocardiograma transtorácico (24/02/2026): VI ligeramente dilatado (DTDVI 61 mm), acinesia inferior e inferolateral basal y media, hipocinesia septal. FEVI 35 % por Simpson biplano (previa 45 % en noviembre de 2025). Insuficiencia mitral moderada funcional. TAPSE 16 mm. PSAP estimada 48 mmHg.
+- Ergometría (Bruce, 15/12/2025): suspendida por disnea a los 5 min 40 s, 7,2 METS, 82 % FCMT, sin cambios eléctricos significativos.
+- Holter 24 h (enero 2026): rachas de TVNS (máx. 6 latidos), extrasistolia ventricular frecuente (8 %).
+- NT-proBNP: 2.140 pg/mL. HbA1c 8,4 %. Creatinina 1,31 mg/dL (FGe 58 ml/min/1,73 m²). LDL 71 mg/dL.
+
+JUICIO CLÍNICO
+1. Miocardiopatía isquémica con disfunción ventricular izquierda moderada-severa (FEVI 35 %). Insuficiencia cardiaca con FEVI reducida, NYHA II-III. Ingreso por descompensación en febrero de 2026.
+2. Cardiopatía isquémica crónica: IAM inferoposterior en 2025, enfermedad de 2 vasos, lesión residual en DA media.
+3. TVNS en Holter. Episodios presincopales a estudio.
+4. Insuficiencia mitral moderada funcional.
+5. Enfermedad renal crónica estadio 3a.
+
+TRATAMIENTO
+- Sacubitrilo/valsartán (Entresto) 49/51 mg cada 12 horas (sustituye a ramipril).
+- Bisoprolol 5 mg cada 24 horas.
+- Empagliflozina (Jardiance) 10 mg cada 24 horas.
+- Eplerenona 25 mg cada 24 horas.
+- Furosemida 40 mg en desayuno.
+- AAS (Adiro) 100 mg. Ticagrelor (Brilique) 90 mg cada 12 h hasta completar 12 meses, después clopidogrel 75 mg.
+- Atorvastatina 80 mg + ezetimiba 10 mg.
+- Resto de tratamiento según MAP, Neumología y Salud Mental.
+
+PLAN
+Se solicita cardiorresonancia magnética para valorar viabilidad miocárdica en territorio de DA y estudio electrofisiológico; según resultados, valorar revascularización de DA y/o implante de DAI en prevención primaria.
+
+CONSIDERACIONES A EFECTOS LABORALES (a petición del paciente)
+Por su situación clínica actual (FEVI 35 %, NYHA II-III, TVNS y presíncopes), el paciente no debe realizar esfuerzos físicos moderados ni intensos y, a criterio de este facultativo, no debe conducir vehículos de los grupos 2 (permisos C, C+E, D) conforme al Anexo IV del Reglamento General de Conductores, que excluye la conducción profesional con FEVI inferior al 40 % y con arritmias ventriculares no controladas. Pronóstico funcional reservado.
+
+Revisión en 3 meses con resultados.
+
+Fdo.: Dr. Francisco Javier Romero Lucena
+FEA Cardiología. Col. 41/12233
+Hospital Universitario Virgen Macarena · Sevilla

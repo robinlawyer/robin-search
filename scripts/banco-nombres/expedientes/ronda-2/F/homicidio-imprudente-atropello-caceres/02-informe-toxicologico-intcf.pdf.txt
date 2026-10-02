@@ -1,0 +1,68 @@
+MINISTERIO DE JUSTICIA
+INSTITUTO NACIONAL DE TOXICOLOGÍA Y CIENCIAS FORENSES
+DEPARTAMENTO DE SEVILLA — Servicio de Química y Drogas
+
+Avda. Dr. Fedriani, s/n — 41009 Sevilla
+
+N.º de Registro: S25-00418 / S25-00419
+Asunto: Diligencias Previas 74/2025 — Juzgado de Instrucción n.º 1 de Cáceres
+Remitente: Guardia Civil, Subsector de Tráfico de Cáceres (Atestado 2025-101003-00000047)
+Fecha de recepción: 16/01/2025 (muestras refrigeradas, precintos intactos, cadena de custodia conforme)
+
+INFORME TOXICOLÓGICO
+
+1. MUESTRAS RECIBIDAS
+S25-00418: Sangre total (2 tubos de 10 ml con fluoruro sódico/oxalato potásico) y orina (frasco de 50 ml), extraídas a D. Iván Rebollo Sanguino (DNI 76031452-H) en el Hospital Universitario de Cáceres el 12/01/2025 a las 23:55 h. Extracción realizada por la enfermera D.ª Pilar Galán Toril.
+S25-00419: Sangre periférica (femoral), sangre cardíaca, humor vítreo, orina y contenido gástrico de D. Manuel Jesús Piñero Domínguez, recogidos en la autopsia n.º CC-2025-012 del Instituto de Medicina Legal y Ciencias Forenses de Cáceres el 13/01/2025.
+
+2. ANÁLISIS SOLICITADOS
+Alcohol etílico, drogas de abuso y psicofármacos en ambas muestras.
+
+3. MÉTODOS
+Etanol: cromatografía de gases con detector de ionización de llama en espacio de cabeza (HS-GC-FID). Screening de drogas de abuso y psicofármacos: inmunoensayo (EMIT) y cromatografía de líquidos acoplada a espectrometría de masas en tándem (LC-MS/MS). Confirmación y cuantificación de cannabinoides y benzodiacepinas por LC-MS/MS con patrones deuterados. Límite de cuantificación del THC: 0,5 ng/ml.
+
+4. RESULTADOS
+
+4.1. Muestra S25-00418 (conductor, sangre):
+| Sustancia | Concentración | Observaciones |
+|---|---|---|
+| Etanol | No detectado (< 0,10 g/l) | |
+| Δ9-tetrahidrocannabinol (THC) | 4,8 ng/ml | Compuesto activo |
+| 11-hidroxi-THC (11-OH-THC) | 1,9 ng/ml | Metabolito activo |
+| 11-nor-9-carboxi-THC (THC-COOH) | 61,3 ng/ml | Metabolito inactivo |
+| Alprazolam | 42 ng/ml | Rango terapéutico 10-40 ng/ml |
+| Diazepam | 118 ng/ml | Rango terapéutico 100-2.500 ng/ml |
+| Nordiazepam (desmetildiazepam) | 207 ng/ml | Metabolito activo del diazepam |
+| Quetiapina | 18 ng/ml | Rango terapéutico 100-500 ng/ml (dosis baja) |
+| Cocaína, benzoilecgonina, opiáceos, anfetaminas, MDMA, metadona, buprenorfina | No detectados | |
+
+Orina: positivo a cannabinoides (THC-COOH > 500 ng/ml) y benzodiacepinas (oxazepam y alfa-hidroxialprazolam). Negativo resto.
+
+4.2. Muestra S25-00419 (fallecido):
+| Sustancia | Concentración |
+|---|---|
+| Etanol en sangre periférica | 0,38 g/l |
+| Etanol en humor vítreo | 0,44 g/l |
+| Acenocumarol | 31 ng/ml (presente, concentración compatible con tratamiento anticoagulante) |
+| Bisoprolol | 22 ng/ml (rango terapéutico) |
+| Emtricitabina y tenofovir | Presentes (cualitativo) |
+| Drogas de abuso | No detectadas |
+
+5. INTERPRETACIÓN
+5.1. La concentración de THC en sangre del conductor (4,8 ng/ml) junto con la presencia de 11-OH-THC indica un consumo reciente de cannabis, compatible con un consumo en las 2-4 horas previas a la extracción y, por tanto, en las horas previas al accidente. Las concentraciones de THC-COOH (61,3 ng/ml en sangre, >500 ng/ml en orina) son propias de un consumidor habitual o crónico, en quien puede existir cierta tolerancia.
+5.2. Las concentraciones de alprazolam (ligeramente por encima del rango terapéutico) y de diazepam y su metabolito revelan la ingesta concomitante de al menos dos benzodiacepinas. La quetiapina, a dosis baja, es compatible con su uso como hipnótico.
+5.3. La combinación de cannabinoides y benzodiacepinas produce un efecto depresor sinérgico sobre el sistema nervioso central: somnolencia, enlentecimiento del tiempo de reacción, alteración de la atención dividida y del control del vehículo en la trayectoria lateral. Las concentraciones halladas son compatibles con una afectación significativa de la capacidad de conducción en el momento del accidente, aunque el grado concreto de afectación en un consumidor crónico no puede determinarse solo con datos analíticos.
+5.4. En el fallecido, la alcoholemia (0,38-0,44 g/l) es compatible con la ingesta de una cantidad moderada de bebidas alcohólicas. La presencia de acenocumarol (Sintrom®) y bisoprolol concuerda con el tratamiento cardiológico referido. La presencia de emtricitabina/tenofovir es compatible con tratamiento o profilaxis antirretroviral, sin que conste en la documentación remitida su indicación.
+
+6. CONCLUSIONES
+Primera.- En la sangre del conductor se detectan THC (4,8 ng/ml), alprazolam (42 ng/ml), diazepam (118 ng/ml) y nordiazepam (207 ng/ml), y quetiapina a dosis baja; no se detecta alcohol.
+Segunda.- Los resultados indican consumo reciente de cannabis en un consumidor habitual y la ingesta conjunta de benzodiacepinas, con efecto sinérgico depresor compatible con afectación de la conducción.
+Tercera.- En el fallecido se detecta etanol (0,38 g/l) y fármacos compatibles con su tratamiento habitual.
+
+Sevilla, 3 de marzo de 2025.
+
+La Facultativa del Servicio de Química y Drogas
+Fdo.: Dra. Cristina Palomo Ortega
+
+Vº Bº La Jefa del Servicio
+Fdo.: Dra. Mercedes Aranda Velasco

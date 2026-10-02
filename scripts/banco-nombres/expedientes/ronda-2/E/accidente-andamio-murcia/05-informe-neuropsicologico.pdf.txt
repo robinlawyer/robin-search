@@ -1,0 +1,57 @@
+INFORME PERICIAL NEUROPSICOLÓGICO
+
+Perita: Elena Gallego Sarabia, Doctora en Psicología, Psicóloga General Sanitaria, Experta en Neuropsicología Clínica (Consejo General de la Psicología de España). Colegiada MU-02145.
+Solicitado por: Dña. Encarnación Martínez Pastor, abogada (ICAMUR n.º 3.902), en representación de D. Ginés Albaladejo Sánchez.
+Objeto: valoración del estado cognitivo, emocional y conductual del peritado y su repercusión funcional y laboral, a efectos del expediente de incapacidad permanente y del procedimiento de recargo de prestaciones.
+Fechas de evaluación: 8, 13 y 20 de enero de 2026 (tres sesiones, 6 h 30 min en total).
+Lugar: consulta de la perita, Gran Vía Escultor Salzillo, 21, 4.º, Murcia.
+
+1. FUENTES DE INFORMACIÓN
+— Entrevista clínica semiestructurada con el peritado.
+— Entrevista con su esposa, Dña. Carmen Cortés Heredia, y con su hijo, D. Raúl Albaladejo Cortés.
+— Informe de alta del Servicio de Neurocirugía del HCUV Arrixaca (22/04/2025), RM cerebral de 08/04/2025 y TC de control de 03/06/2025.
+— Informe de Rehabilitación de Ibermutua (17/11/2025).
+— Informes de la Unidad de Salud Mental de El Palmar (seguimiento desde julio de 2025).
+
+2. ANTECEDENTES RELEVANTES
+Varón de 52 años, diestro, escolarizado hasta los 13 años (certificado de escolaridad), lee y escribe con dificultad. Trabajó desde los 15 años en la construcción. Sin antecedentes psiquiátricos previos al accidente, salvo un trastorno por consumo de alcohol en remisión sostenida desde 2017, que superó con apoyo de Alcohólicos Anónimos y de su congregación evangélica. Su familia, de etnia gitana, describe a un hombre «serio, trabajador, que llevaba la voz cantante en la familia y en la iglesia, donde predicaba algunos domingos».
+
+3. EXPLORACIÓN Y PRUEBAS APLICADAS (puntuaciones directas y percentiles ajustados por edad y escolaridad)
+— MoCA (Montreal Cognitive Assessment): 17/30 (punto de corte 26).
+— TAVEC (aprendizaje verbal): ensayo 1: 3; total ensayos 1-5: 29 (Pc 4); recuerdo libre a largo plazo: 4 (Pc 2). Muchas intrusiones y perseveraciones.
+— Figura compleja de Rey: copia 28/36 (Pc 10); memoria a los 3 minutos: 7/36 (Pc 3).
+— Trail Making Test: TMT-A 78 s (Pc 5); TMT-B abandonado a los 300 s tras 9 errores.
+— Test de Stroop: interferencia −14 (Pc 3).
+— Fluidez verbal: fonémica (P) 6 palabras/min; semántica (animales) 11.
+— WAIS-IV: Comprensión Verbal 81; Razonamiento Perceptivo 76; Memoria de Trabajo 69; Velocidad de Procesamiento 62; CI Total estimado 70 (rango límite).
+— BADS (síndrome disejecutivo): perfil 9/24, «deficiente».
+— Inventario de Depresión de Beck (BDI-II): 31 (depresión grave).
+— Escala de Ansiedad de Hamilton (HARS): 24.
+— Escala de Irritabilidad, Depresión y Ansiedad (IDA): irritabilidad externa elevada.
+— Neuropsychiatric Inventory (NPI), informado por la esposa: desinhibición, agitación/agresividad, apatía y alteraciones del sueño.
+— TOMM (validez del esfuerzo): ensayo 2: 49/50; no hay indicios de simulación.
+
+4. OBSERVACIÓN CLÍNICA
+Se presenta acompañado de su esposa, con bastón. Aspecto descuidado respecto a lo que describe la familia. Habla enlentecida, con anomia y circunloquios. Se desorienta en fecha (dice estar «en el veinticuatro»). Labilidad emocional marcada: llora al hablar de que «ya no sirvo pa ná», y a los pocos minutos se ríe de forma inapropiada. En la segunda sesión tiene un episodio de irritabilidad con gritos porque no entiende una instrucción. Anosmia completa referida («no huelo ni la comida»). Refiere disfunción eréctil y pérdida total de la libido desde el accidente, lo que ha provocado tensiones de pareja. Ideas pasivas de muerte, sin plan estructurado («a veces pienso que mejor me hubiera matao»). Su esposa relata que ha tenido dos crisis epilépticas en casa en octubre de 2025 pese al Keppra, y que ha vuelto a pedir «una cervecita» en reuniones familiares, lo que la tiene muy preocupada por el riesgo de recaída en la bebida.
+
+Por su parte la esposa presenta, según refiere, un trastorno de ansiedad en tratamiento con escitalopram y lorazepam pautados por su médica de familia, y ha tenido que dejar su trabajo en la venta ambulante para cuidarle. El hijo explica que se ha tenido que mudar con ellos.
+
+5. CONCLUSIONES DIAGNÓSTICAS (DSM-5-TR / CIE-11)
+1. Trastorno neurocognitivo mayor debido a traumatismo craneoencefálico, de gravedad moderada, con alteración conductual (F02.81 / 6D85.Y). Afectación predominante de memoria episódica, funciones ejecutivas, velocidad de procesamiento y atención sostenida, con patrón compatible con lesión frontal izquierda y axonal difusa.
+2. Cambio de personalidad debido a TCE, tipo desinhibido y agresivo.
+3. Trastorno depresivo debido a otra afección médica, con características de episodio depresivo mayor.
+4. Riesgo de recaída en trastorno por consumo de alcohol (antecedente en remisión).
+5. Anosmia postraumática.
+
+5 bis. Valoración según el baremo del Real Decreto 1971/1999 y, a título orientativo, de la tabla VI de la Ley 35/2015: deterioro de las funciones cerebrales superiores integradas de grado moderado-grave; trastorno orgánico de la personalidad moderado.
+
+6. REPERCUSIÓN FUNCIONAL Y LABORAL
+El perfil descrito impide el desempeño de cualquier actividad laboral con un mínimo de exigencia de atención, memoria, planificación o seguridad propia y ajena. Requiere supervisión para la toma de medicación, la gestión económica y los desplazamientos fuera del barrio. A juicio de la perita, el peritado necesita la asistencia de otra persona para varias actividades instrumentales y algunas básicas de la vida diaria (supervisión en el baño por riesgo de crisis), extremo que deberá valorar el EVI a efectos del eventual grado de gran invalidez.
+
+7. PRONÓSTICO
+Transcurridos 10 meses desde el TCE, el margen de recuperación espontánea es reducido. Se recomienda rehabilitación cognitiva en unidad de daño cerebral, tratamiento psiquiátrico continuado y apoyo psicológico a la cuidadora principal.
+
+La perita declara bajo juramento haber actuado con objetividad conforme al art. 335.2 de la Ley de Enjuiciamiento Civil, aplicable supletoriamente.
+
+Murcia, 26 de enero de 2026
+Fdo.: Dra. Elena Gallego Sarabia

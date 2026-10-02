@@ -1,0 +1,55 @@
+INFORME MÉDICO PERICIAL
+Responsabilidad profesional sanitaria y valoración del daño corporal
+
+Perito: Dr. Alberto Rial Santamaría
+Especialista en Cirugía Ortopédica y Traumatología. Máster en Valoración del Daño Corporal (USC). Colegiado n.º 36/3604211 del Colegio Oficial de Médicos de Pontevedra.
+Domicilio profesional: Rúa Urzaiz, 74, 2.º izda., 36204 Vigo · Tel. 986 43 21 90
+Solicitado por: D. Iago Domínguez Paz, abogado de D. Manuel Figueroa Lorenzo.
+Fecha: 15 de enero de 2026
+
+I. OBJETO
+Determinar si la asistencia prestada a D. Manuel Figueroa Lorenzo en el Hospital Santa Baia entre el 3 y el 8 de abril de 2025 se ajustó a la lex artis ad hoc, si existe relación de causalidad entre una eventual mala praxis y el daño, y valorar este conforme al baremo de la Ley 35/2015 (aplicado con carácter orientativo).
+
+II. DOCUMENTACIÓN EXAMINADA
+Historia clínica del Hospital Santa Baia (incluida hoja de anestesia, evolutivo de enfermería y documento de alta voluntaria); consentimiento informado y anexo de rechazo de hemoderivados; documento de instrucciones previas; informe de alta del Hospital Álvaro Cunqueiro (21/05/2025); informe del segundo tiempo de recambio (15/09/2025); EMG de 12/05/2025 y de 10/12/2025; resolución del EVO de 14/11/2025; entrevista y exploración del paciente el 9 de enero de 2026, acompañado de su esposa.
+
+III. ANTECEDENTES RELEVANTES
+Varón de 58 años con hemofilia A grave (FVIII < 1 %) sin inhibidor, en profilaxis con octocog alfa (Advate), artropatía hemofílica de cadera derecha con coxartrosis grado IV, HTA, DM2 en tratamiento oral, hepatitis C curada. Paciente testigo de Jehová que rechaza la transfusión de sangre y sus componentes principales, con DIP inscrito desde 2019. Discapacidad previa del 45 %.
+
+IV. CONSIDERACIONES MÉDICAS
+1. Indicación. La indicación de artroplastia total era correcta: coxartrosis hemofílica grado IV con dolor incapacitante.
+
+2. Planificación perioperatoria del paciente hemofílico. Las guías de la World Federation of Hemophilia (WFH, 3.ª ed., 2020) y de la Real Fundación Victoria Eugenia exigen que la cirugía ortopédica mayor en hemofilia A grave se realice en un centro con Unidad de Hemofilia, laboratorio capaz de medir niveles de FVIII de forma diaria y disponibilidad asegurada de concentrado de factor. El objetivo recomendado es FVIII del 80-100 % preoperatorio y 60-80 % durante los días 1 a 3, y 40-60 % durante los días 4 a 6. En el presente caso: (a) no se midió ningún nivel de FVIII tras el bolo; (b) no se pudo procesar el nivel en todo el fin de semana; (c) el 06/04 se redujo la dosis a 2.000 UI/24 h por falta de existencias, y (d) el nivel a la llegada al CHUVI era del 4 %. Ello es incompatible con la lex artis.
+
+3. Paciente que rechaza la transfusión. Aceptado el paciente bajo protocolo sin sangre, el centro asumía el deber reforzado de optimizar la hemostasia (factor, antifibrinolíticos, EPO y hierro preoperatorios —que no se pautaron—, cell saver, hemostasia quirúrgica meticulosa). No consta optimización preoperatoria de la Hb con EPO ni hierro, que la propia SEDAR recomienda iniciar 3-4 semanas antes en pacientes que rechazan la transfusión. La convicción religiosa del paciente no desplaza la responsabilidad por la deficiente planificación: la hemorragia se produjo por déficit de factor, no por la negativa a la transfusión.
+
+4. Lesión del nervio ciático poplíteo externo. Las parestesias del 06/04 («pie dormido») y el pie caído del 07/04 son compatibles con una compresión del nervio ciático por el hematoma glúteo a tensión (síndrome compartimental glúteo). La falta de evacuación urgente del hematoma ante clínica neurológica progresiva —el cirujano indicó «vigilar» por teléfono— constituye un retraso diagnóstico-terapéutico determinante de la axonotmesis. El EMG de 10/12/2025 muestra reinervación muy parcial (tibial anterior 2/5).
+
+5. Infección periprotésica. El hematoma no evacuado es el principal factor de riesgo de infección periprotésica aguda; el SAMS aislado y la cronología (día 10) son coherentes con ello.
+
+6. Alta voluntaria. El paciente no abandonó la asistencia sanitaria: se trasladó directamente a otro hospital (ingreso en urgencias del CHUVI 1 h 47 min después). La alta voluntaria no interrumpe el nexo causal, pues el hematoma, la anemia grave y la lesión nerviosa estaban ya establecidos.
+
+7. Consentimiento informado. El documento es genérico; la única mención personalizada es «Paciente hemofílico. Riesgo hemorrágico aumentado». No informa de que el centro carecía de Unidad de Hemofilia ni de laboratorio de FVIII en fin de semana, ni de las consecuencias específicas del rechazo transfusional en un hemofílico.
+
+V. VALORACIÓN DEL DAÑO (orientativa, Ley 35/2015)
+Perjuicio personal temporal:
+- Muy grave (REA): 4 días.
+- Grave (hospitalización CHUVI y segundo tiempo): 52 días.
+- Moderado: 168 días (hasta la estabilización, 09/03/2026 previsible).
+Secuelas:
+- Lesión del nervio ciático poplíteo externo derecho con pie caído (parálisis parcial, balance 2/5): 20 puntos.
+- Material de artroplastia de revisión (recambio en dos tiempos), con limitación de la movilidad de la cadera: 15 puntos (computando el estado previo).
+- Dismetría de 2,5 cm de miembro inferior derecho: 4 puntos.
+- Trastorno depresivo reactivo en tratamiento con sertralina 100 mg: 5 puntos.
+- Perjuicio estético moderado (cicatrices quirúrgicas, uso de ortesis antiequino y bastón): 14 puntos.
+Perjuicio moral por pérdida de calidad de vida: moderado.
+Intervenciones quirúrgicas: 2 (desbridamiento con retirada de implantes; reimplantación).
+
+VI. CONCLUSIONES
+1.ª La planificación hemostática perioperatoria no se ajustó a la lex artis: existe mala praxis por falta de medios (factor VIII, laboratorio, hematólogo localizable) y por retraso en el tratamiento del hematoma.
+2.ª Existe relación de causalidad directa entre la mala praxis y la anemia grave, el hematoma infectado, la infección periprotésica y la lesión del nervio ciático poplíteo externo.
+3.ª La negativa a la transfusión y el alta voluntaria no rompen el nexo causal.
+4.ª Las secuelas y perjuicios son los descritos en el apartado V.
+
+Vigo, 15 de enero de 2026
+Fdo.: Dr. Alberto Rial Santamaría

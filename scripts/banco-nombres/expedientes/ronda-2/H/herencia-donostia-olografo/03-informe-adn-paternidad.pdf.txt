@@ -1,0 +1,46 @@
+GENEBASK — Laboratorio de Genética Forense y Filiación
+Parque Científico y Tecnológico de Gipuzkoa · Paseo Mikeletegi, 58 · 20009 Donostia-San Sebastián
+Laboratorio acreditado por ENAC conforme a la norma UNE-EN ISO/IEC 17025 (Acreditación n.º 1287/LE2401)
+
+INFORME PERICIAL DE PRUEBA BIOLÓGICA DE PATERNIDAD
+Referencia del caso: GBK-PAT-24-0517
+Tipo de estudio: paternidad dúo (presunto padre e hijo), con cadena de custodia
+
+1. DATOS DE LAS PERSONAS ANALIZADAS
+
+Presunto padre: D. José María Etxeberria Arrieta. DNI 15847362-H. Fecha de nacimiento 02/03/1941.
+Hijo: D. Unai Larrañaga Mendizabal. DNI 44129870-B. Fecha de nacimiento 14/09/1968.
+Madre (no analizada): D.ª Karmele Larrañaga Mendizabal, fallecida en 2019.
+
+Ambos comparecieron personalmente el 4 de junio de 2024, identificados mediante DNI original, y fueron fotografiados y se les tomó la huella dactilar del índice derecho, que se conserva en el expediente. Firmaron el consentimiento informado para el análisis genético y para la cesión del resultado a ambos. El presunto padre acudió acompañado por su hija, D.ª Maite Etxeberria Goikoetxea, quien manifestó que su padre «tiene principio de demencia pero entiende perfectamente a qué viene»; el personal del laboratorio no apreció dificultad de comprensión en el momento de la toma.
+
+2. MUESTRAS Y METODOLOGÍA
+
+Muestras de epitelio bucal (dos hisopos por persona), tomadas por la técnico D.ª Amaia Iturbe Sagastume. Extracción de ADN mediante columnas de sílice; cuantificación por PCR en tiempo real; amplificación de 24 marcadores STR autosómicos (kit GlobalFiler™) y 27 marcadores del cromosoma Y (Yfiler™ Plus) como confirmación de línea paterna; electroforesis capilar en analizador 3500xL. Interpretación conforme a las recomendaciones de la ISFG.
+
+Se hace constar que el presunto padre informó de tratamiento anticoagulante con acenocumarol (Sintrom), sin incidencia en la toma bucal.
+
+3. RESULTADOS
+
+Marcadores autosómicos: el hijo presenta, en los 24 loci analizados, un alelo compatible con el presunto padre, sin exclusiones.
+Ejemplos: D3S1358 (15/17 — 15/16); vWA (16/18 — 18/19); FGA (21/24 — 22/24); TH01 (6/9.3 — 9.3/9.3); D21S11 (29/30 — 30/32.2); SE33 (19/27.2 — 27.2/28).
+Cromosoma Y: haplotipos idénticos en los 27 marcadores.
+
+Índice de paternidad combinado (IPC): 4,72 × 10⁸
+Probabilidad de paternidad (W), con probabilidad a priori de 0,5: 99,9999998 %
+
+4. CONCLUSIÓN
+
+D. José María Etxeberria Arrieta NO QUEDA EXCLUIDO como padre biológico de D. Unai Larrañaga Mendizabal. Según los predicados verbales de Hummel, la paternidad es «PRÁCTICAMENTE PROBADA».
+
+5. OBSERVACIONES
+
+Se advierte a los interesados que el presente informe es privado y que, para su eficacia en un procedimiento de filiación (arts. 767 LEC y 127 CC), podrá ser ratificado por la perito firmante y, en su caso, contrastado mediante prueba judicial. Las muestras se conservarán durante cinco años.
+
+De forma incidental, y a petición expresa del presunto padre, se informa de que no se ha realizado ningún estudio de la mutación del gen HTT (enfermedad de Huntington), que no forma parte del objeto de este análisis y que, según manifestó, «afecta a la otra rama de la familia».
+
+Donostia-San Sebastián, 18 de junio de 2024
+
+Fdo.: Dra. Leire Agirre Etxabe
+Doctora en Biología, especialista en Genética Forense
+Directora técnica — GENEBASK

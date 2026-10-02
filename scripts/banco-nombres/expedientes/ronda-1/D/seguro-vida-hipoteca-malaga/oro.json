@@ -1,0 +1,1210 @@
+{
+ "01-boletin-adhesion-cuestionario-salud.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MEDITERRÁNEA VIDA Y PENSIONES, S.A. DE SEGUROS Y REASEGUROS"
+   ],
+   [
+    "CIF",
+    "A29384756"
+   ],
+   [
+    "ORGANISMO",
+    "Banco Andaluz de Crédito, S.A."
+   ],
+   [
+    "PERSONA",
+    "VALERIA MONTIEL RUANO"
+   ],
+   [
+    "DNI",
+    "74892013T"
+   ],
+   [
+    "DIRECCION",
+    "C/ Victoria, 38, 4.º A — 29012 Málaga"
+   ],
+   [
+    "TELEFONO",
+    "610 447 239"
+   ],
+   [
+    "CORREO",
+    "valeriamontiel79@hotmail.com"
+   ],
+   [
+    "PERSONA",
+    "SERGIO ALARCÓN PINEDA"
+   ],
+   [
+    "DNI",
+    "25718406H"
+   ],
+   [
+    "NORMA",
+    "artículo 10 de la Ley 50/1980, de Contrato de Seguro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "1,72 m",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "71 kg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Se encuentra actualmente de baja laboral o en situación de incapacidad? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Padece o ha padecido alguna enfermedad del corazón, hipertensión arterial o enfermedad vascular? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Padece o ha padecido alguna enfermedad del riñón o de las vías urinarias? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Ha sido sometido/a a alguna intervención quirúrgica o trasplante, o le han propuesto alguna? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Ha estado hospitalizado/a en los últimos diez años? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Padece o ha padecido alguna enfermedad psíquica o nerviosa, o ha recibido tratamiento psiquiátrico? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Consume o ha consumido drogas o más de 3 unidades de alcohol al día? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Toma habitualmente algún medicamento? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Es portador/a de VIH o padece hepatitis B o C? ........................ NO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿Le ha sido reconocido algún grado de discapacidad? ........................ NO",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Mediterránea Vida y Pensiones, S.A."
+   ],
+   [
+    "NORMA",
+    "art. 9.2.a) RGPD"
+   ],
+   [
+    "CORREO",
+    "dpo@mediterraneavida.es"
+   ],
+   [
+    "PERSONA",
+    "R. Gámez"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-cuestionario-firmado-oficina.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MEDITERRANEA VIDA Y PENSI0NES"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "l,72",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "7l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿SE ENCUENTRA ACTUALMENTE DE BAJA LAB0RAL 0 EN SITUACI0N DE INCAPACI DAD? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿PADECE 0 HA PADECID0 ALGUNA ENFERMEDAD DEL C0RAZ0N, HIPERTENSI0N ARTERIAL 0 ENFERMEDAD VASCU LAR? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿PADECE 0 HA PADECID0 ALGUNA ENFERMEDAD DEL RIÑ0N 0 DE LAS VIAS URINARIAS? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿HA SID0 S0METID0/A A ALGUNA INTERVENCI0N QUIRURGICA 0 TRASPLANTE, 0 LE HAN PR0PUEST0 ALGUNA? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿HA ESTAD0 H0SPITALIZAD0/A EN L0S ULTIM0S DIEZ AÑ0S? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿PADECE 0 HA PADECID0 ALGUNA ENFERMEDAD PSIQUICA 0 NERVI0SA, 0 HA RECIBID0 TRATAMIENT0 PSIQUIATRIC0? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿C0NSUME 0 HA C0NSUMID0 DR0GAS 0 MAS DE 3 UNIDADES DE ALC0H0L AL DIA? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿T0MA HABITUALMENTE ALGUN MEDICAMENT0? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿ES P0RTAD0R/A DE VIH 0 PADECE HEPATITIS B 0 C? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿LE HA SID0 REC0N0CID0 ALGUN GRAD0 DE DISCAPACIDAD? ..... [X] N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DICE QUE TODO BIEN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA TENSI0N LA TIENE C0NTR0LADA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "R0CI0"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TENSI0N C0NTR0LADA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "M0NTIEL"
+   ],
+   [
+    "ORGANISMO",
+    "BANC0 ANDALUZ DE CREDIT0"
+   ],
+   [
+    "PERSONA",
+    "R0CI0 GAMEZ 0RTEGA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE PRIMERA INSTANCIA N l4 DE MALAGA"
+   ],
+   [
+    "AUTOS",
+    "P0 l873/2025"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-medico-cabecera.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "Servicio Andaluz de Salud"
+   ],
+   [
+    "ORGANISMO",
+    "Distrito Sanitario Málaga-Guadalhorce"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Victoria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Valeria Montiel Ruano"
+   ],
+   [
+    "NUSS",
+    "AN0617384295"
+   ],
+   [
+    "NUSS",
+    "29/10458823/71"
+   ],
+   [
+    "DNI",
+    "74892013-T"
+   ],
+   [
+    "DIRECCION",
+    "calle Victoria, 38, 4.º A, 29012 Málaga"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en la base de datos de usuario figura el nombre registral anterior a la rectificación de la mención del sexo (2012)",
+    "sexual"
+   ],
+   [
+    "PERSONA",
+    "Víctor Montiel Ruano"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Luque Benítez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad renal crónica secundaria a nefropatía IgA (enfermedad de Berger)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "biopsia renal",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Regional Universitario de Málaga"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Evolución a ERC estadio 5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en hemodiálisis desde marzo de 2012",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trasplante renal de donante cadáver el 23/09/2014",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Trasplante Renal del Hospital Regional"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "creatinina basal 1,3-1,5 mg/dl",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento inmunosupresor de mantenimiento con tacrolimus de liberación prolongada (Advagraf 6 mg/24 h), micofenolato de mofetilo (CellCept 500 mg/12 h) y prednisona 5 mg/24 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA secundaria a nefropatía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento con amlodipino 10 mg y doxazosina (Carduran Neo 4 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cifras en consulta de 140-150/90 mmHg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dislipemia en tratamiento con atorvastatina 20 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización de Salud Mental del Hospital Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "durante 12 días, por episodio depresivo mayor con intento autolítico (sobreingesta de benzodiacepinas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disforia de género",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Seguimiento posterior",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USM de Málaga Centro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "alta sin tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin recaídas ni nuevos ingresos psiquiátricos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mujer transexual",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento hormonal feminizante desde 2007",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estradiol (Progynova 2 mg/12 h) y, hasta la cirugía, acetato de ciproterona (Androcur 50 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cirugía de reasignación genital (vaginoplastia) en 2011",
+    "sexual"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Atención a Personas Transexuales"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Carlos Haya"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "exfumadora desde 2014",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo de alcohol de riesgo entre 2016 y 2018 (refería 4-5 cervezas diarias y \"copas el fin de semana\"; AUDIT 17)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con elevación de GGT (112 U/l)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "refiere abstinencia desde finales de 2018",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GGT normalizada en 2019 y 2020",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No consumo de otras drogas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Vacunación antineumocócica y antigripal anual por inmunosupresión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "renovación de recetas de inmunosupresores y antihipertensivos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 146/92",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "creatinina 1,5 mg/dl",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FG estimado 44 ml/min",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ERC estadio 3b en paciente trasplantada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se habría hecho constar el trasplante, que figura en la primera línea de su historia y en el listado de problemas activos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deterioro progresivo de la función del injerto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Biopsia del injerto (06/2023): nefropatía crónica del injerto con signos de rechazo humoral crónico activo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reinicio de hemodiálisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tres sesiones semanales de cuatro horas",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Diálisis Nefrosur"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fístula arteriovenosa en antebrazo izquierdo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En lista de espera para segundo trasplante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome ansioso-depresivo reactivo a la vuelta a diálisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento con sertralina 50 mg desde mayo de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baja laboral (IT) desde 18/03/2024",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incapacidad permanente absoluta por enfermedad común",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ERC estadio 5D por fracaso del injerto renal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trasplantada renal (2014)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dislipemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno adaptativo mixto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Antecedente de episodio depresivo mayor (2006), en remisión completa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Antecedente de consumo de riesgo de alcohol, en remisión",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "F. J. Luque Benítez"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-carta-rechazo-aseguradora.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MEDITERRÁNEA VIDA Y PENSIONES"
+   ],
+   [
+    "PERSONA",
+    "Valeria Montiel Ruano"
+   ],
+   [
+    "DIRECCION",
+    "C/ Victoria, 38, 4.º A"
+   ],
+   [
+    "DIRECCION",
+    "29012 Málaga"
+   ],
+   [
+    "PERSONA",
+    "Montiel"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Nacional de la Seguridad Social"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente absoluta"
+   ],
+   [
+    "ORGANISMO",
+    "Banco Andaluz de Crédito"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Trasplante Renal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "trasplante renal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enfermedad renal crónica por nefropatía IgA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento inmunosupresor diario con tacrolimus, micofenolato y prednisona",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "medicación antihipertensiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incapacidad que ahora se declara deriva directamente del fracaso de ese injerto (rechazo crónico) y de la vuelta a diálisis",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 10, párrafo tercero, de la Ley 50/1980, de 8 de octubre, de Contrato de Seguro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un ingreso en una unidad de salud mental en 2006",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un consumo de alcohol de riesgo entre 2016 y 2018",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Atención al Cliente"
+   ],
+   [
+    "CORREO",
+    "sac@mediterraneavida.es"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Reclamaciones de la Dirección General de Seguros y Fondos de Pensiones"
+   ],
+   [
+    "PERSONA",
+    "Ángela Ruiz Carmona"
+   ],
+   [
+    "ORGANISMO",
+    "Banco Andaluz de Crédito, S.A."
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-whatsapp-valeria-sergio.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Valeria"
+   ],
+   [
+    "PERSONA",
+    "Sergio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del riñon",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Sergio Alarcón"
+   ],
+   [
+    "PERSONA",
+    "Rocio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trasplante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las pastis de la tension",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del psiquiatrico de cuando tenia 27 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la cerveza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi riñon",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pablo Ariza"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me paso 12 horas a la semana enganchada a la maquina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "he perdido el trabajo por la incapacidad",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Victor"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "porque en el sistema del hospital sigue saliendo mi nombre de antes",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eres mujer toda la vida aunque el DNI lo cambiaras en 2012",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la sertralina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la de dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "te pone una vela a la Virgen de la Esperanza el domingo despues de misa",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Encarni"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "soy diabetico desde los 30",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pablo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe medico",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Luque"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la resolucion de la incapacidad",
+    "salud"
+   ],
+   [
+    "CORREO",
+    "pariza@arizaabogados.es"
+   ],
+   [
+    "ORGANO",
+    "Supremo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dialisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me he mareado al salir, me ha bajado la tension",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Nefrosur"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-demanda-juicio-ordinario.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE MÁLAGA"
+   ],
+   [
+    "PERSONA",
+    "María del Mar Núñez Sedeño"
+   ],
+   [
+    "PERSONA",
+    "VALERIA MONTIEL RUANO"
+   ],
+   [
+    "DNI",
+    "74892013-T"
+   ],
+   [
+    "DIRECCION",
+    "calle Victoria, n.º 38, 4.º A, 29012 Málaga"
+   ],
+   [
+    "PERSONA",
+    "Pablo Ariza Molina"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Málaga"
+   ],
+   [
+    "ORGANISMO",
+    "MEDITERRÁNEA VIDA Y PENSIONES, S.A. DE SEGUROS Y REASEGUROS"
+   ],
+   [
+    "CIF",
+    "A29384756"
+   ],
+   [
+    "PERSONA",
+    "Sergio Alarcón Pineda"
+   ],
+   [
+    "ORGANISMO",
+    "Banco Andaluz de Crédito, S.A."
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente absoluta"
+   ],
+   [
+    "PERSONA",
+    "Rocío Gámez Ortega"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dice que todo bien",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la tensión la tiene controlada",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rocío"
+   ],
+   [
+    "PERSONA",
+    "Alarcón"
+   ],
+   [
+    "OBJETO",
+    "trasplante renal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tomaba medicación para la tensión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento inmunosupresor (tacrolimus, micofenolato y prednisona)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una función renal estable (creatinina 1,5 mg/dl)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Luque Benítez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rechazo crónico del injerto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reiniciar la hemodiálisis en marzo de 2024",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Nacional de la Seguridad Social"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un ingreso de mi mandante en una unidad de salud mental en 2006",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un consumo de alcohol de riesgo entre 2016 y 2018",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la condición de mujer transexual de mi mandante",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nombre anterior a la rectificación registral",
+    "sexual"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Atención al Cliente"
+   ],
+   [
+    "NORMA",
+    "artículos 45 y 52.1.14.º de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 24 de la Ley 50/1980"
+   ],
+   [
+    "NORMA",
+    "art. 249.2 LEC"
+   ],
+   [
+    "NORMA",
+    "Artículo 10 de la Ley de Contrato de Seguro"
+   ],
+   [
+    "ORGANO",
+    "Tribunal Supremo"
+   ],
+   [
+    "NORMA",
+    "SSTS 333/2020, de 22 de junio"
+   ],
+   [
+    "NORMA",
+    "611/2020, de 17 de noviembre"
+   ],
+   [
+    "NORMA",
+    "81/2022, de 7 de febrero"
+   ],
+   [
+    "NORMA",
+    "artículo 20 de la Ley de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 20 LCS"
+   ],
+   [
+    "PERITO",
+    "Tomás Bernal Escobedo"
+   ],
+   [
+    "NORMA",
+    "artículo 337 LEC"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-contestacion-aseguradora.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA N.º 14 DE MÁLAGA"
+   ],
+   [
+    "AUTOS",
+    "1873/2025"
+   ],
+   [
+    "AUTOS",
+    "2906742120250031877"
+   ],
+   [
+    "PERSONA",
+    "Francisco Ruiz-Bravo Lomas"
+   ],
+   [
+    "ORGANISMO",
+    "MEDITERRÁNEA VIDA Y PENSIONES, S.A. DE SEGUROS Y REASEGUROS"
+   ],
+   [
+    "PERSONA",
+    "Gonzalo Ybarra Castellanos"
+   ],
+   [
+    "PERSONA",
+    "Valeria Montiel Ruano"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente absoluta"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "PERSONA",
+    "Rocío Gámez Ortega"
+   ],
+   [
+    "OBJETO",
+    "trasplante renal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«la tensión la tiene controlada»",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Sergio Alarcón Pineda"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una diabetes mellitus tipo 1 en tratamiento con insulina (Lantus y NovoRapid)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una apendicectomía en 2004",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "lleva un riñón ajeno"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tomando a diario tres inmunosupresores",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos antihipertensivos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "revisiones trimestrales en la consulta de trasplante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "función renal reducida (FG estimado de 44 ml/min, ERC estadio 3b)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de su médico de familia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fracaso del injerto por rechazo humoral crónico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vuelta a hemodiálisis",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Carmen Lucena Prados"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un ingreso psiquiátrico de 2006 por un intento de suicidio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un consumo de alcohol de riesgo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nombre distinto del actual de la asegurada",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "documentación clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La identidad de género de la actora",
+    "sexual"
+   ],
+   [
+    "NORMA",
+    "artículo 10, párrafo tercero, LCS"
+   ],
+   [
+    "NORMA",
+    "artículo 20 LCS"
+   ],
+   [
+    "NORMA",
+    "art. 20.8.º LCS"
+   ],
+   [
+    "NORMA",
+    "Artículos 10 y 89 de la Ley 50/1980, de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "STS, Sala Primera, 72/2016, de 17 de febrero"
+   ],
+   [
+    "NORMA",
+    "STS 323/2018, de 30 de mayo"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2018:2017"
+   ],
+   [
+    "NORMA",
+    "artículo 217 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "DIRECCION",
+    "Urbanización Torremar, bloque 3, 2.º C, 29620 Torremolinos"
+   ],
+   [
+    "PERITO",
+    "Lucena Prados"
+   ],
+   [
+    "PERSONA",
+    "F. Ruiz-Bravo Lomas"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

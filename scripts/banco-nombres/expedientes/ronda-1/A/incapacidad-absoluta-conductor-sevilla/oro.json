@@ -1,0 +1,2080 @@
+{
+ "01-dictamen-propuesta-evi.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MINISTERI0 DE INCLUSI0N, SEGURIDAD S0CIAL Y MIGRACI0NES"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUT0 NACI0NAL DE LA SEGURIDAD S0CIAL"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCI0N PR0VINCIAL DE SEVILLA"
+   ],
+   [
+    "ORGANISMO",
+    "EQUIP0 DE VAL0RACI0N DE INCAPACIDADES (EVI)"
+   ],
+   [
+    "AUTOS",
+    "41/2025/IP/0018734"
+   ],
+   [
+    "PERSONA",
+    "CARM0NA RUIZ, MANUEL JESUS"
+   ],
+   [
+    "DNI",
+    "28794O31-T"
+   ],
+   [
+    "NUSS",
+    "41/l0245678/33"
+   ],
+   [
+    "DIRECCION",
+    "AVDA. DE LA BARZ0LA 12, 4 C, 41OO8 SEVILLA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INCAPACIDAD TEMP0RAL DESDE 14/02/2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AGOTAD0 EL PLAZ0 MAXIM0 DE 545 DIAS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AGOTAMIENT0 DEL PLAZ0 DE IT",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "EUSEBI0 LARA CANT0S"
+   ],
+   [
+    "PERSONA",
+    "ENRIQUE CASTAN0 GIL"
+   ],
+   [
+    "PERSONA",
+    "RAQUEL MONTER0 SALAS"
+   ],
+   [
+    "PERSONA",
+    "MIGUEL ANGEL V0Z MEDIANO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CARDI0PATIA ISQUEMICA. IAM INFER0P0STERI0R KILLIP I EN FEBRER0 2025 TRATAD0 C0N ACTP + STENT FARMAC0ACTIV0 EN CD PR0XIMAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ENFERMEDAD DE 2 VAS0S (LESI0N RESIDUAL M0DERADA EN DA MEDIA N0 REVASCULARIZADA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FEVI 45 % EN ULTIM0 ETT (N0VIEMBRE 2025)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CLASE FUNCI0NAL NYHA II",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EP0C FEN0TIP0 N0 AGUDIZAD0R, GOLD 2 (FEV1 POST-BD 58 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EXFUMAD0R DE 40 PAQUETES/AÑ0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DIABETES MELLITUS TIP0 2 EN TRATAMIENT0 C0N ADO E INSULINA BASAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HbA1c 7,9 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAST0RN0 ADAPTATIV0 C0N ANSIEDAD Y ESTAD0 DE ANIM0 DEPRIMID0",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USMC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SA0S M0DERAD0 C0N CPAP B1EN T0LERADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0BESIDAD GRAD0 I (IMC 33)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LIMITACI0N PARA ESFUERZ0S FISIC0S DE INTENSIDAD M0DERADA-ALTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CAPACIDAD FUNCI0NAL EN ERG0METRIA DE 7,2 METS, CLINICA Y ELECTRICAMENTE NEGATIVA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 LIMITACI0N PARA ACTIVIDADES SEDENTARIAS 0 DE ESFUERZ0 LIGER0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA PATOL0GIA PSIQUICA N0 ALCANZA ENTIDAD INCAPACITANTE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EL TRABAJAD0R ESTA AFECT0 A LAS LIMITACI0NES PARA LA C0NDUCCI0N PR0FESI0NAL",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "ANEX0 IV DEL REAL DECRET0 818/2009, DE 8 DE MAY0, P0R EL QUE SE APRUEBA EL REGLAMENT0 GENERAL DE C0NDUCT0RES"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LAS LESI0NES ESTAN ESTABILIZADAS",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "UNA DISMINUCI0N DE SU CAPACIDAD LAB0RAL QUE ALCANCE AL MEN0S UN 33 % PARA SU PR0FESI0N HABITUAL"
+   ],
+   [
+    "ORGANISMO",
+    "CENTR0 DE REC0N0CIMIENT0 DE C0NDUCT0RES"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME APT0 C0N RESTRICCI0NES, PERI0D0 DE VIGENCIA REDUCID0 A 1 AÑ0",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "INCAPACIDAD PERMANENTE"
+   ],
+   [
+    "OBJETO",
+    "N0 PRESENTAR REDUCCI0NES ANAT0MICAS 0 FUNCI0NALES QUE DISMINUYAN 0 ANULEN LA CAPACIDAD LAB0RAL"
+   ],
+   [
+    "OBJETO",
+    "ENFERMEDAD C0MUN"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME MEDIC0 DE SINTESIS (IMS)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "E. CASTAN0"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REFIERE DISNEA A M0DERAD0S ESFUERZ0S, D0L0R T0RACIC0 0CASI0NAL C0N ESFUERZ0S INTENS0S QUE CEDE C0N REP0S0, Y ESTAD0 DE ANIM0 BAJ0 DESDE EL INFART0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REFIERE MIED0 A C0NDUCIR",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0R SI LE DA 0TR0 ATAQUE AL V0LANTE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ESP0SA EN TRATAMIENT0 0NC0L0GIC0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AAS 100 MG, TICAGREL0R 90 MG/12 H (HASTA FEBRER0 2026), AT0RVASTATINA 80 MG, BIS0PR0L0L 2,5 MG, RAMIPRIL 5 MG, METF0RMINA 850 MG/12 H, EMPAGLIF0ZINA 10 MG, INSULINA GLARGINA 18 UI, TI0TR0PI0 + 0LOD4TEROL, SALBUTAM0L A DEMANDA, SERTRALINA 100 MG, L0RAZEPAM 1 MG N0CHE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PES0 101 KG, TALLA 175 CM. TA 138/84",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AUSCULTACI0N CARDIACA RITMICA SIN S0PL0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MURMULL0 VESICULAR DISMINUID0 GL0BALMENTE, SIBILANCIAS ESPIRAT0RIAS AISLADAS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 ED3MAS EN MMII",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SAT 02 95 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANIM0 SUBDEPRIMID0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 IDEACI0N AUTOLITICA",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-cardiologia-macarena.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "JUNTA DE ANDALUCÍA"
+   ],
+   [
+    "ORGANISMO",
+    "Consejería de Sanidad, Presidencia y Emergencias"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen Macarena"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Gestión Clínica del Área del Corazón"
+   ],
+   [
+    "ORGANISMO",
+    "Consulta de Cardiopatía Isquémica e Insuficiencia Cardiaca"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO DE CONSULTA EXTERNA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "MANUEL JESÚS CARMONA RUIZ"
+   ],
+   [
+    "NUSS",
+    "AN0283947561"
+   ],
+   [
+    "NUSS",
+    "1092384"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Romero Lucena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "revisión tras ingreso por insuficiencia cardiaca descompensada (19-26/02/2026)",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "valoración de incapacidad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA de larga evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 desde 2012, insulinizado desde 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dislipemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "obesidad (IMC 33-34)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "exfumador desde febrero de 2025 (IPA 40 paquetes/año)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bebedor moderado hasta 2025 (3-4 cervezas/día), actualmente abstinente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardiopatía isquémica: IAM inferoposterior con elevación del ST (14/02/2025), Killip I",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Coronariografía urgente: enfermedad de 2 vasos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ACTP primaria con implante de stent farmacoactivo en CD proximal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lesión moderada (60-70 %) en DA media, manejo conservador inicialmente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EPOC GOLD 3",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Neumología"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen del Rocío"
+   ],
+   [
+    "PERSONA",
+    "Ángel Moreno Sotillo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SAOS moderado (IAH 28/h) en tratamiento con CPAP nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno depresivo mayor, episodio único, moderado",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Retinopatía diabética no proliferativa leve bilateral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hiperplasia benigna de próstata (tamsulosina)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disnea progresiva, actualmente a esfuerzos ligeros (subir un piso, caminar 100 metros en llano, ducharse)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de opresión torácica con esfuerzos moderados, ortopnea de 2 almohadas y edemas maleolares vespertinos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso en febrero de 2026 por insuficiencia cardiaca descompensada en contexto de infección respiratoria, con buena respuesta a diurético intravenoso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "clase funcional NYHA II-III",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "2 episodios de presíncope en los últimos 3 meses, uno de ellos conduciendo su vehículo particular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 132/80 mmHg. FC 62 lpm, rítmico. SatO2 basal 93 %. Peso 103 kg. IVY a 45º",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AC: rítmica, soplo sistólico II/VI en foco mitral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AP: murmullo vesicular disminuido, crepitantes finos bibasales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Edemas con fóvea hasta tercio medio de ambas piernas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ECG: ritmo sinusal a 62 lpm. Q en II, III y aVF. T negativas en cara inferior. QRS 118 ms.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ecocardiograma transtorácico (24/02/2026): VI ligeramente dilatado (DTDVI 61 mm), acinesia inferior e inferolateral basal y media, hipocinesia septal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FEVI 35 % por Simpson biplano (previa 45 % en noviembre de 2025)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insuficiencia mitral moderada funcional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TAPSE 16 mm. PSAP estimada 48 mmHg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ergometría (Bruce, 15/12/2025): suspendida por disnea a los 5 min 40 s, 7,2 METS, 82 % FCMT, sin cambios eléctricos significativos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Holter 24 h (enero 2026): rachas de TVNS (máx. 6 latidos), extrasistolia ventricular frecuente (8 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NT-proBNP: 2.140 pg/mL. HbA1c 8,4 %. Creatinina 1,31 mg/dL (FGe 58 ml/min/1,73 m²). LDL 71 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Miocardiopatía isquémica con disfunción ventricular izquierda moderada-severa (FEVI 35 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insuficiencia cardiaca con FEVI reducida, NYHA II-III",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso por descompensación en febrero de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardiopatía isquémica crónica: IAM inferoposterior en 2025, enfermedad de 2 vasos, lesión residual en DA media",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TVNS en Holter. Episodios presincopales a estudio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad renal crónica estadio 3a",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sacubitrilo/valsartán (Entresto) 49/51 mg cada 12 horas (sustituye a ramipril)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bisoprolol 5 mg cada 24 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Empagliflozina (Jardiance) 10 mg cada 24 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eplerenona 25 mg cada 24 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Furosemida 40 mg en desayuno",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AAS (Adiro) 100 mg. Ticagrelor (Brilique) 90 mg cada 12 h hasta completar 12 meses, después clopidogrel 75 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Atorvastatina 80 mg + ezetimiba 10 mg",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Salud Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se solicita cardiorresonancia magnética para valorar viabilidad miocárdica en territorio de DA y estudio electrofisiológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "valorar revascularización de DA y/o implante de DAI en prevención primaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Por su situación clínica actual (FEVI 35 %, NYHA II-III, TVNS y presíncopes)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no debe realizar esfuerzos físicos moderados ni intensos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no debe conducir vehículos de los grupos 2",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Anexo IV del Reglamento General de Conductores"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pronóstico funcional reservado",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-salud-mental-usmc.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Gestión Sanitaria Sevilla Norte-Macarena"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Gestión Clínica de Salud Mental"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Comunitaria (USMC) Macarena Norte"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME PSIQUIÁTRICO",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Manuel Jesús Carmona Ruiz"
+   ],
+   [
+    "NUSS",
+    "AN0283947561"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en IT prolongada",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Lourdes Peña Cabello"
+   ],
+   [
+    "ORGANISMO",
+    "CS Pino Montano A"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Bernal Prieto"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "clínica ansioso-depresiva de inicio tras infarto agudo de miocardio en febrero de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mala respuesta a escitalopram 10 mg",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cardiopatía isquémica (IAM 2025, stent), insuficiencia cardiaca con FEVI reducida, EPOC, DM2 insulinizada, SAOS con CPAP, obesidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo de alcohol de riesgo durante años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "4 o 5 cervezas al día y algún cubata los fines de semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "abstinente desde el infarto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega otros tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padre fallecido por IAM a los 54 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con enfermedad de Alzheimer en residencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hermano mayor con trastorno bipolar tipo I, ingresos repetidos",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización de Salud Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Un hermano menor fallecido por suicidio en 2009",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rocío Delgado Ortiz"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnosticada en 2025 de carcinoma de mama HER2+ en tratamiento con quimioterapia y trastuzumab",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Virgen del Rocío"
+   ],
+   [
+    "PERSONA",
+    "Álvaro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con trastorno del espectro autista (TEA) grado 2 y discapacidad reconocida del 65 %, escolarizado en aula específica",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Esperanza"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "agotamiento de la IT",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aspecto descuidado, hipomimia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "centrado en sus limitaciones físicas y en la enfermedad de su esposa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo marcadamente deprimido, con anhedonia generalizada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya no disfruto de nada, ni del Betis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apatía, abulia y sentimientos de inutilidad y de ser una carga para la familia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad flotante con crisis de angustia ocasionales, sobre todo nocturnas, con sensación de opresión torácica que vive con temor a un nuevo infarto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insomnio mixto, con despertar precoz",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hiporexia selectiva con ingesta compulsiva nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ideas pasivas de muerte",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a veces pienso que mejor no despertarme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin ideación ni planificación autolítica estructurada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fobia específica a la conducción desarrollada tras un episodio de presíncope al volante en noviembre de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin alteraciones sensoperceptivas. Juicio de realidad conservado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hamilton para la depresión (HDRS-17): 24 (depresión grave)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escala de Ansiedad de Hamilton (HARS): 27",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Beck (BDI-II): 33",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F32.2 Episodio depresivo grave sin síntomas psicóticos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en el contexto de patología cardiaca y respiratoria crónica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F41.0 Trastorno de pánico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F40.2 Fobia específica (amaxofobia) secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F10.21 Trastorno por consumo de alcohol, en remisión temprana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sertralina 150 mg/día (titulada desde 50 mg; escitalopram retirado por QT largo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mirtazapina 15 mg por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam (Orfidal) 1 mg por la noche y 1 mg de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Psicoterapia individual cognitivo-conductual",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Carmen Benítez Ojeda"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Derivado a la asociación de familiares de personas con TEA para respiro familiar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Evolución tórpida tras 9 meses de seguimiento, con respuesta parcial al tratamiento psicofarmacológico y escasa adherencia a la psicoterapia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La comorbilidad cardiaca limita las opciones de tratamiento (contraindicación relativa de tricíclicos y de dosis altas de ISRS por riesgo arritmogénico)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enfermedad oncológica de la esposa, cuidado del hijo con TEA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una limitación grave para tareas que requieran atención sostenida, responsabilidad sobre la seguridad de terceros, manejo de situaciones de estrés y relación con el público",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La amaxofobia y las crisis de pánico hacen desaconsejable la conducción de cualquier tipo de vehículo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pronóstico incierto a medio plazo",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Social"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-reclamacion-previa-inss.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "DIRECCIÓN PROVINCIAL DEL INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL DE SEVILLA"
+   ],
+   [
+    "AUTOS",
+    "41/2025/IP/0018734"
+   ],
+   [
+    "NORMA",
+    "artículo 71 LRJS"
+   ],
+   [
+    "PERSONA",
+    "MANUEL JESÚS CARMONA RUIZ"
+   ],
+   [
+    "DNI",
+    "28794031-T"
+   ],
+   [
+    "NUSS",
+    "41/10245678/33"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de la Barzola n.º 12, 4.º C, 41008 Sevilla"
+   ],
+   [
+    "TELEFONO",
+    "617 45 98 20"
+   ],
+   [
+    "PERSONA",
+    "José Antonio Lozano Brenes"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Sevilla"
+   ],
+   [
+    "OBJETO",
+    "prestación de incapacidad permanente"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Valoración de Incapacidades"
+   ],
+   [
+    "NORMA",
+    "artículo 71.2 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social"
+   ],
+   [
+    "ORGANISMO",
+    "EVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ecocardiograma de noviembre de 2025, FEVI 45 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un ingreso hospitalario del 19 al 26 de febrero de 2026 por insuficiencia cardiaca descompensada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una caída de la FEVI al 35 %, con insuficiencia mitral moderada y rachas de taquicardia ventricular no sostenida en el Holter",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos episodios de presíncope, uno de ellos al volante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no debe conducir vehículos del grupo 2 ni realizar esfuerzos moderados",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen Macarena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se está valorando el implante de un desfibrilador automático (DAI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EPOC grave, GOLD 3, con FEV1 del 42 % en la espirometría de enero de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no del 58 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disnea de grado 3 en la escala mMRC, en tratamiento con triple terapia inhalada (Trimbow) y rescates de salbutamol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diabetes mellitus tipo 2 mal controlada (HbA1c 8,4 %) en tratamiento con insulina glargina (Lantus), metformina y empagliflozina, con retinopatía diabética no proliferativa y enfermedad renal crónica estadio 3a",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de apnea obstructiva del sueño con CPAP, obesidad y somnolencia diurna (Epworth 14)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo grave, trastorno de pánico y amaxofobia (miedo patológico a conducir), en tratamiento con sertralina 150 mg, mirtazapina y lorazepam",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno adaptativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se emitió con restricciones y vigencia reducida",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Anexo IV del Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al estar limitado para esfuerzos ligeros, para actividades que requieran atención sostenida y para la relación con el público",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 194 del texto refundido de la Ley General de la Seguridad Social, aprobado por Real Decreto Legislativo 8/2015, de 30 de octubre"
+   ],
+   [
+    "NORMA",
+    "disposición transitoria vigesimosexta"
+   ],
+   [
+    "ORGANO",
+    "Sala Cuarta del Tribunal Supremo"
+   ],
+   [
+    "PERSONA",
+    "Manuel Jesús Carmona Ruiz"
+   ],
+   [
+    "OBJETO",
+    "INCAPACIDAD PERMANENTE ABSOLUTA"
+   ],
+   [
+    "OBJETO",
+    "derivada de enfermedad común"
+   ],
+   [
+    "OBJETO",
+    "INCAPACIDAD PERMANENTE TOTAL"
+   ],
+   [
+    "NORMA",
+    "artículo 196.2 LGSS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de Cardiología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta de 26 de febrero de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Espirometría y gasometría arterial",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Neumología del Hospital Universitario Virgen del Rocío"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de Oftalmología (fondo de ojo) de 12 de diciembre de 2025",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-correo-del-cliente.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Manolo Carmona"
+   ],
+   [
+    "CORREO",
+    "manolocarmona67@hotmail.com"
+   ],
+   [
+    "PERSONA",
+    "José Antonio Lozano"
+   ],
+   [
+    "CORREO",
+    "jalozano@lozanobrenes.com"
+   ],
+   [
+    "OBJETO",
+    "la invalided"
+   ],
+   [
+    "PERSONA",
+    "Jose Antonio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no pego ojo, me despierto a las 3 o las 4 y ya no ay quien me duerma, ni con la pastilla",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Esperanza"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me ahogo subiendo las escaleras de mi casa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tengo que pararme en el segundo y en el tercero como un viejo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Los pies se me ponen como botas por la tarde",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la pastilla de orinar (la furosemida)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me a dicho que a lo mejor me ponen un aparato de esos en el pecho, un desfribilador, por las arritmias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el corazon me funciona a un 35 nada mas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ahora no puedo ni llevar las bolsas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del azucar fatal, me pincho la insulina por la noche pero me sale en 200 y pico por las mañanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la endocrina me a dicho que como mal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con los nervios me levanto y me como lo que pillo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la vista cada vez peor, el oculista dice que es de la diabetes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "De la cabeza tampoco estoy bien",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La psiquiatra me a subido la sertralina y me a puesto otra para dormir, la mirtazapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tengo ataques de ansiedad que me da como un infarto otra vez y acabo en urgencias del Macarena y me dicen que es de los nervios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "casi me salgo en la rotonda de la Ronda Supernorte con el coche porque me mareé",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rocio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pienso que para estar asi mejor no despertarme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no voy a hacer ninguna tonteria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi mujer sigue con la quimio, le quedan 4 sesiones y luego la operan del pecho en julio, esta muy flojita y sin pelo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Alvaro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo suyo del autismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se pone malo con los cambios",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Juanma"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el que era el delegado de UGT en la empresa",
+    "sindical"
+   ],
+   [
+    "TELEFONO",
+    "655 81 20 43"
+   ],
+   [
+    "PERSONA",
+    "Paco Ríos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se murio del infarto en la cabina en el 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tenia lo mismo que yo",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "me cogieron dando positivo en un control de alcoholemia en Dos Hermanas y me condenaron por el juzgado a 8 meses sin carnet y una multa"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo ya no bebo nada desde el infarto ni una cerveza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fui a la Basilica a ver a la Virgen como todos los años con la Hermandad, yo soy hermano desde chico",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le pedi que salga bien lo del juicio",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los papeles nuevos del cardiologo y de la analitica",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Manuel Jesús Carmona Ruiz"
+   ],
+   [
+    "PERSONA",
+    "Manolo"
+   ],
+   [
+    "TELEFONO",
+    "617 45 98 20"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-informe-pericial-medico.docx.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Ramón Ortega Villalobos"
+   ],
+   [
+    "ORGANISMO",
+    "Real e Ilustre Colegio Oficial de Médicos de Sevilla"
+   ],
+   [
+    "PERSONA",
+    "José Antonio Lozano Brenes"
+   ],
+   [
+    "PERSONA",
+    "Manuel Jesús Carmona Ruiz"
+   ],
+   [
+    "AUTOS",
+    "Seguridad Social 418/2026"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Social n.º 7 de Sevilla"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente"
+   ],
+   [
+    "ORGANISMO",
+    "EVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe médico de síntesis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de alta de Cardiología",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen Macarena"
+   ],
+   [
+    "PERSONA",
+    "Romero Lucena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardiorresonancia magnética de 14/05/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Espirometría forzada con prueba broncodilatadora y gasometría arterial basal",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Neumología HUVR"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe psiquiátrico",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "PERSONA",
+    "Bernal Prieto"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de Endocrinología (HbA1c, perfil glucémico, función renal) y de Oftalmología (retinografía)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Polisomnografía de 2023 e informe de adaptación de CPAP",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Test de la marcha de 6 minutos realizado en mi presencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Antecedentes de HTA, DM2 desde 2012 (insulinizado desde 2024), dislipemia, obesidad, exfumador de 40 paquetes/año (abandono en febrero de 2025) y consumo de alcohol de riesgo hasta febrero de 2025, en remisión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sufrió un IAMCEST inferoposterior mientras conducía en la A-4",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le practicó ACTP primaria con stent farmacoactivo en coronaria derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En febrero de 2026 ingresó por insuficiencia cardiaca descompensada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere disnea a esfuerzos ligeros (mMRC 3), ortopnea, edemas, palpitaciones y dos presíncopes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere asimismo ánimo muy bajo, crisis de angustia, insomnio con despertar precoz y miedo invalidante a conducir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Entresto 49/51 mg/12 h, bisoprolol 5 mg, eplerenona 25 mg, Jardiance 10 mg, furosemida 40 mg, Adiro 100 mg, clopidogrel 75 mg, atorvastatina 80 mg + ezetimiba 10 mg, Lantus 22 UI, metformina 850 mg/12 h, Trimbow 2 inh/12 h, Ventolin a demanda, sertralina 150 mg, mirtazapina 15 mg, Orfidal 1 mg, tamsulosina 0,4 mg, CPAP nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 104 kg, talla 175 cm, IMC 34. TA 128/78 mmHg. FC 60 lpm. SatO2 basal 92 %, que desciende a 86 % al final del test de la marcha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Disnea al desvestirse",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Auscultación pulmonar con murmullo vesicular disminuido y sibilancias espiratorias dispersas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Edemas con fóvea en ambos tobillos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exploración neurológica sin focalidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipoestesia en ambos pies (polineuropatía diabética incipiente)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipomimia, llanto durante la entrevista al hablar de la enfermedad de su esposa, bradipsiquia, discurso centrado en la incapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FEVI 33 %. Necrosis transmural inferior e inferolateral sin viabilidad. Viabilidad conservada en territorio de DA. Pendiente de nueva coronariografía para revascularización de DA y valoración de DAI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FVC 68 %, FEV1 40 %, FEV1/FVC 0,52 tras broncodilatación. EPOC grave (GOLD 3, grupo E)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pO2 64 mmHg, pCO2 44 mmHg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "290 metros (esperados > 500 m para su edad y talla), con dos paradas y desaturación al 86 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HbA1c 8,4 %. FGe 55 ml/min. Microalbuminuria positiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "miocardiopatía isquémica con insuficiencia cardiaca con FEVI reducida (33-35 %), clase funcional NYHA III, con arritmias ventriculares (TVNS) y presíncopes, pendiente de DAI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EPOC grave con insuficiencia respiratoria latente (pO2 64 mmHg) y desaturación al esfuerzo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 de mal control con afectación de órganos diana (retinopatía, nefropatía estadio 3a, polineuropatía incipiente)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo grave con trastorno de pánico y amaxofobia, de evolución tórpida pese a tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SAOS moderado y obesidad grado I-II, que agravan la limitación cardiorrespiratoria",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANISMO",
+    "American Medical Association"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la capacidad funcional del informado se sitúa en torno a 3-4 METS, lo que le limita para esfuerzos ligeros y prolongados",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un menoscabo global de la persona superior al 70 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no puede conducir vehículos del grupo 2",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Anexo IV del Reglamento General de Conductores"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por la FEVI < 40 %, las arritmias ventriculares y los episodios sincopales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hasta la implantación del DAI y un periodo libre de eventos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la limitación cardiorrespiratoria le impide trabajos que exijan bipedestación o deambulación prolongadas, cargas o esfuerzos ligeros sostenidos, y el cuadro psíquico le impide trabajos con responsabilidad, atención sostenida, estrés o relación con el público",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece una cardiopatía isquémica con insuficiencia cardiaca con FEVI reducida (33 %) y arritmias ventriculares, EPOC grave GOLD 3 con insuficiencia respiratoria latente, diabetes mellitus tipo 2 con afectación de órganos diana, episodio depresivo grave con trastorno de pánico y amaxofobia, SAOS y obesidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dichas dolencias están consolidadas y son de pronóstico desfavorable, sin expectativa razonable de recuperación de la capacidad funcional",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "le inhabilitan por completo para su profesión habitual"
+   ],
+   [
+    "OBJETO",
+    "le impiden igualmente realizar cualquier profesión u oficio con un mínimo de continuidad, dedicación y eficacia"
+   ],
+   [
+    "NORMA",
+    "artículo 335.2 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardio-RM (14/05/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Espirometría (05/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gasometría arterial basal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Test de la marcha de 6 minutos",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-incapacidad-permanente.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE SEVILLA"
+   ],
+   [
+    "PERSONA",
+    "JOSÉ ANTONIO LOZANO BRENES"
+   ],
+   [
+    "PERSONA",
+    "José Antonio Lozano Brenes"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Sevilla"
+   ],
+   [
+    "CORREO",
+    "jalozano@lozanobrenes.com"
+   ],
+   [
+    "PERSONA",
+    "MANUEL JESÚS CARMONA RUIZ"
+   ],
+   [
+    "DNI",
+    "28794031-T"
+   ],
+   [
+    "NUSS",
+    "41/10245678/33"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de la Barzola n.º 12, 4.º C, 41008 Sevilla"
+   ],
+   [
+    "ORGANO",
+    "Oficina judicial"
+   ],
+   [
+    "OBJETO",
+    "INCAPACIDAD PERMANENTE"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL (INSS)"
+   ],
+   [
+    "ORGANISMO",
+    "TESORERÍA GENERAL DE LA SEGURIDAD SOCIAL (TGSS)"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANISMO",
+    "TGSS"
+   ],
+   [
+    "CIF",
+    "B91437265"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un proceso de incapacidad temporal",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "enfermedad común"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras sufrir un infarto agudo de miocardio mientras conducía",
+    "salud"
+   ],
+   [
+    "AUTOS",
+    "41/2025/IP/0018734"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Valoración de Incapacidades de Sevilla"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardiopatía isquémica. IAM inferoposterior Killip I en febrero 2025 tratado con ACTP + stent en CD proximal. FEVI 45 %. EPOC GOLD 2. DM2 en tratamiento con ADO e insulina basal. Trastorno adaptativo con ansiedad y estado de ánimo deprimido. SAOS moderado con CPAP. Obesidad grado I",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial del INSS de Sevilla"
+   ],
+   [
+    "ORGANISMO",
+    "EVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Miocardiopatía isquémica con insuficiencia cardiaca con fracción de eyección reducida (FEVI 33 % en cardiorresonancia de 14 de mayo de 2026), clase funcional NYHA III, necrosis transmural inferior e inferolateral sin viabilidad, taquicardias ventriculares no sostenidas y dos episodios de presíncope, uno de ellos al volante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso por descompensación en febrero de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pendiente de implante de desfibrilador automático implantable (DAI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En tratamiento con sacubitrilo/valsartán, bisoprolol, eplerenona, empagliflozina, furosemida, doble antiagregación y estatina a dosis altas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad pulmonar obstructiva crónica grave (GOLD 3, FEV1 40 %), con insuficiencia respiratoria latente (pO2 64 mmHg) y desaturación al esfuerzo, en tratamiento con triple terapia inhalada (beclometasona/formoterol/glicopirronio)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetes mellitus tipo 2 de mal control metabólico, insulinizada, con retinopatía diabética, enfermedad renal crónica estadio 3a y polineuropatía incipiente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodio depresivo grave sin síntomas psicóticos (F32.2), trastorno de pánico (F41.0) y amaxofobia, con ideas pasivas de muerte, en tratamiento con sertralina 150 mg, mirtazapina 15 mg y lorazepam, y psicoterapia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con evolución tórpida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome de apnea-hipopnea del sueño moderado con CPAP y obesidad grado I-II",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "limitaciones orgánicas y funcionales permanentes que le impiden realizar las tareas fundamentales de su profesión habitual y cualquier otra profesión u oficio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su capacidad funcional está en torno a 3-4 METS, presenta disnea a esfuerzos ligeros (test de la marcha de 6 minutos: 290 metros), no puede conducir vehículos del grupo 2",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Anexo IV del Reglamento General de Conductores"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su cuadro psíquico le incapacita para tareas que exijan atención sostenida, responsabilidad o manejo del estrés",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el consumo de alcohol que el actor mantuvo hasta 2025 se encuentra en remisión desde el infarto",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Entidad Gestora"
+   ],
+   [
+    "NORMA",
+    "artículo 13.2 de la Orden de 18 de enero de 1996, para la aplicación y desarrollo del Real Decreto 1300/1995"
+   ],
+   [
+    "NORMA",
+    "artículos 2.o), 6 y 10.1 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social"
+   ],
+   [
+    "NORMA",
+    "artículos 140 y siguientes LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 71 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículos 193 y 194 del Real Decreto Legislativo 8/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley General de la Seguridad Social (LGSS)"
+   ],
+   [
+    "NORMA",
+    "disposición transitoria vigesimosexta"
+   ],
+   [
+    "ORGANO",
+    "Sala Cuarta del Tribunal Supremo"
+   ],
+   [
+    "NORMA",
+    "artículo 196.2 LGSS"
+   ],
+   [
+    "NORMA",
+    "artículo 90 LRJS"
+   ],
+   [
+    "PERITO",
+    "Ramón Ortega Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Juan Manuel Ojeda Parrilla"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-sentencia-juzgado-social-7.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL NÚMERO SIETE DE SEVILLA"
+   ],
+   [
+    "AUTOS",
+    "Seguridad Social en materia prestacional 418/2026"
+   ],
+   [
+    "AUTOS",
+    "4109144420260004567"
+   ],
+   [
+    "PERSONA",
+    "MANUEL JESÚS CARMONA RUIZ"
+   ],
+   [
+    "PERSONA",
+    "JOSÉ ANTONIO LOZANO BRENES"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL"
+   ],
+   [
+    "ORGANISMO",
+    "TESORERÍA GENERAL DE LA SEGURIDAD SOCIAL"
+   ],
+   [
+    "PERSONA",
+    "BEGOÑA IGLESIAS MONTAÑO"
+   ],
+   [
+    "AUTOS",
+    "512/2026"
+   ],
+   [
+    "PONENTE",
+    "Rafael Gutiérrez Aguilar"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Social número 7 de Sevilla"
+   ],
+   [
+    "OBJETO",
+    "INCAPACIDAD PERMANENTE"
+   ],
+   [
+    "OBJETO",
+    "incapacidad permanente"
+   ],
+   [
+    "OBJETO",
+    "enfermedad común"
+   ],
+   [
+    "PERSONA",
+    "Manuel Jesús Carmona Ruiz"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANISMO",
+    "TGSS"
+   ],
+   [
+    "ORGANISMO",
+    "EVI"
+   ],
+   [
+    "PERITO",
+    "Ramón Ortega Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Juan Manuel Ojeda Parrilla"
+   ],
+   [
+    "DNI",
+    "28794031-T"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un proceso de incapacidad temporal iniciado el 14 de febrero de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cardiopatía isquémica con IAM inferoposterior en febrero de 2025, revascularizado con stent en CD, enfermedad de dos vasos con lesión residual en DA, FEVI 45 % en noviembre de 2025, con dos presíncopes y rachas de TVNS en Holter de enero de 2026; EPOC con FEV1 del 42 % en espirometría de enero de 2026; diabetes mellitus tipo 2 insulinizada con retinopatía no proliferativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo en seguimiento",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Salud Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SAOS con CPAP y obesidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "precisó ingreso por insuficiencia cardiaca descompensada, constatándose una FEVI del 35 % en ecocardiograma de 24 de febrero de 2026 y del 33 % en cardiorresonancia de 14 de mayo de 2026, con necrosis inferior sin viabilidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pendiente de implante de DAI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disnea a esfuerzos ligeros, con una distancia recorrida de 290 metros en el test de la marcha de 6 minutos y desaturación al esfuerzo, y una capacidad funcional estimada de 3-4 METS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un episodio depresivo grave con trastorno de pánico y amaxofobia, con evolución tórpida pese al tratamiento con sertralina, mirtazapina y lorazepam",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen Macarena"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Virgen del Rocío"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Macarena Norte"
+   ],
+   [
+    "PERSONA",
+    "Ojeda"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antiguo delegado sindical de UGT en la empresa",
+    "sindical"
+   ],
+   [
+    "ORGANISMO",
+    "Entidad Gestora"
+   ],
+   [
+    "NORMA",
+    "artículo 143.4 LRJS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La miocardiopatía isquémica, la disfunción ventricular y las arritmias",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 194 LGSS"
+   ],
+   [
+    "NORMA",
+    "disposición transitoria vigesimosexta"
+   ],
+   [
+    "ORGANO",
+    "Sala Cuarta del Tribunal Supremo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una insuficiencia cardiaca con FEVI reducida en clase funcional III, una EPOC grave con insuficiencia respiratoria latente y una patología psiquiátrica grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una capacidad de 7,2 METS, obtenida en una ergometría de diciembre de 2025 que fue suspendida por disnea",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 191.3.c LRJS"
+   ],
+   [
+    "ORGANO",
+    "Sala de lo Social del Tribunal Superior de Justicia de Andalucía"
+   ],
+   [
+    "NORMA",
+    "artículo 230.2.c LRJS"
+   ],
+   [
+    "LAJ",
+    "Carmen Ruiz-Berdejo Soto"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

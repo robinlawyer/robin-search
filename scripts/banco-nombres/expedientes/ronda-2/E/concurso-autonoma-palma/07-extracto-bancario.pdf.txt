@@ -1,0 +1,48 @@
+COLONYA · CAIXA D'ESTALVIS DE POLLENÇA
+Oficina 0018 — Palma, Plaça de l'Olivar, 3
+
+EXTRACTE DE COMPTE / EXTRACTO DE CUENTA
+Titular: BENNÀSSER COLL MARGALIDA        NIF: 43128756T
+Adreça: C/ SANT MAGÍ 34 1-2 — 07013 PALMA
+Compte / IBAN: ES76 2056 0018 4110 2003 7781
+Període: 01/01/2024 – 31/12/2024 (selecció de moviments, pàg. 3 de 11)
+Moneda: EUR
+
+Data op.  Data val.  Concepte                                              Import       Saldo
+--------  ---------  ----------------------------------------------------  ----------   ---------
+02/01/24  02/01/24   REBUT TGSS RETA AUTONOMS 12/2023                        -294,00    2.811,40
+02/01/24  02/01/24   TRANSF. LLOGUER LOCAL C/ FABRICA - G. MIR NICOLAU     -1.350,00    1.461,40
+03/01/24  03/01/24   COMPRA TARGETA FARMACIA SANT MIQUEL PALMA                -47,85    1.413,55
+05/01/24  05/01/24   ABONAMENT TPV MARGA PERRUQUERS                          +612,30    2.025,85
+08/01/24  08/01/24   REBUT COFIDIS SA PRESTEC 0048817 PROJECTE BEBE           -389,20    1.636,65
+10/01/24  10/01/24   REBUT IB FERTILITAT SL - QUOTA CRIOPRESERVACIO EMBRIONS -45,00    1.591,65
+15/01/24  15/01/24   REBUT MES PER MALLORCA - QUOTA AFILIAT                   -25,00    1.566,65
+15/01/24  15/01/24   BIZUM A LAURA MARTORELL - SESSIO PSICOLOGIA              -60,00    1.506,65
+22/01/24  22/01/24   BIZUM A LAURA MARTORELL - SESSIO PSICOLOGIA              -60,00    1.446,65
+29/01/24  29/01/24   TRANSF. PARROQUIA SANTA EULALIA - DONATIU MENSUAL        -20,00    1.426,65
+05/02/24  05/02/24   REBUT TGSS RETA AUTONOMS 01/2024                        -294,00    1.132,65
+09/02/24  09/02/24   COMPRA TARGETA CLINICA ROTGER - ECOGRAFIA TRANSVAGINAL  -120,00    1.012,65
+12/02/24  12/02/24   COMPRA TARGETA LABORATORI ANALISIS CLINIQUES - CA125/HE4 -86,40      926,25
+15/02/24  15/02/24   REBUT MES PER MALLORCA - QUOTA AFILIAT                   -25,00      901,25
+19/02/24  19/02/24   COMPRA TARGETA FARMACIA SANT MIQUEL PALMA               -112,60      788,65
+23/02/24  23/02/24   TRANSF. DE AINA BENNASSER COLL - "PER LO QUE NECESSITIS" +1.000,00 1.788,65
+26/02/24  26/02/24   ABONAMENT INSS/IBERMUTUA PRESTACIO IT AUTONOMS          +684,90    2.473,55
+04/03/24  04/03/24   COMPRA TARGETA ORTOPEDIA BALEAR - PERRUCA ONCOLOGICA     -690,00   1.783,55
+05/03/24  05/03/24   REBUT TGSS RETA AUTONOMS 02/2024                        -294,00    1.489,55
+07/03/24  07/03/24   COMPRA TARGETA FARMACIA SANT MIQUEL - ONDANSETRO/EMEND    -38,12   1.451,43
+11/03/24  11/03/24   REBUT IB FERTILITAT SL - QUOTA CRIOPRESERVACIO EMBRIONS  -45,00    1.406,43
+15/03/24  15/03/24   REBUT MES PER MALLORCA - QUOTA AFILIAT                   -25,00    1.381,43
+18/03/24  18/03/24   DEVOLUCIO REBUT COFIDIS SA PRESTEC 0048817                +389,20  1.770,63
+25/03/24  25/03/24   COMPRA TARGETA FARMACIA SANT MIQUEL PALMA                -23,90    1.746,73
+28/03/24  28/03/24   TRANSF. PARROQUIA SANTA EULALIA - DONATIU MENSUAL        -20,00    1.726,73
+02/04/24  02/04/24   COMPRA TARGETA FARMACIA HOSPITAL SON ESPASES - COPAG.     -4,24    1.722,49
+08/04/24  08/04/24   REBUT IB FERTILITAT SL - RENUNCIA CUSTODIA EMBRIONS      -150,00   1.572,49
+
+Resum del període (moviments seleccionats):
+Total deutor: 4.828,30 €     Total creditor: 2.686,40 €
+
+Notes del document:
+— Selecció de moviments preparada per GESTORIA AMENGUAL a petició de la titular per a l'aportació al procediment concursal n.º 412/2025 (Tribunal de Instancia de Palma, Secció Mercantil). Els moviments omesos corresponen a cobraments del TPV i a despeses ordinàries de llar.
+— Els rebuts de Cofidis i de la targeta CaixaBank Payments queden impagats a partir de maig de 2024.
+
+Document generat el 12/09/2025 a les 18:02 per Colonya Online. Aquest document no té validesa com a certificat bancari.

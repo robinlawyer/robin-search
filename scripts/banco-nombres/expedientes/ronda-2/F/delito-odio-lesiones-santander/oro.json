@@ -1,0 +1,1655 @@
+{
+  "01-informe-urgencias-valdecilla.pdf.txt": {
+    "oro": [
+      [
+        "ORGANISMO",
+        "SERVICIO CÁNTABRO DE SALUD"
+      ],
+      [
+        "ORGANISMO",
+        "HOSPITAL UNIVERSITARIO MARQUÉS DE VALDECILLA"
+      ],
+      [
+        "ORGANISMO",
+        "Servicio de Urgencias"
+      ],
+      [
+        "PERSONA",
+        "RUIZ ABASCAL, DANIEL"
+      ],
+      [
+        "NUSS",
+        "0004418273"
+      ],
+      [
+        "NUSS",
+        "CANT 3348 1902 77"
+      ],
+      [
+        "NUSS",
+        "39/10472385/06"
+      ],
+      [
+        "DIRECCION",
+        "C/ Francisco Palazuelos, 6, 4.º D — 39004 Santander"
+      ],
+      [
+        "TELEFONO",
+        "636 471 029"
+      ],
+      [
+        "ORGANISMO",
+        "SVB (061)"
+      ],
+      [
+        "ORGANISMO",
+        "Policía Nacional"
+      ],
+      [
+        "PERSONA",
+        "Begoña Cuesta Mazón"
+      ],
+      [
+        "PERSONA",
+        "Iker Larrinaga Sáez"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "por ser maricón",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "su pareja, que le acompaña y también ha sido agredido",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Dolor nasal intenso, epistaxis, dolor costal derecho que aumenta con la inspiración",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No alergias medicamentosas conocidas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Infección por VIH diagnosticada en 2016",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "Enfermedades Infecciosas de este hospital"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "en tratamiento con Biktarvy® (bictegravir/emtricitabina/tenofovir alafenamida) 1 comp./24 h, carga viral indetectable, CD4 780",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Asma bronquial extrínseco leve intermitente, salbutamol inhalado a demanda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Episodio depresivo en la adolescencia (16 años) en contexto de acoso escolar, tratado con fluoxetina durante un año",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Actualmente sin tratamiento psiquiátrico",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Intervenido de apendicectomía (2009)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Consumo de alcohol ocasional (esa noche, dos cervezas)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TA 142/88 mmHg, FC 104 lpm, SatO2 97 %, T.ª 36,4 ºC",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ansioso, llanto intermitente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "herida inciso-contusa de 3,5 cm en ceja izquierda, con bordes irregulares y restos de cristal",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hematoma periorbitario izquierdo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Deformidad y crepitación de pirámide nasal con laterodesviación a la derecha, epistaxis bilateral autolimitada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Erosión en pómulo derecho",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "dolor a la palpación en arcos costales 7.º-9.º derechos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hematoma de 6 x 4 cm en flanco derecho",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "erosiones en ambas palmas de las manos y en rodilla izquierda",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Contusión en dorso de mano derecha (lesión de defensa)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "fractura desplazada de huesos propios",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Rx de parrilla costal derecha y tórax: sin fracturas costales visibles; no neumotórax",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TC craneal sin contraste: sin lesiones intracraneales agudas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ecografía FAST: negativa",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Analítica: hemograma y bioquímica normales",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Etanol en sangre 0,21 g/l",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "sutura con 5 puntos de Prolene 5/0",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Taponamiento nasal anterior",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Dexketoprofeno (Enantyum®) 50 mg IV, paracetamol 1 g IV",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Profilaxis antitetánica (vacuna Td)",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "Otorrinolaringología de guardia"
+      ],
+      [
+        "PERSONA",
+        "Ramón Herrera Gutiérrez"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "reducción cerrada de fractura nasal diferida",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Traumatismo craneoencefálico leve sin pérdida de conciencia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Fractura desplazada de huesos propios nasales",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Herida inciso-contusa en ceja izquierda (suturada, 5 puntos)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Contusión costal derecha",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Policontusiones y erosiones múltiples",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Reacción de estrés agudo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Paracetamol 1 g/8 h alternando con dexketoprofeno 25 mg/8 h durante 5 días",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Omeprazol 20 mg/24 h mientras tome AINE",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Lorazepam 1 mg por la noche si insomnio o ansiedad (máximo 5 días)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Continuar con su tratamiento antirretroviral habitual",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Retirada de taponamiento en 48 h",
+        "salud"
+      ],
+      [
+        "ORGANO",
+        "Juzgado de Guardia"
+      ],
+      [
+        "ORGANISMO",
+        "Salud Mental"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "si persisten los síntomas de ansiedad",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "HUMV"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "02-parte-lesiones-hugo.escaneo.txt": {
+    "oro": [
+      [
+        "ORGANISMO",
+        "G0BIERN0 DE CANTABRIA"
+      ],
+      [
+        "ORGANISMO",
+        "SERVICI0 CANTABR0 DE SALUD"
+      ],
+      [
+        "ORGANISMO",
+        "HOSPITAL UNIVERSITARI0 MARQUES DE VALDECILLA"
+      ],
+      [
+        "NORMA",
+        "ART. 262 Y 355 LECRIM"
+      ],
+      [
+        "ORGANO",
+        "JUZGAD0 DE INSTRUCCI0N EN FUNCI0NES DE GUARDIA DE SANTANDER"
+      ],
+      [
+        "PERSONA",
+        "MIGUEL ANGEL TERAN B0LADO"
+      ],
+      [
+        "PERSONA",
+        "HUG0 SETIEN PEREDA"
+      ],
+      [
+        "DNI",
+        "72083516-R"
+      ],
+      [
+        "DIRECCION",
+        "C/ FRANCISC0 PALAZUEL0S 6, 4 D, 39004 SANTANDER"
+      ],
+      [
+        "TELEFONO",
+        "680 25l 447"
+      ],
+      [
+        "NUSS",
+        "0005102998"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "INSULT0S H0M0F0B0S (\"MARIC0NES DE MIERDA\", \"0S VAM0S A CURAR\")",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "AL VERLE C0GID0 DE LA MAN0 C0N SU PAREJA",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "DIABETES MELLITUS TIP0 1 DESDE L0S 12 AÑ0S, EN TRATAMIENT0 C0N INSULINA GLARGINA (TOUJE0) Y ASPART (N0V0RAPID) EN PAUTA BAS0L-B0LO",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "P0RTAD0R DE SENS0R DE GLUC0SA FREESTYLE LIBRE 2 EN BRAZ0 IZQUIERD0",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "HIP0TIR0IDISM0 EN TRATAMIENT0 C0N EUTIR0X 75",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "N0 ALERGIAS",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "D0L0R A LA PALPACI0N EN HEMIT0RAX IZQUIERD0 P0STER0LATERAL",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "FRACTURA N0 DESPLAZADA DEL 9 ARC0 C0STAL IZQUIERD0",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "N0 NEUM0T0RAX",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "HEMAT0MA DE 4 CM EN REGI0N 0CCIPITAL",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TC CRANEAL N0RMAL",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "HERIDA SUPERFICIAL DE 1,5 CM EN CARA EXTERNA DE BRAZ0 IZQUIERD0 (ZONA DEL SENS0R) C0N ER0SI0N CIRCULAR",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "C0NTUSI0N EN H0MBR0 DERECH0 C0N LIMITACI0N D0L0R0SA DE LA ABDUCCI0N",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "RX SIN LESI0NES 0SEAS",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ER0SI0NES EN AMB0S C0D0S",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "GLUCEMIA CAPILAR A SU LLEGADA 62 MG/DL (HIP0GLUCEMIA LEVE P0R ESTRES Y AUSENCIA DE SENS0R), C0RREGIDA C0N GLUC0SA 0RAL",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ANALGESIA (METAMIZ0L, PARACETAM0L), REP0S0 RELATIV0, FISI0TERAPIA RESPIRAT0RIA",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "C0NTR0L DE GLUCEMIAS CAPILARES CADA 4 H",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "BAJA LAB0RAL",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "UNIDAD DE HEMODIALISIS"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "TIEMP0 ESTIMAD0 DE CURACI0N: 30-45 DIAS",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "EL PACIENTE SE ENCUENTRA MUY ANGUSTIAD0",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "P0LICIA NACI0NAL"
+      ],
+      [
+        "TIP",
+        "115.432"
+      ],
+      [
+        "PERSONA",
+        "M. A. TERAN B0LADO"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "03-declaraciones-testigos.pdf.txt": {
+    "oro": [
+      [
+        "ORGANISMO",
+        "DIRECCIÓN GENERAL DE LA POLICÍA"
+      ],
+      [
+        "ORGANISMO",
+        "JEFATURA SUPERIOR DE POLICÍA DE CANTABRIA"
+      ],
+      [
+        "ORGANISMO",
+        "Comisaría Provincial de Santander — Brigada Provincial de Información (Grupo de Delitos de Odio)"
+      ],
+      [
+        "AUTOS",
+        "6.204/2025"
+      ],
+      [
+        "AGENTE",
+        "Álvaro Peña Revuelta"
+      ],
+      [
+        "TIP",
+        "87.019"
+      ],
+      [
+        "TIP",
+        "121.876"
+      ],
+      [
+        "PERSONA",
+        "RAFAEL QUINTANA GÓMEZ"
+      ],
+      [
+        "DNI",
+        "13792046-P"
+      ],
+      [
+        "DIRECCION",
+        "Calle Cisneros, 41, 2.º izquierda, 39007 Santander"
+      ],
+      [
+        "TELEFONO",
+        "645 902 337"
+      ],
+      [
+        "PERSONA",
+        "Noelia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "se dieron un beso",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "llevaban toda la noche «cargados»",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "sabe reconocer cuando alguien va de coca",
+        "salud"
+      ],
+      [
+        "PERSONA",
+        "Kevo"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "un tatuaje en el cuello con el número 88 y una cruz celta",
+        "politica"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "aquí no queremos maricones, iros a Chueca",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Jony"
+      ],
+      [
+        "OBJETO",
+        "le pegó un puñetazo en la nariz y luego le dio con el botellín en la cara"
+      ],
+      [
+        "OBJETO",
+        "le tiró al suelo y le dio patadas en las costillas"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "os vamos a curar a hostias",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Moussa"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "que es negro",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "le llamó «mono» y le dijo que se volviera a su país",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "que va con los del Bastión, los ultras esos que reparten panfletos contra los moros",
+        "politica"
+      ],
+      [
+        "DATO_PENAL",
+        "fue condenado en 2022 por un delito contra la salud pública (tráfico de hachís)"
+      ],
+      [
+        "DATO_PENAL",
+        "estuvo en prisión preventiva tres meses en 2019 por una pelea, causa que se archivó"
+      ],
+      [
+        "PERSONA",
+        "NOELIA ARCE FERNÁNDEZ"
+      ],
+      [
+        "DNI",
+        "72190833-J"
+      ],
+      [
+        "TELEFONO",
+        "611 487 250"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "está embarazada de siete meses y tiene diabetes gestacional",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "maricones de mierda",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "«panchitos» refiriéndose a otra mesa",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tuvo contracciones esa noche y tuvo que ir el domingo a urgencias de Ginecología",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tenía que hacer reposo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "está tomando unas pastillas que le ha dado la matrona para dormir, «que son naturales, de valeriana»",
+        "salud"
+      ],
+      [
+        "PERSONA",
+        "MOUSSA DIALLO NDIAYE"
+      ],
+      [
+        "NIE",
+        "Y-4417829-F"
+      ],
+      [
+        "DIRECCION",
+        "Calle San Fernando, 72, 5.º C, 39010 Santander"
+      ],
+      [
+        "TELEFONO",
+        "699 031 584"
+      ],
+      [
+        "PERSONA",
+        "Daniel"
+      ],
+      [
+        "PERSONA",
+        "Hugo"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "una pareja muy maja",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Kevin"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "les dijo cosas muy feas sobre que eran gais",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "le insultó por su color de piel, le dijo «mono» y «vete a tu selva»",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el dicente es musulmán",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "moro de mierda",
+        "etnia"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "él no es árabe",
+        "etnia"
+      ],
+      [
+        "PERSONA",
+        "Ramiro Gandarillas Ceballos"
+      ],
+      [
+        "PERSONA",
+        "KEVIN GUTIÉRREZ SAIZ"
+      ],
+      [
+        "DNI",
+        "72281504-L"
+      ],
+      [
+        "DIRECCION",
+        "Calle Alta, 88, 3.º A, 39008 Santander"
+      ],
+      [
+        "PERSONA",
+        "JONATAN COBO RUIZ"
+      ],
+      [
+        "DNI",
+        "72204917-W"
+      ],
+      [
+        "DIRECCION",
+        "Barrio Camino, 5, 39609 Maliaño"
+      ],
+      [
+        "PERSONA",
+        "Kevin Gutiérrez Saiz"
+      ],
+      [
+        "DATO_PENAL",
+        "figura con un antecedente policial por desórdenes públicos en las inmediaciones de los Campos de Sport de El Sardinero (2023), diligencias sobreseídas"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "su militancia activa en la agrupación ultraderechista Bastión Cántabro, con participación en concentraciones y en el reparto de propaganda contra la inmigración y el colectivo LGTBI",
+        "politica"
+      ],
+      [
+        "PERSONA",
+        "Jonatan Cobo Ruiz"
+      ],
+      [
+        "DATO_PENAL",
+        "cuenta con una condena de 2020 por un delito leve de hurto"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "cotejo de los fotogramas de las cámaras del local con el sistema automático de reconocimiento facial ABIS y con las reseñas dactiloscópicas obrantes",
+        "biometrico"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "04-valoracion-dano-psicologico.pdf.txt": {
+    "oro": [
+      [
+        "OBJETO",
+        "daño psíquico"
+      ],
+      [
+        "PERSONA",
+        "Daniel Ruiz Abascal"
+      ],
+      [
+        "PERSONA",
+        "Hugo Setién Pereda"
+      ],
+      [
+        "PERITO",
+        "Laura Gómez Arenal"
+      ],
+      [
+        "ORGANISMO",
+        "Colegio Oficial de la Psicología de Cantabria"
+      ],
+      [
+        "PERSONA",
+        "Sara Mier Toca"
+      ],
+      [
+        "AUTOS",
+        "Diligencias Previas 1402/2025"
+      ],
+      [
+        "ORGANO",
+        "Juzgado de Instrucción n.º 3 de Santander"
+      ],
+      [
+        "OBJETO",
+        "el carácter discriminatorio de la agresión"
+      ],
+      [
+        "ORGANISMO",
+        "HUMV"
+      ],
+      [
+        "ORGANISMO",
+        "Centro de Salud Mental de Puertochico"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "episodio depresivo en la adolescencia, a los 16 años, en relación con acoso escolar homófobo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "me llamaban maricón todos los días en el patio",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tratado con fluoxetina un año",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Diagnóstico de infección por VIH en 2016, bien controlada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "con miedo al rechazo, pero ya superado",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Salió del armario con su familia a los 22 años",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Convive con su pareja",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "tienen previsto casarse este año",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "pesadillas recurrentes, reviviscencias intrusivas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "hipervigilancia y sobresalto, evitación de la zona de Cañadío y de cualquier bar",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "restricción marcada de la expresión pública de su afectividad",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Hugo"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "me he vuelto a meter en el armario fuera de casa",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Insomnio de conciliación. Anhedonia.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Sentimientos de vergüenza y culpa",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "si no le hubiera besado allí",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "situación de incapacidad temporal desde el 17 de marzo hasta el 30 de junio de 2025 por ansiedad",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "escitalopram 10 mg y lorazepam (Orfidal®) 1 mg a demanda",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "Salud Mental"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "está en lista de espera para psicoterapia y acude a terapia privada semanal",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "PCL-5 = 52 (punto de corte 33). BDI-II = 27 (depresión moderada). STAI-E percentil 90.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "elevación en RCd (desmoralización) y RC7 (emociones negativas disfuncionales)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Trastorno de estrés postraumático (F43.10), con síntomas depresivos asociados",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "trastorno de estrés postraumático crónico, de intensidad moderada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "diabetes mellitus tipo 1 desde los 12 años, con buen control (HbA1c 6,8 %)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Hipotiroidismo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Sin antecedentes psiquiátricos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Procede de una familia católica muy practicante",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "que sea gay",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "que rezaría por él",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Es voluntario en el colectivo LGTBI Arcoíris Cantabria",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "ansiedad intensa, con dos crisis de angustia (palpitaciones, sensación de ahogo)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "miedo a encontrarse a los agresores; irritabilidad",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "dificultades para controlar sus glucemias desde la agresión, con dos hipoglucemias nocturnas",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "No toma psicofármacos",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "PCL-5 = 31 (por debajo del punto de corte). BDI-II = 15 (depresión leve). STAI-E percentil 85.",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Trastorno adaptativo mixto, con ansiedad y estado de ánimo depresivo (F43.23)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "no se prevé secuela psíquica permanente",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "por ser lo que somos",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Ruiz"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el acoso escolar sufrido en la adolescencia",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "presenta un trastorno de estrés postraumático en relación causal directa con la agresión, con previsión de secuela crónica de intensidad moderada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "presenta un trastorno adaptativo mixto en relación causal directa con la agresión, sin previsión de secuela permanente",
+        "salud"
+      ],
+      [
+        "OBJETO",
+        "El carácter homófobo de la agresión"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "05-escrito-defensa-kevin.docx.txt": {
+    "oro": [
+      [
+        "ORGANO",
+        "JUZGADO DE INSTRUCCIÓN N.º 3 DE SANTANDER"
+      ],
+      [
+        "AUTOS",
+        "Procedimiento Abreviado n.º 77/2025"
+      ],
+      [
+        "AUTOS",
+        "Diligencias Previas n.º 1402/2025"
+      ],
+      [
+        "AUTOS",
+        "3907543220250004127"
+      ],
+      [
+        "PERSONA",
+        "CRISTINA BUSTAMANTE HAYA"
+      ],
+      [
+        "PERSONA",
+        "KEVIN GUTIÉRREZ SAIZ"
+      ],
+      [
+        "DNI",
+        "72281504-L"
+      ],
+      [
+        "PERSONA",
+        "ÍÑIGO VELARDE CAGIGAS"
+      ],
+      [
+        "ORGANISMO",
+        "Ilustre Colegio de la Abogacía de Cantabria"
+      ],
+      [
+        "ORGANISMO",
+        "Fiscalía Provincial de Cantabria, Sección de Delitos de Odio y contra la Discriminación"
+      ],
+      [
+        "PERSONA",
+        "Daniel Ruiz Abascal"
+      ],
+      [
+        "PERSONA",
+        "Hugo Setién Pereda"
+      ],
+      [
+        "NORMA",
+        "art. 784 LECrim"
+      ],
+      [
+        "PERSONA",
+        "Ruiz"
+      ],
+      [
+        "PERSONA",
+        "Setién"
+      ],
+      [
+        "PERSONA",
+        "Jonatan Cobo Ruiz"
+      ],
+      [
+        "OBJETO",
+        "delito de lesiones"
+      ],
+      [
+        "NORMA",
+        "art. 147.1 CP"
+      ],
+      [
+        "OBJETO",
+        "subtipo agravado"
+      ],
+      [
+        "NORMA",
+        "art. 148.1.º CP"
+      ],
+      [
+        "OBJETO",
+        "delito contra la integridad moral por motivos discriminatorios"
+      ],
+      [
+        "NORMA",
+        "art. 510.2.a) CP"
+      ],
+      [
+        "OBJETO",
+        "agravante de discriminación por orientación sexual"
+      ],
+      [
+        "NORMA",
+        "art. 22.4.ª CP"
+      ],
+      [
+        "OBJETO",
+        "el móvil discriminatorio"
+      ],
+      [
+        "PERSONA",
+        "Rafael Quintana Gómez"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la supuesta ideología de mi representado",
+        "politica"
+      ],
+      [
+        "PERSONA",
+        "Quintana"
+      ],
+      [
+        "DATO_PENAL",
+        "fue condenado en 2022 por un delito contra la salud pública por tráfico de hachís"
+      ],
+      [
+        "DATO_PENAL",
+        "estuvo en prisión preventiva en 2019 por una reyerta"
+      ],
+      [
+        "PERSONA",
+        "Noelia Arce Fernández"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "un embarazo de siete meses con diabetes gestacional",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la ansiedad que padecía, por la que la matrona le pautó medicación para dormir",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "la «militancia activa» de mi representado en la agrupación Bastión Cántabro",
+        "politica"
+      ],
+      [
+        "NORMA",
+        "art. 16 CE"
+      ],
+      [
+        "NORMA",
+        "STS 458/2019, de 9 de octubre"
+      ],
+      [
+        "NORMA",
+        "STS 1160/2006, de 9 de noviembre"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "acuda a concentraciones de esa agrupación, que lleve un tatuaje de una cruz celta o que su perfil de redes sociales muestre simpatía por partidos de extrema derecha",
+        "politica"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "es delegado sindical de USO en la empresa de logística",
+        "sindical"
+      ],
+      [
+        "OBJETO",
+        "atenuante de intoxicación por consumo de bebidas alcohólicas y sustancias estupefacientes"
+      ],
+      [
+        "NORMA",
+        "art. 21.2.ª CP"
+      ],
+      [
+        "NORMA",
+        "art. 21.7.ª"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "había consumido esa noche al menos siete cervezas y dos copas, además de cocaína (aproximadamente un gramo compartido)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "«cargado» y yendo al baño repetidas veces",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "un TDAH diagnosticado en la infancia, en tratamiento con lisdexanfetamina (Elvanse® 50 mg)",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "cuya interacción con la cocaína y el alcohol potencia la impulsividad",
+        "salud"
+      ],
+      [
+        "OBJETO",
+        "atenuante de reparación del daño"
+      ],
+      [
+        "NORMA",
+        "art. 21.5.ª CP"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "secuela psíquica",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "su antecedente de episodio depresivo en la adolescencia, tratado con fluoxetina",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "historia clínica",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "Unidad de Salud Mental Infanto-Juvenil"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "diagnóstico de TDAH",
+        "salud"
+      ],
+      [
+        "ORGANISMO",
+        "Logística Besaya, S.L."
+      ],
+      [
+        "CAT_ESPECIAL",
+        "su condición de delegado sindical",
+        "sindical"
+      ],
+      [
+        "PERITO",
+        "Pablo Sañudo Llata"
+      ],
+      [
+        "PERITO",
+        "Javier Mazón Riva"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "alcohol, cocaína y metilfenidato de liberación prolongada/lisdexanfetamina",
+        "salud"
+      ],
+      [
+        "PERSONA",
+        "Yésica Saiz Pontones"
+      ],
+      [
+        "PERSONA",
+        "Óscar Llata Díez"
+      ],
+      [
+        "PERSONA",
+        "Rubén Martínez Abascal"
+      ],
+      [
+        "PERSONA",
+        "Ramiro Gandarillas Ceballos"
+      ],
+      [
+        "ORGANISMO",
+        "Dirección General de la Policía"
+      ],
+      [
+        "DATO_PENAL",
+        "las diligencias sobreseídas de 2023"
+      ],
+      [
+        "PERSONA",
+        "Íñigo Velarde Cagigas"
+      ],
+      [
+        "PERSONA",
+        "Cristina Bustamante Haya"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "06-auto-apertura-juicio-oral.pdf.txt": {
+    "oro": [
+      [
+        "ORGANO",
+        "JUZGADO DE INSTRUCCIÓN N.º 3 DE SANTANDER"
+      ],
+      [
+        "AUTOS",
+        "Procedimiento Abreviado n.º 77/2025"
+      ],
+      [
+        "AUTOS",
+        "3907543220250004127"
+      ],
+      [
+        "AUTOS",
+        "Diligencias Previas n.º 1402/2025"
+      ],
+      [
+        "PERSONA",
+        "Kevin Gutiérrez Saiz"
+      ],
+      [
+        "PERSONA",
+        "Jonatan Cobo Ruiz"
+      ],
+      [
+        "OBJETO",
+        "delito de lesiones con instrumento peligroso"
+      ],
+      [
+        "NORMA",
+        "arts. 147.1 y 148.1.º CP"
+      ],
+      [
+        "PERSONA",
+        "Daniel Ruiz Abascal"
+      ],
+      [
+        "OBJETO",
+        "delito de lesiones"
+      ],
+      [
+        "NORMA",
+        "art. 147.1 CP"
+      ],
+      [
+        "PERSONA",
+        "Hugo Setién Pereda"
+      ],
+      [
+        "OBJETO",
+        "agravante de cometer el delito por motivos discriminatorios referentes a la orientación sexual de las víctimas"
+      ],
+      [
+        "NORMA",
+        "art. 22.4.ª CP"
+      ],
+      [
+        "OBJETO",
+        "delito contra la integridad moral por motivos discriminatorios"
+      ],
+      [
+        "NORMA",
+        "art. 510.2.a) CP"
+      ],
+      [
+        "OBJETO",
+        "delito leve de injurias"
+      ],
+      [
+        "NORMA",
+        "art. 173.4 CP"
+      ],
+      [
+        "PERSONA",
+        "Moussa Diallo Ndiaye"
+      ],
+      [
+        "OBJETO",
+        "con la misma agravante por motivos racistas"
+      ],
+      [
+        "PERSONA",
+        "Fernando Higuera Sainz"
+      ],
+      [
+        "PERSONA",
+        "Sara Mier Toca"
+      ],
+      [
+        "OBJETO",
+        "delito de odio"
+      ],
+      [
+        "NORMA",
+        "art. 510.1.a) CP"
+      ],
+      [
+        "ORGANISMO",
+        "Bastión Cántabro"
+      ],
+      [
+        "ORGANISMO",
+        "Arcoíris Cantabria"
+      ],
+      [
+        "NORMA",
+        "art. 783.1 LECrim"
+      ],
+      [
+        "ORGANISMO",
+        "Hospital Universitario Marqués de Valdecilla"
+      ],
+      [
+        "PERITO",
+        "Pablo Sañudo Llata"
+      ],
+      [
+        "PERITO",
+        "Laura Gómez Arenal"
+      ],
+      [
+        "PERSONA",
+        "Ruiz"
+      ],
+      [
+        "OBJETO",
+        "móvil discriminatorio"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "aquí no queremos maricones",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "maricones de mierda",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "os vamos a curar a hostias",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "inmediatamente después de que las víctimas se besaran",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "La ideología que se atribuye a uno de los acusados",
+        "politica"
+      ],
+      [
+        "NORMA",
+        "art. 125 CE y art. 101 LECrim"
+      ],
+      [
+        "DIRECCION",
+        "Calle Francisco Palazuelos, 6, 4.º D, de Santander"
+      ],
+      [
+        "ORGANISMO",
+        "IES Las Llamas"
+      ],
+      [
+        "ORGANO",
+        "Juzgado de lo Penal de Santander"
+      ],
+      [
+        "NORMA",
+        "art. 14.3 LECrim"
+      ],
+      [
+        "PERSONA",
+        "KEVIN GUTIÉRREZ SAIZ"
+      ],
+      [
+        "PERSONA",
+        "JONATAN COBO RUIZ"
+      ],
+      [
+        "OBJETO",
+        "delitos de lesiones"
+      ],
+      [
+        "NORMA",
+        "art. 783.3 LECrim"
+      ],
+      [
+        "PONENTE",
+        "Gonzalo Ibáñez Riancho"
+      ],
+      [
+        "ORGANO",
+        "Juzgado de Instrucción n.º 3 de Santander"
+      ],
+      [
+        "LAJ",
+        "Marta Lavín Obregón"
+      ]
+    ],
+    "ambiguo": []
+  },
+  "07-whatsapp-hugo-hermana-daniel.whatsapp.txt": {
+    "oro": [
+      [
+        "PERSONA",
+        "Hugo Setién"
+      ],
+      [
+        "PERSONA",
+        "Lucía"
+      ],
+      [
+        "PERSONA",
+        "Hugo"
+      ],
+      [
+        "PERSONA",
+        "Dani"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Unos nazis de esos",
+        "politica"
+      ],
+      [
+        "PERSONA",
+        "Lucía Ruiz"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Dani tiene la nariz rota y 5 puntos en la ceja, y yo una costilla fisurada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Me arrancaron el sensor del brazo y me dio una hipo en urgencias",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Dani no para de llorar, dice que es como volver al instituto",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Por darnos un beso en la barra",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Nos llamaron maricones de mierda",
+        "sexual"
+      ],
+      [
+        "PERSONA",
+        "Moussa"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "le llamaron mono",
+        "etnia"
+      ],
+      [
+        "PERSONA",
+        "Kevin"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "dicen que es de Bastión Cántabro",
+        "politica"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "esos son los q estaban en el mitin de la plaza porticada",
+        "politica"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "sus pastillas del vih",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Le han dado Enantyum y un Orfidal para dormir",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Ya se ha tomado el Biktarvy esta mañana",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Yo con la diabetes descontrolada",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "el hombro fatal. Me han dado la baja",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "Mi madre me diría que rece un rosario",
+        "religion"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "con lo del corazón y el marcapasos",
+        "salud"
+      ],
+      [
+        "PERSONA",
+        "Sara Mier"
+      ],
+      [
+        "PERSONA",
+        "Lu"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "A Dani le ha salido estrés postraumático",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "A mí un trastorno adaptativo",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "sigue con el escitalopram",
+        "salud"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "he dejado de ir a Arcoíris",
+        "sexual"
+      ],
+      [
+        "CAT_ESPECIAL",
+        "lo de la boda sigue en pie",
+        "sexual"
+      ]
+    ],
+    "ambiguo": []
+  }
+}

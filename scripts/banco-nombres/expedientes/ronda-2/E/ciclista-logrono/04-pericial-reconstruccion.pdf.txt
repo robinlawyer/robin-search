@@ -1,0 +1,43 @@
+INFORME PERICIAL DE RECONSTRUCCIÓN DE ACCIDENTE DE TRÁFICO
+
+Perito: D. Aitor Zabala Pérez, Ingeniero Industrial, Máster en Investigación y Reconstrucción de Accidentes de Tráfico (Universidad de Valladolid), colegiado n.º 2.311 del Colegio Oficial de Ingenieros Industriales de La Rioja.
+Encargo: Dña. Ana Isabel Martínez Ruiz, a través de su letrado D. Gonzalo Pérez de Nanclares Urbina.
+Fecha del siniestro: 12 de mayo de 2025, 07:38 h aprox.
+Lugar: Avenida de Burgos, frente al n.º 104, Logroño.
+Fecha del informe: 22 de septiembre de 2025.
+
+1. DOCUMENTACIÓN ANALIZADA
+Atestado de la Policía Local de Logroño n.º 1187/2025 con reportaje fotográfico y croquis; informe de autopsia A-142/2025; informe del INTCF de 30/06/2025; datos de la unidad de control del airbag (ACM) del vehículo AUDI A4 7342-LMB, descargados con equipo Bosch CDR por orden judicial; registro de la cámara de tráfico municipal n.º 37; listado de tráfico de datos del teléfono del conductor aportado a las Diligencias Previas 512/2025; inspección personal del lugar el 4 de junio de 2025 y de la bicicleta en el depósito municipal.
+
+2. DESCRIPCIÓN DE LA VÍA
+Recta de 260 m seguida de curva a la derecha de radio 180 m. Calzada de 7 m por sentido, en dos carriles. Carril bici unidireccional de 1,60 m de anchura, separado de la calzada por bordillo montable de 8 cm y señalizado con pintura verde. Límite genérico de 50 km/h. Coeficiente de rozamiento medido con deceleróm. (pavimento seco): 0,72.
+
+3. DATOS OBJETIVOS
+3.1. Datos del módulo del airbag (5 s previos al evento de despliegue):
+t −5,0 s: 81 km/h, acelerador 34 %, freno OFF
+t −2,0 s: 79 km/h, acelerador 22 %, freno OFF, ángulo de volante +4º
+t −1,0 s: 78 km/h, acelerador 0 %, freno OFF, volante +11º
+t −0,5 s: 77 km/h, freno ON
+t 0 s (impacto ciclista): 72 km/h
+3.2. Registro de la cámara municipal: el AUDI rebasa la línea de detección a las 07:37:52 con una velocidad estimada de 80 ± 4 km/h. El ciclista es visible con luz trasera intermitente encendida.
+3.3. Tráfico de datos del teléfono del conductor: sesión activa de mensajería con envío de mensaje a las 07:37:49 y recepción a las 07:37:55.
+
+4. RECONSTRUCCIÓN
+El turismo circulaba por el carril derecho a unos 80 km/h, un 60 % por encima del límite. Al iniciar la curva a la derecha, el conductor no corrigió la trayectoria en la entrada (volante prácticamente recto) y, ya en la curva, realizó un giro tardío a la derecha (+11º) que llevó al vehículo a montar el bordillo e invadir el carril bici en unos 0,9 m. El ciclista circulaba correctamente por su carril, a una velocidad estimada de 24-26 km/h, con luz trasera encendida y casco. El primer contacto se produce con el paragolpes delantero derecho sobre la rueda trasera de la bicicleta y la pierna derecha del ciclista. El conductor no frena hasta 0,5 s antes del impacto y no hay indicios de maniobra evasiva previa.
+Velocidad de atropello: 70-73 km/h. Velocidad de proyección del ciclista calculada por el método de Searle: 66 ± 5 km/h, coherente.
+Tras el atropello, el vehículo continúa 46 m y colisiona con el lateral del CITROËN C3 2209-KDT que se incorporaba desde un estacionamiento.
+
+5. EVITABILIDAD
+— A 50 km/h, con un tiempo de percepción-reacción normal de 1,0 s, el conductor habría tenido tiempo y espacio suficientes para trazar la curva por su carril sin invadir el carril bici y, en todo caso, para detenerse 11 m antes del punto de impacto.
+— La intoxicación etílica y por drogas (1,70-1,80 g/l estimados, cocaína y cannabis), según el informe del INTCF, alarga el tiempo de reacción hasta 1,5-2,0 s y explica la falta de corrección de la trayectoria. A ello se suma la distracción por uso del teléfono móvil en los segundos previos.
+— No existe ninguna conducta del ciclista que haya contribuido al accidente: circulaba por la vía reservada, con elementos de visibilidad y protección. El hecho de no llevar chaleco de alta visibilidad no es exigible en vía urbana y de día, y la luz trasera estaba encendida. Tampoco consta el uso de auriculares: no se encontraron en el lugar ni entre sus efectos.
+
+6. CONCLUSIONES
+1.ª La causa eficiente y exclusiva del accidente es la conducción del turismo AUDI A4 7342-LMB a velocidad excesiva, con invasión del carril bici, bajo la influencia de alcohol y drogas y con uso del teléfono móvil.
+2.ª La conducta del ciclista fue correcta y no contribuyó al siniestro.
+3.ª El accidente era evitable para un conductor en condiciones normales que respetase el límite de velocidad.
+
+El perito manifiesta, conforme al art. 335.2 de la Ley de Enjuiciamiento Civil, que ha actuado con la mayor objetividad posible.
+
+Logroño, 22 de septiembre de 2025
+Fdo.: Aitor Zabala Pérez

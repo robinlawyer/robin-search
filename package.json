@@ -46,6 +46,9 @@
     "test:control": "node scripts/test-control.mjs",
     "banco:nombres": "node scripts/banco-nombres/banco.mjs",
     "banco:nombres-reglas": "node scripts/banco-nombres/banco.mjs --solo-reglas",
+    "test:anonimizador": "node scripts/banco-nombres/pruebas.mjs",
+    "medir:reales": "node scripts/banco-nombres/medir-reales.mjs",
+    "medir:expedientes": "node scripts/banco-nombres/medir-expedientes.mjs",
     "test:cambios-expediente": "node scripts/test-cambios-expediente.mjs",
     "test:nada-se-queda-fuera": "node scripts/test-nada-se-queda-fuera.mjs",
     "test:sondeo-colgado": "node scripts/test-sondeo-colgado.mjs"

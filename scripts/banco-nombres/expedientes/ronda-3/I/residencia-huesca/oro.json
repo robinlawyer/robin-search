@@ -1,0 +1,1646 @@
+{
+ "01-informe-incidencia-residencia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "Servicio de Inspección de Centros y Servicios Sociales del Gobierno de Aragón"
+   ],
+   [
+    "ORGANISMO",
+    "IASS"
+   ],
+   [
+    "ORGANISMO",
+    "061 Aragón"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias del Hospital Universitario San Jorge"
+   ],
+   [
+    "PERSONA",
+    "PILAR LASIERRA COSCOLLA"
+   ],
+   [
+    "PERSONA",
+    "Daniel Abad Lasierra"
+   ],
+   [
+    "PERSONA",
+    "Ioana Stoica"
+   ],
+   [
+    "PERSONA",
+    "Daniel Abad"
+   ],
+   [
+    "PERSONA",
+    "Pilar"
+   ],
+   [
+    "PERSONA",
+    "Alberto Grasa Puyuelo"
+   ],
+   [
+    "PERSONA",
+    "Silvia Lafuente Bielsa"
+   ],
+   [
+    "DNI",
+    "18004417-W"
+   ],
+   [
+    "TELEFONO",
+    "676 54 12 08"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "unidad de psicogeriatría «Los Mallos»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado III de dependencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consciente pero desorientada, quejándose de dolor en la cadera izquierda, con una herida inciso-contusa en región frontal y restos de sangre en el suelo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "glucemia capilar: 48 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se administran 15 g de glucosa oral (gel)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia a las 06:35 h: 96 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 98/60, FC 104 lpm, SatO2 93 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "demencia tipo Alzheimer en fase moderada-grave (GDS 6), diabetes mellitus tipo 2 insulinizada, hipertensión arterial, fibrilación auricular anticoagulada, osteoporosis, incontinencia urinaria mixta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Barthel 35/100 (dependencia severa)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tinetti 12/28",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo de caídas J.H. Downton 5 (riesgo alto)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEC de Lobo 9/35",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con andador y supervisión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodios de vagabundeo nocturno y agitación vespertina («síndrome del ocaso»)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cama baja, barandilla parcial, sensor de presencia en suelo, luz piloto, ronda cada dos horas, aseo nocturno programado a las 03:00 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "22/12/2025 (sin lesiones), 9/01/2026 (hematoma en antebrazo) y 31/01/2026 (sin lesiones)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "contención mecánica nocturna (cinturón abdominal)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la deambulación nocturna de la residente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a lo que pudo contribuir una hipoglucemia",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Decreto 111/1992, de 26 de mayo"
+   ],
+   [
+    "NORMA",
+    "Orden de 5 de abril de 2022 sobre requisitos de personal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sus creencias",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el pastor de su iglesia la visitó en el hospital",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la celebración de un culto de despedida en la capilla multiconfesional",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-historia-enfermeria.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "LASIERRA COSCOLLA, PILAR"
+   ],
+   [
+    "PERSONA",
+    "Javier Ena Sanclemente"
+   ],
+   [
+    "PERSONA",
+    "Rebeca"
+   ],
+   [
+    "PERSONA",
+    "Leire"
+   ],
+   [
+    "PERSONA",
+    "J. Ena"
+   ],
+   [
+    "PERSONA",
+    "Mariano"
+   ],
+   [
+    "PERSONA",
+    "Daniel"
+   ],
+   [
+    "PERSONA",
+    "S.L.B."
+   ],
+   [
+    "PERSONA",
+    "I.S."
+   ],
+   [
+    "PERSONA",
+    "N.P.G."
+   ],
+   [
+    "PERSONA",
+    "M.C."
+   ],
+   [
+    "NUSS",
+    "RSO-000873"
+   ],
+   [
+    "NUSS",
+    "ARA 0218 4471 93"
+   ],
+   [
+    "ORGANISMO",
+    "H. San Jorge"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insulina glargina (Lantus® SoloStar) 22 UI s.c. a las 22:00 (modificada 10/02/2026; antes 18 UI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insulina asparta (NovoRapid® FlexPen) según pauta móvil antes de comidas (si glucemia > 200: 2 UI; > 250: 4 UI; > 300: 6 UI y avisar)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Metformina 850 mg 1-0-0 (suspendida 20/01/2026 por FG 38 ml/min)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apixabán (Eliquis®) 2,5 mg cada 12 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Donepezilo (Aricept®) 10 mg 0-0-1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quetiapina 25 mg 0-0-1 y 12,5 mg de rescate si agitación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enalapril 10 mg 1-0-0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alendronato 70 mg semanal (lunes) + calcio/colecalciferol (Ideos®) 1-0-1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam 0,5 mg si insomnio (máx. 1/noche)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pañal de noche (absorbente talla M, supernoche)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pérdida de 2,4 kg en tres meses (peso 51,3 kg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingesta irregular, rechaza la cena con frecuencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HbA1c 6,1 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemias basales 90-140",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«iba a la iglesia, que es domingo»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin lesiones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin dolor a la movilización, sin hematomas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia 112",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 132/74",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su mujer",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Le ponen himnos de su iglesia evangélica en el móvil",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que no se le dé la quetiapina «porque la deja como ida»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hematoma en antebrazo dcho. de 4 x 3 cm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia 71",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Al estar anticoagulada se vigila",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "creatinina 1,42 mg/dL, FG 38",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Suspendo metformina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mantengo apixabán 2,5/12 h por edad > 80 y peso < 60",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ajuste de insulina basal según perfiles",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desorientada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "contención con cinturón abdominal nocturno según protocolo de sujeciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como delegada de personal de CGT",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hiperglucemias vespertinas 250-310",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "después del culto",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Perfil glucémico: basales 180-220 los últimos 5 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aumento Lantus de 18 a 22 UI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Control glucemia capilar a las 03:00 los 3 primeros días tras el cambio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia 03:00 = 102",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia 03:00 = 84",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin registro de glucemia de las 03:00",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Muy agitada por la tarde, no ha cenado (solo medio yogur)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se administra quetiapina 12,5 mg de rescate a las 20:15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insulina de las 22:00 administrada por DUE de tarde según pauta (22 UI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sangre en frente. Dolor en cadera izda. Glucemia 48.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Doy gel de glucosa por orden telefónica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucemia 96",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pierna izda. acortada y en rotación externa. Respira rápido.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fractura pertrocantérea de fémur izquierdo y hematoma subdural agudo frontoparietal izquierdo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INR no procede (apixabán)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No candidata a cirugía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingresa en Medicina Interna",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-registro-caidas.escaneo.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "0RDAS BERGUA, J0SE"
+   ],
+   [
+    "PERSONA",
+    "LAFARGA, MANUELA"
+   ],
+   [
+    "PERSONA",
+    "LASIERRA C0SC0LLA, PILAR"
+   ],
+   [
+    "PERSONA",
+    "GRACIA SAN R0MAN, ELVIRA"
+   ],
+   [
+    "PERSONA",
+    "N.P.G."
+   ],
+   [
+    "PERSONA",
+    "I.S."
+   ],
+   [
+    "PERSONA",
+    "M.C."
+   ],
+   [
+    "PERSONA",
+    "A.G.P."
+   ],
+   [
+    "PERSONA",
+    "NEREA"
+   ],
+   [
+    "PERSONA",
+    "FERNAND0 CASTAN AINSA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MARE0 - HIP0TENSI0N 0RT0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ER0SI0N R0DILLA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DEAMBULACI0N N0CTURNA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DESORIENTADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IBA A LA IGLESIA",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARKINS0N - BL0QUE0 MARCHA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0NTUSI0N CADERA DCHA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIP0GLUCEMIA? GLUC 7l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HEMAT0MA ANTEBRAZ0 DCH0 4X3",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANTIC0AGULADA - AVIS0 DUE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DES0RIENTACI0N - BUSCA AL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SE PR0P0NE SUJECI0N N0CTURNA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EPILEPSIA - CRISIS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HERIDA LABI0 - PUNT0S EN C.S.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HERIDA FR0NTAL, D0L0R CADERA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IZDA, ACORTAMIENT0 MIEMBR0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GLUC 48",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "H. SAN J0RGE"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DELEGADA CGT",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-forense.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "INSTITUTO DE MEDICINA LEGAL DE ARAGÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Subdirección de Huesca — Servicio de Patología Forense"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario San Jorge"
+   ],
+   [
+    "ORGANISMO",
+    "Comisaría Provincial de Huesca"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Nacional"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Nacional de Toxicología y Ciencias Forenses, Departamento de Barcelona"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia e Instrucción n.º 2 de Huesca"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de guardia"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas 214/2026"
+   ],
+   [
+    "AUTOS",
+    "22125 41 2 2026 0000987"
+   ],
+   [
+    "AUTOS",
+    "HU-A-2026/038"
+   ],
+   [
+    "AUTOS",
+    "1.247/2026"
+   ],
+   [
+    "TIP",
+    "118.442"
+   ],
+   [
+    "PERSONA",
+    "Pilar Lasierra Coscolla"
+   ],
+   [
+    "PERSONA",
+    "Samuel Abad Lasierra"
+   ],
+   [
+    "DNI",
+    "18004417-W"
+   ],
+   [
+    "PERITO",
+    "Andrés Lacasta Bielsa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "demencia tipo Alzheimer (GDS 6), diabetes mellitus tipo 2 en tratamiento con insulina glargina y pauta de insulina rápida, fibrilación auricular anticoagulada con apixabán, hipertensión arterial, osteoporosis e insuficiencia renal crónica estadio 3b",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "glucemia capilar de 48 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fractura pertrocantérea de fémur izquierdo (clasificación AO 31-A2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hematoma subdural agudo frontoparietal izquierdo de 11 mm con desviación de la línea media de 4 mm (TC craneal de 14/02/2026, 08:12 h)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se revirtió el efecto anticoagulante con complejo protrombínico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se desestimó la intervención quirúrgica de cadera y neurocirugía por la situación basal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Evolucionó con deterioro progresivo del nivel de conciencia (Glasgow 14 → 8), neumonía broncoaspirativa en base derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cadáver de mujer de constitución delgada (peso 49 kg, talla 152 cm)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Herida contusa suturada de 3,5 cm en región frontal izquierda, con equimosis periorbitaria bilateral («en anteojos») y equimosis extensa en cara lateral del muslo y cadera izquierda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hematoma en fase de resolución (coloración amarillo-verdosa) en antebrazo derecho, de 4 x 3 cm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Úlcera por presión de grado II en sacro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hematoma subdural agudo-subagudo frontoparietal izquierdo de 90 ml, con herniación subfalcina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contusión hemorrágica cortical frontal izquierda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Atrofia cortical difusa severa con dilatación ventricular (compatible con enfermedad de Alzheimer avanzada; se remite muestra a Neuropatología)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "condensación en lóbulo inferior derecho con material alimentario en bronquios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cardiomegalia (corazón de 460 g), dilatación auricular izquierda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riñones de superficie granular (nefroangiosclerosis)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fractura pertrocantérea de fémur izquierdo no intervenida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fractura antigua consolidada de radio distal derecho y aplastamientos vertebrales D11-D12 por osteoporosis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucosa en humor vítreo: 41 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HbA1c en sangre: 6,0 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quetiapina en sangre: 0,03 mg/L (rango terapéutico bajo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam: no detectado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Etanol: negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apixabán: 18 ng/mL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "traumatismo craneoencefálico con hematoma subdural agudo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "paciente anticoagulada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La fractura de cadera, la inmovilización y la neumonía broncoaspirativa actuaron como causas intermedias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insuficiencia respiratoria aguda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipoglucemia nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingesta escasa la tarde anterior",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aumento reciente de la dosis de insulina basal (de 18 a 22 UI el 10/02/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "función renal disminuida que reduce el aclaramiento de la insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El hematoma de antebrazo en fase de resolución",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-correos-hermanos.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rebeca Abad"
+   ],
+   [
+    "PERSONA",
+    "Daniel Abad Lasierra"
+   ],
+   [
+    "PERSONA",
+    "Samuel Abad"
+   ],
+   [
+    "PERSONA",
+    "Daniel"
+   ],
+   [
+    "PERSONA",
+    "Samu"
+   ],
+   [
+    "PERSONA",
+    "Eliseo"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Ioana"
+   ],
+   [
+    "PERSONA",
+    "Carmen Allué"
+   ],
+   [
+    "PERSONA",
+    "Leire"
+   ],
+   [
+    "PERSONA",
+    "Rebeca"
+   ],
+   [
+    "PERSONA",
+    "Samuel"
+   ],
+   [
+    "PERSONA",
+    "Rebe"
+   ],
+   [
+    "PERSONA",
+    "Carmen Allué Sarasa"
+   ],
+   [
+    "PERSONA",
+    "Carmen"
+   ],
+   [
+    "CORREO",
+    "rebeca.abad.lasierra@gmail.com"
+   ],
+   [
+    "CORREO",
+    "dabadlasierra@yahoo.es"
+   ],
+   [
+    "CORREO",
+    "samu.abad77@gmail.com"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "después del culto de esta mañana",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El pastor",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nos ha dedicado la oración a los tres",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "poner esto en manos del Señor antes de decidir nada",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No hace falta meter a Dios en esto",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo dejé la iglesia hace veinte años",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como delegada de CGT",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dice que el sindicato le cubre si la quieren echar",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la glucemia de las tres de la madrugada, la que el médico mandó controlar cuando le subió la insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la sujeción",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dijo que no al cinturón",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi mujer y yo",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tenemos la primera ecografía el jueves",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Si sale bien la transferencia de esta vez (es el tercer intento de FIV, ya lo sabéis)",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "los cuatro años que me comí en Brians por lo del hachís en 2009"
+   ],
+   [
+    "DATO_PENAL",
+    "me visitó todos los domingos en la cárcel"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo tuyo de la depresión y el Trankimazin",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mamá se pasó cuatro horas en el suelo sangrando con el Eliquis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba con una bajada de azúcar de 48",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le habían subido el Lantus tres días antes sin hacer los controles",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy de baja por la ansiedad desde enero y que el psiquiatra me ha subido la dosis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dije que no a las sujeciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esto pasa por los recortes del PP y que tú votas a la CUP",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe del forense",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-reclamacion-extrajudicial.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Carmen Allué Sarasa"
+   ],
+   [
+    "PERSONA",
+    "Alberto Grasa Puyuelo"
+   ],
+   [
+    "PERSONA",
+    "Pilar Lasierra Coscolla"
+   ],
+   [
+    "PERSONA",
+    "DANIEL ABAD LASIERRA"
+   ],
+   [
+    "PERSONA",
+    "REBECA ABAD LASIERRA"
+   ],
+   [
+    "PERSONA",
+    "SAMUEL ABAD LASIERRA"
+   ],
+   [
+    "PERSONA",
+    "PILAR LASIERRA COSCOLLA"
+   ],
+   [
+    "PERSONA",
+    "Fernando Castán Aínsa"
+   ],
+   [
+    "PERSONA",
+    "Pilar"
+   ],
+   [
+    "PERSONA",
+    "Lasierra"
+   ],
+   [
+    "CIF",
+    "B-22381904"
+   ],
+   [
+    "CIF",
+    "A-50071236"
+   ],
+   [
+    "DNI",
+    "18039215-H"
+   ],
+   [
+    "DNI",
+    "18041127-C"
+   ],
+   [
+    "DNI",
+    "18046690-Z"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Aragonés de Servicios Sociales"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario San Jorge"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia e Instrucción n.º 2 de Huesca"
+   ],
+   [
+    "ORGANO",
+    "Juzgados de Primera Instancia de Huesca"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas 214/2026"
+   ],
+   [
+    "NORMA",
+    "Orden de 2 de marzo de 2022 del Gobierno de Aragón sobre uso de sujeciones"
+   ],
+   [
+    "NORMA",
+    "texto refundido de la Ley sobre responsabilidad civil y seguro en la circulación de vehículos a motor"
+   ],
+   [
+    "NORMA",
+    "RDLeg. 8/2004"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015"
+   ],
+   [
+    "NORMA",
+    "art. 20 de la Ley 50/1980, de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "art. 18.4 de la Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del paciente"
+   ],
+   [
+    "NORMA",
+    "arts. 1101, 1104 y 1903 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "art. 76 de la Ley de Contrato de Seguro"
+   ],
+   [
+    "OBJETO",
+    "la caída con resultado de muerte"
+   ],
+   [
+    "OBJETO",
+    "el fallecimiento de su madre"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "demencia tipo Alzheimer en fase avanzada (GDS 6, MEC 9/35), con deambulación nocturna y desorientación, una diabetes tipo 2 insulinodependiente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba anticoagulada con apixabán (Eliquis®) por una fibrilación auricular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo alto de caídas (escala de Downton 5)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una de ellas con hematoma en un brazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sensor de presencia en suelo y rondas cada dos horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sangrando por una herida en la frente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El informe médico-forense de autopsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una fractura pertrocantérea de fémur izquierdo y un hematoma subdural agudo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "traumatismo craneoencefálico con hematoma subdural agudo secundario a la caída, con hipoglucemia nocturna (48 mg/dL) como factor coadyuvante probable",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aumentó la dosis de insulina basal (Lantus®, de 18 a 22 UI)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ordenó control de glucemia a las 03:00 h durante tres noches",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la residente no había cenado y había recibido una dosis de rescate de quetiapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una sujeción abdominal nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la historia clínica de la residente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "registros de fichaje biométrico (huella dactilar) del personal del turno de noche",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es practicante de la Iglesia Evangélica Bautista de Huesca",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sus convicciones religiosas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«las visitas del pastor que la alteraban»",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-informe-pericial-geriatria.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Marta Sesé Olivan"
+   ],
+   [
+    "PERITO",
+    "Andrés Lacasta Bielsa"
+   ],
+   [
+    "PERSONA",
+    "Carmen Allué Sarasa"
+   ],
+   [
+    "PERSONA",
+    "Daniel"
+   ],
+   [
+    "PERSONA",
+    "Rebeca"
+   ],
+   [
+    "PERSONA",
+    "Samuel Abad Lasierra"
+   ],
+   [
+    "PERSONA",
+    "Pilar Lasierra Coscolla"
+   ],
+   [
+    "PERSONA",
+    "Nerea Pueyo Gracia"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de Médicos de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario San Jorge"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital San Jorge"
+   ],
+   [
+    "ORGANISMO",
+    "INTCF"
+   ],
+   [
+    "NORMA",
+    "art. 335.2 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Evolutivo de enfermería y hoja de tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incluido el TC craneal y el informe de éxitus",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe médico-forense de autopsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad de Alzheimer de inicio tardío diagnosticada en 2019",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RM cerebral con atrofia hipocampal bilateral, Scheltens 3",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estadio GDS 6 en la última valoración",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEC 9/35",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastornos de conducta: vagabundeo nocturno, agitación vespertina, ideas delirantes de que su marido seguía vivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 de 22 años de evolución, insulinizada desde 2021, con buen control (HbA1c 6,0-6,1 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FA permanente con CHA2DS2-VASc 6 y HAS-BLED 3, anticoagulada con apixabán a dosis reducida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ERC estadio 3b (FG 38 ml/min en enero de 2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA, osteoporosis con fractura previa de radio y aplastamientos vertebrales, sarcopenia, incontinencia mixta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Polifarmacia: 10 principios activos, entre ellos quetiapina y lorazepam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Con un Downton de 5, un Tinetti de 12/28, tres caídas recientes, deambulación nocturna errática y anticoagulación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El aumento de la insulina glargina de 18 a 22 UI (22 %) en una paciente con FG 38, peso de 51 kg, ingesta errática y HbA1c de 6,1 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paciente no cenó y recibió quetiapina de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paciente sufrió una hipoglucemia nocturna (48 mg/dL dos o más horas después de la caída, ya con contrarregulación)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La insulina se administró a las 22:00 sin reducir la dosis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la residente no había cenado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una paciente anticoagulada con hematoma subdural en expansión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la situación basal (GDS 6, 88 años)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las visitas del pastor evangélico ni los cultos a los que la familia la llevaba los domingos",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los himnos «la calman»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esas visitas «la alteraban»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la hipoglucemia nocturna favoreció la caída",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las consecuencias del hematoma subdural en una paciente anticoagulada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la situación basal de la paciente (demencia avanzada y pluripatología)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "control glucémico nocturno pautado por su médico",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-acta-manifestaciones-cuidadora.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "FERNANDO CASTÁN AÍNSA"
+   ],
+   [
+    "PERSONA",
+    "Fernando Castán Aínsa"
+   ],
+   [
+    "PERSONA",
+    "NEREA PUEYO GRACIA"
+   ],
+   [
+    "PERSONA",
+    "Pilar Lasierra Coscolla"
+   ],
+   [
+    "PERSONA",
+    "Lasierra"
+   ],
+   [
+    "PERSONA",
+    "Rebeca"
+   ],
+   [
+    "PERSONA",
+    "Alberto Grasa Puyuelo"
+   ],
+   [
+    "PERSONA",
+    "Pilar"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Cajal"
+   ],
+   [
+    "PERSONA",
+    "Ioana Stoica"
+   ],
+   [
+    "PERSONA",
+    "Ioana"
+   ],
+   [
+    "DIRECCION",
+    "calle Ramiro el Monje, número 9, 4.º C, 22003 Huesca"
+   ],
+   [
+    "DNI",
+    "18052286-B"
+   ],
+   [
+    "TELEFONO",
+    "619 77 30 25"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio Notarial de Aragón"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está afiliada a la Confederación General del Trabajo (CGT) desde 2020 y que fue elegida delegada de personal en las elecciones sindicales de noviembre de 2024",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en su condición de delegada de personal por CGT",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tenía alzhéimer «muy avanzado»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no reconocía ya a sus hijos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por las noches se levantaba buscando a su marido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diciendo que se iba a la iglesia, porque era evangélica y había ido al culto toda la vida",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Que se calmaba cuando le cantaban himnos",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estuvo «muy nerviosa, gritando», no cenó salvo medio yogur",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enfermera de tarde le dio la pastilla de rescate (quetiapina) a las 20:15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de que no había cenado, «por lo de la insulina»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le administró la insulina lenta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un residente de la planta 2.ª con una crisis epiléptica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la glucemia de las 3",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por la baja de la otra compañera",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de etnia gitana",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«porque a las gitanas no nos cree nadie»",
+    "etnia"
+   ],
+   [
+    "DATO_PENAL",
+    "el director fue condenado en 2017, cuando dirigía otra residencia en Barbastro, por un delito contra los derechos de los trabajadores"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lector de huella dactilar",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra de baja médica por un trastorno de ansiedad, en tratamiento con escitalopram 10 mg y lorazepam, y en seguimiento por la psicóloga de la mutua",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

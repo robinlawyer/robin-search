@@ -1,0 +1,72 @@
+Servicio Murciano de Salud
+HOSPITAL CLÍNICO UNIVERSITARIO VIRGEN DE LA ARRIXACA
+Ctra. Madrid-Cartagena, s/n — 30120 El Palmar (Murcia)
+SERVICIO DE NEUROCIRUGÍA
+
+INFORME DE ALTA HOSPITALARIA
+
+Paciente: ALBALADEJO SÁNCHEZ, GINÉS          Sexo: V      Edad: 51 años
+NHC: 1187342      CIP (tarjeta sanitaria): MRSA730711004       N.º episodio: 25-0074213
+Fecha de ingreso: 14/03/2025 (vía Urgencias, traslado por 061)
+Fecha de alta: 22/04/2025
+Servicios: UCI (14/03 – 26/03) → Neurocirugía (26/03 – 22/04), con interconsultas a Traumatología y Cirugía Ortopédica, Cirugía Torácica, Endocrinología y Psiquiatría de enlace.
+Médico responsable: Dr. Fulgencio Marín Cascales (FEA Neurocirugía)
+
+MOTIVO DE INGRESO
+Varón de 51 años, politraumatizado tras precipitación de unos 6 metros de altura desde un andamio en su lugar de trabajo. A la llegada del equipo del 061, GCS 7 (O1 V2 M4), anisocoria con midriasis izquierda, otorragia izquierda. Intubación orotraqueal in situ.
+
+ANTECEDENTES PERSONALES
+— Alergia a penicilina (exantema).
+— HTA de 8 años de evolución en tto. con enalapril 20 mg/24 h.
+— DM2 diagnosticada en 2019, en tto. con metformina 850 mg/12 h (Dianben). Mal control: HbA1c 7,8 %.
+— Dislipemia en tratamiento con atorvastatina 20 mg.
+— Hepatitis C crónica genotipo 1b, tratada con sofosbuvir/velpatasvir (Epclusa) en 2018, con respuesta viral sostenida.
+— Exfumador de 20 paq./año desde 2016. Exenolismo: consumo perjudicial de alcohol hasta 2017, en abstinencia desde entonces (seguimiento en el Centro de Atención a Drogodependencias de Murcia hasta 2019).
+— Apendicectomía en la infancia.
+— Situación basal: independiente para ABVD, trabaja como albañil. Vive con su esposa. Testigo de Jehová: NO (se confirma con la familia que acepta hemoderivados; se registró inicialmente por error en el triaje). Familia refiere que acude a la Iglesia Evangélica de Filadelfia.
+
+EXPLORACIÓN AL INGRESO
+TA 92/54 mmHg, FC 118 lpm, SatO2 89 % con FiO2 0,5. GCS 7. Pupila izquierda midriática arreactiva. Hipoventilación en hemitórax izquierdo. Deformidad y crepitación en pierna derecha y muñeca izquierda. Abdomen sin defensa. eFAST negativo para líquido libre.
+
+PRUEBAS COMPLEMENTARIAS
+— TC craneal (14/03): hematoma subdural agudo frontoparietal izquierdo de 14 mm de grosor con desviación de línea media de 9 mm; contusiones hemorrágicas frontobasales bilaterales; hemorragia subaracnoidea traumática en surcos de convexidad; fractura lineal temporal izquierda que se extiende a peñasco.
+— TC body: fracturas costales 5.ª a 8.ª izquierdas con hemoneumotórax izquierdo; fractura-acuñamiento de L1 (AO A3) con pérdida de altura del 35 % sin compromiso del canal; fractura conminuta de meseta tibial derecha (Schatzker V); fractura de extremidad distal de radio izquierdo (AO 23-C2).
+— Analítica al ingreso: Hb 8,9 g/dl; leucocitos 18.300; plaquetas 142.000; glucemia 212 mg/dl; lactato 4,1 mmol/l; CK 3.240 U/l; etanol en sangre < 10 mg/dl (negativo); tóxicos en orina negativos.
+— RM cerebral (08/04): lesión axonal difusa grado II (focos de microsangrado en cuerpo calloso y sustancia blanca frontal), encefalomalacia frontal izquierda.
+— EEG (10/04): actividad epileptiforme frontotemporal izquierda.
+
+EVOLUCIÓN Y TRATAMIENTO
+Se realiza craneotomía urgente frontoparietal izquierda con evacuación del hematoma subdural y colocación de sensor de PIC (14/03). Drenaje torácico izquierdo (14/03). Transfusión de 4 concentrados de hematíes. Estancia en UCI con sedación profunda, ventilación mecánica 9 días y traqueostomía percutánea (19/03), decanulado el 02/04.
+Osteosíntesis de meseta tibial derecha con doble placa (Traumatología, 28/03). Reducción y osteosíntesis de radio distal izquierdo con placa volar (28/03). Fractura de L1: tratamiento conservador con corsé tipo Jewett.
+Durante su estancia presenta dos crisis comiciales focales con generalización secundaria (05/04 y 09/04), por lo que se inicia levetiracetam. Cuadro de agitación psicomotriz y desorientación (síndrome confusional postraumático), valorado por Psiquiatría de enlace, que pauta quetiapina a dosis bajas. Hiperglucemias de difícil control que requieren insulina en pauta basal-bolo, posteriormente reconvertida a antidiabéticos orales.
+Al alta: consciente, orientado en persona, parcialmente en tiempo; amnesia postraumática que se prolonga 21 días; bradipsiquia, fallos de memoria reciente, desinhibición verbal. Anosmia. Moviliza 4 extremidades; deambula con andador sin carga en MID.
+
+JUICIO CLÍNICO
+1. Traumatismo craneoencefálico grave (GCS 7) con hematoma subdural agudo frontoparietal izquierdo intervenido; contusiones frontales bilaterales; HSA traumática; lesión axonal difusa grado II.
+2. Epilepsia postraumática sintomática.
+3. Síndrome confusional postraumático resuelto parcialmente.
+4. Fractura de meseta tibial derecha Schatzker V intervenida.
+5. Fractura-acuñamiento de L1 (A3), tratamiento ortopédico.
+6. Fractura de radio distal izquierdo intervenida.
+7. Fracturas costales 5.ª-8.ª izquierdas con hemoneumotórax, drenado.
+8. Anemia posthemorrágica.
+9. DM2 descompensada. HTA.
+
+TRATAMIENTO AL ALTA
+— Keppra (levetiracetam) 500 mg: 1 comp. cada 12 h. No suspender.
+— Quetiapina 25 mg: 1 comp. por la noche.
+— Clexane (enoxaparina) 40 mg sc cada 24 h durante 30 días.
+— Zaldiar (tramadol 37,5 mg / paracetamol 325 mg): 1 comp. cada 8 h si dolor.
+— Omeprazol 20 mg en ayunas.
+— Metformina 850 mg cada 12 h y sitagliptina 100 mg/24 h.
+— Enalapril 20 mg/24 h. Atorvastatina 20 mg.
+— Corsé de Jewett en bipedestación durante 3 meses. Férula antebraquial 4 semanas.
+— No conducir. No consumir alcohol.
+
+RECOMENDACIONES Y SEGUIMIENTO
+Revisión en consultas externas de Neurocirugía en 6 semanas con TC de control. Traumatología en 4 semanas con radiografías. Se remite a Rehabilitación (mutua) y a Unidad de Daño Cerebral para valoración neuropsicológica. Seguimiento por su médico de Atención Primaria del Centro de Salud El Palmar.
+
+Contingencia: ACCIDENTE DE TRABAJO. Se comunica a Ibermutua.
+
+Fdo.: Dr. Fulgencio Marín Cascales — Col. n.º 30/08712
+Fdo.: Dra. Lucía Pagán Martínez — MIR Neurocirugía

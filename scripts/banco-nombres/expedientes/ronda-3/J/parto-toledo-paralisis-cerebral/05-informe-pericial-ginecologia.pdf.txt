@@ -1,0 +1,43 @@
+INFORME PERICIAL MÉDICO
+Especialidad: Obstetricia y Ginecología
+
+Perito: Dr. Joaquín Albarrán Seco
+Licenciado en Medicina y Cirugía, especialista en Obstetricia y Ginecología. Colegiado n.º 28/41027 del ICOMEM. Ex jefe de sección de Medicina Materno-Fetal. Máster en Valoración del Daño Corporal.
+Solicitado por: Dña. Leticia Sanromán Prieto, letrada de la familia Escalona Villalobos.
+Fecha: 17 de noviembre de 2025
+
+1. OBJETO
+Determinar si la asistencia al parto de Dña. Nerea Villalobos Cañete en el Hospital Universitario de Toledo (13-14/03/2024) se ajustó a la lex artis y, en su caso, si existe relación de causalidad entre las desviaciones detectadas y las lesiones neurológicas de su hijo Hugo.
+
+2. DOCUMENTACIÓN EXAMINADA
+a) Historia clínica obstétrica completa (partograma, hojas de enfermería, registro de perfusión de oxitocina).
+b) Registro cardiotocográfico en papel (copia, 23 tiras) y exportación digital del sistema OBSTETRIX con marcas horarias.
+c) Informe de alta de Neonatología (Dr. Ochaíta Brea, 19/04/2024) y RM cerebral del día 6.
+d) Informe de Rehabilitación Infantil (Dra. Garcés Moya, 26/08/2025).
+e) Entrevista con los padres el 28/10/2025 en mi consulta.
+No se me ha facilitado el registro de llamadas del busca de guardia, cuya aportación se ha pedido.
+
+3. ANTECEDENTES DE INTERÉS
+Primigesta (un aborto espontáneo previo de primer trimestre). Diabetes gestacional con buen control dietético; no macrosomía clínicamente relevante (PFE 3.850 g, p86). Hipotiroidismo subclínico bien controlado con levotiroxina. Portadora de estreptococo del grupo B con profilaxis adecuada. Antecedente de trastorno de ansiedad tratado con sertralina, sin relevancia obstétrica. Ninguno de estos factores explica, por sí solo, una asfixia de esta intensidad.
+
+4. ANÁLISIS DE LA ASISTENCIA
+4.1. Indicación de la inducción: correcta (40+5 semanas con DG).
+4.2. Manejo de la oxitocina: INCORRECTO. Desde las 12:40 hay taquisistolia (6 contracciones/10 min). La guía de la SEGO sobre monitorización fetal intraparto y el protocolo del propio hospital obligan a reducir o suspender la perfusión ante taquisistolia con registro anómalo. Se mantuvo a 12 mU/min y se elevó a 14 mU/min a las 14:30, cuando ya había taquicardia fetal (165 lpm) y variabilidad ausente.
+4.3. Interpretación del RCTG: a las 12:40 el registro reúne criterios de patológico según la clasificación FIGO 2015 (desaceleraciones tardías repetitivas durante más de 30 minutos con variabilidad reducida). La anotación de las 13:50 («categoría II, se mantiene actitud») no se corresponde con el trazado. Ante un registro patológico con líquido meconial, procedía al menos un pH de calota y, si no era posible, extraer al feto en un tiempo razonable. Nada de esto se hizo.
+4.4. Pérdida del registro (13:58-14:26): durante 28 minutos el feto no estuvo monitorizado. No consta que nadie lo advirtiera.
+4.5. Fiebre materna (37,9 ºC): sugestiva de corioamnionitis, factor que agrava la vulnerabilidad del feto a la hipoxia y que debió adelantar la decisión.
+4.6. Intervalo decisión-extracción: 44 minutos. El estándar para una cesárea de categoría 1 es de 30 minutos (NICE NG235; Protocolo SEGO de cesárea). El retraso se explica por la única ginecóloga adjunta de guardia ocupada en otra cesárea y la necesidad de convertir a anestesia general.
+4.7. Comunicación matrona-ginecóloga: la matrona Sra. Huertas anota que «se comenta» a las 12:40, pero la valoración médica no llega hasta las 13:50. La Sra. Huertas manifestó a los padres por mensajería que «llevaba tres paritorios a la vez» y que «avisó varias veces». Esta afirmación debe contrastarse con el cuadrante.
+
+5. NEXO CAUSAL
+Los criterios de consenso (ACOG/AAP 2014) para atribuir una encefalopatía neonatal a un evento hipóxico intraparto agudo se cumplen todos: pH arterial < 7,00 (6,84) y EB ≥ 12 (−19,2); Apgar < 5 a los 5 y 10 minutos; fallo multiorgánico precoz (miocárdico, renal y hepático); patrón de RM de ganglios basales-tálamo, típico de un insulto agudo y profundo; evento centinela (bradicardia mantenida) precedido de un registro patológico de más de dos horas; ausencia de otras causas (array-CGH normal, hemocultivo negativo, sin infección congénita).
+La tetraparesia espástico-distónica GMFCS V, la epilepsia con síndrome de West, la hipoacusia neurosensorial, la ceguera cortical y la disfagia con gastrostomía son consecuencia directa de la asfixia.
+
+6. CONCLUSIONES
+PRIMERA.- La asistencia vulneró la lex artis en tres momentos: (i) mantenimiento y aumento de la oxitocina ante taquisistolia y RCTG patológico; (ii) falta de valoración fetal (pH de calota) y de decisión de extracción entre las 12:40 y las 14:30; (iii) intervalo decisión-extracción de 44 minutos.
+SEGUNDA.- De haberse actuado conforme a protocolo, con alta probabilidad (estimo superior al 80 %) el niño habría nacido antes de la fase de bradicardia terminal y sin lesión neurológica grave o con una lesión sensiblemente menor.
+TERCERA.- Existe relación de causalidad directa entre la asistencia y la parálisis cerebral de Hugo Escalona Villalobos.
+
+Madrid, 17 de noviembre de 2025
+Fdo.: Dr. Joaquín Albarrán Seco
+Declaro bajo juramento haber actuado con objetividad (art. 335.2 LEC).

@@ -1,0 +1,1399 @@
+{
+ "01-acta-detencion-ertzaintza.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "ERTZAINTZA"
+   ],
+   [
+    "ORGANISMO",
+    "SEGURTASUN SAILA - DEPARTAMENT0 DE SEGURIDAD"
+   ],
+   [
+    "ORGANISMO",
+    "BILB0K0 ERTZAIN-ETXEA / C0MISARIA DE BILBA0"
+   ],
+   [
+    "ORGANISMO",
+    "FISCALIA DE MEN0RES DE BIZKAIA"
+   ],
+   [
+    "ORGANISMO",
+    "HUSPITALE / HOSPITAL UNIVERSITARI0 BASURT0"
+   ],
+   [
+    "AUTOS",
+    "BI-2026-0l4387"
+   ],
+   [
+    "AUTOS",
+    "BI-2026-0l4388"
+   ],
+   [
+    "AUTOS",
+    "203/2024"
+   ],
+   [
+    "PERSONA",
+    "J0SUE M0NT0YA AMAYA"
+   ],
+   [
+    "PERSONA",
+    "RAFAEL"
+   ],
+   [
+    "PERSONA",
+    "REMEDI0S"
+   ],
+   [
+    "PERSONA",
+    "UNAI ETXEBERRIA"
+   ],
+   [
+    "PERSONA",
+    "G0IK0ETXEA"
+   ],
+   [
+    "PERSONA",
+    "KEVIN D0S SANT0S FERREIRA"
+   ],
+   [
+    "PERSONA",
+    "SONIA AMAYA FERNANDEZ"
+   ],
+   [
+    "DNI",
+    "79l84653T"
+   ],
+   [
+    "DIRECCION",
+    "CALLE TXOTENA, l4, 2. A, 48004 BILBA0"
+   ],
+   [
+    "TELEFONO",
+    "688 4l7 290"
+   ],
+   [
+    "TIP",
+    "l2487"
+   ],
+   [
+    "TIP",
+    "2093l"
+   ],
+   [
+    "NORMA",
+    "ART. 237 Y 242 CP"
+   ],
+   [
+    "NORMA",
+    "ART. 520 LECRIM"
+   ],
+   [
+    "NORMA",
+    "ART. l7 L0 5/2000"
+   ],
+   [
+    "OBJETO",
+    "PRESUNT0 DELIT0 DE R0B0 C0N VI0LENCIA E INTIMIDACI0N"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA VICTIMA PRESENTA SANGRAD0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NASAL ABUNDANTE Y DEF0RMIDAD EN EL TABIQUE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PRESENTA 0J0S ENR0JECID0S, PUPILAS DILATADAS, HABLA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ACELERADA Y FUERTE 0L0R A CANNABIS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EL DIA FUMAND0 Y ME HE METID0 UNA RAYA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "2,3 G DE SUSTANCIA VERDE (P0SIBLE HACHIS/MARIHUANA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PAPELINA C0N 0,4 G DE P0LV0 BLANC0 (P0SIBLE C0CAINA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "UNAS PASTILLAS DEL PSIQUIATRA QUE N0 ME T0M0",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "EL PADRE ESTA EN BASAURI, EN LA CARCEL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MADRE ESTA MALA DE LA CABEZA, N0 SE ENTERA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REC0N0CIMIENT0 MEDIC0 PREVI0 AL INGRES0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INT0XICACI0N LEVE P0R CANNABIS. N0 PRECISA TRATAMIENT0. APT0 PARA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REFIERE ANTECEDENTE DE EPIS0DI0 PSIC0TIC0 BREVE EN 2025",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "P0R DELIT0 DE HURT0 (MEDIDA DE PRESTACI0NES EN"
+   ],
+   [
+    "DATO_PENAL",
+    "BENEFICI0 DE LA C0MUNIDAD, CUMPLIDA)"
+   ],
+   [
+    "DATO_PENAL",
+    "ES DETENID0 P0R SEPARAD0"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-equipo-tecnico.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "EUSKO JAURLARITZA · GOBIERNO VASCO"
+   ],
+   [
+    "ORGANISMO",
+    "Justizia Saila · Departamento de Justicia"
+   ],
+   [
+    "ORGANISMO",
+    "Adingabeen Epaitegiko Talde Teknikoa · Equipo Técnico del Juzgado de Menores de Bilbao"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Educativo Txorierri"
+   ],
+   [
+    "ORGANISMO",
+    "Servicios Sociales Municipales del Ayuntamiento de Bilbao"
+   ],
+   [
+    "ORGANISMO",
+    "IES Txurdinaga"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría Infanto-Juvenil del Hospital Universitario Basurto"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Mental de Adultos de Uribarri"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Mental de Uribarri"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría Infanto-Juvenil de Basurto"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría Infanto-Juvenil"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Terapéutico Lurgorri"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Menores n.º 1 de Bilbao"
+   ],
+   [
+    "AUTOS",
+    "Expediente de reforma n.º 87/2026"
+   ],
+   [
+    "AUTOS",
+    "Diligencias preliminares de Fiscalía n.º 214/2026"
+   ],
+   [
+    "AUTOS",
+    "expediente de reforma 203/2024"
+   ],
+   [
+    "NORMA",
+    "art. 27 de la Ley Orgánica 5/2000, de 12 de enero, reguladora de la responsabilidad penal de los menores"
+   ],
+   [
+    "NORMA",
+    "art. 7.1.d de la LORPM"
+   ],
+   [
+    "PERSONA",
+    "Josué Montoya Amaya"
+   ],
+   [
+    "PERSONA",
+    "Sonia Amaya Fernández"
+   ],
+   [
+    "PERSONA",
+    "Josué"
+   ],
+   [
+    "PERSONA",
+    "Josu"
+   ],
+   [
+    "PERSONA",
+    "Aarón"
+   ],
+   [
+    "PERSONA",
+    "Yaiza"
+   ],
+   [
+    "PERSONA",
+    "Rafael Montoya Salazar"
+   ],
+   [
+    "PERSONA",
+    "Remedios Amaya Fernández"
+   ],
+   [
+    "PERSONA",
+    "Reme"
+   ],
+   [
+    "PERSONA",
+    "Dolores Fernández Jiménez"
+   ],
+   [
+    "PERSONA",
+    "Lola"
+   ],
+   [
+    "PERSONA",
+    "Sonia"
+   ],
+   [
+    "PERITO",
+    "Garbiñe Arrieta Zubizarreta"
+   ],
+   [
+    "PERITO",
+    "Iñaki Olabarria Uriarte"
+   ],
+   [
+    "PERITO",
+    "Amaia Larrañaga Etxebarria"
+   ],
+   [
+    "DIRECCION",
+    "calle Txotena, 14, 2.º A"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una familia gitana",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con fuerte vinculación a la Iglesia Evangélica de Filadelfia, a cuyo culto acuden la abuela y la tía varias veces por semana",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el menor dejó de acudir hace dos años",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«por lo de la iglesia»",
+    "religion"
+   ],
+   [
+    "DATO_PENAL",
+    "cumple condena en el Centro Penitenciario de Basauri desde 2023 por un delito contra la salud pública (tráfico de cocaína), con fecha prevista de libertad condicional en 2027"
+   ],
+   [
+    "DATO_PENAL",
+    "Lo paga con «trapicheos» y pequeños hurtos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«ha sido siempre de mucho beber y de meterse»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el menor ha visto consumir en casa desde pequeño",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece una esquizofrenia paranoide diagnosticada a los 22 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con varios ingresos en la Unidad de Agudos de Basurto (el último en octubre de 2025, tras abandonar la medicación)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Está en tratamiento con un antipsicótico inyectable mensual (Xeplion®)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiene reconocida una discapacidad del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pensamiento desorganizado y aplanamiento afectivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ese tiene la cabeza peor que la mía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene una diabetes tipo 2 mal controlada y está en diálisis tres días por semana por una insuficiencia renal crónica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fue diagnosticado de TDAH en 2019, pero la familia retiró la medicación (Medikinet) al cabo de unos meses porque «le quitaba el hambre»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo diario de cannabis desde los 13 años (entre 6 y 8 porros al día en los últimos meses)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo de cocaína esnifada los fines de semana desde hace aproximadamente un año, que en las semanas anteriores a los hechos se había hecho casi diario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síntomas de abstinencia (irritabilidad, insomnio, sudoración)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sufrió un episodio psicótico breve inducido por cannabis, con ingreso de nueve días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras el cual se pautó tratamiento que no ha seguido de forma regular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Los controles de orina en el centro educativo, tras su ingreso cautelar, fueron positivos a THC y benzoilecgonina la primera semana y negativos a partir de la tercera",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "toxicomanía"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«necesitaba pasta para la coca»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«iba muy puesto»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nivel intelectual en rango medio-bajo (WISC-V: CIT 86). Impulsividad elevada, baja tolerancia a la frustración, déficit en empatía hacia la víctima",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo bajo y ansiedad cuando habla de su madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "teme «volverse loco como ella» por los porros",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "refiere haber tenido «líos» también con un chico del centro",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras una primera semana de gran irritabilidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Retomó la medicación pautada por la psiquiatra del centro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "participa en el programa de prevención de recaídas",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "INTERNAMIENTO TERAPÉUTICO EN RÉGIMEN SEMIABIERTO"
+   ],
+   [
+    "OBJETO",
+    "programa específico de deshabituación de drogodependencias y atención a la salud mental"
+   ],
+   [
+    "OBJETO",
+    "obligación de someterse a tratamiento ambulatorio"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-salud-mental-infantojuvenil.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "OSAKIDETZA"
+   ],
+   [
+    "ORGANISMO",
+    "Bizkaiko Osasun Mentaleko Sarea · Red de Salud Mental de Bizkaia"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Basurto – Unidad de Psiquiatría Infanto-Juvenil"
+   ],
+   [
+    "ORGANISMO",
+    "CSM Uribarri"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Educativo Txorierri"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría Infanto-Juvenil"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Menores n.º 1 de Bilbao"
+   ],
+   [
+    "AUTOS",
+    "expediente de reforma 87/2026"
+   ],
+   [
+    "PERSONA",
+    "JOSUÉ MONTOYA AMAYA"
+   ],
+   [
+    "PERSONA",
+    "Jon Ander Uribe Elorza"
+   ],
+   [
+    "NUSS",
+    "MOAMJ100214-48"
+   ],
+   [
+    "NUSS",
+    "3381904"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Madre con esquizofrenia paranoide en seguimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre con trastorno por consumo de alcohol y cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abuela materna DM2 con nefropatía diabética en hemodiálisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Embarazo con consumo materno de tabaco. Parto a término.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TDAH presentación combinada diagnosticado en 2019 por su pediatra (Medikinet 20 mg), abandonado a los 4 meses por hiporexia y pérdida de peso.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inicio de consumo de cannabis a los 13 años; consumo de cocaína intranasal desde 2025.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso en nuestra Unidad del 6 al 15 de agosto de 2025 por episodio psicótico agudo inducido por cannabis (ideación delirante de perjuicio, alucinaciones auditivas, agitación). Alta con aripiprazol 10 mg/día. Seguimiento ambulatorio irregular: acudió a 2 de 6 citas.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alergias conocidas. Fractura de metacarpiano (5.º dedo, mano derecha) en 2024 tras golpear una pared.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lleva 16 días de abstinencia en contexto de internamiento.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere craving intenso la primera semana («me subía por las paredes»), con insomnio, irritabilidad y sudoración nocturna, ahora en mejoría.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Duerme 6 horas con quetiapina 25 mg nocturna (Seroquel®), pautada por la psiquiatra del centro. Mantiene aripiprazol 10 mg. No presenta sintomatología psicótica en la actualidad: niega alucinaciones, no se objetiva ideación delirante. Ánimo subdepresivo, preocupación por la salud de su madre y temor a «acabar como ella». Niega ideación autolítica actual; refiere ideas de muerte pasivas «cuando bajaba de la coca».",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exploración: consciente, orientado. Contacto adecuado, algo suspicaz al inicio. Lenguaje fluido. Inquietud motora. Juicio de realidad conservado. Insight parcial respecto al consumo: reconoce la cocaína como problema, minimiza el cannabis («los porros no son droga»).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Controles de tóxicos en orina: 19/02/2026 positivo THC y benzoilecgonina; 26/02/2026 positivo THC; 04/03/2026 negativo.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escalas: CRAFFT 6/6. SDQ: puntuación total en rango anormal. Conners-3 autoinforme: rango clínico en inatención e hiperactividad.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cannabis, grave (F12.20).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cocaína, moderado (F14.20).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Antecedente de trastorno psicótico inducido por cannabis (F12.959), en remisión.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TDAH, presentación combinada (F90.2), sin tratamiento.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Problemas relacionados con el grupo primario de apoyo (Z63).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mantener aripiprazol 10 mg/día y quetiapina 25 mg nocturna; reevaluar la quetiapina en 4 semanas.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reintroducción de tratamiento para el TDAH (lisdexanfetamina, Elvanse®) una vez estabilizado y con abstinencia mantenida.",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "drogodependencia"
+   ],
+   [
+    "OBJETO",
+    "tratamiento específico de la adicción"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervención psicoterapéutica específica (prevención de recaídas, entrevista motivacional) y control psiquiátrico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El riesgo de nuevo episodio psicótico en caso de recaída en el consumo de cannabis es elevado, dado el antecedente personal y la carga familiar.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo alto de recaída al salir",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-auto-medida-cautelar.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "BILBOKO 1 ZK.KO ADINGABEEN EPAITEGIA"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE MENORES N.º 1 DE BILBAO"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Menores n.º 1 de Bilbao"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Bizkaia"
+   ],
+   [
+    "ORGANO",
+    "Bizkaiko Probintzia Auzitegian"
+   ],
+   [
+    "AUTOS",
+    "Expediente de reforma: 87/2026"
+   ],
+   [
+    "AUTOS",
+    "Diligencias preliminares de Fiscalía: 214/2026"
+   ],
+   [
+    "AUTOS",
+    "48.04.2-26/004912"
+   ],
+   [
+    "AUTOS",
+    "AUTOA / AUTO N.º 31/2026"
+   ],
+   [
+    "AUTOS",
+    "203/2024"
+   ],
+   [
+    "PONENTE",
+    "Ignacio Ruiz de Azúa Pardo"
+   ],
+   [
+    "LAJ",
+    "Begoña Isasi Ugalde"
+   ],
+   [
+    "PERSONA",
+    "Josué Montoya Amaya"
+   ],
+   [
+    "PERSONA",
+    "Leire Salaberria Ortiz"
+   ],
+   [
+    "PERSONA",
+    "Mikel Agirre Bengoetxea"
+   ],
+   [
+    "PERSONA",
+    "Sonia Amaya Fernández"
+   ],
+   [
+    "PERSONA",
+    "Unai Etxeberria Goikoetxea"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo Técnico"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Basurto"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Educativo Txorierri"
+   ],
+   [
+    "NORMA",
+    "artículos 237 y 242.1 y 3 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 28.2 de la Ley Orgánica 5/2000"
+   ],
+   [
+    "NORMA",
+    "artículo 28 de la Ley Orgánica 5/2000"
+   ],
+   [
+    "NORMA",
+    "artículo 27 de la Ley Orgánica 5/2000"
+   ],
+   [
+    "NORMA",
+    "LO 5/2000, 35.2 art."
+   ],
+   [
+    "OBJETO",
+    "delito de robo con violencia e intimidación con uso de instrumento peligroso"
+   ],
+   [
+    "OBJETO",
+    "delito leve de lesiones"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una fractura de los huesos propios de la nariz que ha requerido reducción bajo anestesia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el grave consumo de drogas del menor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la madre padece una enfermedad mental grave que le impide ejercer el control parental",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta a su vez un estado de salud delicado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haber consumido cannabis y cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un antecedente de ingreso psiquiátrico en 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la atención sanitaria que precise, incluida la atención psiquiátrica",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "el padre se encuentra en prisión"
+   ],
+   [
+    "DATO_PENAL",
+    "por un delito de hurto, con medida ya cumplida"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-correo-tia-abogado.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Sonia Amaya"
+   ],
+   [
+    "PERSONA",
+    "Mikel Agirre"
+   ],
+   [
+    "PERSONA",
+    "Mikel"
+   ],
+   [
+    "PERSONA",
+    "Josu"
+   ],
+   [
+    "PERSONA",
+    "Reme"
+   ],
+   [
+    "PERSONA",
+    "Rafa"
+   ],
+   [
+    "PERSONA",
+    "Isaac"
+   ],
+   [
+    "PERSONA",
+    "Ander"
+   ],
+   [
+    "PERSONA",
+    "Sonia Amaya Fernandez"
+   ],
+   [
+    "CORREO",
+    "soniamaya86@hotmail.com"
+   ],
+   [
+    "CORREO",
+    "magirre@agirreabokatuak.eus"
+   ],
+   [
+    "TELEFONO",
+    "688 417 290"
+   ],
+   [
+    "DNI",
+    "45672981R"
+   ],
+   [
+    "ORGANISMO",
+    "hospital de Cruces"
+   ],
+   [
+    "ORGANISMO",
+    "Txorierri"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "foto del informe de Basurto de cuando le ingresaron en agosto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los papeles de la discapacidad de mi hermana (el 65 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el certificado de que mi madre va a dialisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "empezo con los porros con 13 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Al principio era los fines de semana y luego ya todos los dias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la coca nos enteramos el verano pasado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le dio la crisis esa que veia cosas y decia que le perseguian los de la tele",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le llevamos al pastor antes que al medico",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuando ingreso en Basurto el medico nos dijo que era de los porros y que si seguia le podia quedar como a su madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se entera de mucho la pobre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuando se pone la inyeccion esta mas tranquila pero cuando la deja empieza con que le espian por el movil y una vez la tuvieron que llevar los de la ambulancia atada",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "esta en Basauri por lo de la droga"
+   ],
+   [
+    "DATO_PENAL",
+    "antes ya estuvo otra vez en Nanclares"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "somos de la Iglesia de Filadelfia, mi madre y yo vamos al culto martes, jueves y domingo",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tocaba las palmas en el coro",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya no se pone malo, la psiquiatra le da las pastillas para dormir y la otra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha cogido 4 kilos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que se ha asustado de verdad con lo de la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al que le rompio la nariz",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-whatsapp-abogado-tia.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Mikel Agirre"
+   ],
+   [
+    "PERSONA",
+    "Sonia"
+   ],
+   [
+    "PERSONA",
+    "Josu"
+   ],
+   [
+    "PERSONA",
+    "Reme"
+   ],
+   [
+    "PERSONA",
+    "Uribe"
+   ],
+   [
+    "PERSONA",
+    "Kevin"
+   ],
+   [
+    "DIRECCION",
+    "Alameda Urquijo 41, 3º"
+   ],
+   [
+    "ORGANISMO",
+    "Txorierri"
+   ],
+   [
+    "ORGANISMO",
+    "Uribarri"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi madre esta rezando desde las 9",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por la iglesia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los informes médicos de Basurto de agosto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la medicación que toma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Toma una pastilla que se llama abilify pero no se la toma desde navidad. Se la tiraba al vater",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la de la hiperactividad la dejo hace años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "¿tiene algún informe de su enfermedad?",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene la esquizofrenia desde los 22. Tiene el papel del 65 % de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se pone el xeplion cada mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esta muy nervioso dice que no duerme y que suda por las noches. Que le duele todo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es el mono",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es normal las primeras semanas. Que lo hable con la psiquiatra del centro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ya le han dado una pastilla para dormir. La sequel o algo asi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Seroquel",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tuvo algo con un chico en el centro de antes",
+    "sexual"
+   ],
+   [
+    "OBJETO",
+    "necesita tratamiento de la adicción en un sitio cerrado y sin drogas"
+   ],
+   [
+    "OBJETO",
+    "internamiento terapéutico"
+   ],
+   [
+    "DATO_PENAL",
+    "ya ha estado en la carcel de mayores por robos"
+   ],
+   [
+    "DATO_PENAL",
+    "va por otro juzgado, el de instrucción"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ese le metio en la coca",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-alegaciones-defensa.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE MENORES N.º 1 DE BILBAO"
+   ],
+   [
+    "AUTOS",
+    "Expediente de reforma n.º 87/2026"
+   ],
+   [
+    "AUTOS",
+    "48.04.2-26/004912"
+   ],
+   [
+    "PERSONA",
+    "Mikel Agirre Bengoetxea"
+   ],
+   [
+    "PERSONA",
+    "JOSUÉ MONTOYA AMAYA"
+   ],
+   [
+    "PERSONA",
+    "Unai Etxeberria Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Josué"
+   ],
+   [
+    "PERSONA",
+    "Sonia Amaya Fernández"
+   ],
+   [
+    "PERSONA",
+    "Josué Montoya Amaya"
+   ],
+   [
+    "PERITO",
+    "Jon Ander Uribe Elorza"
+   ],
+   [
+    "PERITO",
+    "Garbiñe Arrieta Zubizarreta"
+   ],
+   [
+    "PERITO",
+    "Iñaki Olabarria Uriarte"
+   ],
+   [
+    "PERITO",
+    "Amaia Larrañaga Etxebarria"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Bizkaia"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo Técnico"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría Infanto-Juvenil del Hospital Universitario Basurto"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Terapéutico Lurgorri"
+   ],
+   [
+    "ORGANISMO",
+    "Ertzaintza"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Educativo Txorierri"
+   ],
+   [
+    "TIP",
+    "12487"
+   ],
+   [
+    "TIP",
+    "20931"
+   ],
+   [
+    "NORMA",
+    "arts. 237 y 242.1 y 3 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "art. 147.2 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 31 de la Ley Orgánica 5/2000, de 12 de enero, reguladora de la responsabilidad penal de los menores"
+   ],
+   [
+    "NORMA",
+    "artículo 242.1 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 19 LORPM"
+   ],
+   [
+    "NORMA",
+    "artículo 7.2 LORPM"
+   ],
+   [
+    "NORMA",
+    "artículo 7.1.d) LORPM"
+   ],
+   [
+    "NORMA",
+    "Circular de la Fiscalía General del Estado 1/2007"
+   ],
+   [
+    "NORMA",
+    "artículo 9.2 LORPM"
+   ],
+   [
+    "NORMA",
+    "artículo 35.2 LORPM"
+   ],
+   [
+    "OBJETO",
+    "delito de robo con violencia e intimidación con uso de instrumento peligroso"
+   ],
+   [
+    "OBJETO",
+    "delito leve de lesiones"
+   ],
+   [
+    "OBJETO",
+    "delito de robo con violencia"
+   ],
+   [
+    "OBJETO",
+    "toxicomanía"
+   ],
+   [
+    "OBJETO",
+    "drogodependencia"
+   ],
+   [
+    "OBJETO",
+    "adicción al alcohol o a otras drogas"
+   ],
+   [
+    "OBJETO",
+    "INTERNAMIENTO TERAPÉUTICO EN RÉGIMEN SEMIABIERTO"
+   ],
+   [
+    "OBJETO",
+    "internamiento terapéutico en régimen semiabierto"
+   ],
+   [
+    "OBJETO",
+    "tratamiento ambulatorio de deshabituación"
+   ],
+   [
+    "OBJETO",
+    "programa de deshabituación"
+   ],
+   [
+    "OBJETO",
+    "tratamiento ambulatorio"
+   ],
+   [
+    "OBJETO",
+    "programa específico de deshabituación"
+   ],
+   [
+    "OBJETO",
+    "tratamiento específico de la adicción"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consume cannabis a diario desde los 13 años, entre seis y ocho porros diarios en los últimos meses, y cocaína esnifada desde hace un año, con una frecuencia casi diaria en las semanas previas a los hechos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«necesitaba pasta para la coca»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presentaba ojos enrojecidos y pupilas dilatadas y que manifestó haber estado fumando todo el día y haberse «metido una raya»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno por consumo de cannabis grave (F12.20) y un trastorno por consumo de cocaína moderado (F14.20)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedente de un episodio psicótico inducido por cannabis que motivó un ingreso de nueve días en agosto de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un TDAH sin tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aripiprazol (Abilify®) 10 mg y quetiapina (Seroquel®) 25 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un abordaje intensivo, en medio estructurado y libre de sustancias, con intervención psicoterapéutica específica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo alto de recaída al salir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo elevado de un nuevo episodio psicótico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enfermedad mental grave de la madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la delicada salud de la abuela",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sus controles de tóxicos son negativos, ha retomado la medicación, ha ganado peso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "programa de prevención de recaídas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha verbalizado su deseo de abandonar el consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "analíticas de control de tóxicos",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "un hurto de 2024, con medida de prestaciones en beneficio de la comunidad ya cumplida"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

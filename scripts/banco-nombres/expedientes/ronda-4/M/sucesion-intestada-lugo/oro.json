@@ -1,0 +1,1758 @@
+{
+ "01-informe-neuroloxia-2021.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVIZO GALEG0 DE SAUDE"
+   ],
+   [
+    "ORGANISMO",
+    "AREA SANITARIA DE LUG0, A MARIÑA E MONF0RTE DE LEMOS"
+   ],
+   [
+    "ORGANISMO",
+    "H0SPITAL UNIVERSITARIO LUCUS AUGUSTI - SERVIZO DE NEUR0LOXIA"
+   ],
+   [
+    "ORGANISMO",
+    "CONSULTA EXTERNA DE TRAST0RNOS COGNITIVOS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME CLINICO DE CONSULTA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "SEOANE RIVAS, MANUELA"
+   ],
+   [
+    "NUSS",
+    "0912447"
+   ],
+   [
+    "NUSS",
+    "GLSN360903918"
+   ],
+   [
+    "DIRECCION",
+    "RUA D0 CARME VELLO, 7, BAIXO - 27001 LUG0"
+   ],
+   [
+    "PERSONA",
+    "RAMON CASTRO SEOANE"
+   ],
+   [
+    "PERSONA",
+    "UXIA CASTR0 BARREIRO"
+   ],
+   [
+    "PERSONA",
+    "RAMON"
+   ],
+   [
+    "PERSONA",
+    "M. CAMBA OUTEIRAL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PERDA DE MEM0RIA DE 18 MESES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ESQUECE 0N QUE GARDA AS COUSAS, REPITE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AS MESMAS PREGUNTAS E PERDEUSE DUAS VECES V0LVENDO DA PRAZA DE ABASTOS.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA EN TRATAMENT0 C0N ENALAPRIL 20 MG. DM2 CON",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "METFORMINA 850 MG/l2 H. FIBRILACION AURICULAR PERMANENTE ANTICOAGULADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CON SINTR0M 4 MG. CATARATA 0LLO DEREITO INTERVIDA (2016). FRACTURA DE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CADEIRA ESQUERDA (2019) CON PROTESE PARCIAL. HIP0ACUSIA BILATERAL.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SINDROME DE D0WN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "QUE ACUDE A CENTRO OCUPACI0NAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IRMA FALECIDA CON DEMENCIA AOS 80 AN0S.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CONSCIENTE, COLAB0RADORA, DESORIENTADA EN TEMP0 (NON SABE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "O MES NIN O ANO), ORIENTADA EN PERS0A. LINGUAXE FLUIDA CON ANOMIA LEVE.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE (MINI-MENTAL): l9/30. TEST DO RELOXO: 3/l0. FAQ: l4.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EXPLORACION NEUR0LOXICA SEN FOCALIDADE. MARCHA CON BAST0N.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TC CRANEAL (05/2021): ATROFIA C0RTICAL DIFUSA DE PREDOMINI0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TEMP0RAL MESIAL BILATERAL, LEUC0ARAIOSE PERIVENTRICULAR MODERADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(FAZEKAS 2). ANALITICA C0N VIT. Bl2, FOLAT0 E TSH NORMAIS. SER0LOXIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LUES NEGATIVA.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DETERIOR0 C0GNITIVO MODERADO. PROBABLE ENFERMIDADE DE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ALZHEIMER DE INICI0 TARDIO, C0N COMPONENTE VASCULAR (DEMENCIA MIXTA).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GDS 4 (ESCALA DE REISBERG).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INICIASE DONEPEZIL0 5 MG (ARICEPT) Ã NOITE, SUBIR A l0 MG",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EN 4 SEMANAS SE B0A TOLERANCIA.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SUPERVISION DA MEDICACION P0R FAMILIAR. NON DEBE XESTI0NAR",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SOA DIÑEIRO NIN D0CUMENTOS BANCARIOS.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REC0NECEMENTO DE DEPENDENCIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REVISION EN 6 MESES.",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-medico-residencia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "RESIDENCIA DE MAYORES FOGAR DE SANTA EULALIA"
+   ],
+   [
+    "ORGANISMO",
+    "Xunta de Galicia"
+   ],
+   [
+    "PERSONA",
+    "Manuela Seoane Rivas"
+   ],
+   [
+    "DNI",
+    "33781245-T"
+   ],
+   [
+    "PERSONA",
+    "Alberte Pazos Lombardía"
+   ],
+   [
+    "PERSONA",
+    "Iago Varela Souto"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "PERSONA",
+    "Ramón"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "persona con síndrome de Down y discapacidad reconocida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad de Alzheimer de inicio tardío con componente vascular (demencia mixta), diagnosticada por Neurología del",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "HULA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(GDS 4 en aquel momento)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA, DM2 en tratamiento con metformina, FA permanente anticoagulada con acenocumarol (Sintrom).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fractura de cadera izquierda en 2019 con prótesis parcial. Hipoacusia bilateral con audífonos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grado III de dependencia (gran dependencia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GDS 5. MMSE 14/30. Índice de Barthel 55 (dependencia moderada). Desorientada en tiempo y en espacio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reconocía a sus hijos y nietos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se mantiene donepezilo 10 mg y se añade memantina (Ebixa) 10 mg, subida a 20 mg en mayo de 2023.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de agitación vespertina («síndrome del ocaso»), deambulación errática e ideas delirantes de perjuicio (refería que «le robaban los pendientes» las auxiliares)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se pauta quetiapina 25 mg por la noche.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se retira el donepezilo por bradicardia sintomática (FC 46 lpm) con un síncope sin consecuencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE 9/30; GDS 6 (deterioro cognitivo grave); Barthel 30. Incontinencia urinaria y episodios de incontinencia fecal. Lenguaje empobrecido con frases cortas, perseveraciones y frecuentes falsos reconocimientos",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no hay en la historia clínica ninguna anotación de fluctuación significativa respecto a mayo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas Vilar"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disfagia orofaríngea para líquidos, dieta túrmix y espesante. Úlcera por presión sacra de grado III en marzo de 2025, con curas diarias. Barthel 15. GDS 7 desde junio de 2025, encamada, sin lenguaje útil.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por neumonía aspirativa, tras sedación paliativa con midazolam y morfina en perfusión subcutánea",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Ramón Castro Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "este acompañado de su curadora",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Castro Seoane"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Monterroso"
+   ],
+   [
+    "DATO_PENAL",
+    "donde se encuentra interno"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "recibía la comunión semanal del capellán del centro y se le administró la unción de enfermos el 11/02/2026",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una demencia mixta en fase grave (GDS 6 de Reisberg, MMSE 9/30), con afectación de la memoria, la orientación, el lenguaje y el juicio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "capacidad muy limitada para comprender el alcance de un documento escrito",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la expresión de vínculos afectivos o reconocimientos de personas de su entorno, que en la residente se mantuvieron de forma intermitente hasta finales de 2024",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-social-concello.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "CONCELLO DE LUGO"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Benestar Social — Servizos Sociais Comunitarios"
+   ],
+   [
+    "ORGANISMO",
+    "Unidade de Traballo Social Centro-Milagrosa"
+   ],
+   [
+    "AUTOS",
+    "SS/2019/004127"
+   ],
+   [
+    "PERSONA",
+    "Ramón Castro Seoane"
+   ],
+   [
+    "PERSONA",
+    "Ramón"
+   ],
+   [
+    "DNI",
+    "33912604-L"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vivenda tutelada",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Lucense Pro Persoas con Discapacidade Intelectual (ALUPDI)"
+   ],
+   [
+    "DIRECCION",
+    "Rúa dos Fornos, 12, 1.º — 27002 Lugo"
+   ],
+   [
+    "PERSONA",
+    "Sabela Rouco Freire"
+   ],
+   [
+    "PERSONA",
+    "Iago Varela Souto"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "PERSONA",
+    "Manuela Seoane Rivas"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nunha proba de ADN",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Moncho"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de Down",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trisomía 21 libre, cariotipo 47,XY,+21",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un grao de discapacidade recoñecido do 68 %",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Xefatura Territorial de Política Social de Lugo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con dependencia de grao II",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "comunicación interauricular intervida na infancia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Materno-Infantil Teresa Herrera"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipotiroidismo en tratamento con Eutirox 75 mcg; apnea do sono con CPAP nocturna; cataratas bilaterais.",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidade de Neuroloxía do HULA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "segue un deterioro cognitivo leve, compatible cun inicio de enfermidade de Alzheimer asociada á síndrome de Down, e tomou donepezilo durante uns meses, que se retirou por diarreas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crises epilépticas de inicio tardío (dúas en 2025) en tratamento con levetiracetam 500 mg cada 12 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mantén boa autonomía nas actividades básicas da vida diaria con supervisión. Le con dificultade e asina co seu nome.",
+    "salud"
+   ],
+   [
+    "ORGANO",
+    "Xulgado de Primeira Instancia n.º 3 de Lugo"
+   ],
+   [
+    "AUTOS",
+    "412/2022"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curatela con facultades de representación para actos de administración e disposición patrimonial e para decisións sobre a saúde de especial transcendencia",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "art. 249 do Código Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acode cada día ao centro ocupacional da asociación (obradoiro de xardinería)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel"
+   ],
+   [
+    "PERSONA",
+    "Pepe"
+   ],
+   [
+    "DATO_PENAL",
+    "que cumpre condena no"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Monterroso"
+   ],
+   [
+    "DATO_PENAL",
+    "por un delito contra a saúde pública"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mantén desde hai seis anos unha relación de parella estable cun compañeiro do centro ocupacional",
+    "sexual"
+   ],
+   [
+    "PERSONA",
+    "Xurxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "os dous solicitaron no último ano poder compartir habitación na vivenda",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Acode á misa dos domingos na parroquia de San Froilán coa súa curadora",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas Vilar"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VALORACIÓN SOBRE A PROBA DE ADN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con apoios de comunicación (linguaxe sinxela e pictogramas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mirar na saliva se",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a toma de mostra bucal",
+    "genetico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-acta-notarial-declaracion-herederos.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "FERNANDO QUIROGA MOSQUERA"
+   ],
+   [
+    "PERSONA",
+    "Fernando Quiroga Mosquera"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio Notarial de Galicia"
+   ],
+   [
+    "PERSONA",
+    "UXÍA CASTRO BARREIRO"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "DIRECCION",
+    "Rúa Montevideo, 41, 4.º D, 27003 Lugo"
+   ],
+   [
+    "DNI",
+    "33547812-W"
+   ],
+   [
+    "TELEFONO",
+    "682 334 190"
+   ],
+   [
+    "PERSONA",
+    "XOSÉ MANUEL CASTRO SEOANE"
+   ],
+   [
+    "DNI",
+    "33781990-B"
+   ],
+   [
+    "PERSONA",
+    "Ramiro Lage Ferreiro"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Monterroso"
+   ],
+   [
+    "DATO_PENAL",
+    "donde el poderdante se encuentra interno cumpliendo la pena de seis años de prisión impuesta por sentencia de la"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Lugo, Sección 2.ª"
+   ],
+   [
+    "DATO_PENAL",
+    "de 11 de enero de 2023, por delito contra la salud pública"
+   ],
+   [
+    "NORMA",
+    "art. 368 del Código Penal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curadora representativa",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "RAMÓN CASTRO SEOANE"
+   ],
+   [
+    "PERSONA",
+    "Ramón Castro Seoane"
+   ],
+   [
+    "DNI",
+    "33912604-L"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "persona con discapacidad intelectual (síndrome de Down)",
+    "salud"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 3 de Lugo"
+   ],
+   [
+    "AUTOS",
+    "412/2022"
+   ],
+   [
+    "NORMA",
+    "artículo 1.052 en relación con el 287.3 del Código Civil"
+   ],
+   [
+    "PERSONA",
+    "MANUELA SEOANE RIVAS"
+   ],
+   [
+    "DNI",
+    "33781245-T"
+   ],
+   [
+    "PERSONA",
+    "José"
+   ],
+   [
+    "PERSONA",
+    "Dolores"
+   ],
+   [
+    "PERSONA",
+    "Xesús Castro Pombo"
+   ],
+   [
+    "ORGANISMO",
+    "Residencia Fogar de Santa Eulalia"
+   ],
+   [
+    "DIRECCION",
+    "Estrada de Castro, km 3"
+   ],
+   [
+    "ORGANISMO",
+    "Registro General de Actos de Última Voluntad"
+   ],
+   [
+    "PERSONA",
+    "XOSÉ MANUEL"
+   ],
+   [
+    "PERSONA",
+    "RAMÓN"
+   ],
+   [
+    "PERSONA",
+    "ANDRÉS CASTRO SEOANE"
+   ],
+   [
+    "PERSONA",
+    "ANTÍA CASTRO NOVO"
+   ],
+   [
+    "PERSONA",
+    "Antía Castro Novo"
+   ],
+   [
+    "DNI",
+    "33561128-H"
+   ],
+   [
+    "DIRECCION",
+    "Rúa do Hórreo, 88, 3.º A"
+   ],
+   [
+    "NORMA",
+    "artículos 930, 931, 932 y 933 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 56 de la Ley del Notariado"
+   ],
+   [
+    "PERSONA",
+    "Andrés Castro Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "auto de provisión de apoyos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el grado de discapacidad del 68 %",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Xunta de Galicia"
+   ],
+   [
+    "PERSONA",
+    "CARMEN VILARIÑO TEIJEIRO"
+   ],
+   [
+    "PERSONA",
+    "Carmen Vilariño Teijeiro"
+   ],
+   [
+    "DNI",
+    "33402215-S"
+   ],
+   [
+    "DIRECCION",
+    "Rúa do Carme Vello, 7"
+   ],
+   [
+    "PERSONA",
+    "MANUEL RODRÍGUEZ ABUÍN"
+   ],
+   [
+    "PERSONA",
+    "Manuel Rodríguez Abuín"
+   ],
+   [
+    "DNI",
+    "33419087-Q"
+   ],
+   [
+    "PERSONA",
+    "Vilariño"
+   ],
+   [
+    "PERSONA",
+    "Manolita"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba muy perdida de la cabeza desde antes de entrar en la residencia, ya no conocía ni a los vecinos",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Rodríguez"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "PERSONA",
+    "BRAIS LAMAS VILAR"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas Vilar"
+   ],
+   [
+    "DNI",
+    "33598471-R"
+   ],
+   [
+    "DIRECCION",
+    "Rúa Maior, 23, 2.º"
+   ],
+   [
+    "PERSONA",
+    "Iago Varela Souto"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe pericial genético de 25 de marzo de 2026, que concluye una probabilidad de relación avuncular entre el compareciente y D.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "del 99,93 %",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Ramón"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haya participado en la prueba",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Lamas"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rehúsa someterse a una prueba de hermandad",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en plena fase de Alzheimer, con un GDS 6",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "arts. 112 y 120 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "art. 133 CC"
+   ],
+   [
+    "NORMA",
+    "artículo 56.4 de la Ley del Notariado"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-informe-pericial-adn.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "LABORATORIO GALAICO DE XENÉTICA FORENSE, S.L."
+   ],
+   [
+    "ORGANISMO",
+    "ENAC"
+   ],
+   [
+    "NORMA",
+    "Norma UNE-EN ISO/IEC 17025"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME PERICIAL DE PARENTESCO BIOLÓGICO",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas Vilar"
+   ],
+   [
+    "PERSONA",
+    "Iago Varela Souto"
+   ],
+   [
+    "PERITO",
+    "Noemí Rodeiro Valcárcel"
+   ],
+   [
+    "ORGANISMO",
+    "USC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Determinar, mediante el análisis de marcadores genéticos, la probabilidad de que D.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sea hijo biológico de D.",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Andrés Castro Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la comparación con un hermano de doble vínculo del presunto padre y (b) el análisis de una muestra biológica conservada del presunto padre",
+    "genetico"
+   ],
+   [
+    "DNI",
+    "33598471-R"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Frotis bucal, recogido el 3 de marzo de 2026 en el laboratorio",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "huella dactilar del índice derecho",
+    "biometrico"
+   ],
+   [
+    "PERSONA",
+    "Sonia Lamas Vilar"
+   ],
+   [
+    "DNI",
+    "33590245-C"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Frotis bucal, 3 de marzo de 2026, misma cadena de custodia",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Ramón Castro Seoane"
+   ],
+   [
+    "DNI",
+    "33912604-L"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Frotis bucal, 4 de marzo de 2026",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curadora representativa",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consentimiento informado firmado por el propio interesado y por la curadora",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "Ley 14/2007, de 3 de julio, de Investigación biomédica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bloque de tejido incluido en parafina, procedente de biopsia hepática realizada en el",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Anatomía Patológica del Hospital Universitario Lucus Augusti"
+   ],
+   [
+    "NUSS",
+    "B17-08842"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnóstico: hepatitis crónica por VHC genotipo 1b con fibrosis F3",
+    "salud"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 1 de Lugo"
+   ],
+   [
+    "AUTOS",
+    "88/2026"
+   ],
+   [
+    "ORGANISMO",
+    "GHEP-ISFG"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se obtuvieron perfiles completos de M1, M2 y M3. De M4 se obtuvo un perfil parcial de 14 loci, por degradación del ADN propia de la fijación en formol.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "M2 es compatible como madre biológica de M1 en los 23 loci analizados.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En M3 se observa un patrón trialélico en el locus D21S11 (alelos 29, 30 y 31.2), compatible con la trisomía del cromosoma 21 que consta en sus antecedentes (síndrome de Down)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "M1 y M3 comparten el mismo haplotipo en los 27 Y-STR analizados (haplogrupo predicho R1b-DF27), lo que indica que pertenecen al mismo linaje paterno",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El haplotipo no se ha observado en la base de datos",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "YHRD"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Índice de avuncularidad (IA) = 1.427; probabilidad de relación avuncular W = 99,93 %.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Índice de paternidad (IP) = 9.850; probabilidad de paternidad W = 99,99 %.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como padre biológico de D.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La probabilidad de paternidad, con los datos del perfil parcial del presunto padre, es del 99,99 % («paternidad prácticamente probada» según los predicados verbales de Hummel), y la de relación avuncular con D.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "del 99,93 %, ambas con el haplotipo Y compartido",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Antía Castro Novo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no ha aportado muestra",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Su participación permitiría un estudio de hermandad paterna (cromosoma X no informativo en este caso) que reforzaría el resultado",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "artículo 335.2 de la Ley de Enjuiciamiento Civil"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-uxia-primos.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Uxía Castro"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "CORREO",
+    "uxiacastrob@hotmail.com"
+   ],
+   [
+    "PERSONA",
+    "Antía Castro Novo"
+   ],
+   [
+    "PERSONA",
+    "Antía"
+   ],
+   [
+    "CORREO",
+    "antia.castro.novo@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "CORREO",
+    "braislamas04@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Quiroga"
+   ],
+   [
+    "DIRECCION",
+    "o piso do Carme Vello"
+   ],
+   [
+    "DATO_PENAL",
+    "segue en Monterroso, e que lle quedan dous anos"
+   ],
+   [
+    "DATO_PENAL",
+    "Ten a revisión de grao en setembro e se a"
+   ],
+   [
+    "ORGANISMO",
+    "Xunta de Tratamento"
+   ],
+   [
+    "DATO_PENAL",
+    "o aproba pode saír en terceiro grao, que agora está no módulo de respecto"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "xa deixou a metadona hai un ano",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "PERSONA",
+    "Moncho"
+   ],
+   [
+    "PERSONA",
+    "Xurxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que agora din que os van deixar estar na mesma habitación (por fin, levan seis anos)",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "O neurólogo subiulle o Keppra porque tivo outra crise en marzo, no obradoiro, e anda un pouco máis lento e esquecedizo, que xa nos avisaron que co Down o Alzheimer pode vir antes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fixo a proba do ADN porque el quixo",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estou de baixa desde o 20 de marzo pola hernia discal L4-L5, con Lyrica e Nolotil, e o traumatólogo xa fala de operar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que non podo nin conducir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a avoa non sabía nin quen era en agosto do 24",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Lola"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pero outros días coñecíame perfectamente",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pazos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "o do GDS 6 e o MMSE 9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "recoñecía á xente \"de forma intermitente\"",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Sonia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está pasándoo mal coa esclerose múltiple e co brote de febreiro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se faga a proba de irmandade (que é só un cotonete na boca",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Pilar"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Lucus Augusti"
+   ],
+   [
+    "TELEFONO",
+    "682 334 190"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-antia-brais.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Antía Castro Novo"
+   ],
+   [
+    "PERSONA",
+    "Antía"
+   ],
+   [
+    "CORREO",
+    "antia.castro.novo@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "CORREO",
+    "uxiacastrob@hotmail.com"
+   ],
+   [
+    "PERSONA",
+    "Brais Lamas"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "CORREO",
+    "braislamas04@gmail.com"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No me voy a hacer ninguna prueba",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si el ADN con el tío",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Moncho"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo no voy a meter la boca en un bastoncito",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo estoy embarazada de 22 semanas, con diabetes gestacional y con insulina desde la semana 20, y que la matrona me ha dicho que nada de disgustos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sabes perfectamente lo que es un GDS 6",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La abuela en agosto de 2024 llevaba pañal, no sabía en qué año estaba y a mí me llamó \"señora\" dos veces",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pilar"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo de que es \"una beata del Opus\", que mi madre va a misa cuando le da la gana",
+    "religion"
+   ],
+   [
+    "DATO_PENAL",
+    "en 2022 te detuvieron en las fiestas por una pelea y que tienes una causa pendiente en el"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Sarria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde que ela deixou de traballar pola esclerose e cobra unha incapacidade de 640 euros",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Rexistro Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "o fillo da xitana de Sarria",
+    "etnia"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Moitos días non sabía quen era eu, pero outros días si",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lle contei que son gai",
+    "sexual"
+   ],
+   [
+    "DATO_PENAL",
+    "Sobre o que dis da pelexa de 2022: si, houbo unha liorta nas festas, e o"
+   ],
+   [
+    "ORGANO",
+    "xulgado de Sarria"
+   ],
+   [
+    "DATO_PENAL",
+    "arquivouno. Non teño antecedentes"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde que morreu a avoa estou con sertralina e vou á psicóloga do centro de saúde, e o día da notaría tiven un ataque de ansiedade no baño",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fixo a proba porque quixo",
+    "genetico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-filiacion.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE LUGO"
+   ],
+   [
+    "PERSONA",
+    "Xoán Bermúdez Rial"
+   ],
+   [
+    "PERSONA",
+    "BRAIS LAMAS VILAR"
+   ],
+   [
+    "DNI",
+    "33598471-R"
+   ],
+   [
+    "DIRECCION",
+    "Rúa Maior, 23, 2.º, 27600 Sarria (Lugo)"
+   ],
+   [
+    "PERSONA",
+    "Iago Varela Souto"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Lugo"
+   ],
+   [
+    "OBJETO",
+    "RECLAMACIÓN DE FILIACIÓN NO MATRIMONIAL"
+   ],
+   [
+    "OBJETO",
+    "filiación no matrimonial"
+   ],
+   [
+    "OBJETO",
+    "hijo no matrimonial"
+   ],
+   [
+    "OBJETO",
+    "la filiación paterna"
+   ],
+   [
+    "NORMA",
+    "artículos 127, 131 y 133 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "764 y siguientes de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "PERSONA",
+    "ANTÍA CASTRO NOVO"
+   ],
+   [
+    "PERSONA",
+    "Antía Castro Novo"
+   ],
+   [
+    "DNI",
+    "33561128-H"
+   ],
+   [
+    "DIRECCION",
+    "Rúa do Hórreo, 88, 3.º A, 15702 Santiago de Compostela"
+   ],
+   [
+    "PERSONA",
+    "Andrés Castro Seoane"
+   ],
+   [
+    "PERSONA",
+    "Manuela Seoane Rivas"
+   ],
+   [
+    "PERSONA",
+    "XOSÉ MANUEL CASTRO SEOANE"
+   ],
+   [
+    "DNI",
+    "33781990-B"
+   ],
+   [
+    "DATO_PENAL",
+    "actualmente interno en el"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Monterroso"
+   ],
+   [
+    "PERSONA",
+    "RAMÓN CASTRO SEOANE"
+   ],
+   [
+    "DNI",
+    "33912604-L"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "representado por su curadora",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Uxía Castro Barreiro"
+   ],
+   [
+    "DIRECCION",
+    "Rúa Montevideo, 41, 4.º D, 27003 Lugo"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "NORMA",
+    "art. 749.1 LEC"
+   ],
+   [
+    "PERSONA",
+    "Sonia Lamas Vilar"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Civil de Sarria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mantuvo una relación sentimental con D.",
+    "sexual"
+   ],
+   [
+    "PERSONA",
+    "Andrés"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conoció el embarazo",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Residencia Fogar de Santa Eulalia"
+   ],
+   [
+    "PERSONA",
+    "Seoane"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una demencia mixta tipo Alzheimer que en mayo de 2024 se valoraba como GDS 6, con MMSE de 9/30",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prueba biológica extrajudicial",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pericial genética",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "Laboratorio Galaico de Xenética Forense"
+   ],
+   [
+    "ORGANISMO",
+    "ENAC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se compararon su perfil, el de su madre, el de su tío",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Ramón Castro Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que prestó su consentimiento con el apoyo de su curadora y tras la valoración favorable de la trabajadora social municipal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el perfil parcial obtenido de una muestra de tejido de D.",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Anatomía Patológica del HULA"
+   ],
+   [
+    "AUTOS",
+    "88/2026"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 1 de Lugo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una probabilidad de paternidad del 99,99 %, una probabilidad de relación avuncular del 99,93 % y un haplotipo del cromosoma Y idéntico entre el actor y su tío en los 27 marcadores analizados",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se ha negado a someterse a una prueba de hermandad paterna",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "artículo 767.4 LEC"
+   ],
+   [
+    "PERSONA",
+    "Fernando Quiroga Mosquera"
+   ],
+   [
+    "AUTOS",
+    "n.º 1.284 de su protocolo"
+   ],
+   [
+    "NORMA",
+    "arts. 924 y 931 CC"
+   ],
+   [
+    "DATO_PENAL",
+    "Las circunstancias penitenciarias del codemandado"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Castro Seoane"
+   ],
+   [
+    "DATO_PENAL",
+    "así como la condena por la que cumple pena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de Down con un 68 % de discapacidad, epilepsia en tratamiento y deterioro cognitivo leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la toma de muestra",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "artículo 50 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 748 y siguientes y 764 a 768 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 133 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 766 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 113 y 135 del Código Civil y 767.2 y 767.3 LEC"
+   ],
+   [
+    "NORMA",
+    "STC 7/1994, de 17 de enero"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TC:1994:7"
+   ],
+   [
+    "NORMA",
+    "STC 95/1999, de 31 de mayo"
+   ],
+   [
+    "PERSONA",
+    "ANDRÉS CASTRO SEOANE"
+   ],
+   [
+    "PERITO",
+    "Noemí Rodeiro Valcárcel"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "prueba biológica judicial de hermandad paterna",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ampliación del análisis de los restos de D.",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin descartar la exhumación",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "Concello de Sarria"
+   ],
+   [
+    "PERSONA",
+    "Carmen Vilariño Teijeiro"
+   ],
+   [
+    "PERSONA",
+    "Manuel Rodríguez Abuín"
+   ],
+   [
+    "NORMA",
+    "artículo 727.6.ª LEC"
+   ],
+   [
+    "ORGANISMO",
+    "Registro de la Propiedad n.º 1 de Lugo"
+   ],
+   [
+    "DIRECCION",
+    "piso de la Rúa do Carme Vello, 7, bajo"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

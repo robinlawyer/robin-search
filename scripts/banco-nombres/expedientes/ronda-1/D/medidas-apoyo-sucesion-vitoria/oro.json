@@ -1,0 +1,1485 @@
+{
+ "01-auto-medidas-apoyo-2023.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA N.º 11 DE VITORIA-GASTEIZ"
+   ],
+   [
+    "ORGANO",
+    "GASTEIZKO LEHEN AUZIALDIKO 11 ZK.KO EPAITEGIA"
+   ],
+   [
+    "OBJETO",
+    "Provisión de medidas judiciales de apoyo a persona con discapacidad"
+   ],
+   [
+    "AUTOS",
+    "412/2023"
+   ],
+   [
+    "AUTOS",
+    "0105942120230004127"
+   ],
+   [
+    "PERSONA",
+    "Arantza Lasarte Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Begoña Etxeberria Ruiz de Azúa"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "PONENTE",
+    "María Teresa Lopetegui Bengoa"
+   ],
+   [
+    "PERSONA",
+    "Ainhoa Sagasti Mardaras"
+   ],
+   [
+    "OBJETO",
+    "provisión de medidas de apoyo"
+   ],
+   [
+    "DNI",
+    "16198475-J"
+   ],
+   [
+    "DIRECCION",
+    "calle Manuel Iradier, 44, 2.º dcha., 01005 Vitoria-Gasteiz"
+   ],
+   [
+    "PERSONA",
+    "Koldo Lasarte Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Lasarte Etxeberria"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación Tutelar Arabako Babesa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su curatela por su discapacidad intelectual reconocida en grado del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe del médico forense",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Vasco de Medicina Legal"
+   ],
+   [
+    "PERITO",
+    "Nerea Garmendia Olabarria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe neurológico",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Mikel Aranburu Sáenz"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Neurología del Hospital Universitario Araba"
+   ],
+   [
+    "OBJETO",
+    "curatela representativa"
+   ],
+   [
+    "NORMA",
+    "Ley 8/2021, de 2 de junio"
+   ],
+   [
+    "NORMA",
+    "artículo 249 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "art. 269 CC"
+   ],
+   [
+    "PERSONA",
+    "Begoña"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enfermedad de Alzheimer de inicio tardío",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "evolución a demencia moderada-grave (GDS 5-6, MMSE 13/30 en abril de 2023)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento con donepezilo (Aricept 10 mg) y memantina (Ebixa 20 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desorientación temporal y parcialmente espacial, afectación grave de la memoria reciente, anosognosia y ausencia de capacidad de cálculo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no reconoce el valor del dinero ni comprende el contenido de documentos bancarios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Conserva capacidad para expresar preferencias afectivas simples",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mantiene una comunicación verbal limitada, en castellano y en euskera",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Arantza"
+   ],
+   [
+    "PERSONA",
+    "Koldo"
+   ],
+   [
+    "PERSONA",
+    "Joseba"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ir a misa a San Miguel",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Arantxa"
+   ],
+   [
+    "PERSONA",
+    "Iñakitxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "naturaleza progresiva e irreversible de la enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamientos médicos",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "art. 270 CC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "usuario del piso tutelado de la Fundación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "beneficiario de prestación por dependencia grado II",
+    "salud"
+   ],
+   [
+    "DNI",
+    "16287364-Q"
+   ],
+   [
+    "NORMA",
+    "art. 268 CC"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Civil de Vitoria-Gasteiz"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Álava"
+   ],
+   [
+    "LAJ",
+    "Andoni Mendiluce Pérez"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-medico-forense.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "EUSKAL AUZITEGI MEDIKUNTZAKO INSTITUTUA"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUTO VASCO DE MEDICINA LEGAL"
+   ],
+   [
+    "ORGANISMO",
+    "Subdirección de Álava"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Clínica Médico-Forense"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME MÉDICO-FORENSE",
+    "salud"
+   ],
+   [
+    "AUTOS",
+    "ALA-CF-2023-01188"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 11 de Vitoria-Gasteiz"
+   ],
+   [
+    "AUTOS",
+    "412/2023"
+   ],
+   [
+    "PERSONA",
+    "Begoña Etxeberria Ruiz de Azúa"
+   ],
+   [
+    "PERSONA",
+    "Arantza Lasarte"
+   ],
+   [
+    "PERITO",
+    "Nerea Garmendia Olabarria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe del Servicio de Neurología",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "HUA-Txagorritxu"
+   ],
+   [
+    "PERSONA",
+    "Aranburu"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica de Atención Primaria",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Osakidetza"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Casco Viejo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe social",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Itziar Okariz"
+   ],
+   [
+    "PERSONA",
+    "Arantza"
+   ],
+   [
+    "PERSONA",
+    "Koldo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA en tratamiento con enalapril/hidroclorotiazida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fibrilación auricular permanente anticoagulada con acenocumarol (Sintrom 4 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fractura pertrocantérea de cadera derecha en 2019, intervenida (clavo endomedular)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deambula con andador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia bilateral con audífonos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodio depresivo tras el fallecimiento de su esposo en 2019",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratado con sertralina y lorazepam a demanda (Orfidal)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Deterioro cognitivo de inicio insidioso detectado por su MAP en 2020 (olvidos, repetía preguntas, se perdió en dos ocasiones volviendo de la iglesia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diagnóstico de enfermedad de Alzheimer (octubre de 2021) con apoyo de RM cerebral (atrofia hipocampal bilateral, Scheltens 3) y PET-FDG con hipometabolismo temporoparietal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento con donepezilo desde 2021 y memantina desde 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodios de agitación vespertina (síndrome del ocaso) tratados con quetiapina 25 mg nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consciente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aspecto cuidado; colaboradora y afable, aunque con escasa iniciativa verbal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desorientada en tiempo (no sabe el año, cree que es \"invierno\" en mayo) y parcialmente en espacio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Memoria reciente gravemente alterada (0/3 en el recuerdo diferido)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "memoria remota relativamente conservada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su boda en la iglesia de San Miguel",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lenguaje con anomia y circunloquios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No es capaz de realizar cálculos sencillos (restar 7 de 100)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Juicio de realidad empobrecido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anosognosia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo estoy muy bien, la que se olvida es mi hermana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No hay ideación delirante estructurada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por las noches viene gente a casa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "confusión nocturna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE 12/30. GDS-FAST 6a. Índice de Barthel 55 (dependencia moderada para ABVD). Lawton 0/8",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que le traigan la comunión los domingos si no puede ir a misa",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es como un niño, hay que mirar por él",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "demencia tipo Alzheimer en fase moderada-grave (GDS 6)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curso progresivo e irreversible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Carece de capacidad para comprender, valorar y decidir sobre actos de contenido patrimonial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sobre decisiones médicas complejas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mantiene capacidad para expresar preferencias afectivas y de convivencia sencillas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "evolución documentada (MMSE 19/30 en noviembre de 2021; 16/30 en septiembre de 2022; 12-13/30 en abril-mayo de 2023)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Demencia tipo Alzheimer moderada-grave",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "Precisa apoyo de carácter representativo para la esfera patrimonial y sanitaria"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-carta-manuscrita-causante-2015.escaneo.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "ARANTXA"
+   ],
+   [
+    "PERSONA",
+    "K0LD0"
+   ],
+   [
+    "PERSONA",
+    "IÑAKI"
+   ],
+   [
+    "PERSONA",
+    "MARIBEL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TENG0 LA CABEZA BIEN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LO PRIMER0, QUE CUAND0 ME MUERA QUIER0 FUNERAL EN SAN MIGUEL Y QUE ME DIGAN LAS MISAS GREG0RIANAS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y0 HE SID0 CAT0LICA T0DA LA VIDA Y LA FE ES L0 QUE ME HA SACAD0 ADELANTE",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y0 REZ0 EL R0SARI0 T0D0S L0S DIAS P0R V0S0TR0S TRES",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "QUE ME ENTIERREN C0N EL ESCAPULARI0 DE LA VIRGEN DEL CARMEN",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NACI0 C0N EL CORDON ALREDED0R DEL CUELL0 Y LE FALT0 EL 0XIGEN0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SIEMPRE VA A SER C0M0 UN CHAVAL DE D0CE AÑ0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0N LAS PASTILLAS DE LA EPILEPSIA ESTA BIEN DESDE HACE AÑ0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 PUEDE VIVIR S0L0 NI MANEJAR DINER0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANDES EN LA P0LITICA C0N ESA GENTE",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TU AITA FUE DEL PARTID0 T0DA SU VIDA, DE L0S DE SABIN ETXEA",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L0 DE TU CARNET",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L0 DE VUESTR0 AITA C0N AQUELLA MUJER DE LL0DI0, ALLA P0R EL 67",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0RQUE ES L0 QUE NOS ENSEÑA LA IGLESIA",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "J0SEBA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "QUE DECIDA DI0S",
+    "religion"
+   ],
+   [
+    "DIRECCION",
+    "MANUEL IRADIER"
+   ],
+   [
+    "PERSONA",
+    "ARRIETA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y0 ESTE AÑ0 ESTOY UN P0C0 MAS CANSADA, EL MEDIC0 DICE QUE ES EL C0RAZ0N, QUE VA A SALT0S, Y ME HA PUEST0 EL SINTR0M",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ME ENC0MIEND0 A LA VIRGEN BLANCA",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "BEG0ÑA"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-whatsapp-grupo-hermanos.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Koldo Lasarte"
+   ],
+   [
+    "PERSONA",
+    "Arantxa"
+   ],
+   [
+    "PERSONA",
+    "Arrieta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ama ya no sabía ni en qué año vivía",
+    "salud"
+   ],
+   [
+    "DIRECCION",
+    "Manuel Iradier"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Arantza"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En enero de 2023 me llamó aita a mí",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y en marzo de 2023 la llevaste al juzgado porque no podía firmar ni en el banco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "urduri jartzen da",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "amatxo zeruan dago aitarekin. Bihar mezatara joango gara elkarrekin San Miguelera",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me e tomado la pastilla de la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tú y tus amigos de Bildu siempre habéis sabido mucho de \"derechos\"",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en las asambleas y pegando carteles para las municipales",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cambiándole los pañales a ama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que yo sea de Bildu",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que te pasas el día en el batzoki con la junta",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "Javier Montoya"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hijo de aita, de una relación que tuvo en Llodio",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que está en una residencia con lo mismo que ama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quiere hacerse una prueba de ADN conmigo",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le das la saliva a un desconocido",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es mi saliva",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Jon Ander"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "99,87 % de probabilidad de que seamos medio hermanos por parte de padre",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "javier"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Te has tomado la Depakine?",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tendrá un 65 % de discapacidad",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-informe-adn-parentesco.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GENODIAG LABORATORIO DE GENÉTICA FORENSE, S.L."
+   ],
+   [
+    "CIF",
+    "B95847362"
+   ],
+   [
+    "ORGANISMO",
+    "ENAC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME DE ANÁLISIS DE PARENTESCO BIOLÓGICO (HERMANDAD PATERNA)",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Javier Montoya Sáez"
+   ],
+   [
+    "DNI",
+    "30628419-L"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Frotis bucal (2 hisopos)",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Koldo Lasarte Etxeberria"
+   ],
+   [
+    "DNI",
+    "16271830-E"
+   ],
+   [
+    "PERSONA",
+    "Joseba Lasarte Ugalde"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fotografía digital del rostro y toma de huella dactilar del índice derecho",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "análisis genético",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cromosoma Y: los dos haplotipos son idénticos en los 23 loci analizados (DYS576 = 18; DYS389I = 13; DYS448 = 19; DYS391 = 10; DYS481 = 22; DYS19 = 14; DYS533 = 12, entre otros). Haplotipo no observado en la base de datos YHRD (n = 312.000 haplotipos europeos)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Marcadores autosómicos: los perfiles comparten alelos en 22 de 24 loci, con un índice de hermandad (medios hermanos frente a no emparentados) de 768,4",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Índice combinado de parentesco: 768,4; probabilidad de relación de medios hermanos por vía paterna: 99,87 %",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "compartan el mismo padre biológico",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El resultado es «prácticamente probado»",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se observa una variante en el marcador DYS385 sin significado clínico",
+    "genetico"
+   ],
+   [
+    "PERITO",
+    "Olatz Bengoetxea Lizarralde"
+   ],
+   [
+    "PERSONA",
+    "Iker Salaberria Mendoza"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-koldo-abogada-euskera.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Koldo Lasarte"
+   ],
+   [
+    "CORREO",
+    "klasarte63@euskalnet.net"
+   ],
+   [
+    "PERSONA",
+    "Leire Zubizarreta"
+   ],
+   [
+    "CORREO",
+    "leire@zubizarreta-abokatuak.eus"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ADN emaitza",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Leire"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ADN proba, %99,87",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ama no estaba en condiciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en el informe de neurología de septiembre de 2022 ya tenía 16 sobre 30 en el test ese de memoria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en Navidad de 2022 no me reconoció en la cena de Nochebuena",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Joseba"
+   ],
+   [
+    "PERSONA",
+    "Arrieta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ama en las distancias cortas \"disimulaba\" muy bien",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"fachada conservada\"",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pili Ochoa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la encontró perdida en la calle Dato en diciembre de 2022",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Patxi"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al que ama dejó de reconocer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aunque iba a misa diaria",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su discapacidad intelectual del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la epilepsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en el piso tutelado",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación"
+   ],
+   [
+    "PERSONA",
+    "Javier"
+   ],
+   [
+    "PERSONA",
+    "Gorka Elorriaga"
+   ],
+   [
+    "PERSONA",
+    "Arantxa"
+   ],
+   [
+    "PERSONA",
+    "Rosario Sáez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en una residencia de Amurrio con alzhéimer avanzado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "soy militante de EH Bildu y concejal en Llodio",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ella y su marido son del PNV de toda la vida, él es de la ejecutiva del batzoki de Judimendi",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está con el tratamiento de fecundación in vitro",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Cruces"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tercera transferencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sigo con la lumbalgia y con el Enantyum cuando me da",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Koldo Lasarte Etxeberria"
+   ],
+   [
+    "DIRECCION",
+    "Zumalakarregi kalea 12, 3. A, 01400 Laudio"
+   ],
+   [
+    "TELEFONO",
+    "688 31 04 57"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-nulidad-testamento.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE VITORIA-GASTEIZ"
+   ],
+   [
+    "PERSONA",
+    "Asier Ruiz de Arbulo Sáenz"
+   ],
+   [
+    "PERSONA",
+    "KOLDO LASARTE ETXEBERRIA"
+   ],
+   [
+    "DNI",
+    "16271830-E"
+   ],
+   [
+    "DIRECCION",
+    "calle Zumalakarregi, 12, 3.º A, 01400 Laudio/Llodio"
+   ],
+   [
+    "PERSONA",
+    "Leire Zubizarreta Ibáñez"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Álava"
+   ],
+   [
+    "OBJETO",
+    "falta de capacidad para testar"
+   ],
+   [
+    "PERSONA",
+    "ARANTZA LASARTE ETXEBERRIA"
+   ],
+   [
+    "DIRECCION",
+    "calle Manuel Iradier, 44, 2.º dcha., 01005 Vitoria-Gasteiz"
+   ],
+   [
+    "PERSONA",
+    "IÑAKI LASARTE ETXEBERRIA"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación Tutelar Arabako Babesa"
+   ],
+   [
+    "CIF",
+    "G01283746"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "PERSONA",
+    "Begoña Etxeberria Ruiz de Azúa"
+   ],
+   [
+    "PERSONA",
+    "Joseba Lasarte Ugalde"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Arrieta Garay"
+   ],
+   [
+    "PERSONA",
+    "Arantza"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Osakidetza"
+   ],
+   [
+    "AUTOS",
+    "412/2023"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 11 de Vitoria-Gasteiz"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diagnóstico de enfermedad de Alzheimer en octubre de 2021, con RM y PET compatibles",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mini-Mental (MMSE): 19/30 en noviembre de 2021; 16/30 en septiembre de 2022; 12-13/30 en abril-mayo de 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la puntuación se movía en torno a 14-15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rango de demencia moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento con donepezilo (Aricept) y memantina (Ebixa) desde 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quetiapina por agitación nocturna desde el otoño de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Episodios de desorientación en la vía pública",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pilar Ochoa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la encontró perdida en la calle Dato en diciembre de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "provisión de medidas de apoyo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"no es capaz de entender lo que firma en el banco\"",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe médico-forense",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Nerea Garmendia Olabarria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anosognosia, desorientación temporal y ausencia de capacidad de cálculo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "afectación de las funciones ejecutivas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con plena lucidez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las disposiciones sobre su funeral católico, misas gregorianas y su devoción a la Virgen Blanca",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la militancia política del demandante en EH Bildu y su cargo de concejal",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "Javier Montoya Sáez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el resultado de la prueba de ADN de hermandad realizada entre él y el demandante",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "artículo 52.1.4.º LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 249.1 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 662, 663.2.º, 665 y 666 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "Ley 8/2021"
+   ],
+   [
+    "NORMA",
+    "STS, Sala 1.ª, 146/2018, de 15 de marzo"
+   ],
+   [
+    "NORMA",
+    "STS 461/2020, de 15 de septiembre"
+   ],
+   [
+    "ROJ",
+    "STS 2847/2020"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las enfermedades neurodegenerativas de curso continuo, como la padecida por la causante",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Ley 5/2015, de 25 de junio, de Derecho Civil Vasco"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "PERSONA",
+    "Pilar Ochoa Urrutia"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Garai"
+   ],
+   [
+    "PERSONA",
+    "Mikel Aranburu Sáenz"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-auto-prueba-biologica-filiacion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA N.º 6 DE VITORIA-GASTEIZ"
+   ],
+   [
+    "ORGANO",
+    "GASTEIZKO LEHEN AUZIALDIKO 6 ZK.KO EPAITEGIA"
+   ],
+   [
+    "AUTOS",
+    "1022/2025"
+   ],
+   [
+    "AUTOS",
+    "0105942120250010224"
+   ],
+   [
+    "PERSONA",
+    "Javier Montoya Sáez"
+   ],
+   [
+    "PERSONA",
+    "Gorka Elorriaga Unzueta"
+   ],
+   [
+    "PERSONA",
+    "Joseba Lasarte Ugalde"
+   ],
+   [
+    "PERSONA",
+    "Arantza Lasarte Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Jon Ander Uriarte Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Koldo Lasarte Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Lasarte Etxeberria"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación Tutelar Arabako Babesa"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "PONENTE",
+    "Unai Etxaniz Albizu"
+   ],
+   [
+    "PERSONA",
+    "Rosario Sáez Ibarrola"
+   ],
+   [
+    "OBJETO",
+    "filiación no matrimonial"
+   ],
+   [
+    "NORMA",
+    "artículos 131 y 133 del Código Civil"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de análisis de parentesco",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Koldo Lasarte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una probabilidad de medio hermano por vía paterna del 99,87 %",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Lasarte Ugalde"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padecer una demencia tipo alzhéimer en fase avanzada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de la residencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "persona con discapacidad intelectual reconocida del 65 % sujeta a curatela",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 767.2 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "OBJETO",
+    "paternidad"
+   ],
+   [
+    "NORMA",
+    "artículo 767.4 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 767.1 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 39.2 CE"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "frotis bucal",
+    "genetico"
+   ],
+   [
+    "NORMA",
+    "STC 7/1994, de 17 de enero"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TC:1994:7"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "comparación de los perfiles genéticos de los hermanos",
+    "genetico"
+   ],
+   [
+    "PERSONA",
+    "Arantza Lasarte"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su ADN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la afiliación política de su hermano",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la vida privada que su padre hubiera llevado en los años sesenta",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "prueba biológica de parentesco (análisis de ADN de cromosoma Y y marcadores autosómicos)",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Nacional de Toxicología y Ciencias Forenses"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Vasco de Medicina Legal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "identificación de los donantes mediante reseña fotográfica y huella dactilar",
+    "biometrico"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación"
+   ],
+   [
+    "NORMA",
+    "art. 285.2 LEC"
+   ],
+   [
+    "LAJ",
+    "Marta Quintana Ruiz"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

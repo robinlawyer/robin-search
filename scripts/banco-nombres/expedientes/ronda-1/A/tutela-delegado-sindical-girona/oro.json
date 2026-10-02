@@ -1,0 +1,1412 @@
+{
+ "01-xat-grup-comite.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Jordi Puigvert"
+   ],
+   [
+    "PERSONA",
+    "Jordi"
+   ],
+   [
+    "PERSONA",
+    "Núria Batlle"
+   ],
+   [
+    "PERSONA",
+    "Núria"
+   ],
+   [
+    "PERSONA",
+    "Pere Casals"
+   ],
+   [
+    "PERSONA",
+    "Pere"
+   ],
+   [
+    "PERSONA",
+    "Toni Heredia"
+   ],
+   [
+    "PERSONA",
+    "Toni"
+   ],
+   [
+    "PERSONA",
+    "Marta V."
+   ],
+   [
+    "PERSONA",
+    "Marta"
+   ],
+   [
+    "PERSONA",
+    "Roca"
+   ],
+   [
+    "PERSONA",
+    "Youssef"
+   ],
+   [
+    "PERSONA",
+    "Gemma"
+   ],
+   [
+    "PERSONA",
+    "Ramon Fusté"
+   ],
+   [
+    "PERSONA",
+    "Ramon"
+   ],
+   [
+    "PERSONA",
+    "Laura"
+   ],
+   [
+    "PERSONA",
+    "Laia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El comitè de vaga som la Núria, el Pere i jo",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Des d'UGT ho hem passat a tots els afiliats",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estic embarassada de 4 mesos i la llevadora em diu que res d'estar 6 hores dreta al fred",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la vaga la hago",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest comunista de merda ho pagarà",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "y tú, gitano, vigila que no desaparezca cobre del almacén que ya sabemos cómo sois",
+    "etnia"
+   ],
+   [
+    "ORGANISMO",
+    "Inspecció"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Jo sóc d'UGT",
+    "sindical"
+   ],
+   [
+    "OBJETO",
+    "delegat de CCOO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tu amb la teva pressió alta i les pastilles, el torn de nit et matarà",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "amb l'enalapril i els nervis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bollera",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a vosaltres les lesbianes el que us falta és un home que us posi a lloc",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "assetjament per orientació sexual",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ja estic de baixa per ansietat des de dijous, la psicòloga diu que no em convé remenar-ho ara",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la meva parella, la Laura",
+    "sexual"
+   ],
+   [
+    "DATO_PENAL",
+    "salió de Brians hace dos años por lo de los robos de cobre"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "li han tret la pausa curta que li deixaven per resar i durant el ramadà no el deixen menjar a la pausa del capvespre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fa tres setmanes que no dormo, tinc taquicàrdies i el metge m'ha donat la baixa per ansietat. Prenc escitalopram i alprazolam per dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vaig anar a les llistes d'Esquerra a Salt a les municipals",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "els indepes com tu",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "l'informe de la psicòloga",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-correu-rrhh-canvi-de-torn.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Gemma Pujol Ferrer"
+   ],
+   [
+    "CORREO",
+    "gpujol@embalatgester.cat"
+   ],
+   [
+    "PERSONA",
+    "Jordi Puigvert Serra"
+   ],
+   [
+    "CORREO",
+    "jordipuigvert76@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Xavier Roca Mas"
+   ],
+   [
+    "CORREO",
+    "xroca@embalatgester.cat"
+   ],
+   [
+    "PERSONA",
+    "Albert Soler Bosch"
+   ],
+   [
+    "CORREO",
+    "asoler@embalatgester.cat"
+   ],
+   [
+    "PERSONA",
+    "Jordi"
+   ],
+   [
+    "NORMA",
+    "article 27 del Conveni col·lectiu de la indústria del cartró ondulat"
+   ],
+   [
+    "NORMA",
+    "article 41 de l'Estatut dels treballadors"
+   ],
+   [
+    "OBJETO",
+    "membre del comitè d'empresa"
+   ],
+   [
+    "OBJETO",
+    "vas sol·licitar en nom de la secció sindical de CCOO"
+   ],
+   [
+    "ORGANISMO",
+    "comitè d'empresa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe del teu metge de capçalera sobre la hipertensió arterial i la medicació",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servei de Prevenció Aliè (Quirón Prevención)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "valori, si escau, la teva aptitud per al torn de nit en el proper reconeixement mèdic periòdic",
+    "salud"
+   ],
+   [
+    "TELEFONO",
+    "972 40 18 33"
+   ],
+   [
+    "TELEFONO",
+    "639 12 55 08"
+   ],
+   [
+    "PERSONA",
+    "Laia Coromina Vidal"
+   ],
+   [
+    "CORREO",
+    "lcoromina@coromina-advocats.cat"
+   ],
+   [
+    "PERSONA",
+    "Laia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el paper de la pressió",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "vaig ser el portaveu del comitè de vaga"
+   ],
+   [
+    "PERSONA",
+    "Roca"
+   ],
+   [
+    "TELEFONO",
+    "682 30 14 77"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-carta-sancion.escaneo.txt": {
+  "oro": [
+   [
+    "CIF",
+    "A17O45823"
+   ],
+   [
+    "PERSONA",
+    "J0RDI PUIGVERT SERRA"
+   ],
+   [
+    "DIRECCION",
+    "C/ DE LA RUTLLA 64, 2-1"
+   ],
+   [
+    "DIRECCION",
+    "l7002 GIRONA"
+   ],
+   [
+    "NORMA",
+    "ARTICUL0 68.A) DEL ESTATUT0 DE L0S TRABAJAD0RES"
+   ],
+   [
+    "OBJETO",
+    "LA C0NDICI0N DE MIEMBR0 DEL C0MITE DE EMPRESA Y DELEGAD0 SINDICAL DE LA SECCI0N SINDICAL DE CC.00."
+   ],
+   [
+    "ORGANISMO",
+    "C0MITE DE EMPRESA"
+   ],
+   [
+    "NORMA",
+    "ARTICUL0 40.B).4 DEL C0NVENI0 C0LECTIV0 DE LA INDUSTRIA DEL CART0N 0NDULAD0"
+   ],
+   [
+    "PERSONA",
+    "XAVIER R0CA MAS"
+   ],
+   [
+    "OBJETO",
+    "CREDIT0 H0RARI0 SINDICAL"
+   ],
+   [
+    "OBJETO",
+    "SU ACTIVIDAD REPRESENTATIVA NI C0N SU AFILIACI0N"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L0S P0SIBLES M0TIV0S DE SALUD QUE USTED HA AD0CID0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIPERTENSI0N, TRAST0RN0 DE ANSIEDAD",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SITUACI0N DE INCAPACIDAD TEMP0RAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ALTA MEDICA",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "ART. 114 LRJS"
+   ],
+   [
+    "PERSONA",
+    "GEMMA PUJ0L FERRER"
+   ],
+   [
+    "PERSONA",
+    "J. PUIGVERT"
+   ],
+   [
+    "ORGANISMO",
+    "C0MITE D'EMPRESA EMBALATGES DEL TER"
+   ],
+   [
+    "ORGANISMO",
+    "SECCI0N SINDICAL CC.00."
+   ],
+   [
+    "ORGANISMO",
+    "SECCI0N SINDICAL UGT"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-acta-infraccio-inspeccio-treball.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "Generalitat de Catalunya"
+   ],
+   [
+    "ORGANISMO",
+    "Departament d'Empresa i Treball"
+   ],
+   [
+    "ORGANISMO",
+    "Inspecció de Treball de Catalunya"
+   ],
+   [
+    "ORGANISMO",
+    "Inspecció Territorial de Girona"
+   ],
+   [
+    "ORGANISMO",
+    "Inspecció"
+   ],
+   [
+    "AUTOS",
+    "I172026000041877"
+   ],
+   [
+    "AUTOS",
+    "17/0004321/26"
+   ],
+   [
+    "CIF",
+    "A17045823"
+   ],
+   [
+    "PERSONA",
+    "Montserrat Riera i Pla"
+   ],
+   [
+    "PERSONA",
+    "Jordi Puigvert Serra"
+   ],
+   [
+    "PERSONA",
+    "Puigvert"
+   ],
+   [
+    "OBJETO",
+    "membre del comitè d'empresa i delegat sindical de la secció sindical de CCOO"
+   ],
+   [
+    "OBJETO",
+    "portaveu del comitè de vaga"
+   ],
+   [
+    "ORGANISMO",
+    "comitè d'empresa"
+   ],
+   [
+    "PERSONA",
+    "Gemma Pujol Ferrer"
+   ],
+   [
+    "PERSONA",
+    "Xavier Roca Mas"
+   ],
+   [
+    "PERSONA",
+    "Roca Mas"
+   ],
+   [
+    "PERSONA",
+    "Roca"
+   ],
+   [
+    "OBJETO",
+    "És membre del comitè d'empresa des de 2019 (candidatura de CCOO) i delegat sindical de CCOO des de 2022"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un informe del seu metge d'atenció primària en què constava que pateix hipertensió arterial en tractament farmacològic i es desaconsellava el treball nocturn",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest comunista de merda ho pagarà",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "l'indepe",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el roig",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "A. H. J."
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gitano",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insinuant que podia sostreure coure del magatzem",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la seva condició de persona d'ètnia gitana",
+    "etnia"
+   ],
+   [
+    "PERSONA",
+    "M. V. C."
+   ],
+   [
+    "CAT_ESPECIAL",
+    "afiliada a CCOO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "relatius a la seva orientació sexual (lesbiana)",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situació d'incapacitat temporal per un trastorn d'ansietat des del 12 de març de 2026",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Y. E. A."
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de confessió musulmana",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la pausa breu que tenia autoritzada per a la pregària del migdia i que durant el mes de ramadà no se li va permetre desplaçar la pausa per trencar el dejuni",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situació d'incapacitat temporal des del 8 d'abril de 2026",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "l'activitat sindical i de la participació en la vaga"
+   ],
+   [
+    "NORMA",
+    "articles 28.1 i 28.2 de la Constitució espanyola"
+   ],
+   [
+    "NORMA",
+    "article 12 de la Llei orgànica 11/1985, de 2 d'agost, de llibertat sindical"
+   ],
+   [
+    "NORMA",
+    "article 4.2.c) de l'Estatut dels treballadors"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "assetjament per raó d'origen ètnic",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "per raó d'orientació sexual",
+    "sexual"
+   ],
+   [
+    "NORMA",
+    "article 8.12 del text refós de la Llei sobre infraccions i sancions en l'ordre social, aprovat pel Reial decret legislatiu 5/2000, de 4 d'agost (LISOS)"
+   ],
+   [
+    "NORMA",
+    "article 8.13 bis LISOS"
+   ],
+   [
+    "NORMA",
+    "article 17 del Reglament general sobre procediments per a la imposició de sancions per infraccions d'ordre social, aprovat pel Reial decret 928/1998, de 14 de maig"
+   ],
+   [
+    "ORGANISMO",
+    "Direcció General de Relacions Laborals, Treball Autònom, Seguretat i Salut Laboral"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-informe-psicologico.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "ELISENDA CAMPS TORRENT"
+   ],
+   [
+    "PERITO",
+    "Elisenda Camps Torrent"
+   ],
+   [
+    "ORGANISMO",
+    "Col·legi Oficial de Psicologia de Catalunya"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME PSICOLÓGICO CLÍNICO",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Jordi Puigvert Serra"
+   ],
+   [
+    "PERSONA",
+    "Puigvert"
+   ],
+   [
+    "DNI",
+    "40338917-M"
+   ],
+   [
+    "OBJETO",
+    "miembro del comité de empresa"
+   ],
+   [
+    "PERSONA",
+    "Laia Coromina Vidal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "malestar psicológico intenso",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "portavoz del comité de huelga"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipertensión arterial diagnosticada en 2021, en tratamiento con enalapril 10 mg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bruxismo nocturno con férula de descarga desde 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumador de unos 10 cigarrillos/día, con incremento a 20 en los últimos dos meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Un episodio depresivo leve en 2012, coincidiendo con su separación matrimonial, que remitió con psicoterapia sin tratamiento farmacológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No otros antecedentes psiquiátricos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega consumo de alcohol de riesgo u otros tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre de 78 años con enfermedad de Parkinson",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre fallecido en 2018 por cáncer de pulmón",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Sílvia"
+   ],
+   [
+    "PERSONA",
+    "Arnau"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnosticado de TDAH y dislexia, en tratamiento con metilfenidato (Concerta)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BDI-II: 29 (depresión moderada-grave)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad-Estado percentil 92; Ansiedad-Rasgo percentil 60",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "índice global de estrategias de acoso psicológico (IGAP) 1,85; número de estrategias (NEAP) 38",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Puntuaciones elevadas en las dimensiones de desprestigio laboral, bloqueo de la comunicación y desprestigio personal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no alcanza criterios para TEPT, aunque presenta reexperimentación (pensamientos intrusivos sobre los episodios vividos) y conductas de evitación (evita pasar por las inmediaciones de la fábrica)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "perfil válido. Escalas de validez sin indicios de sobredeclaración ni simulación. Elevación en las escalas de disfunción emocional (EID), ánimo bajo (RC2) y quejas somáticas (RC1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con tendencia a la rumiación sobre los acontecimientos laborales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estado de ánimo deprimido, labilidad emocional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "llanto al relatar el episodio del piquet de huelga",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest comunista de merda ho pagarà",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad elevada con síntomas somáticos: taquicardias, opresión torácica, cefaleas tensionales, epigastralgia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insomnio de conciliación y mantenimiento, agravado por la inversión del ritmo sueño-vigilia tras el paso al turno de noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Irritabilidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Disminución de la libido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sentimientos de culpa respecto de sus compañeros",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "meterme a sindicalista"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "y de indefensión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ideación autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sus cifras tensionales han empeorado",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pau Masó"
+   ],
+   [
+    "ORGANISMO",
+    "CAP Güell"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escitalopram 10 mg y alprazolam 0,5 mg (Trankimazin) por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le ha extendido la baja laboral desde el 8 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno adaptativo mixto con ansiedad y estado de ánimo deprimido, persistente (DSM-5-TR 309.28; CIE-10 F43.23), de intensidad moderada-grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "problemas relacionados con el empleo (CIE-10 Z56.6, Z56.4)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta un trastorno adaptativo mixto con ansiedad y estado de ánimo deprimido de intensidad moderada-grave, sin indicios de simulación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "principal factor desencadenante y de mantenimiento del cuadro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo leve de 2012",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "continuar el tratamiento farmacológico pautado, iniciar psicoterapia cognitivo-conductual con frecuencia semanal y evitar la reincorporación al turno de noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pronóstico favorable si cesa la situación estresora",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-declaracion-testigo-heredia.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Puigvert"
+   ],
+   [
+    "PERSONA",
+    "Laia Coromina Vidal"
+   ],
+   [
+    "PERSONA",
+    "Oriol Bosch Planas"
+   ],
+   [
+    "PERSONA",
+    "Antonio Heredia Jiménez"
+   ],
+   [
+    "PERSONA",
+    "Toni"
+   ],
+   [
+    "DNI",
+    "40552871-Q"
+   ],
+   [
+    "DIRECCION",
+    "calle Bisbe Sivilla n.º 21, bajos, 17005 Girona"
+   ],
+   [
+    "TELEFONO",
+    "618 77 02 39"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No está afiliado a ningún sindicato",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Secundó la huelga de febrero",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Marta Vilanova"
+   ],
+   [
+    "PERSONA",
+    "Youssef"
+   ],
+   [
+    "PERSONA",
+    "Roca"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest comunista de merda ho pagarà, us ho juro",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "Jordi"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "y tú, gitano, vigila que no desaparezca cobre del almacén, que ya sabemos cómo sois",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el gitano",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el de los mercadillos",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo soy gitano y estoy orgulloso, mi familia es de las de toda la vida de Vila-roja",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi padre es pastor en el culto de Filadelfia y yo voy al culto los domingos con mi mujer y los críos",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Ramon Fusté"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest indepe del sindicat no durarà gaire",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el roig",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el de les estelades",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me dijo que no dormía y que el médico le había subido la pastilla de la tensión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se puso blanco y tuvo que sentarse, dijo que le iba el corazón a mil",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Marta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bollera",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la tortillera",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo que le falta es un hombre",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ella tiene novia, la Laura",
+    "sexual"
+   ],
+   [
+    "PERSONA",
+    "Laura"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ella está de baja desde marzo, con ansiedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su novia",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está tomando pastillas y yendo al psicólogo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Youssef El Amrani"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le quitaron la pausa que tenía para rezar al mediodía",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En el ramadán le dejaban antes cambiar la pausa para comer algo cuando se ponía el sol",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquí se viene a trabajar y no a la mezquita",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Ramon"
+   ],
+   [
+    "DATO_PENAL",
+    "estuvo en Brians 1 por unos robos de cobre"
+   ],
+   [
+    "DATO_PENAL",
+    "en 2010 tuvo una condena por una pelea en una verbena (lesiones leves), con multa ya pagada y antecedentes cancelados"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene asma desde niño y usa inhalador (Ventolin)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su mujer dio a luz",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Josep Trueta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por cesárea y tuvo complicaciones",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "su condena de 2010"
+   ],
+   [
+    "NORMA",
+    "art. 92 LRJS"
+   ],
+   [
+    "PERSONA",
+    "L. C. V."
+   ],
+   [
+    "PERSONA",
+    "Puigvert Serra"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-tutela-derechos-fundamentales.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE GIRONA"
+   ],
+   [
+    "NORMA",
+    "artículos 177 a 184 LRJS"
+   ],
+   [
+    "PERSONA",
+    "LAIA COROMINA VIDAL"
+   ],
+   [
+    "PERSONA",
+    "Laia Coromina Vidal"
+   ],
+   [
+    "ORGANISMO",
+    "Il·lustre Col·legi de l'Advocacia de Girona"
+   ],
+   [
+    "ORGANISMO",
+    "ICAG"
+   ],
+   [
+    "CORREO",
+    "lcoromina@coromina-advocats.cat"
+   ],
+   [
+    "PERSONA",
+    "JORDI PUIGVERT SERRA"
+   ],
+   [
+    "DNI",
+    "40338917-M"
+   ],
+   [
+    "NUSS",
+    "17/00983214/62"
+   ],
+   [
+    "DIRECCION",
+    "calle de la Rutlla n.º 64, 2.º 1.ª, 17002 Girona"
+   ],
+   [
+    "TELEFONO",
+    "682 30 14 77"
+   ],
+   [
+    "OBJETO",
+    "LIBERTAD SINDICAL"
+   ],
+   [
+    "OBJETO",
+    "garantía de indemnidad y de derecho de huelga"
+   ],
+   [
+    "NORMA",
+    "artículo 26.2 LRJS"
+   ],
+   [
+    "CIF",
+    "A17045823"
+   ],
+   [
+    "PERSONA",
+    "XAVIER ROCA MAS"
+   ],
+   [
+    "NORMA",
+    "artículo 177.4 LRJS"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "NORMA",
+    "Convenio colectivo de la industria del cartón ondulado"
+   ],
+   [
+    "OBJETO",
+    "El actor es miembro del comité de empresa desde las elecciones de 2019, en las que fue elegido en la candidatura de CCOO, y es delegado sindical de la sección sindical de CCOO en la empresa desde 2022"
+   ],
+   [
+    "OBJETO",
+    "formó parte del comité de huelga y actuó como su portavoz"
+   ],
+   [
+    "PERSONA",
+    "Roca Mas"
+   ],
+   [
+    "PERSONA",
+    "Roca"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest comunista de merda ho pagarà, us ho juro",
+    "politica"
+   ],
+   [
+    "PERSONA",
+    "Antonio Heredia Jiménez"
+   ],
+   [
+    "PERSONA",
+    "Marta Vilanova Coll"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "l'indepe",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el roig",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el de les estelades",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquest indepe del sindicat no durarà gaire",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el actor fue candidato en la lista de Esquerra Republicana de Catalunya a las elecciones municipales de 2023 en Salt",
+    "politica"
+   ],
+   [
+    "OBJETO",
+    "actividad sindical"
+   ],
+   [
+    "OBJETO",
+    "su participación en la huelga"
+   ],
+   [
+    "PERSONA",
+    "Heredia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "expresiones de contenido racista",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "comentarios despectivos sobre su orientación sexual",
+    "sexual"
+   ],
+   [
+    "ORGANISMO",
+    "comité de empresa"
+   ],
+   [
+    "OBJETO",
+    "funciones representativas"
+   ],
+   [
+    "OBJETO",
+    "crédito horario sindical"
+   ],
+   [
+    "OBJETO",
+    "la reunión solicitada por la sección sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un informe de su médico de atención primaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece hipertensión arterial en tratamiento con enalapril y se desaconsejaba el trabajo nocturno",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2 de la Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+   ],
+   [
+    "ORGANISMO",
+    "Inspecció de Treball de Catalunya"
+   ],
+   [
+    "AUTOS",
+    "I172026000041877"
+   ],
+   [
+    "OBJETO",
+    "una conducta discriminatoria por razón de la actividad sindical y de la participación en la huelga"
+   ],
+   [
+    "NORMA",
+    "artículo 8.12 LISOS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Daños en la salud del actor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno adaptativo mixto con ansiedad y estado de ánimo deprimido de intensidad moderada-grave, con insomnio, taquicardias, cefaleas y empeoramiento de sus cifras tensionales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal desde el 8 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento con escitalopram y alprazolam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe psicológico",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Elisenda Camps Torrent"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "excluye la simulación",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 64.1 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículos 2.f), 10.1 y 177 y siguientes LRJS"
+   ],
+   [
+    "NORMA",
+    "artículos 26.2 y 184 LRJS"
+   ],
+   [
+    "OBJETO",
+    "libertad sindical"
+   ],
+   [
+    "OBJETO",
+    "derecho de huelga"
+   ],
+   [
+    "NORMA",
+    "artículo 28.1 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "artículo 28.2 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "artículos 2.1.d), 12 y 13 de la Ley Orgánica 11/1985, de 2 de agosto, de Libertad Sindical"
+   ],
+   [
+    "NORMA",
+    "artículo 68.c) del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "artículo 4.2.c) del mismo texto legal"
+   ],
+   [
+    "NORMA",
+    "artículo 181.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "STC 38/1981, de 23 de noviembre"
+   ],
+   [
+    "NORMA",
+    "STC 90/1997, de 6 de mayo"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección de Trabajo"
+   ],
+   [
+    "NORMA",
+    "artículos 115.1.d) LRJS y 55.5 ET"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2 de la Ley de Prevención de Riesgos Laborales"
+   ],
+   [
+    "NORMA",
+    "artículos 179.3, 182.1.d) y 183 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 40.1.c) LISOS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gastos de tratamiento psicológico",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "artículo 90.3 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 92 LRJS"
+   ],
+   [
+    "PERSONA",
+    "Pere Casals Ribas"
+   ],
+   [
+    "NORMA",
+    "artículo 180 LRJS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el perjuicio para su salud",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "función representativa"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

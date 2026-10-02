@@ -1,0 +1,902 @@
+[
+ {
+  "n": 1,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "importes de nómina; dato económico no identificativo"
+ },
+ {
+  "n": 2,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 3,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 4,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo de sección"
+ },
+ {
+  "n": 5,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 6,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 7,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 8,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 9,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 10,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 11,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 12,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "cita del Reglamento General de Conductores"
+ },
+ {
+  "n": 13,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 14,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "implica medicación y logopeda del menor"
+ },
+ {
+  "n": 15,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 16,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 17,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 18,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 19,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "cita del Reglamento General de Conductores"
+ },
+ {
+  "n": 20,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "prueba psicométrica aplicada a la persona"
+ },
+ {
+  "n": 21,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 22,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 23,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 24,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 25,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "nota del abogado: menciona religión/salud sin dar el dato"
+ },
+ {
+  "n": 26,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 27,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 28,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "protocolo de servicios sociales, no art. 9"
+ },
+ {
+  "n": 29,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 30,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "dirección de oficina de la aseguradora (no persona física)"
+ },
+ {
+  "n": 31,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 32,
+  "categoria": "neutro",
+  "mixto": true,
+  "nota": "rótulo + fecha de consulta sin contenido clínico"
+ },
+ {
+  "n": 33,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 34,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 35,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo de formulario"
+ },
+ {
+  "n": 36,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "dirección de la aseguradora (no persona física)"
+ },
+ {
+  "n": 37,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 38,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo de formulario"
+ },
+ {
+  "n": 39,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 40,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "cargo en antefirma"
+ },
+ {
+  "n": 41,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 42,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 43,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "efecto/síntoma de la medicación del actor"
+ },
+ {
+  "n": 44,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 45,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 46,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo"
+ },
+ {
+  "n": 47,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 48,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 49,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 50,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 51,
+  "categoria": "personal",
+  "mixto": false,
+  "nota": "n.º de caso del laboratorio, identificador"
+ },
+ {
+  "n": 52,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 53,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 54,
+  "categoria": "personal",
+  "mixto": false,
+  "nota": "fecha de nacimiento del actor"
+ },
+ {
+  "n": 55,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 56,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 57,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 58,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 59,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 60,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 61,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "existencia de analítica del demandado (prueba clínica); límite"
+ },
+ {
+  "n": 62,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 63,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo"
+ },
+ {
+  "n": 64,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 65,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 66,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "resultado de test psicológico de la madre"
+ },
+ {
+  "n": 67,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 68,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 69,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 70,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 71,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "tratamiento farmacológico de la persona"
+ },
+ {
+  "n": 72,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 73,
+  "categoria": "neutro",
+  "mixto": true,
+  "nota": "separador + rótulo; solo el n.º insinúa un 2.º antecedente"
+ },
+ {
+  "n": 74,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 75,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 76,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 77,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 78,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 79,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 80,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 81,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "importe de nómina; no identificativo"
+ },
+ {
+  "n": 82,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 83,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 84,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo del certificado"
+ },
+ {
+  "n": 85,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 86,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 87,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 88,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 89,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 90,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 91,
+  "categoria": "personal",
+  "mixto": false,
+  "nota": "filiación (estado civil), no art. 9"
+ },
+ {
+  "n": 92,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 93,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 94,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 95,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "razonamiento jurídico sobre el frotis"
+ },
+ {
+  "n": 96,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo del certificado"
+ },
+ {
+  "n": 97,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 98,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 99,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 100,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "metodología genérica del laboratorio"
+ },
+ {
+  "n": 101,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "dirección del juzgado"
+ },
+ {
+  "n": 102,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo"
+ },
+ {
+  "n": 103,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 104,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "pena pedida al acusado (art. 10)"
+ },
+ {
+  "n": 105,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 106,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "exploración del estado mental del paciente"
+ },
+ {
+  "n": 107,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo del certificado"
+ },
+ {
+  "n": 108,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 109,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 110,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 111,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo"
+ },
+ {
+  "n": 112,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "cargo de la conciliadora"
+ },
+ {
+  "n": 113,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 114,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 115,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 116,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "embarazo y consejo de su ginecóloga"
+ },
+ {
+  "n": 117,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "razonamiento jurídico sobre la prueba genética"
+ },
+ {
+  "n": 118,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 119,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "pena pedida al acusado (art. 10)"
+ },
+ {
+  "n": 120,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 121,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 122,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 123,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "el menor acude a logopeda (tratamiento)"
+ },
+ {
+  "n": 124,
+  "categoria": "personal",
+  "mixto": false,
+  "nota": "edad del menor"
+ },
+ {
+  "n": 125,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 126,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 127,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "intervención por consumo de alcohol (adicciones)"
+ },
+ {
+  "n": 128,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "rótulo de pregunta del cuestionario"
+ },
+ {
+  "n": 129,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 130,
+  "categoria": "sensible",
+  "mixto": false,
+  "nota": "pena pedida al acusado (art. 10)"
+ },
+ {
+  "n": 131,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 132,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 133,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 134,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 135,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 136,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 137,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 138,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 139,
+  "categoria": "general",
+  "mixto": false,
+  "nota": "metodología genérica del laboratorio"
+ },
+ {
+  "n": 140,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 141,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 142,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 143,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 144,
+  "categoria": "personal",
+  "mixto": false,
+  "nota": "nombre del despacho = apellidos de la abogada"
+ },
+ {
+  "n": 145,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 146,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 147,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 148,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ },
+ {
+  "n": 149,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "nombre de garantía del seguro"
+ },
+ {
+  "n": 150,
+  "categoria": "neutro",
+  "mixto": false,
+  "nota": "conector/relleno; el dato está fuera del tramo tapado"
+ }
+]

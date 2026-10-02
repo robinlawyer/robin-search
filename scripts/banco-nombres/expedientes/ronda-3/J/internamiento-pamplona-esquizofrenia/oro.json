@@ -1,0 +1,1483 @@
+{
+ "01-parte-intervencion-policia-municipal.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "AYUNTAMIENT0 DE PAMPL0NA"
+   ],
+   [
+    "ORGANISMO",
+    "P0LICIA MUNICIPAL DE PAMPL0NA"
+   ],
+   [
+    "ORGANISMO",
+    "UNIDAD DE PR0TECCI0N Y ATENCI0N CIUDADANA (UPAC)"
+   ],
+   [
+    "ORGANISMO",
+    "SNS-0"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICI0 DE URGENCIAS DEL C0MPLEJ0 H0SPITALARI0 DE NAVARRA"
+   ],
+   [
+    "ORGANISMO",
+    "CENTRO DE SALUD MENTAL DE ERMITAGAÑA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE L0 PENAL N. 2 DE PAMPL0NA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE GUARDIA DE PAMPL0NA"
+   ],
+   [
+    "AUTOS",
+    "2026/PM/0l8834"
+   ],
+   [
+    "NORMA",
+    "ART. 36.l6 DE LA L0 4/20l5"
+   ],
+   [
+    "DIRECCION",
+    "CALLE SANTESTEBAN, 7, 3 IZDA, 3l0l5 PAMPL0NA"
+   ],
+   [
+    "PERSONA",
+    "ALF0NS0 BERRADE IR IARTE"
+   ],
+   [
+    "PERSONA",
+    "IÑIG0 ZUBIRI LACUNZA"
+   ],
+   [
+    "PERSONA",
+    "MAITE ZUBIRI LACUNZA"
+   ],
+   [
+    "AGENTE",
+    "UNAI ETXARRI G0ÑI"
+   ],
+   [
+    "AGENTE",
+    "LEIRE MENDIVE SAEZ"
+   ],
+   [
+    "TIP",
+    "0457"
+   ],
+   [
+    "TIP",
+    "06l2"
+   ],
+   [
+    "TELEFONO",
+    "6l9 330 74l"
+   ],
+   [
+    "TELEFONO",
+    "688 4l2 077"
+   ],
+   [
+    "TELEFONO",
+    "646 0l8 552"
+   ],
+   [
+    "DNI",
+    "44628l93-R"
+   ],
+   [
+    "OBJETO",
+    "P0SIBLE DELIT0 DE AMENAZAS"
+   ],
+   [
+    "DATO_PENAL",
+    "C0ND ENA P0R DELIT0 DE AMENAZAS"
+   ],
+   [
+    "DATO_PENAL",
+    "0RDEN DE ALEJAMIENT0 YA EXTINGUIDA RESPECT0 DEL MISM0 VECIN0 REQUIRENTE"
+   ],
+   [
+    "DATO_PENAL",
+    "DETENCI0N EN 20l9 P0R DAÑ0S EN VEHICUL0S"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "METE V0CES P0R EL ENCHUFE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MUY AGITAD0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA ERTZAINTZA Y EL VECIN0 ME HAN METID0 UN CHIP EN LA MUELA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "M0SSAD Y L0S DEL 0PUS ME VIGILAN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FUERTE 0L0R A CANNABIS PR0CEDENTE DE LA VIVIENDA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ESQUIZ0FRENIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HACE DOS MESES QUE NO SE PINCHA EL XEPLI0N",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FUMA PORROS TODO EL DIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0N C0NTENCI0N MECANICA PREVENTIVA EN LA CAMILLA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SU INGRES0 N0 V0LUNTARI0 URGENTE",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-psiquiatra-chn.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO NAVARRO DE SALUD - OSASUNBIDEA"
+   ],
+   [
+    "ORGANISMO",
+    "COMPLEJO HOSPITALARIO DE NAVARRA"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Psiquiatría"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización Psiquiátrica II (UHP-II)"
+   ],
+   [
+    "ORGANISMO",
+    "UHP-II"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Municipal"
+   ],
+   [
+    "ORGANISMO",
+    "SNS-O"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Mental de Ermitagaña"
+   ],
+   [
+    "ORGANISMO",
+    "Gobierno de Navarra"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE PAMPLONA/IRUÑA"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 2 de Pamplona"
+   ],
+   [
+    "NORMA",
+    "art. 763.1 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "PERSONA",
+    "IÑIGO ZUBIRI LACUNZA"
+   ],
+   [
+    "PERSONA",
+    "Maite Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Arantxa Iriarte Oteiza"
+   ],
+   [
+    "PERSONA",
+    "Koldo Aranburu Lasa"
+   ],
+   [
+    "PERSONA",
+    "Edurne Ganuza"
+   ],
+   [
+    "DNI",
+    "44628193-R"
+   ],
+   [
+    "NUSS",
+    "00731562"
+   ],
+   [
+    "NUSS",
+    "1004418257"
+   ],
+   [
+    "DIRECCION",
+    "C/ Santesteban, 7, 3.º izda., 31015 Pamplona"
+   ],
+   [
+    "TELEFONO",
+    "646 018 552"
+   ],
+   [
+    "DATO_PENAL",
+    "condena en 2022 por un delito de amenazas al mismo vecino"
+   ],
+   [
+    "DATO_PENAL",
+    "orden de alejamiento ya extinguida"
+   ],
+   [
+    "DATO_PENAL",
+    "detenido en 2019 por daños"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INGRESO NO VOLUNTARIO URGENTE E INFORME CLÍNICO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio de agitación psicomotriz con conducta heteroagresiva verbal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ideación delirante de perjuicio y control centrada en él",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abandono del tratamiento depot desde hace aproximadamente dos meses y consumo diario de cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esquizofrenia paranoide (F20.0) diagnosticada en 2011, tras primer episodio psicótico a los 21 años coincidiendo con consumo intensivo de cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cinco ingresos previos en esta unidad (2011, 2014, 2017, 2020 —este último también involuntario— y 2023)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "palmitato de paliperidona (Xeplion) 150 mg intramuscular mensual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "olanzapina (Zyprexa) 10 mg si insomnio o inquietud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cannabis grave (F12.20): 6-8 porros/día de marihuana de alta potencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo esporádico de cocaína en el pasado (último en 2021, según refiere)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tabaquismo de 30 cigarrillos/día. EPOC leve (espirometría 2025: FEV1 72 %). Hepatitis C tratada y curada en 2019 (antivirales de acción directa, RVS).",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Obesidad grado I (IMC 31) y prediabetes, atribuidas en parte a los antipsicóticos. Dislipemia.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discapacidad reconocida del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pensionista por incapacidad permanente absoluta desde 2016",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre fallecido en 2015 por cirrosis hepática enólica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tío paterno con «algo de nervios, estuvo en el psiquiátrico de Pamplona»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "secuelas de ictus (hemiparesia derecha) y enfermedad de Parkinson, en residencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aspecto descuidado, higiene deficiente. Inquieto, suspicaz y hostil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "requiere contención mecánica en urgencias durante 4 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso tangencial, con pararrespuestas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ideación delirante de perjuicio, vigilancia y control",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cree que el vecino y «la Ertzaintza» le han implantado un chip dental para meterle pensamientos, y que el Mossad y el Opus Dei le persiguen",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alucinaciones auditivas en segunda y tercera persona (voces que le insultan y comentan sus actos) y fenómenos de difusión del pensamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ideación autolítica. Ideación heteroagresiva hacia el vecino, que no critica. Ánimo disfórico.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insight nulo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo no estoy enfermo, el enfermo es el de enfrente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rechaza la medicación y el ingreso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CANNABINOIDES POSITIVO (> 300 ng/ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cocaína, opiáceos, anfetaminas y benzodiacepinas negativos. Etanol en sangre 0,00 g/l.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "glucosa 118, CPK 640 (por la agitación)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niveles plasmáticos de paliperidona indetectables",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ritmo sinusal, QTc 438 ms",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VIH negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esquizofrenia paranoide, episodio agudo de descompensación psicótica por abandono del tratamiento antipsicótico y consumo de cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cannabis grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Riesgo de heteroagresividad alto (HCR-20 V3: riesgo alto a corto plazo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Olanzapina 20 mg/día vo (o 10 mg im si rechaza vía oral), lorazepam (Orfidal) 1 mg/8 h, reintroducción de Xeplion con dosis de carga (150 mg día 1 y 100 mg día 8). Nicotina en parches 21 mg.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno psíquico grave que anula su capacidad para decidir sobre el tratamiento, con ausencia total de conciencia de enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "abandono de autocuidados, consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el tratamiento ambulatorio ha fracasado por falta de adherencia",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-auto-ratificacion-internamiento.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA N.º 3 DE PAMPLONA/IRUÑA"
+   ],
+   [
+    "ORGANO",
+    "IRUÑEKO LEHEN AUZIALDIKO 3. ZK.KO EPAITEGIA"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 3 de Pamplona/Iruña"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Navarra"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción"
+   ],
+   [
+    "ORGANO",
+    "Decanato"
+   ],
+   [
+    "AUTOS",
+    "Internamiento no voluntario urgente n.º 1187/2026"
+   ],
+   [
+    "AUTOS",
+    "31201 42 1 2026 0011873"
+   ],
+   [
+    "AUTOS",
+    "AUTO N.º 512/2026"
+   ],
+   [
+    "PONENTE",
+    "Begoña Echarri Sola"
+   ],
+   [
+    "LAJ",
+    "Fermín Oroz Garde"
+   ],
+   [
+    "PERSONA",
+    "IÑIGO ZUBIRI LACUNZA"
+   ],
+   [
+    "PERSONA",
+    "Iñigo Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Arantxa Iriarte Oteiza"
+   ],
+   [
+    "PERSONA",
+    "Zubiri"
+   ],
+   [
+    "PERSONA",
+    "Garazi Lekuona Erro"
+   ],
+   [
+    "PERSONA",
+    "Mikel Azcona Ibarrola"
+   ],
+   [
+    "PERSONA",
+    "Maite Zubiri Lacunza"
+   ],
+   [
+    "PERITO",
+    "Javier Elizalde Urra"
+   ],
+   [
+    "ORGANISMO",
+    "Complejo Hospitalario de Navarra"
+   ],
+   [
+    "ORGANISMO",
+    "UHP-II"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio de la Abogacía de Pamplona"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización Psiquiátrica del Complejo Hospitalario de Navarra"
+   ],
+   [
+    "NORMA",
+    "artículo 763 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "NORMA",
+    "STC 141/2012, de 2 de julio"
+   ],
+   [
+    "NORMA",
+    "STC 22/2016, de 15 de febrero"
+   ],
+   [
+    "NORMA",
+    "arts. 249 y siguientes del Código Civil"
+   ],
+   [
+    "NORMA",
+    "Ley 8/2021, de 2 de junio"
+   ],
+   [
+    "NORMA",
+    "art. 763.4 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 458 LEC"
+   ],
+   [
+    "OBJETO",
+    "esquizofrenia paranoide"
+   ],
+   [
+    "OBJETO",
+    "internamiento no voluntario"
+   ],
+   [
+    "OBJETO",
+    "ingreso no voluntario urgente"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en fase de descompensación aguda, con ideación delirante de perjuicio, alucinaciones auditivas y nula conciencia de enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "agravada por el consumo de tóxicos (cannabis)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "suspicaz pero colaborador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el vecino le mete voces por el enchufe",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la medicación le deja tonto y le ha hecho engordar 20 kilos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el cannabis «le relaja»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su madre está en una residencia desde hace un año tras un ictus",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dejó de ponerse la inyección en julio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde entonces fuma porros día y noche y no duerme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha dejado de comer «porque dice que le envenenan la comida»",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "como ocurrió en 2022 con el mismo vecino"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su religión (es testigo de Jehová) le impide aceptar algunos aspectos del tratamiento y que su congregación la apoya",
+    "religion"
+   ],
+   [
+    "DATO_PENAL",
+    "Los antecedentes penales de 2022 y la detención de 2019"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-social.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO NAVARRO DE SALUD - OSASUNBIDEA"
+   ],
+   [
+    "ORGANISMO",
+    "Red de Salud Mental de Navarra"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Mental de Ermitagaña"
+   ],
+   [
+    "ORGANISMO",
+    "UHP-II"
+   ],
+   [
+    "ORGANISMO",
+    "Complejo Hospitalario de Navarra"
+   ],
+   [
+    "ORGANISMO",
+    "Residencia Txantrea Zaharra"
+   ],
+   [
+    "ORGANISMO",
+    "Agencia Navarra de Autonomía y Desarrollo de las Personas"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Atención a la Salud Sexual y Reproductiva (CASSYR)"
+   ],
+   [
+    "ORGANISMO",
+    "Programa de Tratamiento Asertivo Comunitario (ETAC)"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Media Estancia (UME) del Hospital San Francisco Javier"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación Argibide"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Programa de Drogodependencias"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 3 de Pamplona/Iruña"
+   ],
+   [
+    "AUTOS",
+    "1187/2026"
+   ],
+   [
+    "NORMA",
+    "Ley 8/2021"
+   ],
+   [
+    "PERSONA",
+    "Iñigo Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Amaia Goikoetxea Ruiz"
+   ],
+   [
+    "PERSONA",
+    "Iñigo"
+   ],
+   [
+    "PERSONA",
+    "Josefina Lacunza Arraiza"
+   ],
+   [
+    "PERSONA",
+    "Maite Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Xabier Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Xabier"
+   ],
+   [
+    "PERSONA",
+    "Vanesa Jiménez Borja"
+   ],
+   [
+    "PERSONA",
+    "Naia"
+   ],
+   [
+    "PERSONA",
+    "Alfonso Berrade Iriarte"
+   ],
+   [
+    "NUSS",
+    "00731562"
+   ],
+   [
+    "DIRECCION",
+    "calle Santesteban, 7, 3.º izquierda"
+   ],
+   [
+    "DIRECCION",
+    "C/ Joaquín Beunza, 21, 2.º B"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras sufrir un ictus en 2025 quedó con hemiparesia derecha y afasia y, por su enfermedad de Parkinson avanzada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado II de dependencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a la inyección mensual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pertenece a la comunidad de los Testigos Cristianos de Jehová desde hace quince años (acude dos veces por semana al Salón del Reino de Ansoáin)",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si Iñigo necesitara una transfusión, ella «no podría firmarla»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en su congregación le aconsejan «poner distancia» con el hermano por su consumo de drogas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere agotamiento y está en tratamiento con su médica de familia por ansiedad y «una úlcera de los nervios»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiene un hijo con TEA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de etnia gitana",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tras el ingreso de ese año",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pensión de incapacidad permanente absoluta de 1.048,20 €/mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discapacidad del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una multa por tenencia de marihuana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gasta entre 250 y 300 €/mes en cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vinculado al movimiento juvenil de la izquierda abertzale (Ernai)",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de su ideación delirante incorpora contenidos políticos («la Ertzaintza me ha puesto un chip»)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere haber mantenido relaciones sexuales esporádicas sin protección con personas que conoce por aplicaciones",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cribado de ITS",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "condena de 2022 por amenazas al vecino del 3.º derecha"
+   ],
+   [
+    "DATO_PENAL",
+    "orden de alejamiento ya cumplida"
+   ],
+   [
+    "DATO_PENAL",
+    "detención en 2019 por daños en vehículos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo activo de tóxicos y nula adherencia al tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "para el consumo de cannabis",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-whatsapp-familia.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Xabi"
+   ],
+   [
+    "PERSONA",
+    "Iñigo"
+   ],
+   [
+    "PERSONA",
+    "Edurne"
+   ],
+   [
+    "PERSONA",
+    "Xabier"
+   ],
+   [
+    "PERSONA",
+    "Koldo"
+   ],
+   [
+    "PERSONA",
+    "Garazi"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no ha ido hoy al CSM a pincharse",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "azken aldian oso arraro dago telefonoan",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el xeplion le deja como un zombi y que se le hincha la tripa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fuma porros a todas horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "psikiatrari",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dice desde dentro que le escuchamos por el enchufe",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "igual que en 2020",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "que ya tiene una condena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ama ez dago horretarako, ictusaren ondoren ia ez du hitz egiten",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bastante tiene en la residencia con el parkinson",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el vecino me mete voces",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ertzaintza tiene el chip en mi muela",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gaur ez erre gehiago",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tómate la olanzapina que tienes en el cajón",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "voy a la reunión del Salón del Reino y voy a pedir que oren por él. Jehová sabe lo que hace",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otoitzak ondo daude",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Iñigok psikiatra behar du",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No me hables así de mi fe",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo han llevado a urgencias del hospital de Navarra atado en la camilla",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se queda ingresado aunque él no quiera",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me tiemblan las piernas. Me he tomado un lexatin de los míos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo dejan ingresado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y si le tienen que poner sangre que no me llamen a mí que yo no firmo",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ya no oigo tanto las voces. Me han pinchado el xeplion otra vez y me dan zyprexa. Engordo como un cerdo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me pincho yo en el csm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Que no quiero estar con los locos de aquí, hay uno que se caga encima",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-hermano-abogada.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Xabier Zubiri"
+   ],
+   [
+    "PERSONA",
+    "Garazi Lekuona"
+   ],
+   [
+    "PERSONA",
+    "Garazi"
+   ],
+   [
+    "PERSONA",
+    "Xabier"
+   ],
+   [
+    "PERSONA",
+    "Iñigo"
+   ],
+   [
+    "PERSONA",
+    "Edurne"
+   ],
+   [
+    "PERSONA",
+    "Alfonso"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Xabier Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Unax"
+   ],
+   [
+    "CORREO",
+    "xzubiri.lacunza@gmail.com"
+   ],
+   [
+    "CORREO",
+    "garazi.lekuona@lekuonaabokatuak.eus"
+   ],
+   [
+    "DNI",
+    "44631907-M"
+   ],
+   [
+    "DIRECCION",
+    "C/ Askatasuna 14, 4.º A, 48200 Durango"
+   ],
+   [
+    "TELEFONO",
+    "627 914 306"
+   ],
+   [
+    "TELEFONO",
+    "646 018 552"
+   ],
+   [
+    "ORGANISMO",
+    "CSM de Ermitagaña"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ya no habla tanto del chip ni de las voces, duerme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se pone el Xeplion",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Le diagnosticaron esquizofrenia paranoide en 2011, con 21 años, cuando estaba todo el día fumando porros con la cuadrilla",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha tenido cinco o seis ingresos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Siempre que deja la inyección y vuelve a fumar, recae",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuando está con la medicación",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "Lo de la condena de 2022"
+   ],
+   [
+    "DATO_PENAL",
+    "Le dijo que le iba a tirar por la ventana, le pusieron una orden de alejamiento de 6 meses y la cumplió"
+   ],
+   [
+    "DATO_PENAL",
+    "En 2019 le detuvieron por romper retrovisores de coches en la calle"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "borracho y colocado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la Ertzaintza y el Mossad es el delirio de siempre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "De joven anduvo con los de Ernai (pintadas y tal)",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo voto a Bildu",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nuestra madre está en la residencia de la Txantrea desde el ictus",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiene parkinson y casi no habla",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Maite es testigo de Jehová desde hace años",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo vive como una prueba de fe",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está quemada, toma pastillas para los nervios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "necesita sangre, ella se oponga",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene autismo, TEA grado 2",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-recurso-apelacion.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA N.º 3 DE PAMPLONA/IRUÑA"
+   ],
+   [
+    "ORGANO",
+    "AUDIENCIA PROVINCIAL DE NAVARRA"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Navarra"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 4 de Pamplona"
+   ],
+   [
+    "AUTOS",
+    "Internamiento no voluntario urgente n.º 1187/2026"
+   ],
+   [
+    "AUTOS",
+    "31201 42 1 2026 0011873"
+   ],
+   [
+    "AUTOS",
+    "Auto n.º 512/2026"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 1544/2026"
+   ],
+   [
+    "PERSONA",
+    "AINHOA URDIAIN VIDAURRE"
+   ],
+   [
+    "PERSONA",
+    "IÑIGO ZUBIRI LACUNZA"
+   ],
+   [
+    "PERSONA",
+    "GARAZI LEKUONA ERRO"
+   ],
+   [
+    "PERSONA",
+    "Zubiri"
+   ],
+   [
+    "PERSONA",
+    "Xabier Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Maite Zubiri Lacunza"
+   ],
+   [
+    "PERSONA",
+    "Xabier"
+   ],
+   [
+    "PERSONA",
+    "Garazi Lekuona Erro"
+   ],
+   [
+    "PERSONA",
+    "Ainhoa Urdiain Vidaurre"
+   ],
+   [
+    "PERITO",
+    "Javier Elizalde Urra"
+   ],
+   [
+    "DNI",
+    "44628193-R"
+   ],
+   [
+    "ORGANISMO",
+    "UHP-II"
+   ],
+   [
+    "ORGANISMO",
+    "Complejo Hospitalario de Navarra"
+   ],
+   [
+    "ORGANISMO",
+    "Muy Ilustre Colegio de la Abogacía de Pamplona"
+   ],
+   [
+    "ORGANISMO",
+    "CSM de Ermitagaña"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Tratamiento Asertivo Comunitario"
+   ],
+   [
+    "ORGANISMO",
+    "Programa de Drogodependencias"
+   ],
+   [
+    "NORMA",
+    "artículos 455 y 458 de la Ley de Enjuiciamiento Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 763 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 17 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "art. 24 CE"
+   ],
+   [
+    "NORMA",
+    "art. 758 LEC"
+   ],
+   [
+    "NORMA",
+    "STC 132/2016, de 18 de julio"
+   ],
+   [
+    "NORMA",
+    "art. 225.3.º LEC"
+   ],
+   [
+    "NORMA",
+    "art. 14 de la Convención sobre los derechos de las personas con discapacidad"
+   ],
+   [
+    "NORMA",
+    "STC 34/2016, de 29 de febrero"
+   ],
+   [
+    "NORMA",
+    "art. 255 CC"
+   ],
+   [
+    "NORMA",
+    "arts. 756 y siguientes LEC"
+   ],
+   [
+    "NORMA",
+    "art. 460 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 2 de la Ley 1/1996, de 10 de enero"
+   ],
+   [
+    "OBJETO",
+    "esquizofrenia paranoide"
+   ],
+   [
+    "OBJETO",
+    "internamiento no voluntario"
+   ],
+   [
+    "OBJETO",
+    "internamiento involuntario"
+   ],
+   [
+    "DATO_PENAL",
+    "la condena de 2022 por amenazas y la detención de 2019"
+   ],
+   [
+    "DATO_PENAL",
+    "lo que ocurrió en 2022 con el mismo vecino"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encontraba descompensado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escala HCR-20, que puntúa la violencia previa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nota de evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "remisión parcial de la sintomatología positiva, sin heteroagresividad, con crítica parcial de la ideación delirante y aceptación de la medicación depot",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha aceptado el Xeplion y la olanzapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le administraba la inyección mensual sin incidencias hasta julio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por sus convicciones religiosas, no autorizaría una transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las creencias de la Sra. Zubiri",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo de cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo de cannabis de mi mandante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es cierto que consume y que el consumo agrava su enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno por consumo de sustancias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pensionista por incapacidad permanente y tiene reconocida una discapacidad del 65 %",
+    "salud"
+   ]
+  ],
+  "ambiguo": [
+   "Zubiri"
+  ]
+ }
+}

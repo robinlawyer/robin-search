@@ -1,0 +1,1805 @@
+{
+ "01-partes-baja-it.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GENERALITAT VALENCIANA - C0NSELLERIA DE SANITAT"
+   ],
+   [
+    "ORGANISMO",
+    "AGENCIA VALENCIANA DE SALUT - DEPARTAMENT ALACANT HOSPITAL GENERAL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARTE MEDIC0 DE BAJA/ALTA DE INCAPACIDAD TEMP0RAL P0R C0NTINGENCIAS C0MUNES",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "RD 625/2014, DE l8 DE JULI0"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ENFERMEDAD C0MUN",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "ESCRIVA M0LLA, RAUL"
+   ],
+   [
+    "DNI",
+    "48573921-K"
+   ],
+   [
+    "NUSS",
+    "03 l0458293 7l"
+   ],
+   [
+    "DIRECCION",
+    "C/ D0CT0R JUST, l4, 3. B - 03007 ALICANTE"
+   ],
+   [
+    "TELEFONO",
+    "6l2 448 093"
+   ],
+   [
+    "NUSS",
+    "3l20 5588 74"
+   ],
+   [
+    "CIF",
+    "B-03984512"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FECHA DE LA BAJA: l2/0l/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LARGA (MAS DE 6l DIAS)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F3l.2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAST0RN0 BIP0LAR, EPIS0DI0 ACTUAL MANIAC0 GRAVE C0N SINT0MAS PSIC0TIC0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0NSUM0 PERJUDICIAL DE ALC0H0L ASOCIAD0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fl0.l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0 APT0 PARA TAREAS C0N RIESG0 (FUEG0S, CUCHILL0S, TURNICIDAD)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PRECISA AJUSTE DE TRATAMIENT0 Y SEGUIMIENT0 P0R USM",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "MARIA DEL CARMEN B0R0NAT SEVILA"
+   ],
+   [
+    "ORGANISMO",
+    "CS ALICANTE BABEL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARTE DE C0NFIRMACI0N N. 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FECHA BAJA INICIAL: l2/0l/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INGRES0 EN UHP DEL l3/0l AL 28/0l/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ALTA HOSPITALARIA C0N LITI0 Y QUETIAPINA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LITEMIA 0,7 MEQ/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEJ0RIA PARCIAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REMITID0 A UCA (UNIDAD DE C0NDUCTAS ADICTIVAS) DE SAN BLAS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARTE MEDIC0 DE ALTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEJ0RIA QUE PERMITE REALIZAR EL TRABAJ0 HABITUAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F3l.7 TRAST0RN0 BIP0LAR, ACTUALMENTE EN REMISI0N PARCIAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ABSTINENTE DE ALC0H0L DESDE 28/0l/2026 (C0NTR0L UCA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EVITAR TURN0 N0CTURN0 Y PR0L0NGACI0N DE J0RNADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VAL0RAR ADAPTACI0N DEL PUEST0 P0R SERVICI0 DE PREVENCI0N",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "MERCEDES ALCARAZ"
+   ],
+   [
+    "PERSONA",
+    "J0RGE"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "YA VAN TRES BAJAS P0R L0 MISM0",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-medico-trabajo-mutua.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MUTUA MEDITERRÁNEA COLABORADORA CON LA SEGURIDAD SOCIAL N.º 287"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Vigilancia de la Salud — Centro Asistencial de Alicante"
+   ],
+   [
+    "NORMA",
+    "art. 22 Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+   ],
+   [
+    "NORMA",
+    "art. 37.3.b) RD 39/1997, de 17 de enero"
+   ],
+   [
+    "NORMA",
+    "art. 37.3.b.2.º RD 39/1997"
+   ],
+   [
+    "NORMA",
+    "art. 25 LPRL"
+   ],
+   [
+    "NUSS",
+    "VS-2026-03-018834"
+   ],
+   [
+    "NUSS",
+    "HC 0457716"
+   ],
+   [
+    "PERSONA",
+    "Raúl Escrivá Mollá"
+   ],
+   [
+    "DNI",
+    "48573921K"
+   ],
+   [
+    "CIF",
+    "B03984512"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ausencia prolongada por motivos de salud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "proceso de IT de 79 días (12/01/2026 a 31/03/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sospecha de consumo durante el servicio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta de la UHP",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital General Universitario Dr. Balmis"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno afectivo bipolar tipo I diagnosticado en 2016",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "primer episodio maníaco a los 31 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tres ingresos previos en Psiquiatría (2016, 2019 y 2023)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Último ingreso del 13/01 al 28/01/2026 por episodio maníaco con síntomas psicóticos (ideas megalomaníacas, insomnio de cinco noches, gasto compulsivo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo perjudicial de alcohol (F10.1) de larga evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "patrón de consumo en fin de semana y «para bajar» tras el servicio de noches",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "refiere hasta 8-10 UBE/día en las fases de euforia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cannabis esporádico en la juventud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA leve sin tratamiento farmacológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esteatosis hepática grado I en ecografía de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Intervenido de apendicitis aguda (2009)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumador de 15 cigarrillos/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padre fallecido por cirrosis enólica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hermana con depresión mayor en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Plenur® (carbonato de litio) 400 mg: 1-0-1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quetiapina de liberación prolongada (Seroquel Prolong®) 300 mg: 0-0-1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam 1 mg si insomnio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo está usando 3-4 noches por semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Seguimiento en USM de Babel",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Senent"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en UCA San Blas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acude además a un grupo de Alcohólicos Anónimos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha rechazado el disulfiram (Antabus®)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inició naltrexona 50 mg, que abandonó por náuseas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consciente, orientado, discurso coherente, algo taquipsíquico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo eutímico-levemente expansivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ideación autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Temblor fino distal en ambas manos (atribuible al litio)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 148/94 mmHg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FC 88 lpm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC 29,4",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GGT 112 U/L (VN < 55)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GOT 48 U/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GPT 61 U/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VCM 101 fL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CDT 2,1 % (límite 1,7 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Litemia 0,82 mEq/L (rango terapéutico)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TSH y creatinina normales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Test de alcohol en aire espirado en el momento del reconocimiento (09:10 h): 0,00 mg/l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuestionario AUDIT: 19 puntos (consumo de riesgo con probable dependencia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escala YMRS: 9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El temblor por litio y la sedación matutina de la quetiapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "APTO CON RESTRICCIONES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Evitar turno de cierre y jornada nocturna más allá de las 23:00 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Retirada del alcohol de cocina de su partida o control de su uso por el jefe de cocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Facilitar la asistencia a sus citas de USM y UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trabajador especialmente sensible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trabajador especialmente sensible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No se aprecia, en el día de hoy, consumo activo ni signos de intoxicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "compatibles con consumo crónico elevado en las semanas previas al ingreso",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Begoña Ortuño Sáez"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Mediterránea — Servicio de Vigilancia de la Salud"
+   ],
+   [
+    "PERSONA",
+    "Fernando Lloret Payá"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(USO)",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-carta-despido.docx.txt": {
+  "oro": [
+   [
+    "CIF",
+    "B-03984512"
+   ],
+   [
+    "PERSONA",
+    "RAÚL ESCRIVÁ MOLLÁ"
+   ],
+   [
+    "DIRECCION",
+    "C/ Doctor Just, 14, 3.º B"
+   ],
+   [
+    "DIRECCION",
+    "03007 Alicante"
+   ],
+   [
+    "NORMA",
+    "artículo 54.1 y 54.2, letras b), d) y f), del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "Real Decreto Legislativo 2/2015, de 23 de octubre"
+   ],
+   [
+    "NORMA",
+    "artículos 40 y 41 del V Acuerdo Laboral de ámbito Estatal para el sector de Hostelería (ALEH V)"
+   ],
+   [
+    "NORMA",
+    "Convenio Colectivo de Hostelería de la provincia de Alicante"
+   ],
+   [
+    "NORMA",
+    "artículo 54.2.f) ET"
+   ],
+   [
+    "NORMA",
+    "art. 54.2.b) ET"
+   ],
+   [
+    "NORMA",
+    "art. 54.2.d) ET"
+   ],
+   [
+    "NORMA",
+    "artículo 40, apartados 3, 8 y 12, del ALEH V"
+   ],
+   [
+    "NORMA",
+    "artículo 41.3 del mismo Acuerdo"
+   ],
+   [
+    "NORMA",
+    "artículo 55.1 ET"
+   ],
+   [
+    "NORMA",
+    "art. 68.a) ET"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Sarasola Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Yolanda Benali Ruiz"
+   ],
+   [
+    "PERSONA",
+    "Jonathan Heredia Flores"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Alcaraz Vidal"
+   ],
+   [
+    "PERSONA",
+    "Raúl Escrivá Mollá"
+   ],
+   [
+    "PERSONA",
+    "Fernando Lloret Payá"
+   ],
+   [
+    "PERSONA",
+    "Jorge Bernabeu Climent"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fuerte olor a alcohol, habla pastosa, falta de coordinación y un comportamiento alterado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una quemadura que requirió asistencia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de la Albufereta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un proceso de incapacidad temporal derivado de accidente de trabajo de dicho ayudante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "signos evidentes de haber ingerido bebidas alcohólicas",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "EMBRIAGUEZ HABITUAL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los procesos de baja médica que usted ha tenido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ninguna enfermedad o circunstancia personal que usted pueda padecer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le adaptó el horario a las indicaciones del Servicio de Vigilancia de la Salud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al constarnos que usted está afiliado al sindicato USO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical de dicha sección",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Delegado sindical de USO / miembro del comité de empresa",
+    "sindical"
+   ],
+   [
+    "ORGANISMO",
+    "SEPE"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Mediación, Arbitraje y Conciliación (SMAC) de Alicante"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-conversacion-telegram.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Raúl Escrivá"
+   ],
+   [
+    "PERSONA",
+    "Nando Lloret"
+   ],
+   [
+    "PERSONA",
+    "Nando"
+   ],
+   [
+    "PERSONA",
+    "Raúl"
+   ],
+   [
+    "PERSONA",
+    "Mercedes"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Paco"
+   ],
+   [
+    "PERSONA",
+    "Sandra"
+   ],
+   [
+    "PERSONA",
+    "Yolanda"
+   ],
+   [
+    "PERSONA",
+    "Jonathan"
+   ],
+   [
+    "PERSONA",
+    "Senent"
+   ],
+   [
+    "PERSONA",
+    "Lucía Ferrándiz"
+   ],
+   [
+    "PERSONA",
+    "Lucía"
+   ],
+   [
+    "PERSONA",
+    "Vane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "USO",
+    "sindical"
+   ],
+   [
+    "TELEFONO",
+    "965 22 61 48"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del ingreso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "x los partes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apto con restricciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las transas me suben x el litio, q tengo la gamma esa disparada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como delegado",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esta de 7 meses ya",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la diabetes gestacional pinchandose insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "para eso me afilié, para algo sirve la cuota",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el ramadan va muerta, no come nada hasta las 9 y pico",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me he tomado un par de cañas al cerrar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acabas de salir del ingreso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Llevo dos meses limpio y voy a los de AA los martes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Habias bebido?",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo llevo semanas mal, sin dormir, con las pastillas me levanto como un zombi y el temblor de manos no se me quita",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Creo q me esta volviendo a subir. Hablo muy rapido, lo noto",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "con lo de 2019 si te paran otra vez te comes la carcel"
+   ],
+   [
+    "DATO_PENAL",
+    "tengo el carne recien recuperado de la condena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "son todos gitanos de Juan XXIII",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quemadura de segundo grado. 15 dias de baja dice la mutua",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "embriaguez habitual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Embriaguez habitual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Si he estado ingresado en psiquiatria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quitarse al bipolar de encima",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la maquina de la huella",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuando hizo la transicion",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "voy en las listas de Podemos en Sant Joan",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "He pedido cita urgente en la USM",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-demanda-despido.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE ALICANTE"
+   ],
+   [
+    "PERSONA",
+    "LUCÍA FERRÁNDIZ GOMIS"
+   ],
+   [
+    "PERSONA",
+    "Lucía Ferrándiz Gomis"
+   ],
+   [
+    "PERSONA",
+    "RAÚL ESCRIVÁ MOLLÁ"
+   ],
+   [
+    "PERSONA",
+    "Heredia"
+   ],
+   [
+    "PERSONA",
+    "Lloret"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Alcaraz Vidal"
+   ],
+   [
+    "PERSONA",
+    "Fernando Lloret Payá"
+   ],
+   [
+    "PERSONA",
+    "Vanessa Martínez Aracil"
+   ],
+   [
+    "PERITO",
+    "Begoña Ortuño Sáez"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Alicante"
+   ],
+   [
+    "CORREO",
+    "lferrandiz@ferrandiz-laboralistas.es"
+   ],
+   [
+    "DNI",
+    "48573921-K"
+   ],
+   [
+    "NUSS",
+    "03/10458293/71"
+   ],
+   [
+    "DIRECCION",
+    "calle Doctor Just, n.º 14, 3.º B, 03007 Alicante"
+   ],
+   [
+    "TELEFONO",
+    "612 448 093"
+   ],
+   [
+    "CIF",
+    "B-03984512"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Conselleria de Igualdad y Políticas Inclusivas"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización Psiquiátrica del Hospital General Universitario Dr. Balmis"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Vigilancia de la Salud de la Mutua Mediterránea"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Mediterránea"
+   ],
+   [
+    "ORGANISMO",
+    "SMAC de Alicante"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuota sindical USO 11,50 €",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es afiliado a la Unión Sindical Obrera (USO) desde 2019",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le descuenta la cuota en nómina",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical de USO",
+    "sindical"
+   ],
+   [
+    "NORMA",
+    "art. 177.3 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 54.2.b), d) y f) ET"
+   ],
+   [
+    "NORMA",
+    "art. 25 LPRL"
+   ],
+   [
+    "NORMA",
+    "arts. 2.a) y 10.1 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social (LRJS)"
+   ],
+   [
+    "NORMA",
+    "arts. 103 y siguientes y 177 y siguientes LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 55.5 ET"
+   ],
+   [
+    "NORMA",
+    "Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "art. 2.1"
+   ],
+   [
+    "NORMA",
+    "art. 26"
+   ],
+   [
+    "NORMA",
+    "Directiva 2000/78/CE"
+   ],
+   [
+    "NORMA",
+    "STJUE de 11 de abril de 2013 (HK Danmark, asuntos acumulados C-335/11 y C-337/11)"
+   ],
+   [
+    "NORMA",
+    "STJUE de 18 de enero de 2018 (Ruiz Conejero, C-270/16)"
+   ],
+   [
+    "NORMA",
+    "STS 22 de mayo de 2020, rec. 2684/2017"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2020:1604"
+   ],
+   [
+    "NORMA",
+    "art. 40.2 del Real Decreto Legislativo 1/2013, de 29 de noviembre"
+   ],
+   [
+    "NORMA",
+    "STS 2 de abril de 2014, rec. 1543/2013"
+   ],
+   [
+    "NORMA",
+    "art. 54.2.f)"
+   ],
+   [
+    "NORMA",
+    "art. 183 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 8.12 y el art. 40.1.c) LISOS (RD Legislativo 5/2000)"
+   ],
+   [
+    "NORMA",
+    "art. 14 CE"
+   ],
+   [
+    "NORMA",
+    "art. 56 ET"
+   ],
+   [
+    "NORMA",
+    "art. 236 bis LOPJ"
+   ],
+   [
+    "NORMA",
+    "art. 232.2 LOPJ"
+   ],
+   [
+    "OBJETO",
+    "trastorno bipolar"
+   ],
+   [
+    "OBJETO",
+    "embriaguez habitual"
+   ],
+   [
+    "OBJETO",
+    "discriminación por razón de discapacidad"
+   ],
+   [
+    "OBJETO",
+    "la propia Administración le ha reconocido la discapacidad"
+   ],
+   [
+    "OBJETO",
+    "la enfermedad del actor, equiparable a discapacidad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del 33 % desde el 9 de octubre de 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«trastorno afectivo bipolar tipo I con episodios psicóticos y patología dual asociada»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha estado en situación de incapacidad temporal en tres ocasiones en los últimos dieciocho meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la última del 12 de enero al 31 de marzo de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso hospitalario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "recibía los partes de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«otra vez… ya van tres bajas por lo mismo»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trabajador especialmente sensible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apto con restricciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no realizar el turno de cierre ni jornada más allá de las 23:00 h, no prolongar jornada y retirar el alcohol de cocina de su partida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "firmó durante una fase de descompensación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica de la USM de Babel",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Llevaba varias semanas con insomnio y signos prodrómicos de recaída hipomaníaca",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que comunicó a su psiquiatra el 20 de abril",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El temblor de manos atribuible al carbonato de litio y la sedación de la quetiapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las quemaduras de segundo grado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No se le practicó prueba de alcoholemia alguna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«quiere quitarse al bipolar de encima»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el alta (31 de marzo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de la mutua (3 de abril)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incumplimiento consciente de las restricciones médicas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una dolencia de larga duración que limita su participación plena en la vida profesional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "agravamiento del cuadro psiquiátrico del actor tras el despido (ingreso en hospital de día desde el 4 de mayo de 2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sistema biométrico de huella dactilar",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "datos especialmente protegidos relativos a la salud mental del actor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su historial clínico",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-acta-juicio.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL N.º 3 DE ALICANTE"
+   ],
+   [
+    "AUTOS",
+    "03014 44 4 2026 0004731"
+   ],
+   [
+    "AUTOS",
+    "DESPIDOS / CESES EN GENERAL 612/2026"
+   ],
+   [
+    "NORMA",
+    "art. 89 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 232.2 LOPJ"
+   ],
+   [
+    "NORMA",
+    "art. 181.2 LRJS"
+   ],
+   [
+    "PONENTE",
+    "Amparo Sempere Rico"
+   ],
+   [
+    "LAJ",
+    "Rosa María Tormo Pastor"
+   ],
+   [
+    "PERSONA",
+    "Raúl Escrivá Mollá"
+   ],
+   [
+    "PERSONA",
+    "Lucía Ferrándiz Gomis"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Alcaraz Vidal"
+   ],
+   [
+    "PERSONA",
+    "Jorge Bernabeu Climent"
+   ],
+   [
+    "PERSONA",
+    "Ana Belén Quiles Ortiz"
+   ],
+   [
+    "PERSONA",
+    "Alcaraz"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Sarasola Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Fernando Lloret Payá"
+   ],
+   [
+    "PERSONA",
+    "Vanessa Martínez Aracil"
+   ],
+   [
+    "PERSONA",
+    "Senent"
+   ],
+   [
+    "PERITO",
+    "Begoña Ortuño Sáez"
+   ],
+   [
+    "DNI",
+    "48573921-K"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Mediterránea"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 1 de Alicante"
+   ],
+   [
+    "DATO_PENAL",
+    "la condena del actor en 2019 por un delito contra la seguridad vial por conducir con una tasa de 0,78 mg/l"
+   ],
+   [
+    "DATO_PENAL",
+    "la retirada del permiso de conducir durante dieciocho meses"
+   ],
+   [
+    "DATO_PENAL",
+    "la condena"
+   ],
+   [
+    "DATO_PENAL",
+    "no he vuelto a coger el coche bebido"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en 2019 estaba en plena fase maníaca y no estaba diagnosticado bien",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde entonces voy a terapia",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "trastorno bipolar"
+   ],
+   [
+    "OBJETO",
+    "embriaguez habitual"
+   ],
+   [
+    "OBJETO",
+    "«que fuera bipolar»"
+   ],
+   [
+    "OBJETO",
+    "discriminación por enfermedad asimilada a discapacidad"
+   ],
+   [
+    "OBJETO",
+    "discriminación por discapacidad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un 33 % de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historial psiquiátrico del actor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de la USM de Babel de 2 de septiembre de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnóstico de episodio depresivo grave tras el despido, en tratamiento con lamotrigina 200 mg y Plenur® 800 mg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe completo de la mutua",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un día de baja imprevista de otro cocinero",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "del parte de alta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«otra vez… ya van tres bajas por lo mismo»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«tenía algo de nervios y que había estado ingresado»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba afiliado a USO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«porque se le descuenta la cuota»",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«olía a alcohol desde la puerta» y «arrastraba las palabras»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bebía «desde siempre», que se servía coñac de cocina «en un vaso de café», y que el 17 de abril «iba ciego»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conocía la recomendación de la mutua",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo mismo estuve en Proyecto Hombre hace quince años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical de USO y miembro del comité de empresa",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su condición de delegado de la sección sindical de USO, a la que está afiliado desde 2012",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«ya ha vuelto el loco» y «a ver cuánto le dura el litio»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«muy acelerado, hablando sin parar, sudando», más que borracho",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "llevaba días sin dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me dijo que un poco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su mujer, que ha dado a luz por cesárea en julio tras una diabetes gestacional complicada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«blanco, temblando, con la mirada perdida»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no notó olor a alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la testigo es una mujer transexual",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi identidad de género",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los valores de GGT, VCM y CDT eran compatibles con un consumo elevado previo al ingreso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«no con un consumo sostenido después del alta»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el temblor fino por litio y la sedación de la quetiapina por la mañana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno afectivo bipolar y patología dual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«el consumo de alcohol suele aumentar al inicio de una fase hipomaníaca, como automedicación»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los síntomas descritos por los testigos (aceleración, verborrea, sudoración, insomnio) son compatibles tanto con intoxicación etílica como con un episodio hipomaníaco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin una prueba de alcoholemia no puede afirmar ni descartar la intoxicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el trabajador era especialmente sensible y que debía evitar el cierre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "había bebido «dos cervezas en la comida familiar»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "niega haber bebido en la cocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«no dormía, estaba subiéndome»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo comunicó a su psiquiatra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "registro biométrico de jornada (huella dactilar)",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incumplimiento de las restricciones médicas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ausencia de prueba de alcoholemia",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-cliente-abogada.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Raúl Escrivá"
+   ],
+   [
+    "PERSONA",
+    "Lucía Ferrándiz"
+   ],
+   [
+    "PERSONA",
+    "Lucia"
+   ],
+   [
+    "PERSONA",
+    "Raul"
+   ],
+   [
+    "PERSONA",
+    "Raúl"
+   ],
+   [
+    "PERSONA",
+    "Nando"
+   ],
+   [
+    "PERSONA",
+    "Mercedes"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Oscar"
+   ],
+   [
+    "PERSONA",
+    "Óscar Bru Llinares"
+   ],
+   [
+    "PERSONA",
+    "Vane"
+   ],
+   [
+    "PERSONA",
+    "Senent"
+   ],
+   [
+    "PERSONA",
+    "Lucía Ferrándiz Gomis"
+   ],
+   [
+    "CORREO",
+    "raulescriva84@gmail.com"
+   ],
+   [
+    "CORREO",
+    "lferrandiz@ferrandiz-laboralistas.es"
+   ],
+   [
+    "TELEFONO",
+    "655 30 21 87"
+   ],
+   [
+    "TELEFONO",
+    "612 448 093"
+   ],
+   [
+    "TELEFONO",
+    "965 22 61 48"
+   ],
+   [
+    "DNI",
+    "48573921K"
+   ],
+   [
+    "IBAN",
+    "ES21 2100 1234 5602 0012 3456"
+   ],
+   [
+    "DIRECCION",
+    "Doctor Just"
+   ],
+   [
+    "ORGANISMO",
+    "SMAC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no duermo nada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los 3 partes de baja de este año y el de alta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otra vez ya van tres bajas por lo mismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apto con restricciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la resolucion de la conselleria del 33% de minusvalia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por consejo de la trabajadora social de la USM",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la cuota de USO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "he bebido mucho años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cuando me sube la mania bebo mas, y cuando estoy en el bajon tambien, para dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde el ingreso de enero estaba bien, iba a la UCA y a Alcoholicos Anonimos los martes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El 17 me tome dos cervezas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esta con la quimio del cancer de mama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En la cocina no bebi",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "Tengo un antecedente"
+   ],
+   [
+    "DATO_PENAL",
+    "En 2019 me pillaron con el coche con 0,78 y me condenaron, me quitaron el carne año y medio y trabajos en beneficio de la comunidad"
+   ],
+   [
+    "DATO_PENAL",
+    "Ya esta cancelado creo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "soy gay",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin dormir, hablando a mil, comprandome cosas por internet q no necesitaba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Plenur 2 al dia, quetiapina 300 por la noche y el lorazepam cuando no puedo dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me ha subido el litio despues del despido y me ha mandado al hospital de dia de salud mental desde el 4 de mayo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "digan q estoy loco para trabajar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Asesora jurídica de USO-Comunitat Valenciana (Alicante)",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

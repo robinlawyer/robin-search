@@ -1,0 +1,1330 @@
+{
+ "01-informe-centro-reconocimiento.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "GRACIA LAHOZ, ANSELMO"
+   ],
+   [
+    "PERSONA",
+    "Joaquín Monforte Sancho"
+   ],
+   [
+    "PERSONA",
+    "Pilar Tena Edo"
+   ],
+   [
+    "DNI",
+    "18436275-T"
+   ],
+   [
+    "DIRECCION",
+    "calle Mayor, 12, 44400 Mora de Rubielos"
+   ],
+   [
+    "AUTOS",
+    "2026/A/0193"
+   ],
+   [
+    "ORGANISMO",
+    "Jefatura Provincial de Tráfico de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "PSICOTÉCNICO TERUEL CENTRO"
+   ],
+   [
+    "ORGANISMO",
+    "Intervención de Armas"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 2487/1998, de 20 de noviembre"
+   ],
+   [
+    "NORMA",
+    "anexo IV, apartado 9, del Real Decreto 2487/1998"
+   ],
+   [
+    "OBJETO",
+    "APTO — sin restricciones ni adaptaciones"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipertensión arterial en tratamiento con enalapril 20 mg (1-0-0)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diabetes mellitus tipo 2 diagnosticada en 2021, en tratamiento con metformina 850 mg (1-0-1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere última HbA1c de 6,8 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia neurosensorial leve bilateral, de probable origen laboral y por exposición a disparos, sin audífono",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso en la Unidad de Psiquiatría del Hospital Obispo Polanco de Teruel en noviembre de 2015",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por una depresión muy fuerte cuando murió mi padre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratamiento con venlafaxina y mirtazapina hasta 2017",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "alta definitiva por su psiquiatra de la Unidad de Salud Mental en 2018",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no haber vuelto a tomar medicación psiquiátrica desde entonces",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un vino en la comida, los fines de semana alguna cerveza más",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega otros tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumador desde 2019",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colecistectomía laparoscópica (2020)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No refiere epilepsia, síncopes ni pérdidas de conciencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA: 138/84 mmHg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FC: 72 lpm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 88 kg, talla 1,74 m (IMC 29,1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Agudeza visual sin corrección: OD 0,9 — OI 0,8",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Binocular 1,0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Visión cromática: normal (Ishihara 21/21)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida media de 28 dB en OD y 31 dB en OI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin limitaciones funcionales en miembros superiores ni inferiores",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin temblor, coordinación y equilibrio normales (Romberg negativo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "coordinación bimanual (ASDE Driver-Test) dentro de rango",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiempos de reacción múltiple: 0,62 s",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anticipación de velocidad: 8 % de error",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se observan signos de agresividad, impulsividad ni alteración del estado de ánimo en el momento actual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Puntuación en escala de ansiedad estado (STAI-E): percentil 35",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inventario de Depresión de Beck (BDI-II): 6 puntos (mínimo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Juicio y orientación conservados",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedente declarado de ingreso psiquiátrico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe del especialista en Psiquiatría que acredite la ausencia de patología activa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Huella dactilar del interesado registrada en el sistema de verificación del centro (lector biométrico n.º serie BIO-TE-0007)",
+    "biometrico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-alegaciones-tramite-audiencia.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "ANSELMO GRACIA LAHOZ"
+   ],
+   [
+    "PERSONA",
+    "Sergio Hernández Monzón"
+   ],
+   [
+    "PERSONA",
+    "Gracia"
+   ],
+   [
+    "PERSONA",
+    "Nieves Sanz Cebrián"
+   ],
+   [
+    "PERSONA",
+    "Anselmo Gracia Lahoz"
+   ],
+   [
+    "DNI",
+    "18436275-T"
+   ],
+   [
+    "DIRECCION",
+    "calle Mayor, 12, 44400 Mora de Rubielos"
+   ],
+   [
+    "DIRECCION",
+    "calle San Juan, 21, 2.º, 44001 Teruel"
+   ],
+   [
+    "TELEFONO",
+    "678 552 031"
+   ],
+   [
+    "CORREO",
+    "shernandez@hernandezmonzon-abogados.es"
+   ],
+   [
+    "ORGANISMO",
+    "INTERVENCIÓN DE ARMAS Y EXPLOSIVOS DE LA COMANDANCIA DE LA GUARDIA CIVIL DE TERUEL"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Sociedad de Cazadores de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Reconocimiento de Conductores «Psicotécnico Teruel Centro»"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización Breve de Psiquiatría del Hospital Obispo Polanco"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio de Justicia"
+   ],
+   [
+    "ORGANISMO",
+    "CRC"
+   ],
+   [
+    "ORGANISMO",
+    "puesto de Mora de Rubielos"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 1 de Teruel"
+   ],
+   [
+    "AUTOS",
+    "ARM-TE/2026/00342"
+   ],
+   [
+    "AUTOS",
+    "88/2012"
+   ],
+   [
+    "NORMA",
+    "art. 82 de la Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 153.1 y 3 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 136.5 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículo 25.2 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "Reglamento de Armas"
+   ],
+   [
+    "OBJETO",
+    "un antiguo ingreso psiquiátrico"
+   ],
+   [
+    "OBJETO",
+    "una condena por violencia doméstica"
+   ],
+   [
+    "OBJETO",
+    "Sobre el ingreso psiquiátrico de 2015"
+   ],
+   [
+    "OBJETO",
+    "estuvo ingresado doce días en noviembre de 2015"
+   ],
+   [
+    "OBJETO",
+    "Sobre la condena de 2012"
+   ],
+   [
+    "OBJETO",
+    "delito de maltrato de obra en el ámbito familiar"
+   ],
+   [
+    "OBJETO",
+    "a la pena de nueve meses de prisión, suspendida, y privación del derecho a la tenencia y porte de armas durante dos años y un día"
+   ],
+   [
+    "OBJETO",
+    "Los hechos consistieron en un empujón a la que entonces era su esposa"
+   ],
+   [
+    "OBJETO",
+    "Los antecedentes penales derivados de dicha condena fueron cancelados"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo mayor con ideas de muerte",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fue tratado con antidepresivos durante dos años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "recibió el alta definitiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde entonces no ha recibido tratamiento ni ha tenido recaída alguna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe psiquiátrico actualizado",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-resolucion-guardia-civil.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "ANSELMO GRACIA LAHOZ"
+   ],
+   [
+    "PERSONA",
+    "Anselmo Gracia Lahoz"
+   ],
+   [
+    "AGENTE",
+    "Jesús Escriche Gil"
+   ],
+   [
+    "AGENTE",
+    "Manuel Aznar Pitarch"
+   ],
+   [
+    "TIP",
+    "K-38215-F"
+   ],
+   [
+    "DNI",
+    "18436275-T"
+   ],
+   [
+    "DIRECCION",
+    "calle Mayor, 12, 44400 Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO DEL INTERIOR"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GENERAL DE LA GUARDIA CIVIL"
+   ],
+   [
+    "ORGANISMO",
+    "Zona de Aragón"
+   ],
+   [
+    "ORGANISMO",
+    "Comandancia de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Intervención de Armas y Explosivos"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto de la Guardia Civil de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Reconocimiento «Psicotécnico Teruel Centro»"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Psiquiatría del Hospital Obispo Polanco de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Intervención de Armas de esta Comandancia"
+   ],
+   [
+    "ORGANISMO",
+    "Zona de la Guardia Civil de Aragón"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 1 de Teruel"
+   ],
+   [
+    "AUTOS",
+    "ARM-TE/2026/00342"
+   ],
+   [
+    "NORMA",
+    "artículo 97 del Reglamento de Armas"
+   ],
+   [
+    "NORMA",
+    "art. 153 CP"
+   ],
+   [
+    "NORMA",
+    "artículo 99 del Reglamento de Armas aprobado por Real Decreto 137/1993, de 29 de enero"
+   ],
+   [
+    "NORMA",
+    "artículo 98 del Reglamento de Armas"
+   ],
+   [
+    "NORMA",
+    "artículo 165 del Reglamento de Armas"
+   ],
+   [
+    "NORMA",
+    "artículos 121 y 122 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas"
+   ],
+   [
+    "OBJETO",
+    "existencia de antecedentes en las bases de datos policiales"
+   ],
+   [
+    "OBJETO",
+    "autor de un delito de malos tratos en el ámbito familiar"
+   ],
+   [
+    "OBJETO",
+    "pena accesoria de privación del derecho a la tenencia y porte de armas"
+   ],
+   [
+    "OBJETO",
+    "antecedentes que figuran como cancelados"
+   ],
+   [
+    "OBJETO",
+    "la condena por un delito de violencia en el ámbito familiar, que, aunque cancelada"
+   ],
+   [
+    "OBJETO",
+    "el antecedente de ingreso psiquiátrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por un cuadro depresivo grave con ideación autolítica, que precisó tratamiento farmacológico prolongado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por un cuadro con ideación autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ausencia de riesgo actual de autolesión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe psiquiátrico actualizado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toma de su reseña dactilar",
+    "biometrico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-psiquiatrico-pericial.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Fernando Lázaro Bielsa"
+   ],
+   [
+    "PERSONA",
+    "Sergio Hernández Monzón"
+   ],
+   [
+    "PERSONA",
+    "Anselmo Gracia Lahoz"
+   ],
+   [
+    "PERSONA",
+    "Nieves Sanz Cebrián"
+   ],
+   [
+    "PERSONA",
+    "Tomás Gracia Lahoz"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Royo Villarroya"
+   ],
+   [
+    "DIRECCION",
+    "Paseo de Sagasta, 40, 4.º dcha. — 50006 Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de Médicos de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización Breve del Hospital Obispo Polanco"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "CRC"
+   ],
+   [
+    "NORMA",
+    "art. 335.2 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 153 CP"
+   ],
+   [
+    "OBJETO",
+    "condena de 2012"
+   ],
+   [
+    "OBJETO",
+    "no existe contraindicación para la tenencia y uso de armas de fuego"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo de conductas auto o heteroagresivas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informes de seguimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica de Atención Primaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padre fallecido en 2015 por cáncer de páncreas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con demencia vascular, institucionalizada en una residencia de Alcañiz",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnosticado de trastorno bipolar tipo I, en tratamiento con litio y con varios ingresos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA y DM2 bien controladas (enalapril, metformina)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colecistectomía en 2020",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo mayor grave sin síntomas psicóticos (F32.2 CIE-10)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con insomnio global, anhedonia, pérdida de 9 kg de peso e ideación autolítica estructurada sin intento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le deriva a Urgencias, donde acepta ingreso voluntario (12 días)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "venlafaxina retard 150 mg/día y mirtazapina 15 mg por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Buena respuesta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Retirada progresiva de mirtazapina en 2016 y de venlafaxina en 2017",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alta por remisión completa en la USM en junio de 2018",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ha vuelto a consultar por motivos psiquiátricos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ha tenido intentos autolíticos en ningún momento de su vida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo de alcohol moderado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bebía más de la cuenta, sobre todo los fines de semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No otros tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece fibromialgia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consciente, orientado en las tres esferas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo eutímico, reactividad emocional conservada, sin anhedonia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No ideación de muerte ni autolítica actual ni en el último año (C-SSRS: 0)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alteraciones sensoperceptivas ni del contenido del pensamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insight completo sobre el episodio de 2015",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sueño y apetito conservados",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escalas de validez correctas; ninguna escala clínica > 65 T",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Perfil sin psicopatología significativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BIS-11 | 54 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rasgo de ira: percentil 45; Expresión externa: percentil 50",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BHS | 2 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AUDIT | 4 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumo de bajo riesgo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ítems históricos: presencia parcial (H1, H8); clínicos y de gestión del riesgo: ausentes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Riesgo de violencia: BAJO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GGT | 28 U/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VCM | 89 fL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CDT | 1,1 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "descarta consumo crónico excesivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no presenta en la actualidad ningún trastorno mental ni del comportamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El episodio depresivo mayor de 2015 fue reactivo a acontecimientos vitales graves, tuvo buena respuesta al tratamiento y se encuentra en remisión completa y sostenida desde hace más de ocho años, sin tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No existe riesgo suicida actual (C-SSRS 0, BHS 2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ni factores de riesgo heteroagresivo activos (HCR-20 V3: riesgo bajo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No se aprecia consumo perjudicial de alcohol (AUDIT 4, CDT 1,1 %)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-carta-interesado.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Anselmo Gracia"
+   ],
+   [
+    "PERSONA",
+    "Sergio Hernández Monzón"
+   ],
+   [
+    "PERSONA",
+    "Sergio"
+   ],
+   [
+    "PERSONA",
+    "Nieves"
+   ],
+   [
+    "PERSONA",
+    "Julio"
+   ],
+   [
+    "PERSONA",
+    "Mercedes"
+   ],
+   [
+    "PERSONA",
+    "Sara"
+   ],
+   [
+    "PERSONA",
+    "Tomas"
+   ],
+   [
+    "PERSONA",
+    "Anselmo"
+   ],
+   [
+    "AGENTE",
+    "Escriche"
+   ],
+   [
+    "CORREO",
+    "anselmo.gracia.mora@gmail.com"
+   ],
+   [
+    "CORREO",
+    "shernandez@hernandezmonzon-abogados.es"
+   ],
+   [
+    "TELEFONO",
+    "678 552 031"
+   ],
+   [
+    "OBJETO",
+    "me quedaba ingresado"
+   ],
+   [
+    "OBJETO",
+    "Estuve 12 dias en el Obispo"
+   ],
+   [
+    "OBJETO",
+    "le di un empujon y se dio con la mesa"
+   ],
+   [
+    "OBJETO",
+    "me llevaron al cuartel esa noche"
+   ],
+   [
+    "OBJETO",
+    "Firmé una conformidad"
+   ],
+   [
+    "OBJETO",
+    "me quitaron las armas dos años"
+   ],
+   [
+    "OBJETO",
+    "los antecedentes me los quitaron en el 2016"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la depresion",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se murio mi padre en septiembre del cancer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo no dormia nada, dejé de comer, adelgacé 9 kilos y se me pasaban cosas malas por la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me mando a urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estuve con las pastillas (la venlafaxina y otra para dormir que no me acuerdo, creo que mirtazapina) hasta el 17",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me dio el alta la psiquiatra en el 18",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo bebia mas de la cuenta entonces",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ella esta con lo de la fibromialgia y le hago los recados cuando va a Teruel al hospital",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene lo de bipolar y esta con el litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo iba en la lista de Teruel Existe",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el es del PP de toda la vida",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su cuñado iba de alcalde",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "soy de los de toda la vida de UPA",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-recurso-contencioso.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Sergio Hernández Monzón"
+   ],
+   [
+    "PERSONA",
+    "ANSELMO GRACIA LAHOZ"
+   ],
+   [
+    "PERSONA",
+    "Alberto Gimeno Ibáñez"
+   ],
+   [
+    "PERSONA",
+    "Anselmo Gracia Lahoz"
+   ],
+   [
+    "PERSONA",
+    "Nieves Sanz Cebrián"
+   ],
+   [
+    "PERSONA",
+    "Ramón Ferrer Montolío"
+   ],
+   [
+    "PERITO",
+    "Fernando Lázaro Bielsa"
+   ],
+   [
+    "PERITO",
+    "Lázaro Bielsa"
+   ],
+   [
+    "AGENTE",
+    "Jesús Escriche Gil"
+   ],
+   [
+    "DNI",
+    "18436275-T"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE LO CONTENCIOSO-ADMINISTRATIVO N.º 1 DE TERUEL"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Zona de la Guardia Civil de Aragón"
+   ],
+   [
+    "ORGANISMO",
+    "Comandancia de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "Sociedad de Cazadores de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio Provincial de Medio Ambiente del Gobierno de Aragón"
+   ],
+   [
+    "ORGANISMO",
+    "Puesto de Mora de Rubielos"
+   ],
+   [
+    "ORGANISMO",
+    "Comandancia de la Guardia Civil de Teruel"
+   ],
+   [
+    "ORGANISMO",
+    "CRC «Psicotécnico Teruel Centro»"
+   ],
+   [
+    "AUTOS",
+    "ARM-TE/2026/00342"
+   ],
+   [
+    "NORMA",
+    "art. 78 de la Ley 29/1998, de 13 de julio, reguladora de la Jurisdicción Contencioso-administrativa"
+   ],
+   [
+    "NORMA",
+    "artículo 153 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículos 8.3 y 14.1 de la LJCA"
+   ],
+   [
+    "NORMA",
+    "artículo 19.1.a) LJCA"
+   ],
+   [
+    "NORMA",
+    "artículo 46.1 LJCA"
+   ],
+   [
+    "NORMA",
+    "artículo 24.1 de la Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 136.5 del Código Penal"
+   ],
+   [
+    "NORMA",
+    "artículos 25.2 y 9.3 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "artículo 2.1 de la Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "artículo 14 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "artículo 98 del Reglamento de Armas (Real Decreto 137/1993, de 29 de enero)"
+   ],
+   [
+    "NORMA",
+    "art. 9.3 CE"
+   ],
+   [
+    "NORMA",
+    "art. 35.1.i Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "art. 3.1.e Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 139.1 LJCA"
+   ],
+   [
+    "OBJETO",
+    "la condena de 2012 por un delito de maltrato en el ámbito familiar"
+   ],
+   [
+    "OBJETO",
+    "cuyos antecedentes fueron cancelados el 3 de octubre de 2016"
+   ],
+   [
+    "OBJETO",
+    "el ingreso psiquiátrico de noviembre de 2015"
+   ],
+   [
+    "OBJETO",
+    "Uso prohibido de antecedentes penales cancelados"
+   ],
+   [
+    "OBJETO",
+    "La denegación por un ingreso psiquiátrico de hace más de diez años"
+   ],
+   [
+    "OBJETO",
+    "discriminación por razón de enfermedad o condición de salud"
+   ],
+   [
+    "OBJETO",
+    "Vulneración del principio de igualdad y no discriminación por razón de salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "exploración psicológica normal (BDI-II: 6 puntos; STAI-E: percentil 35)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sus antecedentes de hipertensión, diabetes tipo 2 e hipoacusia leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no padece trastorno mental alguno",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el episodio depresivo de 2015, reactivo al fallecimiento de su padre y a la ruina de la explotación, está en remisión completa y sostenida desde 2018 sin medicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no existe riesgo suicida actual (escala Columbia 0, escala de desesperanza de Beck 2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el riesgo de violencia evaluado con el HCR-20 V3 es bajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las pruebas analíticas descartan consumo excesivo de alcohol (CDT 1,1 %; GGT 28 U/L)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "superado sin secuelas y sin tratamiento desde 2017",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-certificado-medico-escaneado.escaneo.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "J0AQUIN M0NF0RTE SANCH0"
+   ],
+   [
+    "PERSONA",
+    "ANSELM0 GRACIA LAH0Z"
+   ],
+   [
+    "DNI",
+    "l8436275-T"
+   ],
+   [
+    "DIRECCION",
+    "CALLE MAY0R, l2, 44400 M0RA DE RU"
+   ],
+   [
+    "ORGANISMO",
+    "C0NSEJO GENERAL DE C0LEGI0S OFICIALES DE MEDIC0S DE ESPAÑA"
+   ],
+   [
+    "ORGANISMO",
+    "CENTR0 DE REC0N0CIMIENT0 \"PSIC0TECNIC0 TERUEL CENTR0\""
+   ],
+   [
+    "ORGANISMO",
+    "C0LEGI0 0FICIAL DE MEDIC0S"
+   ],
+   [
+    "NORMA",
+    "REAL DECRET0 2487/l998, DE 20 DE N0VIEMBRE"
+   ],
+   [
+    "OBJETO",
+    "QUE N0 PADECE ENFERMEDAD NI DEFECT0 FISIC0 0 PSIQUIC0 QUE LE IMPIDA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA EN TTO C0N ENALAPRIL 20 MG",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM TIP0 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EN TTO C0N METF0RMINA 850 MG/l2H",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIP0ACUSIA LEVE BILATERAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GRES0 EN PSIQUIATRIA (H. 0BISP0 P0LANC0) N0V-20l5 P0R EPIS0DI0 DE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PRESIV0, EN REMISI0N, SIN TT0 DESDE 20l7",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AGUDEZA VISUAL: 0D 0,9 / 0I 0,8",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AUDI0METRIA: PERDIDA MEDIA 28 / 3l DB",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C00RDINACI0N BIMANUAL N0RMAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "T. REACCI0N",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0,62 S. BDI-II: 6 PUNT0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SE REC0MIENDA INF0RME DE ESPECIALISTA EN PSIQUIATRIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0R EL ANTECEDENTE DE INGRES0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "[IMPRESI0N DACTILAR PULGAR DCH0.]",
+    "biometrico"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

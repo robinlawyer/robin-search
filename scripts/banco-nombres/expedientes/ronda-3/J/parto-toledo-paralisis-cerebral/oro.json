@@ -1,0 +1,2167 @@
+{
+ "01-partograma-registro-ctg.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO DE TOLEDO"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Obstetricia y Ginecología"
+   ],
+   [
+    "ORGANISMO",
+    "Gerencia de Atención Integrada de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "SESCAM"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Santa Bárbara"
+   ],
+   [
+    "ORGANISMO",
+    "consulta de Alto Riesgo Obstétrico"
+   ],
+   [
+    "ORGANISMO",
+    "UCI Neonatal"
+   ],
+   [
+    "ORGANISMO",
+    "Anestesiología"
+   ],
+   [
+    "ORGANISMO",
+    "Jefatura de Sección de Paritorio"
+   ],
+   [
+    "NORMA",
+    "art. 18 Ley 41/2002"
+   ],
+   [
+    "PERSONA",
+    "VILLALOBOS CAÑETE, NEREA"
+   ],
+   [
+    "PERSONA",
+    "Rubén Escalona Mateos"
+   ],
+   [
+    "PERSONA",
+    "M. Ortuño"
+   ],
+   [
+    "PERSONA",
+    "S. Huertas"
+   ],
+   [
+    "PERSONA",
+    "Calleja"
+   ],
+   [
+    "PERSONA",
+    "Lomas"
+   ],
+   [
+    "PERSONA",
+    "Recuero"
+   ],
+   [
+    "PERSONA",
+    "I. Recuero"
+   ],
+   [
+    "NUSS",
+    "2087431"
+   ],
+   [
+    "NUSS",
+    "VLCN930412K18"
+   ],
+   [
+    "DIRECCION",
+    "C/ Río Guadarrama, 14, 2.º C, 45007 Toledo"
+   ],
+   [
+    "TELEFONO",
+    "625 418 903"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "copia de historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2 A1 P0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aborto espontáneo de 9 semanas en 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "legrado evacuador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación actual 40+5 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetes gestacional diagnosticada en la semana 26",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "O'Sullivan 168 mg/dl; SOG de 100 g patológica, 2 valores alterados",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "controlada con dieta, sin insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo subclínico en tratamiento con Eutirox 25 mcg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "POSITIVO para Streptococcus agalactiae",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grupo 0 Rh positivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VIH negativo, VHB negativo, lúes negativo, rubéola inmune",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad en tratamiento previo al embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sertralina 50 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IMC pregestacional 27,4",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumadora de 5 cig/día hasta la semana 12",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "peso fetal estimado 3.850 g (p86)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inducción por gestación cronológicamente prolongada (40+5) y DG",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RCTG reactivo, FCF basal 140 lpm, variabilidad normal (10-15), sin desaceleraciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dinoprostona 10 mg (Propess)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "perfusión de oxitocina (Syntocinon) a 2 mU/min",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Profilaxis antibiótica intraparto SGB: ampicilina 2 g iv",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Analgesia epidural (ropivacaína 0,1 % + fentanilo 2 mcg/ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LÍQUIDO TEÑIDO DE MECONIO (++)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dinámica 6 contracciones/10 min (taquisistolia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "variabilidad reducida (3-5 lpm), desaceleraciones tardías recurrentes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RCTG categoría II",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desaceleraciones tardías con todas las contracciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FCF basal 165 lpm (taquicardia fetal)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Oxitocina aumentada a 14 mU/min",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tª materna 37,9 ºC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BRADICARDIA FETAL MANTENIDA de 80-85 lpm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia persistente de 80 lpm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CESÁREA URGENTE (categoría 1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anestesia general por insuficiente nivel de la epidural",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Circular de cordón laxa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Líquido meconial espeso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apgar 1 / 3 / 5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "arteria umbilical pH 6,84; EB −19,2 mmol/l; lactato 14,1 mmol/l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Vena umbilical pH 6,96",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reanimación avanzada tipo IV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intubación orotraqueal, masaje cardiaco y adrenalina iv (2 dosis)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemorragia posparto por atonía uterina (pérdida estimada 1.200 ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Carbetocina (Duratocin) 100 mcg y Hemabate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Transfusión de 2 concentrados de hematíes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb control 7,8 g/dl",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fiebre intraparto (37,9 ºC) sin foco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sospecha de corioamnionitis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ampicilina + gentamicina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "patrón patológico (desaceleraciones tardías en > 50 % de contracciones, variabilidad mínima, taquisistolia con oxitocina en aumento)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "patrón patológico con taquicardia fetal y variabilidad ausente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia terminal",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-alta-neonatologia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO DE TOLEDO"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Pediatría"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Neonatología y UCI Neonatal"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Base"
+   ],
+   [
+    "ORGANISMO",
+    "CDIAT"
+   ],
+   [
+    "ORGANISMO",
+    "Psiquiatría de Enlace"
+   ],
+   [
+    "ORGANISMO",
+    "Consulta de Neurología Infantil"
+   ],
+   [
+    "PERSONA",
+    "ESCALONA VILLALOBOS, HUGO"
+   ],
+   [
+    "PERSONA",
+    "Nerea Villalobos Cañete"
+   ],
+   [
+    "PERSONA",
+    "Rubén Escalona Mateos"
+   ],
+   [
+    "PERSONA",
+    "Fernando Ochaíta Brea"
+   ],
+   [
+    "PERSONA",
+    "Sonia Bermejo Laguna"
+   ],
+   [
+    "NUSS",
+    "2104588"
+   ],
+   [
+    "NUSS",
+    "2087431"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME DE ALTA HOSPITALARIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Recién nacido a término (40+6 s) con depresión neonatal grave tras cesárea urgente por bradicardia fetal mantenida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Acidosis metabólica grave en sangre de cordón (pH arterial 6,84; EB −19,2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apgar 1/3/5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reanimación avanzada en paritorio con IOT, masaje cardiaco y dos dosis de adrenalina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2A1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DG controlada con dieta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo subclínico (levotiroxina)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SGB positivo con profilaxis completa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inducción con prostaglandinas y oxitocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Líquido amniótico meconial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fiebre materna intraparto 37,9 ºC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RCTG patológico durante más de dos horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso al nacer 3.720 g (p70)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "encefalopatía hipóxico-isquémica moderada-grave (estadio III de Sarnat a las 6 h: hipotonía generalizada, ausencia de succión, pupilas mióticas poco reactivas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIPOTERMIA TERAPÉUTICA corporal total a 33,5 ºC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trazado de bajo voltaje y discontinuo con crisis eléctricas en las primeras 24 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Crisis convulsivas clínicas (clónicas multifocales)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fenobarbital (carga 20 mg/kg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "levetiracetam (Keppra) 40 mg/kg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aEEG con ciclos sueño-vigilia inmaduros",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesiones bilaterales y simétricas en ganglios basales y tálamos (patrón de afectación profunda)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "restricción en difusión en brazo posterior de la cápsula interna; afectación cortical parasagital",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pico de lactato y descenso de NAA/Cho",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesión hipóxico-isquémica grave de patrón ganglios basales-tálamo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MAL PRONÓSTICO NEUROLÓGICO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ventilación mecánica convencional 5 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de aspiración meconial con HTPP leve que precisó óxido nítrico inhalado 36 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disfunción miocárdica hipóxica, soporte con dobutamina 3 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Troponina máx. 0,9 ng/ml",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insuficiencia renal aguda prerrenal (creatinina máx. 1,6 mg/dl)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "elevación de transaminasas (GOT 410, GPT 188)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Coagulopatía que precisó plasma fresco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Disfagia orofaríngea con succión débil e incoordinada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sonda nasogástrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemocultivo negativo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PCR máx. 38 mg/l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ampicilina + gentamicina 7 días por sospecha de sepsis precoz",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con fiebre y SGB+",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipoglucemia inicial (32 mg/dl)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Potenciales evocados visuales con latencias alargadas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otoemisiones no superadas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipoacusia neurosensorial bilateral leve-moderada a confirmar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cariotipo y array-CGH solicitados para descartar causa genética coincidente",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "46,XY, array sin variantes patogénicas",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se realiza bautismo en la unidad por el capellán del hospital a petición de la abuela materna",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipertonía de miembros con hipotonía axial, reflejos osteotendinosos exaltados, clonus aquíleo bilateral agotable",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pulgares incluidos. No fija la mirada ni sigue objetos. Succión débil.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Irritable, llanto agudo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Encefalopatía hipóxico-isquémica grave (Sarnat III) por asfixia perinatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lesión de ganglios basales y tálamos bilateral en RM",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Crisis neonatales sintomáticas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome de aspiración meconial. HTPP.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fallo multiorgánico resuelto (miocárdico, renal, hepático)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Disfagia orofaríngea. Alimentación mixta oral/SNG.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia neurosensorial bilateral pendiente de confirmación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alto riesgo de parálisis cerebral discinética/espástica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Keppra solución oral 100 mg/ml",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Omeprazol 1 mg/kg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Vitamina D3 400 UI/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lactancia materna diferida (extracción) + fórmula espesada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SNG para completar tomas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la madre refiere insomnio y llanto diario",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-rehabilitacion-infantil.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SESCAM"
+   ],
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO DE TOLEDO"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Medicina Física y Rehabilitación"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Rehabilitación Infantil"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario 12 de Octubre"
+   ],
+   [
+    "ORGANISMO",
+    "CDIAT de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Base de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Consejería de Bienestar Social"
+   ],
+   [
+    "ORGANISMO",
+    "Salud Mental de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Trabajo Social"
+   ],
+   [
+    "PERSONA",
+    "Hugo Escalona Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Pilar Garcés Moya"
+   ],
+   [
+    "PERSONA",
+    "Marta Corrochano"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "NUSS",
+    "2104588"
+   ],
+   [
+    "NUSS",
+    "CMES240314H09"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO DE REHABILITACIÓN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Asfixia perinatal grave con encefalopatía hipóxico-isquémica Sarnat III, tratado con hipotermia activa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesión bilateral de ganglios basales y tálamos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Epilepsia sintomática en tratamiento con levetiracetam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ácido valproico (Depakine)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "espasmos epilépticos con hipsarritmia (síndrome de West), con respuesta parcial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia neurosensorial bilateral moderada confirmada; portador de audífonos desde los 8 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Disfagia orofaríngea grave con dos ingresos por neumonía aspirativa (octubre 2024 y enero 2025)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gastrostomía endoscópica percutánea (PEG)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reflujo gastroesofágico en tratamiento con omeprazol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARÁLISIS CEREBRAL INFANTIL de tipo mixto, tetraparesia espástico-distónica, de predominio en miembros superiores",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nivel V de la escala GMFCS (no control cefálico ni de tronco). MACS V. CFCS V.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Microcefalia adquirida (PC 43 cm, < p3)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotonía axial marcada con hipertonía espástica de cuatro extremidades",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ashworth modificada 3 en aductores de cadera e isquiotibiales, 2 en flexores de codo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Distonía con patrón en opistótonos ante estímulos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pies en equino bilateral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "migración del 28 % la izquierda y 22 % la derecha (Reimers)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo de luxación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No sedestación sin apoyo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "déficit visual cortical",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No lenguaje oral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Irritabilidad y trastorno del sueño importante (despertares cada 1-2 h)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "melatonina 3 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fisioterapia: 3 sesiones semanales en el hospital (método Bobath y control postural)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Infiltración de toxina botulínica tipo A (Botox) en aductores, isquiotibiales y gemelos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baclofeno oral 2,5 mg cada 8 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bomba de baclofeno intratecal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DAFO bilaterales, asiento postural a medida, bipedestador",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "levetiracetam 150 mg/12 h, ácido valproico 120 mg/12 h, omeprazol 10 mg/24 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nutrición enteral por PEG (Pediasure Peptide) 5 tomas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dependencia total para todas las actividades de la vida diaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "probable cirugía de caderas (osteotomía) antes de los 6 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esperanza de vida reducida respecto a la población general",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del 87 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grado III de dependencia (gran dependencia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está de baja por trastorno adaptativo con síntomas ansioso-depresivos desde el nacimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escitalopram y lormetazepam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuidado de menor afectado por enfermedad grave (CUME)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnosticada en mayo de Alzheimer en fase moderada",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-reclamacion-responsabilidad-patrimonial-sescam.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO DE SALUD DE CASTILLA-LA MANCHA"
+   ],
+   [
+    "ORGANISMO",
+    "SESCAM"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Responsabilidad Patrimonial"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Salud de Castilla-La Mancha"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Base"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Obstetricia"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección Médica"
+   ],
+   [
+    "ORGANISMO",
+    "SEGO"
+   ],
+   [
+    "PERSONA",
+    "NEREA VILLALOBOS CAÑETE"
+   ],
+   [
+    "PERSONA",
+    "RUBÉN ESCALONA MATEOS"
+   ],
+   [
+    "PERSONA",
+    "HUGO ESCALONA VILLALOBOS"
+   ],
+   [
+    "PERSONA",
+    "Leticia Sanromán Prieto"
+   ],
+   [
+    "PERSONA",
+    "Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Sagrario Huertas Pantoja"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Lomas Arribas"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Escalona"
+   ],
+   [
+    "PERSONA",
+    "Nerea Villalobos Cañete"
+   ],
+   [
+    "PERSONA",
+    "Rubén Escalona Mateos"
+   ],
+   [
+    "PERITO",
+    "Joaquín Albarrán Seco"
+   ],
+   [
+    "DNI",
+    "03912845-L"
+   ],
+   [
+    "DNI",
+    "03905172-W"
+   ],
+   [
+    "DIRECCION",
+    "calle Río Guadarrama, n.º 14, 2.º C, 45007 Toledo"
+   ],
+   [
+    "DIRECCION",
+    "calle Comercio, 22, 1.º izda., 45001 Toledo"
+   ],
+   [
+    "TELEFONO",
+    "925 214 660"
+   ],
+   [
+    "CORREO",
+    "lsanroman@sanromanabogados.es"
+   ],
+   [
+    "NORMA",
+    "artículos 32 y siguientes de la Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público"
+   ],
+   [
+    "NORMA",
+    "artículos 65, 67 y 91 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común"
+   ],
+   [
+    "NORMA",
+    "art. 67.1 LPAC"
+   ],
+   [
+    "NORMA",
+    "art. 106.2 CE"
+   ],
+   [
+    "NORMA",
+    "art. 32 LRJSP"
+   ],
+   [
+    "NORMA",
+    "STS, Sala 3.ª, de 9 de octubre de 2012, rec. 6878/2010"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015, de 22 de septiembre"
+   ],
+   [
+    "OBJETO",
+    "PARÁLISIS CEREBRAL"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gestante de 40+5 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diabetes gestacional controlada con dieta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inducción del parto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dispositivo de prostaglandinas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "perfusión de oxitocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desaceleraciones tardías recurrentes y variabilidad mínima",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "taquisistolia (seis contracciones en diez minutos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "líquido meconial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "microtoma de sangre fetal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia mantenida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cesárea de categoría 1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pH arterial de 6,84 y un exceso de bases de −19,2, con Apgar 1/3/5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reanimación avanzada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "encefalopatía hipóxico-isquémica grave, con tetraparesia espástico-distónica, epilepsia (síndrome de West), hipoacusia neurosensorial bilateral, déficit visual cortical y disfagia que ha obligado a alimentarle por gastrostomía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del 87 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grado III de dependencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta de Neonatología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de Rehabilitación Infantil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "array-CGH normal",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemocultivos negativos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asfixia aguda intraparto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "patrón de ganglios basales-tálamo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "permanece de baja desde el parto, con diagnóstico de trastorno adaptativo mixto ansioso-depresivo y en tratamiento psiquiátrico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica íntegra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asistencia de tercera persona de 24 h",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-informe-pericial-ginecologia.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Joaquín Albarrán Seco"
+   ],
+   [
+    "ORGANISMO",
+    "ICOMEM"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "SEGO"
+   ],
+   [
+    "PERSONA",
+    "Leticia Sanromán Prieto"
+   ],
+   [
+    "PERSONA",
+    "Escalona Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Nerea Villalobos Cañete"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Ochaíta Brea"
+   ],
+   [
+    "PERSONA",
+    "Garcés Moya"
+   ],
+   [
+    "PERSONA",
+    "Huertas"
+   ],
+   [
+    "NORMA",
+    "art. 335.2 LEC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesiones neurológicas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica obstétrica completa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Registro cardiotocográfico en papel",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de alta de Neonatología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RM cerebral del día 6",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de Rehabilitación Infantil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Primigesta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un aborto espontáneo previo de primer trimestre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetes gestacional con buen control dietético",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PFE 3.850 g, p86",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo subclínico bien controlado con levotiroxina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Portadora de estreptococo del grupo B con profilaxis adecuada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno de ansiedad tratado con sertralina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asfixia de esta intensidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "taquisistolia (6 contracciones/10 min)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "taquicardia fetal (165 lpm) y variabilidad ausente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desaceleraciones tardías repetitivas durante más de 30 minutos con variabilidad reducida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "categoría II, se mantiene actitud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "registro patológico con líquido meconial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pH de calota",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fiebre materna (37,9 ºC): sugestiva de corioamnionitis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anestesia general",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "encefalopatía neonatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "evento hipóxico intraparto agudo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pH arterial < 7,00 (6,84) y EB ≥ 12 (−19,2); Apgar < 5 a los 5 y 10 minutos; fallo multiorgánico precoz (miocárdico, renal y hepático); patrón de RM de ganglios basales-tálamo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia mantenida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "array-CGH normal",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemocultivo negativo, sin infección congénita",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La tetraparesia espástico-distónica GMFCS V, la epilepsia con síndrome de West, la hipoacusia neurosensorial, la ceguera cortical y la disfagia con gastrostomía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia terminal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesión neurológica grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parálisis cerebral",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-padres-abogada.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rubén Escalona"
+   ],
+   [
+    "PERSONA",
+    "Leticia Sanromán"
+   ],
+   [
+    "PERSONA",
+    "Nerea Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Leticia"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Montse"
+   ],
+   [
+    "PERSONA",
+    "Mónica Ortuño"
+   ],
+   [
+    "PERSONA",
+    "Sagrario"
+   ],
+   [
+    "PERSONA",
+    "Sagra"
+   ],
+   [
+    "PERSONA",
+    "Lomas"
+   ],
+   [
+    "PERSONA",
+    "Iván"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "PERSONA",
+    "Rubén Escalona Mateos"
+   ],
+   [
+    "PERSONA",
+    "Leticia Sanromán Prieto"
+   ],
+   [
+    "PERITO",
+    "Albarrán"
+   ],
+   [
+    "CORREO",
+    "ruben.escalona.m@gmail.com"
+   ],
+   [
+    "CORREO",
+    "lsanroman@sanromanabogados.es"
+   ],
+   [
+    "CORREO",
+    "nerevicanete@hotmail.com"
+   ],
+   [
+    "TELEFONO",
+    "667 302 158"
+   ],
+   [
+    "TELEFONO",
+    "678 551 240"
+   ],
+   [
+    "TELEFONO",
+    "925 214 660"
+   ],
+   [
+    "DIRECCION",
+    "C/ Comercio, 22, 1.º izda."
+   ],
+   [
+    "ORGANISMO",
+    "Salud Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se despierta cada hora y media",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el tampón ese (el Propess)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la linea de abajo bajaba cada vez que Nerea tenia una contraccion",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la epidural que solo le cogia una pierna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La cesárea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "muchacha gitana",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "iba de gemelos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reducción de jornada (CUME)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado de UGT en el comité",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esta fatal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sigue de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toma el escitalopram ese y unas pastillas para dormir (Noctamid)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no duerme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es muy de misa",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el cura del hospital bautizara a Hugo en la UCI",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene una cosa con la religion",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le han diagnosticado alzheimer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tambien estaba de baja por ansiedad",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-whatsapp-matrona.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Sagra"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Sagrario"
+   ],
+   [
+    "PERSONA",
+    "Lomas"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "ORGANISMO",
+    "sescam"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intubado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le han quitado el frío (la hipotermia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las convulsiones van mejor con el keppra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hasta la resonancia no sabremos nada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Te subió la hemoglobina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me han puesto hierro intravenoso (ferinject)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me tira la cicatriz y me sale la leche y no se la puedo dar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me la saco con el sacaleches",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lesión en los ganglios basales y tálamos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una compañera estaba de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un parto instrumental",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la cesárea de la chica de gemelos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de la oxitocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un expulsivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo ya estoy de baja desde ayer, la mutua me ha dado ansiedad y estoy con lorazepam porque no duermo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Le han quitado el tubo! Respira solo. Pero no traga, le ponen sonda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Con sonda, con keppra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "casi seguro va a tener parálisis cerebral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otra vez ingresado, neumonía por aspiración",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La psiquiatra me ha subido el escitalopram a 20",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si tienes pensamientos malos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "algo de lactancia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi sindicato (SATSE)",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-contencioso-tsj.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "SALA DE LO CONTENCIOSO-ADMINISTRATIVO DEL TRIBUNAL SUPERIOR DE JUSTICIA DE CASTILLA-LA MANCHA"
+   ],
+   [
+    "ORGANO",
+    "SECCIÓN SEGUNDA — ALBACETE"
+   ],
+   [
+    "AUTOS",
+    "Procedimiento Ordinario n.º 245/2026"
+   ],
+   [
+    "AUTOS",
+    "02003 33 3 2026 0000412"
+   ],
+   [
+    "AUTOS",
+    "RP-2025/1187-TO"
+   ],
+   [
+    "LAJ",
+    "Rosario Gil-Ortega Navas"
+   ],
+   [
+    "PERSONA",
+    "JULIÁN MEDRANO RUIZ"
+   ],
+   [
+    "PERSONA",
+    "NEREA VILLALOBOS CAÑETE"
+   ],
+   [
+    "PERSONA",
+    "RUBÉN ESCALONA MATEOS"
+   ],
+   [
+    "PERSONA",
+    "HUGO ESCALONA VILLALOBOS"
+   ],
+   [
+    "PERSONA",
+    "LETICIA SANROMÁN PRIETO"
+   ],
+   [
+    "PERSONA",
+    "Villalobos"
+   ],
+   [
+    "PERSONA",
+    "Sagrario Huertas Pantoja"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Lomas Arribas"
+   ],
+   [
+    "PERSONA",
+    "Iván Recuero Sotillo"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Fernando Ochaíta Brea"
+   ],
+   [
+    "PERSONA",
+    "Huertas"
+   ],
+   [
+    "PERSONA",
+    "Escalona"
+   ],
+   [
+    "PERSONA",
+    "Mónica Ortuño Ruano"
+   ],
+   [
+    "PERSONA",
+    "Leticia Sanromán Prieto"
+   ],
+   [
+    "PERSONA",
+    "Julián Medrano Ruiz"
+   ],
+   [
+    "PERITO",
+    "Joaquín Albarrán Seco"
+   ],
+   [
+    "PERITO",
+    "Albarrán Seco"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Salud de Castilla-La Mancha"
+   ],
+   [
+    "ORGANISMO",
+    "SESCAM"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Toledo"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Obstetricia"
+   ],
+   [
+    "ORGANISMO",
+    "ICA Toledo"
+   ],
+   [
+    "NORMA",
+    "arts. 1, 2.e) y 10.1.a) de la Ley 29/1998, de 13 de julio, reguladora de la Jurisdicción Contencioso-administrativa"
+   ],
+   [
+    "NORMA",
+    "art. 162 CC"
+   ],
+   [
+    "NORMA",
+    "art. 21.1.c LJCA"
+   ],
+   [
+    "NORMA",
+    "art. 106.2 CE"
+   ],
+   [
+    "NORMA",
+    "arts. 32 a 35 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "art. 67 de la Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "STS, Sala 3.ª, Sección 4.ª, de 19 de mayo de 2015, rec. 4397/2010"
+   ],
+   [
+    "NORMA",
+    "art. 217.7 LEC"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015, de 22 de septiembre"
+   ],
+   [
+    "NORMA",
+    "art. 34.3 LRJSP"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2015:2235"
+   ],
+   [
+    "OBJETO",
+    "PARÁLISIS CEREBRAL"
+   ],
+   [
+    "OBJETO",
+    "parálisis cerebral"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en la semana 40+5 de su embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diabetes gestacional bien controlada con dieta y un hipotiroidismo subclínico tratado con levotiroxina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "perfusión de oxitocina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el líquido salió teñido de meconio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desaceleraciones tardías recurrentes y variabilidad mínima, en presencia de taquisistolia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "categoría II, se mantiene actitud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pH de calota",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "taquicardia fetal de 165 lpm, variabilidad ausente y fiebre materna de 37,9 ºC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la oxitocina se subió a 14 mU/min",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bradicardia fetal mantenida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cesárea urgente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anestesia general",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acidosis metabólica grave (pH 6,84; EB −19,2), Apgar 1/3/5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reanimación cardiopulmonar avanzada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "encefalopatía hipóxico-isquémica grado III de Sarnat, tratada con hipotermia, con fallo multiorgánico y crisis convulsivas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta de Neonatología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lesión bilateral de ganglios basales y tálamos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tetraparesia espástico-distónica de nivel V en la escala GMFCS, epilepsia con síndrome de West tratada con levetiracetam y valproato, hipoacusia neurosensorial bilateral con audífonos, déficit visual cortical, microcefalia y disfagia grave que obliga a alimentarle por gastrostomía (PEG) tras dos neumonías aspirativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del 87 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grado III de dependencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asistencia de tercera persona las veinticuatro horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cariotipo 46,XY y array-CGH sin variantes patogénicas",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "evento hipóxico intraparto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su propia situación médica posterior",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sigue en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno de ansiedad tratado con sertralina antes del embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esa ansiedad previa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el duelo que sufre desde el nacimiento de su hijo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "corioamnionitis subclínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los hemocultivos fueron negativos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la placenta no se envió a anatomía patológica",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

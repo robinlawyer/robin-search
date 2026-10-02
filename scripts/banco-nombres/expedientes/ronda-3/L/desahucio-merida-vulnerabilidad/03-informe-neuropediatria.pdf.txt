@@ -1,0 +1,54 @@
+SERVICIO EXTREMEÑO DE SALUD
+Complejo Hospitalario Universitario de Badajoz
+Hospital Materno Infantil — Unidad de Neuropediatría y Enfermedades Neuromusculares
+
+INFORME DE CONSULTA EXTERNA
+
+Paciente: Daniel Pozo Barrientos
+F. nac.: 22/07/2013 (12 a 9 m)
+NHC: 1190344
+Acompañado por: su padre
+Fecha de consulta: 29/04/2026
+
+MOTIVO
+Revisión semestral y emisión de informe actualizado a petición de la familia, que lo necesita para un procedimiento judicial por la vivienda.
+
+ANTECEDENTES
+Embarazo controlado, parto eutócico a término. Retraso en la adquisición de la marcha (19 meses). A los 4 años, caídas frecuentes, maniobra de Gowers positiva e hipertrofia gemelar bilateral; CK 12.400 U/L. MLPA del gen DMD: deleción de los exones 45-50, fuera de pauta de lectura, compatible con distrofia muscular de Duchenne (DMD). Madre portadora (estudio familiar 2017). Hermana de 7 años no estudiada.
+Inicio de corticoterapia a los 5 años. Pérdida de la deambulación autónoma en agosto de 2023 (10 años). Desde entonces, usuario de silla de ruedas eléctrica con control por joystick.
+
+EVOLUCIÓN Y SITUACIÓN ACTUAL
+- Motor: Brooke 5, Vignos 9. Mantiene función de miembros superiores para alimentación y escritura con adaptaciones; Performance of Upper Limb (PUL 2.0): 42/74.
+- Respiratorio: espirometría (03/2026) CVF 61 % del teórico, PCF 210 L/min. Ventilación mecánica no invasiva nocturna con BiPAP (IPAP 14 / EPAP 5) desde septiembre de 2025 por hipoventilación nocturna en poligrafía (SpO2 media 91 %, CT90 18 %). Asistente de tos (Cough Assist) en reagudizaciones.
+- Cardiológico: ecocardiograma (02/2026) con FEVI 52 %, leve hipocinesia inferolateral; RM cardiaca con realce tardío subepicárdico. Inicio de enalapril.
+- Ortopédico: escoliosis neuromuscular de 32º Cobb (T8-L2), en seguimiento por Traumatología Infantil con corsé nocturno; probable artrodesis vertebral en 12-18 meses.
+- Óseo: densitometría con Z-score -2,4 en columna lumbar; una fractura vertebral por fragilidad (D11) en 2025.
+- Endocrino: talla baja y retraso puberal relacionados con corticoides; obesidad (IMC 24,8, p95).
+- Psicológico: valorado por Psicología Clínica por sintomatología ansiosa y rasgos de TDAH sin criterios completos; el menor expresa miedo a "perder su casa y su colegio". El padre comenta que duerme mal desde que llegó la carta del juzgado.
+
+TRATAMIENTO
+- Deflazacort (Dezacor® 30 mg; dosis ajustada a 18 mg/día).
+- Enalapril 2,5 mg/12 h.
+- Colecalciferol (Deltius®) 25.000 UI/15 días.
+- Calcio carbonato 1.000 mg/día.
+- Ranitidina sustituida por omeprazol 20 mg/día como protección gástrica.
+- Ataluren no indicado (no es mutación sin sentido). Valorada inclusión en ensayo con terapia de salto del exón 51/53: no candidato por su deleción.
+- Fisioterapia respiratoria y motora 3 días/semana; hidroterapia mensual.
+
+JUICIO CLÍNICO
+Distrofia muscular de Duchenne (deleción ex45-50 DMD), fase no ambulante temprana, con:
+- Insuficiencia respiratoria restrictiva nocturna en VMNI.
+- Miocardiopatía en fase inicial.
+- Escoliosis neuromuscular.
+- Osteoporosis secundaria a corticoides con fractura vertebral.
+
+RECOMENDACIONES SOCIOSANITARIAS
+Daniel precisa una vivienda sin barreras arquitectónicas (acceso con ascensor de dimensiones suficientes, puertas de al menos 80 cm, baño adaptado), con suministro eléctrico estable para la VMNI nocturna y la carga de la silla eléctrica, y proximidad a su centro escolar y de fisioterapia. Un cambio brusco de domicilio a un recurso no adaptado podría comprometer seriamente su seguridad y la continuidad de los cuidados. Se recomienda mantener el entorno actual.
+
+Próxima revisión: octubre de 2026, con nueva espirometría y Holter.
+
+Badajoz, 29 de abril de 2026
+
+Dr. Ramiro Expósito Cordero
+Neuropediatra. Unidad de Enfermedades Neuromusculares
+Col. 0606 03882

@@ -1,0 +1,1940 @@
+{
+ "01-atestado-policia-nacional.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GENERAL DE LA POLICÍA"
+   ],
+   [
+    "ORGANISMO",
+    "JEFATURA SUPERIOR DE POLICÍA DE LA COMUNITAT VALENCIANA"
+   ],
+   [
+    "ORGANISMO",
+    "COMISARÍA PROVINCIAL DE VALENCIA - COMISARÍA DE DISTRITO MARÍTIM"
+   ],
+   [
+    "ORGANISMO",
+    "Sala del 091"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Central de Penados"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Integrado de Serrería"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Valencia"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Sanidad de la Subdelegación del Gobierno en Valencia"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción en funciones de guardia de València"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de lo Penal n.º 5 de València"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Valencia, Sección Segunda"
+   ],
+   [
+    "AUTOS",
+    "18.774/26"
+   ],
+   [
+    "NORMA",
+    "art. 520 LECrim"
+   ],
+   [
+    "TIP",
+    "98.233"
+   ],
+   [
+    "TIP",
+    "131.506"
+   ],
+   [
+    "TIP",
+    "118.452"
+   ],
+   [
+    "TIP",
+    "124.907"
+   ],
+   [
+    "AGENTE",
+    "Sergio Llorens Pastor"
+   ],
+   [
+    "OBJETO",
+    "Robo con fuerza en las cosas en establecimiento y delito contra la salud pública"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "ADRIÁN SANCHIS RIBERA"
+   ],
+   [
+    "PERSONA",
+    "Iván Gómez Puchades"
+   ],
+   [
+    "PERSONA",
+    "el Rata"
+   ],
+   [
+    "PERSONA",
+    "José Luis"
+   ],
+   [
+    "PERSONA",
+    "Amparo"
+   ],
+   [
+    "PERSONA",
+    "Amparo Ribera Climent"
+   ],
+   [
+    "PERSONA",
+    "Enric Ballester Mora"
+   ],
+   [
+    "PERSONA",
+    "Francisco Martí Soler"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch Sanz"
+   ],
+   [
+    "DNI",
+    "24398571M"
+   ],
+   [
+    "DNI",
+    "22517893F"
+   ],
+   [
+    "TELEFONO",
+    "633 902 147"
+   ],
+   [
+    "TELEFONO",
+    "657 330 821"
+   ],
+   [
+    "TELEFONO",
+    "961 447 203"
+   ],
+   [
+    "DIRECCION",
+    "carrer de la Reina, 47, porta 9, 46011 València"
+   ],
+   [
+    "DIRECCION",
+    "calle de la Barraca, 114, 2.ª"
+   ],
+   [
+    "DIRECCION",
+    "calle de Sant Pere del barrio del Cabanyal"
+   ],
+   [
+    "DATO_PENAL",
+    "conocido por los agentes por anteriores intervenciones"
+   ],
+   [
+    "DATO_PENAL",
+    "Le constan en las bases policiales detenciones por hurto (2021 y 2022), por robo con violencia e intimidación (2023) y por desobediencia a agentes de la autoridad (2023)"
+   ],
+   [
+    "DATO_PENAL",
+    "le constan dos condenas firmes"
+   ],
+   [
+    "DATO_PENAL",
+    "no puedo ir a la cárcel otra vez"
+   ],
+   [
+    "DATO_PENAL",
+    "por delito de hurto, pena de multa de seis meses"
+   ],
+   [
+    "DATO_PENAL",
+    "por delito de robo con violencia, pena de dos años de prisión, suspendida por plazo de tres años condicionada a tratamiento de deshabituación"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de etnia gitana",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece TDAH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«pastillas para la atención»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es consumidor habitual de cocaína y porros",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Refiere haber consumido «un par de rayas» unas horas antes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Presenta midriasis, nerviosismo e inquietud motora, habla acelerada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una pequeña herida inciso-contusa en la palma de la mano derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de asistencia por herida superficial en mano derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«probable intoxicación por cocaína, leve»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el parte de lesiones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "siempre colocado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "él mismo es diabético",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tuvo que pincharse la insulina dos veces",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi madre tiene cáncer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reseña dactiloscópica",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toma de muestra de ADN mediante frotis bucal",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se registran las huellas en el sistema SAID",
+    "biometrico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-auto-prision-provisional.pdf.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE INSTRUCCIÓN N.º 14 DE VALÈNCIA"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 14 de València"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Valencia"
+   ],
+   [
+    "AUTOS",
+    "46250-43-2-2026-0034718"
+   ],
+   [
+    "AUTOS",
+    "1287/2026"
+   ],
+   [
+    "AUTOS",
+    "18.774/26"
+   ],
+   [
+    "ORGANISMO",
+    "Comisaría de Distrito Marítim del Cuerpo Nacional de Policía"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Conductas Adictivas"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Oncología Médica del Hospital Universitari i Politècnic La Fe"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Valencia (Picassent)"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "ADRIÁN SANCHIS RIBERA"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch Sanz"
+   ],
+   [
+    "PERSONA",
+    "Andrés Molins Aguilar"
+   ],
+   [
+    "PONENTE",
+    "Inmaculada Ferrandis Albert"
+   ],
+   [
+    "LAJ",
+    "Vicent Peris Martínez"
+   ],
+   [
+    "DNI",
+    "24398571M"
+   ],
+   [
+    "NORMA",
+    "artículo 505 LECrim"
+   ],
+   [
+    "NORMA",
+    "artículos 502 y 503 LECrim"
+   ],
+   [
+    "NORMA",
+    "artículos 237, 238.2.º y 240.1 CP"
+   ],
+   [
+    "NORMA",
+    "artículo 368, párrafo primero, CP"
+   ],
+   [
+    "NORMA",
+    "art. 503.1.3.º.c) y 503.2 LECrim"
+   ],
+   [
+    "NORMA",
+    "art. 86 CP"
+   ],
+   [
+    "OBJETO",
+    "robo con fuerza en las cosas en establecimiento abierto al público y contra la salud pública"
+   ],
+   [
+    "OBJETO",
+    "un delito de robo con fuerza en las cosas"
+   ],
+   [
+    "OBJETO",
+    "un delito contra la salud pública"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba «muy puesto» porque llevaba dos días consumiendo cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«con lo que me meto, catorce bolsitas me duran tres días»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece un trastorno de déficit de atención desde pequeño",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que dejó la medicación hace un año",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enferma de cáncer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de someterse a tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la grave enfermedad de su madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "herida en la mano compatible con el forzamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la situación de consumo activo de cocaína que el propio investigado reconoce",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra en tratamiento de quimioterapia por un cáncer de mama con metástasis óseas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el diagnóstico de TDAH y el consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "programa de intervención con drogodependientes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su derivación a módulo terapéutico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la continuidad del tratamiento farmacológico que se le pudiera pautar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su estado de salud mental, su eventual dependencia a sustancias",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "Al investigado le constan dos condenas firmes anteriores, una de ellas por robo con violencia en 2024, cuya pena de dos años de prisión se encuentra suspendida y en periodo de prueba"
+   ],
+   [
+    "DATO_PENAL",
+    "los hechos se habrían cometido durante la suspensión"
+   ],
+   [
+    "DATO_PENAL",
+    "una suspensión condicionada a tratamiento de deshabituación que no se ha cumplido"
+   ],
+   [
+    "DATO_PENAL",
+    "a los efectos de la ejecutoria en la que se suspendió la pena impuesta al investigado"
+   ],
+   [
+    "DATO_PENAL",
+    "por si procediera la revocación de la suspensión"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-medico-forense.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "INSTITUT DE MEDICINA LEGAL I CIÈNCIES FORENSES DE VALÈNCIA"
+   ],
+   [
+    "ORGANISMO",
+    "Servei de Clínica Mèdico-Forense - Secció de Psiquiatria Forense"
+   ],
+   [
+    "ORGANISMO",
+    "IMLCF"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Valencia (Picassent)"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Integrado de Serrería"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Infanto-Juvenil del Hospital Clínic Universitari de València"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Atención a Drogodependencias de Malvarrosa"
+   ],
+   [
+    "ORGANISMO",
+    "IES Isabel de Villena"
+   ],
+   [
+    "ORGANISMO",
+    "USMIJ del Hospital Clínic"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Clínic"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Valencia"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 14 de València"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas 1287/2026"
+   ],
+   [
+    "AUTOS",
+    "VAL-PSQ-2026-02214"
+   ],
+   [
+    "AUTOS",
+    "18.774/26"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "Ximo Gisbert Alapont"
+   ],
+   [
+    "PERITO",
+    "Rosa María Escrivà Gil"
+   ],
+   [
+    "DNI",
+    "24398571M"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME MÉDICO-FORENSE DE IMPUTABILIDAD Y DROGODEPENDENCIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toma de muestras de cabello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de asistencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parto prematuro a las 34 semanas, con ingreso en neonatos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Asma extrínseco en la infancia, actualmente asintomático",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fractura de escafoides izquierdo a los 15 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Serología VHB, VHC y VIH negativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnosticado a los 8 años de TDAH de presentación combinada (F90.0)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con CI total de 94 (WISC-IV) y dificultades específicas del aprendizaje (dislexia)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tratado con metilfenidato de liberación prolongada (Concerta 36 mg y después 54 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abandono del tratamiento y del seguimiento a los 16 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reinicio irregular con lisdexanfetamina (Elvanse 50 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Un episodio de autolesiones (cortes superficiales en antebrazos) a los 15 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inicio del consumo de cannabis a los 13 años y de alcohol en fines de semana a los 14",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cocaína esnifada desde los 17, con escalada a consumo diario desde 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "refiere entre 1 y 2 gramos diarios en los últimos meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Consumos esporádicos de MDMA y ketamina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega consumo de heroína y por vía parenteral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Un ingreso en Urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por dolor torácico tras consumo de cocaína, con troponinas negativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padre con trastorno por consumo de alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Madre diagnosticada en 2025 de carcinoma ductal infiltrante de mama HER2 positivo con metástasis óseas, en tratamiento con quimioterapia (docetaxel) y trastuzumab",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tía materna con trastorno bipolar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delgado (IMC 19,1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inquieto, cambia constantemente de postura",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso fluido, taquilálico, con tendencia a la digresión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Atención dispersa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo subdepresivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enfermedad de la madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si se muere mientras estoy aquí no me lo perdono",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin ideación autolítica actual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insight parcial sobre el consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "signos de consumo nasal crónico (irritación de la mucosa y perforación septal incipiente)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cicatriz de la herida de la mano derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Analítica de orina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "positiva a cocaína (benzoilecgonina > 3.000 ng/ml) y cannabinoides (THC-COOH 210 ng/ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Análisis de cabello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cocaína 18,4 ng/mg; benzoilecgonina 6,2 ng/mg; cocaetileno positivo; THC 0,9 ng/mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Valores compatibles con un consumo intenso y continuado de cocaína, asociado a alcohol",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(SDS) para cocaína: 12/15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ASRS v1.1 (cribado TDAH adulto): positiva (6/6 en la parte A)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escala de Wender-Utah (WURS): 58",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno por consumo de cocaína de gravedad severa (criterios DSM-5: 9 de 11), un trastorno por consumo de cannabis de gravedad moderada y un trastorno por déficit de atención e hiperactividad de presentación combinada, persistente en la edad adulta, sin tratamiento desde 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bajo los efectos de un consumo reciente de cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sus capacidades volitivas pueden considerarse levemente o moderadamente disminuidas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la conjunción de la dependencia grave a la cocaína y el TDAH no tratado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El consumo diario de 1-2 gramos que refiere",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cocaína, grave (F14.20), de larga evolución, activo en el momento de los hechos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TDAH de presentación combinada (F90.0) persistente en el adulto, sin tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "volitivas disminuidas de forma leve-moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento integrado de la patología dual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reinicio de tratamiento farmacológico del TDAH con supervisión, deshabituación de cocaína y psicoterapia",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-cad-malvarrosa.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GENERALITAT VALENCIANA - CONSELLERIA DE SANITAT"
+   ],
+   [
+    "ORGANISMO",
+    "Departament de Salut València Clínic-Malvarrosa"
+   ],
+   [
+    "ORGANISMO",
+    "CENTRO DE ATENCIÓN A DROGODEPENDENCIAS (CAD) / UNITAT DE CONDUCTES ADDICTIVES DE MALVARROSA"
+   ],
+   [
+    "ORGANISMO",
+    "La Fe"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Picassent"
+   ],
+   [
+    "ORGANISMO",
+    "Comunidad Terapéutica de Proyecto Hombre en Valencia"
+   ],
+   [
+    "ORGANISMO",
+    "Fundación Arzobispo Miguel Roca"
+   ],
+   [
+    "ORGANISMO",
+    "ICOMV"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Valencia"
+   ],
+   [
+    "AUTOS",
+    "233/2024"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "Ximo Gisbert Alapont"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch Sanz"
+   ],
+   [
+    "PERSONA",
+    "Noelia"
+   ],
+   [
+    "NUSS",
+    "1904823766"
+   ],
+   [
+    "NUSS",
+    "UCA-MALV-0007731"
+   ],
+   [
+    "DNI",
+    "24398571M"
+   ],
+   [
+    "DATO_PENAL",
+    "como condición de la suspensión de la pena impuesta"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO DE SEGUIMIENTO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Motivo de consulta: consumo de cocaína y cannabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cannabis desde los 13 años (4-5 porros diarios en los periodos de más consumo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Cocaína esnifada desde los 17 años, inicialmente de fin de semana asociada al alcohol, con progresión a consumo diario a partir de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gasto estimado al inicio del tratamiento: unos 300 euros a la semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin consumo por vía inyectada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Acude a 14 de 16 citas con psicología y a todas las de enfermería",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Controles de orina semanales: negativos a cocaína en 9 de 12 (positivos a THC en todos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se reinicia tratamiento del TDAH con lisdexanfetamina 30 mg (Elvanse)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mejoría de la impulsividad referida por la madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la madre es diagnosticada de cáncer de mama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acompaña a la madre a las sesiones de quimioterapia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene una discapacidad intelectual reconocida del 45 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asistencia irregular (3 citas de 11)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Abandona la lisdexanfetamina por «quitarle el hambre»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dos controles positivos a cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le da de baja administrativa del programa por inasistencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cocaína, grave (DSM-5; CIE-10 F14.2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de cannabis, moderado (F12.2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por déficit de atención e hiperactividad, tipo combinado, persistente (F90.0)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rasgos de personalidad impulsiva, sin criterios de trastorno de la personalidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha conseguido periodos de abstinencia de la cocaína",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la sobrecarga familiar derivada de la enfermedad de la madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quiero estar limpio para cuidar a mi madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento residencial de deshabituación en comunidad terapéutica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento integrado del TDAH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lisdexanfetamina 30 mg/día (Elvanse), con supervisión de la toma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Topiramato 50 mg/12 h como coadyuvante para el craving",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Psicoterapia cognitivo-conductual y entrevista motivacional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Controles toxicológicos aleatorios",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-informe-social.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "AJUNTAMENT DE VALÈNCIA"
+   ],
+   [
+    "ORGANISMO",
+    "Regidoria de Benestar Social"
+   ],
+   [
+    "ORGANISMO",
+    "Centre Municipal de Serveis Socials Marítim"
+   ],
+   [
+    "ORGANISMO",
+    "Equip d'Intervenció amb Famílies"
+   ],
+   [
+    "ORGANISMO",
+    "Centre Penitenciari de València (Picassent)"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital La Fe"
+   ],
+   [
+    "ORGANISMO",
+    "UCA de Malvarrosa"
+   ],
+   [
+    "ORGANISMO",
+    "Càritas de la parròquia de Santa Maria del Mar"
+   ],
+   [
+    "ORGANO",
+    "Jutjat d'Instrucció núm. 14 de València"
+   ],
+   [
+    "AUTOS",
+    "1287/2026"
+   ],
+   [
+    "AUTOS",
+    "EIF-MAR-2019/0412"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch Sanz"
+   ],
+   [
+    "PERSONA",
+    "Mireia Soriano Catalá"
+   ],
+   [
+    "PERSONA",
+    "Amparo Ribera Climent"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "Noelia Sanchis Ribera"
+   ],
+   [
+    "PERSONA",
+    "José Luis Sanchis Moreno"
+   ],
+   [
+    "PERSONA",
+    "Adrián"
+   ],
+   [
+    "PERSONA",
+    "Noelia"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "DIRECCION",
+    "carrer de la Reina, 47, porta 9, 46011 València"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en situació d'incapacitat temporal des de maig de 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escolaritzada en un centre d'educació especial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Té reconegut un grau de discapacitat del 45 % per discapacitat intel·lectual lleu i una situació de dependència en grau I",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "té problemes greus amb l'alcohol",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "va complir condemna per un delicte de maltractament en l'àmbit familiar"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prestació d'IT de la mare",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Prestació per fill a càrrec amb discapacitat",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "transport a l'hospital (la mare no pot conduir)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "està diagnosticada des d'abril de 2025 d'un càncer de mama amb metàstasi òssia, en tractament de quimioteràpia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pateix molt de cansament i dolor als ossos, té una neuropatia a les mans pel tractament i li han posat un reservori (port-a-cath)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Està en tractament amb morfina d'alliberament retardat (MST 30 mg) i amb antidepressius des del diagnòstic",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«per allargar, no per curar»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "té diagnosticat TDAH des de xicotet i té un problema de consum de cocaïna i cànnabis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "va estar en tractament",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quan prenia la medicació «era un altre»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la va deixar quan ella es va posar malalta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta discapacitat intel·lectual lleu i epilèpsia controlada amb Depakine",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en transport adaptat",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "una situació de violència de gènere patida per la mare (amb ordre de protecció en vigor fins a 2022)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acompanya la mare a les sessions de quimioteràpia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "s'encarrega de la medicació de Noelia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "plaça de respir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La família és practicant catòlica",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "manté una relació de parella amb un jove",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ell és l'únic que l'ajuda a no consumir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el va acompanyar les últimes vegades a la UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Adrián no ho havia explicat a la família fins aquest any i la mare ho ha acceptat",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el tractament de la seua addicció (comunitat terapèutica o tractament ambulatori intensiu)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-correo-madre.eml.txt": {
+  "oro": [
+   [
+    "CORREO",
+    "amparoribera73@gmail.com"
+   ],
+   [
+    "CORREO",
+    "jbenlloch@benllochadvocats.es"
+   ],
+   [
+    "PERSONA",
+    "Amparo Ribera"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch"
+   ],
+   [
+    "PERSONA",
+    "Benlloch"
+   ],
+   [
+    "PERSONA",
+    "Amparo"
+   ],
+   [
+    "PERSONA",
+    "Adrian"
+   ],
+   [
+    "PERSONA",
+    "Adrián Sanchis"
+   ],
+   [
+    "PERSONA",
+    "Adrián"
+   ],
+   [
+    "PERSONA",
+    "Gisbert"
+   ],
+   [
+    "PERSONA",
+    "Peiró"
+   ],
+   [
+    "PERSONA",
+    "Noelia"
+   ],
+   [
+    "PERSONA",
+    "Vicent"
+   ],
+   [
+    "PERSONA",
+    "Rubén"
+   ],
+   [
+    "PERSONA",
+    "Paco"
+   ],
+   [
+    "PERSONA",
+    "Amparo Ribera Climent"
+   ],
+   [
+    "TELEFONO",
+    "657 330 821"
+   ],
+   [
+    "ORGANISMO",
+    "Proyecto Hombre"
+   ],
+   [
+    "ORGANISMO",
+    "La Fe"
+   ],
+   [
+    "OBJETO",
+    "el xic que esta a Picassent per lo del bar de la Barraca"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no puc dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esta molt prim, diu que no dorm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el metge de la preso li dona unes pastilles que el deixen atontat",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no li donen la del TDAH, l'Elvanse",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "te por de tornar a caure",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el porten a una comunitat d'eixes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dilluns em toca quimio altra vegada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "l'ultim TAC ha eixit que les metastasis dels ossos han crescut, ara també en la columna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "canvien el tractament i que si no funciona ja parlarem de \"cures pal·liatives\"",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tambe estic amb les pastilles per a la depressio, la sertralina, des de l'any passat",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha tingut dos crisis d'epilepsia aquest mes, li han pujat el Depakine",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de la oncologa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el papel de la discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba apuntado en la UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una carta del rector de la parroquia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde que hizo la comunión",
+    "religion"
+   ],
+   [
+    "DATO_PENAL",
+    "Ja va tindre problemes abans, ho se, el del mòbil i el de la cadena aquella del 2023, i jo pensava que despres del judici de l'any passat havia aprés"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "d'açò la culpa és de la droga",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "jo em vaig posar malalta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el seu xicot",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pel matí estic molt marejada",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-escrito-defensa-atenuantes.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE INSTRUCCIÓN N.º 14 DE VALÈNCIA"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Provincial de Valencia"
+   ],
+   [
+    "AUTOS",
+    "1287/2026"
+   ],
+   [
+    "AUTOS",
+    "46250-43-2-2026-0034718"
+   ],
+   [
+    "AUTOS",
+    "233/2024"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Valencia"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Penitenciario de Valencia (Picassent)"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Sanidad"
+   ],
+   [
+    "ORGANISMO",
+    "IMLCF"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Atención a Drogodependencias"
+   ],
+   [
+    "ORGANISMO",
+    "Proyecto Hombre en Valencia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Cuidados Paliativos"
+   ],
+   [
+    "ORGANISMO",
+    "Servicios Sociales municipales"
+   ],
+   [
+    "ORGANISMO",
+    "CAD de Malvarrosa"
+   ],
+   [
+    "ORGANISMO",
+    "USMIJ del Hospital Clínic"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital La Fe"
+   ],
+   [
+    "PERSONA",
+    "JORDI BENLLOCH SANZ"
+   ],
+   [
+    "PERSONA",
+    "Jordi Benlloch Sanz"
+   ],
+   [
+    "PERSONA",
+    "ADRIÁN SANCHIS RIBERA"
+   ],
+   [
+    "PERSONA",
+    "Elena Tormo Gascó"
+   ],
+   [
+    "PERSONA",
+    "Francisco Martí Soler"
+   ],
+   [
+    "PERSONA",
+    "Amparo Ribera Climent"
+   ],
+   [
+    "PERSONA",
+    "Noelia"
+   ],
+   [
+    "PERSONA",
+    "Rubén Alcaide Ferrer"
+   ],
+   [
+    "PERITO",
+    "Rosa María Escrivà Gil"
+   ],
+   [
+    "PERITO",
+    "Ximo Gisbert Alapont"
+   ],
+   [
+    "PERITO",
+    "Mireia Soriano Catalá"
+   ],
+   [
+    "NORMA",
+    "artículo 784 LECrim"
+   ],
+   [
+    "NORMA",
+    "artículos 237, 238.2.º y 240.1 CP"
+   ],
+   [
+    "NORMA",
+    "artículo 368 CP"
+   ],
+   [
+    "NORMA",
+    "STS 2.ª 482/2023, de 21 de junio"
+   ],
+   [
+    "NORMA",
+    "art. 28 CP"
+   ],
+   [
+    "NORMA",
+    "artículos 21.1.ª en relación con el 20.2.º CP"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2.ª CP"
+   ],
+   [
+    "NORMA",
+    "SSTS 2.ª 129/2023, de 27 de febrero, y 813/2021, de 26 de octubre"
+   ],
+   [
+    "NORMA",
+    "artículo 21.7.ª CP en relación con el 21.1.ª"
+   ],
+   [
+    "NORMA",
+    "artículo 21.5.ª CP"
+   ],
+   [
+    "NORMA",
+    "artículo 22.8.ª CP"
+   ],
+   [
+    "NORMA",
+    "artículo 136.2.1.º CP"
+   ],
+   [
+    "NORMA",
+    "art. 22.8.ª, párrafo tercero, CP"
+   ],
+   [
+    "NORMA",
+    "artículo 66.1.7.ª CP"
+   ],
+   [
+    "NORMA",
+    "art. 68 CP"
+   ],
+   [
+    "NORMA",
+    "art. 368.2 CP"
+   ],
+   [
+    "NORMA",
+    "artículo 80.5 CP"
+   ],
+   [
+    "NORMA",
+    "artículo 99 CP"
+   ],
+   [
+    "OBJETO",
+    "delito de robo con fuerza en las cosas"
+   ],
+   [
+    "OBJETO",
+    "delito contra la salud pública"
+   ],
+   [
+    "OBJETO",
+    "Mi defendido es consumidor diario de entre 1 y 2 gramos de cocaína"
+   ],
+   [
+    "OBJETO",
+    "una tenencia para el autoconsumo"
+   ],
+   [
+    "OBJETO",
+    "TDAH"
+   ],
+   [
+    "OBJETO",
+    "grave adicción a la cocaína"
+   ],
+   [
+    "OBJETO",
+    "La condena por hurto de 12 de mayo de 2022 (multa de seis meses, satisfecha el 30 de enero de 2023)"
+   ],
+   [
+    "OBJETO",
+    "la condena por robo con violencia de 18 de octubre de 2024"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "también consumidor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el análisis de cabello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin tratamiento desde 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no tratado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "disminuían de forma leve-moderada sus facultades volitivas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno por consumo grave, con 9 de 11 criterios DSM-5, perforación septal incipiente y niveles de 18,4 ng/mg de cocaína en cabello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acredita el tratamiento desde noviembre de 2024 y la recaída",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se asocia a mayor impulsividad y peor control de la conducta de búsqueda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento de deshabituación en régimen de comunidad terapéutica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la obligación de ingresar en la comunidad terapéutica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento integrado de patología dual en comunidad terapéutica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece un carcinoma ductal infiltrante de mama HER2+ con metástasis óseas y vertebrales en progresión, en quimioterapia con docetaxel y trastuzumab (Herceptin), con tratamiento con morfina (MST) y sertralina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está pendiente de valoración por la",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene reconocida una discapacidad intelectual del 45 % y epilepsia tratada con ácido valproico, ha sufrido dos crisis en el último mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informes de la UCA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "certificado de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informes oncológicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la documentación médica de la madre y de la hermana del acusado",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "la eventual revocación de la suspensión acordada"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-hoja-historico-penal.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MINISTERI0 DE JUSTICIA"
+   ],
+   [
+    "ORGANISMO",
+    "SECRETARIA DE ESTAD0 DE JUSTICIA"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 CENTRAL DE PENAD0S"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 CENTRAL DE SENTENCIAS DE RESP0NSABILIDAD PENAL DE L0S MEN0RES"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 DE MEN0RES"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE INSTRUCCI0N N. 14 DE VALENCIA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE L0 PENAL N. 5 DE VALENCIA"
+   ],
+   [
+    "ORGANO",
+    "AUDIENCIA PR0VINCIAL DE VALENCIA, SECCI0N SEGUNDA"
+   ],
+   [
+    "ORGANO",
+    "JUZGAD0 DE MEN0RES N. 2 DE VALENCIA"
+   ],
+   [
+    "AUTOS",
+    "DP 1287/2026"
+   ],
+   [
+    "AUTOS",
+    "2026-RCP-0981147"
+   ],
+   [
+    "AUTOS",
+    "412/2022"
+   ],
+   [
+    "AUTOS",
+    "87/2024"
+   ],
+   [
+    "AUTOS",
+    "233/2024"
+   ],
+   [
+    "AUTOS",
+    "211/2020"
+   ],
+   [
+    "PERSONA",
+    "SANCHIS RIBERA"
+   ],
+   [
+    "PERSONA",
+    "ADRIAN"
+   ],
+   [
+    "PERSONA",
+    "J0SE LUIS"
+   ],
+   [
+    "PERSONA",
+    "AMPAR0"
+   ],
+   [
+    "DNI",
+    "24398571M"
+   ],
+   [
+    "DIRECCION",
+    "CR REINA 47 PTA 9 - 46011 VALENCIA"
+   ],
+   [
+    "NORMA",
+    "ART. 234.1 CP"
+   ],
+   [
+    "NORMA",
+    "ART. 53 CP"
+   ],
+   [
+    "NORMA",
+    "ART. 237 Y 242.1 CP"
+   ],
+   [
+    "NORMA",
+    "ART. 80.5 CP"
+   ],
+   [
+    "NORMA",
+    "136.2.1"
+   ],
+   [
+    "OBJETO",
+    "HURT0"
+   ],
+   [
+    "OBJETO",
+    "MULTA 6 MESES, CU0TA DIARIA 4 EUR (720 EUR)"
+   ],
+   [
+    "OBJETO",
+    "R0B0 C0N VI0LENCIA 0 INTIMIDACI0N EN LAS PERS0NAS"
+   ],
+   [
+    "OBJETO",
+    "PRISI0N 2 AN0S. INHABILITACI0N ESPECIAL DERECH0 SUFRAGI0 PASIV0"
+   ],
+   [
+    "OBJETO",
+    "R0B0 2024 -> SI C0MPUTA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRATAMIENT0 DE DESHABITUACI0N HASTA SU FINALIZACI0N",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(ADICCI0N A\nC0CAINA)",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "C0NSTA N0TA DE CANCELACI0N DE ANTECEDENTES"
+   ],
+   [
+    "DATO_PENAL",
+    "0J0 REV0CACI0N SUSPENSI0N"
+   ],
+   [
+    "OBJETO",
+    "SUSPENSI0N: SI"
+   ],
+   [
+    "OBJETO",
+    "PLAZ0 3 AN0S DESDE 04/11/2024"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

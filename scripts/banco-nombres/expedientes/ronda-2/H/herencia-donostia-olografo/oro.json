@@ -1,0 +1,1655 @@
+{
+ "01-testamento-olografo.escaneo.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "J0SE MARIA ETXEBERRIA ARRIETA"
+   ],
+   [
+    "PERSONA",
+    "UNAI LARRAÑAGA MENDIZABAL"
+   ],
+   [
+    "PERSONA",
+    "UNAI"
+   ],
+   [
+    "PERSONA",
+    "KARMELE LARRAÑAGA"
+   ],
+   [
+    "PERSONA",
+    "KARMELE"
+   ],
+   [
+    "PERSONA",
+    "LARRAÑAGA"
+   ],
+   [
+    "PERSONA",
+    "G0RKA"
+   ],
+   [
+    "PERSONA",
+    "MAITE"
+   ],
+   [
+    "PERSONA",
+    "IÑAKIRI"
+   ],
+   [
+    "PERSONA",
+    "IÑAKI"
+   ],
+   [
+    "PERSONA",
+    "URANGA"
+   ],
+   [
+    "PERSONA",
+    "J0XE MARI"
+   ],
+   [
+    "DNI",
+    "15847362-H"
+   ],
+   [
+    "DIRECCION",
+    "IGELD0K0 ETXEBERRI BASERRIAN"
+   ],
+   [
+    "DIRECCION",
+    "CASERI0 ETXEBERRI DE IGELD0"
+   ],
+   [
+    "DIRECCION",
+    "CALLE PRIM, 33, 4º IZDA. DE D0N0STIA"
+   ],
+   [
+    "ORGANISMO",
+    "ATZEGI"
+   ],
+   [
+    "ORGANISMO",
+    "RESIDENCIA DE ZARAUTZ"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "2024AN EGIN GENUEN DNA PR0BAK BAIEZTATU ZUEN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L0 C0NFIRM0 LA PRUEBA DE ADN QUE N0S HICIM0S EN 2024 (99,99 P0R CIENT0)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "BERE ADIMEN-URRITASUNAGATIK",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0R SU DISCAPACIDAD INTELECTUAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LA DEL 67 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SIGA SIEND0 SU CURAD0RA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SINTR0MA ETA PILULA GUZTIAK EMAN DIZKIDANA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EL SINTR0M Y T0DAS LAS PASTILLAS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AMAREN GAIX0TASUNA (HUNTINGT0N)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GENETAN DAUKA",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LLEVA EN L0S GENES LA ENFERMEDAD DE",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SU AMA (EL HUNTINGT0N)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LE DI0 P0SITIV0 LA PRUEBA EN 2019",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "YA TIENE L0S TEMBL0RES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EL SEGUR0 DE INVALIDEZ",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAZ0 TEMBL0R0S0",
+    "salud"
+   ]
+  ],
+  "ambiguo": [
+   "LARRAÑAGA"
+  ]
+ },
+ "02-carta-causante-a-unai.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Unai Larrañaga Mendizabal"
+   ],
+   [
+    "PERSONA",
+    "Unai"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Karmele"
+   ],
+   [
+    "PERSONA",
+    "Miren"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Gorka"
+   ],
+   [
+    "PERSONA",
+    "Zubizarreta"
+   ],
+   [
+    "PERSONA",
+    "Arantxa"
+   ],
+   [
+    "PERSONA",
+    "Ane"
+   ],
+   [
+    "PERSONA",
+    "Joxe Mari Etxeberria"
+   ],
+   [
+    "ORGANISMO",
+    "Atzegi"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el temblor y con los anticoagulantes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tengo la cabeza «de los pequeños infartos» y que irá a peor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Algunos días no me acuerdo de si he comido",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "me detuvo la Brigada Político-Social en una imprenta de Errenteria por repartir propaganda de la huelga de Bandas de Laminación"
+   ],
+   [
+    "DATO_PENAL",
+    "me tuvieron cuatro meses en Martutene y luego me juzgó el TOP"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba embarazada de ti",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "era de los carlistas de toda la vida",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de misa diaria y de requeté",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el rojo separatista",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fui del PNV desde que se pudo, del 77, y presidente del batzoki de Amara veinte años",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado de ELA en Michelin",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del ADN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la chica del laboratorio me llamó para decirme el resultado",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "murió de la enfermedad de Huntington en 2015, después de diez años sin poder casi hablar ni tragar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha salido con lo mismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le dio positivo la prueba genética hace unos años",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya se le nota en las manos y en el carácter",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en tratamiento con tetrabenazina y tiene la incapacidad permanente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se hizo la prueba también y salió limpia",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con su retraso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su síndrome de Down y sus cosas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cosa de la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya no rige",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hay días malos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene la pensión de invalidez, el seguro que cobró de la enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la quimio y esa leucemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nada de curas. Ya sabes que dejé de creer en Martutene",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la ikurriña y que canten el Agur Jaunak los del batzoki",
+    "politica"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-adn-paternidad.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Leire Agirre Etxabe"
+   ],
+   [
+    "PERSONA",
+    "José María Etxeberria Arrieta"
+   ],
+   [
+    "PERSONA",
+    "Unai Larrañaga Mendizabal"
+   ],
+   [
+    "PERSONA",
+    "Karmele Larrañaga Mendizabal"
+   ],
+   [
+    "PERSONA",
+    "Maite Etxeberria Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Amaia Iturbe Sagastume"
+   ],
+   [
+    "DNI",
+    "15847362-H"
+   ],
+   [
+    "DNI",
+    "44129870-B"
+   ],
+   [
+    "ORGANISMO",
+    "GENEBASK — Laboratorio de Genética Forense y Filiación"
+   ],
+   [
+    "ORGANISMO",
+    "ENAC"
+   ],
+   [
+    "NORMA",
+    "UNE-EN ISO/IEC 17025"
+   ],
+   [
+    "NORMA",
+    "arts. 767 LEC y 127 CC"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME PERICIAL DE PRUEBA BIOLÓGICA DE PATERNIDAD",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "paternidad dúo (presunto padre e hijo)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fueron fotografiados y se les tomó la huella dactilar del índice derecho",
+    "biometrico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consentimiento informado para el análisis genético",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene principio de demencia pero entiende perfectamente a qué viene",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Muestras de epitelio bucal (dos hisopos por persona)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Extracción de ADN mediante columnas de sílice; cuantificación por PCR en tiempo real; amplificación de 24 marcadores STR autosómicos (kit GlobalFiler™) y 27 marcadores del cromosoma Y (Yfiler™ Plus) como confirmación de línea paterna",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento anticoagulante con acenocumarol (Sintrom)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el hijo presenta, en los 24 loci analizados, un alelo compatible con el presunto padre, sin exclusiones",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "D3S1358 (15/17 — 15/16); vWA (16/18 — 18/19); FGA (21/24 — 22/24); TH01 (6/9.3 — 9.3/9.3); D21S11 (29/30 — 30/32.2); SE33 (19/27.2 — 27.2/28)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haplotipos idénticos en los 27 marcadores",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Índice de paternidad combinado (IPC): 4,72 × 10⁸",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Probabilidad de paternidad (W), con probabilidad a priori de 0,5: 99,9999998 %",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NO QUEDA EXCLUIDO como padre biológico de",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paternidad es «PRÁCTICAMENTE PROBADA»",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estudio de la mutación del gen HTT (enfermedad de Huntington)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "afecta a la otra rama de la familia",
+    "genetico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-medico-capacidad.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Xabier Lasa Uranga"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Etxeberria Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Garazi Mendia Soraluze"
+   ],
+   [
+    "PERSONA",
+    "José María Etxeberria Arrieta"
+   ],
+   [
+    "PERSONA",
+    "Itziar Olaizola Garmendia"
+   ],
+   [
+    "PERSONA",
+    "Patxi Urkiola Bengoetxea"
+   ],
+   [
+    "PERSONA",
+    "Maite Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "NUSS",
+    "01-2290471"
+   ],
+   [
+    "NUSS",
+    "ETXE410302-H"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de Médicos de Gipuzkoa"
+   ],
+   [
+    "ORGANISMO",
+    "Osakidetza"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Lasarte-Oria"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Donostia"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Neurología del Hospital Universitario Donostia"
+   ],
+   [
+    "ORGANISMO",
+    "residencia sociosanitaria Matia"
+   ],
+   [
+    "ORGANISMO",
+    "residencia Matia"
+   ],
+   [
+    "NORMA",
+    "art. 18.4 de la Ley 41/2002"
+   ],
+   [
+    "NORMA",
+    "art. 335.2 LEC"
+   ],
+   [
+    "OBJETO",
+    "CAPACIDAD PARA TESTAR"
+   ],
+   [
+    "OBJETO",
+    "facultades mentales"
+   ],
+   [
+    "OBJETO",
+    "demencia vascular"
+   ],
+   [
+    "OBJETO",
+    "la capacidad del testador para otorgar el testamento ológrafo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Resonancia magnética cerebral de 28/04/2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de alta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(respiro familiar, julio de 2024)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA de larga evolución (enalapril 20 mg, amlodipino 5 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 desde 2009 (metformina 850 mg/12 h; HbA1c 7,4 % en 2024)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fibrilación auricular permanente, anticoagulado con acenocumarol (Sintrom) hasta marzo de 2024 y después con apixabán (Eliquis 2,5 mg/12 h) tras una hemorragia digestiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ictus isquémico lacunar en territorio de la arteria cerebral media izquierda en febrero de 2022, con paresia leve del miembro superior derecho residual y disartria leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoacusia bilateral con audífonos. Cataratas intervenidas.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumador (40 paquetes/año). Bebedor moderado de vino hasta 2022.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "queja de pérdida de memoria reciente, desorientación en lugares conocidos (se perdió volviendo del batzoki), apatía. MMSE 22/30.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RM: múltiples infartos lacunares en ganglios basales y sustancia blanca periventricular, leucoaraiosis grado 3 de Fazekas, atrofia cortical leve.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deterioro cognitivo de origen vascular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estadio leve (GDS 4)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE 19/30. Fallos en cálculo y en recuerdo diferido. Se inicia memantina (Ebixa 20 mg). Se recomienda supervisión de la medicación.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE 17/30; test del reloj 3/10; fluencia verbal semántica 8 animales/minuto.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de confusión vespertina, agitación nocturna («se levanta convencido de que tiene que ir a la fábrica») y dos episodios en que no la reconoció",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se pauta quetiapina 25 mg por la noche.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estadio moderado (GDS 5), con fluctuaciones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso en julio de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desorientación temporal constante, orientado en persona, colaborador, precisa ayuda para ducha y control de esfínteres nocturno (incontinencia urinaria)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trazo tembloroso compatible con su paresia residual y con la medicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene los temblores",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervalo de relativa lucidez, característico de su curso fluctuante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estadio moderado (GDS 5), con un MMSE de 17/30 cinco semanas antes del otorgamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Este grado de deterioro afecta de forma significativa a la memoria, al juicio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El curso fluctuante de la enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervalo lúcido",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-acta-notarial-protocolizacion.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "ANDER ZUBIZARRETA OLANO"
+   ],
+   [
+    "PERSONA",
+    "Ander Zubizarreta Olano"
+   ],
+   [
+    "DIRECCION",
+    "Avenida de la Libertad, 17, 1.º · 20004 Donostia-San Sebastián"
+   ],
+   [
+    "PERSONA",
+    "MAITE ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "JOSÉ MARÍA ETXEBERRIA ARRIETA"
+   ],
+   [
+    "PERSONA",
+    "Iñigo Uranga Etxaniz"
+   ],
+   [
+    "PERSONA",
+    "IÑAKI ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "GORKA ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "UNAI LARRAÑAGA MENDIZABAL"
+   ],
+   [
+    "PERSONA",
+    "Unai Larrañaga Mendizabal"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Maite Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Edurne Salaberria Iturrioz"
+   ],
+   [
+    "PERSONA",
+    "Jon Ugalde Azpiazu"
+   ],
+   [
+    "PERSONA",
+    "Ugalde"
+   ],
+   [
+    "PERSONA",
+    "Begoña Arregi Lizarraga"
+   ],
+   [
+    "PERSONA",
+    "Gorka"
+   ],
+   [
+    "PERSONA",
+    "Karmele"
+   ],
+   [
+    "PERSONA",
+    "Etxeberria Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Garazi Mendia Soraluze"
+   ],
+   [
+    "PERITO",
+    "Nekane Aranburu Elosegi"
+   ],
+   [
+    "PERITO",
+    "Xabier Lasa Uranga"
+   ],
+   [
+    "DNI",
+    "72511094-R"
+   ],
+   [
+    "DNI",
+    "72487311-C"
+   ],
+   [
+    "DNI",
+    "72530982-W"
+   ],
+   [
+    "DNI",
+    "44129870-B"
+   ],
+   [
+    "DIRECCION",
+    "Bidebieta Kalea, 6, 2.º B, 20017 Donostia"
+   ],
+   [
+    "ORGANISMO",
+    "ILUSTRE COLEGIO NOTARIAL DEL PAÍS VASCO"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio del País Vasco"
+   ],
+   [
+    "ORGANISMO",
+    "Registro General de Actos de Última Voluntad"
+   ],
+   [
+    "ORGANISMO",
+    "GENEBASK"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia n.º 2 de Donostia-San Sebastián"
+   ],
+   [
+    "AUTOS",
+    "412/2026"
+   ],
+   [
+    "AUTOS",
+    "1.988/2025"
+   ],
+   [
+    "NORMA",
+    "artículos 61 a 63 de la Ley del Notariado"
+   ],
+   [
+    "NORMA",
+    "Ley 15/2015, de 2 de julio"
+   ],
+   [
+    "NORMA",
+    "artículo 23 de la Ley 5/2015, de 25 de junio"
+   ],
+   [
+    "NORMA",
+    "artículo 63 de la Ley del Notariado"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "neumonía aspirativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "demencia vascular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "persona con discapacidad que tiene judicialmente establecida una curatela representativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "compañero del causante durante décadas en el batzoki de Amara y en la ejecutiva local del PNV",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su secretaria en la sección sindical de ELA de la fábrica",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aunque más temblorosa que antes, por lo de los infartos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con signos de temblor fisiológico y senil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "carecía de capacidad para testar por la demencia que padecía desde 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está diagnosticado de enfermedad de Huntington, que está en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba de los días buenos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de prueba biológica de paternidad",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no le preguntara por la medicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Le noté dificultades auditivas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "confundió el nombre de su difunta esposa con el de su hija",
+    "salud"
+   ]
+  ],
+  "ambiguo": [
+   "Etxeberria Goikoetxea"
+  ]
+ },
+ "06-correo-inaki-a-maite.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Iñaki Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Etxeberria Goikoetxea"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Maite Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Arantxa"
+   ],
+   [
+    "PERSONA",
+    "Miren"
+   ],
+   [
+    "PERSONA",
+    "Mikel"
+   ],
+   [
+    "PERSONA",
+    "Uxue"
+   ],
+   [
+    "PERSONA",
+    "Unai"
+   ],
+   [
+    "PERSONA",
+    "Gorka"
+   ],
+   [
+    "PERSONA",
+    "Garazi"
+   ],
+   [
+    "PERITO",
+    "Lasa"
+   ],
+   [
+    "CORREO",
+    "ietxeberria68@euskalnet.net"
+   ],
+   [
+    "CORREO",
+    "maite.etxeberria.g@gmail.com"
+   ],
+   [
+    "TELEFONO",
+    "688 402 117"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Huntington de Cruces"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la tension luego no duermo y me tiemblan mas las manos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escribir me cuesta cada vez mas, los dedos van a su aire",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la neurologa dice que es la corea y que el Xenazina ya no me hace lo mismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no te habia reconocido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se habia meado en la cama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tu le dabas las pastillas, la quetiapina y el Ebixa y el Eliquis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tengo lo mismo que la ama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me dio positivo el test, 44 repeticiones CAG",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la silla, la sonda, no poder tragar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se quiere hacer la prueba",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se la hizo el año pasado a escondidas y gracias a Dios dio negativo",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy con el psiquiatra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy con una depresion que no levanto, me han subido la sertralina a 150",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del ADN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un hombre que no sabia en que dia vivia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le llevo al laboratorio",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con su Down y su 67 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la neurologa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE de 17, que ya es demencia moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el del batzoki",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "murio como vivio, abertzale y sin curas",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enterramos con misa en Igeldo",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-maite-a-inaki.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Maite Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Iñaki Etxeberria"
+   ],
+   [
+    "PERSONA",
+    "Iñaki"
+   ],
+   [
+    "PERSONA",
+    "Unai Larrañaga"
+   ],
+   [
+    "PERSONA",
+    "Unai"
+   ],
+   [
+    "PERSONA",
+    "Jon"
+   ],
+   [
+    "PERSONA",
+    "Uxue"
+   ],
+   [
+    "PERSONA",
+    "Lorea"
+   ],
+   [
+    "PERSONA",
+    "Mikel"
+   ],
+   [
+    "PERSONA",
+    "Gorka"
+   ],
+   [
+    "PERSONA",
+    "Edurne"
+   ],
+   [
+    "PERSONA",
+    "Ane"
+   ],
+   [
+    "CORREO",
+    "maite.etxeberria.g@gmail.com"
+   ],
+   [
+    "CORREO",
+    "ietxeberria68@euskalnet.net"
+   ],
+   [
+    "CORREO",
+    "unai.larranaga@telefonica.net"
+   ],
+   [
+    "ORGANISMO",
+    "Donostia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le cambiaba el pañal por las noches cuando se le escapaba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le ponía el pastillero los domingos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cada vez que el Sintrom se le descontrolaba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las seis noches de la neumonía",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo tuyo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tenía días malos. Muchos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me confundió con la ama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "también tenía días buenos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me hizo parar en el batzoki",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo hacía en todos los papeles del partido desde los años ochenta",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del ADN",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le llevé al laboratorio",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no puede conducir desde el ictus",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo también me hice la prueba y salió que no soy portadora",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la psicóloga dice que se llama «culpa del superviviente»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi mujer",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha tenido otras dos crisis epilépticas este mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le han cambiado el Depakine por Keppra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el aita se hizo de misa por la ama",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo de abertzale y sin curas",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en nuestras oraciones",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo rezo poco",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-impugnacion-testamento.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Ainhoa Garmendia Zabala"
+   ],
+   [
+    "PERSONA",
+    "IÑAKI ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "Mikel Arruti Lasarte"
+   ],
+   [
+    "PERSONA",
+    "Garazi Mendia Soraluze"
+   ],
+   [
+    "PERSONA",
+    "MAITE ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "GORKA ETXEBERRIA GOIKOETXEA"
+   ],
+   [
+    "PERSONA",
+    "UNAI LARRAÑAGA MENDIZABAL"
+   ],
+   [
+    "PERSONA",
+    "Maite"
+   ],
+   [
+    "PERSONA",
+    "Gorka"
+   ],
+   [
+    "PERSONA",
+    "Edurne Salaberria Iturrioz"
+   ],
+   [
+    "PERSONA",
+    "José María Etxeberria Arrieta"
+   ],
+   [
+    "PERSONA",
+    "Joxe Mari"
+   ],
+   [
+    "PERSONA",
+    "Miren Goikoetxea Alberdi"
+   ],
+   [
+    "PERSONA",
+    "Unai Larrañaga Mendizabal"
+   ],
+   [
+    "PERSONA",
+    "Unai Larrañaga"
+   ],
+   [
+    "PERSONA",
+    "Larrañaga"
+   ],
+   [
+    "PERSONA",
+    "Iñigo Uranga Etxaniz"
+   ],
+   [
+    "PERSONA",
+    "Ander Zubizarreta Olano"
+   ],
+   [
+    "PERSONA",
+    "Itziar Olaizola Garmendia"
+   ],
+   [
+    "PERSONA",
+    "Patxi Urkiola Bengoetxea"
+   ],
+   [
+    "PERITO",
+    "Xabier Lasa Uranga"
+   ],
+   [
+    "DNI",
+    "72487311-C"
+   ],
+   [
+    "DNI",
+    "72511094-R"
+   ],
+   [
+    "DNI",
+    "72530982-W"
+   ],
+   [
+    "DNI",
+    "44129870-B"
+   ],
+   [
+    "DIRECCION",
+    "Zubieta Kalea, 41, 3.º D, 20007 Donostia-San Sebastián"
+   ],
+   [
+    "DIRECCION",
+    "Bidebieta Kalea, 6, 2.º B, 20017 Donostia-San Sebastián"
+   ],
+   [
+    "DIRECCION",
+    "Kale Nagusia, 12, 1.º, 20100 Errenteria"
+   ],
+   [
+    "DIRECCION",
+    "residencia de Atzegi en Zarautz"
+   ],
+   [
+    "DIRECCION",
+    "caserío Etxeberri de Igeldo"
+   ],
+   [
+    "DIRECCION",
+    "calle Prim, 33, 4.º izquierda"
+   ],
+   [
+    "DIRECCION",
+    "calle Prim"
+   ],
+   [
+    "AUTOS",
+    "n.º 233"
+   ],
+   [
+    "AUTOS",
+    "n.º 1104/2025"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE DONOSTIA-SAN SEBASTIÁN"
+   ],
+   [
+    "ORGANO",
+    "Sala Primera"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Gipuzkoa"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Neurología del Hospital Universitario Donostia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Huntington del Hospital Universitario Cruces"
+   ],
+   [
+    "ORGANISMO",
+    "Osakidetza"
+   ],
+   [
+    "ORGANISMO",
+    "residencia Matia"
+   ],
+   [
+    "NORMA",
+    "artículo 48 de la Ley 5/2015, de 25 de junio"
+   ],
+   [
+    "NORMA",
+    "artículo 685 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "STS 461/2014, de 22 de septiembre"
+   ],
+   [
+    "NORMA",
+    "STS 146/2018, de 15 de marzo"
+   ],
+   [
+    "NORMA",
+    "art. 741 CC"
+   ],
+   [
+    "NORMA",
+    "artículo 253.3 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 45 y 52.1.4.º LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 249.2 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 10 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 662, 663, 665, 666, 678, 688 y 741 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículos 23 y 48 de la Ley 5/2015, de 25 de junio"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "OBJETO",
+    "falta de capacidad del testador"
+   ],
+   [
+    "OBJETO",
+    "capacidad del testador"
+   ],
+   [
+    "OBJETO",
+    "demencia vascular"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en estadio moderado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "múltiples infartos cerebrales de pequeño vaso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un ictus lacunar en 2022 que le dejó secuelas motoras y de habla",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MMSE de 22/30 en mayo de 2023, de 19/30 en noviembre de 2023 y de 17/30 en septiembre de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de confusión vespertina, agitación nocturna, incontinencia y al menos dos episodios en que no reconoció a su propia hija",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Precisaba quetiapina para la agitación nocturna y memantina, y no podía gestionar por sí mismo su medicación, anticoagulante incluida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tenía el control de la medicación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le acompañó al laboratorio de genética",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "referencias al estado de salud de mi mandante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paternidad biológica del causante",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la prueba de ADN de 18 de junio de 2024",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece una enfermedad neurodegenerativa hereditaria, la enfermedad de Huntington",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incapacidad permanente absoluta y un grado de discapacidad del 65 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en seguimiento psiquiátrico por un trastorno depresivo reactivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tener establecida judicialmente una curatela representativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "persona con síndrome de Down y discapacidad intelectual reconocida del 67 %, con epilepsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica completa del causante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el expediente de su estancia de julio de 2024",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

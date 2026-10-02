@@ -1,0 +1,86 @@
+MINISTERIO DE TRABAJO Y ECONOMÍA SOCIAL
+PARTE DE ACCIDENTE DE TRABAJO (Orden TAS/2926/2002)
+Comunicado por el sistema Delt@ — N.º de referencia: 30/2025/000318744
+Fecha de presentación: 18/03/2025 · Entidad gestora/colaboradora: IBERMUTUA, Mutua Colaboradora con la Seguridad Social n.º 274
+
+1. DATOS DEL TRABAJADOR/A
+
+Apellidos y nombre ........ ALBALADEJO SÁNCHEZ, GINÉS
+DNI/NIE ................... 23284917K
+N.º afiliación SS ......... 30 1048372215
+Sexo ...................... Hombre        Fecha de nacimiento: 11/07/1973
+Nacionalidad .............. España
+Domicilio ................. C/ Mayor, 47, 2.º B
+Municipio / C.P. .......... El Palmar (Murcia) / 30120
+Teléfono .................. 659 21 43 08
+Fecha de antigüedad ....... 03/02/2019
+Ocupación (CNO-11) ........ 7121 — Albañiles (oficial de primera)
+Tipo de contrato .......... 189 — Indefinido adscrito a obra
+Régimen de la SS .......... General
+Situación profesional ..... Asalariado sector privado
+
+2. DATOS DE LA EMPRESA
+
+Razón social .............. CONSTRUCCIONES SEGURA HELLÍN, S.L.
+CIF ....................... B73519846
+CCC ....................... 30/1123456/78
+Domicilio social .......... Avda. Juan Carlos I, 59, 30100 Espinardo (Murcia)
+Actividad (CNAE-09) ....... 4121 — Construcción de edificios residenciales
+Plantilla ................. 23 trabajadores
+Organización preventiva ... Servicio de prevención ajeno (Quirónprevención, S.L.U.)
+¿Es una ETT? .............. No   ¿Contrata/subcontrata? Sí — contratista principal
+
+3. LUGAR Y CENTRO DE TRABAJO
+
+Obra: Edificio de 24 viviendas, garajes y trasteros. Promotor: Residencial Floridablanca 2023, S.L.
+Emplazamiento: C/ Pintor Sobejano esq. C/ Acisclo Díaz, 30005 Murcia
+¿El accidente ocurrió en el centro habitual? Sí   ¿Al ir o volver del trabajo? No
+
+4. DATOS DEL ACCIDENTE
+
+Fecha del accidente: 14/03/2025    Día de la semana: Viernes    Hora del día: 11:40
+Hora de trabajo: 4.ª    ¿Trabajo habitual? Sí    ¿Evaluado el riesgo? Sí
+
+Descripción del accidente (qué hacía, cómo ocurrió):
+El trabajador se encontraba en la plataforma del andamio tubular de fachada, nivel 3 (aprox. 6,20 m de altura), recibiendo ladrillo cara vista para el cerramiento de la fachada posterior. Al retroceder para coger material perdió el equilibrio y cayó por el lateral del andamio, en el cual en ese momento no estaba colocada la barandilla de protección del extremo, golpeándose contra el palé de bovedillas acopiado en planta baja. Fue atendido en el lugar por el encargado de obra D. Francisco Meroño Lax, que avisó al 112, y trasladado en UVI móvil del 061 al Hospital Clínico Universitario Virgen de la Arrixaca.
+
+Tipo de lugar: 021 — Obra en construcción, edificio en construcción
+Tipo de trabajo: 22 — Nueva construcción
+Actividad física específica: 61 — Andar, correr, subir, bajar
+Agente material de la actividad: 03.01.00 — Andamios, estructuras temporales
+Desviación: 51 — Caída de una persona desde una altura
+Forma (contacto): 31 — Golpe sobre o contra resultado de una caída del trabajador
+Agente material asociado: 14.02.00 — Materiales de construcción (palés)
+
+Testigos:
+1. Francisco Meroño Lax — encargado de obra — tlf. 618 40 22 97
+2. José Antonio Ruiz Abellán — oficial de 1.ª
+3. Antonio Cánovas Pina — operador de grúa torre
+
+5. DATOS ASISTENCIALES
+
+Descripción de la lesión: Traumatismo craneoencefálico grave. Fracturas múltiples (pierna derecha, muñeca izquierda, columna lumbar). Traumatismo torácico.
+Código lesión: 120 — Fracturas cerradas / 052 — Conmoción y lesiones internas
+Grado de la lesión: GRAVE
+Parte del cuerpo lesionado: 18 — Lesiones múltiples / 11 — Cabeza
+Médico que efectuó la asistencia: Servicio de Urgencias HCUV Arrixaca
+Tipo de asistencia: Hospitalaria
+¿Hospitalización? SÍ — ingreso en UCI
+
+6. DATOS ECONÓMICOS
+
+Base de cotización mes anterior (contingencias profesionales): 2.184,30 €
+N.º de días cotizados: 31
+Base reguladora A (B/días): 70,46 €
+Base reguladora B (horas extra, pagas): 6,12 €/día
+Total base reguladora diaria: 76,58 €
+Subsidio: 75 % desde el día siguiente a la baja
+
+7. ACTOR DEL PARTE
+
+Observaciones de la empresa:
+El trabajador había recibido formación en PRL de 20 h (nivel básico, Fundación Laboral de la Construcción, TPC 2020) y disponía de arnés anticaídas, que según el encargado no estaba anclado en el momento de la caída al tratarse de plataforma con protección colectiva. En el último reconocimiento médico periódico (noviembre 2024) fue declarado APTO CON RESTRICCIONES por hipertensión arterial en tratamiento y diabetes tipo 2, con la indicación de evitar trabajos en altura superiores a 2 m sin supervisión. Se ha procedido a revisar el andamio y a reponer la barandilla el mismo día del accidente.
+
+Lugar y fecha: Murcia, 18 de marzo de 2025
+Por la empresa: Juan Pedro Segura Hellín — Administrador único
+Firma y sello

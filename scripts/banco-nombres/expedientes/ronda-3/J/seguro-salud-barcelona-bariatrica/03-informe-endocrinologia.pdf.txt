@@ -1,0 +1,54 @@
+CLÍNICA DIAGONAL NORD
+Unitat d'Obesitat i Cirurgia Metabòlica · Servei d'Endocrinologia i Nutrició
+C/ de Ganduxer, 117 · 08022 Barcelona
+
+INFORME MÈDIC
+
+Pacient: Oriol Ventosa Ribera                    Data de naixement: 19/06/1979 (45 anys)
+Núm. d'història: DN-0098214                       Asseguradora: Vitalis Salud (pòlissa 0471-2219-883)
+Targeta sanitària individual (CatSalut): VERI 1790619 007
+Data: 18 de febrer de 2025
+Metgessa: Dra. Núria Cortada Vilalta, especialista en Endocrinologia i Nutrició (col. 38.554)
+
+MOTIU DE CONSULTA
+Valoració per a cirurgia bariàtrica, derivat pel seu metge de capçalera (CAP Sant Martí - Provençals) i per la Unitat del Son.
+
+ANTECEDENTS PERSONALS
+- Obesitat des de l'adolescència, amb increment ponderal progressiu (+28 kg en els darrers 6 anys). Múltiples intents dietètics fracassats supervisats (dieta hipocalòrica, dos programes amb dietista-nutricionista, 2019 i 2022), liraglutida (Saxenda) 3 mg/dia durant 9 mesos el 2022 amb pèrdua de 7 kg i recuperació posterior, i semaglutida (Ozempic) 1 mg setmanal des de maig de 2023, amb intolerància digestiva (nàusees i vòmits).
+- Hipertensió arterial (HTA) des de 2018: enalapril 20 mg + amlodipina 5 mg.
+- Diabetis mellitus tipus 2 (DM2) diagnosticada el 2022: metformina 850 mg/12 h + semaglutida. HbA1c 7,9 %.
+- Síndrome d'apnees-hipopnees del son (SAHS) greu: polisomnografia (09/2023) amb IAH de 52/h, saturació mínima 74 %, T90 del 31 %. En tractament amb CPAP a 11 cm H2O, amb mala adherència (< 3 h/nit) per claustrofòbia i ferides nasals.
+- Esteatosi hepàtica (fetge gras) amb transaminases elevades (GPT 78) i FibroScan F2.
+- Gonartrosi bilateral, meniscectomia dreta (2012). Dolor que limita la marxa a 300 m.
+- Depressió en seguiment per psiquiatria (vegeu informe del Dr. Garriga), en tractament amb vortioxetina (Brintellix). L'estat d'ànim afecta l'adherència a la dieta i fa ingestes compulsives nocturnes.
+- Exfumador des de 2023 (10 cig./dia, IPA 25). Consum d'alcohol actualment nul (vegeu informe psiquiàtric).
+- Apendicectomia (1998).
+- Al·lèrgies: no conegudes.
+
+ANTECEDENTS FAMILIARS
+Mare amb DM2 insulinodependent i cardiopatia isquèmica (IAM als 61 anys). Pare mort d'un AVC als 70 anys. Germana amb obesitat grau II.
+
+EXPLORACIÓ FÍSICA
+Pes 138,4 kg. Talla 1,76 m. IMC 44,7 kg/m². Perímetre de cintura 141 cm. TA 148/94 mmHg. Acantosi nigricans a coll i aixelles. Edemes mal·leolars bilaterals.
+
+PROVES COMPLEMENTÀRIES
+- Analítica (10/02/2025): glucosa 162 mg/dl, HbA1c 7,9 %, colesterol total 236, LDL 151, triglicèrids 289, HDL 34, GPT 78, GGT 112, àcid úric 8,4, vitamina D 14 ng/ml, ferritina normal. TSH 2,1.
+- Estudi genètic d'obesitat monogènica (panell de 42 gens, inclosos MC4R, LEPR i POMC): no s'identifiquen variants patogèniques.
+- Ecografia abdominal: esteatosi hepàtica greu; colelitiasi no complicada.
+- Gastroscòpia: hèrnia de hiat petita, sense esòfag de Barrett. Helicobacter pylori negatiu.
+- Valoració psicològica prequirúrgica (psicòloga Laia Bassols Pi): apte, amb recomanació de mantenir el seguiment psiquiàtric.
+
+JUDICI CLÍNIC
+1. Obesitat mòrbida (grau III, IMC 44,7) amb comorbiditats greus.
+2. SAHS greu amb mala tolerància a la CPAP.
+3. DM2 mal controlada malgrat tractament amb agonistes de GLP-1.
+4. HTA de difícil control.
+5. Esteatosi hepàtica amb fibrosi moderada.
+6. Trastorn depressiu en tractament.
+
+PLA I INDICACIÓ
+El pacient compleix tots els criteris de la SECO i de les guies IFSO per a cirurgia bariàtrica (IMC > 40, o > 35 amb comorbiditats), amb fracàs documentat del tractament mèdic durant més de 5 anys. Es proposa GASTRECTOMIA VERTICAL LAPAROSCÒPICA (sleeve), amb colecistectomia simultània. La cirurgia no és estètica: és el tractament de la seva obesitat mòrbida i s'espera la remissió de la DM2 en un 60-70 %, la millora o resolució del SAHS i de l'HTA, i la reducció del risc cardiovascular.
+Demorar la intervenció comporta un risc rellevant: apnees greus sense tractament eficaç, progressió de la fibrosi hepàtica i un risc cardiovascular estimat (REGICOR) elevat.
+
+Signat: Dra. Núria Cortada Vilalta
+Barcelona, 18 de febrer de 2025

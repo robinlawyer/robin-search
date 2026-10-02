@@ -1,0 +1,51 @@
+HOSPITAL UNIVERSITARIO 12 DE OCTUBRE
+Servicio de Oncología Médica — Unidad de Cáncer de Mama
+Avda. de Córdoba, s/n — 28041 Madrid
+
+INFORME CLÍNICO
+
+Paciente: EL AMRANI, FATIMA ZAHRA
+NHC: 3307715
+Fecha de nacimiento: 09/04/1982 (42 años)
+Documento: Pasaporte UZ4718293
+Facultativa responsable: Dra. Elena Ruiz Navarro
+Fecha: 12 de septiembre de 2024
+
+A petición de la paciente, para presentar ante la Oficina de Extranjería.
+
+ANTECEDENTES PERSONALES
+- Sin alergias medicamentosas conocidas.
+- G3P3 (tres partos eutócicos). Lactancia materna de los tres hijos. Menarquia a los 12 años. Premenopáusica.
+- Anemia ferropénica crónica por hipermenorrea, en tratamiento con sulfato ferroso (Ferro Sanol®) intermitente.
+- Hipotiroidismo subclínico (levotiroxina 25 µg).
+- No fumadora. No consume alcohol.
+- Antecedentes familiares: madre fallecida a los 51 años por cáncer de ovario; tía materna con cáncer de mama a los 46 años; hermano con cáncer de páncreas a los 49 años (vive en Tetuán).
+
+HISTORIA ONCOLÓGICA
+Mujer de 42 años que en agosto de 2023, encontrándose en España de visita, consulta en urgencias por autopalpación de nódulo en mama izquierda de 3 cm, de dos meses de evolución, con adenopatía axilar palpable.
+- Mamografía y ecografía (24/08/2023): BI-RADS 5. Nódulo de 34 mm en CSE de mama izquierda y adenopatía axilar sospechosa.
+- BAG (biopsia con aguja gruesa) 30/08/2023: carcinoma ductal infiltrante (carcinoma de mama de tipo no especial), grado histológico 3. RE 80 %, RP 20 %, HER2 positivo (3+), Ki-67 40 %. Fenotipo luminal B HER2+.
+- PAAF de adenopatía axilar: positiva para metástasis de carcinoma.
+- Estudio de extensión (TAC toraco-abdomino-pélvico y gammagrafía ósea): sin evidencia de enfermedad a distancia. Estadio clínico cT2 cN1 M0 (IIB).
+- Consejo genético (Unidad de Cáncer Familiar, Dra. Laura Vidal i Pons): panel multigén en sangre periférica con detección de variante patogénica germinal en BRCA2 (c.5946delT, p.Ser1982Argfs*22). Se recomienda estudio en cascada a familiares de primer grado (dos hijas y un hijo).
+
+TRATAMIENTO REALIZADO
+1. Quimioterapia neoadyuvante (oct. 2023 – feb. 2024): 4 ciclos de AC (doxorrubicina + ciclofosfamida) seguidos de 12 semanas de paclitaxel con trastuzumab + pertuzumab (Phesgo®). Toxicidad: neutropenia febril G3 que requirió ingreso (10 días, dic. 2023), alopecia total, neuropatía periférica sensitiva G2 en manos y pies (persistente), astenia G2.
+2. Cirugía (19/03/2024): mastectomía radical modificada izquierda con linfadenectomía axilar, dada la mutación BRCA2, y mastectomía contralateral profiláctica (derecha). Anatomía patológica: respuesta parcial (RCB-II), 6 mm de tumor residual, 2/14 ganglios afectos.
+3. Radioterapia adyuvante sobre pared torácica y cadenas ganglionares (50 Gy en 25 sesiones, may.-jun. 2024).
+4. Tratamiento adyuvante anti-HER2: trastuzumab emtansina (T-DM1, Kadcyla®) cada 21 días hasta completar 14 ciclos (en curso, previsto fin en mayo 2025).
+5. Hormonoterapia: tamoxifeno 20 mg/día durante 5-10 años, más supresión ovárica con goserelina (Zoladex®) mensual.
+6. Pendiente de salpingo-ooforectomía bilateral reductora de riesgo, indicada por la mutación BRCA2, a valorar en 2025.
+7. Linfedema de miembro superior izquierdo secundario a linfadenectomía, en seguimiento por Rehabilitación (drenaje linfático, manga de compresión).
+
+SITUACIÓN ACTUAL
+ECOG 1. Astenia moderada, parestesias en manos que dificultan tareas finas. Trastorno adaptativo con ánimo ansioso-depresivo en seguimiento por Psicooncología; tratamiento con mirtazapina 15 mg. Última ecocardiografía (julio 2024): FEVI 58 %, sin cardiotoxicidad.
+
+JUICIO CLÍNICO
+Carcinoma ductal infiltrante de mama izquierda, luminal B HER2+, estadio IIB, en paciente portadora de mutación germinal patogénica en BRCA2, en tratamiento adyuvante con intención curativa.
+
+PRONÓSTICO Y NECESIDAD DE ASISTENCIA
+La paciente se encuentra en mitad de un tratamiento con intención curativa que precisa administración intravenosa hospitalaria cada 21 días hasta mayo de 2025, controles cardiológicos trimestrales, hormonoterapia durante al menos 5 años, cirugía reductora de riesgo y seguimiento estrecho (cada 3-4 meses los primeros 3 años) con pruebas de imagen y RM mamaria anual por la mutación. La interrupción del tratamiento anti-HER2 o del seguimiento aumentaría significativamente el riesgo de recaída y de muerte. Se trata de una enfermedad grave que requiere asistencia sanitaria especializada continuada.
+
+Fdo.: Dra. Elena Ruiz Navarro
+FEA Oncología Médica — N.º col. 28/51093

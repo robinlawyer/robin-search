@@ -1,0 +1,1987 @@
+{
+ "01-acuerdo-incoacion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "CONSEJERÍA DE SALUD Y CONSUMO"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección de Enfermería"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Medicina Interna"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Junta de Personal"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "AUTOS",
+    "RRHH/DISC/26-031"
+   ],
+   [
+    "NORMA",
+    "Ley 55/2003, de 16 de diciembre, del Estatuto Marco del personal estatutario de los servicios de salud"
+   ],
+   [
+    "NORMA",
+    "Real Decreto Legislativo 5/2015, de 30 de octubre"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 33/1986, de 10 de enero"
+   ],
+   [
+    "NORMA",
+    "artículo 72.2 de la Ley 55/2003"
+   ],
+   [
+    "NORMA",
+    "artículo 95.2 del texto refundido de la Ley del Estatuto Básico del Empleado Público"
+   ],
+   [
+    "NORMA",
+    "artículo 24 de la Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público"
+   ],
+   [
+    "NORMA",
+    "artículo 98.3 del texto refundido de la Ley del Estatuto Básico del Empleado Público"
+   ],
+   [
+    "NORMA",
+    "artículo 94.3 del citado texto refundido"
+   ],
+   [
+    "PERSONA",
+    "Rocío Moral Peinado"
+   ],
+   [
+    "PERSONA",
+    "Manuel Ortiz Carrillo"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Cobo Expósito"
+   ],
+   [
+    "PERSONA",
+    "Cobo"
+   ],
+   [
+    "PERSONA",
+    "Antonia Quesada Lara"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Ruiz Gámez"
+   ],
+   [
+    "PERSONA",
+    "Encarnación Liébana Torres"
+   ],
+   [
+    "PERSONA",
+    "Luis Alberto Garrido Medina"
+   ],
+   [
+    "DNI",
+    "26489173-K"
+   ],
+   [
+    "NUSS",
+    "23/10458722/61"
+   ],
+   [
+    "DIRECCION",
+    "calle Millán de Priego, 42, 3.º B, 23004 Jaén"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cloruro mórfico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fentanilo transdérmico de 25 mcg/h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Durogesic Matrix",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "oxicodona/naloxona 10/5 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Targin",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento paliativo por adenocarcinoma de páncreas con metástasis hepáticas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bomba de perfusión de morfina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "control del dolor inexplicablemente deficiente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estado de somnolencia profunda, con miosis puntiforme y bradipnea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le administró naloxona intravenosa con respuesta inmediata",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "parte de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "alta médica",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-pliego-cargos.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Gerencia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Medicina Interna"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Prevención de Riesgos Laborales"
+   ],
+   [
+    "ORGANISMO",
+    "Junta de Personal"
+   ],
+   [
+    "ORGANISMO",
+    "Farmacia Hospitalaria"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias"
+   ],
+   [
+    "ORGANISMO",
+    "Secretaría de Régimen Jurídico"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "NORMA",
+    "artículos 34 y 35 del Real Decreto 33/1986, de 10 de enero"
+   ],
+   [
+    "NORMA",
+    "artículo 35 de dicho Reglamento"
+   ],
+   [
+    "NORMA",
+    "artículo 72.2 de la Ley 55/2003, de 16 de diciembre, del Estatuto Marco del personal estatutario de los servicios de salud"
+   ],
+   [
+    "NORMA",
+    "artículo 95.2 del Real Decreto Legislativo 5/2015, de 30 de octubre"
+   ],
+   [
+    "NORMA",
+    "artículo 73 de la Ley 55/2003"
+   ],
+   [
+    "NORMA",
+    "artículo 35 del Real Decreto 33/1986"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Cobo Expósito"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Ruiz Gámez"
+   ],
+   [
+    "PERSONA",
+    "Encarnación Liébana Torres"
+   ],
+   [
+    "PERSONA",
+    "Rocío Moral Peinado"
+   ],
+   [
+    "PERSONA",
+    "Cobo"
+   ],
+   [
+    "PERSONA",
+    "Antonia Quesada Lara"
+   ],
+   [
+    "PERSONA",
+    "Inma"
+   ],
+   [
+    "PERSONA",
+    "Sergio Pulido Navas"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Anguita Rus"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Olmedo Castro"
+   ],
+   [
+    "PERSONA",
+    "Manuel Ortiz Carrillo"
+   ],
+   [
+    "PERSONA",
+    "Dolores Fuentes Ruano"
+   ],
+   [
+    "CORREO",
+    "regimenjuridico.hujaen.sspa@juntadeandalucia.es"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sudoración y bostezos continuos al inicio del turno",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adaptación de puesto que la eximía de los turnos de noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por un problema de salud que nunca se especificó en planta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "muy delgada y con las pupilas como cabezas de alfiler",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "algún problema de consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de su tratamiento de siempre para los nervios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado de SATSE",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo durante el embarazo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cloruro mórfico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fentanilo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Targin",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "oxicodona/naloxona",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tres jeringas de insulina usadas, un compresor elástico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Plenur 400 mg (carbonato de litio)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intoxicación aguda por opiáceos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "determinación de opiáceos en orina positiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervenida de prótesis total de cadera",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dolor no controlado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bajo los efectos de sustancias opiáceas",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-unidad-prevencion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO DE JAÉN"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Prevención de Riesgos Laborales"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Medicina Interna"
+   ],
+   [
+    "ORGANISMO",
+    "SAS"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Comunitaria Jaén Norte"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hospitalización de Salud Mental"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Tratamiento Ambulatorio de Adicciones de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Programa de Atención Integral al Profesional Sanitario Enfermo (PAIPSE)"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de Enfermería de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "USMC"
+   ],
+   [
+    "ORGANISMO",
+    "CTA"
+   ],
+   [
+    "NORMA",
+    "Ley 31/1995, art. 22.4"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4 de la Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+   ],
+   [
+    "NORMA",
+    "art. 25 LPRL"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "PERSONA",
+    "COBO EXPÓSITO, INMACULADA"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Ruiz Gámez"
+   ],
+   [
+    "PERSONA",
+    "Pilar Escobedo Rus"
+   ],
+   [
+    "DNI",
+    "26489173-K"
+   ],
+   [
+    "NUSS",
+    "0471229"
+   ],
+   [
+    "TELEFONO",
+    "953 008 417"
+   ],
+   [
+    "CORREO",
+    "pilar.escobedo.sspa@juntadeandalucia.es"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno bipolar tipo I",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos ingresos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por episodios maníacos, el segundo con síntomas psicóticos (ideación megalomaníaca, gasto compulsivo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IT de 74 y 112 días respectivamente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "carbonato de litio (Plenur 400 mg, 1-0-1)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quetiapina 100 mg por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "levotiroxina (Eutirox 50 mcg) por hipotiroidismo secundario al litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Litemias en rango (0,6-0,8 mEq/l)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adaptación del puesto de trabajo por trabajadora especialmente sensible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "exclusión de turnos de noche y de rotación en turnos de 12 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la privación de sueño y la desestabilización afectiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "limitación por motivos de salud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hernia discal L4-L5 con radiculopatía L5 izquierda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baja de 41 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tramadol/paracetamol (Zaldiar 37,5/325 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tapentadol (Palexia retard 50 mg) por mal control del dolor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la retirada voluntaria de la adaptación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el consumo comenzó en la primavera de 2025 con la medicación pautada para la lumbalgia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la dejaba en paz por dentro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "comprimidos de Targin de la planta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "morfina intravenosa y parches de fentanilo que se aplicaba al terminar el turno",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consumo diario en las últimas ocho semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síntomas de abstinencia (rinorrea, piloerección, diarrea, insomnio, inquietud)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega consumo de alcohol o de otras sustancias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "benzodiacepinas (lorazepam 1 mg) de manera ocasional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "programa de tratamiento con buprenorfina/naloxona (Suboxone 8/2 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "controles toxicológicos semanales negativos para opiáceos no prescritos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha ajustado el litio (Plenur 400 mg, 1-0-2) por clínica hipomaníaca",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "terapia grupal de profesionales sanitarios",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso coherente, algo acelerado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo hipotímico, llanto al relatar los hechos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin ideación autolítica estructurada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pensamientos de muerte pasivos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin signos de venopunción recientes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso: 51 kg (refiere pérdida de 8 kg desde octubre). IMC 18,9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno por consumo de opioides de gravedad moderada-grave, de inicio iatrogénico, actualmente en tratamiento sustitutivo y en remisión inicial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encontraba descompensado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "retirada de la adaptación del puesto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "descompensación afectiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escalada del consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NO APTA TEMPORAL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "APTA CON RESTRICCIONES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estabilidad clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin acceso a armario de estupefacientes, sin turnos de noche, con controles toxicológicos aleatorios",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-informe-psiquiatra.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "Junta de Andalucía"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio Andaluz de Salud"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Gestión Sanitaria Norte de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "UNIDAD DE GESTIÓN CLÍNICA DE SALUD MENTAL"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Comunitaria Jaén Norte"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Jaén Norte"
+   ],
+   [
+    "ORGANISMO",
+    "HUJ"
+   ],
+   [
+    "ORGANISMO",
+    "CTA de Jaén"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Cobo Expósito"
+   ],
+   [
+    "PERSONA",
+    "Lidia"
+   ],
+   [
+    "PERSONA",
+    "Andrés Villena Ortega"
+   ],
+   [
+    "NUSS",
+    "0471229"
+   ],
+   [
+    "NUSS",
+    "AN0612473301"
+   ],
+   [
+    "DIRECCION",
+    "C/ Millán de Priego 42, 3.º B – 23004 Jaén"
+   ],
+   [
+    "TELEFONO",
+    "617 384 902"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alergias medicamentosas conocidas. No HTA, no DM.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno bipolar tipo I (F31) diagnosticado en 2014 tras primer episodio maníaco en el contexto de puerperio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cesárea por preeclampsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingresos en UHSM en 2016 (episodio maníaco) y 2021 (episodio mixto con síntomas psicóticos congruentes)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin intentos autolíticos previos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo iatrogénico por litio, en tratamiento con Eutirox 50",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lumbociatalgia L5 izquierda por hernia L4-L5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratada con opioides menores por MAP",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fumadora de 10 cig/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alcohol: niega consumo de riesgo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Madre con trastorno bipolar en tratamiento con valproato, con varios ingresos en los años 90",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cirrosis hepática enólica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedentes de consumo de heroína en los años 2000, actualmente en programa de mantenimiento con metadona",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con TDAH en tratamiento con metilfenidato (Medikinet)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Relación de pareja estable con una mujer",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paciente estaba eutímica, con litemia de 0,72 mEq/l",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuadro hipomaníaco: reducción de la necesidad de sueño (3-4 h), taquipsiquia, aumento de la actividad dirigida, irritabilidad y gasto excesivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el consumo de opioides",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "subiendo litio y quetiapina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sobredosis de opiáceos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se descarta intencionalidad autolítica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aspecto descuidado, delgadez marcada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discurso fluido, de ritmo ligeramente aumentado, coherente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo bajo, reactivo, con intensa culpa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haberle quitado la morfina a gente que se estaba muriendo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad psíquica moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alteraciones sensoperceptivas. No ideación delirante.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ideas pasivas de muerte sin planificación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insomnio de mantenimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Conciencia de enfermedad parcial respecto al trastorno afectivo, plena respecto al consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno bipolar tipo I, episodio actual mixto/hipomaníaco con transición depresiva (F31.6)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno por consumo de opioides, grave (F11.20), en remisión inicial, en tratamiento de mantenimiento con agonista parcial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotiroidismo secundario a litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Carbonato de litio (Plenur 400 mg): 1-0-2 (litemia 0,84 mEq/l el 24/03/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quetiapina 200 mg: 0-0-1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Buprenorfina/naloxona 8/2 mg (Suboxone): 1 comp. sublingual por la mañana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Levotiroxina 50 mcg: 1-0-0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam 1 mg si insomnio (máx. 1/día, retirada progresiva)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el episodio afectivo mixto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "redujo de forma significativa su capacidad de control de impulsos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la escalada del consumo de opioides",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La impulsividad, la disminución de la percepción de riesgo y la búsqueda de alivio de la disforia son características del cuadro mixto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esa capacidad y, sobre todo, la de autodeterminarse estaban seriamente disminuidas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la adherencia al tratamiento, la abstinencia de opioides no prescritos, el control de la litemia",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-alegaciones-pliego.docx.txt": {
+  "oro": [
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO DE JAÉN"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Medicina Interna"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "USMC Jaén Norte"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Prevención de Riesgos Laborales"
+   ],
+   [
+    "ORGANISMO",
+    "SAS"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección de Enfermería"
+   ],
+   [
+    "ORGANISMO",
+    "Farmacia Hospitalaria"
+   ],
+   [
+    "ORGANISMO",
+    "CTA de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio de Enfermería"
+   ],
+   [
+    "ORGANISMO",
+    "centro de salud de El Valle"
+   ],
+   [
+    "ORGANISMO",
+    "PAIPSE"
+   ],
+   [
+    "PERSONA",
+    "INMACULADA COBO EXPÓSITO"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Cobo Expósito"
+   ],
+   [
+    "PERSONA",
+    "Elena Martos Jurado"
+   ],
+   [
+    "PERSONA",
+    "Andrés Villena Ortega"
+   ],
+   [
+    "PERSONA",
+    "Cobo"
+   ],
+   [
+    "PERSONA",
+    "Villena"
+   ],
+   [
+    "PERSONA",
+    "Rocío Moral"
+   ],
+   [
+    "PERSONA",
+    "José Manuel Cano Hidalgo"
+   ],
+   [
+    "PERSONA",
+    "Antonia Quesada Lara"
+   ],
+   [
+    "PERSONA",
+    "Sergio Pulido Navas"
+   ],
+   [
+    "DNI",
+    "26489173-K"
+   ],
+   [
+    "DIRECCION",
+    "Paseo de la Estación, 19, 4.º izda., 23008 Jaén"
+   ],
+   [
+    "CORREO",
+    "emartos@martosabogadas.es"
+   ],
+   [
+    "AUTOS",
+    "rec. 2187/2017"
+   ],
+   [
+    "AUTOS",
+    "rec. 1406/2020"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2019:3298"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TSJAND:2022:4512"
+   ],
+   [
+    "NORMA",
+    "artículo 28 de la Ley 40/2015, de 1 de octubre"
+   ],
+   [
+    "NORMA",
+    "STC 76/1990, de 26 de abril"
+   ],
+   [
+    "NORMA",
+    "STS (Sala Tercera, Sección 4.ª) de 14 de octubre de 2019"
+   ],
+   [
+    "NORMA",
+    "STSJ de Andalucía (Granada) de 22 de marzo de 2022"
+   ],
+   [
+    "NORMA",
+    "art. 25 de la Ley 31/1995"
+   ],
+   [
+    "NORMA",
+    "art. 22 LPRL"
+   ],
+   [
+    "NORMA",
+    "artículo 29 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4 de la Ley 31/1995"
+   ],
+   [
+    "OBJETO",
+    "adicción a opiáceos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno bipolar tipo I descompensado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tramadol y tapentadol prescritos por su médico de familia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la hernia discal L4-L5",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "accidente de trabajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El paso a la morfina y al fentanilo de la planta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en plena fase hipomaníaca",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estaba seriamente disminuida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio mixto (F31.6)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno por consumo de opioides grave (F11.20)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síntomas de abstinencia —rinorrea, piloerección, diarrea, inquietud—",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome de abstinencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "era como tener la gripe y un ataque de pánico a la vez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un funcionario con alcoholismo crónico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una auxiliar de enfermería con ludopatía y trastorno depresivo grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trabajadora especialmente sensible",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "exclusión de los turnos nocturnos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "signos evidentes (sudoración, bostezos, pérdida de peso, ausencias)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un problema de consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "programa de mantenimiento con Suboxone",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con todos los controles de orina negativos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está afiliada al Sindicato de Enfermería SATSE",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El informe psiquiátrico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adherencia al tratamiento y resultados de los controles toxicológicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hoja de prescripción de Zaldiar y Palexia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con adaptación del puesto a su reincorporación",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-resolucion-sancionadora.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GERENCIA DEL HOSPITAL UNIVERSITARIO DE JAÉN"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Gerencia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Prevención de Riesgos Laborales"
+   ],
+   [
+    "ORGANISMO",
+    "Consejería de Salud y Familias"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio Andaluz de Salud"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Personal del SAS"
+   ],
+   [
+    "ORGANISMO",
+    "Comisión de Farmacia"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Personal del Servicio Andaluz de Salud"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia e Instrucción n.º 3 de Jaén"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 312/2026"
+   ],
+   [
+    "NORMA",
+    "artículo 15.2 del Decreto 105/2019, de 12 de febrero"
+   ],
+   [
+    "NORMA",
+    "artículo 72.2 de la Ley 55/2003, de 16 de diciembre"
+   ],
+   [
+    "NORMA",
+    "artículo 29.3 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 73 de la Ley 55/2003"
+   ],
+   [
+    "NORMA",
+    "artículo 9 del Reglamento (UE) 2016/679"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4 de la Ley 31/1995"
+   ],
+   [
+    "NORMA",
+    "artículos 121 y 122 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas"
+   ],
+   [
+    "PERSONA",
+    "Inmaculada Cobo Expósito"
+   ],
+   [
+    "PERSONA",
+    "Francisco Javier Ruiz Gámez"
+   ],
+   [
+    "PERSONA",
+    "Antonia Quesada Lara"
+   ],
+   [
+    "PERSONA",
+    "Sergio Pulido Navas"
+   ],
+   [
+    "PERITO",
+    "Lourdes Ibáñez Carmona"
+   ],
+   [
+    "PERITO",
+    "Ibáñez Carmona"
+   ],
+   [
+    "PERSONA",
+    "Luis Alberto Garrido Medina"
+   ],
+   [
+    "DNI",
+    "26489173-K"
+   ],
+   [
+    "OBJETO",
+    "adicción a opiáceos"
+   ],
+   [
+    "OBJETO",
+    "la adicción como circunstancia que disminuye la culpabilidad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "situación de incapacidad temporal hasta el 28 de mayo de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento psiquiátrico por un trastorno afectivo de larga evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el consumo de opioides se inició con medicación prescrita tras una lesión de espalda de origen laboral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la naturaleza de su patología de base",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ocultar el consumo a su propio psiquiatra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la paciente conservaba la capacidad de comprender, si bien con merma relevante de la capacidad volitiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el sometimiento voluntario a tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la renuncia a la adaptación del puesto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bajo los efectos de opiáceos",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-recurso-alzada.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GENERAL DE PERSONAL DEL SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Gerencia del Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección de Enfermería"
+   ],
+   [
+    "ORGANISMO",
+    "Junta de Personal"
+   ],
+   [
+    "ORGANISMO",
+    "PAIPSE"
+   ],
+   [
+    "ORGANISMO",
+    "CTA de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Infanto-Juvenil"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Primera Instancia e Instrucción n.º 3 de Jaén"
+   ],
+   [
+    "AUTOS",
+    "ED-JA-2026/0147"
+   ],
+   [
+    "AUTOS",
+    "Diligencias Previas n.º 312/2026"
+   ],
+   [
+    "NORMA",
+    "artículos 112, 121 y 122 de la Ley 39/2015, de 1 de octubre"
+   ],
+   [
+    "NORMA",
+    "art. 77.3 de la Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 29.3 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "art. 94.3 del Real Decreto Legislativo 5/2015"
+   ],
+   [
+    "PERSONA",
+    "INMACULADA COBO EXPÓSITO"
+   ],
+   [
+    "PERSONA",
+    "Elena Martos Jurado"
+   ],
+   [
+    "PERITO",
+    "Lourdes Ibáñez Carmona"
+   ],
+   [
+    "PERITO",
+    "Ibáñez"
+   ],
+   [
+    "DNI",
+    "26489173-K"
+   ],
+   [
+    "OBJETO",
+    "adicción a opiáceos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la capacidad volitiva se encontraba gravemente comprometida por la confluencia de un estado mixto bipolar con predominio de la impulsividad y de una dependencia física a opioides con craving intenso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la conducta de búsqueda de la sustancia escapaba en gran medida al control de la voluntad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el litio a dosis de mantenimiento no evita por sí solo un viraje a hipomanía cuando se suprime el sueño",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la ocultación del consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un síntoma más del trastorno adictivo, no un indicio de frialdad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está otra vez con lo suyo de la cabeza y además huele a que se está metiendo algo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "requiere atención especial por su TDAH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la pérdida del trabajo es uno de los principales factores de recaída tanto del trastorno bipolar como de la dependencia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lleva casi cuatro meses abstinente, con controles toxicológicos negativos, litemias estables y asistencia del 100 % a la terapia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el origen laboral de la lesión que desencadenó el consumo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la renuncia sin reconocimiento médico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "seguimiento terapéutico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de la Unidad de Salud Mental Infanto-Juvenil relativo a la menor",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-correos-supervisora.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío Moral Peinado"
+   ],
+   [
+    "PERSONA",
+    "José Manuel Cano Hidalgo"
+   ],
+   [
+    "PERSONA",
+    "Inma Cobo"
+   ],
+   [
+    "PERSONA",
+    "Toñi Quesada"
+   ],
+   [
+    "PERSONA",
+    "Inma"
+   ],
+   [
+    "PERSONA",
+    "Lidia"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Olmedo"
+   ],
+   [
+    "PERSONA",
+    "Sergio"
+   ],
+   [
+    "PERSONA",
+    "Mercedes"
+   ],
+   [
+    "PERSONA",
+    "Trini"
+   ],
+   [
+    "PERSONA",
+    "Rocío"
+   ],
+   [
+    "PERSONA",
+    "José Manuel"
+   ],
+   [
+    "PERSONA",
+    "JM"
+   ],
+   [
+    "PERSONA",
+    "Toñi"
+   ],
+   [
+    "PERSONA",
+    "Cobo"
+   ],
+   [
+    "CORREO",
+    "rocio.moral.sspa@juntadeandalucia.es"
+   ],
+   [
+    "CORREO",
+    "josem.cano.sspa@juntadeandalucia.es"
+   ],
+   [
+    "TELEFONO",
+    "670 912 335"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Jaén"
+   ],
+   [
+    "ORGANISMO",
+    "Farmacia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sentada en el suelo, medio dormida, con las pupilas como puntas de alfiler y respirando muy lento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le pusieron naloxona y se espabiló en el momento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos ampollas de morfina vacías",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la chica que viene a recogerla",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha cogido la baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hundida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sé cuándo alguien se está pinchando",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "moviéndose con los de SATSE",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde que lo eligieron delegado",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de baja por la amenaza de aborto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está con la quimio del pecho",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en Salud Mental desde hace años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "firmó la renuncia a la adaptación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está otra vez con lo suyo de la cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con un montón de ideas para reorganizar todo el control, hablando a mil por hora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al día siguiente lloraba en el office",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antes de que la ingresaran",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le han subido el litio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene temblor en las manos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "huele a que se está metiendo algo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bostezos todo el rato al empezar el turno, sudando con la planta a 21 grados, la nariz que le gotea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha perdido muchísimo peso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de los nervios y el divorcio",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "09-whatsapp-toni.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Toñi"
+   ],
+   [
+    "PERSONA",
+    "Inma"
+   ],
+   [
+    "PERSONA",
+    "Lidia"
+   ],
+   [
+    "PERSONA",
+    "Rocio"
+   ],
+   [
+    "PERSONA",
+    "Cano"
+   ],
+   [
+    "PERSONA",
+    "Sergio"
+   ],
+   [
+    "PERSONA",
+    "Mercedes"
+   ],
+   [
+    "PERSONA",
+    "Trini"
+   ],
+   [
+    "ORGANISMO",
+    "CTA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me han puesto el bupre (suboxone) y me da unas nauseas que flipas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el psiquiatra me ha subido el plenur a 3 al dia, tengo la boca como un estropajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el mono de la noche, las piernas no paran quietas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo suyo no quiero que le de otra crisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy con el lexatin y el escitalopram y si un dia no me lo tomo no soy persona",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el niño con el TDAH y las crisis que le dan en el cole",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los de SATSE te ponen abogada gratis si estas afiliada",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Si estoy afiliada desde siempre",
+    "sindical"
+   ],
+   [
+    "DATO_PENAL",
+    "estuvo detenido en 2018 por la pelea aquella en la feria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si yo me pinchaba en la planta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con los temblores y lo de que no dormias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me voy a la romeria de la Virgen de la Cabeza con mi hermandad y le voy a pedir por ti",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que tu no crees pero yo si",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del embarazo pinta regular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "despues de tres FIV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la quimio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estas en los huesos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "6 semanas limpia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las orinas todas negativas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El animo regular",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy saliendo de la fase mala",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

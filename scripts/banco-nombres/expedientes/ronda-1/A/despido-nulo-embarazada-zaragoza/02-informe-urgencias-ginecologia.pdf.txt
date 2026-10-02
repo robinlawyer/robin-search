@@ -1,0 +1,69 @@
+SERVICIO ARAGONÉS DE SALUD
+Sector Zaragoza II
+Hospital Universitario Miguel Servet — Hospital Materno-Infantil
+Servicio de Obstetricia y Ginecología · Urgencias de Obstetricia
+Paseo Isabel la Católica 1-3 · 50009 Zaragoza
+
+INFORME DE ALTA DE URGENCIAS
+
+Paciente: LASHERAS TOMÉ, NEREA
+NHC: 2184773            CIPA: ARLT880412-07
+Fecha de nacimiento: 12/04/1988 (37 años)     Sexo: Mujer
+Domicilio: C/ Tomás Bretón 47, 3.º izda., 50005 Zaragoza
+Teléfono de contacto: 654 21 87 39
+Fecha/hora de llegada: 18/03/2026 09:42      Fecha/hora de alta: 18/03/2026 14:10
+Procedencia: domicilio (traída por su pareja)      Nivel de triaje: 3 (amarillo)
+Médico/s: Dr. Alberto Lahuerta Pardos (MIR-3) / Dra. Sofía Gimeno Anadón (FEA)
+
+MOTIVO DE CONSULTA
+Sangrado vaginal de inicio brusco durante la jornada laboral (refiere conducir carretilla elevadora en almacén logístico), acompañado de dolor hipogástrico tipo cólico.
+
+ANTECEDENTES PERSONALES
+- NAMC.
+- Hipotiroidismo subclínico en tto. con levotiroxina (Eutirox 50 mcg/día) desde 2023.
+- Síndrome de ovario poliquístico (SOP) diagnosticado en 2021.
+- Esterilidad primaria de 3 años de evolución. Gestación actual conseguida mediante FIV-ICSI con transferencia de embrión único en día 5 (Unidad de Reproducción Humana Asistida del HUMS, 21/01/2026). Dos ciclos previos de FIV no exitosos (2024 y 2025), con un aborto bioquímico en 2025.
+- Episodio depresivo leve en 2025 tras el segundo ciclo fallido, tratado por su MAP con sertralina 50 mg durante 6 meses. Actualmente sin tratamiento.
+- IQ: apendicectomía (2006). Laparoscopia diagnóstica (2024): endometriosis mínima, estadio I.
+- Exfumadora (5 cig/día) desde 2024. No otros hábitos tóxicos.
+- Fórmula obstétrica: G2 A1 V0.
+
+ANTECEDENTES FAMILIARES
+Madre intervenida de carcinoma ductal infiltrante de mama a los 52 años, portadora de mutación BRCA2 (la paciente no ha sido estudiada en la Unidad de Consejo Genético). Padre con DM2 y cardiopatía isquémica.
+
+ENFERMEDAD ACTUAL
+Gestante de 9+3 semanas según fecha de transferencia embrionaria, con ecografía de 7 semanas en la Unidad de Reproducción acorde. Acude por metrorragia escasa-moderada de color rojo de unas 2 horas de evolución, iniciada mientras trabajaba en carretilla elevadora, asociada a dolor tipo cólico en hipogastrio. No fiebre. No síndrome miccional. Refiere esfuerzos físicos importantes en los días previos (carga y descarga de bultos de más de 15 kg) pese a haber comunicado su estado a la empresa.
+
+EXPLORACIÓN FÍSICA
+TA 118/72 mmHg · FC 88 lpm · Tª 36,4 ºC · SatO2 99 %.
+BEG. Consciente y orientada. Normocoloreada. Abdomen blando y depresible, doloroso a la palpación profunda en hipogastrio, sin signos de irritación peritoneal.
+Especuloscopia: sangrado escaso procedente de cavidad. OCE cerrado. No se visualizan restos.
+Ecografía transvaginal: gestación intrauterina única. Embrión con LCN de 25 mm acorde a 9+2 semanas. LCF positivo (168 lpm). Hematoma subcoriónico de 18 x 9 mm en cara posterior. Anejos sin hallazgos.
+
+PRUEBAS COMPLEMENTARIAS
+Hemograma: Hb 12,1 g/dL; Hto 36 %; plaquetas 231.000. Coagulación normal.
+β-hCG: 64.300 mUI/mL.
+Grupo sanguíneo: 0 Rh negativo. Coombs indirecto negativo.
+TSH: 2,1 mUI/L.
+
+JUICIO CLÍNICO
+1. Amenaza de aborto en gestación de 9+3 semanas (CIE-10 O20.0).
+2. Hematoma subcoriónico.
+3. Gestación conseguida por técnica de reproducción asistida (FIV-ICSI). Gestación de alto riesgo obstétrico.
+4. Gestante Rh negativa.
+
+TRATAMIENTO Y RECOMENDACIONES
+- Reposo relativo domiciliario. Abstinencia de relaciones sexuales hasta nueva valoración.
+- Progesterona natural micronizada (Utrogestan 200 mg): 1 cápsula vía vaginal cada 12 horas.
+- Continuar con Eutirox 50 mcg en ayunas y ácido fólico + yoduro potásico (Yodofolin) 1 comprimido/día.
+- Se administra en urgencias inmunoglobulina anti-D (Rhophylac 300 mcg) i.m.
+- Se recomienda baja laboral (IT), que deberá tramitar su médico de Atención Primaria.
+- Desde el punto de vista obstétrico se desaconseja durante toda la gestación la manipulación de cargas de más de 5 kg, la bipedestación prolongada, el trabajo nocturno y la conducción de carretilla elevadora (exposición a vibraciones de cuerpo completo).
+- Control en consulta de Alto Riesgo Obstétrico (Dra. Elena Bescós Lacambra) en 10 días, con ecografía.
+- Volver a urgencias si aumenta el sangrado, dolor intenso, fiebre o mareo.
+
+Firmado electrónicamente por: Dra. Sofía Gimeno Anadón
+Facultativa Especialista de Área de Obstetricia y Ginecología
+Hospital Universitario Miguel Servet
+Fecha de firma: 18/03/2026 14:08
+Código de verificación: SALUD-HCE-7F2A-99C1-0318

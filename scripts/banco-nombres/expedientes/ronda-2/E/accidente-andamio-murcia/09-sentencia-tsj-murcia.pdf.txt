@@ -1,0 +1,72 @@
+TRIBUNAL SUPERIOR DE JUSTICIA DE LA REGIÓN DE MURCIA
+SALA DE LO SOCIAL
+
+NIG: 30030 44 4 2026 0001873
+Tipo y n.º de recurso: RSU RECURSO SUPLICACIÓN 512/2026
+Juzgado de origen: Tribunal de Instancia de Murcia, Sección de lo Social, Plaza n.º 7 — Seguridad Social 845/2025
+
+Recurrente: CONSTRUCCIONES SEGURA HELLÍN, S.L.
+Abogado: Ignacio Barba Moreno
+Recurridos: INSTITUTO NACIONAL DE LA SEGURIDAD SOCIAL, TESORERÍA GENERAL DE LA SEGURIDAD SOCIAL, D. GINÉS ALBALADEJO SÁNCHEZ e IBERMUTUA, MCSS n.º 274
+Abogados: Letrado de la Administración de la Seguridad Social; Encarnación Martínez Pastor
+
+ECLI:ES:TSJMU:2026:2287
+Roj: STSJ MU 2287/2026
+
+Ilmos. Sres.:
+D. Mariano Gascón Valero — Presidente
+Dña. Pilar Ródenas Garre
+D. Joaquín Abellán Soriano (Ponente)
+
+En Murcia, a veintitrés de septiembre de dos mil veintiséis.
+
+La Sala de lo Social del Tribunal Superior de Justicia de la Región de Murcia, compuesta por los Ilmos. Sres. citados, ha dictado, EN NOMBRE DEL REY, la siguiente
+
+SENTENCIA N.º 1043/2026
+
+En el recurso de suplicación interpuesto por CONSTRUCCIONES SEGURA HELLÍN, S.L. contra la sentencia de 14 de mayo de 2026 dictada por la Sección de lo Social del Tribunal de Instancia de Murcia, Plaza n.º 7, en autos 845/2025, sobre RECARGO DE PRESTACIONES, siendo Magistrado-Ponente el Ilmo. Sr. D. Joaquín Abellán Soriano.
+
+ANTECEDENTES DE HECHO
+
+PRIMERO.— La sentencia de instancia desestimó la demanda de la empresa y confirmó la resolución de la Dirección Provincial del INSS de Murcia de 30 de marzo de 2026, que declaró la responsabilidad empresarial por falta de medidas de seguridad en el accidente sufrido por el trabajador codemandado y fijó un recargo del 40 % sobre las prestaciones derivadas del mismo.
+
+SEGUNDO.— Hechos probados de la sentencia recurrida (se transcriben en lo esencial):
+
+1.º D. Ginés Albaladejo Sánchez, con DNI 23284917K, prestaba servicios para la empresa recurrente como oficial de primera albañil desde el 3 de febrero de 2019.
+
+2.º El 14 de marzo de 2025, a las 11:40 horas, mientras recibía material en el nivel 3 del andamio tubular de la fachada posterior de la obra sita en C/ Pintor Sobejano de Murcia, a unos 6,20 metros de altura, retrocedió y cayó por el extremo lateral, en el que no se encontraba colocada la barandilla de protección, que había sido retirada dos días antes para facilitar el izado de palés con la grúa.
+
+3.º El andamio carecía de plan de montaje, utilización y desmontaje, de acta de puesta en servicio y de puntos de anclaje para el arnés. Los montadores no contaban con formación específica.
+
+4.º El coordinador de seguridad anotó el 4 de marzo de 2025 en el libro de incidencias la existencia de huecos sin protección. El delegado de prevención lo puso de manifiesto en la reunión del Comité de Seguridad y Salud de 28 de febrero de 2025.
+
+5.º Como consecuencia del accidente el trabajador sufrió traumatismo craneoencefálico grave con hematoma subdural agudo intervenido y lesión axonal difusa, fracturas de meseta tibial derecha, de L1 y de radio distal izquierdo, y fracturas costales con hemoneumotórax. Ha quedado con trastorno neurocognitivo mayor, cambio de personalidad, epilepsia postraumática y trastorno depresivo.
+
+6.º Por resolución del INSS de 12 de febrero de 2026 fue declarado en situación de incapacidad permanente absoluta derivada de accidente de trabajo.
+
+7.º La analítica practicada al ingreso hospitalario arrojó resultado negativo en alcohol y tóxicos.
+
+8.º La Inspección de Trabajo levantó acta de infracción por falta muy grave y propuso recargo del 40 %.
+
+TERCERO.— La empresa formalizó recurso de suplicación, que fue impugnado por el trabajador y por la Entidad Gestora.
+
+FUNDAMENTOS DE DERECHO
+
+PRIMERO.— Revisión fáctica (art. 193.b LRJS). La recurrente pretende añadir al hecho probado 1.º que «en el reconocimiento médico de noviembre de 2024 el trabajador fue declarado apto con restricciones por hipertensión arterial y diabetes mellitus tipo 2, y presentaba antecedentes de alcoholismo crónico». La adición no puede prosperar. En primer lugar, la sentencia de instancia ya valoró el reconocimiento y concluyó que, existiendo restricciones, la empresa no las respetó, lo que en nada favorece a la recurrente. En segundo lugar, el antecedente de consumo de alcohol, remitido desde 2017 según la documental médica, es irrelevante para el fallo, dado el resultado negativo de la analítica (hecho 7.º); su inclusión no aportaría nada salvo exponer innecesariamente datos de salud del trabajador, lo que esta Sala no puede amparar (art. 9 del Reglamento (UE) 2016/679 y art. 236 bis LOPJ).
+
+SEGUNDO.— Infracción del art. 164 LGSS (art. 193.c LRJS). Sostiene la empresa que la caída se debió a un mareo del trabajador y no a la falta de barandilla. Es una hipótesis carente de soporte fáctico. Como reiteradamente ha declarado la Sala Cuarta del Tribunal Supremo (SSTS de 12 de junio de 2013, rcud 793/2012; de 4 de mayo de 2015, rcud 1238/2014; y de 20 de marzo de 2019, rcud 2918/2017), el deber de seguridad del empresario es de máxima intensidad, comprende la previsión de las distracciones o imprudencias no temerarias del trabajador (art. 15.4 LPRL) y la carga de acreditar la adopción de las medidas exigibles corresponde al empresario (art. 96.2 LRJS). Aunque se admitiera el mareo, la barandilla está precisamente para que un trabajador que pierde el equilibrio no se precipite al vacío.
+
+TERCERO.— Porcentaje. Tampoco cabe reducir el recargo al mínimo del 30 %. Concurren varios incumplimientos, advertidos previamente y desatendidos por razones productivas, y el resultado es de extrema gravedad. El 40 % fijado es proporcionado, y no habiendo recurrido el trabajador para pedir el 50 % no puede la Sala incrementarlo (reformatio in peius).
+
+CUARTO.— Costas. Conforme al art. 235.1 LRJS procede imponer las costas a la recurrente vencida, incluidos los honorarios de la letrada del trabajador en cuantía de 800 €, con pérdida del depósito y destino legal de la consignación.
+
+FALLO
+
+Desestimamos el recurso de suplicación interpuesto por CONSTRUCCIONES SEGURA HELLÍN, S.L. contra la sentencia de 14 de mayo de 2026 de la Sección de lo Social del Tribunal de Instancia de Murcia, Plaza n.º 7, en autos 845/2025, que confirmamos íntegramente. Con imposición de costas a la recurrente.
+
+Notifíquese a las partes y a la Fiscalía del Tribunal Superior de Justicia, advirtiéndoles de que contra esta sentencia cabe recurso de casación para la unificación de doctrina ante la Sala de lo Social del Tribunal Supremo, que deberá prepararse en el plazo de diez días (arts. 220 y 221 LRJS).
+
+Así por esta nuestra sentencia lo pronunciamos, mandamos y firmamos.
+
+PUBLICACIÓN.— Dada, leída y publicada fue la anterior sentencia por el Ilmo. Sr. Magistrado-Ponente en audiencia pública. Doy fe.
+La Letrada de la Administración de Justicia: Dña. María Dolores Navarro Sánchez

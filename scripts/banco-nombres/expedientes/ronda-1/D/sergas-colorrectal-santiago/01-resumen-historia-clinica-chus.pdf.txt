@@ -1,0 +1,57 @@
+SERVIZO GALEGO DE SAÚDE
+Complexo Hospitalario Universitario de Santiago de Compostela
+Servicio de Oncología Médica
+Travesía da Choupana, s/n — 15706 Santiago de Compostela
+
+INFORME CLÍNICO DE EVOLUCIÓN (RESUMEN DE HISTORIA CLÍNICA)
+Emitido a petición de la familia — fecha de emisión: 03/03/2025
+
+Paciente: OUTEIRO BARREIRO, XOSÉ MANUEL
+F. nacimiento: 14/03/1961 — Edad al fallecimiento: 63 años
+N.º historia clínica: 2184567
+TIS: GAOTBR610314018
+NUSS: 15/04827391/62
+DNI: 33284719K
+Domicilio: Rúa do Hórreo, 47, 3.º D — 15702 Santiago de Compostela
+Médico de atención primaria: Dra. Montserrat Pena Lorenzo (Centro de Saúde de Conxo)
+
+ANTECEDENTES PERSONALES
+- No alergias medicamentosas conocidas.
+- HTA de larga evolución en tratamiento con enalapril 20 mg/24 h.
+- DM2 diagnosticada en 2015, en tratamiento con metformina 850 mg/12 h, HbA1c 7,1 % en 2021.
+- Exfumador desde 2012 (IPA 25 paquetes-año). Bebedor ocasional.
+- Colecistectomía laparoscópica en 2009 por colelitiasis sintomática.
+- Hernia inguinal derecha intervenida en 2017.
+
+ANTECEDENTES FAMILIARES
+- Padre fallecido a los 71 años por carcinoma de colon.
+- Hermana con pólipos adenomatosos resecados endoscópicamente en 2018.
+
+HISTORIA DE LA ENFERMEDAD ACTUAL
+Consulta en Atención Primaria el 09/02/2022 por episodios de rectorragia intermitente de dos meses de evolución, con heces "de color oscuro alguna vez" y cambio del ritmo deposicional (alternancia de estreñimiento y diarrea). Se orienta como patología hemorroidal y se pauta Hemoal pomada y dieta rica en fibra. En analítica de 22/03/2022: Hb 10,9 g/dl, VCM 76 fl, ferritina 9 ng/ml (anemia ferropénica). Se inicia sulfato ferroso (Fero-Gradumet 105 mg/24 h).
+El 17/05/2022 resulta positivo el test de sangre oculta en heces (SOH inmunológico, 312 ng/ml) del programa de cribado de cáncer colorrectal. Se solicita colonoscopia con carácter ordinario (no preferente) el 30/05/2022.
+Persisten molestias abdominales y pérdida de peso de 7 kg en seis meses (consta en la historia: "refiere que se encuentra muy cansado, no tiene ganas de comer"). Reconsulta 11/10/2022 y 23/01/2023; no se modifica la prioridad de la petición.
+
+PRUEBAS COMPLEMENTARIAS
+- Colonoscopia (12/04/2023, Servicio de Aparato Digestivo, Dr. Ramón Toubes Ares): a 25 cm del margen anal, neoformación ulcerada y estenosante en sigma que impide el paso del endoscopio. Se toman biopsias y se tatúa.
+- Anatomía patológica de la biopsia: adenocarcinoma moderadamente diferenciado infiltrante.
+- TAC toracoabdominopélvico con contraste (19/04/2023): engrosamiento parietal de sigma de 6 cm con afectación de la grasa pericólica; adenopatías mesentéricas de hasta 14 mm; dos LOEs hepáticas en segmentos VI y VII (21 y 17 mm) sugestivas de metástasis. Sin lesiones pulmonares.
+- CEA 48,2 ng/ml.
+
+TRATAMIENTO
+- 08/05/2023: intervención de Hartmann (sigmoidectomía con colostomía terminal en fosa ilíaca izquierda) por cuadro suboclusivo, Servicio de Cirugía General.
+- AP de la pieza quirúrgica: adenocarcinoma de sigma pT4a pN2b (9/21 ganglios afectos), invasión linfovascular y perineural presentes, márgenes libres. Estudio molecular: KRAS mutado (G12D), NRAS y BRAF no mutados, estabilidad de microsatélites (MSS).
+- Quimioterapia según esquema FOLFOX-6 modificado (oxaliplatino 85 mg/m², leucovorina y 5-fluorouracilo en infusión) asociado a bevacizumab (Avastin) 5 mg/kg, 12 ciclos entre junio y diciembre de 2023. Se reduce dosis de oxaliplatino al 75 % desde el ciclo 8 por neurotoxicidad grado 2.
+- Metastasectomía hepática no posible por progresión (TAC 02/2024: aparición de nódulos pulmonares bilaterales). Segunda línea FOLFIRI + aflibercept desde marzo de 2024.
+
+EVOLUCIÓN Y SECUELAS
+Neuropatía periférica sensitiva en manos y pies secundaria a oxaliplatino, con dificultad para abrochar botones; pautada pregabalina (Lyrica 75 mg/12 h). Hernia paraestomal sintomática desde 2024, manejada con faja. Episodios de dermatitis periestomal. Síndrome ansioso-depresivo reactivo, tratado por su MAP con sertralina 50 mg. Pérdida ponderal progresiva hasta caquexia neoplásica.
+Ingreso hospitalario el 02/01/2025 en la Unidad de Cuidados Paliativos por deterioro del estado general, con sedación paliativa a petición de la familia. Fallece el 12/01/2025.
+
+JUICIO CLÍNICO
+1. Adenocarcinoma de sigma estadio IV (pT4a pN2b M1c) con metástasis hepáticas y pulmonares.
+2. Colostomía terminal permanente.
+3. Neurotoxicidad por oxaliplatino.
+4. HTA. DM2.
+
+Fdo.: Dra. Lucía Gestido Mariño — Facultativa especialista de área, Oncología Médica

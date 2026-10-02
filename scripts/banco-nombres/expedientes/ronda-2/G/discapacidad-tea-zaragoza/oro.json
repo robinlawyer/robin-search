@@ -1,0 +1,1547 @@
+{
+ "01-dictamen-equipo-valoracion.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GOBIERNO DE ARAGÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Departamento de Bienestar Social y Familia"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Aragonés de Servicios Sociales"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Base n.º 1"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Valoración y Orientación (EVO-2)"
+   ],
+   [
+    "ORGANISMO",
+    "EVO-2"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Infantil Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Infanto-Juvenil (USMIJ) Sector II"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Orientación Educativa y Psicopedagógica"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 888/2022, de 18 de octubre"
+   ],
+   [
+    "NORMA",
+    "anexo I del Real Decreto 888/2022"
+   ],
+   [
+    "AUTOS",
+    "50/0384217/2025"
+   ],
+   [
+    "PERSONA",
+    "LACASA BERNAL, HUGO"
+   ],
+   [
+    "PERSONA",
+    "Carmen Bernal Gimeno"
+   ],
+   [
+    "PERSONA",
+    "María Pilar Lasheras Usón"
+   ],
+   [
+    "PERSONA",
+    "Óscar Tolosana Ferrer"
+   ],
+   [
+    "PERSONA",
+    "Raquel Aznar Pina"
+   ],
+   [
+    "PERSONA",
+    "Elena Sancho Marín"
+   ],
+   [
+    "DNI",
+    "73429105-R"
+   ],
+   [
+    "DNI",
+    "17763520-W"
+   ],
+   [
+    "DIRECCION",
+    "C/ Duquesa Villahermosa, 118, 5.º D – 50009 Zaragoza"
+   ],
+   [
+    "OBJETO",
+    "GRADO DE DISCAPACIDAD: 38 %"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnóstico de TEA con ADOS-2 (módulo 1) y ADI-R",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EEG de sueño de 15/05/2025 y RM cerebral de 3T de 03/2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "F84.0 Trastorno del espectro autista, nivel 2 de apoyo (DSM-5-TR), con discapacidad intelectual leve asociada y alteración del lenguaje expresivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G40.209 Epilepsia focal sintomática/de etiología a estudio, con crisis focales con alteración de conciencia y ocasional generalización secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Último status epiléptico: noviembre de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G47.00 Insomnio de conciliación y mantenimiento secundario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "R63.3 Selectividad alimentaria grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de deficiencia de la función intelectual 15 % (CI total WISC-V estimado 63, perfil heterogéneo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "funciones de comunicación y relación 20 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "epilepsia en tratamiento con dos fármacos, con crisis mensuales: 14 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deficiencia global de la persona 41 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Problema de desempeño moderado-grave en aprendizaje y aplicación del conocimiento, comunicación, autocuidado (necesita supervisión en aseo y vestido, control de esfínteres diurno adquirido a los 5 años, enuresis nocturna persistente) e interacciones interpersonales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Calificación BLA: clase 2 (moderado)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con apoyos de PT, AL y auxiliar de educación especial a media jornada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Calificación BRP: clase 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Baremo de movilidad reducida: NEGATIVO (0 puntos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una crisis focal al mes de media, sin status",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la resistencia farmacológica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las crisis nocturnas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las paramos en casa con el Stesolid",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-neuropediatria.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "Servicio Aragonés de Salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Materno-Infantil"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Neuropediatría"
+   ],
+   [
+    "ORGANISMO",
+    "USMIJ"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Sant Joan de Déu de Barcelona"
+   ],
+   [
+    "ORGANISMO",
+    "UCI pediátrica"
+   ],
+   [
+    "ORGANISMO",
+    "Neonatos"
+   ],
+   [
+    "PERSONA",
+    "HUGO LACASA BERNAL"
+   ],
+   [
+    "PERSONA",
+    "Elena Sancho Marín"
+   ],
+   [
+    "NUSS",
+    "2194837"
+   ],
+   [
+    "NUSS",
+    "ARCA 501298734"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Revisión de epilepsia focal y control de tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipotiroidismo autoinmune (Hashimoto) en tratamiento con levotiroxina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodio depresivo postparto tras el nacimiento del paciente, tratado con sertralina durante un año",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedentes de crisis febriles en la infancia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diagnóstico de síndrome de Asperger en edad adulta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Gestación conseguida mediante fecundación in vitro (ICSI) tras tres años de esterilidad por factor masculino",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Embarazo controlado con diabetes gestacional tratada con dieta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Parto por cesárea urgente a las 36+2 semanas por riesgo de pérdida de bienestar fetal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PRN 2.410 g. Apgar 7/9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "6 días por hipoglucemia e ictericia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Primeras palabras a los 24 meses con regresión del lenguaje a los 26 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diagnóstico de trastorno del espectro autista",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crisis focal con desconexión, automatismos orales y desviación cefálica izquierda, de 4 minutos de duración, con generalización secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estatus epiléptico de 35 minutos que requirió midazolam y levetiracetam IV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "actividad epileptiforme frecuente en región temporal derecha, con tendencia a la difusión bilateral en sueño NREM",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "displasia cortical focal tipo II en región temporal mesial derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deleción de 600 kb en 16p11.2, de origen paterno",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el padre es portador asintomático de la misma deleción",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se ofreció consejo genético a los progenitores",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ácido valproico 82 mcg/ml (rango terapéutico)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ácido valproico (Depakine 200 mg/ml solución oral): 4,5 ml cada 12 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Levetiracetam (Keppra 100 mg/ml solución): 3 ml cada 12 horas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Risperidona 0,5 mg (Risperdal solución): 0,5 ml por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por irritabilidad y autoagresiones (se golpea la cabeza contra la pared en las rabietas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Melatonina de liberación prolongada (Slenyto 1 mg): 2 comp. a las 20:30 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diazepam rectal (Stesolid 5 mg) como rescate si crisis > 3 minutos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "23 crisis, de las cuales 15 nocturnas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "4 rescates con Stesolid domiciliario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "frecuencia de 3-4 crisis al mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "epilepsia farmacorresistente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pendiente de video-EEG prolongado para valorar candidatura quirúrgica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hiperactividad marcada, escasa conciencia del peligro (fugas en la calle), rabietas con autoagresión; sueño fragmentado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alimentación muy selectiva (solo admite 6-7 alimentos, todos de color blanco), peso en percentil 8",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 19,2 kg (P8), talla 118 cm (P40), PC 51 cm (P50)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Contacto ocular escaso, no responde a su nombre de forma consistente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "frases de 2-3 palabras, ecolalia inmediata, estereotipias motoras (aleteo de manos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipotonía leve generalizada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Epilepsia focal estructural (displasia cortical focal temporal derecha) farmacorresistente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno del espectro autista grado 2 con discapacidad intelectual leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Microdeleción 16p11.2 heredada",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno del sueño y trastorno de la conducta alimentaria (selectividad grave)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aumento de levetiracetam a 3,5 ml/12 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Supervisión continua de un adulto durante las 24 horas, incluido el periodo de sueño, por el riesgo de crisis nocturnas y de SUDEP",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "administración de medicación de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sedestación a los 8 meses, marcha libre a los 17 meses",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-psicopedagogico.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GOBIERNO DE ARAGÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Departamento de Educación, Ciencia y Universidades"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio Provincial de Educación de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Orientación Educativa de Infantil y Primaria (EOEIP) Zaragoza n.º 4"
+   ],
+   [
+    "ORGANISMO",
+    "CEIP Ciudad del Ebro"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Delicias Sur"
+   ],
+   [
+    "ORGANISMO",
+    "112"
+   ],
+   [
+    "ORGANISMO",
+    "CPEE Los Sauces"
+   ],
+   [
+    "NORMA",
+    "Orden ECD/1005/2018, de 7 de junio"
+   ],
+   [
+    "PERSONA",
+    "Hugo Lacasa Bernal"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Sonia Ballarín Escó"
+   ],
+   [
+    "PERSONA",
+    "Marta Gil Lahoz"
+   ],
+   [
+    "PERSONA",
+    "Carmen Bernal Gimeno"
+   ],
+   [
+    "PERSONA",
+    "Jorge Lacasa Abad"
+   ],
+   [
+    "PERSONA",
+    "Ana Isabel Pérez Lambán"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "alumno con necesidad específica de apoyo educativo (ACNEAE) por trastorno del espectro autista",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "alumno con necesidades educativas especiales por discapacidad intelectual leve",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de Neuropediatría",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una epilepsia focal con crisis frecuentes y medicación de rescate (Stesolid rectal)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "protocolo de atención sanitaria en centros educativos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos crisis (17 de octubre y 3 de febrero)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "administró el diazepam rectal a los 4 minutos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se recuperó en el aula de calma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "índice de razonamiento perceptivo 81, comprensión verbal 58, memoria de trabajo 62, velocidad de procesamiento 64",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CI total no interpretable por la heterogeneidad del perfil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "edad equivalente de vocabulario receptivo 3 años y 9 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conducta adaptativa general en rango extremadamente bajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "juego solitario, estereotipias motoras cuando aumenta el ruido (tapa los oídos y se balancea), escasa iniciativa comunicativa, uso de pictogramas (SAAC)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se desregula con los cambios imprevistos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conductas de autoagresión (se muerde la mano)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otro alumno con TDAH en tratamiento farmacológico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos alumnas con dificultades específicas de lectura",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deje de cursar Religión Católica, que eligió el padre al matricularlo",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le genera ansiedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pedagogía Terapéutica (PT): 5 sesiones semanales (3 dentro del aula)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Audición y Lenguaje (AL): 3 sesiones semanales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Auxiliar de educación especial compartida: 12,5 h semanales (media jornada lectiva)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crisis epilépticas, desregulación conductual, necesidad de supervisión continuada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la crisis de febrero",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "manejo de crisis",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-resolucion-iass-discapacidad.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "GOBIERNO DE ARAGÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Aragonés de Servicios Sociales"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCIÓN PROVINCIAL DEL INSTITUTO ARAGONÉS DE SERVICIOS SOCIALES DE ZARAGOZA"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Valoración y Orientación n.º 2"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Base n.º 1"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial del Instituto Aragonés de Servicios Sociales de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Consejera de Bienestar Social y Familia"
+   ],
+   [
+    "AUTOS",
+    "50/0384217/2025"
+   ],
+   [
+    "AUTOS",
+    "2026/IASS-ZA/011873"
+   ],
+   [
+    "PERSONA",
+    "HUGO LACASA BERNAL"
+   ],
+   [
+    "PERSONA",
+    "CARMEN BERNAL GIMENO"
+   ],
+   [
+    "PERSONA",
+    "Carmen Bernal Gimeno"
+   ],
+   [
+    "PERSONA",
+    "Hugo Lacasa Bernal"
+   ],
+   [
+    "PERSONA",
+    "Mercedes Lanzuela Bielsa"
+   ],
+   [
+    "DNI",
+    "73429105-R"
+   ],
+   [
+    "DIRECCION",
+    "C/ Duquesa Villahermosa, 118, 5.º D"
+   ],
+   [
+    "NORMA",
+    "Decreto 113/2000, de 13 de junio"
+   ],
+   [
+    "NORMA",
+    "Orden de 22 de diciembre de 2022 de la Consejería de Ciudadanía y Derechos Sociales"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 888/2022, de 18 de octubre"
+   ],
+   [
+    "NORMA",
+    "Ley 39/2015, de 1 de octubre"
+   ],
+   [
+    "NORMA",
+    "artículo 4 del Real Decreto Legislativo 1/2013, de 29 de noviembre"
+   ],
+   [
+    "NORMA",
+    "artículos 121 y 122 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas"
+   ],
+   [
+    "OBJETO",
+    "grado de discapacidad del 38 %"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Puntuación de movilidad reducida: 0 puntos (no cumple los requisitos)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-recurso-alzada.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "CONSEJERA DE BIENESTAR SOCIAL Y FAMILIA DEL GOBIERNO DE ARAGÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial del IASS de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Real e Ilustre Colegio de Abogados de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "EVO"
+   ],
+   [
+    "ORGANISMO",
+    "EVO-2"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "AUTOS",
+    "50/0384217/2025"
+   ],
+   [
+    "NORMA",
+    "artículos 121 y 122 de la Ley 39/2015, de 1 de octubre"
+   ],
+   [
+    "NORMA",
+    "anexo III del Real Decreto 888/2022"
+   ],
+   [
+    "PERSONA",
+    "CARMEN BERNAL GIMENO"
+   ],
+   [
+    "PERSONA",
+    "HUGO LACASA BERNAL"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Royo Casaus"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Hugo Lacasa Bernal"
+   ],
+   [
+    "PERSONA",
+    "Carmen Bernal Gimeno"
+   ],
+   [
+    "DNI",
+    "17763520-W"
+   ],
+   [
+    "DNI",
+    "73429105-R"
+   ],
+   [
+    "DIRECCION",
+    "calle Duquesa Villahermosa, n.º 118, 5.º D (C.P. 50009)"
+   ],
+   [
+    "DIRECCION",
+    "C/ Coso, 67, 2.º – 50001 Zaragoza"
+   ],
+   [
+    "TELEFONO",
+    "676 215 498"
+   ],
+   [
+    "CORREO",
+    "broyo@royoabogados.es"
+   ],
+   [
+    "OBJETO",
+    "grado de discapacidad del 38 %"
+   ],
+   [
+    "OBJETO",
+    "grado de discapacidad no inferior al 65 %"
+   ],
+   [
+    "OBJETO",
+    "reconocimiento de la necesidad de concurso de tercera persona"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Infravaloración de la epilepsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deficiencia del sistema nervioso en un 14 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una crisis focal al mes de media, sin status",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estatus epiléptico de 35 minutos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con ingreso en la UCI pediátrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Último status epiléptico: noviembre de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "frecuencia real de crisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "son nocturnas y se yugulan en casa con diazepam rectal (Stesolid 5 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la pauta de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "registro diario del monitor de crisis nocturnas (dispositivo Emfit)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una media de 3,5 crisis al mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "registro de rescates",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos fármacos antiepilépticos a dosis plenas (ácido valproico y levetiracetam)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "epilepsia farmacorresistente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Infravaloración del trastorno del espectro autista y de la discapacidad intelectual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "15 % a la función intelectual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CI total estimado 63",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el CI total no es interpretable por la heterogeneidad del perfil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la comprensión verbal se sitúa en 58",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conducta adaptativa (ABAS-II) en rango extremadamente bajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un TEA con necesidad de apoyo de nivel 2, con lenguaje de frases de dos o tres palabras, ecolalia y necesidad de supervisión continua",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "funciones de comunicación y relación (20 %)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no puede quedarse nunca solo, ni siquiera durmiendo, por el riesgo de crisis nocturnas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe completo de Neuropediatría",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-demanda-contencioso.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO CONTENCIOSO-ADMINISTRATIVO N.º 3 DE ZARAGOZA"
+   ],
+   [
+    "AUTOS",
+    "Procedimiento Ordinario n.º 214/2026"
+   ],
+   [
+    "AUTOS",
+    "5029745320260001387"
+   ],
+   [
+    "AUTOS",
+    "RA-DEP-2026/0592"
+   ],
+   [
+    "AUTOS",
+    "SAAD 50-D-2025-118340"
+   ],
+   [
+    "AUTOS",
+    "rec. 288/2021"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TSJAR:2023:812"
+   ],
+   [
+    "PERSONA",
+    "PILAR GRACIA ALCUBIERRE"
+   ],
+   [
+    "PERSONA",
+    "CARMEN BERNAL GIMENO"
+   ],
+   [
+    "PERSONA",
+    "HUGO LACASA BERNAL"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Royo Casaus"
+   ],
+   [
+    "PERSONA",
+    "Hugo Lacasa Bernal"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Pilar Gracia Alcubierre"
+   ],
+   [
+    "LAJ",
+    "Silvia Andreu Marco"
+   ],
+   [
+    "ORGANISMO",
+    "Consejera de Bienestar Social y Familia"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Provincial del IASS de Zaragoza"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Miguel Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Sant Joan de Déu de Barcelona"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Local"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio Provincial de Educación"
+   ],
+   [
+    "NORMA",
+    "Real Decreto 174/2011, de 11 de febrero"
+   ],
+   [
+    "NORMA",
+    "artículos 1, 8.3 y 14 de la Ley 29/1998, de 13 de julio, reguladora de la Jurisdicción Contencioso-administrativa"
+   ],
+   [
+    "NORMA",
+    "artículo 19.1.a) LJCA"
+   ],
+   [
+    "NORMA",
+    "artículos 154 y 162 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 26 de la Ley 39/2006, de 14 de diciembre, de Promoción de la Autonomía Personal y Atención a las personas en situación de dependencia"
+   ],
+   [
+    "NORMA",
+    "STSJ de Aragón, Sala de lo Contencioso-Administrativo, Sección 1.ª, de 15 de junio de 2023"
+   ],
+   [
+    "NORMA",
+    "artículo 139 LJCA"
+   ],
+   [
+    "NORMA",
+    "artículo 236 quinquies de la Ley Orgánica 6/1985, de 1 de julio, del Poder Judicial"
+   ],
+   [
+    "OBJETO",
+    "Grado I de dependencia moderada"
+   ],
+   [
+    "OBJETO",
+    "Grado II de dependencia severa"
+   ],
+   [
+    "OBJETO",
+    "38 puntos, correspondientes al Grado I"
+   ],
+   [
+    "OBJETO",
+    "al menos 58 puntos, propios del Grado II"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno del espectro autista con necesidad de apoyo de nivel 2 y discapacidad intelectual leve, una epilepsia focal estructural farmacorresistente secundaria a una displasia cortical temporal derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "microdeleción 16p11.2 heredada",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de Neuropediatría",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "valproato (Depakine), levetiracetam (Keppra), risperidona (Risperdal) y melatonina (Slenyto)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diazepam rectal como medicación de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso en UCI pediátrica por estatus epiléptico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una posible cirugía de la epilepsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desempeño con supervisión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un nivel de desarrollo de tres años y medio en vocabulario receptivo y una conducta adaptativa en rango extremadamente bajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la necesidad de supervisión nocturna permanente ni la administración de medicación de rescate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "durante las 24 horas, incluido el periodo de sueño, por el riesgo de crisis nocturnas y de SUDEP",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "carece de conciencia del peligro y ha protagonizado fugas en la vía pública",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las conductas de autoagresión ni la selectividad alimentaria grave, que obligan a un apoyo físico parcial en la alimentación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del menor (38 % reconocido)",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-madre.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Carmen Bernal"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Royo"
+   ],
+   [
+    "PERSONA",
+    "Hugo"
+   ],
+   [
+    "PERSONA",
+    "Beatriz"
+   ],
+   [
+    "PERSONA",
+    "Montañés"
+   ],
+   [
+    "PERSONA",
+    "Marta"
+   ],
+   [
+    "PERSONA",
+    "Jorge"
+   ],
+   [
+    "PERSONA",
+    "Sancho"
+   ],
+   [
+    "PERSONA",
+    "Carmen"
+   ],
+   [
+    "PERSONA",
+    "Carmen Bernal Gimeno"
+   ],
+   [
+    "CORREO",
+    "carmenbernal.g@gmail.com"
+   ],
+   [
+    "CORREO",
+    "broyo@royoabogados.es"
+   ],
+   [
+    "TELEFONO",
+    "676 215 498"
+   ],
+   [
+    "ORGANISMO",
+    "IASS"
+   ],
+   [
+    "ORGANISMO",
+    "Servet"
+   ],
+   [
+    "ORGANISMO",
+    "Sant Joan de Deu"
+   ],
+   [
+    "ORGANISMO",
+    "Los Sauces"
+   ],
+   [
+    "OBJETO",
+    "GRADO I"
+   ],
+   [
+    "OBJETO",
+    "38%"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "despues de una crisis a las 22:30, la tercera esta semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Le he tenido que poner el stesolid porque pasaba de los tres minutos y se ha quedado como un trapo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no le vio ninguna rabieta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "todavia se hace pis por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un niño que no puede dormir sin el monitor debajo del colchon",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "otro niño con TDAH que tambien necesita apoyo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos crios gitanos que casi no van",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la delecion 16p11 la tiene el tambien",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ahora va de Vox",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los moros que nos quitan las ayudas",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "siga en Religion",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en su familia siempre se ha hecho la comunion",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo estoy bastante mal, la verdad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me ha vuelto a mandar sertralina, 50 al dia, porque estoy con ansiedad y no duermo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la operaron de cadera en marzo y esta con el sintrom",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es muy de misa",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a la Virgen del Pilar",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se pone fatal con tanta gente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el calendario de crisis de abril (son 5, 4 de noche)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de farmacorresistente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le operan en 2027 si el video-EEG sale bien",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-resolucion-dependencia.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "G0BIERNO DE ARAG0N"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUT0 ARAGONES DE SERVICI0S SOCIALES"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCI0N PR0VINCIAL DE ZARAG0ZA"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICI0 DE ATENCI0N A LA DEPENDENCIA"
+   ],
+   [
+    "ORGANISMO",
+    "CENTR0 DE SALUD DELICIAS SUR"
+   ],
+   [
+    "ORGANISMO",
+    "CENTR0 MUNICIPAL DE SERVICI0S S0CIALES"
+   ],
+   [
+    "AUTOS",
+    "SAAD 50-D-2025-118340"
+   ],
+   [
+    "AUTOS",
+    "2026/IASS-ZA/0298l4"
+   ],
+   [
+    "PERSONA",
+    "CARMEN BERNAL GIMEN0"
+   ],
+   [
+    "PERSONA",
+    "HUG0 LACASA BERNAL"
+   ],
+   [
+    "PERSONA",
+    "PAULA ESCARTIN BLASC0"
+   ],
+   [
+    "PERSONA",
+    "GUILLERM0 PUEY0 SALAS"
+   ],
+   [
+    "PERSONA",
+    "MERCEDES LANZUELA BIELSA"
+   ],
+   [
+    "DIRECCION",
+    "C/ DUQUESA VILLAHERM0SA ll8 5 D"
+   ],
+   [
+    "DNI",
+    "73429l05-R"
+   ],
+   [
+    "NORMA",
+    "LEY 39/2006, DE l4 DE DICIEMBRE"
+   ],
+   [
+    "NORMA",
+    "REAL DECRET0 l74/20ll, DE ll DE FEBRER0"
+   ],
+   [
+    "NORMA",
+    "ARTICUL0S 26 Y 27 DE LA LEY 39/2006"
+   ],
+   [
+    "NORMA",
+    "ARTS. l2l Y l22"
+   ],
+   [
+    "OBJETO",
+    "38 PUNT0S"
+   ],
+   [
+    "OBJETO",
+    "GRAD0 I, DEPENDENCIA M0DERADA"
+   ],
+   [
+    "OBJETO",
+    "DEPENDENCIA EN GRAD0 I (DEPENDENCIA M0DERADA)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME DE SALUD",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAST0RN0 DEL ESPECTR0 AUTISTA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "EPILEPSIA F0CAL (G40.2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VALPR0AT0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LEVETIRACETAM",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RETRAS0 MADURATIV0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0MER Y BEBER (SUPERVISI0N)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIGIENE PERS0NAL (AP0Y0 PARCIAL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VESTIRSE (SUPERVISI0N)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "T0MAR DECISI0NES (AP0Y0 PARCIAL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0NTR0L DE ESFINTERES: ENURESIS",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

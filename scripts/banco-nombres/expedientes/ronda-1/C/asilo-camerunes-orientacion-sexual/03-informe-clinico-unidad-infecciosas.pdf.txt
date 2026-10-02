@@ -1,0 +1,57 @@
+HOSPITAL UNIVERSITARIO RAMÓN Y CAJAL
+Servicio de Enfermedades Infecciosas
+Ctra. de Colmenar Viejo, km 9,100 — 28034 Madrid
+
+INFORME CLÍNICO DE CONSULTA EXTERNA
+
+Paciente: NKEMELU TABE, EMMANUEL
+N.º historia clínica: 4410982
+CIPA / TSI: MDRD930814NK0123
+Fecha de nacimiento: 14-08-1993 · Sexo: varón
+Médico responsable: Dr. Álvaro Quiroga Benítez
+Fecha: 21/10/2025
+
+MOTIVO DE CONSULTA
+Revisión semestral de infección por VIH-1. El paciente solicita informe para aportar a su expediente de asilo.
+
+ANTECEDENTES
+- No RAMC.
+- Infección por VIH-1 diagnosticada en 2021 en Camerún (Bamenda), estadio CDC A2 al diagnóstico. Recibió en origen TDF/3TC/DTG (Tenofovir/Lamivudina/Dolutegravir), con interrupciones documentadas por desabastecimiento y por el periodo de detención (refiere 11 días sin medicación en septiembre de 2024) y durante el tránsito migratorio (aprox. 4 meses sin TAR en 2024-2025).
+- Al llegar a España (feb. 2025): CV 48.300 copias/ml, CD4 214 cél/µl (14 %). Se reinició TAR con BIC/FTC/TAF (Biktarvy®) el 18/03/2025.
+- Serología VHB: anti-HBc positivo, HBsAg negativo (infección pasada resuelta). VHC negativo. Lúes: RPR negativo, TPHA positivo (sífilis tratada en 2022 en origen, con penicilina benzatina).
+- Fractura de maleolo peroneo derecho (2024) consolidada en mala posición, no tratada en origen.
+- TEPT en seguimiento por Psicología (Asociación Elkartu Refugio) y por su MAP. Tratamiento con sertralina 100 mg.
+- Tabaquismo activo (5 cig/día). Consumo ocasional de alcohol.
+- Vacunación: pendiente completar pauta VHB y neumococo (VNC20).
+
+SITUACIÓN SOCIAL
+Vive en Madrid con su pareja (varón), que conoce su diagnóstico. Sin red familiar en España. Pendiente de resolución de protección internacional.
+
+EXPLORACIÓN
+Buen estado general. Peso 68 kg (ganancia de 7 kg desde marzo). TA 124/78. No adenopatías. Auscultación cardiopulmonar normal. Abdomen anodino. Cicatrices lineales hipertróficas en región dorsal (3) y antebrazo izquierdo (1), de 4-9 cm, que el paciente atribuye a golpes con objeto contundente. Muguet oral resuelto.
+
+PRUEBAS COMPLEMENTARIAS (analítica 07/10/2025)
+- Carga viral VIH-1: < 20 copias/ml (indetectable).
+- Linfocitos CD4: 512 cél/µl (27 %). Cociente CD4/CD8: 0,61.
+- Hemograma, función renal (FG 98 ml/min) y hepática normales. Perfil lipídico: LDL 138 mg/dl.
+- Genotipado de resistencias basal (marzo 2025): mutación M184V en transcriptasa inversa; sin mutaciones en integrasa.
+
+JUICIO CLÍNICO
+1. Infección por VIH-1 en TAR con supresión virológica e inmunorrecuperación parcial.
+2. Mutación M184V (resistencia a lamivudina/emtricitabina) en relación con las interrupciones del tratamiento en origen.
+3. Hepatitis B pasada. Sífilis latente tratada.
+4. Trastorno de estrés postraumático.
+
+TRATAMIENTO
+- Biktarvy® (bictegravir 50 mg / emtricitabina 200 mg / tenofovir alafenamida 25 mg), 1 comprimido cada 24 h. Se mantiene pese a M184V dada la supresión mantenida; vigilancia estrecha.
+- Sertralina 100 mg/día (pautada por MAP).
+- Profilaxis: ninguna precisa con CD4 > 200.
+- Completar vacunación VHB (Heplisav B) y VNC20.
+
+OBSERVACIONES
+Se hace constar a petición del paciente que la presencia de la mutación M184V reduce las alternativas terapéuticas de primera línea disponibles en programas públicos de países con recursos limitados, en los que el esquema estándar es precisamente TDF/3TC/DTG. Una nueva interrupción prolongada del tratamiento conllevaría alto riesgo de fracaso virológico, acumulación de resistencias, progresión a SIDA e infecciones oportunistas. No corresponde a este Servicio valorar otras cuestiones del expediente administrativo.
+
+Próxima revisión: abril 2026 con analítica previa.
+
+Fdo.: Dr. Álvaro Quiroga Benítez
+FEA Enfermedades Infecciosas — N.º colegiado 28/45120

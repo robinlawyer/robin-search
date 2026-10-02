@@ -1,0 +1,457 @@
+════════════════════════════════════════════════════════════════════════════════════════════════
+BANCO DE PRUEBAS DEL ANONIMIZADOR — RobinSearch
+Fecha: 2026-09-29
+Corpus de trabajo:     44 fragmentos · 300 anotaciones · 5 escaneos
+Corpus de validación:  24 fragmentos · 157 anotaciones · 4 escaneos
+Corpus ciego 1:        40 fragmentos · 561 anotaciones · 6 escaneos
+Corpus ciego 2:        40 fragmentos · 639 anotaciones · 4 escaneos
+
+El corpus de validación se escribió DESPUÉS de cerrar las reglas y no se ha usado para
+afinarlas. Sus números son los honestos; los del corpus de trabajo son un techo.
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+SIN MODELO — solo reglas (dígito de control, propagación, tratamiento y cargo,
+domicilios y categoría especial). Dice cuánto se hace sin pagar un MB ni un milisegundo.
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+   CORPUS DE TRABAJO (techo: las reglas se afinaron aquí)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                 9         9     100.0 %
+     CIF                          8         8     100.0 %
+     CORREO                       8         8     100.0 %
+     DIRECCION                    9         9     100.0 %
+     DNI                         17        17     100.0 %
+     IBAN                         5         5     100.0 %
+     MATRICULA                    5         5     100.0 %
+     NIE                          2         2     100.0 %
+     NUSS                         3         3     100.0 %
+     PERSONA                     88        88     100.0 %
+     TELEFONO                     6         6     100.0 %
+     TOTAL                      160       160     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      69/69   100.0 %
+       escaneo MAYÚSCULAS sin tildes     12/12   100.0 %
+       correo del despacho                7/7    100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo               80   50.0 %
+       dígito de control                 54   33.8 %
+       estructura de domicilio            9   5.6 %
+       categoría especial                 9   5.6 %
+       propagación (gratis)               8   5.0 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (137 cosas que nunca se tapan)
+       sin la guardia           9   (6.6 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                42/44
+       nombre canonizado        2/44   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/44
+
+     TECHO — identificación sin nombre: 1/3 perífrasis
+
+   CORPUS DE VALIDACIÓN
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                13        13     100.0 %
+     CIF                          5         5     100.0 %
+     CORREO                       5         5     100.0 %
+     DIRECCION                    4         4     100.0 %
+     DNI                         10        10     100.0 %
+     IBAN                         3         3     100.0 %
+     MATRICULA                    1         1     100.0 %
+     NIE                          1         1     100.0 %
+     PERSONA                     47        47     100.0 %
+     TELEFONO                     4         4     100.0 %
+     TOTAL                       93        93     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      28/28   100.0 %
+       escaneo MAYÚSCULAS sin tildes     12/12   100.0 %
+       correo del despacho                7/7    100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo               43   46.2 %
+       dígito de control                 29   31.2 %
+       categoría especial                13   14.0 %
+       estructura de domicilio            4   4.3 %
+       propagación (gratis)               4   4.3 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (61 cosas que nunca se tapan)
+       sin la guardia           8   (13.1 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                21/24
+       nombre canonizado        3/24   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/24
+
+     TECHO — identificación sin nombre: 0/3 perífrasis
+
+   CORPUS CIEGO 1 (escrito sin ver las reglas, 29-sep; ya afinado contra él)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                41        41     100.0 %
+     CIF                          3         3     100.0 %
+     CORREO                       8         8     100.0 %
+     DATO_PENAL                   4         4     100.0 %
+     DIRECCION                   24        24     100.0 %
+     DNI                         12        12     100.0 %
+     IBAN                         4         4     100.0 %
+     MATRICULA                    3         3     100.0 %
+     NIE                          8         8     100.0 %
+     NUSS                         4         4     100.0 %
+     PERSONA                    155       155     100.0 %
+     TELEFONO                    10        10     100.0 %
+     TOTAL                      276       276     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      98/98   100.0 %
+       correo del despacho               38/38   100.0 %
+       escaneo MAYÚSCULAS sin tildes     19/19   100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo              128   46.4 %
+       dígito de control                 52   18.8 %
+       categoría especial                45   16.3 %
+       propagación (gratis)              27   9.8 %
+       estructura de domicilio           24   8.7 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (284 cosas que nunca se tapan)
+       sin la guardia           40   (14.1 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                28/40
+       nombre canonizado        12/40   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/40
+
+     TECHO — identificación sin nombre: 0/1 perífrasis
+
+   CORPUS CIEGO 2 (escrito después, sin ver reglas ni corpus: el número honesto)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL               101        43      42.6 %  ←
+     CIF                          7         7     100.0 %
+     CORREO                      17        17     100.0 %
+     DATO_PENAL                   5         1      20.0 %  ←
+     DIRECCION                   43        28      65.1 %  ←
+     DNI                         28        21      75.0 %  ←
+     IBAN                         7         7     100.0 %
+     MATRICULA                    6         6     100.0 %
+     NIE                         13        11      84.6 %  ←
+     NUSS                         4         4     100.0 %
+     PERSONA                    235       207      88.1 %  ←
+     TELEFONO                    24        24     100.0 %
+     TOTAL                      490       376      76.7 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                     149/170  87.6 %
+       escaneo MAYÚSCULAS sin tildes     11/17   64.7 %
+       correo del despacho               47/48   97.9 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo              147   39.1 %
+       dígito de control                 97   25.8 %
+       propagación (gratis)              60   16.0 %
+       categoría especial                44   11.7 %
+       estructura de domicilio           28   7.4 %
+
+     SE ESCAPAN 114   ← llegarían a Claude tal cual
+       · [d-querella-estafa] DIRECCION "Urbanización Los Pinares, parcela 27, 47151 Boecillo"
+       · [d-acusacion-fiscal-lesiones] PERSONA "MOHAMED EL AMRANI BOUZIANE"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "fractura de huesos propios nasales"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "herida inciso-contusa en región malar izquierda de 4 cm"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "cicatriz de 3,5 cm"
+       · [d-auto-apertura-juicio-oral] DIRECCION "calle Pintor Aparicio, 8, bajo izquierda, de Alicante"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "turno de reserva para personas con discapacidad"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "hipoacusia neurosensorial bilateral severa"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "intérprete de lengua de signos y bucle magnético"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "informe audiológico"
+       · [d-lista-admitidos-policia-local] PERSONA "ÁLVAREZ SOUTO, Brais"
+       · [d-lista-admitidos-policia-local] DNI "***4521**"
+       … y 102 más
+
+     FUSIONES 2   ← dos personas con el mismo alias
+       · [PERSONA_6]: "Mohamed El Amrani" y "MOHAMED EL AMRANI BOUZIANE"
+       · [PERSONA_1]: "Bravo" y "Pilar"
+
+     TAPADO DE MÁS, sin estar anotado: 15
+       · [d-alzada-consejeria-oposiciones] PERSONA "Otra" (contexto:apellido-en-correo)
+       · [d-desamparo-menores] PERSONA "ASUNCIÓN DE TUTELA\n\nVista" (contexto:nombre-de-pila)
+       · [d-apoyos-informe-forense-ocr] PERSONA "PROCEDIMIENTO" (contexto:cargo)
+       · [d-testamento-abierto] DIRECCION "plaza de aparcamiento número 14" (domicilio:vía + número + piso (sin CP))
+       · [d-acta-junta-socios] DIRECCION "Polígono Industrial Belartza" (domicilio:polígono o urbanización + nave)
+       · [d-acta-junta-socios] PERSONA "Cesar" (contexto:nombre-de-pila)
+       · [d-requerimiento-notarial] CAT_ESPECIAL "uso" (especial:afiliación o representación sindical)
+       · [d-finiquito-ocr] PERSONA "FDO" (contexto:cargo)
+       · [d-rcud-incapacidad-absoluta] CAT_ESPECIAL "cuadro idéntico" (especial:episodio o cuadro con adjetivo)
+       · [d-laudo-arbitral] PERSONA "NORDIC TIMBER TRADING AB" (contexto:etiqueta)
+       · [d-laudo-arbitral] PERSONA "CARPINTERÍAS DEL PRADO" (contexto:etiqueta)
+       · [d-laudo-arbitral] PERSONA "CARPINTERÍAS DEL PRADO" (propagacion)
+
+     SOBRE-TAPADO (149 cosas que nunca se tapan)
+       sin la guardia           11   (7.4 %)
+       con la guardia           4   (2.7 %)
+         · [d-desamparo-menores] OBJETO "trastorno por consumo de cocaína y alcohol"
+         · [d-providencia-tc-inadmision] PONENTE "Ignacio Sanz de Albornoz Pellicer"
+         · [d-providencia-tc-inadmision] LAJ "Herminia Palencia Guerra"
+         · [d-modificacion-medidas-ludopatia] OBJETO "ludopatía severa"
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                25/40
+       nombre canonizado        15/40   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/40
+
+     TECHO — identificación sin nombre: 0/0 perífrasis
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+SOLO REGLAS · PRODUCCIÓN   (texto troceado como en el indexador (sin saltos de línea))
+La v1, sobre el texto que de verdad le llega.
+════════════════════════════════════════════════════════════════════════════════════════════════
+
+   CORPUS DE TRABAJO (techo: las reglas se afinaron aquí)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                 9         9     100.0 %
+     CIF                          8         8     100.0 %
+     CORREO                       8         8     100.0 %
+     DIRECCION                    9         9     100.0 %
+     DNI                         17        17     100.0 %
+     IBAN                         5         5     100.0 %
+     MATRICULA                    5         5     100.0 %
+     NIE                          2         2     100.0 %
+     NUSS                         3         3     100.0 %
+     PERSONA                     88        88     100.0 %
+     TELEFONO                     6         6     100.0 %
+     TOTAL                      160       160     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      69/69   100.0 %
+       escaneo MAYÚSCULAS sin tildes     12/12   100.0 %
+       correo del despacho                7/7    100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo               80   50.0 %
+       dígito de control                 54   33.8 %
+       estructura de domicilio            9   5.6 %
+       categoría especial                 9   5.6 %
+       propagación (gratis)               8   5.0 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (137 cosas que nunca se tapan)
+       sin la guardia           9   (6.6 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                42/44
+       nombre canonizado        2/44   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/44
+
+     TECHO — identificación sin nombre: 1/3 perífrasis
+
+   CORPUS DE VALIDACIÓN
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                13        13     100.0 %
+     CIF                          5         5     100.0 %
+     CORREO                       5         5     100.0 %
+     DIRECCION                    4         4     100.0 %
+     DNI                         10        10     100.0 %
+     IBAN                         3         3     100.0 %
+     MATRICULA                    1         1     100.0 %
+     NIE                          1         1     100.0 %
+     PERSONA                     47        47     100.0 %
+     TELEFONO                     4         4     100.0 %
+     TOTAL                       93        93     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      28/28   100.0 %
+       escaneo MAYÚSCULAS sin tildes     12/12   100.0 %
+       correo del despacho                7/7    100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo               43   46.2 %
+       dígito de control                 29   31.2 %
+       categoría especial                13   14.0 %
+       estructura de domicilio            4   4.3 %
+       propagación (gratis)               4   4.3 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (61 cosas que nunca se tapan)
+       sin la guardia           8   (13.1 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                21/24
+       nombre canonizado        3/24   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/24
+
+     TECHO — identificación sin nombre: 0/3 perífrasis
+
+   CORPUS CIEGO 1 (escrito sin ver las reglas, 29-sep; ya afinado contra él)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL                41        41     100.0 %
+     CIF                          3         3     100.0 %
+     CORREO                       8         8     100.0 %
+     DATO_PENAL                   4         4     100.0 %
+     DIRECCION                   24        24     100.0 %
+     DNI                         12        12     100.0 %
+     IBAN                         4         4     100.0 %
+     MATRICULA                    3         3     100.0 %
+     NIE                          8         8     100.0 %
+     NUSS                         4         4     100.0 %
+     PERSONA                    155       155     100.0 %
+     TELEFONO                    10        10     100.0 %
+     TOTAL                      276       276     100.0 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                      98/98   100.0 %
+       correo del despacho               38/38   100.0 %
+       escaneo MAYÚSCULAS sin tildes     19/19   100.0 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo              128   46.4 %
+       dígito de control                 52   18.8 %
+       categoría especial                45   16.3 %
+       propagación (gratis)              27   9.8 %
+       estructura de domicilio           24   8.7 %
+
+     SE ESCAPAN 0
+
+     FUSIONES 0
+
+     TAPADO DE MÁS, sin estar anotado: 0
+
+     SOBRE-TAPADO (284 cosas que nunca se tapan)
+       sin la guardia           40   (14.1 %)
+       con la guardia           0   (0.0 %)
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                28/40
+       nombre canonizado        12/40   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/40
+
+     TECHO — identificación sin nombre: 0/1 perífrasis
+
+   CORPUS CIEGO 2 (escrito después, sin ver reglas ni corpus: el número honesto)
+   ──────────────────────────────────────────────────────────────────────────────────────────
+     tipo              en el corpus   tapados   cobertura
+     CAT_ESPECIAL               101        43      42.6 %  ←
+     CIF                          7         7     100.0 %
+     CORREO                      17        17     100.0 %
+     DATO_PENAL                   5         1      20.0 %  ←
+     DIRECCION                   43        28      65.1 %  ←
+     DNI                         28        21      75.0 %  ←
+     IBAN                         7         7     100.0 %
+     MATRICULA                    6         6     100.0 %
+     NIE                         13        11      84.6 %  ←
+     NUSS                         4         4     100.0 %
+     PERSONA                    235       210      89.4 %  ←
+     TELEFONO                    24        24     100.0 %
+     TOTAL                      490       379      77.3 %
+
+     por clase de fragmento (solo personas):
+       texto nativo                     151/170  88.8 %
+       escaneo MAYÚSCULAS sin tildes     12/17   70.6 %
+       correo del despacho               47/48   97.9 %
+
+     quién tapa qué (reparto por capas):
+       tratamiento y cargo              150   39.6 %
+       dígito de control                 97   25.6 %
+       propagación (gratis)              60   15.8 %
+       categoría especial                44   11.6 %
+       estructura de domicilio           28   7.4 %
+
+     SE ESCAPAN 111   ← llegarían a Claude tal cual
+       · [d-querella-estafa] DIRECCION "Urbanización Los Pinares, parcela 27, 47151 Boecillo"
+       · [d-acusacion-fiscal-lesiones] PERSONA "MOHAMED EL AMRANI BOUZIANE"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "fractura de huesos propios nasales"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "herida inciso-contusa en región malar izquierda de 4 cm"
+       · [d-acusacion-fiscal-lesiones] CAT_ESPECIAL "cicatriz de 3,5 cm"
+       · [d-auto-apertura-juicio-oral] DIRECCION "calle Pintor Aparicio, 8, bajo izquierda, de Alicante"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "turno de reserva para personas con discapacidad"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "hipoacusia neurosensorial bilateral severa"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "intérprete de lengua de signos y bucle magnético"
+       · [d-alzada-consejeria-oposiciones] CAT_ESPECIAL "informe audiológico"
+       · [d-lista-admitidos-policia-local] PERSONA "ÁLVAREZ SOUTO, Brais"
+       · [d-lista-admitidos-policia-local] DNI "***4521**"
+       … y 99 más
+
+     FUSIONES 2   ← dos personas con el mismo alias
+       · [PERSONA_6]: "Mohamed El Amrani" y "MOHAMED EL AMRANI BOUZIANE"
+       · [PERSONA_1]: "Bravo" y "Pilar"
+
+     TAPADO DE MÁS, sin estar anotado: 14
+       · [d-alzada-consejeria-oposiciones] PERSONA "Otra" (contexto:apellido-en-correo)
+       · [d-desamparo-menores] PERSONA "ASUNCIÓN DE TUTELA Vista" (contexto:nombre-de-pila)
+       · [d-apoyos-informe-forense-ocr] PERSONA "PROCEDIMIENTO" (contexto:cargo)
+       · [d-testamento-abierto] DIRECCION "plaza de aparcamiento número 14" (domicilio:vía + número + piso (sin CP))
+       · [d-acta-junta-socios] DIRECCION "Polígono Industrial Belartza" (domicilio:polígono o urbanización + nave)
+       · [d-acta-junta-socios] PERSONA "Cesar" (contexto:nombre-de-pila)
+       · [d-requerimiento-notarial] CAT_ESPECIAL "uso" (especial:afiliación o representación sindical)
+       · [d-finiquito-ocr] PERSONA "FDO" (contexto:cargo)
+       · [d-rcud-incapacidad-absoluta] CAT_ESPECIAL "cuadro idéntico" (especial:episodio o cuadro con adjetivo)
+       · [d-laudo-arbitral] PERSONA "NORDIC TIMBER TRADING AB" (contexto:etiqueta)
+       · [d-laudo-arbitral] PERSONA "CARPINTERÍAS DEL PRADO" (contexto:etiqueta)
+       · [d-reagrupacion-familiar] DATO_PENAL "antecedentes penales" (especial:antecedentes penales)
+
+     SOBRE-TAPADO (149 cosas que nunca se tapan)
+       sin la guardia           11   (7.4 %)
+       con la guardia           6   (4.0 %)
+         · [d-desamparo-menores] OBJETO "trastorno por consumo de cocaína y alcohol"
+         · [d-providencia-tc-inadmision] PONENTE "Ignacio Sanz de Albornoz Pellicer"
+         · [d-providencia-tc-inadmision] LAJ "Herminia Palencia Guerra"
+         · [d-sancion-dgt] ORGANISMO "JEFATURA PROVINCIAL DE TOLEDO"
+         · [d-sancion-dgt] AUTOS "Expediente sancionador n.º 450123456789"
+         · [d-modificacion-medidas-ludopatia] OBJETO "ludopatía severa"
+
+     IDA Y VUELTA (anonimizar → revertir → ¿el texto original?)
+       idénticos                25/40
+       nombre canonizado        15/40   (vuelve completo o bien escrito: «Urdiales Cotrina» → «Feliciana Urdiales Cotrina»)
+       CORROMPIDOS              0/40
+
+     TECHO — identificación sin nombre: 0/0 perífrasis
+
+════════════════════════════════════════════════════════════════════════════════════════════════
+RESUMEN — sobre el corpus CIEGO 2
+════════════════════════════════════════════════════════════════════════════════════════════════
+   configuración               peso  instal.  60 frag.     tapa   escaneo  escapan  sobre-tapa  ida/vuelta
+   solo reglas                 0 MB   243 MB         —   76.7 %    64.7 %      114       2.7 %     0 rotos
+   solo reglas · producción    0 MB   243 MB         —   77.3 %    70.6 %      111       4.0 %     0 rotos
+
+
+JSON en /private/tmp/claude-501/-Users-alonsocuspineracarvajal-Downloads-Abogado-v2/d6fe16a5-c1c2-4e2f-9fe7-024e22eed395/scratchpad/b2.json

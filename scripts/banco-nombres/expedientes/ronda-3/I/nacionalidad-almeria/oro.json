@@ -1,0 +1,1480 @@
+{
+ "01-certificado-antecedentes-senegal.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MINISTERE DE LA JUSTICE"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECTI0N DES AFFAIRES CRIMINELLES ET DES GRACES"
+   ],
+   [
+    "ORGANISMO",
+    "CASIER JUDICIAIRE CENTRAL"
+   ],
+   [
+    "ORGANO",
+    "TRIBUNAL DE GRANDE INSTANCE DE THIES"
+   ],
+   [
+    "NORMA",
+    "ART. 77l DU C0DE DE PR0CEDURE PENALE"
+   ],
+   [
+    "NORMA",
+    "C0NVENTI0N DE LA HAYE DU 5 0CT0BRE l96l"
+   ],
+   [
+    "AUTOS",
+    "2022/TGI-TH/0048l7"
+   ],
+   [
+    "AUTOS",
+    "AP-2022-l093l"
+   ],
+   [
+    "AUTOS",
+    "R-4l8877/2022"
+   ],
+   [
+    "PERSONA",
+    "DI0P"
+   ],
+   [
+    "PERSONA",
+    "AMINATA"
+   ],
+   [
+    "PERSONA",
+    "MAMAD0U DI0P"
+   ],
+   [
+    "PERSONA",
+    "FAT0U NDIAYE"
+   ],
+   [
+    "PERSONA",
+    "0USMANE BADJI"
+   ],
+   [
+    "PERSONA",
+    "CLAIRE DUB0IS-MARTINEZ"
+   ],
+   [
+    "DIRECCION",
+    "QUARTIER RANDOULENE N0RD, VILLA N0 ll4, THIES"
+   ],
+   [
+    "DIRECCION",
+    "BARRI0 RANDOULENE N0RTE, VIVIENDA N. ll4, THIES"
+   ],
+   [
+    "DNI",
+    "A0l4877236"
+   ],
+   [
+    "TELEFONO",
+    "950 l2 77 43"
+   ],
+   [
+    "CORREO",
+    "cdubois.traduccions@gmail.c0m"
+   ],
+   [
+    "OBJETO",
+    "NEANT"
+   ],
+   [
+    "OBJETO",
+    "SIN ANTECEDENTES"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERI0 DE JUSTICIA - REGISTR0 CENTRAL DE PENAD0S"
+   ],
+   [
+    "ORGANISMO",
+    "REGISTR0 CIVIL"
+   ],
+   [
+    "ORGANISMO",
+    "MAEC"
+   ]
+  ],
+  "ambiguo": [
+   "DI0P"
+  ]
+ },
+ "02-informe-hematologia-torrecardenas.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICIO ANDALUZ DE SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "HOSPITAL UNIVERSITARIO TORRECÁRDENAS — ALMERÍA"
+   ],
+   [
+    "ORGANISMO",
+    "UGC de Hematología y Hemoterapia"
+   ],
+   [
+    "ORGANISMO",
+    "Consultas Externas — Unidad de Hemoglobinopatías"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio de Justicia"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Cervantes"
+   ],
+   [
+    "ORGANISMO",
+    "Hôpital Principal de Dakar"
+   ],
+   [
+    "ORGANISMO",
+    "Junta de Andalucía"
+   ],
+   [
+    "PERSONA",
+    "AMINATA DIOP NDIAYE"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Martín Úbeda"
+   ],
+   [
+    "PERSONA",
+    "Moussa"
+   ],
+   [
+    "PERSONA",
+    "Moussa Sarr Diop"
+   ],
+   [
+    "PERSONA",
+    "Ibrahima Sarr Faye"
+   ],
+   [
+    "NIE",
+    "X8473625-P"
+   ],
+   [
+    "NUSS",
+    "AN1023847566"
+   ],
+   [
+    "NUSS",
+    "1.348.902"
+   ],
+   [
+    "NUSS",
+    "AN1067732914"
+   ],
+   [
+    "DIRECCION",
+    "C/ Gregorio Marañón, 27, 2.º izda., 04005 Almería"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La paciente solicita informe que acredite su patología y los ingresos hospitalarios de los años 2022 y 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el ingreso coincidente con la convocatoria de la prueba CCSE de 26 de mayo de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Drepanocitosis (anemia falciforme) homocigota HbSS, diagnosticada en la infancia en Senegal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«drépanocytose homozygote SS, crises douloureuses récurrentes depuis l'âge de 2 ans»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Crisis vasooclusivas de repetición (3-5 episodios/año que precisan ingreso)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome torácico agudo en 2019 y en noviembre de 2022, este último con ingreso en UCI durante 4 días y necesidad de ventilación mecánica no invasiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Necrosis avascular de cabeza femoral izquierda (estadio III de Ficat)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pendiente de valoración por Traumatología para prótesis total de cadera",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colelitiasis; colecistectomía laparoscópica en 2018",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hiperesplenismo con autoesplenectomía funcional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "vacunada frente a neumococo, meningococo y Haemophilus",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G3 P1 A2 (dos abortos espontáneos del primer trimestre, 2013 y 2015)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nacido en 2017 por cesárea programada a las 36 semanas por preeclampsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno adaptativo con ánimo ansioso-depresivo en seguimiento por su médico de familia desde 2021",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "refiere situación de violencia de género, con orden de protección en vigor hasta 2024"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Serologías VIH, VHB y VHC negativas (último control 03/2026)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alergias medicamentosas conocidas. No hábitos tóxicos.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crisis vasooclusiva grave con dolor en columna lumbar y ambas extremidades inferiores (EVA 9/10)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Precisó perfusión de morfina (bomba PCA), hidratación IV y una transfusión de 2 concentrados de hematíes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb al ingreso 6,4 g/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "síndrome torácico agudo con infiltrado bilateral, SatO2 84 % basal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso en UCI del 16 al 20/11/2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exanguinotransfusión parcial",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb al alta 8,9 g/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crisis vasooclusiva tras episodio febril",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hidroxiurea (Siklos®) 1.000 mg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ácido fólico (Acfol®) 5 mg/día",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Nolotil® y tramadol a demanda en domicilio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Programa de transfusión simple cada 8 semanas desde 2023",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 7,8 g/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "VCM 104 fL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reticulocitos 9,2 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LDH 512 U/L",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bilirrubina indirecta 2,8 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ferritina 1.240 ng/mL (sobrecarga férrica secundaria a transfusiones, en tratamiento quelante con deferasirox, Exjade® 900 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Electroforesis de hemoglobinas: HbS 82 %, HbF 11,4 %, HbA2 3,6 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Doppler transcraneal y ecocardiograma (PSAP 32 mmHg) dentro de límites",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "grado de discapacidad del 45 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el ayuno del mes de Ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por el riesgo de deshidratación y de desencadenar crisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "recomendación que la paciente refiere seguir parcialmente",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "electroforesis con HbA 57,8 %, HbS 38,6 %, HbF 0,9 %",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estudio molecular del gen HBB: heterocigoto para la mutación c.20A>T (p.Glu7Val)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "portador sano del rasgo falciforme (HbAS), sin enfermedad",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se ofreció consejo genético a la madre",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se puede descartar que sea portador",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "evitar deshidratación intensa y altitud",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en seguimiento por Neuropediatría",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TDAH de presentación combinada, en tratamiento con metilfenidato (Medikinet® 20 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anemia falciforme (HbSS) con fenotipo grave, en tratamiento con hidroxiurea y programa transfusional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Necrosis avascular de cadera izquierda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemosiderosis transfusional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno adaptativo mixto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enfermedad crónica que cursa con crisis imprevisibles, fatiga intensa y dolor, y que obliga a ausencias frecuentes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en los periodos intercrisis la paciente mantiene una vida autónoma",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-integracion-ayuntamiento.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "AYUNTAMIENTO DE ALMERÍA"
+   ],
+   [
+    "ORGANISMO",
+    "Área de Familia, Igualdad y Participación Ciudadana"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Municipal de Servicios Sociales Comunitarios «Ciudad Jardín-Levante»"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Teranga Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Cervantes"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Local"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Profesional de Trabajo Social de Almería"
+   ],
+   [
+    "ORGANISMO",
+    "CEIP «Lope de Vega»"
+   ],
+   [
+    "NORMA",
+    "art. 22.4 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "art. 6 del Real Decreto 1004/2015, de 6 de noviembre"
+   ],
+   [
+    "AUTOS",
+    "ISI-2026/0213"
+   ],
+   [
+    "AUTOS",
+    "R-418877/2022"
+   ],
+   [
+    "PERSONA",
+    "Aminata Diop Ndiaye"
+   ],
+   [
+    "PERSONA",
+    "Moussa Sarr Diop"
+   ],
+   [
+    "PERSONA",
+    "Diop"
+   ],
+   [
+    "PERSONA",
+    "Ibrahima Sarr Faye"
+   ],
+   [
+    "PERSONA",
+    "Sarr"
+   ],
+   [
+    "PERSONA",
+    "Moussa"
+   ],
+   [
+    "PERSONA",
+    "Juan Antonio Cazorla Fenoy"
+   ],
+   [
+    "PERSONA",
+    "Encarnación Martos Gallardo"
+   ],
+   [
+    "NIE",
+    "X8473625-P"
+   ],
+   [
+    "DIRECCION",
+    "C/ Gregorio Marañón, 27, 2.º izquierda, 04005 Almería"
+   ],
+   [
+    "TELEFONO",
+    "642 18 09 55"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Violencia sobre la Mujer n.º 1 de Almería"
+   ],
+   [
+    "DATO_PENAL",
+    "resultó condenado por un delito de maltrato habitual en el ámbito familiar"
+   ],
+   [
+    "DATO_PENAL",
+    "con orden de alejamiento respecto de la interesada y del menor"
+   ],
+   [
+    "DATO_PENAL",
+    "en 2019 fue detenida"
+   ],
+   [
+    "DATO_PENAL",
+    "en un supermercado por un malentendido con un paquete de pañales, sin que llegara a juicio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "actividad que tuvo que abandonar por su enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el frío de las cámaras le desencadenaba crisis de dolor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pensión no contributiva de invalidez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene reconocido un 45 % de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a las que no pudo presentarse por estar hospitalizada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe hospitalario",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es musulmana practicante, de la cofradía mouride, y acude a la oratoria del barrio de Los Ángeles los viernes",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colabora en la organización de la fiesta del Magal de Touba",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pertenece a la etnia wolof",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Su lengua materna es el wolof",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conoce solo de forma oral el wolof",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "apoyo de la profesora de PT por su diagnóstico de TDAH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Su enfermedad crónica, con frecuentes ingresos hospitalarios y una necrosis de cadera que le provoca cojera",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-correos-ong-teranga.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío Garrido Amat"
+   ],
+   [
+    "PERSONA",
+    "Aminata Diop"
+   ],
+   [
+    "PERSONA",
+    "Aminata"
+   ],
+   [
+    "PERSONA",
+    "Fatou"
+   ],
+   [
+    "PERSONA",
+    "Claire"
+   ],
+   [
+    "PERSONA",
+    "Moussa"
+   ],
+   [
+    "PERSONA",
+    "Mariama"
+   ],
+   [
+    "PERSONA",
+    "Rocio"
+   ],
+   [
+    "PERSONA",
+    "Martín"
+   ],
+   [
+    "PERSONA",
+    "Mariama Ba"
+   ],
+   [
+    "CORREO",
+    "rocio.garrido@terangaalmeria.org"
+   ],
+   [
+    "CORREO",
+    "aminatadiop88@hotmail.com"
+   ],
+   [
+    "TELEFONO",
+    "950 26 88 14"
+   ],
+   [
+    "TELEFONO",
+    "689 40 11 72"
+   ],
+   [
+    "AUTOS",
+    "R-418877/2022"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Teranga Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya te han dado el alta y que estás en casa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la UCI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con las pastillas estás cansada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "porque estabas ingresada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe del hospital que diga que estuviste ingresada justo en esas fechas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la DISPENSA de los exámenes por tu enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tú tienes la anemia falciforme y te están tramitando el grado de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los días de transfusión",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "¿lo de 2019 del supermercado, al final te llegó alguna citación del juzgado?"
+   ],
+   [
+    "DATO_PENAL",
+    "puede salir en la base de datos policial"
+   ],
+   [
+    "DATO_PENAL",
+    "Lo del super en 2019 no me llego nada nunca"
+   ],
+   [
+    "DATO_PENAL",
+    "Solo la policia me llevo a la comisaria unas horas y luego me dejaron ir"
+   ],
+   [
+    "DATO_PENAL",
+    "Yo no robe nada, el niño tenia la caja de pañales en el carro y se me olvido pagar"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "porque estaba con dolor y mareada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "je suis sortie de l'hôpital vendredi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "J'ai eu une crise thoracique très forte, ils m'ont mis à la réanimation avec le masque pour respirer, quatre jours",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "c'est la drépanocytose qui attaque les poumons maintenant",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ils m'ont changé le sang (exsanguino) et maintenant je dois faire la transfusion tous les deux mois",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Je prends l'hydroxyurée et la morphine pour la douleur, je suis très fatiguée",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo estaba en la UCI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si estoy enferma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ella le da la pastilla del TDAH por la mañana",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "m'a encore écrit sur WhatsApp malgré l'ordre d'éloignement"
+   ],
+   [
+    "DATO_PENAL",
+    "je dois le dénoncer encore une fois"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Que Dieu te bénisse",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Je prie pour toi à chaque prière",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-correo-ong-abogado.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Rocío Garrido Amat"
+   ],
+   [
+    "PERSONA",
+    "Pablo Navarro Segura"
+   ],
+   [
+    "PERSONA",
+    "Inés Castillo Rubí"
+   ],
+   [
+    "PERSONA",
+    "Pablo"
+   ],
+   [
+    "PERSONA",
+    "Aminata Diop Ndiaye"
+   ],
+   [
+    "PERSONA",
+    "Inés"
+   ],
+   [
+    "PERSONA",
+    "Aminata"
+   ],
+   [
+    "PERSONA",
+    "Aminata Diop"
+   ],
+   [
+    "PERSONA",
+    "Martín Úbeda"
+   ],
+   [
+    "PERSONA",
+    "Ibrahima Sarr Faye"
+   ],
+   [
+    "PERSONA",
+    "Moussa"
+   ],
+   [
+    "PERSONA",
+    "Cheikh"
+   ],
+   [
+    "CORREO",
+    "rocio.garrido@terangaalmeria.org"
+   ],
+   [
+    "CORREO",
+    "pnavarro@navarrosegura-extranjeria.com"
+   ],
+   [
+    "CORREO",
+    "ines.castillo@terangaalmeria.org"
+   ],
+   [
+    "NIE",
+    "X8473625-P"
+   ],
+   [
+    "TELEFONO",
+    "642 18 09 55"
+   ],
+   [
+    "TELEFONO",
+    "950 26 88 14"
+   ],
+   [
+    "TELEFONO",
+    "689 40 11 72"
+   ],
+   [
+    "AUTOS",
+    "R-418877/2022"
+   ],
+   [
+    "ORGANISMO",
+    "DGSJFP"
+   ],
+   [
+    "ORGANO",
+    "Audiencia Nacional"
+   ],
+   [
+    "ORGANISMO",
+    "Junta"
+   ],
+   [
+    "ORGANISMO",
+    "Ayuntamiento"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Teranga Almería"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está de baja maternal hasta octubre",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "un antecedente policial de 2019"
+   ],
+   [
+    "OBJETO",
+    "una detención por un presunto hurto"
+   ],
+   [
+    "OBJETO",
+    "antecedentes policiales sin condena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en plena crisis de dolor",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "anemia falciforme"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(drepanocitosis)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con transfusiones cada dos meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una necrosis de cadera que la tiene esperando una prótesis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un 45 % de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estuvo ingresada justo en las dos fechas de examen de 2022, una de ellas en la UCI",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de Hematología del Torrecárdenas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe médico que mandamos en 2022",
+    "salud"
+   ],
+   [
+    "OBJETO",
+    "la dispensaran por enfermedad"
+   ],
+   [
+    "OBJETO",
+    "certificado de Senegal limpio"
+   ],
+   [
+    "OBJETO",
+    "certificado español negativo"
+   ],
+   [
+    "DATO_PENAL",
+    "fue condenado en 2023 por maltrato habitual, y tuvo una orden de alejamiento"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es portador del rasgo falciforme (no está enfermo)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene TDAH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está embarazada de unas 10 semanas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Con la drepanocitosis es un embarazo de alto riesgo y la están viendo en Obstetricia y en Hematología cada quince días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es musulmana practicante y lleva velo",
+    "religion"
+   ],
+   [
+    "OBJETO",
+    "la enfermedad está más que documentada"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "suele estar en el hospital de día",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-resolucion-denegatoria.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MINISTERIO DE LA PRESIDENCIA, JUSTICIA Y RELACIONES CON LAS CORTES"
+   ],
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GENERAL DE SEGURIDAD JURÍDICA Y FE PÚBLICA"
+   ],
+   [
+    "ORGANISMO",
+    "Subdirección General de Nacionalidad y Estado Civil"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Central de Penados"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de la Policía"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Local de Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Centro Nacional de Inteligencia"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Cervantes"
+   ],
+   [
+    "ORGANO",
+    "Sala de lo Contencioso-Administrativo de la Audiencia Nacional"
+   ],
+   [
+    "ORGANO",
+    "Tribunal Supremo"
+   ],
+   [
+    "AUTOS",
+    "R-418877/2022"
+   ],
+   [
+    "AUTOS",
+    "MJU-7Y3K-22QP-L0X8-4N6D"
+   ],
+   [
+    "PERSONA",
+    "AMINATA DIOP NDIAYE"
+   ],
+   [
+    "PERSONA",
+    "Sofía Puente Alcázar"
+   ],
+   [
+    "NIE",
+    "X8473625-P"
+   ],
+   [
+    "DIRECCION",
+    "C/ Gregorio Marañón, 27, 2.º izda., 04005 Almería"
+   ],
+   [
+    "NORMA",
+    "artículo 6 del Real Decreto 1004/2015, de 6 de noviembre"
+   ],
+   [
+    "NORMA",
+    "artículo 21.2 del Código Civil"
+   ],
+   [
+    "NORMA",
+    "artículo 22"
+   ],
+   [
+    "NORMA",
+    "artículo 22.4"
+   ],
+   [
+    "NORMA",
+    "artículo 6.1 del Real Decreto 1004/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 10"
+   ],
+   [
+    "NORMA",
+    "STS, Sala Tercera, de 19 de diciembre de 2014, rec. 4103/2013"
+   ],
+   [
+    "NORMA",
+    "Orden JUS/125/2019, de 5 de febrero"
+   ],
+   [
+    "NORMA",
+    "arts. 123 y 124 de la Ley 39/2015, de 1 de octubre"
+   ],
+   [
+    "NORMA",
+    "arts. 11.1.a) y 46 de la Ley 29/1998, de 13 de julio"
+   ],
+   [
+    "OBJETO",
+    "certificado de antecedentes penales de su país de origen"
+   ],
+   [
+    "OBJETO",
+    "ausencia de antecedentes penales"
+   ],
+   [
+    "OBJETO",
+    "la dispensa de las citadas pruebas por razón de enfermedad"
+   ],
+   [
+    "OBJETO",
+    "fue detenida el 11 de marzo de 2019"
+   ],
+   [
+    "OBJETO",
+    "como presunta autora de un delito leve de hurto en un establecimiento comercial"
+   ],
+   [
+    "OBJETO",
+    "una detención por delito leve de hurto en 2019"
+   ],
+   [
+    "OBJETO",
+    "una enfermedad crónica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un certificado médico de 1 de diciembre de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«hemoglobinopatía crónica»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos ingresos hospitalarios en las fechas de examen",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "resolución de reconocimiento de grado de discapacidad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin que de ella se derive una dificultad de aprendizaje o de lectoescritura",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la coincidencia de sus ingresos hospitalarios con dos convocatorias concretas de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El grado de discapacidad reconocido obedece a limitaciones físicas y no a una dificultad de aprendizaje",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-recurso-reposicion.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "DIRECCIÓN GENERAL DE SEGURIDAD JURÍDICA Y FE PÚBLICA"
+   ],
+   [
+    "ORGANISMO",
+    "Subdirección General de Nacionalidad y Estado Civil"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO DE LA PRESIDENCIA, JUSTICIA Y RELACIONES CON LAS CORTES"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Central de Penados"
+   ],
+   [
+    "ORGANISMO",
+    "Policía Local de Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Urgencias del Hospital Universitario Torrecárdenas"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hemoglobinopatías del Hospital Universitario Torrecárdenas"
+   ],
+   [
+    "ORGANISMO",
+    "Hôpital Principal de Dakar"
+   ],
+   [
+    "ORGANISMO",
+    "Ayuntamiento de Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Teranga Almería"
+   ],
+   [
+    "ORGANISMO",
+    "Instituto Cervantes"
+   ],
+   [
+    "ORGANO",
+    "Juzgado de Instrucción n.º 4 de Almería"
+   ],
+   [
+    "AUTOS",
+    "R-418877/2022"
+   ],
+   [
+    "AUTOS",
+    "Juicio sobre delitos leves n.º 312/2019"
+   ],
+   [
+    "PERSONA",
+    "PABLO NAVARRO SEGURA"
+   ],
+   [
+    "PERSONA",
+    "Pablo Navarro Segura"
+   ],
+   [
+    "PERSONA",
+    "AMINATA DIOP NDIAYE"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Martín Úbeda"
+   ],
+   [
+    "PERSONA",
+    "Ibrahima Sarr Faye"
+   ],
+   [
+    "CORREO",
+    "pnavarro@navarrosegura-extranjeria.com"
+   ],
+   [
+    "NIE",
+    "X8473625-P"
+   ],
+   [
+    "DIRECCION",
+    "C/ Gregorio Marañón, 27, 2.º izda., 04005 Almería"
+   ],
+   [
+    "NORMA",
+    "artículos 123 y 124 de la Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas"
+   ],
+   [
+    "NORMA",
+    "art. 22.1 y 22.3 CC"
+   ],
+   [
+    "NORMA",
+    "STS, Sala Tercera, de 19 de diciembre de 2014"
+   ],
+   [
+    "NORMA",
+    "SAN, Sala de lo Contencioso-Administrativo, Sección 3.ª, de 12 de marzo de 2021, rec. 1450/2019"
+   ],
+   [
+    "NORMA",
+    "STS de 3 de febrero de 2022, rec. 6870/2020"
+   ],
+   [
+    "NORMA",
+    "artículo 10 del Real Decreto 1004/2015"
+   ],
+   [
+    "NORMA",
+    "arts. 9 RGPD y 9 LOPDGDD"
+   ],
+   [
+    "OBJETO",
+    "ausencia de antecedentes penales"
+   ],
+   [
+    "OBJETO",
+    "«Condamnations: néant»"
+   ],
+   [
+    "OBJETO",
+    "certificado negativo"
+   ],
+   [
+    "OBJETO",
+    "una detención archivada no es un antecedente"
+   ],
+   [
+    "OBJETO",
+    "una detención practicada el 11 de marzo de 2019"
+   ],
+   [
+    "OBJETO",
+    "un presunto delito leve de hurto de un paquete de pañales por valor de 13,95 euros en un supermercado"
+   ],
+   [
+    "OBJETO",
+    "SOBRESEÍDO Y ARCHIVADO por auto de 2 de mayo de 2019"
+   ],
+   [
+    "OBJETO",
+    "al haber abonado la interesada el importe en el mismo día"
+   ],
+   [
+    "OBJETO",
+    "La detención"
+   ],
+   [
+    "OBJETO",
+    "anemia falciforme"
+   ],
+   [
+    "OBJETO",
+    "la dispensa por enfermedad"
+   ],
+   [
+    "OBJETO",
+    "una enfermedad crónica y grave"
+   ],
+   [
+    "OBJETO",
+    "por razón de discapacidad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una crisis de dolor de su enfermedad, con mareo e hipotensión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fue atendida esa misma tarde",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de urgencias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«dolor óseo generalizado, Hb 7,1 g/dL, TA 90/55, se pauta metamizol IV y fluidoterapia»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un grado de discapacidad del 45 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«drepanocitosis homocigota con crisis vasooclusivas de repetición, necrosis avascular de cadera izquierda y limitación de la deambulación»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«cursa con crisis imprevisibles, fatiga intensa y dolor»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde 2023 está en programa transfusional cada ocho semanas, en tratamiento con hidroxiurea y deferasirox",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha tenido tres ingresos en dieciocho meses, uno de ellos en la UCI por síndrome torácico agudo con ventilación no invasiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La imprevisibilidad de las crisis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los dos ingresos de 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«crises douloureuses récurrentes depuis l'âge de 2 ans»",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "los antecedentes del padre del menor"
+   ],
+   [
+    "DATO_PENAL",
+    "condenado por un delito de maltrato habitual en el ámbito familiar y con orden de alejamiento respecto de ambos, que no ha sido cumplida en su integridad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estudio de hemoglobinopatías",
+    "genetico"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

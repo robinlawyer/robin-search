@@ -1,0 +1,62 @@
+Servei de Salut de les Illes Balears — IB-SALUT
+HOSPITAL UNIVERSITARI SON ESPASES
+Carretera de Valldemossa, 79 — 07120 Palma
+SERVEI D'ONCOLOGIA MÈDICA — Unitat de Tumors Ginecològics
+
+INFORME CLÍNIC
+
+Pacient: BENNÀSSER COLL, MARGALIDA
+Data de naixement: 09/05/1984      Edat: 41 anys
+NHC: 2093381      TIS (targeta sanitària): BNCL840509002      CIP autonòmic: 1700457321
+Data de l'informe: 14/10/2025
+Metgessa responsable: Dra. Neus Ferrà Garau
+
+MOTIU DE L'INFORME
+A petició de la pacient, per a tràmits administratius i judicials (procediment concursal i sol·licitud d'incapacitat permanent).
+
+ANTECEDENTS PERSONALS
+— Sense al·lèrgies medicamentoses conegudes.
+— No fumadora. Consum d'alcohol ocasional.
+— Hipotiroïdisme subclínic en tractament amb levotiroxina (Eutirox 50 mcg).
+— Antecedents gineco-obstètrics: G1 P0 A1 (avortament espontani de 9 setmanes, gener 2023, gestació aconseguida mitjançant FIV). Dos cicles d'estimulació ovàrica per a FIV (2022 i 2023) i una transferència d'embrió criopreservat, en centre privat.
+— Antecedents psiquiàtrics: episodi depressiu major diagnosticat el maig de 2024, en seguiment per la USM de Son Pisà (Dr. Pere Sastre Cerdà). Tractament: sertralina 100 mg/dia i lorazepam 1 mg a la nit si cal. Una visita a Urgències el setembre de 2024 per ideació autolítica sense pla estructurat, sense ingrés.
+
+ANTECEDENTS FAMILIARS
+Mare amb malaltia d'Alzheimer. Tia materna morta als 52 anys per càncer de mama. Àvia materna, càncer d'ovari. Es va oferir assessorament genètic a la germana de la pacient (Aina), que és portadora de la mateixa variant i s'ha fet una mastectomia bilateral profilàctica.
+
+HISTÒRIA ONCOLÒGICA
+— Gener 2024: distensió abdominal, sensació de plenitud i pèrdua de 6 kg en 3 mesos. La metgessa de capçalera li demana una ecografia: massa annexial dreta de 9 cm i ascites.
+— CA-125: 1.840 U/ml (normal < 35). HE4: 612 pmol/l. Índex ROMA: 96 % (alt risc).
+— TC toracoabdominopèlvica (07/02/2024): massa annexial bilateral, carcinomatosi peritoneal amb implants a l'epipló («omental cake»), ascites moderada, adenopaties paraaòrtiques de 14 mm. Sense afectació hepàtica parenquimatosa ni vessament pleural.
+— Laparoscòpia exploradora amb biòpsia (15/02/2024): carcinoma seros d'alt grau d'ovari. Immunohistoquímica: WT1+, PAX8+, p53 amb patró aberrant (mutat), Ki-67 80 %. Índex de càncer peritoneal (PCI) 14.
+— Estudi genètic germinal (panell de gens de susceptibilitat a càncer de mama i ovari hereditari): variant patogènica en BRCA1 c.5266dupC (p.Gln1756Profs*74). Estatus HRD positiu.
+— Estadiatge: FIGO IIIC.
+
+TRACTAMENT REALITZAT
+1. Quimioteràpia neoadjuvant: 3 cicles de carboplatí AUC 5 + paclitaxel 175 mg/m² cada 21 dies (de 26/02/2024 a 09/04/2024). Resposta radiològica parcial; CA-125 baixa a 96 U/ml.
+2. Cirurgia de citoreducció d'interval (30/04/2024; Dr. Joan Llull Bauzà, Ginecologia Oncològica): histerectomia total amb doble annexectomia, omentectomia infracòlica, limfadenectomia pèlvica i paraaòrtica, apendicectomia i peritonectomia parcial. Resultat: citoreducció completa (R0). Postoperatori complicat amb ili paralític i infecció de ferida quirúrgica, alta al 12è dia.
+3. Quimioteràpia adjuvant: 3 cicles més de carboplatí + paclitaxel (de 03/06/2024 a 22/07/2024), amb reducció de dosi del 20 % al cicle 5 per neutropènia de grau 3 i un ingrés per neutropènia febril (22-27/06/2024).
+4. Manteniment: olaparib (Lynparza) 300 mg cada 12 h des de 12/08/2024. Previst fins a completar 2 anys.
+
+TOXICITATS I SEQÜELES
+— Neuropatia perifèrica sensitiva de grau 2 a mans i peus (dificultat per a la motricitat fina: «no puc agafar les tisores», refereix la pacient, que era perruquera).
+— Astènia de grau 2 persistent; anèmia de grau 1 relacionada amb olaparib (Hb 10,1 g/dl), que va precisar 2 transfusions el gener de 2025.
+— Menopausa quirúrgica precoç amb simptomatologia vasomotora intensa; teràpia hormonal contraindicada.
+— Alopècia completa durant la QT, recuperada parcialment; ús de perruca oncològica.
+— Limfedema lleu a extremitat inferior esquerra.
+
+SITUACIÓ ACTUAL (octubre 2025)
+ECOG 1. Sense evidència de malaltia a la TC de setembre de 2025. CA-125: 11 U/ml. Continua amb olaparib, amb bona tolerància digestiva després de l'ajust a 250 mg cada 12 h. Molt afectada anímicament: plor freqüent, insomni, refereix «no tenc ganes de res», preocupació per la situació econòmica i pel deute. Se li recomana mantenir el seguiment a la USM i la teràpia amb la psicooncòloga de l'Associació Espanyola Contra el Càncer.
+
+JUDICI CLÍNIC
+1. Carcinoma seros d'alt grau d'ovari, estadi FIGO IIIC, BRCA1 mutat, en resposta completa després de cirurgia R0 i quimioteràpia; en tractament de manteniment amb inhibidor de PARP.
+2. Neuropatia perifèrica postquimioteràpia grau 2.
+3. Menopausa iatrogènica.
+4. Trastorn depressiu major, episodi únic, moderat-greu.
+5. Hipotiroïdisme subclínic.
+
+PRONÒSTIC I CAPACITAT FUNCIONAL
+Malaltia amb alt risc de recidiva (aproximadament el 60-70 % en els 3 primers anys en aquest estadi, menor en pacients BRCA mutades amb manteniment amb inhibidor de PARP). Requereix controls cada 3 mesos amb analítica, marcadors i TC cada 6 mesos. Les seqüeles neurològiques i l'astènia la incapaciten per a la seva professió habitual de perruquera, que exigeix bipedestació prolongada i precisió manual.
+
+Palma, 14 d'octubre de 2025
+Dra. Neus Ferrà Garau — FEA Oncologia Mèdica — Col. 07/09412

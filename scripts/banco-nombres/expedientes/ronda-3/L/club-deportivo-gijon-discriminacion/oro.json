@@ -1,0 +1,1450 @@
+{
+ "01-correos-club.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Florentino Álvarez Lantero"
+   ],
+   [
+    "PERSONA",
+    "Covadonga Cueto"
+   ],
+   [
+    "PERSONA",
+    "Iván Menéndez Rato"
+   ],
+   [
+    "PERSONA",
+    "Cueto"
+   ],
+   [
+    "PERSONA",
+    "Leonor"
+   ],
+   [
+    "PERSONA",
+    "Leo"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "PERSONA",
+    "Borja"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Marcos"
+   ],
+   [
+    "PERSONA",
+    "Cova"
+   ],
+   [
+    "PERSONA",
+    "Iván"
+   ],
+   [
+    "PERSONA",
+    "Iván Menéndez"
+   ],
+   [
+    "PERSONA",
+    "Rionda"
+   ],
+   [
+    "CORREO",
+    "presidencia@cdnatahoyo.es"
+   ],
+   [
+    "CORREO",
+    "covacueto@gmail.com"
+   ],
+   [
+    "CORREO",
+    "coordinacion@cdnatahoyo.es"
+   ],
+   [
+    "TELEFONO",
+    "985 32 14 70"
+   ],
+   [
+    "TELEFONO",
+    "685 447 219"
+   ],
+   [
+    "ORGANISMO",
+    "Federación de Fútbol del Principado de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "Club Deportivo Natahoyo"
+   ],
+   [
+    "ORGANISMO",
+    "CD Natahoyo"
+   ],
+   [
+    "ORGANISMO",
+    "Junta Directiva"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "figura como niña y así tiene que competir",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se cambiará en el vestuario de las chicas o en el cuarto del material",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "LEO ES UN NIÑO. Lleva viviendo como niño desde los 8 años",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde junio tiene el nombre cambiado",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No se va a cambiar en el vestuario de las chicas",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "al otro vestuario",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se cambie con los chicos",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ningún entrenador está dispuesto a hacerse cargo de la bomba de insulina ni de pincharle nada si le da una bajada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "niño con epilepsia del infantil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no ha vuelto a dormir bien y la psicóloga del centro de salud le ha tenido que ver dos veces",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ha empezado a mojar la cama otra vez con 11 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lleva la MiniMed 780G con sensor, que se ajusta sola casi siempre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "darle un zumo si baja de 70",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "solo si pierde el conocimiento (que no le ha pasado nunca), ponerle el Baqsimi por la nariz",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La endocrino de Cabueñes os ofreció una formación gratis de una hora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "responsabilizarse de la diabetes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el chaval del TDAH, que no para quieto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el portero, que es asmático y lleva el Ventolin en la mochila",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "usted está en Izquierda Unida",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se utilice a los niños para hacer campaña política",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hay familias muy religiosas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "es diácono en San José",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-informe-endocrino-alba.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Alba Suárez Cueto"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "PERSONA",
+    "Begoña Riera Llaneza"
+   ],
+   [
+    "NUSS",
+    "2287416"
+   ],
+   [
+    "NUSS",
+    "ASTU160314SUAR0004"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICIO DE SALUD DEL PRINCIPADO DE ASTURIAS (SESPA)"
+   ],
+   [
+    "ORGANISMO",
+    "Área Sanitaria V"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Endocrinología y Diabetes Pediátrica"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación de Diabéticos de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "CD Natahoyo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con su enfermedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetes mellitus tipo 1 diagnosticada el 02/02/2021 (4 años y 11 meses)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "debut con cetoacidosis diabética moderada (pH 7,18, HCO3 9 mmol/L, glucemia 486 mg/dL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso de 5 días en UCI pediátrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anticuerpos anti-GAD 65 positivos (> 250 UI/mL), anti-IA2 positivos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Celiaquía diagnosticada en cribado en 2022 (anti-transglutaminasa IgA > 128 U/mL, biopsia duodenal Marsh 3b)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dieta sin gluten estricta",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiroiditis autoinmune con función normal (anti-TPO positivos, TSH 3,1 µUI/mL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "abuelo paterno con DM tipo 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tía materna con hipotiroidismo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hermano de 11 años en seguimiento en esta misma Unidad por otro motivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sistema de asa cerrada híbrida avanzada (AHCL)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "bomba de insulina Medtronic MiniMed 780G con sensor Guardian 4, en modo SmartGuard (objetivo 100 mg/dL), con insulina aspart (Fiasp®) en el reservorio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dosis total diaria media: 21,4 UI (0,68 UI/kg/día); basal automática 44 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ratio insulina/HC: 1 UI/12 g en desayuno, 1 UI/15 g resto de comidas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Factor de sensibilidad 110 mg/dL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucagón intranasal (Baqsimi® 3 mg) para hipoglucemia grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Glucosa rápida (zumo 200 ml, pastillas de glucosa Glucosport® 4 g) para hipoglucemias leves",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HbA1c (laboratorio, 18/11/2025) | 6,9 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GMI | 6,8 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiempo en rango 70-180 mg/dL (TIR) | 78 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiempo por debajo de 70 mg/dL (TBR) | 3 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiempo por debajo de 54 mg/dL | 0,4 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiempo por encima de 180 mg/dL (TAR) | 19 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Coeficiente de variación | 33,1 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipoglucemias graves en el último año | 0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Uso del sensor | 96 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 31,2 kg (p55), talla 136 cm (p60). IMC 16,9. Tanner I",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lugares de inserción sin lipohipertrofias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Diabetes mellitus tipo 1 con buen control metabólico, en tratamiento con sistema AHCL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Enfermedad celíaca en dieta sin gluten",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tiroiditis autoinmune eutiroidea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "administrar Baqsimi 3 mg en una fosa nasal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Recordar que sigue dieta sin gluten",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una niña con diabetes tipo 1 bien controlada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tipaje HLA DR3/DR4",
+    "genetico"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-endocrino-leo.pdf.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Leo Suárez Cueto"
+   ],
+   [
+    "PERSONA",
+    "Leonor"
+   ],
+   [
+    "PERSONA",
+    "Leo"
+   ],
+   [
+    "PERSONA",
+    "Begoña Riera Llaneza"
+   ],
+   [
+    "NUSS",
+    "2287415"
+   ],
+   [
+    "ORGANISMO",
+    "SERVICIO DE SALUD DEL PRINCIPADO DE ASTURIAS (SESPA)"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Endocrinología Pediátrica"
+   ],
+   [
+    "ORGANISMO",
+    "Consulta de Identidad de Género en la Infancia y Adolescencia"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Tratamiento de Identidad de Género del Principado de Asturias — HUCA"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud Mental Infanto-Juvenil de Gijón"
+   ],
+   [
+    "ORGANISMO",
+    "CSMIJ"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nombre registral anterior",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Menor asignado como mujer al nacer, que desde los 6-7 años manifiesta de forma persistente, consistente e insistente una identidad de género masculina",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Transición social completa desde los 8 años (nombre, pronombres, vestimenta, entorno escolar y familiar)",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rectificación del nombre en el Registro Civil en junio de 2025",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le obligó a cambiarse en el vestuario femenino y se le nombró en público con su nombre anterior",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Incongruencia de género en la infancia (CIE-11 HA61), en tratamiento con análogos de GnRH",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "debe ser tratado como tal en todos los ámbitos de su vida",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nombre, pronombres masculinos, equipo y vestuario masculino",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "revelación pública de su condición",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Seguimiento psicológico de apoyo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin psicopatología asociada (no ansiedad, no depresión, no autolesiones previas a 2025)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "asma infantil leve en la primera infancia, sin crisis desde los 5 años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Apendicectomía en 2022",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alergia a amoxicilina (exantema)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "inicio puberal (Tanner II mamario, telarquia bilateral), con LH basal 1,8 UI/L y estradiol 28 pg/mL",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tratamiento frenador de la pubertad con análogo de GnRH (triptorelina, Decapeptyl® 11,25 mg i.m. trimestral)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tolerancia buena",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Densitometría basal: Z-score L1-L4 -0,3",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Edad ósea (Greulich-Pyle): 11 años y 6 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insomnio de conciliación, pesadillas, enuresis nocturna secundaria (3-4 noches por semana) y rechazo a acudir a los entrenamientos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En la escala SCARED (versión niño) obtiene 31 puntos (ansiedad clínicamente significativa; punto de corte 25)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se deriva de forma preferente a su psicóloga clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Peso 38,5 kg, talla 146 cm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Tanner II (regresión parcial desde inicio de bloqueo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 104/62",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Reacción de estrés con sintomatología ansiosa y enuresis secundaria, de probable origen en experiencias de rechazo en el entorno deportivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El tratamiento hormonal que recibe no le confiere ventaja física alguna; al contrario, frena el desarrollo puberal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "constituye un factor de riesgo para su salud mental",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "analítica con LH, FSH, estradiol, vitamina D; nueva inyección de triptorelina el 15/12/2025",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-mensajes-instagram.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "covacueto_xixon"
+   ],
+   [
+    "PERSONA",
+    "marisa.rionda.g"
+   ],
+   [
+    "PERSONA",
+    "xixonfutbolbase_"
+   ],
+   [
+    "PERSONA",
+    "anonimo_gijon_88"
+   ],
+   [
+    "PERSONA",
+    "nerea.villa.entrena"
+   ],
+   [
+    "PERSONA",
+    "Covadonga"
+   ],
+   [
+    "PERSONA",
+    "Marisa"
+   ],
+   [
+    "PERSONA",
+    "Pelayo"
+   ],
+   [
+    "PERSONA",
+    "Xuan"
+   ],
+   [
+    "PERSONA",
+    "Borja Fano"
+   ],
+   [
+    "PERSONA",
+    "Cova"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "PERSONA",
+    "Ainhoa Llaneza"
+   ],
+   [
+    "ORGANISMO",
+    "cdnatahoyo_oficial"
+   ],
+   [
+    "ORGANISMO",
+    "Policía"
+   ],
+   [
+    "TELEFONO",
+    "622 08 17 54"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "etiquetáis a mi hijo con su nombre muerto",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tu hija o hijo o lo que sea",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ver eso en el vestuario",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la niña es una niña",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el informe de la endocrino",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la diabetes de mi hija es contagiosa o que se va a morir en un torneo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "llevan dos semanas sin dejar dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo de la otra q la tengas en casa si esta enferma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tu sabras lo q haces con sus hormonas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la formación de la bomba",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi hermano también es diabético desde pequeño",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "líos con la insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "somos católicos",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi marido es diácono",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Respeto mucho vuestra fe, yo también hice la comunión y mi madre va a misa todos los días",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "todo el mundo sabe que estás en IU",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estoy en IU desde los 19 años",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo voto a Vox",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tu chiringuito comunista",
+    "politica"
+   ],
+   [
+    "DATO_PENAL",
+    "tiene antecedentes, lo condenaron por darle una paliza a uno en Fomento en 2017"
+   ],
+   [
+    "DATO_PENAL",
+    "ya te detuvieron una vez en la manifa de Arcelor del 2019"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-carta-abierta-asturianu.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Covadonga Cueto Fernández"
+   ],
+   [
+    "PERSONA",
+    "Leo"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "PERSONA",
+    "Nerea"
+   ],
+   [
+    "ORGANISMO",
+    "CLUB DEPORTIVO NATAHOYO"
+   ],
+   [
+    "ORGANISMO",
+    "Defensor del Pueblu"
+   ],
+   [
+    "ORGANISMO",
+    "Unidá de Diabetes de Cabueñes"
+   ],
+   [
+    "NORMA",
+    "Llei 4/2023"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ye un neñu",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fai tres años que vive como lo que ye",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dende xunu tien el so nome nel Rexistru Civil",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "obligalu a cambiase nel vestuariu de les neñes",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pol nome que yá nun ye'l so",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "s'apunte y se cambie colos neños, col so nome",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "nun duerme, tien pesadielles, volvió a mexase na cama",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lu trata col bloquéu de la pubertá",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el rechazu ye un factor de riesgu pa la so salú mental",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tien diabetes tipo 1 dende los cinco años",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lleva una bomba d'insulina y un sensor que miden y ponen la insulina solos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un 78 % del tiempu en rangu",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "naide quier facese cargu de la insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un neñu que llora pela nueche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toi n'Izquierda Xunida",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sí, toi n'Izquierda Xunida dende los diecinueve años y nun me avergoncio",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mio ma va a misa toles mañanes a San Xosé",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Respeto a les families católiques del club",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-queja-defensor-pueblo.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Covadonga Cueto Fernández"
+   ],
+   [
+    "PERSONA",
+    "Leo Suárez Cueto"
+   ],
+   [
+    "PERSONA",
+    "Alba Suárez Cueto"
+   ],
+   [
+    "PERSONA",
+    "Marcos Suárez Prendes"
+   ],
+   [
+    "PERSONA",
+    "Leo"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "DNI",
+    "10894523-L"
+   ],
+   [
+    "DNI",
+    "10901786-Z"
+   ],
+   [
+    "DIRECCION",
+    "calle Marqués de San Esteban, 31, 4.º D, 33206 Gijón"
+   ],
+   [
+    "TELEFONO",
+    "685 447 219"
+   ],
+   [
+    "CORREO",
+    "covacueto@gmail.com"
+   ],
+   [
+    "ORGANISMO",
+    "DEFENSOR DEL PUEBLO"
+   ],
+   [
+    "ORGANISMO",
+    "Defensor del Pueblo"
+   ],
+   [
+    "ORGANISMO",
+    "Federación de Fútbol del Principado de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Deporte del Principado de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "Consejería de Cultura, Política Llingüística y Deporte"
+   ],
+   [
+    "ORGANISMO",
+    "Patronato Deportivo Municipal de Gijón"
+   ],
+   [
+    "ORGANISMO",
+    "Club Deportivo Natahoyo"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Civil de Gijón"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Diabetes Pediátrica del Hospital de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Endocrinología Pediátrica del Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Deporte"
+   ],
+   [
+    "AUTOS",
+    "2025/DGD/18834"
+   ],
+   [
+    "NORMA",
+    "Artículo 14 de la Constitución Española"
+   ],
+   [
+    "NORMA",
+    "Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "Ley 4/2023, de 28 de febrero, para la igualdad real y efectiva de las personas trans y para la garantía de los derechos de las personas LGTBI"
+   ],
+   [
+    "NORMA",
+    "Ley 39/2022, de 30 de diciembre, del Deporte"
+   ],
+   [
+    "NORMA",
+    "Ley Orgánica 1/1996, de 15 de enero, de Protección Jurídica del Menor"
+   ],
+   [
+    "NORMA",
+    "Convención sobre los Derechos del Niño"
+   ],
+   [
+    "OBJETO",
+    "es un niño trans"
+   ],
+   [
+    "OBJETO",
+    "vive conforme a su identidad de género"
+   ],
+   [
+    "OBJETO",
+    "su nuevo nombre"
+   ],
+   [
+    "OBJETO",
+    "su nombre anterior"
+   ],
+   [
+    "OBJETO",
+    "le obliga a cambiarse en el vestuario femenino"
+   ],
+   [
+    "OBJETO",
+    "tiene diabetes tipo 1"
+   ],
+   [
+    "OBJETO",
+    "discriminación por identidad de género y por enfermedad"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un cuadro de ansiedad (SCARED 31 puntos), insomnio, pesadillas y enuresis secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "derivado de forma preferente a Salud Mental Infanto-Juvenil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Usa un sistema de asa cerrada (bomba de insulina MiniMed 780G y sensor de glucosa)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene un control excelente (HbA1c 6,9 %; 78 % del tiempo en rango)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por mi pertenencia a un partido",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi militancia es conocida y legítima",
+    "politica"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-tutela-derechos-fundamentales.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Diego Arbesú Tuñón"
+   ],
+   [
+    "PERSONA",
+    "MARCOS SUÁREZ PRENDES"
+   ],
+   [
+    "PERSONA",
+    "COVADONGA CUETO FERNÁNDEZ"
+   ],
+   [
+    "PERSONA",
+    "LEO SUÁREZ CUETO"
+   ],
+   [
+    "PERSONA",
+    "ALBA SUÁREZ CUETO"
+   ],
+   [
+    "PERSONA",
+    "Ainhoa Llaneza Miravalles"
+   ],
+   [
+    "PERSONA",
+    "Leo"
+   ],
+   [
+    "PERSONA",
+    "Alba"
+   ],
+   [
+    "PERSONA",
+    "Borja Fano Quirós"
+   ],
+   [
+    "PERSONA",
+    "Iván Menéndez Rato"
+   ],
+   [
+    "PERSONA",
+    "Florentino Álvarez Lantero"
+   ],
+   [
+    "PERSONA",
+    "Leonor"
+   ],
+   [
+    "PERSONA",
+    "Nerea Villa Solís"
+   ],
+   [
+    "PERSONA",
+    "Cueto"
+   ],
+   [
+    "PERSONA",
+    "Fano"
+   ],
+   [
+    "PERSONA",
+    "Leo Suárez Cueto"
+   ],
+   [
+    "PERSONA",
+    "Alba Suárez Cueto"
+   ],
+   [
+    "PERITO",
+    "Begoña Riera Llaneza"
+   ],
+   [
+    "DNI",
+    "10901786-Z"
+   ],
+   [
+    "DNI",
+    "10894523-L"
+   ],
+   [
+    "CIF",
+    "G33124578"
+   ],
+   [
+    "DIRECCION",
+    "calle Marqués de San Esteban, 31, 4.º D, 33206 Gijón"
+   ],
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE GIJÓN"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Gijón"
+   ],
+   [
+    "ORGANISMO",
+    "CLUB DEPORTIVO NATAHOYO"
+   ],
+   [
+    "ORGANISMO",
+    "Club Deportivo Natahoyo"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "ORGANISMO",
+    "Ministerio Fiscal"
+   ],
+   [
+    "ORGANISMO",
+    "Registro de Entidades Deportivas del Principado de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "Registro Civil de Gijón"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Endocrinología Pediátrica del Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario de Cabueñes"
+   ],
+   [
+    "ORGANISMO",
+    "Federación de Fútbol del Principado de Asturias"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección General de Deporte"
+   ],
+   [
+    "ORGANISMO",
+    "Defensor del Pueblo"
+   ],
+   [
+    "ORGANISMO",
+    "Junta Directiva"
+   ],
+   [
+    "AUTOS",
+    "25041873"
+   ],
+   [
+    "NORMA",
+    "art. 249.1.2.º LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 21 y 22 LOPJ"
+   ],
+   [
+    "NORMA",
+    "artículo 50 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 249.1.2.º LEC"
+   ],
+   [
+    "NORMA",
+    "art. 162 CC"
+   ],
+   [
+    "NORMA",
+    "artículo 29 de la Ley 15/2022"
+   ],
+   [
+    "NORMA",
+    "art. 1903 CC"
+   ],
+   [
+    "NORMA",
+    "Artículo 14 CE"
+   ],
+   [
+    "NORMA",
+    "Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "artículo 2.1"
+   ],
+   [
+    "NORMA",
+    "artículo 6"
+   ],
+   [
+    "NORMA",
+    "artículo 26"
+   ],
+   [
+    "NORMA",
+    "artículo 27"
+   ],
+   [
+    "NORMA",
+    "artículo 30"
+   ],
+   [
+    "NORMA",
+    "Ley 4/2023, de 28 de febrero, para la igualdad real y efectiva de las personas trans y para la garantía de los derechos de las personas LGTBI"
+   ],
+   [
+    "NORMA",
+    "Ley Orgánica 1/1996, de 15 de enero, de Protección Jurídica del Menor, artículo 2"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 721 LEC"
+   ],
+   [
+    "NORMA",
+    "art. 138.2 LEC"
+   ],
+   [
+    "OBJETO",
+    "por razón de identidad de género y por razón de enfermedad"
+   ],
+   [
+    "OBJETO",
+    "por su identidad de género"
+   ],
+   [
+    "OBJETO",
+    "es un niño trans"
+   ],
+   [
+    "OBJETO",
+    "Vive socialmente como niño desde los 8 años"
+   ],
+   [
+    "OBJETO",
+    "la rectificación de su nombre"
+   ],
+   [
+    "OBJETO",
+    "su nombre anterior"
+   ],
+   [
+    "OBJETO",
+    "en el otro vestuario"
+   ],
+   [
+    "OBJETO",
+    "por razón de enfermedad"
+   ],
+   [
+    "OBJETO",
+    "tiene diabetes tipo 1 desde los 4 años"
+   ],
+   [
+    "OBJETO",
+    "por razón de su identidad de género"
+   ],
+   [
+    "OBJETO",
+    "use el vestuario masculino"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un cuadro de ansiedad clínicamente significativa, con insomnio, pesadillas y enuresis nocturna secundaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ha sido derivado de forma preferente a Salud Mental Infanto-Juvenil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su tratamiento con análogos de GnRH",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Usa un sistema automatizado de bomba de insulina con sensor continuo de glucosa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene un control óptimo (HbA1c 6,9 %, 78 % de tiempo en rango, ninguna hipoglucemia grave en el último año)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "líos con la insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las secuelas acreditadas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la exposición pública de su condición",
+    "sexual"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "familias muy religiosas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en Izquierda Unida",
+    "politica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "campaña política",
+    "politica"
+   ],
+   [
+    "DATO_PENAL",
+    "el antecedente penal que en redes sociales se ha atribuido al entrenador"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

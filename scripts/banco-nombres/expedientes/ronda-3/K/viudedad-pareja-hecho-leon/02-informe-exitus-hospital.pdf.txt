@@ -1,0 +1,60 @@
+SACYL - GERENCIA REGIONAL DE SALUD DE CASTILLA Y LEÓN
+COMPLEJO ASISTENCIAL UNIVERSITARIO DE LEÓN (CAULE)
+Hospital de León - Altos de Nava s/n
+Servicio de Medicina Interna - Unidad de Enfermedades Infecciosas
+
+INFORME DE ALTA POR EXITUS
+
+Paciente: HÉCTOR ROBLES VALBUENA
+N.º historia clínica: 0412887
+CIPA / TSI: CYL 2400387219
+Fecha de nacimiento: 07/08/1974 (50 años)
+Fecha de ingreso: 29/01/2025 (vía Urgencias)
+Fecha de exitus: 14/02/2025, 05:40 h
+Cama: 7.ª planta, habitación 712-B
+Médico responsable: Dr. Álvaro Barrientos Cubría
+Persona de contacto que figura en la historia: Marcos Fidalgo Prieto (pareja), tel. 676 551 093
+
+MOTIVO DE INGRESO
+Paciente de 50 años que acude a Urgencias traído por su pareja por cuadro de 10 días de evolución de disnea progresiva, tos seca, fiebre de hasta 38,7 ºC y desorientación en las últimas 48 horas, junto con aumento del perímetro abdominal y melenas desde hace 2 días.
+
+ANTECEDENTES PERSONALES
+- No alergias medicamentosas conocidas.
+- Infección por VIH-1 diagnosticada en 2009 (transmisión sexual, HSH). Estadio C3 de los CDC (sida) desde 2016, cuando debutó con neumonía por Pneumocystis jirovecii. Seguimiento irregular en consultas de Enfermedades Infecciosas, con múltiples abandonos del tratamiento antirretroviral (TAR). Último TAR pautado: bictegravir/emtricitabina/tenofovir alafenamida (Biktarvy), con mala adherencia. Último control (noviembre de 2024): CD4 48 cél/µl (6 %), carga viral 184.000 copias/ml.
+- Hepatopatía crónica por VHC genotipo 1a, tratada con sofosbuvir/velpatasvir (Epclusa) en 2018 con respuesta viral sostenida, y consumo enólico importante hasta 2021 (aprox. 80 g/día). Cirrosis hepática Child-Pugh C (10 puntos), MELD 24, con hipertensión portal, varices esofágicas grado III con ligadura con bandas en 2023 y dos episodios previos de descompensación hidrópica.
+- Sarcoma de Kaposi cutáneo en extremidades inferiores (2016), en remisión.
+- Trastorno depresivo recurrente, en tratamiento con mirtazapina 30 mg. Seguimiento por Psiquiatría hasta 2022.
+- Exfumador desde 2020 (IPA 30). Exconsumidor de cocaína (hasta 2015).
+- Intervenciones: apendicectomía (1990). Colecistectomía laparoscópica (2014).
+- Situación basal: independiente para las ABVD hasta diciembre de 2024. Convive con su pareja, que es su cuidador principal.
+
+EXPLORACIÓN AL INGRESO
+TA 92/54 mmHg, FC 118 lpm, Tª 38,4 ºC, SatO2 84 % basal. Caquexia, ictericia mucocutánea, asterixis. Muguet oral. Crepitantes bibasales. Abdomen distendido con ascitis a tensión. Tacto rectal: melenas.
+
+PRUEBAS COMPLEMENTARIAS
+- Analítica: Hb 7,9 g/dl, plaquetas 41.000, INR 2,3, bilirrubina total 6,8 mg/dl, albúmina 2,1 g/dl, creatinina 2,4 mg/dl, PCR 186 mg/l, LDH 612 U/l.
+- Rx de tórax: infiltrado intersticial bilateral en «alas de mariposa».
+- TC torácico: patrón en vidrio deslustrado bilateral compatible con neumonía por Pneumocystis.
+- Lavado broncoalveolar: PCR positiva para Pneumocystis jirovecii.
+- Gastroscopia urgente: varices esofágicas grado III con estigmas de sangrado reciente; se realiza ligadura.
+- Paracentesis diagnóstica: PMN 520/mm3, compatible con peritonitis bacteriana espontánea.
+
+EVOLUCIÓN
+Se inicia tratamiento con cotrimoxazol a dosis altas y corticoides, terlipresina, ceftriaxona, albúmina y transfusión de 3 concentrados de hematíes. Ingresa en la UCI del 31/01 al 05/02 por insuficiencia respiratoria, con oxigenoterapia de alto flujo. Tras una mejoría inicial, el 10/02 presenta nuevo episodio de hemorragia digestiva alta, con fracaso renal agudo (síndrome hepatorrenal tipo 1) y encefalopatía hepática grado III-IV. Dada la situación de enfermedad avanzada e irreversible, y tras hablarlo con su pareja (que el paciente designó como interlocutor en 2023 en su documento de instrucciones previas, registrado en el Registro de Instrucciones Previas de Castilla y León), se acuerda adecuación del esfuerzo terapéutico y se inicia sedación paliativa el 13/02. Exitus el 14/02/2025 a las 05:40 h, acompañado por su pareja.
+
+Durante el ingreso, la madre y un hermano del paciente solicitan en varias ocasiones información clínica y que se restrinja la presencia de la pareja en la habitación, y reclaman que se avise al capellán del hospital para administrar la unción de enfermos. Se les informa de que el paciente, mientras estuvo consciente, manifestó su voluntad de que fuera su pareja el interlocutor, y de que el servicio de atención religiosa está disponible si el paciente lo hubiera pedido. Se avisa a la trabajadora social del hospital.
+
+JUICIO CLÍNICO
+1. Neumonía por Pneumocystis jirovecii en paciente con infección por VIH estadio C3 (sida) con inmunosupresión grave.
+2. Hemorragia digestiva alta por rotura de varices esofágicas.
+3. Cirrosis hepática Child-Pugh C de etiología mixta (VHC curado y alcohólica), descompensada: ascitis, peritonitis bacteriana espontánea, encefalopatía hepática, síndrome hepatorrenal.
+4. Exitus.
+
+CAUSA INMEDIATA DE LA MUERTE: Fracaso multiorgánico.
+CAUSA INTERMEDIA: Hemorragia digestiva alta por varices esofágicas. Neumonía por Pneumocystis jirovecii.
+CAUSA FUNDAMENTAL: Infección por VIH (sida). Cirrosis hepática.
+
+León, 14 de febrero de 2025.
+
+Fdo.: Dr. Álvaro Barrientos Cubría
+FEA Medicina Interna - Unidad de Enfermedades Infecciosas

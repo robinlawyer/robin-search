@@ -1,0 +1,1609 @@
+{
+ "01-documento-instrucions-previas.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "XUNTA DE GALICIA - C0NSELLERIA DE SANIDADE"
+   ],
+   [
+    "ORGANISMO",
+    "REXISTR0 GALEG0 DE INSTRUCI0NS PREVIAS"
+   ],
+   [
+    "AUTOS",
+    "RGIP-36-2019-004817"
+   ],
+   [
+    "NORMA",
+    "LEI 3/2001, DO 28 DE MAI0"
+   ],
+   [
+    "PERSONA",
+    "MANUEL FIGUER0A L0RENZ0"
+   ],
+   [
+    "DNI",
+    "36087412-H"
+   ],
+   [
+    "NUSS",
+    "GA0815366921"
+   ],
+   [
+    "DIRECCION",
+    "RUA DE PI I MARGALL 47, 3 D, 36202 VIG0 (P0NTEVEDRA)"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "S0N TESTEMUÑA CRISTIA DE XEH0VA",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "P0R C0NVICCI0NS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "REL1XI0SAS PR0FUNDAS BASEADAS NA BIBLIA (FEIT0S 15:28,29), N0N",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ACEPT0 EN NINGUNHA CIRCUNSTANCIA TRANSFUSI0NS DE SANGUE C0MPLETA,",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "GL0BUL0S VERMELL0S, GL0BUL0S BRANC0S, PLAQUETAS NIN PLASMA, AINDA",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "QUE 0S MEDIC0S C0NSIDEREN QUE S0N NECESARIAS PARA SALVARME A VIDA",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PADEZ0 HEM0FILIA A GRAVE (NIVEL DE FACT0R VIII INFERI0R AO",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "1 %) E QUE ACEPT0 0 TRATAMENT0 C0N FACT0R VIII REC0MBINANTE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(ADVATE / 0CT0C0G ALFA), ACID0 TRANEXAMIC0, ERITR0P0YETINA E",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FERR0 INTRAVEN0S0. ACEPT0 A RECUPERACI0N INTRA0PERAT0RIA DE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SANGUE (CELL SAVER) SE 0 CIRCUIT0 PERMANECE PECHAD0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0N ACEPT0 FRACCI0NS MEN0RES DERIVADAS D0 PLASMA AGAGAS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ALBUMINA (DECIDE0 EU), NIN CRI0PRECIPITAD0",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"SI ALBUMINA - MF 2023\"",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "CARMEN 0TER0 VAZQUEZ"
+   ],
+   [
+    "DNI",
+    "36091155-P"
+   ],
+   [
+    "TELEFONO",
+    "655 08 41 93"
+   ],
+   [
+    "PERSONA",
+    "R0MAN COUT0 BALSEIR0"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANCIA N0 SAL0N D0 REIN0 DE C0IA",
+    "religion"
+   ],
+   [
+    "TELEFONO",
+    "636 72 10 58"
+   ],
+   [
+    "PERSONA",
+    "BRAIS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0N C0MPARTE AS MIÑAS CRENZAS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SE ME ATOPO EN SITUACION IRREVERSIBLE N0N SE ME APLIQUEN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEDIDAS DE S0P0RTE VITAL QUE PR0L0NGUEN ARTIFICIALMENTE A VIDA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "D0AZ0 0S MEUS 0RGAN0S, AGAS A SANGUE",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "AN TONI0 PAZ GR0BAS"
+   ],
+   [
+    "DNI",
+    "36113320-L"
+   ],
+   [
+    "PERSONA",
+    "MARIA D0LORES RIAL FREIRE"
+   ],
+   [
+    "DNI",
+    "35998402-N"
+   ],
+   [
+    "PERSONA",
+    "S0FIA ABAL CARREIRA"
+   ],
+   [
+    "DNI",
+    "36222041-B"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIST0RIA CLINICA ELECTR0NICA IANUS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "03/04/2025 - PRE0PERATORI0",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-consentimiento-informado-artroplastia.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "HOSPITAL SANTA BAIA"
+   ],
+   [
+    "ORGANISMO",
+    "Clínica Santa Baia, S.L."
+   ],
+   [
+    "CIF",
+    "B36512874"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Cirugía Ortopédica y Traumatología"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ARTROPLASTIA TOTAL DE CADERA (PTC)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "FIGUEROA LORENZO, MANUEL"
+   ],
+   [
+    "NUSS",
+    "0094471"
+   ],
+   [
+    "PERSONA",
+    "Xoán Pereiro Castro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"Paciente hemofílico. Riesgo hemorrágico aumentado.\"",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Manuel Figueroa Lorenzo"
+   ],
+   [
+    "DNI",
+    "36087412-H"
+   ],
+   [
+    "PERSONA",
+    "X. Pereiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RECHAZO DE ADMINISTRACIÓN DE SANGRE Y HEMODERIVADOS",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "como testigo de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NO autorizo la transfusión de sangre total ni de sus componentes principales (hematíes, plaquetas, plasma, leucocitos) durante la intervención ni en el postoperatorio, aun en caso de riesgo vital",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "documento de instrucciones previas",
+    "salud"
+   ],
+   [
+    "AUTOS",
+    "RGIP-36-2019-004817"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SÍ acepto: factor VIII recombinante, ácido tranexámico (Amchafibrin), eritropoyetina (Eprex), hierro intravenoso (Ferinject), albúmina y recuperador de sangre intraoperatorio en circuito cerrado",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Carmen Otero Vázquez"
+   ],
+   [
+    "PERSONA",
+    "Noelia Cid Rial"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pte. TJ",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trae su tarjeta de directrices médicas y DIP",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Esposa insiste en que no se le ponga 'ni una gota'",
+    "religion"
+   ],
+   [
+    "ORGANISMO",
+    "Hematología del CHUVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pauta de factor",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Montes"
+   ],
+   [
+    "PERSONA",
+    "Lucía Vilas"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-historia-clinica-alta-voluntaria-reingreso.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "HOSPITAL SANTA BAIA"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HISTORIA CLÍNICA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Manuel Figueroa Lorenzo"
+   ],
+   [
+    "NUSS",
+    "0094471"
+   ],
+   [
+    "ORGANISMO",
+    "SERGAS"
+   ],
+   [
+    "NUSS",
+    "GA0815366921"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemofilia A grave (FVIII:C < 1 %), sin inhibidor (título Bethesda 0,0 UB en 2024). En profilaxis domiciliaria con Advate 2.000 UI 3 veces/semana",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hemofilia del CHUVI"
+   ],
+   [
+    "PERSONA",
+    "Iria Montes Abal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Artropatía hemofílica de rodilla izquierda (sinovectomía radioisotópica 1998) y de cadera derecha; coxartrosis grado IV de Kellgren-Lawrence",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hepatitis C crónica por transfusión de hemoderivados en 1984, tratada con sofosbuvir/velpatasvir (Epclusa) en 2017, RVS. Serología VIH negativa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA en tratamiento con enalapril 20 mg. DM tipo 2 con metformina 850 mg/12 h (HbA1c 7,4 %). Exfumador desde 2010. Bebedor ocasional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alergia a metamizol (Nolotil): urticaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Testigo de Jehová: rechaza transfusión de sangre y componentes principales. DIP registrado",
+    "religion"
+   ],
+   [
+    "ORGANISMO",
+    "Vitrasa"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "reconocida discapacidad del 45 % desde 2012",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Artroplastia total de cadera derecha no cementada (cotilo Pinnacle 54 mm, vástago Corail n.º 12, cabeza cerámica 36 mm). Abordaje posterolateral",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pereiro"
+   ],
+   [
+    "PERSONA",
+    "Seixas"
+   ],
+   [
+    "PERSONA",
+    "Cid"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Profilaxis hemostática: bolo de Advate 4.000 UI (≈ 50 UI/kg) en inducción. Ácido tranexámico 1 g iv. Cell saver: recuperados 380 ml. Sangrado estimado 900 ml. Hb preop 14,2 g/dl",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«No se dispone de nivel de FVIII postbolo",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "hematología del CHUVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Estable. Drenaje 250 ml. Advate 2.000 UI/12 h según pauta verbal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 10,1. Drenaje 420 ml. Dolor 7/10. Se pide nivel de FVIII",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 8,3. Muslo derecho tumefacto, a tensión. Se baja dosis de Advate a 2.000 UI/24 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pte. muy dolorido, refiere hormigueo y «pie dormido» derecho",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«parestesias en territorio del CPE, vigilar»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 6,9. Hematoma glúteo-muslo extenso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El paciente rechaza transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se inicia Eprex 40.000 UI sc y Ferinject 1.000 mg iv",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pie caído derecho (balance muscular de tibial anterior 1/5)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 6,1",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Brais Figueroa"
+   ],
+   [
+    "ORGANISMO",
+    "CHUVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«aquí le presionan para que se transfunda»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Firma ALTA VOLUNTARIA a las 13:15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DOCUMENTO DE ALTA VOLUNTARIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "solicita el alta voluntaria en contra del criterio médico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta anemia aguda posthemorrágica grave (Hb 6,1 g/dl), hematoma extenso en muslo derecho y déficit neurológico (pie caído) en estudio",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "M. Figueroa"
+   ],
+   [
+    "PERSONA",
+    "Carmen Otero Vázquez"
+   ],
+   [
+    "PERSONA",
+    "Ignacio Barreiro Sende"
+   ],
+   [
+    "ORGANISMO",
+    "Cunqueiro"
+   ],
+   [
+    "ORGANISMO",
+    "COMPLEXO HOSPITALARIO UNIVERSITARIO DE VIGO (CHUVI) — HOSPITAL ÁLVARO CUNQUEIRO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME DE ALTA HOSPITALARIA",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Hematología y Hemoterapia / Traumatología"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso: 08/04/2025 (vía Urgencias, 15:02) · Alta: 21/05/2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anemia grave y hematoma de muslo derecho tras PTC realizada en centro privado, en paciente con hemofilia A grave",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "testigo de Jehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TA 98/56, FC 118 lpm. Palidez intensa. Muslo derecho con hematoma a tensión, perímetro +9 cm respecto al contralateral. Pie caído derecho. Herida con exudado serohemático",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 5,8 g/dl; Hto 17 %; plaquetas 312.000; FVIII:C 4 %; TTPa 68 s; PCR 112 mg/l; lactato 2,9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se instaura perfusión continua de factor VIII (Advate, objetivo FVIII > 80 %), ácido tranexámico, EPO a dosis altas y hierro iv, con protocolo de ahorro de sangre. Hb mínima 4,9 g/dl el 10/04; ingreso en REA 4 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "fiebre 38,9 ºC; punción del hematoma: Staphylococcus aureus sensible a meticilina. Diagnóstico de infección periprotésica aguda. Desbridamiento, retirada de implantes y espaciador de cemento con gentamicina y vancomicina el 22/04 (recambio en dos tiempos). Cloxacilina iv 6 semanas y rifampicina oral. EMG 12/05: axonotmesis grave del nervio ciático poplíteo externo derecho",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "1) Anemia aguda posthemorrágica grave. 2) Hematoma de muslo derecho infectado. 3) Infección periprotésica aguda por SAMS, cadera derecha (espaciador). 4) Lesión del nervio ciático poplíteo externo derecho con pie caído. 5) Hemofilia A grave. 6) DM2 descompensada durante el ingreso (insulinización transitoria)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Advate profilaxis 3.000 UI 3 veces/semana; rifampicina 600 mg/24 h hasta completar 3 meses; levofloxacino 500 mg/24 h; ortesis antiequino (DAFO); enoxaparina NO (hemofilia); metformina; enalapril; tramadol/paracetamol (Zaldiar) si dolor; lorazepam 1 mg si ansiedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "segundo tiempo de recambio cuando se negativicen reactantes (previsto septiembre 2025)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Fernando Lojo Otero"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-correos-familia-clinica.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Brais Figueroa Otero"
+   ],
+   [
+    "CORREO",
+    "braisfigueroa86@hotmail.com"
+   ],
+   [
+    "CORREO",
+    "atencionpaciente@hospitalsantabaia.es"
+   ],
+   [
+    "PERSONA",
+    "Uxía Figueroa"
+   ],
+   [
+    "CORREO",
+    "uxiafigueroa.o@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Manuel Figueroa Lorenzo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ALTA VOLUNTARIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "operado de la cadera derecha el viernes 4",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pereiro"
+   ],
+   [
+    "ORGANISMO",
+    "Cunqueiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "esta ahora con la hemoglobina a 5,8 y la pierna como un tronco",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi padre es hemofilico grave desde que nacio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin poder medirle el factor VIII en todo el fin de semana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le bajaron la dosis de Advate",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la historia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi padre decia que tenia el pie dormido y que no podia levantar los dedos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ahora tiene el pie caido",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi padre es testigo de Jehova y no acepta sangre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "firmaron el anexo y tenian su documento de instrucciones previas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo no soy testigo (de hecho me expulsaron de la congregacion hace años",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "porque soy gay y vivo con mi pareja",
+    "sexual"
+   ],
+   [
+    "PERSONA",
+    "Iván"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no comparto su decision",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con 6 de hemoglobina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"los de su secta\"",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi madre lleva desde el miercoles sin dormir y con ataques de ansiedad, ya esta con el Diazepam otra vez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mi padre firmo el alta voluntaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la pierna asi",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "copia integra de la historia clinica, de la hoja de anestesia y de los registros de enfermeria",
+    "salud"
+   ],
+   [
+    "DNI",
+    "36184420-W"
+   ],
+   [
+    "TELEFONO",
+    "699 31 58 02"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Médica - Hospital Santa Baia"
+   ],
+   [
+    "CORREO",
+    "direccionmedica@hospitalsantabaia.es"
+   ],
+   [
+    "PERSONA",
+    "Sr. Figueroa"
+   ],
+   [
+    "AUTOS",
+    "SAP-2025-0412"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Traumatología"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Atlántica de Seguros"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "abandonó el centro por decisión propia y en contra del criterio médico, tras rechazar reiteradamente la transfusión que el equipo consideraba indicada",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La pauta de factor VIII",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "servicio de Hematología de referencia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "copia de la historia clínica",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "Ley 41/2002"
+   ],
+   [
+    "PERSONA",
+    "Gonzalo Méndez Taboada"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "PERSONA",
+    "Iago Domínguez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy de 14 semanas, con los pinchazos de heparina de la FIV y la ginecóloga me ha mandado reposo relativo por el sangrado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Papá ayer volvió a preguntar si iba a perder la pierna",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mamá dice que Jehová proveerá",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-chat-grupo-familia.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Carmen Mamá"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Papá pasou a noite na REA. Din que a hemoglobina baixou a 4,9 pero que respira ben",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Os irmáns da congregación están orando por el",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Veu o ancián",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Román"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a traerlle o comité de enlace",
+    "religion"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que ninguén lle diga nada de transfusións agora, que el xa decidiu",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "despois da eco",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Brais"
+   ],
+   [
+    "PERSONA",
+    "Iago Domínguez"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "toda la historia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Santa Baia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me da igual lo que diga el consejo de ancianos",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ten febre 38,9. Pincharon o hematoma e sae pus. Din que pode ser infección da prótese",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Montes"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "van quitar todo e poñer un espaciador con antibiótico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ya ha salido de quirófano",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin sangre, como quería",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 7,2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grazas a Xehová",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Papá está fatal de ánimo. Non quere saír da casa con a bota esa do pé. Di que é un inútil",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "A médica de cabeceira mandoulle sertralina e vai ir ao psiquiatra",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Nicolás Peña"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lo del pie es lo que más le jode. El neurólogo dice que el nervio no se va a recuperar del todo, que como mucho un 3/5 dentro de un año",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Y la Lyrica le deja atontado",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Manuel Papá"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mañá opéranme da segunda parte",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Iván"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "coida a nena da barriga",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Xa sabemos que é nena!",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Antía"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aunque no me dejen entrar al Salón",
+    "religion"
+   ],
+   [
+    "ORGANISMO",
+    "EVO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "65 % de discapacidade e mobilidade reducida",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dalle a incapacidade permanente absoluta",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Iago"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-informe-pericial-medico.pdf.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Alberto Rial Santamaría"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de Médicos de Pontevedra"
+   ],
+   [
+    "DIRECCION",
+    "Rúa Urzaiz, 74, 2.º izda., 36204 Vigo"
+   ],
+   [
+    "TELEFONO",
+    "986 43 21 90"
+   ],
+   [
+    "PERSONA",
+    "Iago Domínguez Paz"
+   ],
+   [
+    "PERSONA",
+    "Manuel Figueroa Lorenzo"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Santa Baia"
+   ],
+   [
+    "OBJETO",
+    "mala praxis"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hoja de anestesia, evolutivo de enfermería y documento de alta voluntaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "consentimiento informado y anexo de rechazo de hemoderivados",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "documento de instrucciones previas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe de alta",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Álvaro Cunqueiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe del segundo tiempo de recambio (15/09/2025); EMG de 12/05/2025 y de 10/12/2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "resolución del EVO de 14/11/2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemofilia A grave (FVIII < 1 %) sin inhibidor, en profilaxis con octocog alfa (Advate), artropatía hemofílica de cadera derecha con coxartrosis grado IV, HTA, DM2 en tratamiento oral, hepatitis C curada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Paciente testigo de Jehová que rechaza la transfusión de sangre y sus componentes principales",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con DIP inscrito desde 2019",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Discapacidad previa del 45 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La indicación de artroplastia total era correcta: coxartrosis hemofílica grado IV con dolor incapacitante",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "World Federation of Hemophilia (WFH, 3.ª ed., 2020)"
+   ],
+   [
+    "ORGANISMO",
+    "Real Fundación Victoria Eugenia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "(a) no se midió ningún nivel de FVIII tras el bolo; (b) no se pudo procesar el nivel en todo el fin de semana; (c) el 06/04 se redujo la dosis a 2.000 UI/24 h por falta de existencias, y (d) el nivel a la llegada al CHUVI era del 4 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Paciente que rechaza la transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Aceptado el paciente bajo protocolo sin sangre",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No consta optimización preoperatoria de la Hb con EPO ni hierro",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "SEDAR"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La convicción religiosa del paciente",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la hemorragia se produjo por déficit de factor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no por la negativa a la transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lesión del nervio ciático poplíteo externo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las parestesias del 06/04 («pie dormido») y el pie caído del 07/04 son compatibles con una compresión del nervio ciático por el hematoma glúteo a tensión (síndrome compartimental glúteo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La falta de evacuación urgente del hematoma ante clínica neurológica progresiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "determinante de la axonotmesis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El EMG de 10/12/2025 muestra reinervación muy parcial (tibial anterior 2/5)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Infección periprotésica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el SAMS aislado y la cronología (día 10) son coherentes con ello",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Alta voluntaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingreso en urgencias del CHUVI 1 h 47 min después",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La alta voluntaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el hematoma, la anemia grave y la lesión nerviosa estaban ya establecidos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«Paciente hemofílico. Riesgo hemorrágico aumentado»",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las consecuencias específicas del rechazo transfusional en un hemofílico",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Muy grave (REA): 4 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Grave (hospitalización CHUVI y segundo tiempo): 52 días",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Moderado: 168 días (hasta la estabilización, 09/03/2026 previsible)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lesión del nervio ciático poplíteo externo derecho con pie caído (parálisis parcial, balance 2/5): 20 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Material de artroplastia de revisión (recambio en dos tiempos), con limitación de la movilidad de la cadera: 15 puntos (computando el estado previo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dismetría de 2,5 cm de miembro inferior derecho: 4 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno depresivo reactivo en tratamiento con sertralina 100 mg: 5 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Perjuicio estético moderado (cicatrices quirúrgicas, uso de ortesis antiequino y bastón): 14 puntos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Intervenciones quirúrgicas: 2 (desbridamiento con retirada de implantes; reimplantación)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la anemia grave, el hematoma infectado, la infección periprotésica y la lesión del nervio ciático poplíteo externo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La negativa a la transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el alta voluntaria",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-juicio-ordinario.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE PRIMERA INSTANCIA DE VIGO"
+   ],
+   [
+    "PERSONA",
+    "Antía Lago Sobrino"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Procuradores de Vigo"
+   ],
+   [
+    "PERSONA",
+    "MANUEL FIGUEROA LORENZO"
+   ],
+   [
+    "DNI",
+    "36087412-H"
+   ],
+   [
+    "DIRECCION",
+    "Rúa de Pi i Margall, 47, 3.º D, 36202 Vigo"
+   ],
+   [
+    "PERSONA",
+    "Enrique Carballal Sanmartín"
+   ],
+   [
+    "PERSONA",
+    "Iago Domínguez Paz"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Vigo"
+   ],
+   [
+    "OBJETO",
+    "mala praxis médica"
+   ],
+   [
+    "ORGANISMO",
+    "CLÍNICA SANTA BAIA, S.L."
+   ],
+   [
+    "CIF",
+    "B36512874"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Santa Baia"
+   ],
+   [
+    "PERSONA",
+    "XOÁN PEREIRO CASTRO"
+   ],
+   [
+    "ORGANISMO",
+    "MUTUA ATLÁNTICA DE SEGUROS Y REASEGUROS A PRIMA FIJA"
+   ],
+   [
+    "CIF",
+    "V15022417"
+   ],
+   [
+    "NORMA",
+    "artículo 76 LCS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "padece desde su nacimiento una hemofilia A grave (FVIII < 1 %)",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Hemofilia del CHUVI"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con artropatía hemofílica y una coxartrosis derecha grado IV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es testigo de Jehová desde 1991",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tiene otorgado documento de instrucciones previas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rechaza la transfusión de sangre y sus componentes principales",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "acepta expresamente el factor VIII recombinante, el ácido tranexámico, la eritropoyetina, el hierro y el recuperador de sangre",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pereiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una artroplastia total de cadera derecha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El consentimiento informado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la única referencia a la hemofilia es una línea manuscrita",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La hemorragia no controlada y la lesión del nervio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la propia historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no se midió el nivel de factor VIII tras la cirugía; el 6 de abril se redujo la dosis de Advate a la mitad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la hemoglobina cayó de 14,2 a 6,1 g/dl; se formó un hematoma glúteo-muslo a tensión, y el paciente refirió desde el 6 de abril «pie dormido», que el 7 de abril era ya un pie caído",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "CHUVI"
+   ],
+   [
+    "PERSONA",
+    "Brais Figueroa Otero"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección Médica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El alta voluntaria y el reingreso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "firmó el alta voluntaria",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Álvaro Cunqueiro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ingresó por urgencias una hora y cuarenta y siete minutos después con 5,8 g/dl de hemoglobina y un nivel de factor VIII del 4 %",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin transfundir",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se controló la hemorragia con perfusión continua de factor, EPO y hierro, aunque tuvo que permanecer cuatro días en Reanimación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se diagnosticó una infección periprotésica aguda por Staphylococcus aureus, que obligó a retirar la prótesis, colocar un espaciador con antibiótico y reimplantar en septiembre de 2025 (recambio en dos tiempos)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "El EMG confirmó una axonotmesis grave del nervio ciático poplíteo externo derecho",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Alberto Rial Santamaría"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "presenta pie caído derecho con balance 2/5 y ortesis antiequino permanente, artroplastia de revisión con limitación de la movilidad, dismetría de 2,5 cm, trastorno depresivo reactivo en tratamiento con sertralina y pregabalina (Lyrica) para el dolor neuropático, y perjuicio estético moderado",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Equipo de Valoración y Orientación"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un grado de discapacidad del 65 % con movilidad reducida",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sobre la convicción religiosa del paciente y el alta voluntaria",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el rechazo a la transfusión y el alta voluntaria",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un paciente hemofílico bajo protocolo sin sangre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conociendo su condición de testigo de Jehová",
+    "religion"
+   ],
+   [
+    "NORMA",
+    "art. 2.4 Ley 41/2002"
+   ],
+   [
+    "NORMA",
+    "STC 154/2002, de 18 de julio"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La hemorragia fue consecuencia del déficit de factor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no de la negativa a la transfusión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el alta no supuso abandono de la asistencia",
+    "salud"
+   ],
+   [
+    "DATO_PENAL",
+    "fue condenado por el Juzgado de lo Penal n.º 2 de Vigo, en sentencia de 12 de mayo de 2017, como autor de un delito de lesiones por imprudencia profesional en una artroplastia de rodilla, a la pena de multa e inhabilitación especial de un año"
+   ],
+   [
+    "NORMA",
+    "artículos 45 y 51 LEC"
+   ],
+   [
+    "NORMA",
+    "artículo 249.2 LEC"
+   ],
+   [
+    "NORMA",
+    "artículos 1101, 1104, 1902 y 1903 CC"
+   ],
+   [
+    "NORMA",
+    "artículo 148 del Real Decreto Legislativo 1/2007"
+   ],
+   [
+    "NORMA",
+    "artículo 76 de la Ley 50/1980, de Contrato de Seguro"
+   ],
+   [
+    "NORMA",
+    "artículos 4, 8 y 10 de la Ley 41/2002"
+   ],
+   [
+    "NORMA",
+    "Lei 3/2001 de Galicia"
+   ],
+   [
+    "NORMA",
+    "STS 1.ª 284/2014, de 6 de junio"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2014:2393"
+   ],
+   [
+    "NORMA",
+    "STS 1.ª 227/2016, de 8 de abril"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 20 LCS"
+   ],
+   [
+    "NORMA",
+    "artículo 394 LEC"
+   ],
+   [
+    "PERSONA",
+    "Carmen Otero Vázquez"
+   ],
+   [
+    "PERSONA",
+    "Iria Montes Abal"
+   ],
+   [
+    "PERSONA",
+    "Lucía Vilas"
+   ],
+   [
+    "CORREO",
+    "idominguez@dominguezpaz.gal"
+   ],
+   [
+    "TELEFONO",
+    "986 22 71 04"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

@@ -1,0 +1,57 @@
+RESIDENCIA SANTA OROSIA MAYORES — PROGRAMA GERIÁTRICO (exportación del módulo «Evolutivo de enfermería»)
+Residente: LASIERRA COSCOLLA, PILAR — Hab. 112 — NHC residencia: RSO-000873 — CIPA (tarjeta sanitaria Aragón): ARA 0218 4471 93
+Médico de referencia del centro: Dr. Javier Ena Sanclemente
+Periodo exportado: 15/12/2025 a 14/02/2026
+Aviso: documento clínico confidencial
+
+TRATAMIENTO ACTIVO (a 10/02/2026)
+- Insulina glargina (Lantus® SoloStar) 22 UI s.c. a las 22:00 (modificada 10/02/2026; antes 18 UI)
+- Insulina asparta (NovoRapid® FlexPen) según pauta móvil antes de comidas (si glucemia > 200: 2 UI; > 250: 4 UI; > 300: 6 UI y avisar)
+- Metformina 850 mg 1-0-0 (suspendida 20/01/2026 por FG 38 ml/min)
+- Apixabán (Eliquis®) 2,5 mg cada 12 h
+- Donepezilo (Aricept®) 10 mg 0-0-1
+- Quetiapina 25 mg 0-0-1 y 12,5 mg de rescate si agitación
+- Enalapril 10 mg 1-0-0
+- Alendronato 70 mg semanal (lunes) + calcio/colecalciferol (Ideos®) 1-0-1
+- Lorazepam 0,5 mg si insomnio (máx. 1/noche)
+- Pañal de noche (absorbente talla M, supernoche)
+
+EVOLUTIVO
+
+15/12/2025 09:30 — S.L.B. (DUE): Valoración trimestral. Pérdida de 2,4 kg en tres meses (peso 51,3 kg). Ingesta irregular, rechaza la cena con frecuencia. HbA1c 6,1 %. Glucemias basales 90-140. Se informa a médico.
+
+22/12/2025 05:40 — I.S. (gerocultora noche): Encontrada sentada en el suelo junto a la cama. Dice que «iba a la iglesia, que es domingo». Sin lesiones aparentes. Se avisa a DUE localizada. Se registra caída en hoja de caídas (n.º 1).
+
+22/12/2025 10:15 — S.L.B.: Revisión post-caída: sin dolor a la movilización, sin hematomas. Glucemia 112. TA 132/74. Se refuerza ronda nocturna. Se pide sensor de suelo.
+
+28/12/2025 17:20 — N.P.G. (gerocultora tarde): Visita de su hija Rebeca y de Leire, su mujer. Le ponen himnos de su iglesia evangélica en el móvil y se calma mucho, canta. Rebeca pide que no se le dé la quetiapina «porque la deja como ida».
+
+09/01/2026 03:55 — I.S.: Caída en el baño. Hematoma en antebrazo dcho. de 4 x 3 cm. Consciente, la levanto con ayuda del celador de planta 2.ª. Glucemia 71. Registrada (n.º 2).
+
+09/01/2026 09:00 — S.L.B.: Se comprueba hematoma. Al estar anticoagulada se vigila. Se informa a Dr. J. Ena. Pendiente de instalar sensor de suelo (llega 15/01).
+
+20/01/2026 12:10 — Dr. J. Ena: Analítica: creatinina 1,42 mg/dL, FG 38. Suspendo metformina. Mantengo apixabán 2,5/12 h por edad > 80 y peso < 60. Ajuste de insulina basal según perfiles.
+
+31/01/2026 02:20 — I.S.: Encontrada de pie en el pasillo, desorientada, buscando «a Mariano» (marido fallecido). Se cae al intentar sentarla, sin golpe en cabeza. Sin lesiones. Registrada (n.º 3).
+
+31/01/2026 11:00 — S.L.B.: Se habla con el hijo D. Daniel (tutor). Se plantea contención con cinturón abdominal nocturno según protocolo de sujeciones. El hijo lo consultará con sus hermanos. Se le explica que el sensor de suelo funciona y que se mantiene la cama baja.
+
+02/02/2026 23:40 — N.P.G.: El sensor de suelo de la 112 no pita. Se comunica a mantenimiento (parte 0311). No hay otro. Comunicado también a dirección por correo, como delegada de personal de CGT, la falta de una segunda gerocultora de noche en planta 1.ª, que tiene 24 residentes, 9 de ellos con riesgo alto de caída.
+
+04/02/2026 — Dr. J. Ena: Hiperglucemias vespertinas 250-310. Familia (hija Rebeca) refiere que le llevan dulces el domingo después del culto. Se habla con ellos.
+
+10/02/2026 13:00 — Dr. J. Ena: Perfil glucémico: basales 180-220 los últimos 5 días. Aumento Lantus de 18 a 22 UI. Control glucemia capilar a las 03:00 los 3 primeros días tras el cambio.
+
+11/02/2026 03:05 — I.S.: Glucemia 03:00 = 102.
+12/02/2026 03:10 — I.S.: Glucemia 03:00 = 84.
+13/02/2026 — sin registro de glucemia de las 03:00. [Registro vacío]
+
+13/02/2026 20:30 — N.P.G.: Muy agitada por la tarde, no ha cenado (solo medio yogur). Se administra quetiapina 12,5 mg de rescate a las 20:15. Se pasa al turno de noche que no ha cenado. Insulina de las 22:00 administrada por DUE de tarde según pauta (22 UI) — firma: M.C.
+
+14/02/2026 02:00 — I.S.: Ronda. Dormida.
+14/02/2026 04:00 — [Sin registro]
+14/02/2026 06:10 — I.S.: Encontrada en el suelo entre cama y baño. Sangre en frente. Dolor en cadera izda. Glucemia 48. Doy gel de glucosa por orden telefónica. Aviso al 112.
+14/02/2026 06:35 — I.S.: Glucemia 96. Pierna izda. acortada y en rotación externa. Respira rápido. Dice «me he caído, Mariano».
+14/02/2026 06:50 — Traslado a Urgencias del H. San Jorge en UVI móvil.
+
+14/02/2026 15:00 — S.L.B.: Llamada del hospital: fractura pertrocantérea de fémur izquierdo y hematoma subdural agudo frontoparietal izquierdo. INR no procede (apixabán). No candidata a cirugía. Ingresa en Medicina Interna. Se informa a dirección.

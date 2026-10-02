@@ -1,0 +1,1901 @@
+{
+ "01-resumen-historia-clinica-chus.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVIZO GALEGO DE SAÚDE"
+   ],
+   [
+    "ORGANISMO",
+    "Complexo Hospitalario Universitario de Santiago de Compostela"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Oncología Médica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME CLÍNICO DE EVOLUCIÓN (RESUMEN DE HISTORIA CLÍNICA)",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "OUTEIRO BARREIRO, XOSÉ MANUEL"
+   ],
+   [
+    "NUSS",
+    "2184567"
+   ],
+   [
+    "NUSS",
+    "GAOTBR610314018"
+   ],
+   [
+    "NUSS",
+    "15/04827391/62"
+   ],
+   [
+    "DNI",
+    "33284719K"
+   ],
+   [
+    "DIRECCION",
+    "Rúa do Hórreo, 47, 3.º D — 15702 Santiago de Compostela"
+   ],
+   [
+    "PERSONA",
+    "Montserrat Pena Lorenzo"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Saúde de Conxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No alergias medicamentosas conocidas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA de larga evolución en tratamiento con enalapril 20 mg/24 h",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DM2 diagnosticada en 2015, en tratamiento con metformina 850 mg/12 h, HbA1c 7,1 % en 2021",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Exfumador desde 2012 (IPA 25 paquetes-año)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Bebedor ocasional",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colecistectomía laparoscópica en 2009 por colelitiasis sintomática",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hernia inguinal derecha intervenida en 2017",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Padre fallecido a los 71 años por carcinoma de colon",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hermana con pólipos adenomatosos resecados endoscópicamente en 2018",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de rectorragia intermitente de dos meses de evolución",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "heces \"de color oscuro alguna vez\"",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cambio del ritmo deposicional (alternancia de estreñimiento y diarrea)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "patología hemorroidal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemoal pomada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dieta rica en fibra",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 10,9 g/dl, VCM 76 fl, ferritina 9 ng/ml (anemia ferropénica)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sulfato ferroso (Fero-Gradumet 105 mg/24 h)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "positivo el test de sangre oculta en heces (SOH inmunológico, 312 ng/ml) del programa de cribado de cáncer colorrectal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopia con carácter ordinario (no preferente)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "molestias abdominales y pérdida de peso de 7 kg en seis meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "refiere que se encuentra muy cansado, no tiene ganas de comer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colonoscopia",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Aparato Digestivo"
+   ],
+   [
+    "PERSONA",
+    "Ramón Toubes Ares"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "neoformación ulcerada y estenosante en sigma que impide el paso del endoscopio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se toman biopsias y se tatúa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anatomía patológica de la biopsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenocarcinoma moderadamente diferenciado infiltrante",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TAC toracoabdominopélvico con contraste",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "engrosamiento parietal de sigma de 6 cm con afectación de la grasa pericólica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenopatías mesentéricas de hasta 14 mm",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dos LOEs hepáticas en segmentos VI y VII (21 y 17 mm) sugestivas de metástasis",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin lesiones pulmonares",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CEA 48,2 ng/ml",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervención de Hartmann (sigmoidectomía con colostomía terminal en fosa ilíaca izquierda) por cuadro suboclusivo",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Cirugía General"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AP de la pieza quirúrgica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenocarcinoma de sigma pT4a pN2b (9/21 ganglios afectos), invasión linfovascular y perineural presentes, márgenes libres",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "KRAS mutado (G12D), NRAS y BRAF no mutados, estabilidad de microsatélites (MSS)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quimioterapia según esquema FOLFOX-6 modificado (oxaliplatino 85 mg/m², leucovorina y 5-fluorouracilo en infusión) asociado a bevacizumab (Avastin) 5 mg/kg, 12 ciclos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se reduce dosis de oxaliplatino al 75 % desde el ciclo 8 por neurotoxicidad grado 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Metastasectomía hepática no posible por progresión",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aparición de nódulos pulmonares bilaterales",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Segunda línea FOLFIRI + aflibercept",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Neuropatía periférica sensitiva en manos y pies secundaria a oxaliplatino, con dificultad para abrochar botones",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pregabalina (Lyrica 75 mg/12 h)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hernia paraestomal sintomática desde 2024, manejada con faja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dermatitis periestomal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Síndrome ansioso-depresivo reactivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sertralina 50 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "caquexia neoplásica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ingreso hospitalario",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Cuidados Paliativos"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "deterioro del estado general",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sedación paliativa a petición de la familia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Adenocarcinoma de sigma estadio IV (pT4a pN2b M1c) con metástasis hepáticas y pulmonares",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colostomía terminal permanente",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Neurotoxicidad por oxaliplatino",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HTA. DM2",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Lucía Gestido Mariño"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-reclamacion-responsabilidad-patrimonial.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "CONSELLERÍA DE SANIDADE DE LA XUNTA DE GALICIA"
+   ],
+   [
+    "ORGANISMO",
+    "SERVIZO GALEGO DE SAÚDE (SERGAS)"
+   ],
+   [
+    "ORGANISMO",
+    "Secretaría Xeral Técnica"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Responsabilidad Patrimonial"
+   ],
+   [
+    "PERSONA",
+    "CARMEN RIVAS FANDIÑO"
+   ],
+   [
+    "DNI",
+    "33261054-W"
+   ],
+   [
+    "PERSONA",
+    "IAGO OUTEIRO RIVAS"
+   ],
+   [
+    "DNI",
+    "44829377-B"
+   ],
+   [
+    "PERSONA",
+    "UXÍA OUTEIRO RIVAS"
+   ],
+   [
+    "DNI",
+    "44829378-N"
+   ],
+   [
+    "DIRECCION",
+    "rúa da Senra, 22, 1.º izquierda, 15702 Santiago de Compostela"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Couceiro Mosquera"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de Abogados de Santiago de Compostela"
+   ],
+   [
+    "NORMA",
+    "artículos 32 y siguientes de la Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público"
+   ],
+   [
+    "NORMA",
+    "artículos 65, 67, 81 y 91 de la Ley 39/2015, de 1 de octubre"
+   ],
+   [
+    "OBJETO",
+    "retraso en el diagnóstico del cáncer colorrectal"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Outeiro Barreiro"
+   ],
+   [
+    "DNI",
+    "33284719K"
+   ],
+   [
+    "NUSS",
+    "15/04827391/62"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Saúde de Conxo"
+   ],
+   [
+    "NUSS",
+    "2184567"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipertensión arterial y diabetes tipo 2 bien controladas con medicación oral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "su padre había fallecido de un cáncer de colon",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo incrementado",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sangrado rectal de dos meses de evolución y cambio del ritmo intestinal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemorroides",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anemia ferropénica (hemoglobina 10,9 g/dl, ferritina 9 ng/ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "positivo el test de sangre oculta en heces",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "SERGAS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de peso, cansancio y dolor abdominal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "neoformación estenosante en sigma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenocarcinoma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TAC",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "metástasis hepáticas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "operación de Hartmann con colostomía definitiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "doce ciclos de FOLFOX con oxaliplatino y bevacizumab",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "neuropatía en manos y pies",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La enfermedad progresó a pulmón",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Cuidados Paliativos"
+   ],
+   [
+    "ORGANISMO",
+    "CHUS"
+   ],
+   [
+    "PERITO",
+    "Anxo Vilariño Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estadio II o III, sin metástasis a distancia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estadio IV",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Carmen Rivas"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curas diarias del estoma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno depresivo mayor",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidade de Saúde Mental de Conxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escitalopram y lormetazepam para dormir",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Iago"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crédito horario que le correspondía como delegado de la CIG",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "NORMA",
+    "art. 67.1 de la Ley 39/2015"
+   ],
+   [
+    "NORMA",
+    "artículos 32 a 37 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 106.2 de la Constitución"
+   ],
+   [
+    "NORMA",
+    "STS, Sala 3.ª, de 2 de enero de 2012, rec. 6710/2010"
+   ],
+   [
+    "NORMA",
+    "texto refundido aprobado por el Real Decreto Legislativo 8/2004"
+   ],
+   [
+    "NORMA",
+    "Ley 35/2015"
+   ],
+   [
+    "ORGANISMO",
+    "Servizo de Inspección Médica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Resumen de historia clínica",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Oncología Médica"
+   ],
+   [
+    "ORGANISMO",
+    "USM"
+   ],
+   [
+    "PERSONA",
+    "Carmen"
+   ],
+   [
+    "TELEFONO",
+    "981 57 42 18"
+   ],
+   [
+    "CORREO",
+    "bcouceiro@couceiroavogados.gal"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-pericial-cirugia.docx.txt": {
+  "oro": [
+   [
+    "PERITO",
+    "Anxo Vilariño Seoane"
+   ],
+   [
+    "ORGANISMO",
+    "Hospital Universitario Lucus Augusti"
+   ],
+   [
+    "ORGANISMO",
+    "Colexio Oficial de Médicos da Coruña"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Couceiro Mosquera"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Outeiro Barreiro"
+   ],
+   [
+    "OBJETO",
+    "retraso en el diagnóstico del cáncer colorrectal"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Historia clínica",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Saúde de Conxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informes de anatomía patológica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TAC toracoabdominopélvico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Informe de alta de Cirugía General",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hojas de tratamiento de Oncología",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Resumen de historia clínica",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Gestido Mariño"
+   ],
+   [
+    "PERSONA",
+    "Carmen Rivas Fandiño"
+   ],
+   [
+    "PERSONA",
+    "Uxía Outeiro"
+   ],
+   [
+    "ORGANISMO",
+    "Asociación Española de Gastroenterología"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rectorragia de dos meses y alternancia de estreñimiento y diarrea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "antecedente paterno de carcinoma de colon",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No consta tacto rectal ni anuscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "\"hemorroides\"",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 10,9 g/dl, VCM 76 fl, ferritina 9 ng/ml",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ferropenia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se trató con hierro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SOH positivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "312 ng/ml",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de 7 kg, astenia y anorexia",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Pena Lorenzo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pendiente colono",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Adenocarcinoma de sigma con dos metástasis hepáticas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estadio IV, M1a",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "M1c tras la progresión pulmonar de 2024",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mutación de KRAS",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "quimioterapia adyuvante (CAPOX tres meses)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colostomía de Hartmann en lugar de una resección con anastomosis primaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la obstrucción",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "24 ciclos entre primera y segunda línea",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "polineuropatía sensitiva por oxaliplatino grado 2-3",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colostomía terminal permanente con hernia paraestomal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Neuropatía periférica sensitiva por oxaliplatino",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno adaptativo con ánimo depresivo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sertralina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dependencia para el aseo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "curas del estoma",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Salud Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cuadro depresivo mayor con insomnio, llanto diario y abandono de su actividad habitual",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "anemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de peso",
+    "salud"
+   ],
+   [
+    "NORMA",
+    "art. 335.2 de la Ley de Enjuiciamiento Civil"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-correo-uxia-a-letrada.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Uxía Outeiro"
+   ],
+   [
+    "CORREO",
+    "uxia.outeiro.r@gmail.com"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Couceiro"
+   ],
+   [
+    "CORREO",
+    "bcouceiro@couceiroavogados.gal"
+   ],
+   [
+    "PERSONA",
+    "Beatriz"
+   ],
+   [
+    "PERITO",
+    "Vilariño"
+   ],
+   [
+    "ORGANISMO",
+    "Atención Primaria"
+   ],
+   [
+    "PERSONA",
+    "Pena"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemorroides, dieta y pomada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "isto non son almorranas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "7 kilos menos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pte colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "dedos dormidos de la quimio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la bolsa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la colostomia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le salio una hernia al lado del estoma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le hacia las curas todos los dias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en los huesos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pesaba 52 kilos el que pesaba 84",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo sedaran",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Celso"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "y le dio la extremauncion como el queria, que mi padre era de misa todos los domingos de toda la vida",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde el entierro no levanta cabeza",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Llora todos los dias, no come, no duerme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "las pastillas que le dio el de cabecera (creo que se llaman Noctamid)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el otro el Cipralex que le subieron a 15",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "USM"
+   ],
+   [
+    "PERSONA",
+    "Fraga"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "depresion mayor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no esta para quedarse sola",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dejo de ir al coro y a la asociacion de viudas",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Iago"
+   ],
+   [
+    "PERSONA",
+    "Manolo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy embarazada de 5 meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el embarazo es de riesgo (tengo la tension alta y me han mandado reposo relativo)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "delegado sindical",
+    "sindical"
+   ],
+   [
+    "IBAN",
+    "ES21 2080 5032 9130 4011 2783"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "TELEFONO",
+    "655 182 409"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-resolucion-desestimatoria-galego.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "XUNTA DE GALICIA"
+   ],
+   [
+    "ORGANISMO",
+    "CONSELLERÍA DE SANIDADE"
+   ],
+   [
+    "ORGANISMO",
+    "Secretaría Xeral Técnica"
+   ],
+   [
+    "AUTOS",
+    "RP-2025/0412-SERGAS"
+   ],
+   [
+    "PERSONA",
+    "Carmen Rivas Fandiño"
+   ],
+   [
+    "ORGANISMO",
+    "SECRETARÍA XERAL TÉCNICA DA CONSELLERÍA DE SANIDADE"
+   ],
+   [
+    "PERSONA",
+    "CARMEN RIVAS FANDIÑO"
+   ],
+   [
+    "PERSONA",
+    "IAGO OUTEIRO RIVAS"
+   ],
+   [
+    "PERSONA",
+    "UXÍA OUTEIRO RIVAS"
+   ],
+   [
+    "ORGANISMO",
+    "Xunta de Galicia"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Couceiro Mosquera"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Outeiro Barreiro"
+   ],
+   [
+    "OBJETO",
+    "atraso no diagnóstico do cancro colorrectal"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Saúde de Conxo"
+   ],
+   [
+    "ORGANISMO",
+    "Complexo Hospitalario Universitario de Santiago"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a historia clínica completa",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Servizo de Inspección Médica"
+   ],
+   [
+    "PERSONA",
+    "Fernando Pazos Rey"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a sintomatoloxía inicial era compatible con patoloxía hemorroidal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "KRAS mutado",
+    "genetico"
+   ],
+   [
+    "ORGANISMO",
+    "Servizo de Aparello Dixestivo"
+   ],
+   [
+    "ORGANISMO",
+    "CHUS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopias",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "informe psiquiátrico",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Unidade de Saúde Mental"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un trastorno depresivo maior en tratamento farmacolóxico",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Consello Consultivo de Galicia"
+   ],
+   [
+    "AUTOS",
+    "CCG 211/2026"
+   ],
+   [
+    "NORMA",
+    "artigo 92 da Lei 39/2015, do 1 de outubro"
+   ],
+   [
+    "NORMA",
+    "Decreto 136/2024, do 25 de xullo"
+   ],
+   [
+    "NORMA",
+    "Orde do 12 de setembro de 2024"
+   ],
+   [
+    "NORMA",
+    "artigos 32 e 34 da Lei 40/2015, do 1 de outubro"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "test de sangue oculto en feces positivo",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección Médica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "clínica de rectorraxia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a anemia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemorroides",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Anxo Vilariño Seoane"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenocarcinoma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cadro depresivo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Carmen Rivas"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "enfermidade oncolóxica avanzada",
+    "salud"
+   ],
+   [
+    "ORGANISMO",
+    "Consello Consultivo"
+   ],
+   [
+    "PERSONA",
+    "Iago Outeiro Rivas"
+   ],
+   [
+    "PERSONA",
+    "Uxía Outeiro Rivas"
+   ],
+   [
+    "ORGANO",
+    "Sala do Contencioso-Administrativo do Tribunal Superior de Xustiza de Galicia"
+   ],
+   [
+    "NORMA",
+    "artigos 10 e 46 da Lei 29/1998, do 13 de xullo"
+   ],
+   [
+    "PERSONA",
+    "Ramiro Doval Piñeiro"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-informe-usm-viuda.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVIZ0 GALEG0 DE SAUDE"
+   ],
+   [
+    "ORGANISMO",
+    "AREA SANITARIA DE SANTIAG0 DE C0MP0STELA E BARBANZA"
+   ],
+   [
+    "ORGANISMO",
+    "UNIDADE DE SAUDE MENTAL DE C0NXO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INF0RME CLINIC0 DE SAUDE MENTAL",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "RIVAS FANDIN0, CARMEN"
+   ],
+   [
+    "NUSS",
+    "0761l290"
+   ],
+   [
+    "DNI",
+    "3326l054W"
+   ],
+   [
+    "DIRECCION",
+    "RUA D0 H0RRE0 47 3 D 15702 SANTIAG0"
+   ],
+   [
+    "PERSONA",
+    "M. ARIAS"
+   ],
+   [
+    "ORGANISMO",
+    "CS C0NXO"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NE0PLASIA DE C0L0N EN ESTADI0 IV",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PR0CES0 0NC0L0XIC0 DE DOUS AN0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CLINICA DEPRESIVA DE TRES MESES DE EV0LUCI0N",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIP0TIR0IDISM0 EN TRATAMENT0 C0N EUTIR0X 75 MCG",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "0STE0P0R0SE P0STMEN0PAUSICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NON ANTECEDENTES PSIQUIATRIC0S PREVI0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NON C0NSUM0 DE TOXIC0S",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NAI C0N DEMENCIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IRMAN C0N TRAST0RN0 BIP0LAR",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0NSCIENTE E 0RIENTADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AB0RDABLE, C0LAB0RAD0RA, LLANT0 FACIL DURANTE TODA A ENTREVISTA. HIP0TIMIA MARCADA, ANHED0NIA, APATIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "NON TEÑ0 F0RZAS PARA NADA, ESTOU BAIER0",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "MAN0L0"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IDEAS DE CULPA (\" TERIA QUE TER INSISTID0 MAIS C0 MEDIC0\")",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INS0MNI0 MIXT0 (C0NCILIACI0N E DESPERTAR PRECOZ)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HIP0REXIA C0N PERDA DE 6 KG",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "IDEAS DE MORTE PASIVAS (\"0XALA N0N ESPERTARA\"), SEN IDEACI0N AUT0LITICA ESTRUTURADA NIN PLANS",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0N CLINICA PSIC0TICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "HAM-D 24 (DEPRESI0N GRAVE). BDI-II 33",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAST0RN0 DEPRESIV0 MAI0R, EPIS0DI0 UNIC0, GRAVE, SEN SINT0MAS PSIC0TIC0S (F32.2)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DUEL0 C0MPLICAD0 / PR0L0NGAD0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ESCITAL0PRAM (CIPRALEX) 15 MG 1-0-0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "L0RMETAZEPAM (N0CTAMID) 1 MG AO DEITARSE",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PSIC0TERAPIA DE AP0I0 QUINCENAL C0A PSIC0L0XA CLINICA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "ANTIA L0IS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SEGUIMENT0 MENSUAL EN C0NSULTA DE PSIQUIATRIA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "MEL0RIA PARCIAL DESDE SETEMBR0 2025",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ANHED0NIA E INSOMNI0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "AB4ND0NOU AS SUAS ACTIVIDADES",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0R0 PARR0QUIAL",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "XESTANTE, EMBARAZ0 DE RISC0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PR0GN0STIC0 RESERVAD0 A MEDI0 PRAZ0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "N0N ESTA EN C0NDICI0NS DE VIVIR S0A NIN DE XESTI0NAR TRAMITES C0MPLEX0S P0R SI MESMA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "SABELA FRAGA IGLESIAS"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-correo-iago-resolucion.eml.txt": {
+  "oro": [
+   [
+    "CORREO",
+    "iagoouteiro@mundo-r.com"
+   ],
+   [
+    "CORREO",
+    "bcouceiro@couceiroavogados.gal"
+   ],
+   [
+    "CORREO",
+    "uxia.outeiro.r@gmail.com"
+   ],
+   [
+    "ORGANISMO",
+    "Sergas"
+   ],
+   [
+    "PERSONA",
+    "Beatriz"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin poder dormir sin el Noctamid",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con la psiquiatra cada mes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "agresividad del tumor",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el tumor sería todo lo agresivo que quieran",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "test de sangre positivo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Uxía"
+   ],
+   [
+    "PERSONA",
+    "Fraga"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el estrés del juicio puede hacerla recaer",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el seguro de defensa jurídica de mi sindicato",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo consulté en la CIG de Santiago; solo cubre asuntos laborales de los afiliados",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy en el comité de huelga del metal",
+    "sindical"
+   ],
+   [
+    "PERSONA",
+    "Pilar Seoane"
+   ],
+   [
+    "PERSONA",
+    "Ricardo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "le diagnosticaron un cáncer de recto tarde",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está con la bolsa y en quimio todavía",
+    "salud"
+   ],
+   [
+    "TELEFONO",
+    "638 207 115"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tuvo un ataque de pánico",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Iago Outeiro Rivas"
+   ],
+   [
+    "TELEFONO",
+    "629 344 870"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "08-demanda-contencioso-tsj.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "SALA DE LO CONTENCIOSO-ADMINISTRATIVO DEL TRIBUNAL SUPERIOR DE JUSTICIA DE GALICIA"
+   ],
+   [
+    "ORGANO",
+    "SECCIÓN TERCERA"
+   ],
+   [
+    "AUTOS",
+    "7184/2026"
+   ],
+   [
+    "PERSONA",
+    "Carmen Rivas Fandiño"
+   ],
+   [
+    "ORGANISMO",
+    "Consellería de Sanidade"
+   ],
+   [
+    "ORGANISMO",
+    "Servizo Galego de Saúde"
+   ],
+   [
+    "PERSONA",
+    "Ánxel Brea Novo"
+   ],
+   [
+    "PERSONA",
+    "CARMEN RIVAS FANDIÑO"
+   ],
+   [
+    "PERSONA",
+    "IAGO OUTEIRO RIVAS"
+   ],
+   [
+    "PERSONA",
+    "UXÍA OUTEIRO RIVAS"
+   ],
+   [
+    "PERSONA",
+    "Beatriz Couceiro Mosquera"
+   ],
+   [
+    "ORGANISMO",
+    "Secretaría Xeral Técnica de la Consellería de Sanidade"
+   ],
+   [
+    "AUTOS",
+    "RP-2025/0412-SERGAS"
+   ],
+   [
+    "OBJETO",
+    "retraso en el diagnóstico del cáncer colorrectal"
+   ],
+   [
+    "PERSONA",
+    "Xosé Manuel Outeiro Barreiro"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Saúde de Conxo"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hipertensión arterial y diabetes mellitus tipo 2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el fallecimiento de su padre por un carcinoma de colon",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la resección de pólipos adenomatosos a una hermana",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "riesgo familiar incrementado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Rectorragia de dos meses, cambio del ritmo intestinal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hemorroides",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hemoal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin tacto rectal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hb 10,9; ferritina 9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Fero-Gradumet",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "SOH positivo (312 ng/ml)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Colonoscopia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pérdida de 7 kg, astenia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Dolor abdominal, anorexia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Neoformación estenosante de sigma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Biopsia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "adenocarcinoma",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TAC: dos metástasis hepáticas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "intervención de Hartmann con colostomía terminal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FOLFOX-6 con bevacizumab y, después, FOLFIRI con aflibercept",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una polineuropatía sensitiva por oxaliplatino",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lyrica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una hernia paraestomal",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sedación paliativa",
+    "salud"
+   ],
+   [
+    "PERITO",
+    "Vilariño Seoane"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección Médica"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "trastorno depresivo mayor grave (F32.2) con duelo complicado",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "escitalopram 15 mg, lormetazepam y psicoterapia quincenal",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Fraga Iglesias"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "incapaz de vivir sola",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el embarazo de riesgo",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "Uxía Outeiro"
+   ],
+   [
+    "NORMA",
+    "artículos 1, 2.e) y 10.1.a) de la Ley 29/1998, de 13 de julio"
+   ],
+   [
+    "NORMA",
+    "artículo 19.1.a) LJCA"
+   ],
+   [
+    "NORMA",
+    "artículos 32 y 34 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "STS, Sala 3.ª, Sección 4.ª, de 19 de octubre de 2011 (rec. 5893/2006)"
+   ],
+   [
+    "ECLI",
+    "ECLI:ES:TS:2012:9"
+   ],
+   [
+    "NORMA",
+    "STSJ de Galicia de 14 de febrero de 2024, rec. 412/2023"
+   ],
+   [
+    "NORMA",
+    "artículo 34.3 de la Ley 40/2015"
+   ],
+   [
+    "NORMA",
+    "artículo 139 LJCA"
+   ],
+   [
+    "PERITO",
+    "Anxo Vilariño Seoane"
+   ],
+   [
+    "PERSONA",
+    "Montserrat Pena Lorenzo"
+   ],
+   [
+    "PERSONA",
+    "Fernando Pazos Rey"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

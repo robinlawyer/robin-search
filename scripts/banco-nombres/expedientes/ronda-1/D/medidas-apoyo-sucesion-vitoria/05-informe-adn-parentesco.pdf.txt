@@ -1,0 +1,35 @@
+GENODIAG LABORATORIO DE GENÉTICA FORENSE, S.L. — CIF B95847362
+Parque Tecnológico de Álava — Laboratorio acreditado por ENAC conforme a la norma UNE-EN ISO/IEC 17025
+Calle Leonardo da Vinci, 11 — 01510 Miñano (Álava)
+
+INFORME DE ANÁLISIS DE PARENTESCO BIOLÓGICO (HERMANDAD PATERNA)
+Caso n.º GD-25-0417 — Modalidad: prueba informativa, sin cadena de custodia judicial
+
+PERSONAS ANALIZADAS
+| Rol | Nombre | Documento | Fecha de nacimiento | Muestra |
+|---|---|---|---|---|
+| Supuesto medio hermano 1 | Javier Montoya Sáez | DNI 30628419-L | 22/08/1967 | Frotis bucal (2 hisopos) |
+| Supuesto medio hermano 2 | Koldo Lasarte Etxeberria | DNI 16271830-E | 05/04/1963 | Frotis bucal (2 hisopos) |
+Progenitor común alegado: D. Joseba Lasarte Ugalde (fallecido en 2019, no analizado).
+
+Toma de muestras: 24/04/2025, en las instalaciones del laboratorio. Identificación de los donantes mediante documento original, fotografía digital del rostro y toma de huella dactilar del índice derecho, incorporadas al expediente. Ambos firmaron el consentimiento informado para el análisis genético y para la comunicación del resultado a la otra persona analizada.
+
+METODOLOGÍA
+Extracción de ADN mediante columnas de sílice. Amplificación de 23 marcadores STR del cromosoma Y (Yfiler Plus) y de 24 marcadores STR autosómicos (GlobalFiler). Electroforesis capilar en analizador ABI 3500. Cálculos estadísticos con frecuencias de la población española de referencia y probabilidad a priori del 50 %.
+
+RESULTADOS
+1. Cromosoma Y: los dos haplotipos son idénticos en los 23 loci analizados (DYS576 = 18; DYS389I = 13; DYS448 = 19; DYS391 = 10; DYS481 = 22; DYS19 = 14; DYS533 = 12, entre otros). Haplotipo no observado en la base de datos YHRD (n = 312.000 haplotipos europeos).
+2. Marcadores autosómicos: los perfiles comparten alelos en 22 de 24 loci, con un índice de hermandad (medios hermanos frente a no emparentados) de 768,4.
+3. Índice combinado de parentesco: 768,4; probabilidad de relación de medios hermanos por vía paterna: 99,87 %.
+
+INTERPRETACIÓN
+Los resultados son concordantes con que D. Javier Montoya Sáez y D. Koldo Lasarte Etxeberria compartan el mismo padre biológico. El resultado es «prácticamente probado» según la escala de Hummel.
+
+Hallazgo incidental comunicado solo a la persona afectada, que lo autorizó por escrito para su inclusión: en el perfil de D. Koldo Lasarte Etxeberria se observa una variante en el marcador DYS385 sin significado clínico. El laboratorio no realiza ni informa análisis de predisposición a enfermedades.
+
+ADVERTENCIA: al haberse realizado sin intervención judicial, este informe tiene carácter informativo. Para su validez como prueba en un procedimiento de filiación deberá ratificarse o repetirse con cadena de custodia por orden del órgano judicial competente.
+
+Miñano, 9 de mayo de 2025.
+
+Dra. Olatz Bengoetxea Lizarralde, doctora en Biología, directora técnica
+D. Iker Salaberria Mendoza, técnico superior de laboratorio

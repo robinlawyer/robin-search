@@ -1,0 +1,1511 @@
+{
+ "01-correos-supervisora.eml.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Raquel Montesdeoca Suárez"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata Bah Camara"
+   ],
+   [
+    "PERSONA",
+    "Yaiza Betancor León"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata"
+   ],
+   [
+    "PERSONA",
+    "Raquel"
+   ],
+   [
+    "PERSONA",
+    "Yaiza"
+   ],
+   [
+    "PERSONA",
+    "Nayra"
+   ],
+   [
+    "PERSONA",
+    "Fatou"
+   ],
+   [
+    "CORREO",
+    "rmontesdeoca@conectaatlantico.es"
+   ],
+   [
+    "CORREO",
+    "fbah@conectaatlantico.es"
+   ],
+   [
+    "CORREO",
+    "ybetancor@conectaatlantico.es"
+   ],
+   [
+    "TELEFONO",
+    "669 214 837"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "te vas a ir al sindicato a llorar",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los de Comisiones repartiendo panfletos en el office",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con los ojos llorosos en el puesto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yendo al baño cada media hora con tus \"ataques de ansiedad\"",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "mandarte al médico de la mutua",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi hijo tiene TEA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "hacer tus rezos con la alfombrilla",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Si quieres rezar cinco veces al día",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el mes ese vuestro, el ramadán o como se diga",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lo del pañuelo",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una chica negra",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el pañuelo puesto",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estoy en ayuno",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "romper el ayuno",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Las pausas para la oración",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tomo pastillas para dormir",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no duermo nada con todo esto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por motivos religiosos",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "02-transcripcion-slack.docx.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "R. Montesdeoca"
+   ],
+   [
+    "PERSONA",
+    "Y. Betancor"
+   ],
+   [
+    "PERSONA",
+    "J. Alemán"
+   ],
+   [
+    "PERSONA",
+    "D. Ojeda"
+   ],
+   [
+    "PERSONA",
+    "Dailos Ojeda Rivero"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata Bah Camara"
+   ],
+   [
+    "PERSONA",
+    "Raquel Montesdeoca"
+   ],
+   [
+    "PERSONA",
+    "Jonay Alemán"
+   ],
+   [
+    "PERSONA",
+    "Yaiza Betancor"
+   ],
+   [
+    "PERSONA",
+    "Dailos Ojeda"
+   ],
+   [
+    "PERSONA",
+    "Raquel"
+   ],
+   [
+    "PERSONA",
+    "Dailos"
+   ],
+   [
+    "PERSONA",
+    "Kevin"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata"
+   ],
+   [
+    "PERSONA",
+    "fatu"
+   ],
+   [
+    "PERSONA",
+    "Nayra"
+   ],
+   [
+    "PERSONA",
+    "Yaiza"
+   ],
+   [
+    "PERSONA",
+    "Kevin Hernández Perdomo"
+   ],
+   [
+    "ORGANISMO",
+    "Gabinete Jurídico de CCOO Canarias"
+   ],
+   [
+    "NORMA",
+    "art. 90.2 LRJS"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me ha pedido sitio para rezar",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que se vaya a la mezquita de Guanarteme",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el pañuelo de colores",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya ha empezado con el ayuno ese",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la negrita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "tú con tu diabetes y tus pinchazos de insulina",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se ha afiliado a CCOO",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la vio en la asamblea del jueves",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "desde que es delegada",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se ha ido llorando al baño otra vez",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquí no estamos en la selva",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está tomando lorazepam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está fatal, no duerme",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "de qué pie cojeas en las elecciones sindicales",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la morita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya está de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Psicológica dice",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "estuve con depresión y con el escitalopram",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "«mona»",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la asamblea a la que se refiere el mensaje del 05/03/2026",
+    "sindical"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "03-informe-psicologa-mutua.pdf.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "MUTUA ATLÁNTICA"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Colaboradora con la Seguridad Social n.º 287"
+   ],
+   [
+    "ORGANISMO",
+    "Unidad de Salud Mental Laboral"
+   ],
+   [
+    "ORGANISMO",
+    "Servicio de Prestaciones"
+   ],
+   [
+    "ORGANISMO",
+    "Centro de Salud de Guanarteme"
+   ],
+   [
+    "ORGANISMO",
+    "INSS"
+   ],
+   [
+    "ORGANISMO",
+    "Colegio Oficial de la Psicología de Las Palmas"
+   ],
+   [
+    "AUTOS",
+    "MA-LP-2026-018734"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata Bah Camara"
+   ],
+   [
+    "PERSONA",
+    "Nayra Cabrera Melián"
+   ],
+   [
+    "PERITO",
+    "Leticia Peñate Ramos"
+   ],
+   [
+    "NIE",
+    "Y4827316K"
+   ],
+   [
+    "NUSS",
+    "35/10482733/61"
+   ],
+   [
+    "NUSS",
+    "HC-0091827"
+   ],
+   [
+    "DIRECCION",
+    "C/ Fernando Guanarteme, 88, 2.º izq., 35010 Las Palmas de Gran Canaria"
+   ],
+   [
+    "TELEFONO",
+    "642 718 305"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "INFORME DE VALORACIÓN PSICOLÓGICA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "historia clínica",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra en situación de incapacidad temporal desde el 7 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el diagnóstico de trastorno de adaptación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se identifica como delegada sindical de CCOO en la empresa",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Anemia ferropénica en tratamiento intermitente con sulfato ferroso (Fero-Gradumet 105 mg)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Portadora de rasgo drepanocítico (HbAS)",
+    "genetico"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conocido desde el estudio prenatal de 2017",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "G2P1C1 (un parto eutócico en 2017 y una cesárea en 2020)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Migraña sin aura desde la adolescencia, con crisis ocasionales que trata con ibuprofeno 600 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sin consultas previas en salud mental ni tratamiento psicofarmacológico anterior a enero de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega consumo de alcohol y otros tóxicos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no bebo, por mi religión",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "madre con HTA y DM2",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Un hermano menor con epilepsia en tratamiento con valproato",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Sin antecedentes psiquiátricos familiares conocidos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Pertenece a la etnia fulani (peul)",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Es practicante musulmana",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "realiza las cinco oraciones diarias, guarda el ayuno de ramadán y viste hiyab",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la oración y la lectura del Corán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la comunidad de la mezquita del barrio",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "comentarios sobre su color de piel, su pañuelo y su práctica religiosa",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insomnio de conciliación y despertares precoces (duerme unas 4 horas)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "pérdida de peso de 6 kg en dos meses",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "cefalea tensional casi diaria",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "crisis de llanto en el puesto de trabajo",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "episodios de opresión torácica, taquicardia y sensación de ahogo antes de entrar al turno",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se me cierra el pecho cuando veo el edificio",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad anticipatoria los domingos por la tarde",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Hipervigilancia, pensamientos intrusivos recurrentes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "conductas de evitación",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ánimo bajo, anhedonia parcial, sentimientos de culpa",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Niega ideación autolítica estructurada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a veces pienso que mejor no despertar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ideación pasiva de muerte, sin planes ni intentos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "zolpidem 10 mg (Stilnox) a demanda",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "lorazepam 1 mg (Orfidal) por la noche",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Desde el inicio de la IT, escitalopram 10 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Llanto durante el relato de los hechos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ánimo hipotímico",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ansiedad psíquica y somática elevada (temblor fino, sudoración palmar)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No se objetivan rasgos de simulación ni de exageración de síntomas",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ansiedad 17/21; depresión 13/21",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PCL-5 (Lista de verificación de TEPT): 46",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inventario de Depresión de Beck (BDI-II): 27, depresión moderada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escala Atenas de Insomnio: 15",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "índice global de estrategias de acoso psicológico (IGAP) 1,62; número de estrategias (NEAP) 31; índice medio de intensidad (IMAP) 3,1",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inventario Estructurado de Simulación de Síntomas (SIMS): 9",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Trastorno de adaptación con ansiedad mixta y estado de ánimo depresivo (CIE-10 F43.23)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sintomatología de estrés postraumático (reexperimentación e hiperactivación) que no alcanza todos los criterios de TEPT",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Insomnio secundario. Cefalea tensional.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Escitalopram 10 mg/24 h (Cipralex), con previsión de subir a 15 mg",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Lorazepam 1 mg (Orfidal) por la noche, con pauta de retirada progresiva",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Se retira el zolpidem",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Psicoterapia cognitivo-conductual semanal centrada en el manejo de la ansiedad",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la enfermedad crónica de la madre",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la relación de causalidad entre el cuadro y factores psicosociales del entorno laboral",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "04-parte-baja-it.escaneo.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "SERVICI0 CANARIO DE LA SALUD"
+   ],
+   [
+    "ORGANISMO",
+    "INSTITUT0 NACIONAL DE LA SEGURIDAD S0CIAL"
+   ],
+   [
+    "ORGANISMO",
+    "G0BIERNO DE CANARIAS"
+   ],
+   [
+    "ORGANISMO",
+    "C.S. GUANARTEME - ZBS GUANARTEME"
+   ],
+   [
+    "ORGANISMO",
+    "CENTR0 DE SALUD GUANARTEME - SERVICI0 CANARI0 DE LA SALUD"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "PARTE MEDIC0 DE BAJA",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "BAH CAMARA, FAT0UMATA"
+   ],
+   [
+    "PERSONA",
+    "FAT0U"
+   ],
+   [
+    "NIE",
+    "Y4827316K"
+   ],
+   [
+    "NUSS",
+    "35/10482733/61"
+   ],
+   [
+    "DIRECCION",
+    "C/ FERNAND0 GUANARTEME, 88, 2 IZQ"
+   ],
+   [
+    "DIRECCION",
+    "C.P.: 35010"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "FECHA DE LA BAJA: 07/04/2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "[X] ENFERMEDAD C0MUN",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "TRAST0RN0 DE ADAPTACI0N C0N ANSIEDAD Y ANIM0 DEPRESIV0 MIXT0S. IN-\nS0MNI0.",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "C0DIG0 CIE: F43.23",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "CRISIS DE ANSIEDAD\nREPETIDAS EN EL PUEST0, LLANT0, N0 T0LERA ATENCI0N TELEF0NICA C0NTINUADA",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "DURACI0N ESTIMADA DEL PR0CES0: 60 DIAS (MEDIA)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "RECAIDA DE PR0CES0 ANTERI0R: N0",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ME DI0 TAMBIEN\n0RFIDAL Y ESCITAL0PRAM",
+    "salud"
+   ],
+   [
+    "PERSONA",
+    "MARIA DEL PIN0 SANTANA VEGA"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "05-denuncia-inspeccion-trabajo.docx.txt": {
+  "oro": [
+   [
+    "ORGANISMO",
+    "INSPECCIÓN PROVINCIAL DE TRABAJO Y SEGURIDAD SOCIAL DE LAS PALMAS"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección Provincial de Trabajo y Seguridad Social de Las Palmas"
+   ],
+   [
+    "ORGANISMO",
+    "Gabinete Jurídico de CCOO Canarias"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Las Palmas"
+   ],
+   [
+    "ORGANISMO",
+    "Mutua Atlántica"
+   ],
+   [
+    "ORGANISMO",
+    "Dirección del Organismo Estatal Inspección de Trabajo y Seguridad Social"
+   ],
+   [
+    "ORGANISMO",
+    "OIT"
+   ],
+   [
+    "PERSONA",
+    "FATOUMATA BAH CAMARA"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata Bah Camara"
+   ],
+   [
+    "PERSONA",
+    "Carmen Delia Quintana Falcón"
+   ],
+   [
+    "PERSONA",
+    "Raquel Montesdeoca Suárez"
+   ],
+   [
+    "PERSONA",
+    "Yaiza Betancor León"
+   ],
+   [
+    "PERSONA",
+    "Dailos Ojeda Rivero"
+   ],
+   [
+    "NIE",
+    "Y4827316K"
+   ],
+   [
+    "TELEFONO",
+    "642 718 305"
+   ],
+   [
+    "CIF",
+    "B76284513"
+   ],
+   [
+    "NORMA",
+    "Convenio colectivo de ámbito estatal del sector de contact center"
+   ],
+   [
+    "NORMA",
+    "Artículos 4.2.c), 4.2.e) y 17.1 del Estatuto de los Trabajadores (RDLeg 2/2015)"
+   ],
+   [
+    "NORMA",
+    "Artículos 2, 4, 6 y 11 de la Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "Artículos 14 y 16 de la Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales"
+   ],
+   [
+    "NORMA",
+    "Artículos 8.11, 8.12 y 8.13 bis de la LISOS (RDLeg 5/2000)"
+   ],
+   [
+    "NORMA",
+    "Criterio Técnico 104/2021"
+   ],
+   [
+    "NORMA",
+    "Convenio n.º 190 de la OIT sobre la violencia y el acoso"
+   ],
+   [
+    "NORMA",
+    "artículos 8.12 y 8.13 bis LISOS"
+   ],
+   [
+    "NORMA",
+    "art. 20.4 de la Ley 23/2015, Ordenadora del Sistema de Inspección de Trabajo y Seguridad Social"
+   ],
+   [
+    "NORMA",
+    "artículo 20.1 de la Ley 23/2015"
+   ],
+   [
+    "AUTOS",
+    "35/2026/E/009184"
+   ],
+   [
+    "AUTOS",
+    "35/0004127/26"
+   ],
+   [
+    "OBJETO",
+    "acoso discriminatorio por razón de origen racial o étnico y de religión"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sobre su color de piel",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "sobre su práctica religiosa",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haber rezado en un cuarto durante su pausa",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si quieres rezar cinco veces al día",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "durante el mes de ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una chica negra",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el pañuelo puesto",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la negrita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la morita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se había afiliado a CCOO en marzo de 2026",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se encuentra en situación de incapacidad temporal desde el 7 de abril de 2026",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "un cuadro de ansiedad, insomnio y bajo estado de ánimo",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "06-whatsapp-delegada-ccoo.whatsapp.txt": {
+  "oro": [
+   [
+    "PERSONA",
+    "Fatou"
+   ],
+   [
+    "PERSONA",
+    "Nayra"
+   ],
+   [
+    "PERSONA",
+    "Fatoumata"
+   ],
+   [
+    "PERSONA",
+    "Kevin"
+   ],
+   [
+    "PERSONA",
+    "Raquel"
+   ],
+   [
+    "PERSONA",
+    "Jonay"
+   ],
+   [
+    "PERSONA",
+    "Carmen Delia"
+   ],
+   [
+    "PERSONA",
+    "Mamadou"
+   ],
+   [
+    "PERSONA",
+    "Dailos"
+   ],
+   [
+    "PERSONA",
+    "Yaiza"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Quiero afiliarme al sindicato",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por ser negra",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por el pañuelo",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "La cuota son 13,50 al mes y te la pueden descontar en nomina",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el jueves hay asamblea en el local de Primero de Mayo",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me vio en la asamblea",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "yo soy delegada y tengo garantias",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "A ti tampoco por afiliarte",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "No duermo, la doctora me dio pastillas, el stilnox",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me levanto como borracha",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me tiemblan las manos",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Ayer vomite antes de entrar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en el ramadan sin comer todo el dia",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "que te de la baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Eso es ansiedad de libro",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Yo estuve igual cuando lo de mi aborto y el ERE y me puse en tratamiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "En mi cultura no se va al psicologo",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Mi marido dice que rece mas",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "rezar esta bien",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me ha dado un ataque en el baño, no podia respirar",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me dio un orfidal la doctora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Me ha dado la baja. Trastorno de adaptacion dice. Y escitalopram",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "por estar de baja",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con lo de su diabetes",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Inshallah",
+    "religion"
+   ]
+  ],
+  "ambiguo": []
+ },
+ "07-demanda-tutela-derechos-fundamentales.docx.txt": {
+  "oro": [
+   [
+    "ORGANO",
+    "JUZGADO DE LO SOCIAL DE LAS PALMAS DE GRAN CANARIA QUE POR TURNO DE REPARTO CORRESPONDA"
+   ],
+   [
+    "ORGANISMO",
+    "Ilustre Colegio de la Abogacía de Las Palmas"
+   ],
+   [
+    "ORGANISMO",
+    "Gabinete Jurídico de CCOO Canarias"
+   ],
+   [
+    "ORGANISMO",
+    "MINISTERIO FISCAL"
+   ],
+   [
+    "ORGANISMO",
+    "Inspección Provincial de Trabajo y Seguridad Social de Las Palmas"
+   ],
+   [
+    "PERSONA",
+    "CARMEN DELIA QUINTANA FALCÓN"
+   ],
+   [
+    "PERSONA",
+    "Carmen Delia Quintana Falcón"
+   ],
+   [
+    "PERSONA",
+    "FATOUMATA BAH CAMARA"
+   ],
+   [
+    "PERSONA",
+    "RAQUEL MONTESDEOCA SUÁREZ"
+   ],
+   [
+    "PERSONA",
+    "Montesdeoca"
+   ],
+   [
+    "PERSONA",
+    "Yaiza Betancor León"
+   ],
+   [
+    "PERSONA",
+    "Dailos Ojeda Rivero"
+   ],
+   [
+    "PERSONA",
+    "Raquel"
+   ],
+   [
+    "PERSONA",
+    "Kevin Hernández Perdomo"
+   ],
+   [
+    "PERITO",
+    "Leticia Peñate Ramos"
+   ],
+   [
+    "NIE",
+    "Y4827316K"
+   ],
+   [
+    "DNI",
+    "42871365T"
+   ],
+   [
+    "CIF",
+    "B76284513"
+   ],
+   [
+    "DIRECCION",
+    "calle Fernando Guanarteme, n.º 88, 2.º izquierda, 35010 Las Palmas de Gran Canaria"
+   ],
+   [
+    "AUTOS",
+    "35/0004127/26"
+   ],
+   [
+    "NORMA",
+    "artículos 177 a 184 de la Ley 36/2011, de 10 de octubre, reguladora de la jurisdicción social"
+   ],
+   [
+    "NORMA",
+    "artículo 177.4 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 177.3 LRJS"
+   ],
+   [
+    "NORMA",
+    "Convenio colectivo de ámbito estatal del sector de contact center"
+   ],
+   [
+    "NORMA",
+    "artículo 28.1 CE"
+   ],
+   [
+    "NORMA",
+    "art. 64.1 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 2.f LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 6 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 10.1 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 177.1 y 177.4 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 179.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 179.1 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 14 CE"
+   ],
+   [
+    "NORMA",
+    "art. 15 CE"
+   ],
+   [
+    "NORMA",
+    "art. 16 CE"
+   ],
+   [
+    "NORMA",
+    "artículos 4.2.c) y e) y 17.1 del Estatuto de los Trabajadores"
+   ],
+   [
+    "NORMA",
+    "Directiva 2000/43/CE"
+   ],
+   [
+    "NORMA",
+    "Directiva 2000/78/CE"
+   ],
+   [
+    "NORMA",
+    "artículos 2, 6.2 y 6.3 de la Ley 15/2022, de 12 de julio, integral para la igualdad de trato y la no discriminación"
+   ],
+   [
+    "NORMA",
+    "art. 28.1 CE y art. 12 LOLS"
+   ],
+   [
+    "NORMA",
+    "arts. 96.1 y 181.2 LRJS y art. 30 de la Ley 15/2022"
+   ],
+   [
+    "NORMA",
+    "artículo 183 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 27 de la Ley 15/2022"
+   ],
+   [
+    "NORMA",
+    "artículo 40.1.c) de la LISOS"
+   ],
+   [
+    "NORMA",
+    "artículo 8.12 y 8.13 bis"
+   ],
+   [
+    "NORMA",
+    "STS (Sala 4.ª) de 5 de octubre de 2017 (rec. 2497/2015)"
+   ],
+   [
+    "NORMA",
+    "STC 61/2021, de 15 de marzo"
+   ],
+   [
+    "NORMA",
+    "art. 180.4 LRJS"
+   ],
+   [
+    "NORMA",
+    "art. 90.2 y 94.2 LRJS"
+   ],
+   [
+    "NORMA",
+    "artículo 236 bis LOPJ"
+   ],
+   [
+    "NORMA",
+    "artículo 9 RGPD"
+   ],
+   [
+    "OBJETO",
+    "acoso discriminatorio por razón de origen racial o étnico y de religión"
+   ],
+   [
+    "OBJETO",
+    "La actora es una mujer negra"
+   ],
+   [
+    "OBJETO",
+    "profesa la religión musulmana"
+   ],
+   [
+    "OBJETO",
+    "La actora es además afiliada a CCOO desde el 4 de marzo de 2026"
+   ],
+   [
+    "OBJETO",
+    "Represalia por la afiliación sindical"
+   ],
+   [
+    "OBJETO",
+    "vulneración de su libertad sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "no consta descuento de cuota sindical, porque la actora la abona por domiciliación bancaria",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "me ha pedido sitio para rezar",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se vaya a la mezquita de Guanarteme",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "compara el pañuelo de la actora con «un árbol de navidad»",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "primer día de ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "a ver cuánto aguanta la negrita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "el cambio de turno solicitado para el mes de ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "haber rezado durante su pausa",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "si quieres rezar cinco veces al día",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "una chica negra",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con el pañuelo puesto",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ante una crisis de ansiedad de la actora en el puesto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aquí no estamos en la selva",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "con los ojos llorosos en el puesto",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "ya de baja la actora",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la morita",
+    "etnia"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "Al conocer la afiliación de la actora",
+    "sindical"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "insomnio, crisis de ansiedad y llanto en el puesto, con pérdida de 6 kg de peso",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "se le pautó zolpidem y después lorazepam",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "está en situación de IT con el diagnóstico de trastorno de adaptación con ansiedad mixta y estado de ánimo depresivo (F43.23)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "en tratamiento con escitalopram 10 mg y psicoterapia",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "aprecia sintomatología de estrés postraumático, descarta la simulación (SIMS 9)",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "considera probable la relación de causalidad con factores psicosociales del entorno laboral",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "la determinación de la contingencia, que no es objeto de este procedimiento",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "durante el ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "durante el mes de ramadán",
+    "religion"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "diferencia entre el salario y la prestación de IT",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "gastos de psicoterapia privada",
+    "salud"
+   ],
+   [
+    "CAT_ESPECIAL",
+    "los datos de salud de la actora",
+    "salud"
+   ]
+  ],
+  "ambiguo": []
+ }
+}

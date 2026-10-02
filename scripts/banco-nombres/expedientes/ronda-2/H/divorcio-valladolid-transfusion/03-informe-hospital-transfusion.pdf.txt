@@ -1,0 +1,61 @@
+SACYL — Junta de Castilla y León
+HOSPITAL CLÍNICO UNIVERSITARIO DE VALLADOLID
+Servicio de Pediatría · Unidad de Cuidados Intensivos Pediátricos
+Avda. Ramón y Cajal, 3 · 47003 Valladolid
+
+INFORME CLÍNICO SOBRE INDICACIÓN Y ADMINISTRACIÓN DE TRANSFUSIÓN EN MENOR
+(Emitido a solicitud de la madre, D.ª Nerea Calvo Ortega, y para su remisión al Juzgado que autorizó la transfusión)
+
+Paciente: Hugo Gallardo Calvo
+Fecha de nacimiento: 22/06/2018 (7 años)
+NHC: 1 087 336            CIPA (tarjeta sanitaria): CL 3409 1188 72
+Episodio: Urgencias 14/03/2026 → UCIP 15/03/2026 → Planta 18/03/2026 → Alta 24/03/2026
+Médico responsable: Dr. Ignacio Herrero Gil (UCIP)
+Médica adjunta de guardia: Dra. Sonia Vaquero Alonso
+
+1. RESUMEN DEL EPISODIO
+
+Varón de 7 años trasladado en UVI móvil desde el Centro de Salud de Tordesillas el 14/03/2026 a las 22:40 h tras caída de bicicleta con traumatismo abdominal en hipocondrio izquierdo (impacto con el manillar) a las 19:30 h, en el domicilio de los abuelos paternos en Tordesillas.
+
+Antecedentes personales: esferocitosis hereditaria diagnosticada en 2022 (mutación heterocigota en el gen ANK1, estudio genético realizado en el Servicio de Hematología; herencia autosómica dominante, padre no estudiado, abuelo paterno afecto). Esplenomegalia leve conocida. Seguimiento en consulta de Hematología infantil. Hemoglobina basal habitual 10,5-11 g/dl. Vacunación al día. Sin alergias medicamentosas conocidas.
+
+A la llegada: palidez cutáneo-mucosa intensa, taquicardia de 148 lpm, TA 78/40, relleno capilar de 4 segundos, dolor y defensa abdominal en hemiabdomen izquierdo. Ecografía FAST positiva. TC abdominal con contraste: laceración esplénica grado III-IV (escala AAST) con hemoperitoneo moderado, sin extravasación activa de contraste en el momento del estudio. Hemoglobina 6,2 g/dl a las 23:15 h; 5,4 g/dl a las 01:30 h.
+
+2. INDICACIÓN DE TRANSFUSIÓN
+
+A la vista del descenso de hemoglobina, la inestabilidad hemodinámica pese a la expansión con cristaloides (2 bolos de 20 ml/kg de suero fisiológico) y la anemia hemolítica crónica de base, se estableció indicación de transfusión urgente de concentrado de hematíes, por existir riesgo vital inminente, y se planteó la posibilidad de esplenectomía de urgencia si fracasaba el manejo conservador.
+
+3. NEGATIVA DE LOS ACOMPAÑANTES
+
+El menor llegó acompañado por su padre, D. Rubén Gallardo Sanz, y por sus abuelos paternos, D. Teodoro Gallardo Pastor y D.ª Adoración Sanz Merino. Informados de la indicación a las 23:40 h, los abuelos manifestaron que son Testigos de Jehová y que, por sus convicciones religiosas, se oponían a cualquier transfusión de sangre, exhibiendo ambos su documento de directrices médicas anticipadas y una tarjeta en la que consta «No sangre». Solicitaron alternativas (eritropoyetina, hierro intravenoso, recuperador de sangre), que se explicaron como insuficientes en la situación clínica del menor.
+
+El padre, tras hablar a solas con sus progenitores, manifestó que «no quería ir contra su familia», que «él no podía firmar eso» y que esperaran a la madre. Se negó a firmar tanto el consentimiento como el documento de rechazo. Hacia las 00:30 h el padre se ofreció como donante directo para evitar «sangre de extraños»; se le explicó que la donación dirigida no es posible en urgencias y, además, el propio padre refirió espontáneamente ser VIH positivo en tratamiento antirretroviral, lo que la excluiría en cualquier caso.
+
+Se intentó contactar con la madre por teléfono en diez ocasiones entre las 23:45 h y las 01:50 h, sin éxito (posteriormente se supo que regresaba en un vuelo desde Tenerife). La trabajadora social de guardia, D.ª Lidia Pascual Benito, dejó constancia de los intentos.
+
+Ante la urgencia vital y la negativa del padre a pronunciarse, a las 02:10 h se puso el caso en conocimiento del Juzgado de Guardia de Valladolid, solicitando autorización judicial, aun cuando el art. 9.6 de la Ley 41/2002 habría permitido actuar directamente en caso de demora. Se recibió por vía telemática auto de autorización a las 03:05 h.
+
+4. TRATAMIENTO ADMINISTRADO
+
+- Transfusión de 2 concentrados de hematíes (grupo A Rh positivo, 10 ml/kg cada uno), a las 03:20 h y 05:10 h, sin reacciones transfusionales.
+- Tratamiento conservador de la lesión esplénica en UCIP: reposo absoluto, monitorización, controles seriados de hemoglobina.
+- Analgesia: paracetamol iv y cloruro mórfico en perfusión las primeras 24 h.
+- No fue necesaria la esplenectomía.
+- Hemoglobina post-transfusión: 9,1 g/dl. Al alta: 9,8 g/dl.
+
+La madre llegó al hospital a las 04:15 h, fue informada de lo actuado y firmó su conformidad con la transfusión y con el tratamiento.
+
+5. JUICIO CLÍNICO
+
+- Traumatismo abdominal cerrado con laceración esplénica grado III-IV y hemoperitoneo, manejado de forma conservadora.
+- Shock hemorrágico compensado al ingreso.
+- Anemia aguda sobre anemia hemolítica crónica por esferocitosis hereditaria.
+
+6. RECOMENDACIONES AL ALTA
+
+Reposo relativo durante 6 semanas, sin deportes de contacto ni bicicleta durante 3 meses. Control en consulta de Hematología infantil en 15 días con hemograma. Se plantea esplenectomía programada parcial a partir de los 8-9 años, con vacunación previa frente a neumococo, meningococo y Haemophilus. Se recomienda a ambos progenitores que dejen constancia por escrito de su conformidad previa con transfusiones en caso de urgencia, dado el riesgo hematológico de base del menor.
+
+Valladolid, 26 de marzo de 2026
+
+Fdo.: Dr. Ignacio Herrero Gil                Vº Bº: Dra. Sonia Vaquero Alonso
+Facultativo especialista UCIP                Jefa de la guardia de Pediatría

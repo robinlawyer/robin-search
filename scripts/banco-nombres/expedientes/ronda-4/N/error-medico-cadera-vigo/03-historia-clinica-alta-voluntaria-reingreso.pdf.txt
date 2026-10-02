@@ -1,0 +1,41 @@
+HOSPITAL SANTA BAIA — VIGO · HISTORIA CLÍNICA (extracto certificado aportado como doc. n.º 3)
+Paciente: Manuel Figueroa Lorenzo · NHC 0094471 · F. nac. 22/06/1966 · Tarjeta sanitaria SERGAS GA0815366921
+
+ANTECEDENTES PERSONALES
+- Hemofilia A grave (FVIII:C < 1 %), sin inhibidor (título Bethesda 0,0 UB en 2024). En profilaxis domiciliaria con Advate 2.000 UI 3 veces/semana, seguido en la Unidad de Hemofilia del CHUVI (Dra. Iria Montes Abal).
+- Artropatía hemofílica de rodilla izquierda (sinovectomía radioisotópica 1998) y de cadera derecha; coxartrosis grado IV de Kellgren-Lawrence.
+- Hepatitis C crónica por transfusión de hemoderivados en 1984, tratada con sofosbuvir/velpatasvir (Epclusa) en 2017, RVS. Serología VIH negativa.
+- HTA en tratamiento con enalapril 20 mg. DM tipo 2 con metformina 850 mg/12 h (HbA1c 7,4 %). Exfumador desde 2010. Bebedor ocasional.
+- Alergia a metamizol (Nolotil): urticaria.
+- Testigo de Jehová: rechaza transfusión de sangre y componentes principales. DIP registrado.
+- Situación social: casado, vive con su esposa. Hijo e hija independizados. Jubilado anticipado (antes conductor de Vitrasa); reconocida discapacidad del 45 % desde 2012.
+
+INTERVENCIÓN — 04/04/2025
+Artroplastia total de cadera derecha no cementada (cotilo Pinnacle 54 mm, vástago Corail n.º 12, cabeza cerámica 36 mm). Abordaje posterolateral. Cirujano: Dr. Pereiro. Ayudante: Dr. Seixas. Anestesia: Dra. Cid (raquídea).
+Profilaxis hemostática: bolo de Advate 4.000 UI (≈ 50 UI/kg) en inducción. Ácido tranexámico 1 g iv. Cell saver: recuperados 380 ml. Sangrado estimado 900 ml. Hb preop 14,2 g/dl.
+Hoja de anestesia: «No se dispone de nivel de FVIII postbolo; hematología del CHUVI no localizable (festivo local)».
+
+EVOLUTIVO (resumen)
+04/04 21:00 — Estable. Drenaje 250 ml. Advate 2.000 UI/12 h según pauta verbal.
+05/04 — Hb 10,1. Drenaje 420 ml. Dolor 7/10. Se pide nivel de FVIII: no se procesa en el laboratorio del centro (técnica no disponible en fin de semana).
+06/04 — Hb 8,3. Muslo derecho tumefacto, a tensión. Se baja dosis de Advate a 2.000 UI/24 h «por stock limitado en farmacia». Pte. muy dolorido, refiere hormigueo y «pie dormido» derecho. Se anota: «parestesias en territorio del CPE, vigilar».
+07/04 — Hb 6,9. Hematoma glúteo-muslo extenso. El paciente rechaza transfusión. Se inicia Eprex 40.000 UI sc y Ferinject 1.000 mg iv. Se comenta con el Dr. Pereiro: «no urge revisión, vigilar». Pie caído derecho (balance muscular de tibial anterior 1/5).
+08/04 10:30 — Hb 6,1. La familia (hijo, Sr. Brais Figueroa) solicita traslado al CHUVI por falta de hematólogo y de factor. Se le informa de que no hay cama. El hijo amenaza con denunciar. El paciente refiere que «aquí le presionan para que se transfunda» y que «el anestesista de guardia le ha dicho que si se muere es cosa suya». Se le explican los riesgos. Firma ALTA VOLUNTARIA a las 13:15.
+
+DOCUMENTO DE ALTA VOLUNTARIA (08/04/2025)
+D. Manuel Figueroa Lorenzo solicita el alta voluntaria en contra del criterio médico, habiendo sido informado de que presenta anemia aguda posthemorrágica grave (Hb 6,1 g/dl), hematoma extenso en muslo derecho y déficit neurológico (pie caído) en estudio, y de los riesgos que asume. Firma: M. Figueroa. Testigo: Carmen Otero Vázquez. Médico: Dr. Ignacio Barreiro Sende (MIR R3 Traumatología). Observaciones del paciente: «Me voy al Cunqueiro porque aquí no hay hematólogo ni factor. No me voy a mi casa».
+
+────────────────────────────────────────
+
+COMPLEXO HOSPITALARIO UNIVERSITARIO DE VIGO (CHUVI) — HOSPITAL ÁLVARO CUNQUEIRO
+INFORME DE ALTA HOSPITALARIA — Servicio de Hematología y Hemoterapia / Traumatología
+Ingreso: 08/04/2025 (vía Urgencias, 15:02) · Alta: 21/05/2025
+
+Motivo de ingreso: anemia grave y hematoma de muslo derecho tras PTC realizada en centro privado, en paciente con hemofilia A grave, testigo de Jehová.
+Exploración: TA 98/56, FC 118 lpm. Palidez intensa. Muslo derecho con hematoma a tensión, perímetro +9 cm respecto al contralateral. Pie caído derecho. Herida con exudado serohemático.
+Analítica: Hb 5,8 g/dl; Hto 17 %; plaquetas 312.000; FVIII:C 4 %; TTPa 68 s; PCR 112 mg/l; lactato 2,9.
+Evolución: Se instaura perfusión continua de factor VIII (Advate, objetivo FVIII > 80 %), ácido tranexámico, EPO a dosis altas y hierro iv, con protocolo de ahorro de sangre. Hb mínima 4,9 g/dl el 10/04; ingreso en REA 4 días. El 14/04, fiebre 38,9 ºC; punción del hematoma: Staphylococcus aureus sensible a meticilina. Diagnóstico de infección periprotésica aguda. Desbridamiento, retirada de implantes y espaciador de cemento con gentamicina y vancomicina el 22/04 (recambio en dos tiempos). Cloxacilina iv 6 semanas y rifampicina oral. EMG 12/05: axonotmesis grave del nervio ciático poplíteo externo derecho.
+Diagnósticos al alta: 1) Anemia aguda posthemorrágica grave. 2) Hematoma de muslo derecho infectado. 3) Infección periprotésica aguda por SAMS, cadera derecha (espaciador). 4) Lesión del nervio ciático poplíteo externo derecho con pie caído. 5) Hemofilia A grave. 6) DM2 descompensada durante el ingreso (insulinización transitoria).
+Tratamiento al alta: Advate profilaxis 3.000 UI 3 veces/semana; rifampicina 600 mg/24 h hasta completar 3 meses; levofloxacino 500 mg/24 h; ortesis antiequino (DAFO); enoxaparina NO (hemofilia); metformina; enalapril; tramadol/paracetamol (Zaldiar) si dolor; lorazepam 1 mg si ansiedad.
+Pendiente: segundo tiempo de recambio cuando se negativicen reactantes (previsto septiembre 2025).
+Firmado: Dra. Iria Montes Abal (Hematología) · Dr. Fernando Lojo Otero (Traumatología)

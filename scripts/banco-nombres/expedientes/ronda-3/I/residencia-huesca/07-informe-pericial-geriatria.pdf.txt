@@ -1,0 +1,49 @@
+INFORME PERICIAL MÉDICO
+Especialidad: Geriatría
+
+Perito: Dra. Marta Sesé Olivan, licenciada en Medicina y Cirugía, especialista en Geriatría (vía MIR), máster en Valoración del Daño Corporal, colegiada n.º 50/08822 del Colegio Oficial de Médicos de Zaragoza.
+Solicitado por: Dña. Carmen Allué Sarasa, abogada, en representación de los hermanos D. Daniel, Dña. Rebeca y D. Samuel Abad Lasierra.
+Objeto: valorar si la asistencia prestada a Dña. Pilar Lasierra Coscolla en la Residencia Santa Orosia Mayores entre diciembre de 2025 y febrero de 2026 se ajustó a la lex artis y, en su caso, la relación causal con su fallecimiento.
+Fecha: 15 de julio de 2026
+
+1. DOCUMENTACIÓN EXAMINADA
+1.1 Informe de incidencia grave de la residencia (23/02/2026).
+1.2 Evolutivo de enfermería y hoja de tratamiento (15/12/2025 a 14/02/2026).
+1.3 Copia compulsada del registro de caídas de la planta 1.ª (hoja n.º 14).
+1.4 Historia clínica del Hospital Universitario San Jorge (14 a 19/02/2026), incluido el TC craneal y el informe de éxitus.
+1.5 Informe médico-forense de autopsia del Dr. Andrés Lacasta Bielsa (30/04/2026) y resultados del INTCF.
+1.6 Acta notarial de manifestaciones de Dña. Nerea Pueyo Gracia (05/05/2026).
+1.7 Plan de Atención Individualizado (PAI) de octubre de 2025.
+
+2. ANTECEDENTES CLÍNICOS RELEVANTES
+Mujer de 88 años, viuda, con:
+- Enfermedad de Alzheimer de inicio tardío diagnosticada en 2019 por Neurología del Hospital San Jorge (RM cerebral con atrofia hipocampal bilateral, Scheltens 3), en estadio GDS 6 en la última valoración. MEC 9/35. Trastornos de conducta: vagabundeo nocturno, agitación vespertina, ideas delirantes de que su marido seguía vivo.
+- DM2 de 22 años de evolución, insulinizada desde 2021, con buen control (HbA1c 6,0-6,1 %), lo que en una anciana frágil con demencia indica un objetivo de control excesivamente estricto (las guías recomiendan HbA1c 7,5-8,5 % en este perfil).
+- FA permanente con CHA2DS2-VASc 6 y HAS-BLED 3, anticoagulada con apixabán a dosis reducida.
+- ERC estadio 3b (FG 38 ml/min en enero de 2026).
+- HTA, osteoporosis con fractura previa de radio y aplastamientos vertebrales, sarcopenia, incontinencia mixta.
+- Polifarmacia: 10 principios activos, entre ellos quetiapina y lorazepam, ambos con riesgo de caídas (criterios STOPP/Beers).
+- Tres caídas en siete semanas antes de la caída fatal.
+
+3. ANÁLISIS
+3.1 Riesgo de caídas. Con un Downton de 5, un Tinetti de 12/28, tres caídas recientes, deambulación nocturna errática y anticoagulación, la paciente tenía un riesgo MUY ALTO no ya de caer, sino de sufrir una lesión grave al caer (hemorragia intracraneal, fractura de cadera). Las medidas del PAI eran adecuadas en el papel; lo que falló fue su ejecución: sensor averiado doce días sin sustituir, rondas no realizadas, ratio de una gerocultora por 24 residentes en una unidad psicogeriátrica.
+
+3.2 La hipoglucemia. El aumento de la insulina glargina de 18 a 22 UI (22 %) en una paciente con FG 38, peso de 51 kg, ingesta errática y HbA1c de 6,1 % fue, a mi juicio, una decisión clínica discutible, y en todo caso exigía el control nocturno pautado. Ese control no se realizó la tercera noche, precisamente la noche en la que la paciente no cenó y recibió quetiapina de rescate. Con alta probabilidad, la paciente sufrió una hipoglucemia nocturna (48 mg/dL dos o más horas después de la caída, ya con contrarregulación) que contribuyó a la inestabilidad y a la caída. La insulina se administró a las 22:00 sin reducir la dosis pese a constar en el evolutivo que la residente no había cenado.
+
+3.3 Demora en el hallazgo. Con el sensor de suelo operativo, la caída habría generado una alarma inmediata. La demora estimada por el forense (dos a cuatro horas) en una paciente anticoagulada con hematoma subdural en expansión resulta clínicamente relevante: la reversión precoz del anticoagulante y la valoración neuroquirúrgica temprana mejoran el pronóstico, aunque en este caso la situación basal (GDS 6, 88 años) hacía muy improbable la cirugía.
+
+3.4 La sujeción. La negativa de la familia a la sujeción física no altera las conclusiones. Las sujeciones físicas no reducen las caídas graves en demencia e incrementan el riesgo de lesiones y de muerte por asfixia; la alternativa correcta era la vigilancia (sensor, cama baja, rondas) que no se ejecutó.
+
+3.5 Otras consideraciones. No consta que las visitas del pastor evangélico ni los cultos a los que la familia la llevaba los domingos produjeran agitación; al contrario, el propio evolutivo (28/12/2025) recoge que los himnos «la calman». La alusión de la dirección a que esas visitas «la alteraban» carece de soporte documental.
+
+4. CONCLUSIONES
+1.ª La residente presentaba un riesgo muy alto y conocido de caída con lesión grave.
+2.ª La residencia no ejecutó las medidas preventivas de su propio PAI (sensor de suelo, rondas cada dos horas) ni el control glucémico nocturno pautado por su médico la noche del 13 al 14 de febrero de 2026.
+3.ª Con alta probabilidad, la hipoglucemia nocturna favoreció la caída, y la demora en el hallazgo empeoró las consecuencias del hematoma subdural en una paciente anticoagulada.
+4.ª Existe relación de causalidad entre los incumplimientos descritos y el fallecimiento, sin que la situación basal de la paciente (demencia avanzada y pluripatología) la rompa, aunque deba tenerse en cuenta a efectos de cuantificación.
+
+La perita declara, conforme al art. 335.2 de la Ley de Enjuiciamiento Civil, que ha actuado y actuará con la mayor objetividad posible.
+
+Zaragoza, 15 de julio de 2026
+
+Fdo.: Marta Sesé Olivan

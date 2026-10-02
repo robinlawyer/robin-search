@@ -1,0 +1,55 @@
+MINISTERIO DE JUSTICIA
+INSTITUTO NACIONAL DE TOXICOLOGÍA Y CIENCIAS FORENSES
+DEPARTAMENTO DE MADRID — SERVICIO DE QUÍMICA Y DROGAS
+C/ José Echegaray, 4 — 28232 Las Rozas de Madrid
+
+INFORME TOXICOLÓGICO
+N.º de registro INTCF: M-25-07781 y M-25-07792
+Organismo peticionario: Tribunal de Instancia de Logroño, Sección de Instrucción, Plaza n.º 3 — Diligencias Previas 512/2025
+Asunto: Atropello mortal de ciclista. Análisis de muestras del fallecido y del conductor investigado.
+Facultativa responsable: Dra. Beatriz Lozano Peña, Facultativa del INTCF
+Fecha de recepción de muestras: 14/05/2025 (precintos íntegros; cadena de custodia correcta)
+Fecha de emisión: 30/06/2025
+
+PARTE I — MUESTRAS DEL FALLECIDO (M-25-07781)
+Identificación: Javier Sáenz Pascual. Autopsia A-142/2025 del IML de La Rioja (Dr. Fernando Arnedo Calvo).
+Muestras: sangre periférica (2 × 10 ml, con fluoruro sódico), orina (20 ml), humor vítreo (2 ml), contenido gástrico (60 ml).
+
+Técnicas: HS-GC-FID para etanol y volátiles; screening por inmunoensayo (EMIT) en orina; GC-MS y LC-MS/MS en sangre para confirmación y cuantificación.
+
+Resultados:
+— Etanol en sangre: NEGATIVO (< 0,10 g/l). Etanol en humor vítreo: negativo.
+— Drogas de abuso (opiáceos, cocaína y metabolitos, anfetaminas, MDMA, cannabinoides, benzodiacepinas, metadona, ketamina): NEGATIVO.
+— Sertralina: 0,08 mg/l en sangre periférica (rango terapéutico: 0,01-0,25 mg/l). Desmetilsertralina: 0,15 mg/l.
+— Salbutamol: detectado en orina, no cuantificado.
+— Budesonida: no detectada.
+— Ibuprofeno: 4,2 mg/l (concentración terapéutica).
+— Cafeína: detectada.
+
+Interpretación: El fallecido no se encontraba bajo los efectos de alcohol ni de drogas de abuso. Las concentraciones de sertralina e ibuprofeno son compatibles con tratamiento terapéutico y, a esas concentraciones, no producen efectos que alteren la capacidad para circular en bicicleta.
+
+PARTE II — MUESTRAS DEL CONDUCTOR INVESTIGADO (M-25-07792)
+Identificación: Rubén Ochoa Martínez, DNI 72794410B.
+Muestras: sangre venosa extraída en el Servicio de Urgencias del Hospital Universitario San Pedro el 12/05/2025 a las 09:10 h (2 × 5 ml); saliva recogida por la Policía Local a las 08:05 h (dispositivo Quantisal).
+
+Resultados en sangre:
+— Etanol: 1,58 g/l.
+— Cocaína: 42 ng/ml. Benzoilecgonina: 610 ng/ml. Cocaetileno: 18 ng/ml.
+— Δ9-THC: 3,1 ng/ml. 11-OH-THC: 1,4 ng/ml. THC-COOH: 38 ng/ml.
+— Lorazepam: 11 ng/ml (rango terapéutico bajo).
+— Paracetamol: no detectado.
+
+Resultados en saliva: cocaína 310 ng/ml; Δ9-THC 47 ng/ml.
+
+Interpretación:
+1. La alcoholemia de 1,58 g/l en sangre extraída aproximadamente 1 h 35 min después del accidente, y teniendo en cuenta la fase de eliminación, permite estimar una alcoholemia en el momento de los hechos del orden de 1,70-1,80 g/l. Es coherente con los resultados del etilómetro evidencial (0,78 y 0,74 mg/l en aire espirado).
+2. La presencia de cocaína inalterada y de cocaetileno indica un consumo reciente y simultáneo de cocaína y alcohol (en las horas previas), con potenciación de efectos.
+3. La concentración de Δ9-THC en sangre (> 2 ng/ml) indica un consumo reciente de cannabis, probablemente en las 3-4 horas previas.
+4. El lorazepam a concentración terapéutica baja sugiere toma de una benzodiacepina prescrita o no, que potencia el efecto depresor del alcohol.
+5. La combinación de sustancias detectada es susceptible de producir una afectación grave de la capacidad de conducción: disminución de la atención y de los reflejos, aumento del tiempo de reacción, alteración de la percepción de distancias y velocidades, y conducta de riesgo por sobreestimación de las propias capacidades.
+
+Las muestras sobrantes se conservan a −20 ºC durante el plazo legal a disposición de la autoridad judicial para eventuales contraanálisis.
+
+Las Rozas de Madrid, 30 de junio de 2025
+La Facultativa: Beatriz Lozano Peña
+V.º B.º La Jefa del Servicio de Química y Drogas

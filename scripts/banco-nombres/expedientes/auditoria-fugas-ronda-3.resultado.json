@@ -1,0 +1,752 @@
+[
+ {
+  "n": 1,
+  "categoria": "fuga",
+  "nota": "lisdexanfetamina abandonada y asistencia irregular a citas en claro"
+ },
+ {
+  "n": 2,
+  "categoria": "leve",
+  "nota": "alta y informe de mutua: insinúa baja sin diagnóstico"
+ },
+ {
+  "n": 3,
+  "categoria": "leve",
+  "nota": "cabecera de parte médico de baja; diagnóstico tapado"
+ },
+ {
+  "n": 4,
+  "categoria": "no_fuga",
+  "nota": "cabecera del escrito; nada sensible"
+ },
+ {
+  "n": 5,
+  "categoria": "leve",
+  "nota": "resultados psicotécnicos normales"
+ },
+ {
+  "n": 6,
+  "categoria": "fuga",
+  "nota": "revela que el padre identificado tiene antecedentes penales"
+ },
+ {
+  "n": 7,
+  "categoria": "fuga",
+  "nota": "propuesta de sujeción nocturna a residente psicogeriátrica"
+ },
+ {
+  "n": 8,
+  "categoria": "leve",
+  "nota": "«dicen que estás loca», «tratamiento»: insinúa salud mental"
+ },
+ {
+  "n": 9,
+  "categoria": "no_fuga",
+  "nota": "cabecera del chat; USO no visible"
+ },
+ {
+  "n": 10,
+  "categoria": "leve",
+  "nota": "medicación «de rescate» con fármaco tapado"
+ },
+ {
+  "n": 11,
+  "categoria": "fuga",
+  "nota": "centro de educación especial y transporte adaptado: discapacidad del menor"
+ },
+ {
+  "n": 12,
+  "categoria": "no_fuga",
+  "nota": "transición tapada"
+ },
+ {
+  "n": 13,
+  "categoria": "leve",
+  "nota": "índice documental: evolutivo de enfermería y registro de caídas"
+ },
+ {
+  "n": 14,
+  "categoria": "leve",
+  "nota": "diagnóstico tapado; solo «no capacitada para el puesto»"
+ },
+ {
+  "n": 15,
+  "categoria": "no_fuga",
+  "nota": "dato tapado; queda solo el sensor de suelo"
+ },
+ {
+  "n": 16,
+  "categoria": "no_fuga",
+  "nota": "drepanocitosis no visible; antecedentes penales limpios"
+ },
+ {
+  "n": 17,
+  "categoria": "leve",
+  "nota": "no cenó y dosis de rescate; fármaco tapado"
+ },
+ {
+  "n": 18,
+  "categoria": "fuga",
+  "nota": "facultades volitivas disminuidas y atenuante 21.2.ª CP en claro"
+ },
+ {
+  "n": 19,
+  "categoria": "fuga",
+  "nota": "antecedentes toxicológicos (cannabis a los 13, alcohol a los 14)"
+ },
+ {
+  "n": 20,
+  "categoria": "leve",
+  "nota": "«los [X] de 2022» coincidentes con convocatorias"
+ },
+ {
+  "n": 21,
+  "categoria": "fuga",
+  "nota": "capacidades volitivas disminuidas (pericial psiquiátrica)"
+ },
+ {
+  "n": 22,
+  "categoria": "fuga",
+  "nota": "visitas del pastor: revela confesión religiosa"
+ },
+ {
+  "n": 23,
+  "categoria": "no_fuga",
+  "nota": "todo tapado"
+ },
+ {
+  "n": 24,
+  "categoria": "fuga",
+  "nota": "SIMS y causalidad psicosocial: patología psíquica laboral en claro"
+ },
+ {
+  "n": 25,
+  "categoria": "leve",
+  "nota": "la madre cobra prestación de IT; sin diagnóstico"
+ },
+ {
+  "n": 26,
+  "categoria": "no_fuga",
+  "nota": "condena por maltrato fuera del texto visible"
+ },
+ {
+  "n": 27,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 28,
+  "categoria": "leve",
+  "nota": "«tres bajas por lo mismo» sin decir de qué"
+ },
+ {
+  "n": 29,
+  "categoria": "fuga",
+  "nota": "adicción a la cocaína y TDAH no tratado"
+ },
+ {
+  "n": 30,
+  "categoria": "leve",
+  "nota": "«tres bajas por lo mismo» sin causa"
+ },
+ {
+  "n": 31,
+  "categoria": "fuga",
+  "nota": "condenas por hurto y robo con violencia en claro"
+ },
+ {
+  "n": 32,
+  "categoria": "fuga",
+  "nota": "«embriaguez habitual del actor» atribuida a persona concreta"
+ },
+ {
+  "n": 33,
+  "categoria": "fuga",
+  "nota": "motivo de consulta: consumo de cocaína y cannabis"
+ },
+ {
+  "n": 34,
+  "categoria": "fuga",
+  "nota": "tratamiento en centro de drogodependencias desde nov-2024"
+ },
+ {
+  "n": 35,
+  "categoria": "fuga",
+  "nota": "facultades volitivas disminuidas en relación con los hechos"
+ },
+ {
+  "n": 36,
+  "categoria": "leve",
+  "nota": "cabecera de parte de baja; ajuste de tratamiento por USM no visible"
+ },
+ {
+  "n": 37,
+  "categoria": "fuga",
+  "nota": "limitación de deambulación e informe de Unidad de Hemoglobinopatías"
+ },
+ {
+  "n": 38,
+  "categoria": "fuga",
+  "nota": "condena de 2019 por delito contra la seguridad vial"
+ },
+ {
+  "n": 39,
+  "categoria": "fuga",
+  "nota": "sujeción abdominal nocturna a la residente"
+ },
+ {
+  "n": 40,
+  "categoria": "fuga",
+  "nota": "detención policial por supuesto robo"
+ },
+ {
+  "n": 41,
+  "categoria": "leve",
+  "nota": "diagnóstico tapado; quedan medidas cautelares sin delito"
+ },
+ {
+  "n": 42,
+  "categoria": "leve",
+  "nota": "medidas de prevención de caídas; insinúa"
+ },
+ {
+  "n": 43,
+  "categoria": "no_fuga",
+  "nota": "cabecera del atestado"
+ },
+ {
+  "n": 44,
+  "categoria": "leve",
+  "nota": "la madre va al hospital cada tres semanas; sin diagnóstico"
+ },
+ {
+  "n": 45,
+  "categoria": "no_fuga",
+  "nota": "polifarmacia tapada"
+ },
+ {
+  "n": 46,
+  "categoria": "leve",
+  "nota": "alusión a embriaguez habitual negada por la defensa"
+ },
+ {
+  "n": 47,
+  "categoria": "leve",
+  "nota": "informe de mutua y alta; sin diagnóstico"
+ },
+ {
+  "n": 48,
+  "categoria": "fuga",
+  "nota": "urgencias por consumo de cocaína, heroína negada, trastorno por consumo"
+ },
+ {
+  "n": 49,
+  "categoria": "fuga",
+  "nota": "suspensión de pena en ejecutoria y consumo de cocaína y cannabis"
+ },
+ {
+  "n": 50,
+  "categoria": "fuga",
+  "nota": "reanimación con ventilación cuatro días y exanguinotransfusión"
+ },
+ {
+  "n": 51,
+  "categoria": "fuga",
+  "nota": "antecedentes cancelados en el registro de menores con expediente"
+ },
+ {
+  "n": 52,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 53,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 54,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 55,
+  "categoria": "leve",
+  "nota": "«mi marido dice que rece más»: insinúa religiosidad"
+ },
+ {
+  "n": 56,
+  "categoria": "leve",
+  "nota": "«mi mujer» y «transferencia»: insinúa reproducción asistida u orientación"
+ },
+ {
+  "n": 57,
+  "categoria": "no_fuga",
+  "nota": "cabecera del informe social"
+ },
+ {
+  "n": 58,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 59,
+  "categoria": "fuga",
+  "nota": "glucemia 48 y acortamiento de miembro (fractura)"
+ },
+ {
+  "n": 60,
+  "categoria": "fuga",
+  "nota": "revocación de suspensión y atenuante 21.2: antecedente penal"
+ },
+ {
+  "n": 61,
+  "categoria": "fuga",
+  "nota": "trastorno por consumo de cocaína en claro"
+ },
+ {
+  "n": 62,
+  "categoria": "leve",
+  "nota": "«blanco, temblando, mirada perdida»"
+ },
+ {
+  "n": 63,
+  "categoria": "fuga",
+  "nota": "«el entrenador ese, que tiene antecedentes»"
+ },
+ {
+  "n": 64,
+  "categoria": "no_fuga",
+  "nota": "dato tapado"
+ },
+ {
+  "n": 65,
+  "categoria": "no_fuga",
+  "nota": "texto legal; ingresos no visibles"
+ },
+ {
+  "n": 66,
+  "categoria": "leve",
+  "nota": "«me dijo que un poco» (beber)"
+ },
+ {
+  "n": 67,
+  "categoria": "leve",
+  "nota": "comunidad terapéutica y «no estic bé»: insinúa adicción"
+ },
+ {
+  "n": 68,
+  "categoria": "leve",
+  "nota": "cabecera de neuropediatría/enfermedades neuromusculares"
+ },
+ {
+  "n": 69,
+  "categoria": "leve",
+  "nota": "dosis de rescate; fármaco tapado"
+ },
+ {
+  "n": 70,
+  "categoria": "leve",
+  "nota": "cabecera de unidad neuromuscular"
+ },
+ {
+  "n": 71,
+  "categoria": "fuga",
+  "nota": "consumo de cannabis, alcohol, heroína negada, urgencias"
+ },
+ {
+  "n": 72,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 73,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 74,
+  "categoria": "leve",
+  "nota": "«cansancio extremo los días de sesión»"
+ },
+ {
+  "n": 75,
+  "categoria": "fuga",
+  "nota": "«embriaguez habitual del actor»"
+ },
+ {
+  "n": 76,
+  "categoria": "no_fuga",
+  "nota": "dato tapado"
+ },
+ {
+  "n": 77,
+  "categoria": "leve",
+  "nota": "cansancio los días de sesión; CEDEX no visible"
+ },
+ {
+  "n": 78,
+  "categoria": "leve",
+  "nota": "formación de la bomba (insulina): insinúa diabetes"
+ },
+ {
+  "n": 79,
+  "categoria": "leve",
+  "nota": "existe un estudio de hemoglobinopatías del menor, sin resultado"
+ },
+ {
+  "n": 80,
+  "categoria": "fuga",
+  "nota": "revocación de suspensión de pena impuesta (art. 86 CP)"
+ },
+ {
+  "n": 81,
+  "categoria": "no_fuga",
+  "nota": "texto legal; confesión no visible"
+ },
+ {
+  "n": 82,
+  "categoria": "fuga",
+  "nota": "derivación preferente a Salud Mental"
+ },
+ {
+  "n": 83,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 84,
+  "categoria": "fuga",
+  "nota": "familiar con enfermedad grave incapacitante permanente"
+ },
+ {
+  "n": 85,
+  "categoria": "leve",
+  "nota": "retrovisores, «borracho», Mossad: insinúa"
+ },
+ {
+  "n": 86,
+  "categoria": "fuga",
+  "nota": "detención en 2019 por daños"
+ },
+ {
+  "n": 87,
+  "categoria": "leve",
+  "nota": "«tratamiento», «estás loca»"
+ },
+ {
+  "n": 88,
+  "categoria": "fuga",
+  "nota": "«plena fase maníaca»: trastorno bipolar"
+ },
+ {
+  "n": 89,
+  "categoria": "leve",
+  "nota": "hemocultivos negativos"
+ },
+ {
+  "n": 90,
+  "categoria": "fuga",
+  "nota": "condena de 2022 por amenazas y detención de 2019"
+ },
+ {
+  "n": 91,
+  "categoria": "fuga",
+  "nota": "suspensión de pena en ejecutoria 233/2024"
+ },
+ {
+  "n": 92,
+  "categoria": "no_fuga",
+  "nota": "anotado no visible; madre en residencia"
+ },
+ {
+  "n": 93,
+  "categoria": "no_fuga",
+  "nota": "identificación de perito"
+ },
+ {
+  "n": 94,
+  "categoria": "leve",
+  "nota": "plaza de respiro para el familiar dependiente"
+ },
+ {
+  "n": 95,
+  "categoria": "fuga",
+  "nota": "«ha sacado un cuchillo al vecino»: hecho penal en claro"
+ },
+ {
+  "n": 96,
+  "categoria": "leve",
+  "nota": "«estaba subiéndome»"
+ },
+ {
+  "n": 97,
+  "categoria": "fuga",
+  "nota": "«gran dependencia» con prestación del SEPAD"
+ },
+ {
+  "n": 98,
+  "categoria": "fuga",
+  "nota": "ejecutoria con pena suspendida"
+ },
+ {
+  "n": 99,
+  "categoria": "leve",
+  "nota": "registro de caídas de unidad psicogeriátrica"
+ },
+ {
+  "n": 100,
+  "categoria": "no_fuga",
+  "nota": "cabecera de queja"
+ },
+ {
+  "n": 101,
+  "categoria": "leve",
+  "nota": "«mio ma va a…» tras «relixón»: insinúa"
+ },
+ {
+  "n": 102,
+  "categoria": "no_fuga",
+  "nota": "nada sensible"
+ },
+ {
+  "n": 103,
+  "categoria": "fuga",
+  "nota": "recién salido del ingreso y bebiendo «no es como antes»: problema con el alcohol"
+ },
+ {
+  "n": 104,
+  "categoria": "fuga",
+  "nota": "no ha ido al CSM a pincharse: tratamiento psiquiátrico depot"
+ },
+ {
+  "n": 105,
+  "categoria": "fuga",
+  "nota": "«ya no oigo tanto las voces», efectos de la medicación"
+ },
+ {
+  "n": 106,
+  "categoria": "leve",
+  "nota": "«lo de la cabeza», fármacos tapados"
+ },
+ {
+  "n": 107,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 108,
+  "categoria": "leve",
+  "nota": "asunto «internamiento»"
+ },
+ {
+  "n": 109,
+  "categoria": "no_fuga",
+  "nota": "cabecera ministerial"
+ },
+ {
+  "n": 110,
+  "categoria": "leve",
+  "nota": "«mi pareja… vivimos juntos», secreto contado: insinúa"
+ },
+ {
+  "n": 111,
+  "categoria": "fuga",
+  "nota": "paciente de Centro de Atención a Drogodependencias"
+ },
+ {
+  "n": 112,
+  "categoria": "leve",
+  "nota": "«otra ma, de dreches»: insinúa ideología"
+ },
+ {
+  "n": 113,
+  "categoria": "fuga",
+  "nota": "cinco o seis ingresos y recaídas al fumar"
+ },
+ {
+  "n": 114,
+  "categoria": "no_fuga",
+  "nota": "cabecera de queja"
+ },
+ {
+  "n": 115,
+  "categoria": "fuga",
+  "nota": "citas de psicología y enfermería, adherencia al tratamiento"
+ },
+ {
+  "n": 116,
+  "categoria": "leve",
+  "nota": "descuento en nómina «que se enteran»: insinúa afiliación"
+ },
+ {
+  "n": 117,
+  "categoria": "no_fuga",
+  "nota": "sin referencia religiosa visible"
+ },
+ {
+  "n": 118,
+  "categoria": "leve",
+  "nota": "medidas cautelares; documentación médica no visible"
+ },
+ {
+  "n": 119,
+  "categoria": "leve",
+  "nota": "cabecera de parte de baja"
+ },
+ {
+  "n": 120,
+  "categoria": "fuga",
+  "nota": "discapacidad, dependencia y enfermedad grave en la unidad familiar"
+ },
+ {
+  "n": 121,
+  "categoria": "fuga",
+  "nota": "realce tardío en RM cardiaca y corsé por patología vertebral"
+ },
+ {
+  "n": 122,
+  "categoria": "fuga",
+  "nota": "TDAH y adicción según el forense"
+ },
+ {
+  "n": 123,
+  "categoria": "fuga",
+  "nota": "macrosomía e hipotiroidismo subclínico"
+ },
+ {
+  "n": 124,
+  "categoria": "fuga",
+  "nota": "recién salido del ingreso y bebiendo"
+ },
+ {
+  "n": 125,
+  "categoria": "fuga",
+  "nota": "no ha ido al CSM a pincharse"
+ },
+ {
+  "n": 126,
+  "categoria": "fuga",
+  "nota": "recién salido del ingreso y bebiendo; USO no visible"
+ },
+ {
+  "n": 127,
+  "categoria": "fuga",
+  "nota": "pena suspendida, posible revocación"
+ },
+ {
+  "n": 128,
+  "categoria": "fuga",
+  "nota": "«el entrenador… tiene antecedentes»; la detención anotada no visible"
+ },
+ {
+  "n": 129,
+  "categoria": "fuga",
+  "nota": "robos previos (móvil, cadena 2023) y juicio"
+ },
+ {
+  "n": 130,
+  "categoria": "fuga",
+  "nota": "crisis con ventilación no invasiva"
+ },
+ {
+  "n": 131,
+  "categoria": "leve",
+  "nota": "variabilidad ausente en RCTG; taquicardia tapada"
+ },
+ {
+  "n": 132,
+  "categoria": "fuga",
+  "nota": "violencia de género con orden de protección"
+ },
+ {
+  "n": 133,
+  "categoria": "fuga",
+  "nota": "derivación a Salud Mental"
+ },
+ {
+  "n": 134,
+  "categoria": "fuga",
+  "nota": "atestado: hallazgo de efectos y papelinas al detenido"
+ },
+ {
+  "n": 135,
+  "categoria": "leve",
+  "nota": "cabecera de internamiento no voluntario urgente"
+ },
+ {
+  "n": 136,
+  "categoria": "leve",
+  "nota": "«lo de la cabeza» y estimulación magnética; fármacos tapados"
+ },
+ {
+  "n": 137,
+  "categoria": "no_fuga",
+  "nota": "cabecera de aseguradora"
+ },
+ {
+  "n": 138,
+  "categoria": "fuga",
+  "nota": "derivación a Salud Mental"
+ },
+ {
+  "n": 139,
+  "categoria": "fuga",
+  "nota": "hipotiroidismo subclínico"
+ },
+ {
+  "n": 140,
+  "categoria": "leve",
+  "nota": "«echa polvo, no me tengo en pie»; diálisis tapada"
+ },
+ {
+  "n": 141,
+  "categoria": "leve",
+  "nota": "cabecera de parte de alta"
+ },
+ {
+  "n": 142,
+  "categoria": "leve",
+  "nota": "cabecera de Salud Mental/UHP; religión no visible"
+ },
+ {
+  "n": 143,
+  "categoria": "fuga",
+  "nota": "escalas Brooke/Vignos, PUL y asistente de tos"
+ },
+ {
+  "n": 144,
+  "categoria": "no_fuga",
+  "nota": "cabecera de correo"
+ },
+ {
+  "n": 145,
+  "categoria": "no_fuga",
+  "nota": "sindicato tapado"
+ },
+ {
+  "n": 146,
+  "categoria": "no_fuga",
+  "nota": "cabecera de carta; ideología no visible"
+ },
+ {
+  "n": 147,
+  "categoria": "fuga",
+  "nota": "discapacidad intelectual y dependencia en claro"
+ },
+ {
+  "n": 148,
+  "categoria": "fuga",
+  "nota": "deshabituación en comunidad terapéutica"
+ },
+ {
+  "n": 149,
+  "categoria": "leve",
+  "nota": "«está fatal»"
+ },
+ {
+  "n": 150,
+  "categoria": "leve",
+  "nota": "prueba en clínica privada; sin diagnóstico"
+ }
+]

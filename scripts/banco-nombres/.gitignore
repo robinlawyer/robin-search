@@ -1,0 +1,6 @@
+# Se regeneran: modelos del banco, ficheros construidos y volcados de fragmentos.
+.modelos/
+expedientes/*-ficheros/
+expedientes/*-ficheros.oro.json
+expedientes/*.frags.json
+_*.mjs

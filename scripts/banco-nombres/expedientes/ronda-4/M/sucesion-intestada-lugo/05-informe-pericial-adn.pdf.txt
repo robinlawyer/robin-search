@@ -1,0 +1,41 @@
+LABORATORIO GALAICO DE XENÉTICA FORENSE, S.L.
+Laboratorio acreditado por ENAC conforme a la Norma UNE-EN ISO/IEC 17025 (Acreditación n.º 1287/LE2411)
+Rúa da República Arxentina, 30 · 15706 Santiago de Compostela
+
+INFORME PERICIAL DE PARENTESCO BIOLÓGICO
+Referencia del laboratorio: LGXF-2026-0318
+Fecha del informe: 25 de marzo de 2026
+Solicitante: D. Brais Lamas Vilar, a través de su letrado D. Iago Varela Souto
+Perita responsable: Dra. Noemí Rodeiro Valcárcel, doctora en Biología, especialista en Genética Forense (Máster en Ciencias Forenses, USC)
+
+1. OBJETO
+Determinar, mediante el análisis de marcadores genéticos, la probabilidad de que D. Brais Lamas Vilar sea hijo biológico de D. Andrés Castro Seoane (fallecido en 2018), a partir de (a) la comparación con un hermano de doble vínculo del presunto padre y (b) el análisis de una muestra biológica conservada del presunto padre.
+
+2. MUESTRAS
+M1 — D. Brais Lamas Vilar, DNI 33598471-R. Frotis bucal, recogido el 3 de marzo de 2026 en el laboratorio, con identificación por DNI, fotografía y huella dactilar del índice derecho.
+M2 — Dña. Sonia Lamas Vilar, DNI 33590245-C, madre de M1. Frotis bucal, 3 de marzo de 2026, misma cadena de custodia.
+M3 — D. Ramón Castro Seoane, DNI 33912604-L, hermano del presunto padre. Frotis bucal, 4 de marzo de 2026, en presencia de su curadora representativa, Dña. Uxía Castro Barreiro, y de la trabajadora social municipal; consentimiento informado firmado por el propio interesado y por la curadora (Ley 14/2007, de 3 de julio, de Investigación biomédica).
+M4 — D. Andrés Castro Seoane (fallecido). Bloque de tejido incluido en parafina, procedente de biopsia hepática realizada en el Servicio de Anatomía Patológica del Hospital Universitario Lucus Augusti el 9 de noviembre de 2017 (n.º de biopsia B17-08842; diagnóstico: hepatitis crónica por VHC genotipo 1b con fibrosis F3), remitido por el hospital previa autorización del Juzgado de Primera Instancia n.º 1 de Lugo (diligencias preliminares 88/2026).
+
+3. METODOLOGÍA
+Extracción de ADN mediante columnas de sílice (M1-M3) y protocolo específico para tejido parafinado (M4). Amplificación de 23 STR autosómicos (PowerPlex® Fusion 6C) y 27 Y-STR (Yfiler™ Plus). Electroforesis capilar en analizador 3500. Análisis estadístico con frecuencias alélicas de la población gallega (base de datos GHEP-ISFG) y probabilidad a priori de 0,5.
+
+4. RESULTADOS
+4.1. Perfiles autosómicos. Se obtuvieron perfiles completos de M1, M2 y M3. De M4 se obtuvo un perfil parcial de 14 loci, por degradación del ADN propia de la fijación en formol. M2 es compatible como madre biológica de M1 en los 23 loci analizados.
+En M3 se observa un patrón trialélico en el locus D21S11 (alelos 29, 30 y 31.2), compatible con la trisomía del cromosoma 21 que consta en sus antecedentes (síndrome de Down), sin incidencia en el cálculo, que se realiza excluyendo dicho locus.
+4.2. Cromosoma Y. M1 y M3 comparten el mismo haplotipo en los 27 Y-STR analizados (haplogrupo predicho R1b-DF27), lo que indica que pertenecen al mismo linaje paterno. El haplotipo no se ha observado en la base de datos YHRD (n = 312.000), lo que refuerza el valor del hallazgo.
+4.3. Avuncularidad (M1–M3), alelos paternos obligados de M1 deducidos con M2: Índice de avuncularidad (IA) = 1.427; probabilidad de relación avuncular W = 99,93 %.
+4.4. Paternidad (M1–M4), 14 loci: Índice de paternidad (IP) = 9.850; probabilidad de paternidad W = 99,99 %.
+
+5. CONCLUSIONES
+1.ª No se excluye a D. Andrés Castro Seoane como padre biológico de D. Brais Lamas Vilar.
+2.ª La probabilidad de paternidad, con los datos del perfil parcial del presunto padre, es del 99,99 % («paternidad prácticamente probada» según los predicados verbales de Hummel), y la de relación avuncular con D. Ramón Castro Seoane, del 99,93 %, ambas con el haplotipo Y compartido.
+3.ª Dña. Antía Castro Novo, hija reconocida del presunto padre, no ha aportado muestra. Su participación permitiría un estudio de hermandad paterna (cromosoma X no informativo en este caso) que reforzaría el resultado.
+4.ª Los restos del material biológico se conservan en el laboratorio a disposición judicial durante cinco años.
+
+La perita declara bajo juramento, conforme al artículo 335.2 de la Ley de Enjuiciamiento Civil, que ha actuado y actuará con la mayor objetividad posible, y que conoce las sanciones penales en que podría incurrir si incumpliere su deber como perito.
+
+Santiago de Compostela, 25 de marzo de 2026
+
+Fdo.: Dra. Noemí Rodeiro Valcárcel
+Perita en Genética Forense — N.º de colegiada COBGA 15-2207

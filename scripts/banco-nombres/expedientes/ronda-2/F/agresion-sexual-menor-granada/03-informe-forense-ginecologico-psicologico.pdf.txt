@@ -1,0 +1,57 @@
+INSTITUTO DE MEDICINA LEGAL Y CIENCIAS FORENSES DE GRANADA
+Servicio de Clínica Médico-Forense — Unidad de Valoración Integral de Violencia de Género (UVIVG)
+
+N.º de registro IML: GR-2025-03117
+Órgano solicitante: Juzgado de Instrucción n.º 4 de Granada
+Procedimiento: Diligencias Previas 512/2025
+Informada: A.M.R. (Alba Medina Rosales), 14 años. Historia clínica HUVN n.º 1180457332.
+
+INFORME MÉDICO-FORENSE CONJUNTO (VALORACIÓN GINECOLÓGICA Y PSICOLÓGICA)
+
+Peritos: Dr. Javier Escobedo Lara, médico forense, especialista en Obstetricia y Ginecología; D.ª María José Ortuño Díaz, psicóloga forense de la UVIVG.
+
+I. OBJETO DE LA PERICIA
+Por providencia de 4 de marzo de 2025 se solicita: (1) reconocimiento ginecológico de la menor y descripción de las lesiones que presente; (2) toma de muestras biológicas; (3) valoración psicológica de la menor, de su estado actual, de la existencia de sintomatología compatible con los hechos denunciados y de las secuelas psíquicas que pudieran derivarse.
+
+II. RECONOCIMIENTO GINECOLÓGICO (4 de marzo de 2025, 12:30 h, en la consulta de Ginecología del Hospital Universitario Materno-Infantil Virgen de las Nieves, con presencia de la madre y de la enfermera D.ª Sonia Pérez Lupiáñez)
+
+Antecedentes personales referidos por la madre: TDAH diagnosticado a los 9 años en tratamiento con metilfenidato (Concerta 36 mg/día). Episodio de autolesiones en 2024 seguido en USMIJ. Menarquia a los 12 años, ciclos regulares de 28 días, FUR 20/02/2025. Alergia a la amoxicilina. Sin intervenciones quirúrgicas. No refiere relaciones sexuales previas consentidas.
+
+Exploración física general: buen estado general, consciente, orientada, colaboradora aunque con llanto frecuente. Peso 52 kg, talla 161 cm. En cara anterior del antebrazo izquierdo, cinco heridas lineales superficiales, paralelas, de 2 a 4 cm, en fase de costra, de unos 3-4 días de evolución, compatibles con autolesiones por objeto cortante; cicatrices blanquecinas antiguas en la misma zona. No se aprecian hematomas en muslos ni en cara interna de rodillas.
+
+Exploración genital (con colposcopio y sin especuloscopia): genitales externos de aspecto normal para su edad, Tanner IV. Himen anular con desgarro completo antiguo a las 5 horarias según la esfera del reloj, que alcanza la base de inserción, con bordes cicatrizados, y escotadura incompleta a las 7 horarias con discreto eritema perilesional. Horquilla vulvar con pequeña erosión de 3 mm en vías de cicatrización. No se observa flujo patológico.
+
+Pruebas complementarias:
+- Test de embarazo en orina: negativo. Se repite beta-hCG en sangre: negativa.
+- Frotis vaginal y endocervical para estudio de ADN y semen: remitidos al Instituto Nacional de Toxicología y Ciencias Forenses, Departamento de Sevilla, con cadena de custodia.
+- Serologías: VIH 1/2, VHB, VHC y sífilis (RPR) negativas. Se pautan nuevas serologías a los 3 y 6 meses. Cultivo para Chlamydia trachomatis y Neisseria gonorrhoeae: pendiente.
+- No procede profilaxis postexposición antirretroviral por el tiempo transcurrido desde el último contacto (>72 h). Se ofrece vacunación de VHB, que consta completa en calendario.
+
+Valoración ginecológica: los hallazgos (desgarro himeneal completo a las 5 y escotadura a las 7 con signos de reparación) son compatibles con penetración digital vaginal reciente-subaguda, con una data aproximada de entre 1 y 4 semanas, coherente con el relato de la menor. La erosión de horquilla es compatible con un episodio más reciente (5-10 días). Los hallazgos no permiten por sí solos determinar el número de episodios.
+
+III. VALORACIÓN PSICOLÓGICA (entrevistas de 11 y 18 de marzo y 1 de abril de 2025)
+
+Instrumentos: entrevista semiestructurada; CDI-2 (Inventario de Depresión Infantil); STAIC; CPSS-5 (escala de síntomas de estrés postraumático infantil); CBCL completado por la madre; análisis del contenido de la declaración según criterios CBCA/SVA.
+
+Resultados:
+- CDI-2: puntuación T = 74, rango muy elevado, con anhedonia, sentimientos de culpa, ideación de muerte pasiva («a veces pienso que estaría mejor muerta, pero no lo haría por mi madre») sin plan estructurado.
+- STAIC: ansiedad-estado percentil 95.
+- CPSS-5: 41 puntos, por encima del punto de corte, con reexperimentación (pesadillas casi diarias, flashbacks ante el olor a goma del pabellón), evitación (ha abandonado el baloncesto y no quiere pasar por la calle del pabellón), hiperactivación (insomnio de conciliación, sobresalto) y alteraciones cognitivas negativas (culpa: «yo le dejé»).
+- Episodios disociativos breves y autolesiones por corte reactivadas desde febrero de 2025.
+- Rendimiento escolar en descenso brusco desde enero (ver informe del centro educativo).
+- Se explora la orientación sexual a petición de la menor, que refiere atracción hacia personas de su mismo sexo, no comunicada a la familia, y temor intenso a que se conozca en el procedimiento; se deja constancia únicamente porque la menor la vincula a sentimientos de culpa y confusión tras los hechos.
+
+Análisis de credibilidad: el relato presenta estructura lógica, elaboración inestructurada, cantidad de detalles, engranaje contextual, reproducción de conversaciones y correcciones espontáneas, sin indicadores de fabulación ni de influencia de terceros. La declaración cumple 14 de los 19 criterios CBCA. Se descarta simulación (no hay ganancia secundaria apreciable).
+
+Diagnóstico (DSM-5-TR): F43.10 Trastorno de estrés postraumático, con síntomas disociativos (despersonalización), en una menor con F90.2 TDAH presentación combinada previo. Sintomatología depresiva comórbida.
+
+IV. CONCLUSIONES
+1.ª Los hallazgos ginecológicos son compatibles con penetración vaginal digital, con signos de reparación coherentes con la cronología relatada.
+2.ª La menor presenta un trastorno de estrés postraumático con síntomas disociativos, en relación de causalidad con los hechos investigados, que precisa tratamiento psicológico especializado y seguimiento psiquiátrico en USMIJ, actualmente con sertralina 50 mg/día y melatonina 3 mg al acostarse.
+3.ª Estabilización lesional no alcanzada. Se estima un período de tratamiento no inferior a 18 meses. Previsión de secuela: trastorno de estrés postraumático crónico o trastorno adaptativo persistente, a valorar en informe de sanidad.
+4.ª La declaración de la menor reúne criterios de validez y no se aprecian indicadores de simulación ni de inducción.
+
+Granada, 14 de abril de 2025.
+
+Fdo.: Dr. Javier Escobedo Lara                 Fdo.: María José Ortuño Díaz
+Médico Forense                                 Psicóloga Forense

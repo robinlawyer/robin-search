@@ -1,0 +1,45 @@
+SERVICIO MADRILEÑO DE SALUD
+HOSPITAL UNIVERSITARIO 12 DE OCTUBRE
+Avda. de Córdoba, s/n · 28041 Madrid
+
+INFORME CLÍNICO CONJUNTO (Obstetricia y Ginecología · Unidad de VIH-Enfermedades Infecciosas · Pediatría)
+Emitido a solicitud de la paciente para su aportación al procedimiento de protección internacional
+
+Paciente: OSAGIE EHIGIATOR, BLESSING        Sexo: M     F. nac.: 04/08/1997
+NHC: 4.118.207          CIPA: OSEH970804021015
+Hija: OSAGIE, PRECIOUS                      F. nac.: 12/01/2021
+NHC (pediatría): 4.120.553
+Idioma: inglés / pidgin (intérprete telefónico Dualia)
+
+A) OBSTETRICIA Y GINECOLOGÍA — Dra. Beatriz Lomas Herrera (col. 28/2814576)
+
+Antecedentes: G4 P1 A2 (dos IVE farmacológicas no supervisadas en Italia, 2020). Parto eutócico en Nigeria (2021). Mutilación genital femenina tipo II de la clasificación OMS (escisión del clítoris y labios menores), con cicatriz queloidea vulvar, practicada en la infancia. Refiere dispareunia profunda y dolor vulvar crónico. Antecedente de violencia sexual múltiple (Libia, Italia, España). No alergias medicamentosas conocidas.
+
+Episodio: Acude a urgencias el 28/08/2025 por metrorragia leve y dolor hipogástrico. β-hCG positiva; ecografía transvaginal: gestación intrauterina única, embrión con LCR de 11 mm, latido presente, compatible con 7+2 semanas. Se descarta gestación ectópica. Serologías del primer trimestre: VIH positivo (confirmado por Western blot), VHB HBsAg negativo, anti-HBc positivo, VHC negativo, sífilis (RPR) negativa, toxoplasma IgG negativo, rubéola inmune. Cultivo endocervical positivo para Chlamydia trachomatis, tratada con azitromicina 1 g en dosis única.
+
+Evolución: Control de gestación en consulta de alto riesgo obstétrico. Ecografía de las 20 semanas sin hallazgos morfológicos patológicos; feto de sexo femenino. Cribado combinado de primer trimestre de bajo riesgo (1/4.300 para T21). Anemia ferropénica (Hb 9,8 g/dl) en tratamiento con Ferro Sanol. Se valora la cicatriz de la MGF de cara al parto: probable necesidad de episiotomía amplia; se ofrece desinfibulación/reconstrucción en el posparto, que la paciente desea.
+FPP: 10/04/2026. Plan: cesárea electiva a las 38 semanas si CV > 50 copias/ml; en caso contrario, parto vaginal con zidovudina (AZT) intravenosa intraparto. Lactancia materna contraindicada; inhibición con cabergolina (Dostinex) tras el parto.
+
+B) UNIDAD DE VIH — Dr. Ángel Seoane Prieto
+
+Diagnóstico de infección por VIH-1 en septiembre de 2025. Estadio CDC A2. CD4 basal 342 cél/µl (21 %); carga viral basal 87.400 copias/ml. Genotipado sin mutaciones de resistencia. HLA-B*5701 negativo.
+Inicia TAR el 18/09/2025 con Biktarvy (bictegravir/emtricitabina/tenofovir alafenamida) 1 comp/24 h. A las 12 semanas: CV < 50 copias/ml, CD4 498 cél/µl. Buena adherencia, aunque refiere miedo intenso a que «la comunidad» conozca el diagnóstico y a que su pareja actual la abandone. Se ofrece estudio de contactos; la pareja, Emmanuel Okafor, de 34 años, se ha realizado la prueba con resultado negativo e inicia PrEP (Descovy).
+Se informa de que el tratamiento antirretroviral está disponible en Nigeria solo de forma irregular en su área de procedencia y de que la interrupción del TAR durante la gestación eleva el riesgo de transmisión vertical por encima del 15-25 %.
+
+C) PEDIATRÍA — Dra. Fatou Diallo Ndiaye
+
+Exploración de Precious (4 años y 10 meses) en presencia de la madre y de la trabajadora social: genitales externos con ausencia del clítoris y de la porción superior de los labios menores, con cicatriz lineal, compatible con MGF tipo II reciente (estimada en los dos o tres últimos años). Sin signos de infección urinaria actual. Desarrollo psicomotor adecuado. Peso 16,2 kg (P25). Talla 104 cm (P30). Calendario vacunal incompleto; se actualiza. Serología VIH negativa.
+Comportamiento: terrores nocturnos 3-4 noches por semana, enuresis secundaria desde la llegada a España, miedo intenso a la exploración genital (precisó dos sesiones de acercamiento). Se deriva a la Unidad de Salud Mental Infanto-Juvenil del distrito de Usera.
+
+Se activa el Protocolo de actuación sanitaria ante la mutilación genital femenina de la Comunidad de Madrid y se comunica a Fiscalía de Menores y a los Servicios Sociales. Se firma por la madre el compromiso preventivo de no realizar ni consentir la práctica de MGF a la hija nacida ni a la futura hija.
+
+JUICIO CLÍNICO
+1. Gestación de 31+4 semanas (a fecha de este informe) en gestante con infección por VIH-1 en TAR con carga viral indetectable.
+2. MGF tipo II materna con secuelas (dispareunia, dolor vulvar crónico, cicatriz queloidea).
+3. MGF tipo II en hija menor.
+4. Trastorno por estrés postraumático en seguimiento por la ONG (no evaluado por Psiquiatría de este hospital). Insomnio; se pauta melatonina.
+5. Anemia ferropénica del embarazo.
+
+Madrid, 13 de enero de 2026
+
+Dra. Beatriz Lomas Herrera     Dr. Ángel Seoane Prieto     Dra. Fatou Diallo Ndiaye

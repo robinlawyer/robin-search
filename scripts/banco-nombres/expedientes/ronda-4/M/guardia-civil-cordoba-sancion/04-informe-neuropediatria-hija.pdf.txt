@@ -1,0 +1,55 @@
+SERVICIO ANDALUZ DE SALUD
+Hospital Universitario Reina Sofía — Córdoba
+UGC de Pediatría · Sección de Neuropediatría
+Avda. Menéndez Pidal, s/n · 14004 Córdoba
+
+INFORME DE ALTA DE HOSPITALIZACIÓN
+
+Paciente: Lucía Montilla Ruiz          Fecha de nacimiento: 02/06/2016 (9 años)
+NHC: 2209174          NUHSA: AN1023338845
+Madre: Inmaculada Ruiz Lara          Padre: Rafael Montilla Cabello          Tel.: 657 330 418
+Fecha de ingreso: 11/03/2026 (vía Urgencias)          Fecha de alta: 13/03/2026
+Médica responsable: Dra. Ana Belén Cuevas Priego, FEA Pediatría — Neuropediatría
+
+MOTIVO DE INGRESO
+Crisis tónico-clónica bilateral de 7 minutos de duración en domicilio (inicio focal con versión cefálica a la derecha), que precisó administración de midazolam bucal (Buccolam 7,5 mg) por la madre y una segunda dosis por el 061 durante el traslado. Periodo postcrítico prolongado (40 min) con hemiparesia derecha transitoria (parálisis de Todd).
+
+ANTECEDENTES
+- Embarazo controlado, parto eutócico a término, periodo neonatal normal.
+- Epilepsia focal estructural diagnosticada en 2022 (primera crisis a los 5 años, febril atípica), secundaria a displasia cortical focal tipo IIb frontal izquierda (RM cerebral 3T, octubre de 2023).
+- Estudio genético (panel de epilepsias, 2024): variante patogénica en heterocigosis en el gen DEPDC5 (c.1555C>T; p.Arg519*), heredada por vía paterna; el padre está asintomático. Asesoramiento genético realizado a la familia.
+- TDAH de presentación combinada, en tratamiento con metilfenidato de liberación prolongada (Medikinet 20 mg) por la mañana. Dificultades de aprendizaje con adaptación curricular no significativa.
+- Grado de discapacidad reconocido del 45 % (Delegación Territorial de Inclusión Social de Córdoba, 2024).
+- Frecuencia de crisis en los últimos seis meses: 2-3 crisis focales con alteración de conciencia al mes, la mayoría nocturnas; última crisis bilateral en diciembre de 2025.
+- Tratamiento previo: levetiracetam (Keppra) 500 mg cada 12 h y lacosamida (Vimpat) 100 mg cada 12 h.
+
+EXPLORACIÓN AL INGRESO
+Peso 31 kg. Talla 136 cm. Somnolienta, responde a estímulos verbales. Pupilas isocóricas y normorreactivas. Paresia de miembro superior derecho 3/5, resuelta a las 6 horas. Resto de exploración neurológica sin hallazgos. Sin signos meníngeos.
+
+PRUEBAS COMPLEMENTARIAS
+- Analítica: hemograma y bioquímica normales. Niveles de levetiracetam en rango (18 mcg/mL).
+- EEG de vigilia (12/03/2026): actividad de fondo enlentecida en hemisferio izquierdo; puntas y punta-onda frontales izquierdas frecuentes, con tendencia a la generalización secundaria.
+- TC craneal urgente: sin hallazgos agudos.
+
+EVOLUCIÓN
+Buena evolución, sin nuevas crisis durante el ingreso. Se ajusta el tratamiento.
+
+JUICIO CLÍNICO
+1. Crisis focal con evolución a tónico-clónica bilateral, prolongada, en paciente con epilepsia focal estructural farmacorresistente (displasia cortical focal tipo IIb frontal izquierda, variante DEPDC5).
+2. TDAH.
+
+TRATAMIENTO AL ALTA
+- Levetiracetam (Keppra) 750 mg cada 12 h.
+- Lacosamida (Vimpat) 100 mg cada 12 h.
+- Medikinet 20 mg por la mañana (sin cambios).
+- Rescate: Buccolam 7,5 mg bucal si crisis > 3 minutos; avisar al 061 si no cede.
+- Evitar privación de sueño, pantallas por la noche, baños sin supervisión y deportes de altura.
+- Se recomienda supervisión nocturna (dispositivo de detección de crisis) y que la menor no duerma sola.
+
+PLAN
+Al cumplir criterios de farmacorresistencia (fracaso de dos fármacos adecuados), se remite a la Unidad de Referencia de Epilepsia Refractaria del Hospital Universitario Virgen del Rocío (Sevilla) para valoración prequirúrgica (vídeo-EEG prolongado, RM funcional y PET), con vistas a una posible lesionectomía. Revisión en consulta de Neuropediatría en 4 semanas. Informe escolar y protocolo de actuación en el centro educativo.
+
+Se informa a los padres del diagnóstico y del plan. La madre refiere el estrés familiar por la situación laboral del padre, que se encuentra de baja médica.
+
+Fdo.: Dra. Ana Belén Cuevas Priego
+Neuropediatría — N.º colegiada 14/07355

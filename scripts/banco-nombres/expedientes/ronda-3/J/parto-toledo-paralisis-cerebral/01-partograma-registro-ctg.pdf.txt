@@ -1,0 +1,61 @@
+HOSPITAL UNIVERSITARIO DE TOLEDO
+Servicio de Obstetricia y Ginecología — Bloque Obstétrico
+Gerencia de Atención Integrada de Toledo · SESCAM
+
+REGISTRO DE PARTO / PARTOGRAMA
+(copia de historia clínica entregada a petición de la paciente, art. 18 Ley 41/2002)
+
+Paciente: VILLALOBOS CAÑETE, NEREA                  NHC: 2087431
+CIP SESCAM: VLCN930412K18                          Fecha nac.: 12/04/1993 (30 a.)
+Domicilio: C/ Río Guadarrama, 14, 2.º C, 45007 Toledo
+Teléfono de contacto: 625 418 903
+Acompañante: Rubén Escalona Mateos (pareja)
+Ubicación: Dilatación 4 → Quirófano obstétrico 2
+
+ANTECEDENTES PERSONALES Y OBSTÉTRICOS
+- G2 A1 P0. Aborto espontáneo de 9 semanas en 2022 (legrado evacuador en este centro).
+- Gestación actual 40+5 semanas por ECO del primer trimestre. Controlada en el Centro de Salud de Santa Bárbara (matrona) y en la consulta de Alto Riesgo Obstétrico.
+- Diabetes gestacional diagnosticada en la semana 26 (O'Sullivan 168 mg/dl; SOG de 100 g patológica, 2 valores alterados), controlada con dieta, sin insulina. Glucemias capilares en rango.
+- Hipotiroidismo subclínico en tratamiento con Eutirox 25 mcg/día.
+- Cribado de SGB (exudado vagino-rectal sem. 36): POSITIVO para Streptococcus agalactiae.
+- Grupo 0 Rh positivo. Serologías 3.er trimestre: VIH negativo, VHB negativo, lúes negativo, rubéola inmune.
+- Ansiedad en tratamiento previo al embarazo (sertralina 50 mg, suspendida en 2023 por deseo gestacional).
+- IMC pregestacional 27,4. Fumadora de 5 cig/día hasta la semana 12.
+- Ecografía sem. 39: peso fetal estimado 3.850 g (p86). LA normal. Placenta fúndica.
+
+MOTIVO DE INGRESO: inducción por gestación cronológicamente prolongada (40+5) y DG.
+Exploración al ingreso: TA 121/76. Tª 36,6. AU 36 cm. Cefálica. Bishop 3. RCTG reactivo, FCF basal 140 lpm, variabilidad normal (10-15), sin desaceleraciones.
+
+HOJA DE EVOLUCIÓN (13/03/2024 – 14/03/2024)
+
+13/03 21:40  Se coloca dispositivo de dinoprostona 10 mg (Propess) intravaginal. RCTG 40 min reactivo. — M. Ortuño (matrona)
+14/03 06:50  Retirada de Propess por fin de tiempo. Bishop 6. Dinámica irregular 2/10. — M. Ortuño
+14/03 08:30  Inicio de perfusión de oxitocina (Syntocinon) a 2 mU/min con aumentos cada 30 min según protocolo. Profilaxis antibiótica intraparto SGB: ampicilina 2 g iv y después 1 g cada 4 h. — S. Huertas (matrona)
+14/03 10:05  Analgesia epidural (ropivacaína 0,1 % + fentanilo 2 mcg/ml). TA 112/70. Sin incidencias. — Dr. Calleja (Anestesiología)
+14/03 11:20  Dilatación 4 cm, borramiento 80 %, plano I. Amniorrexis artificial: LÍQUIDO TEÑIDO DE MECONIO (++). RCTG: FCF basal 150, variabilidad 5-10. — S. Huertas
+14/03 12:40  Oxitocina 12 mU/min. Dinámica 6 contracciones/10 min (taquisistolia). RCTG: variabilidad reducida (3-5 lpm), desaceleraciones tardías recurrentes. Se comenta con ginecóloga de guardia. — S. Huertas
+14/03 13:15  Dilatación 6 cm. Se mantiene oxitocina a 12 mU/min. Cambio postural. — S. Huertas
+14/03 13:50  Valoración por ginecóloga de guardia: «RCTG categoría II. Se mantiene actitud. Control estrecho». No se realiza microtoma de sangre fetal (pH de calota). — Dra. Lomas
+14/03 13:58 – 14:26  NO CONSTA REGISTRO (pérdida de señal del transductor / desconexión).
+14/03 14:30  Dilatación 8 cm. Desaceleraciones tardías con todas las contracciones. FCF basal 165 lpm (taquicardia fetal). Variabilidad < 3 lpm. Oxitocina aumentada a 14 mU/min. Tª materna 37,9 ºC. — S. Huertas
+14/03 15:05  BRADICARDIA FETAL MANTENIDA de 80-85 lpm. Se suspende oxitocina, decúbito lateral izquierdo, O2 y sueroterapia. Se avisa a la guardia por busca (la Dra. Lomas está en cesárea en quirófano 1). — S. Huertas
+14/03 15:12  Valora R2 de Obstetricia (Dr. Recuero): bradicardia persistente de 80 lpm. Se indica CESÁREA URGENTE (categoría 1). Hora de decisión: 15:14. — I. Recuero
+14/03 15:40  Paciente en quirófano. Anestesia general por insuficiente nivel de la epidural. — Dr. Calleja
+14/03 15:58  Extracción fetal. Intervalo decisión-extracción: 44 minutos. Circular de cordón laxa. Líquido meconial espeso. — Dra. Lomas / Dr. Recuero
+
+RECIÉN NACIDO
+Varón, 3.720 g. Apgar 1 / 3 / 5 (1, 5 y 10 min).
+Gasometría de cordón: arteria umbilical pH 6,84; EB −19,2 mmol/l; lactato 14,1 mmol/l. Vena umbilical pH 6,96.
+Reanimación avanzada tipo IV: ventilación con presión positiva, intubación orotraqueal, masaje cardiaco y adrenalina iv (2 dosis). Traslado a UCI Neonatal en incubadora a los 22 min de vida.
+
+PUERPERIO INMEDIATO (MADRE)
+Hemorragia posparto por atonía uterina (pérdida estimada 1.200 ml). Carbetocina (Duratocin) 100 mcg y Hemabate. Transfusión de 2 concentrados de hematíes. Hb control 7,8 g/dl. Fiebre intraparto (37,9 ºC) sin foco: sospecha de corioamnionitis, se pauta ampicilina + gentamicina.
+
+LECTURA DEL REGISTRO CARDIOTOCOGRÁFICO (anotación retrospectiva del Servicio, 18/03/2024)
+- 08:30-11:20: registro tranquilizador.
+- 11:20-12:40: variabilidad en límite bajo; líquido teñido.
+- 12:40-13:58: patrón patológico (desaceleraciones tardías en > 50 % de contracciones, variabilidad mínima, taquisistolia con oxitocina en aumento).
+- 13:58-14:26: ausencia de registro.
+- 14:26-15:05: patrón patológico con taquicardia fetal y variabilidad ausente.
+- 15:05 en adelante: bradicardia terminal.
+Firmado: Jefatura de Sección de Paritorio. Documento generado desde Mambrino XXI el 02/05/2024.
