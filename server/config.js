@@ -343,6 +343,10 @@ function buildConfig() {
     maxPagesPerFile: toInt(process.env.ROBIN_MAX_PAGES, 100000),
 
     nResultsDefault: toInt(process.env.ROBIN_N_RESULTS, 5),
+    // Interruptor de la fase 2 de «buscar por estructura» (correo de Juan del 1-oct-2026): con él,
+    // cada fragmento de buscar_documentos trae su sección y a qué otras remite. APAGADO por
+    // defecto: apagado, la respuesta es la de siempre, byte a byte.
+    seccionesEnBusqueda: process.env.ROBIN_SECCIONES_EN_BUSQUEDA === '1',
 
     // Contraseñas de los PDF protegidos del despacho (muchos juzgados y bancos mandan siempre
     // con la misma). RobinSearch NO las guarda ni las pide por el chat: las pone quien despliega,

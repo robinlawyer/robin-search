@@ -12,6 +12,9 @@ import * as store from '../search/store.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+import { log } from '../logger.js';
+import { estructuraDe, seccionDeFragmento, remisionesEn, describirRemision, rutaDe, piezasDeNodo, piezasDeRemision, claveDe } from '../estructura/documento.js';
+import { registrar } from '../estructura/piezas.js';
 
 export const definition = {
   name: 'buscar_documentos',
@@ -112,7 +115,60 @@ export async function handler(args) {
       score: Number(r.score.toFixed(4)),
     }));
 
-  return ok({ query, expediente, n_resultados: fragmentos.length, fragmentos });
+  const piezasPorDoc = config.seccionesEnBusqueda ? await anotarSecciones(fragmentos) : null;
+  const res = ok({ query, expediente, n_resultados: fragmentos.length, fragmentos });
+  // Con el interruptor, los títulos de sección también son texto del despacho (piezas.js).
+  for (const d of piezasPorDoc?.values() ?? []) registrar(res, d);
+  return res;
+}
+
+// FASE 2 (detrás de config.seccionesEnBusqueda): a cada fragmento, la sección del documento en la
+// que está y las secciones a las que remite su texto («según el Anexo II» → s31, «Anexo II —
+// Tablas salariales»), para que Claude siga la remisión con leer_seccion. Lo que no se pueda
+// calcular se omite en silencio: el fragmento sale como siempre.
+//
+// La primera vez que se ve un documento hay que volver a leerlo (un PDF de cien páginas, segundos).
+// La búsqueda no espera más de PRESUPUESTO_MS: lo que no esté listo sale como siempre, sin sección,
+// y se termina de calcular en segundo plano para la siguiente.
+const PRESUPUESTO_MS = 1500;
+async function anotarSecciones(fragmentos) {
+  const limite = Date.now() + PRESUPUESTO_MS;
+  const piezasPorDoc = new Map();
+  for (const f of fragmentos) {
+    try {
+      const pendiente = estructuraDe(f.doc_id);
+      const resto = limite - Date.now();
+      const est = resto > 0
+        ? await Promise.race([pendiente, new Promise((r) => setTimeout(() => r(null), resto).unref?.())])
+        : null;
+      if (!est) {
+        pendiente.catch(() => {});
+        continue;
+      }
+      if (!est.ok || est.arbol.nodos.length < 2) continue;
+      const s = seccionDeFragmento(est, f.chunk_id);
+      if (!s) continue;
+      if (s.nodo) {
+        f.seccion = { id: s.nodo.id, etiqueta: s.nodo.etiqueta, ruta: rutaDe(est, s.nodo) };
+        if (s.nodo.titulo) f.seccion.titulo = s.nodo.titulo;
+      }
+      const vistos = new Set();
+      const rem = remisionesEn(est, s.tramo.inicio, s.tramo.fin)
+        .filter((r) => r.destino !== s.nodo?.id)
+        .map((r) => describirRemision(est, r))
+        .filter((r) => (vistos.has(r.seccion_id) ? false : vistos.add(r.seccion_id)));
+      if (rem.length) f.remite_a = rem;
+      if (est.modo !== 'exacto') f.indice_aproximado = true;
+      const entrada = piezasPorDoc.get(f.doc_id) ?? { docId: f.doc_id, clave: claveDe(est), texto: est.texto, piezas: [] };
+      let x = s.nodo;
+      while (x) { entrada.piezas.push(...piezasDeNodo(est, x)); x = x.padre ? est.porId.get(x.padre) : null; }
+      for (const r of remisionesEn(est, s.tramo.inicio, s.tramo.fin)) entrada.piezas.push(...piezasDeRemision(est, r));
+      piezasPorDoc.set(f.doc_id, entrada);
+    } catch (err) {
+      log.warn('No se pudo anotar la sección de un fragmento', { err: String(err?.message ?? err) });
+    }
+  }
+  return piezasPorDoc;
 }
 
 export default { definition, handler };

@@ -20,11 +20,14 @@ import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
 import * as registry from './indexer/registry.js';
 import { usarCertificadosDelSistema, proxyIgnorado } from './red-corporativa.js';
+import { piezasDe } from './estructura/piezas.js';
 
 import buscarDocumentos from './tools/buscar_documentos.js';
 import indexarCarpeta from './tools/indexar_carpeta.js';
 import obtenerFragmento from './tools/obtener_fragmento.js';
 import obtenerDocumento from './tools/obtener_documento.js';
+import indiceDocumento from './tools/indice_documento.js';
+import leerSeccion from './tools/leer_seccion.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
 import establecerExpedienteActivo from './tools/establecer_expediente_activo.js';
 import estadoServidor from './tools/estado_servidor.js';
@@ -44,6 +47,10 @@ const TOOLS = [
   indexarCarpeta,
   obtenerFragmento,
   obtenerDocumento,
+  // Buscar por estructura (correo de Juan del 1-oct-2026): el índice de un documento y la lectura
+  // de una sección, para seguir las remisiones internas («según el Anexo II»).
+  indiceDocumento,
+  leerSeccion,
   listarDocumentos,
   establecerExpedienteActivo,
   estadoServidor,
@@ -105,7 +112,16 @@ async function main() {
     const tool = byName.get(name);
     if (!tool) return fail(`Herramienta desconocida: ${name}`);
     try {
-      return await tool.handler(args || {});
+      const res = await tool.handler(args || {});
+      // PUNTO DE RESPUESTA ÚNICO: todo lo que devuelven las herramientas vuelve a Claude por aquí.
+      // Aquí va el filtro de salida del anonimizador cuando se enchufe. Las herramientas de
+      // estructura (indice_documento, leer_seccion y la sección de cada fragmento de
+      // buscar_documentos) dejan en piezasDe(res) qué texto del despacho llevan y en qué posición
+      // del documento, para tapar con el documento entero a la vista (condición de Juan, 1-oct-2026).
+      if (process.env.ROBIN_PRUEBA_PIEZAS === '1' && res?.structuredContent) {
+        res.structuredContent = { ...res.structuredContent, _piezas_prueba: piezasDe(res).flatMap((d) => d.piezas.map((p) => p.valor)) };
+      }
+      return res;
     } catch (err) {
       log.error('Error ejecutando herramienta', { name, err: String(err) });
       return fail(`Error ejecutando ${name}: ${err?.message ?? err}`);

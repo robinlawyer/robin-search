@@ -101,6 +101,8 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `indexar_carpeta`             | Indexa/re-indexa la carpeta (incremental por defecto)          | `idempotentHint`  |
 | `obtener_fragmento`           | Texto completo de un fragmento por `doc_id`+`chunk_id`         | `readOnlyHint`    |
 | `obtener_documento`           | Texto íntegro de un documento (todos sus fragmentos en orden)  | `readOnlyHint`    |
+| `indice_documento`            | Índice de un documento por su estructura y a qué secciones remite cada una | `readOnlyHint`    |
+| `leer_seccion`                | Texto de una sección (Anexo II, cláusula quinta, hecho tercero…) y sus remisiones | `readOnlyHint`    |
 | `listar_documentos_indexados` | Lista documentos indexados del expediente (incluye PDFs sin OCR) | `readOnlyHint`    |
 | `establecer_expediente_activo` | Fija el expediente de la sesión (o lo limpia al cerrar el asunto) | —                 |
 | `estado_servidor`             | Estado, versión, actualización, expedientes detectados y activo, contadores | `readOnlyHint`    |
@@ -112,6 +114,21 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `leer_correo`                 | Un correo entero en texto plano, con sus adjuntos listados      | `readOnlyHint`    |
 | `guardar_borrador`            | Deja la respuesta redactada en Borradores, dentro del hilo      | —                 |
 | `enviar_correo`               | Envía por SMTP y deja copia en Enviados (**desactivado de fábrica**) | `destructiveHint` |
+
+### Buscar por estructura (1.11.0)
+
+`indice_documento` y `leer_seccion` siguen las remisiones internas de un documento («según el
+Anexo II», «en los términos de la cláusula quinta», «como se expone en el hecho tercero»), que la
+búsqueda por parecido se salta porque el fragmento que remite no se parece al que tiene la
+respuesta. El índice se calcula al vuelo, en el ordenador del abogado y sin ningún modelo: se vuelve
+a leer el fichero con sus saltos de línea (los rótulos solo se ven con ellos) y se comprueba que da
+exactamente los fragmentos indexados. Si no puede (escaneado, fichero cambiado), se construye con
+el texto indexado y se marca como aproximado. Cuando el propio documento remite a una sección cuyo
+título no casa con lo que dice («la Comisión de Seguimiento de la cláusula sexta», que está en la
+séptima), la remisión se sigue al pie de la letra y se avisa.
+
+`ROBIN_SECCIONES_EN_BUSQUEDA=1` hace que `buscar_documentos` devuelva además, con cada fragmento,
+su sección y a qué otras remite. **Apagado por defecto**: apagado, la respuesta es la de siempre.
 
 ### El correo del despacho (1.7.0)
 

@@ -96,7 +96,29 @@ async function conContrasenya(abrir) {
   return null;
 }
 
-export async function extractPdf(filePath, { maxPages }) {
+// Texto de una página de pdfjs con sus saltos de línea: cada trozo lleva `hasEOL` cuando acaba la
+// línea. Entre trozos de la misma línea va un espacio, como siempre.
+function conSaltosDeLinea(items) {
+  let out = '';
+  for (const it of items) {
+    out += typeof it.str === 'string' ? it.str : '';
+    out += it.hasEOL ? '\n' : ' ';
+  }
+  return out
+    .replace(/[ \t]+/g, ' ')
+    .replace(/ ?\n ?/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+// `conSaltos` (5-oct-2026, «buscar por estructura»): conserva los saltos de línea de pdfjs
+// (`hasEOL`) en vez de unir todo con espacios. Sin saltos no se ven los rótulos («CLÁUSULA
+// QUINTA», «ANEXO II», «PRIMERO.-») con los que se construye el índice del documento. Las
+// PALABRAS son las mismas en el mismo orden —solo cambia el blanco que las separa—, así que los
+// fragmentos que salen de chunkPages son idénticos carácter a carácter con y sin la opción: el
+// indexado no la usa y nadie tiene que reindexar. `sinOcrNuevo`: un escaneado NO se pasa por el
+// OCR (minutos); se devuelve `escaneado: true` y quien llama usa lo ya indexado.
+export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcrNuevo = false }) {
   const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
   // En Node (y dentro del .mcpb) pdfjs necesita un workerSrc explícito o lanza
   // "No GlobalWorkerOptions.workerSrc specified". Lo resolvemos al fichero real del worker,
@@ -178,12 +200,15 @@ export async function extractPdf(filePath, { maxPages }) {
     try {
       page = await pdf.getPage(p);
       const content = await page.getTextContent();
-      const text = content.items
+      const plano = content.items
         .map((it) => (typeof it.str === 'string' ? it.str : ''))
         .join(' ')
         .replace(/[ \t]+/g, ' ')
         .trim();
-      totalChars += text.length;
+      // La cuenta de caracteres (¿es un escaneado?) se hace SIEMPRE sobre el texto plano: con
+      // saltos la decisión de pasar por OCR no puede cambiar.
+      totalChars += plano.length;
+      const text = conSaltos ? conSaltosDeLinea(content.items) : plano;
       if (text) pages.push({ page: p, text });
     } catch (err) {
       paginasRotas += 1;
@@ -211,6 +236,7 @@ export async function extractPdf(filePath, { maxPages }) {
 
   const escaneado = limit > 0 && totalChars / limit < MIN_CHARS_PER_PAGE;
   if (!escaneado) return { pages, sinOcr: false, numPages, viaOcr: false };
+  if (sinOcrNuevo) return { pages: [], sinOcr: false, numPages, viaOcr: false, escaneado: true };
 
   if (!config.ocrEnabled) return { pages: [], sinOcr: true, numPages };
 
@@ -1216,7 +1242,7 @@ async function extractByExtension(filePath, extNombre, opts) {
   const maxPages = opts?.maxPages ?? config.maxPagesPerFile;
   const ext = extensionDeLectura(filePath, extNombre);
   if (ext !== extNombre) log.info('El contenido no corresponde a la extensión: se lee como lo que es', { ext: extNombre, como: ext });
-  if (ext === '.pdf') return extractPdf(filePath, { maxPages });
+  if (ext === '.pdf') return extractPdf(filePath, { maxPages, conSaltos: Boolean(opts?.conSaltos), sinOcrNuevo: Boolean(opts?.sinOcrNuevo) });
   if (ext === '.docx') return extractDocx(filePath);
   if (EXT_OFFICE_OLE.has(ext)) return extractOfficeOle(filePath, ext);
   if (EXT_TEXT.has(ext)) return extractText(filePath);
@@ -1227,16 +1253,21 @@ async function extractByExtension(filePath, extNombre, opts) {
   if (EXT_CSV.has(ext)) return extractCsv(filePath);
   if (ext === '.eml') return extractEml(filePath, opts);
   if (ext === '.msg') return extractMsg(filePath, opts);
-  if (EXT_IMAGE.has(ext)) return extractImage(filePath);
+  if (EXT_IMAGE.has(ext)) {
+    if (opts?.sinOcrNuevo) return { pages: [], sinOcr: false, numPages: 1, viaOcr: false, escaneado: true };
+    return extractImage(filePath);
+  }
   if (EXT_ARCHIVE.has(ext)) return extractArchive(filePath, opts);
   throw new Error(`Formato no soportado: ${ext}`);
 }
 
 // Dispatcher público por extensión. `opts` incluye maxPages y depth (recursión de contenedores).
-export async function extractFile(filePath, { maxPages } = {}) {
+// `conSaltos` y `sinOcrNuevo`: ver extractPdf. Solo los usa el índice del documento (estructura/);
+// el indexado llama sin ellos y lee exactamente como siempre.
+export async function extractFile(filePath, { maxPages, conSaltos = false, sinOcrNuevo = false } = {}) {
   // extensionDe y no extname a secas: «demanda.pdf » (espacio final) es un PDF.
   const ext = extensionDe(filePath);
-  return extractByExtension(filePath, ext, { maxPages, depth: 0 });
+  return extractByExtension(filePath, ext, { maxPages, depth: 0, conSaltos, sinOcrNuevo });
 }
 
 export default {

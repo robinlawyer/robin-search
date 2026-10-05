@@ -195,6 +195,13 @@ export function porDocId(docId) {
   return e && e.docId === docId ? e : null;
 }
 
+// Ruta absoluta del fichero de un docId (o null). La usa el índice del documento para volver a
+// leerlo con sus saltos de línea.
+export function rutaDeDocId(docId) {
+  if (!porDocId(docId)) return null;
+  return _porDocId.get(docId) ?? null;
+}
+
 export function remove(absPath) {
   const reg = load();
   const entry = reg[absPath];
@@ -285,4 +292,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, porDocId, conHuella, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };
+export default { docIdForAbsPath, porDocId, rutaDeDocId, conHuella, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };
