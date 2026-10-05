@@ -25,7 +25,11 @@ import { construirArbol, remisiones as buscarRemisiones, nodoEn, claveDeId, pleg
 import { localizar } from './piezas.js';
 
 const TOKENS_PER_WORD = 1.4; // el mismo factor que chunk.js
-const MAX_EN_CACHE = 24;
+// Caché por TAMAÑO, no por número: un expediente de cuarenta convenios de cien páginas cabe entero
+// (con 24 documentos se vaciaba a cada búsqueda y cada fragmento volvía a releer su PDF). ~60 MB.
+const MAX_CARACTERES_EN_CACHE = 30_000_000;
+const MAX_EN_CACHE = 400;
+let _caracteresEnCache = 0;
 const _cache = new Map();
 
 function pasos() {
@@ -165,8 +169,15 @@ async function calcular(docId, { entry = null, chunks = null } = {}) {
   const porId = new Map(arbol.nodos.map((n) => [n.id, n]));
   // Solo los fragmentos que de verdad están indexados (el tope por documento puede dejar fuera la cola).
   const valor = { ok: true, docId, entry, modo, motivo, texto, paginas, tramos: tramos.slice(0, chunks.length), arbol, remisiones: rem, porId };
+  const previo = _cache.get(docId);
+  if (previo) { _caracteresEnCache -= previo.valor.texto.length; _cache.delete(docId); }
   _cache.set(docId, { clave, valor });
-  while (_cache.size > MAX_EN_CACHE) _cache.delete(_cache.keys().next().value);
+  _caracteresEnCache += texto.length;
+  while (_cache.size > 1 && (_cache.size > MAX_EN_CACHE || _caracteresEnCache > MAX_CARACTERES_EN_CACHE)) {
+    const k = _cache.keys().next().value;
+    _caracteresEnCache -= _cache.get(k).valor.texto.length;
+    _cache.delete(k);
+  }
   return valor;
 }
 
@@ -200,6 +211,7 @@ export function claveDe(est) {
 
 export function vaciarCache() {
   _cache.clear();
+  _caracteresEnCache = 0;
 }
 
 // Página de una posición del texto global.
