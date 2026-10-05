@@ -40,10 +40,12 @@ export const definition = {
         description: `Máximo de fragmentos por llamada (por defecto y tope ${MAX_FRAGMENTOS_POR_LLAMADA}).`,
       },
       expediente: {
-        type: 'string',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
         description:
           'Expediente al que debe pertenecer el documento. Si se omite, se usa el expediente ' +
-          'activo de la sesión. Si tampoco hay activo, la llamada falla.',
+          'activo de la sesión. Si tampoco hay activo, la llamada falla.' +
+          ' Admite una lista si el abogado trabaja con varios expedientes a la vez. Pásalo SIEMPRE ' +
+          'con lo elegido en esta conversación: el expediente activo es común a todas las conversaciones.',
       },
     },
     required: ['doc_id'],
@@ -76,7 +78,7 @@ export async function handler(args) {
   if (entry && !expedientes.enAmbito(expDoc, expediente)) {
     return fail(
       `Ese documento pertenece a otro expediente ("${expDoc}"), no al expediente activo ` +
-        `("${expediente}"). Cambia de expediente con establecer_expediente_activo si es lo que quieres.`,
+        `(${expedientes.etiqueta(expediente)}). Si es lo que quieres, cambia de expediente con elegir_expediente o establecer_expediente_activo.`,
       { doc_id: docId, expediente_activo: expediente },
     );
   }
@@ -91,7 +93,7 @@ export async function handler(args) {
     if (!expedientes.enAmbito(expChunk, expediente)) {
       return fail(
         `Ese documento pertenece a otro expediente ("${expChunk}"), no al expediente activo ` +
-          `("${expediente}").`,
+          `(${expedientes.etiqueta(expediente)}).`,
         { doc_id: docId, expediente_activo: expediente },
       );
     }

@@ -1,35 +1,44 @@
-// establecer_expediente_activo — fija el expediente sobre el que trabajan el resto de
-// herramientas durante esta sesión, para no tener que repetirlo en cada pregunta.
+// establecer_expediente_activo — fija el expediente (o los expedientes) sobre el que trabajan el
+// resto de herramientas, para no tener que repetirlo en cada pregunta.
 //
 // El servidor corre por stdio ligado a UNA instancia del cliente (Claude Desktop / Code /
-// Cursor), así que el expediente activo vive a nivel de proceso y NO se persiste: al cerrar
-// el cliente no queda un expediente "pegado" de la sesión anterior.
+// Cursor), así que la selección vive a nivel de proceso y NO se persiste: al cerrar el cliente
+// no queda un expediente "pegado" de la sesión anterior. Pero es COMÚN a todas las conversaciones
+// de ese cliente: por eso la respuesta pide a Claude que, en adelante, pase el expediente en cada
+// llamada (expedientes.AVISO_CONVERSACIONES).
+//
+// Para que el abogado lo elija con un clic en la ventana de carpetas, elegir_expediente.
 
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
-import { config } from '../config.js';
-import { esRutaDeRed } from '../net.js';
-import { reescanear } from '../watcher/watcher.js';
+import { fijarSeleccion } from '../seleccion.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
-
-const ESPERA_REESCANEO_MS = Number(process.env.ROBIN_ESPERA_REESCANEO_MS) || 20000;
 
 export const definition = {
   name: 'establecer_expediente_activo',
   title: 'Fijar el expediente activo',
   description:
-    'Fija el expediente (carpeta del caso) sobre el que buscarán el resto de herramientas ' +
-    'durante esta sesión, para no repetirlo en cada pregunta. Llámala al abrir o cambiar de ' +
-    'asunto. El nombre se resuelve de forma tolerante: vale la ruta completa ' +
-    '("Expedientes/Pérez"), solo el nombre de la carpeta ("Pérez") o su slug ' +
-    '("perez"). Si coincide con varios, no elige ninguno: devuelve los candidatos. ' +
-    'Usa "limpiar": true al cerrar el asunto para quedarse sin expediente activo.',
+    'Fija el expediente (carpeta del caso) sobre el que buscarán el resto de herramientas, para ' +
+    'no repetirlo en cada pregunta. Llámala al abrir o cambiar de asunto. El nombre se resuelve ' +
+    'de forma tolerante: vale la ruta completa ("Expedientes/Pérez"), solo el nombre de la ' +
+    'carpeta ("Pérez") o su slug ("perez"). Si coincide con varios, no elige ninguno: devuelve ' +
+    'los candidatos. Admite VARIOS expedientes (lista) cuando el abogado quiere trabajar con ' +
+    'carpetas separadas a la vez; "anadir": true los suma a los que ya hay. Si el abogado no da ' +
+    'un nombre, usa elegir_expediente, que le abre la ventana de carpetas del sistema. Usa ' +
+    '"limpiar": true al cerrar el asunto.',
   inputSchema: {
     type: 'object',
     properties: {
       expediente: {
-        type: 'string',
-        description: 'Nombre o ruta de la carpeta del expediente bajo la carpeta vigilada.',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
+        description:
+          'Nombre o ruta de la carpeta del expediente bajo la carpeta vigilada, o una lista de ' +
+          'ellos para trabajar con varios a la vez.',
+      },
+      anadir: {
+        type: 'boolean',
+        description: 'Si es true, suma estos expedientes a los ya seleccionados en vez de sustituirlos.',
+        default: false,
       },
       limpiar: {
         type: 'boolean',
@@ -65,90 +74,28 @@ export async function handler(args) {
     });
   }
 
-  const pedido = (args?.expediente || '').trim();
-  if (!pedido) {
-    return fail('Se requiere "expediente" (o "limpiar": true para dejar la sesión sin expediente).', {
-      expedientes_disponibles: expedientes.nombresConocidos(),
-    });
-  }
-
-  const r = expedientes.resolver(pedido);
-  if (!r.ok) {
-    if (r.motivo === 'ambiguo') {
-      return fail(
-        `El expediente "${pedido}" es ambiguo: coincide con varios. Indica cuál con su ruta completa.`,
-        { candidatos: r.candidatos, expedientes_disponibles: r.conocidos },
-      );
-    }
+  const pedidos = expedientes.normalizarSeleccion(args?.expediente ?? []);
+  if (!pedidos.length) {
     return fail(
-      `No hay ningún expediente llamado "${pedido}" bajo las carpetas vigiladas. ` +
-        'Comprueba el nombre de la carpeta, o revisa las carpetas configuradas con estado_servidor.',
-      { expedientes_disponibles: r.conocidos },
+      'Se requiere "expediente" (o "limpiar": true para dejar la sesión sin expediente). Si el ' +
+        'abogado no sabe el nombre, elegir_expediente le abre la ventana de carpetas.',
+      { expedientes_disponibles: expedientes.nombresConocidos() },
     );
   }
 
-  expedientes.setActivo(r.expediente);
-
-  // Si el expediente vive en una carpeta de RED (Z:\\ o montaje del servidor del despacho), se
-  // refresca contra el disco AL ABRIRLO. Es el momento exacto en que el abogado va a trabajar
-  // sobre el asunto, y sobre SMB no hay evento fiable que nos avise de lo que han dejado ahí
-  // los compañeros desde la última vez. Es incremental: solo se re-indexa lo que ha cambiado.
-  //
-  // Pero SIN esperar a que acabe: sobre una carpeta de red con miles de ficheros la pasada dura
-  // horas y Claude cortaba la llamada. Se espera como mucho ESPERA_REESCANEO_MS; si no ha
-  // terminado, sigue en segundo plano (progreso en estado_servidor) y se responde ya.
-  const ruta = expedientes.rutaAbsoluta(r.expediente);
-  let refresco = null;
-  let actualizandose = false;
-  if (config.rescanAlAbrir && ruta && esRutaDeRed(ruta)) {
-    const pasada = reescanear([ruta], { motivo: 'apertura' }).catch(() => null);
-    let tope;
-    const SIGUE = Symbol('sigue');
-    const r2 = await Promise.race([pasada, new Promise((res) => (tope = setTimeout(() => res(SIGUE), ESPERA_REESCANEO_MS)))]);
-    clearTimeout(tope);
-    if (r2 === SIGUE) actualizandose = true;
-    else refresco = r2;
+  const r = expedientes.resolverVarios(pedidos);
+  if (!r.ok) {
+    return fail(
+      r.extra?.candidatos
+        ? r.error
+        : `${r.error} Comprueba el nombre de la carpeta, o revisa las carpetas configuradas con estado_servidor.`,
+      r.extra,
+    );
   }
 
-  // Contadores de TODO el ámbito del caso (él y sus subcarpetas), no solo de su raíz.
-  const ficha = expedientes.contadoresAmbito(r.expediente);
-
-  const respuesta = {
-    expediente_activo: r.expediente,
-    documentos_indexados: ficha.documentos,
-    fragmentos_indexados: ficha.fragmentos,
-    ficheros_sin_ocr: ficha.sin_ocr,
-  };
-
-  if (actualizandose) {
-    respuesta.ubicacion = 'red';
-    respuesta.actualizandose = true;
-    respuesta.aviso_actualizacion =
-      'La carpeta de red del expediente se está actualizando en segundo plano (tiene muchos ' +
-      'ficheros). Ya se puede buscar sobre lo indexado; lo nuevo o modificado irá apareciendo. ' +
-      'El progreso se ve en estado_servidor.';
-  }
-  if (refresco) {
-    respuesta.ubicacion = 'red';
-    respuesta.actualizado_desde_disco = {
-      documentos_nuevos_o_modificados: refresco.indexados,
-      documentos_retirados: refresco.eliminados,
-    };
-    if (refresco.carpetas_inaccesibles || refresco.subcarpetas_ilegibles) {
-      // La carpeta de red no responde: NO es un expediente vacío, y hay que decirlo así.
-      respuesta.aviso_red =
-        'No se ha podido leer la carpeta de red del expediente, así que lo que se busque puede ' +
-        'estar incompleto o desactualizado. Comprueba que la unidad sigue conectada.';
-      if (refresco.carpetas_inaccesibles) respuesta.carpetas_inaccesibles = refresco.carpetas_inaccesibles;
-      if (refresco.subcarpetas_ilegibles) respuesta.subcarpetas_ilegibles = refresco.subcarpetas_ilegibles;
-    }
-  }
-  if (ficha.documentos === 0) {
-    respuesta.aviso =
-      'El expediente existe pero aún no tiene documentos indexados: puede que el indexado ' +
-      'siga en curso (consulta estado_servidor) o que la carpeta esté vacía.';
-  }
-  return ok(respuesta);
+  const f = await fijarSeleccion(r.expedientes, { anadir: args?.anadir === true });
+  if (!f.ok) return fail(f.error, f.extra);
+  return ok(f.respuesta);
 }
 
 export default { definition, handler };

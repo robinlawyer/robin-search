@@ -74,7 +74,11 @@
     },
     {
       "name": "establecer_expediente_activo",
-      "description": "Fija el expediente (carpeta del caso) sobre el que trabajan el resto de herramientas durante la sesión."
+      "description": "Fija el expediente (carpeta del caso), o varios a la vez, sobre el que trabajan el resto de herramientas durante la sesión."
+    },
+    {
+      "name": "elegir_expediente",
+      "description": "Abre la ventana de carpetas del sistema (Finder, Explorador) para que el abogado elija con un clic el expediente, o varios, en que trabajar. Solo acepta carpetas vigiladas e indexadas."
     },
     {
       "name": "estado_servidor",

@@ -40,10 +40,12 @@ export const definition = {
         description: 'Para secciones largas: carácter desde el que seguir (el "siguiente_caracter" de la llamada anterior).',
       },
       expediente: {
-        type: 'string',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
         description:
           'Expediente al que debe pertenecer el documento. Si se omite, se usa el expediente activo de ' +
-          'la sesión. Si tampoco hay activo, la llamada falla.',
+          'la sesión. Si tampoco hay activo, la llamada falla.' +
+          ' Admite una lista si el abogado trabaja con varios expedientes a la vez. Pásalo SIEMPRE ' +
+          'con lo elegido en esta conversación: el expediente activo es común a todas las conversaciones.',
       },
     },
     required: ['doc_id', 'seccion'],

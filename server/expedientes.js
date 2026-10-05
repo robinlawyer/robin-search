@@ -143,50 +143,105 @@ export function rutaAbsoluta(expedienteId) {
   return resto.length ? path.join(raiz.path, ...resto) : raiz.path;
 }
 
+// La SELECCIÓN de trabajo es una lista de expedientes. Lo normal es uno; varios cuando el
+// abogado lo pide expresamente (un asunto con la documentación repartida en carpetas separadas,
+// o dos casos conexos). Hacia fuera se conserva la forma de siempre: `getActivo()` devuelve un
+// texto si hay uno, una lista si hay varios y null si no hay ninguno, para no romper a quien ya
+// lee `expediente_activo` como texto.
+export function normalizarSeleccion(x) {
+  const lista = (Array.isArray(x) ? x : [x])
+    .map((v) => (typeof v === 'string' ? v.trim() : ''))
+    .filter(Boolean);
+  return [...new Set(lista)];
+}
+
+function formaPublica(lista) {
+  if (!lista || lista.length === 0) return null;
+  return lista.length === 1 ? lista[0] : [...lista];
+}
+
+// Para los mensajes: «Madre/Pérez» o «Madre/Pérez» + «Madre/García».
+export function etiqueta(sel) {
+  return normalizarSeleccion(sel).map((e) => `«${e}»`).join(' + ') || '(ninguno)';
+}
+
 export function getActivo() {
-  return state.expedienteActivo;
+  return formaPublica(state.expedientesActivos);
+}
+
+export function getActivos() {
+  return [...(state.expedientesActivos || [])];
 }
 
 export function setActivo(expediente) {
-  state.expedienteActivo = expediente || null;
-  return state.expedienteActivo;
+  state.expedientesActivos = normalizarSeleccion(expediente);
+  return getActivo();
+}
+
+// Se dice en la respuesta de las herramientas que fijan la selección. Claude Desktop arranca UN
+// solo RobinSearch para todas sus conversaciones, así que la selección es común a todas: si el
+// abogado abre el caso García en otra conversación y vuelve a esta, sin el parámetro explícito
+// buscaría en García sin que nadie lo notase.
+export const AVISO_CONVERSACIONES =
+  'El expediente activo es COMÚN a todas las conversaciones abiertas en Claude: si en otra se ' +
+  'elige otro, cambia también aquí. En el resto de esta conversación pasa SIEMPRE el parámetro ' +
+  '"expediente" con este mismo valor en cada llamada a RobinSearch, y no confíes en el activo.';
+
+function resolverUno(pedido) {
+  const r = resolver(pedido);
+  if (r.ok) return { ok: true, expediente: r.expediente };
+  if (r.motivo === 'ambiguo') {
+    return {
+      ok: false,
+      error: `El expediente "${pedido}" es ambiguo: coincide con varios. Indica cuál con su ruta completa.`,
+      extra: { candidatos: r.candidatos, expedientes_disponibles: r.conocidos },
+    };
+  }
+  return {
+    ok: false,
+    error: `No hay ningún expediente llamado "${pedido}". Elige uno de los disponibles.`,
+    extra: { expedientes_disponibles: r.conocidos },
+  };
+}
+
+// Resuelve una lista entera: si UNO solo falla, falla todo (buscar en «los que sí» sin decirlo
+// dejaría fuera un caso que el abogado cree estar consultando).
+export function resolverVarios(pedidos) {
+  const out = [];
+  for (const p of normalizarSeleccion(pedidos)) {
+    const r = resolverUno(p);
+    if (!r.ok) return r;
+    if (!out.includes(r.expediente)) out.push(r.expediente);
+  }
+  if (out.length === 0) return { ok: false, error: 'No se ha indicado ningún expediente.', extra: {} };
+  return { ok: true, expedientes: out };
 }
 
 // Núcleo de la política de aislamiento. Devuelve `{ ok, expediente }` o `{ ok:false, error }`
 // con un error EXPLÍCITO. Nunca devuelve "todos los expedientes": si no se sabe cuál es, no
-// se busca.
+// se busca. `expediente` es un texto si la selección es de uno y una lista si es de varios;
+// enAmbito/ambito/contadoresAmbito aceptan las dos formas.
 export function exigirExpediente(explicito) {
-  const pedido = explicito ?? null;
+  const pedidos = normalizarSeleccion(explicito ?? []);
 
-  if (pedido) {
-    const r = resolver(pedido);
-    if (r.ok) return { ok: true, expediente: r.expediente };
-    if (r.motivo === 'ambiguo') {
-      return {
-        ok: false,
-        error: `El expediente "${pedido}" es ambiguo: coincide con varios. Indica cuál con su ruta completa.`,
-        extra: { candidatos: r.candidatos, expedientes_disponibles: r.conocidos },
-      };
-    }
-    return {
-      ok: false,
-      error: `No hay ningún expediente llamado "${pedido}". Elige uno de los disponibles.`,
-      extra: { expedientes_disponibles: r.conocidos },
-    };
+  if (pedidos.length) {
+    const r = resolverVarios(pedidos);
+    if (!r.ok) return r;
+    return { ok: true, expediente: formaPublica(r.expedientes), expedientes: r.expedientes };
   }
 
-  const activo = getActivo();
-  if (activo) {
-    // El expediente activo puede haber desaparecido del disco (carpeta renombrada o cerrada).
-    const r = resolver(activo);
-    if (r.ok) return { ok: true, expediente: r.expediente };
+  const activos = getActivos();
+  if (activos.length) {
+    // Un expediente activo puede haber desaparecido del disco (carpeta renombrada o cerrada).
+    const r = resolverVarios(activos);
+    if (r.ok) return { ok: true, expediente: formaPublica(r.expedientes), expedientes: r.expedientes };
     setActivo(null);
     return {
       ok: false,
       error:
-        `El expediente activo ("${activo}") ya no existe: puede que se haya renombrado o movido ` +
-        'la carpeta. Vuelve a fijar uno con establecer_expediente_activo.',
-      extra: { expedientes_disponibles: r.conocidos },
+        `El expediente activo (${etiqueta(activos)}) ya no existe: puede que se haya renombrado o ` +
+        'movido la carpeta. Vuelve a fijarlo con elegir_expediente o establecer_expediente_activo.',
+      extra: { expedientes_disponibles: nombresConocidos() },
     };
   }
 
@@ -196,9 +251,26 @@ export function exigirExpediente(explicito) {
     error:
       'No hay expediente activo y no se ha indicado ninguno. RobinSearch no busca en todos los ' +
       'expedientes a la vez: cada expediente es un cliente distinto y mezclarlos sería un riesgo ' +
-      'de conflicto de intereses y de secreto profesional. Fija el expediente con ' +
-      'establecer_expediente_activo, o pasa el parámetro "expediente" en esta llamada.',
+      'de conflicto de intereses y de secreto profesional. Pregunta al abogado en qué expediente ' +
+      'trabajar (elegir_expediente le abre la ventana de carpetas) o pasa el parámetro ' +
+      '"expediente" en esta llamada.',
     extra: { expedientes_disponibles: conocidos },
+  };
+}
+
+// La misma puerta para lo que actúa sobre UN expediente concreto: escribir (anotar, archivar un
+// correo) o llevar su cuenta (barrido, cambios). Con varios seleccionados no se elige uno «a
+// ojo»: se pide cuál, que es el mismo criterio que con un nombre ambiguo.
+export function exigirExpedienteUnico(explicito) {
+  const g = exigirExpediente(explicito);
+  if (!g.ok) return g;
+  if (g.expedientes.length === 1) return { ok: true, expediente: g.expedientes[0], expedientes: g.expedientes };
+  return {
+    ok: false,
+    error:
+      `Hay varios expedientes seleccionados (${etiqueta(g.expedientes)}) y esta operación es sobre ` +
+      'UNO: indica en cuál con el parámetro "expediente".',
+    extra: { motivo: 'varios_expedientes', expedientes_activos: g.expedientes },
   };
 }
 
@@ -211,14 +283,16 @@ export function exigirExpediente(explicito) {
 // SIN error: el abogado creía haber buscado en el expediente entero y no era verdad.
 // La comparación es POR SEGMENTOS, así que "Madre/Pérez" nunca alcanza a "Madre/Pérez - Divorcio":
 // el aislamiento entre casos HERMANOS —que es el que protege el secreto profesional— intacto.
+// `seleccionado` puede ser una lista: basta con estar dentro de UNO de ellos.
 export function enAmbito(exp, seleccionado) {
   if (!seleccionado || !exp) return false;
+  if (Array.isArray(seleccionado)) return seleccionado.some((s) => enAmbito(exp, s));
   return exp === seleccionado || String(exp).startsWith(`${seleccionado}/`);
 }
 
-// Los expedientes conocidos que caen dentro del seleccionado (él incluido).
+// Los expedientes conocidos que caen dentro de la selección (ella incluida).
 export function ambito(seleccionado) {
-  if (!seleccionado) return [];
+  if (!seleccionado || (Array.isArray(seleccionado) && seleccionado.length === 0)) return [];
   return nombresConocidos().filter((c) => enAmbito(c, seleccionado));
 }
 
@@ -241,6 +315,43 @@ export function perteneceA(rutaLogica, expediente) {
   return enAmbito(expedienteForLogicalPath(rutaLogica), expediente);
 }
 
+// Una carpeta del disco (la que el abogado elige en la ventana del sistema) → su expediente.
+//   · fuera de las carpetas vigiladas          → { ok:false, motivo:'fuera' }
+//   · la carpeta vigilada misma (o un nivel intermedio, con expedienteDepth > 1)
+//                                               → { ok:false, motivo:'raiz', raiz, contiene }
+//   · dentro de un expediente (o él mismo)      → { ok:true, expediente, exacta }
+// Una subcarpeta de un caso («Pérez/02 Prueba») da el caso entero: el aislamiento es por
+// expediente, y buscar solo en una parte se hace con el parámetro `subcarpeta` de la búsqueda.
+export function expedienteDeCarpeta(absPath) {
+  let abs = path.resolve(String(absPath || ''));
+  try { abs = fs.realpathSync.native(abs); } catch { /* si no existe, se compara tal cual */ }
+  // La raíz también por su ruta real: /tmp → /private/tmp en macOS, unidades mapeadas…
+  const roots = (config.roots || []).map((r) => {
+    let real = r.real || r.path;
+    try { real = fs.realpathSync.native(r.path); } catch { /* ídem */ }
+    return { ...r, real };
+  });
+  const hit = rutas.raizDe(roots, abs);
+  if (!hit) return { ok: false, motivo: 'fuera' };
+  const raiz = hit.raiz;
+  const rel = rutas.relativaDentro(abs, hit.base);
+  const segmentos = String(rel || '').split(process.platform === 'win32' ? /[\\/]+/ : path.sep).filter(Boolean);
+  const depth = config.expedienteDepth;
+  if (segmentos.length < depth) {
+    const prefijo = [raiz.name, ...segmentos].join('/');
+    return {
+      ok: false,
+      motivo: 'raiz',
+      raiz: prefijo,
+      contiene: nombresConocidos().filter((c) => c.startsWith(`${prefijo}/`)),
+    };
+  }
+  const id = [raiz.name, ...segmentos.slice(0, depth)].join('/');
+  // Con el nombre exacto del disco (caja y forma Unicode), que es como está en el índice.
+  const r = resolver(id);
+  return { ok: true, expediente: r.ok ? r.expediente : id, exacta: segmentos.length === depth };
+}
+
 export default {
   slug,
   detectarIndexados,
@@ -248,12 +359,19 @@ export default {
   catalogo,
   nombresConocidos,
   resolver,
+  resolverVarios,
+  normalizarSeleccion,
+  etiqueta,
   enAmbito,
   ambito,
   contadoresAmbito,
   getActivo,
+  getActivos,
   setActivo,
   exigirExpediente,
+  exigirExpedienteUnico,
+  expedienteDeCarpeta,
   perteneceA,
+  AVISO_CONVERSACIONES,
   EXPEDIENTE_SIN_CARPETA,
 };

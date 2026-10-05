@@ -23,9 +23,10 @@ export const definition = {
     'Búsqueda semántica sobre los documentos indexados de UN expediente del despacho. ' +
     'Recibe una consulta en lenguaje natural y devuelve los fragmentos más relevantes con ' +
     'su fichero, página y puntuación. El contenido nunca sale del ordenador. ' +
-    'La búsqueda está aislada por expediente: usa el expediente activo de la sesión (fíjalo ' +
-    'con establecer_expediente_activo) o el que indiques en "expediente". Si no hay ninguno, ' +
-    'devuelve error en lugar de buscar en todos los expedientes.',
+    'La búsqueda está aislada por expediente: usa el que indiques en "expediente" (uno, o una ' +
+    'lista si el abogado ha elegido varios) o, si se omite, el activo (elegir_expediente / ' +
+    'establecer_expediente_activo). Si no hay ninguno, devuelve error en lugar de buscar en ' +
+    'todos los expedientes.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -38,11 +39,13 @@ export const definition = {
         maximum: 50,
       },
       expediente: {
-        type: 'string',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
         description:
           'Expediente en el que buscar (carpeta del caso). Incluye sus subcarpetas. Si se ' +
           'omite, se usa el expediente activo de la sesión. Si tampoco hay activo, la llamada ' +
-          'falla: nunca se busca en todos.',
+          'falla: nunca se busca en todos.' +
+          ' Admite una lista si el abogado trabaja con varios expedientes a la vez. Pásalo SIEMPRE ' +
+          'con lo elegido en esta conversación: el expediente activo es común a todas las conversaciones.',
       },
       subcarpeta: {
         type: 'string',
@@ -84,8 +87,9 @@ export async function handler(args) {
   // expedientes ANTES de puntuar, así que el top-K se calcula ya dentro del expediente. Es lo
   // que hace que el aislamiento no cueste recall (el post-filtro en memoria de la 1.2.x podía
   // devolver menos de n resultados, o ninguno, al quedarse sin candidatos del expediente).
-  const prefijo = subcarpeta ? `${expediente}/${subcarpeta}` : null;
-  const topK = prefijo ? Math.min(n * 5, 200) : n;
+  // Con varios expedientes, la subcarpeta se busca dentro de CADA uno.
+  const prefijos = subcarpeta ? expedientes.normalizarSeleccion(expediente).map((e) => `${e}/${subcarpeta}`) : null;
+  const topK = prefijos ? Math.min(n * 5, 200) : n;
   // El ámbito es el expediente Y lo que cuelga de él (ver expedientes.enAmbito). Con igualdad
   // estricta, un caso cuyas subcarpetas son expedientes por sí mismas devolvía solo los
   // documentos sueltos de su raíz, sin avisar de nada.
@@ -97,7 +101,7 @@ export async function handler(args) {
 
   // Sin distinguir mayúsculas (Windows/macOS) ni forma Unicode: Claude escribe «Pérez» en NFC y
   // la carpeta puede estar en NFD; con comparación exacta el filtro devolvía 0 sin avisar.
-  const dentroDeSubcarpeta = (ruta) => rutas.bajoPrefijoLogico(ruta, prefijo);
+  const dentroDeSubcarpeta = (ruta) => !prefijos || prefijos.some((pr) => rutas.bajoPrefijoLogico(ruta, pr));
 
   const fragmentos = raw
     .filter((r) => dentroDeSubcarpeta(r.metadata.rutaRelativa))

@@ -106,7 +106,8 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `indice_documento`            | Índice de un documento por su estructura y a qué secciones remite cada una | `readOnlyHint`    |
 | `leer_seccion`                | Texto de una sección (Anexo II, cláusula quinta, hecho tercero…) y sus remisiones | `readOnlyHint`    |
 | `listar_documentos_indexados` | Lista documentos indexados del expediente (incluye PDFs sin OCR) | `readOnlyHint`    |
-| `establecer_expediente_activo` | Fija el expediente de la sesión (o lo limpia al cerrar el asunto) | —                 |
+| `establecer_expediente_activo` | Fija el expediente de la sesión, o varios a la vez (o lo limpia al cerrar el asunto) | —                 |
+| `elegir_expediente`           | Abre la ventana de carpetas del sistema para elegir el expediente (o varios) con un clic | —                 |
 | `estado_servidor`             | Estado, versión, actualización, expedientes detectados y activo, contadores | `readOnlyHint`    |
 | `siguiente_por_revisar`       | Siguiente trozo del expediente que nadie ha leído, con su texto y el progreso | `readOnlyHint`    |
 | `anotar`                      | Guarda la ficha de hechos de la ventana revisada                | —                 |
@@ -116,6 +117,30 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `leer_correo`                 | Un correo entero en texto plano, con sus adjuntos listados      | `readOnlyHint`    |
 | `guardar_borrador`            | Deja la respuesta redactada en Borradores, dentro del hilo      | —                 |
 | `enviar_correo`               | Envía por SMTP y deja copia en Enviados (**desactivado de fábrica**) | `destructiveHint` |
+
+### Elegir el expediente con un clic, y varios a la vez (1.12.0)
+
+`elegir_expediente` abre en el ordenador del abogado la ventana de carpetas del sistema (Finder en
+Mac, Explorador en Windows, zenity o kdialog en Linux) ya situada en su carpeta de expedientes: lo
+que elige queda como expediente activo, sin escribir ni pegar rutas. Es lo que hace «Hola Robin» en
+una conversación nueva cuando la entrevista inicial ya está hecha (propuesta de Juan, 1-oct-2026).
+Solo acepta carpetas que RobinSearch vigila **y tiene indexadas**; una subcarpeta de un caso fija el
+caso entero, y la carpeta vigilada misma no se fija sin preguntar: puede ser la de un caso con sus
+piezas en subcarpetas o la madre con todos los clientes, y desde aquí no se distingue. Si el abogado
+tarda más de lo que Claude espera, la ventana sigue abierta y la siguiente llamada recoge la
+elección. Si la ventana no se puede abrir, Claude enseña la lista y el abogado contesta con el
+número. A Claude solo vuelve el nombre del expediente, nunca la ruta de otra carpeta.
+
+**Varias carpetas separadas en el mismo trabajo:** `establecer_expediente_activo` admite una lista
+(y `anadir`), y `elegir_expediente(varias=true)` deja marcar varias (en Windows, de una en una). Las
+búsquedas y lecturas cubren todas a la vez y cada resultado dice de cuál viene; lo que escribe o
+lleva la cuenta de UN expediente (anotar, barrido, archivar correo, cambios) pide que se diga en
+cuál. Fijar una carpeta que abarca varios expedientes (la madre, por nombre) pide confirmación.
+
+**Conversaciones paralelas:** Claude Desktop arranca un solo RobinSearch para todas sus
+conversaciones, así que el expediente activo es común a todas. Al fijarlo, la respuesta pide a
+Claude que en el resto de la conversación pase `expediente` en cada llamada, para que elegir otro
+caso en otra conversación no cambie en silencio dónde busca esta.
 
 ### Buscar por estructura (1.11.0)
 

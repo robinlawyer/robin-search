@@ -143,11 +143,11 @@ export async function handler(args) {
   // El expediente destino, con la misma política de aislamiento que la búsqueda: si no hay
   // activo y no se indica ninguno, se PIDE. Adivinar dónde va la correspondencia de un cliente
   // es exactamente el error que no puede ocurrir.
-  const puerta = expedientes.exigirExpediente(args?.expediente || null);
+  const puerta = expedientes.exigirExpedienteUnico(args?.expediente || null);
   if (!puerta.ok) {
     return fail(
       `${puerta.error} Para archivar un correo hay que saber en qué expediente va: dímelo o `
-      + 'fíjalo con establecer_expediente_activo.',
+      + 'fíjalo con elegir_expediente o establecer_expediente_activo.',
       { ...puerta.extra, motivo: 'sin_expediente' },
     );
   }

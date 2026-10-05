@@ -292,7 +292,8 @@ export async function handler() {
   if (!expedientes.getActivo()) {
     respuesta.aviso_expediente =
       catalogo.length > 0
-        ? 'No hay expediente activo. Fíjalo con establecer_expediente_activo antes de buscar: ' +
+        ? 'No hay expediente activo. Fíjalo con elegir_expediente (abre la ventana de carpetas) o ' +
+          'establecer_expediente_activo antes de buscar: ' +
           'las búsquedas están aisladas por expediente y no cubren todos a la vez.'
         : 'Aún no se ha detectado ningún expediente en las carpetas vigiladas.';
   }

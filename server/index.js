@@ -33,6 +33,7 @@ import indiceDocumento from './tools/indice_documento.js';
 import leerSeccion from './tools/leer_seccion.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
 import establecerExpedienteActivo from './tools/establecer_expediente_activo.js';
+import elegirExpediente from './tools/elegir_expediente.js';
 import estadoServidor from './tools/estado_servidor.js';
 import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
@@ -60,6 +61,8 @@ const TOOLS = [
   leerSeccion,
   listarDocumentos,
   establecerExpedienteActivo,
+  // Elegir el expediente con la ventana de carpetas del sistema (propuesta de Juan, 1-oct-2026).
+  elegirExpediente,
   estadoServidor,
   // Barrido exhaustivo del expediente (due diligence sobre lo que no cabe en contexto).
   siguientePorRevisar,

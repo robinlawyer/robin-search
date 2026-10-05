@@ -132,8 +132,11 @@ export async function handler(args) {
           expediente_activo: activo,
           sugerencia_archivo: activo
             ? {
-              pregunta: `¿Guardo ${adjuntos.length ? `el correo «${sobreDelCorreo.asunto}» y sus adjuntos` : `el correo «${sobreDelCorreo.asunto}»`}, de ${deCorto}, en el expediente «${activo}»?`,
-              como: `archivar_correo con uid ${uid}${ruta === 'INBOX' ? '' : `, bandeja «${ruta}»`} y "confirmar": true`,
+              // Con varios expedientes seleccionados no se propone uno: se pregunta en cuál.
+              pregunta: Array.isArray(activo)
+                ? `¿Guardo ${adjuntos.length ? `el correo «${sobreDelCorreo.asunto}» y sus adjuntos` : `el correo «${sobreDelCorreo.asunto}»`}, de ${deCorto}, en alguno de los expedientes seleccionados (${expedientes.etiqueta(activo)})? ¿En cuál?`
+                : `¿Guardo ${adjuntos.length ? `el correo «${sobreDelCorreo.asunto}» y sus adjuntos` : `el correo «${sobreDelCorreo.asunto}»`}, de ${deCorto}, en el expediente «${activo}»?`,
+              como: `archivar_correo con uid ${uid}${ruta === 'INBOX' ? '' : `, bandeja «${ruta}»`}${Array.isArray(activo) ? ', "expediente" (el que diga el abogado)' : ''} y "confirmar": true`,
               que_haria: adjuntos.length
                 ? 'Dejaría el .eml en la carpeta «Comunicaciones» del expediente; sus adjuntos quedan dentro y se indexan con él. Con "que": "todo" saca además el adjunto a fichero suelto.'
                 : 'Dejaría el .eml en la carpeta «Comunicaciones» del expediente, para que el caso se busque junto.',
@@ -141,7 +144,7 @@ export async function handler(args) {
             : (adjuntos.length
               ? {
                 pregunta: null,
-                que_haria: 'Este correo se puede archivar en el expediente (archivar_correo), pero no hay expediente activo en esta sesión: pregúntale al abogado en cuál va, o fíjalo con establecer_expediente_activo. No se adivina.',
+                que_haria: 'Este correo se puede archivar en el expediente (archivar_correo), pero no hay expediente activo en esta sesión: pregúntale al abogado en cuál va, o fíjalo con elegir_expediente o establecer_expediente_activo. No se adivina.',
               }
               : null),
           desde,

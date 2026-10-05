@@ -20,10 +20,12 @@ export const definition = {
       doc_id: { type: 'string', description: 'Identificador del documento.' },
       chunk_id: { type: 'integer', description: 'Identificador del fragmento dentro del documento.' },
       expediente: {
-        type: 'string',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
         description:
           'Expediente al que debe pertenecer el fragmento. Si se omite, se usa el expediente ' +
-          'activo de la sesión. Si tampoco hay activo, la llamada falla.',
+          'activo de la sesión. Si tampoco hay activo, la llamada falla.' +
+          ' Admite una lista si el abogado trabaja con varios expedientes a la vez. Pásalo SIEMPRE ' +
+          'con lo elegido en esta conversación: el expediente activo es común a todas las conversaciones.',
       },
     },
     required: ['doc_id', 'chunk_id'],
@@ -57,7 +59,7 @@ export async function handler(args) {
   if (!expedientes.enAmbito(expChunk, expediente)) {
     return fail(
       `Ese fragmento pertenece a otro expediente ("${expChunk}"), no al expediente activo ` +
-        `("${expediente}").`,
+        `(${expedientes.etiqueta(expediente)}).`,
       { doc_id: docId, chunk_id: chunkId, expediente_activo: expediente },
     );
   }

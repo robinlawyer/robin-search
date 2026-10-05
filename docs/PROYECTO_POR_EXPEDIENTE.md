@@ -60,6 +60,35 @@ deja de estar al alcance en el acto: no hay mezcla ni "arrastre" del caso previo
 Para quedarse sin expediente activo (al cerrar un asunto),
 `establecer_expediente_activo(limpiar=true)`.
 
+## Elegir la carpeta con un clic (1.12.0)
+
+Si el abogado no da un nombre, Claude llama a `elegir_expediente`: se abre la ventana
+de carpetas del sistema (Finder en Mac, Explorador en Windows, zenity o kdialog en
+Linux) ya situada en la carpeta de expedientes, y lo que elija queda como expediente
+activo. Solo se aceptan carpetas que RobinSearch vigila **y tiene indexadas**; una
+subcarpeta de un caso fija el caso entero, y la carpeta vigilada misma no se fija sin
+preguntar (puede ser la de un caso con sus piezas o la madre con todos los clientes). Si la ventana no se puede abrir, Claude enseña la lista y el
+abogado contesta con el número. Es lo que hace «Hola Robin» en una conversación nueva
+cuando la entrevista ya está hecha.
+
+## Varias carpetas separadas en el mismo trabajo (1.12.0)
+
+`establecer_expediente_activo` admite una lista (`expediente=["Pérez - Divorcio",
+"Pérez - Herencia"]`) y `elegir_expediente(varias=true)` deja marcar varias en la
+ventana (en Windows, de una en una con `anadir=true`). Las búsquedas y lecturas
+cubren todas a la vez y cada resultado dice de cuál viene; lo que escribe o lleva la
+cuenta de UN expediente (anotar, barrido, archivar correo, cambios) pide que se diga
+en cuál. Es siempre una decisión expresa del abogado: el aislamiento sigue siendo lo
+normal.
+
+## Varias conversaciones abiertas a la vez
+
+Claude Desktop arranca **un solo** RobinSearch para todas sus conversaciones, así que
+el expediente activo es común a todas: si en otra conversación se elige otro caso,
+cambia también en esta. Por eso, al fijarlo, la respuesta pide a Claude que en el
+resto de la conversación pase `expediente` en cada llamada, y las herramientas lo
+recuerdan en su descripción.
+
 ## Si el abogado tiene los expedientes repartidos
 
 Se pueden añadir varias carpetas madre; las subcarpetas de cada una siguen siendo

@@ -21,10 +21,12 @@ export const definition = {
     type: 'object',
     properties: {
       expediente: {
-        type: 'string',
+        anyOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' }, minItems: 1 }],
         description:
           'Expediente a listar (carpeta del caso). Si se omite, se usa el expediente activo ' +
-          'de la sesión. Si tampoco hay activo, la llamada falla.',
+          'de la sesión. Si tampoco hay activo, la llamada falla.' +
+          ' Admite una lista si el abogado trabaja con varios expedientes a la vez. Pásalo SIEMPRE ' +
+          'con lo elegido en esta conversación: el expediente activo es común a todas las conversaciones.',
       },
       subcarpeta: {
         type: 'string',
@@ -50,14 +52,15 @@ export async function handler(args) {
   const expediente = gate.expediente;
 
   const subcarpeta = (args?.subcarpeta || '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-  const prefijo = subcarpeta ? `${expediente}/${subcarpeta}` : null;
+  // Con varios expedientes, la subcarpeta se busca dentro de CADA uno.
+  const prefijos = subcarpeta ? expedientes.normalizarSeleccion(expediente).map((x) => `${x}/${subcarpeta}`) : null;
 
   const documentos = [];
   for (const e of registry.all()) {
     const exp = e.expediente || expedienteForLogicalPath(e.rutaRelativa);
     if (!expedientes.enAmbito(exp, expediente)) continue;
     // Sin distinguir mayúsculas ni forma Unicode (ver buscar_documentos).
-    if (prefijo && !rutas.bajoPrefijoLogico(e.rutaRelativa, prefijo)) continue;
+    if (prefijos && !prefijos.some((pr) => rutas.bajoPrefijoLogico(e.rutaRelativa, pr))) continue;
     documentos.push({
       doc_id: e.docId,
       raiz: e.raiz ?? null,

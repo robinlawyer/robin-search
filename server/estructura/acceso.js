@@ -22,7 +22,7 @@ export async function documentoDelExpediente(args) {
       ok: false,
       error:
         `Ese documento pertenece a otro expediente ("${expDoc}"), no al expediente activo ` +
-        `("${expediente}"). Cambia de expediente con establecer_expediente_activo si es lo que quieres.`,
+        `(${expedientes.etiqueta(expediente)}). Si es lo que quieres, cambia de expediente con elegir_expediente o establecer_expediente_activo.`,
       extra: { doc_id: docId, expediente_activo: expediente },
     };
   }
@@ -33,7 +33,7 @@ export async function documentoDelExpediente(args) {
     if (!expedientes.enAmbito(expChunk, expediente)) {
       return {
         ok: false,
-        error: `Ese documento pertenece a otro expediente ("${expChunk}"), no al expediente activo ("${expediente}").`,
+        error: `Ese documento pertenece a otro expediente ("${expChunk}"), no al expediente activo (${expedientes.etiqueta(expediente)}).`,
         extra: { doc_id: docId, expediente_activo: expediente },
       };
     }
