@@ -59,8 +59,16 @@ function nuevaMadre(nombre, ficheros) {
   return madre;
 }
 
+// Un registro de Claude PROPIO de la prueba (como test-incidencias-29sep/2oct). Sin esto se leía el
+// del equipo: en un Mac con Claude instalado, la caída simulada se clasificaba como «incierta» y el
+// aviso salía como caida_incierta en vez de caida_previa (B.3-B.5 fallaban en local; 5-oct-2026).
+// Con el registro de un servidor que arrancó y no se cerró, la caída es cierta.
+const logsClaude = fs.mkdtempSync(path.join(os.tmpdir(), 'rs-logs-claude-'));
+fs.writeFileSync(path.join(logsClaude, 'mcp-server-RobinSearch.log'), 'robin-search: servidor listo (prueba)\n');
+
 function servidor({ madre, datos, env = {} }) {
   const e = {
+    ROBIN_CLAUDE_LOGS_DIR: logsClaude,
     ...process.env,
     ROBIN_TOKEN: 't',
     ROBIN_FOLDERS: madre,
