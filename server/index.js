@@ -35,6 +35,7 @@ import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
 import obtenerAnotaciones from './tools/obtener_anotaciones.js';
 import cambiosExpediente from './tools/cambios_expediente.js';
+import { HERRAMIENTAS_CONSULTA, alConsultar, expedienteDeLaLlamada } from './consultas.js';
 import buscarCorreos from './tools/buscar_correos.js';
 import leerCorreo from './tools/leer_correo.js';
 import leerAdjunto from './tools/leer_adjunto.js';
@@ -113,6 +114,18 @@ async function main() {
     if (!tool) return fail(`Herramienta desconocida: ${name}`);
     try {
       const res = await tool.handler(args || {});
+      // 6-oct-2026 (Juan): en la primera consulta sobre un expediente tras una pausa, lo que ha
+      // cambiado desde la última vez, para que Claude se lo diga al abogado sin que lo pregunte.
+      if (HERRAMIENTAS_CONSULTA.has(name) && !res?.isError && res?.structuredContent) {
+        const cambios = alConsultar(expedienteDeLaLlamada(args));
+        if (cambios) {
+          res.structuredContent = { ...res.structuredContent, cambios_desde_tu_ultima_consulta: cambios };
+          res.content = [
+            { type: 'text', text: JSON.stringify(res.structuredContent, null, 2) },
+            ...(res.content || []).slice(1),
+          ];
+        }
+      }
       // PUNTO DE RESPUESTA ÚNICO: todo lo que devuelven las herramientas vuelve a Claude por aquí.
       // Aquí va el filtro de salida del anonimizador cuando se enchufe. Las herramientas de
       // estructura (indice_documento, leer_seccion y la sección de cada fragmento de

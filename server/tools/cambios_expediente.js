@@ -21,7 +21,10 @@ export const definition = {
     'MEDIAS, RETIRADOS del índice y llegados SIN TEXTO legible. Por defecto compara con el último ' +
     'barrido completo; con "desde" (AAAA-MM-DD), con esa fecha. Úsala en una due diligence en ' +
     'curso para saber qué falta por revisar y, después, sigue con siguiente_por_revisar: solo te ' +
-    'servirá lo nuevo y lo cambiado.',
+    'servirá lo nuevo y lo cambiado. Aparte, en la PRIMERA consulta sobre un expediente tras una ' +
+    'pausa, la respuesta de cualquier herramienta trae "cambios_desde_tu_ultima_consulta" ' +
+    '(nuevos, modificados y retirados desde la consulta anterior): díselo al abogado antes de ' +
+    'contestar, una sola vez.',
   inputSchema: {
     type: 'object',
     properties: {
