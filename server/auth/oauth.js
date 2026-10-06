@@ -437,6 +437,8 @@ function listenOnAny(ports) {
 // pantalla de "conexión establecida" en vez de un error de conexión. Y si no
 // llega nunca, se cierra solo y libera el puerto.
 const GRACIA_CIERRE_MS = 60 * 1000;
+// Lo que se espera a la vuelta local, cuando el código llegó antes por el sondeo.
+const ESPERA_WEB_MS = 4000;
 
 function cerrarConGracia(server, codeP, ms = GRACIA_CIERRE_MS) {
   let cerrado = false;
@@ -455,7 +457,11 @@ function cerrarConGracia(server, codeP, ms = GRACIA_CIERRE_MS) {
   if (t.unref) t.unref();
 }
 
-function awaitCallback(server, port, expectedState) {
+// `alWeb`: el secreto de un solo uso que el servidor añade a ESTA vuelta
+// (`robin_web`) para que RobinDesktop deje también la sesión de la web dentro
+// de su panel (Juan, 6-oct-2026). Solo llega por aquí —nunca por /oauth/pickup—,
+// así que solo lo ve este ordenador.
+function awaitCallback(server, port, expectedState, alWeb = () => {}) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
       try {
@@ -516,7 +522,11 @@ function awaitCallback(server, port, expectedState) {
           // los dos casos: que ya se puede cerrar la pestaña.
           'Infraestructura de dirección jurídica vinculada correctamente. Ya puedes cerrar esta pestaña de forma segura.',
         ),
-        () => resolve(code),
+        () => {
+          const web = u.searchParams.get('robin_web');
+          if (web) alWeb(web);
+          resolve(code);
+        },
       );
     });
   });
@@ -567,7 +577,9 @@ function startLogin() {
     // Vale el primero que llegue; si uno falla, el login NO se cae mientras el
     // otro siga vivo.
     const abort = new AbortController();
-    const codeP = awaitCallback(server, port, state);
+    let alWeb = () => {};
+    const webP = new Promise((r) => { alWeb = r; });
+    const codeP = awaitCallback(server, port, state, (w) => alWeb(w));
     const pickupUrl =
       disc.robin_code_pickup_endpoint ||
       (disc.issuer || config.oauthIssuer).replace(/\/+$/, '') + '/oauth/pickup';
@@ -605,7 +617,15 @@ function startLogin() {
     else delete merged.user;
     saveAuth(merged);
     log.info('Sesión de RobinLawyer.ai iniciada', { usuario: user?.email || null });
-    return { ok: true, user };
+    // RobinDesktop (ROBIN_WEB_HANDOFF=1) quiere además el secreto de la web. Si
+    // ganó el sondeo, la vuelta local del navegador puede llegar un instante
+    // después: se la espera un poco. NO se guarda en auth.json (es de un solo
+    // uso y no le sirve a nadie más).
+    let web = null;
+    if (process.env.ROBIN_WEB_HANDOFF === '1') {
+      web = await Promise.race([webP, new Promise((r) => { const t = setTimeout(() => r(null), ESPERA_WEB_MS); if (t.unref) t.unref(); })]);
+    }
+    return { ok: true, user, web };
   })()
     .catch((err) => {
       log.error('Fallo iniciando sesión en RobinLawyer.ai', { err: String(err) });
@@ -709,6 +729,9 @@ export async function loginInteractive() {
   const hecho = await res;
   if (_lastAuthorizeUrl) process.stdout.write(`Si no se abrió, entra aquí:\n  ${_lastAuthorizeUrl}\n`);
   if (hecho.ok) {
+    // Una línea de máquina para RobinDesktop, solo si la pidió: un secreto no
+    // se imprime en la terminal de quien lanza el login a mano.
+    if (hecho.web && process.env.ROBIN_WEB_HANDOFF === '1') process.stdout.write(`ROBIN_WEB_HANDOFF ${hecho.web}\n`);
     const a = loadAuth();
     process.stdout.write(`✓ Sesión iniciada como ${a?.user?.email || a?.user?.name || 'usuario de Robin'}.\n`);
     return true;
