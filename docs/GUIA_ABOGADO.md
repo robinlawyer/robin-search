@@ -72,6 +72,13 @@ Un truco que ahorra repetirlo: crea **un proyecto de Claude por caso** y pon en 
 instrucciones del proyecto una línea diciendo de qué expediente se trata. Ver
 [PROYECTO_POR_EXPEDIENTE.md](PROYECTO_POR_EXPEDIENTE.md).
 
+**Lo que ha cambiado en el caso te lo dice solo.** Si en la carpeta del expediente han entrado,
+cambiado o desaparecido documentos que aún no te ha contado, Claude te lo dice en la primera
+consulta que haga sobre ese caso, sea en el chat que sea: un chat nuevo a los diez minutos, el
+mismo chat una hora después o tras reiniciar Claude. Lo que ya te ha contado no lo repite, y si
+estás retocando un documento no te lo vuelve a decir en cada pregunta (te lo recuerda una vez
+la próxima vez que vuelvas al caso tras una pausa).
+
 ---
 
 ## Tu correo (opcional, desde la 1.7.0)

@@ -150,8 +150,9 @@ async function main() {
     if (!tool) return fail(`Herramienta desconocida: ${name}`);
     try {
       const res = await tool.handler(args || {});
-      // 6-oct-2026 (Juan): en la primera consulta sobre un expediente tras una pausa, lo que ha
-      // cambiado desde la última vez, para que Claude se lo diga al abogado sin que lo pregunte.
+      // 6-oct-2026 (Juan): lo que ha cambiado en el expediente y aún no se le ha contado al
+      // abogado, para que Claude se lo diga sin que lo pregunte. 8-oct: sin depender de una pausa
+      // (un chat nuevo a los diez minutos comparte este mismo proceso; ver consultas.js).
       if (HERRAMIENTAS_CONSULTA.has(name) && !res?.isError && res?.structuredContent) {
         const cambios = alConsultar(expedienteDeLaLlamada(args));
         if (cambios) {
