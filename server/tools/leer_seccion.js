@@ -58,7 +58,7 @@ export const definition = {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const pedido = String(args?.seccion ?? '').trim();
   if (!pedido) return fail('Se requiere "seccion" (id del índice o nombre, p. ej. "Anexo II").');

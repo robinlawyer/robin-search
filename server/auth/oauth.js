@@ -237,6 +237,25 @@ function refresh(a) {
 // Solo un rechazo explícito del servidor (sesión revocada o caducada) exige iniciar sesión.
 export const DIAS_SIN_CONEXION = Number(process.env.ROBIN_DIAS_SIN_CONEXION) || 14;
 let _ultimaRenovacion = null; // 'ok' | 'sin_conexion' | 'rechazada'
+// Por qué no se pudo hablar con Robin la última vez (código técnico, nunca contenido): lo que
+// distingue un antivirus que revisa HTTPS (certificado) de un corte de red o de un servidor caído.
+let _ultimoErrorRed = null;
+export function ultimoErrorRed() {
+  return _ultimoErrorRed;
+}
+function apuntarErrorRed(e) {
+  const c = e?.cause;
+  _ultimoErrorRed = {
+    codigo: String(c?.code || e?.code || e?.name || 'desconocido').slice(0, 60),
+    detalle: String(c?.message || e?.message || '').slice(0, 160),
+    en: new Date().toISOString(),
+  };
+}
+const ERRORES_CERTIFICADO = new Set([
+  'SELF_SIGNED_CERT_IN_CHAIN', 'DEPTH_ZERO_SELF_SIGNED_CERT', 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY',
+  'UNABLE_TO_GET_ISSUER_CERT', 'UNABLE_TO_VERIFY_LEAF_SIGNATURE', 'CERT_UNTRUSTED', 'CERT_HAS_EXPIRED',
+  'ERR_TLS_CERT_ALTNAME_INVALID', 'CERT_SIGNATURE_FAILURE',
+]);
 
 async function renovar(a) {
   const r = await intentarRenovar(a);
@@ -273,10 +292,12 @@ async function intentarRenovar(aEntrada) {
       body,
       signal: AbortSignal.timeout(10000),
     });
-  } catch {
+  } catch (e) {
+    apuntarErrorRed(e);
     return null; // sin red: no invalidamos la sesión, reintentaremos luego
   }
   if (!r.ok) {
+    if (r.status >= 500 || r.status === 429) _ultimoErrorRed = { codigo: `HTTP_${r.status}`, detalle: '', en: new Date().toISOString() };
     // Solo un rechazo EXPLÍCITO del refresh cierra la sesión. Un 502 durante un despliegue o un
     // 429 dejaban a todos los abogados sin sesión.
     let error = null;
@@ -684,13 +705,43 @@ export async function ensureAuthorized() {
     log.info('Sin conexión con Robin: se sigue con la sesión guardada', { hasta: new Date(hasta).toISOString() });
     return { ok: true, bearer: a.access_token, mode: 'sin_conexion', user: a.user || null, sin_conexion_hasta: new Date(hasta).toISOString() };
   }
+  // 🔴 8-oct-2026 (Pedro): pasados los 14 días SIN HABER PODIDO HABLAR con Robin, abrir el login
+  // no arregla nada —el navegador autoriza, pero este programa tampoco llega para recoger el
+  // código— y el abogado se pasa la mañana autorizando enlaces. La sesión no está rechazada (eso
+  // sería 'rechazada'): en cuanto haya conexión se renueva sola. Se dice eso, con la causa.
+  if (_ultimaRenovacion === 'sin_conexion' && a?.refresh_token) {
+    log.warn('Sin conexión con Robin pasado el margen: no se abre el login', { causa: _ultimoErrorRed?.codigo || null });
+    return { ok: false, loginUrl: null, sin_conexion: true, error_red: _ultimoErrorRed };
+  }
   startLogin(); // no bloquea la llamada MCP; el usuario completa el login en el navegador
   const loginUrl = await awaitAuthorizeUrl();
   return { ok: false, loginUrl };
 }
 
+function causaLegible(err) {
+  const c = err?.codigo || '';
+  if (ERRORES_CERTIFICADO.has(c)) {
+    return 'la conexión segura lleva un certificado que RobinSearch no reconoce; suele ponerlo el antivirus o el proxy del despacho al revisar las conexiones';
+  }
+  if (c === 'ENOTFOUND' || c === 'EAI_AGAIN') return 'el ordenador no encuentra la dirección de RobinLawyer.ai';
+  if (c.startsWith('HTTP_5') || c === 'HTTP_429') return 'el servidor de RobinLawyer.ai no responde ahora mismo';
+  if (c) return 'la conexión se corta antes de llegar a RobinLawyer.ai; suele ser el antivirus, el cortafuegos o un proxy';
+  return 'la conexión no llega a RobinLawyer.ai';
+}
+
 // Respuesta MCP amable cuando falta sesión.
-export function authPromptResult(loginUrl) {
+export function authPromptResult(loginUrl, auth = null) {
+  if (auth?.sin_conexion) {
+    return fail(
+      'RobinSearch no consigue conectar con RobinLawyer.ai desde este ordenador (' + causaLegible(auth.error_red) + '). ' +
+        'NO hace falta volver a iniciar sesión: la sesión sigue siendo válida y se renovará sola en cuanto ' +
+        'RobinSearch pueda conectar, así que abrir enlaces de autorización no sirve. ' +
+        (/^HTTP_/.test(auth.error_red?.codigo || '') ? '' : 'El navegador sí entra porque usa otra vía. ') +
+        'Actualiza RobinSearch a la última versión desde RobinDesktop y vuelve a ' +
+        'intentarlo; si sigue igual, escribe a hola@robinlawyer.ai.',
+      { requiere_login: false, sin_conexion: true, causa: auth.error_red?.codigo || null },
+    );
+  }
   const enlace = loginUrl
     ? ` Si no se abrió sola, abre este enlace: ${loginUrl}`
     : ' Si no se abrió sola, vuelve a pedírmelo en unos segundos y te doy el enlace.';

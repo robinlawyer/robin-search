@@ -87,7 +87,7 @@ async function original(carpetas, cliente, uid, bandeja) {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const respondeA0 = Number.isFinite(parseInt(args?.en_respuesta_a, 10));
   const elegida = elegirCuenta(args, {

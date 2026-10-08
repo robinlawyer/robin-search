@@ -63,7 +63,7 @@ export const definition = {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const query = (args?.query || '').trim();
   if (!query) return fail('El parámetro "query" es obligatorio.');

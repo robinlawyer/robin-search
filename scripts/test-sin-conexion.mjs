@@ -49,7 +49,10 @@ check('13 días sin conexión (vacaciones) → sigue buscando', r.ok && r.mode==
 
 sesion(15*DIA); modo='sin_red';
 r=await ensureAuthorized();
-check('15 días sin conexión → pide iniciar sesión', !r.ok);
+check('15 días sin conexión → no busca', !r.ok);
+// 🔴 8-oct-2026 (Pedro): ni da un enlace de login, que sin conexión no puede terminar nunca; dice
+// que no conecta y que la sesión se renovará sola (la prueba del certificado: test-certificados).
+check('…y no da un enlace de login que no puede terminar', r.sin_conexion === true && r.loginUrl === null, JSON.stringify({sin_conexion:r.sin_conexion,loginUrl:r.loginUrl}));
 
 sesion(2*DIA); modo='caido';
 r=await ensureAuthorized();

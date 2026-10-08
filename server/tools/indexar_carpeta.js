@@ -81,7 +81,7 @@ alTerminarIndexado(drenar);
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   if (config.watchedFolders.length === 0) {
     return fail(

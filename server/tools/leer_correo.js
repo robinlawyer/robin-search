@@ -54,7 +54,7 @@ async function bandejaReal(carpetas, cliente, pedida) {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const elegida = elegirCuenta(args, { exigeSiVarias: true, porque: 'el uid de un correo solo vale dentro de su propio buzón' });
   if (elegida.error) return fail(elegida.error, elegida.extra);

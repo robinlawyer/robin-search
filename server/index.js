@@ -5,6 +5,9 @@
 
 // Antes que nada: con un Node demasiado antiguo se dice claro y se sale (version-node.js).
 import './version-node.js';
+// Y antes de abrir ninguna conexión: confiar también en los certificados del sistema, como el
+// navegador (antivirus que revisan HTTPS y proxies de despacho; ver certificados-sistema.js).
+import './certificados-sistema.js';
 // IMPORTANTE: primero de todo, blindar stdout (redirige console.* de las librerías a stderr).
 import './stdio-guard.js';
 

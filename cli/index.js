@@ -13,6 +13,9 @@
 
 // Lo primero: con un Node demasiado antiguo se dice claro y se sale (no lee configuración).
 import '../server/version-node.js';
+// Y antes de abrir ninguna conexión: confiar también en los certificados del sistema, como el
+// navegador (antivirus que revisan HTTPS y proxies de despacho; ver certificados-sistema.js).
+import '../server/certificados-sistema.js';
 
 function parseArgs(argv) {
   const opts = { silent: false, help: false, version: false, folders: [], _: [] };

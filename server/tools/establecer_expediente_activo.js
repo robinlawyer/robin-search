@@ -50,7 +50,7 @@ export const definition = {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   if (args?.limpiar === true) {
     const anterior = expedientes.getActivo();

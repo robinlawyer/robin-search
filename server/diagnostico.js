@@ -34,7 +34,8 @@ import { pidVivo } from './escritor.js';
 import * as registry from './indexer/registry.js';
 import * as cuarentena from './indexer/cuarentena.js';
 import nube from './indexer/nube.js';
-import { getBearerQuiet } from './auth/oauth.js';
+import { getBearerQuiet, ultimoErrorRed } from './auth/oauth.js';
+import { certificadosSistema } from './certificados-sistema.js';
 import { escribirAtomico, escribirJson, conCerrojoDeFichero } from './persistencia.js';
 
 const ENTRE_INFORMES_IGUALES_MS = 12 * 3600 * 1000;
@@ -987,6 +988,8 @@ function sistema() {
     os: os.release(),
     node: process.versions.node,
     electron: process.versions.electron ?? null,
+    certificados_sistema: certificadosSistema,
+    ultimo_error_red: ultimoErrorRed(),
     ram_total_mb: Math.round(os.totalmem() / 1048576),
     ram_libre_mb: Math.round(os.freemem() / 1048576),
     heap_limite_mb: heap,

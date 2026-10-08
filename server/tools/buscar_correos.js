@@ -70,7 +70,7 @@ async function bandejaReal(carpetas, cliente, pedida) {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   // Con una cuenta, o con la que se pida, se busca ahí. Con varias y sin pedir ninguna, en
   // TODAS (26-sep-2026): el abogado busca «el correo del juzgado», no «el de mi segunda cuenta».

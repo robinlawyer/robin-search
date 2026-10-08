@@ -42,7 +42,7 @@ export const definition = {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const pedido = args?.expediente ?? args?.carpeta_filtro ?? null;
   const gate = expedientes.exigirExpediente(pedido);

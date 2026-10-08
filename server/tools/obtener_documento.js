@@ -58,7 +58,7 @@ export const definition = {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const docId = args?.doc_id;
   if (!docId) return fail('Se requiere "doc_id".');

@@ -82,7 +82,7 @@ function cabeceraCobertura(estado) {
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
-  if (!auth.ok) return authPromptResult(auth.loginUrl);
+  if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   const gate = expedientes.exigirExpediente(args?.expediente ?? null);
   if (!gate.ok) return fail(gate.error, gate.extra);
