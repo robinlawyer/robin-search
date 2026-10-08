@@ -5,7 +5,7 @@
 import { UPDATE_CHECK_URL, VERSION } from './config.js';
 import { log } from './logger.js';
 import { state } from './state.js';
-import { getBearerQuiet } from './auth/oauth.js';
+import { getBearerQuiet, cabeceras } from './auth/oauth.js';
 
 function isNewer(remote, local) {
   const a = String(remote).split('.').map((n) => parseInt(n, 10) || 0);
@@ -49,10 +49,15 @@ async function comprobar(signal) {
     if (signal.aborted) return null;
     const res = await fetch(UPDATE_CHECK_URL, {
       signal,
-      headers: bearer ? { Authorization: `Bearer ${bearer}` } : {},
+      headers: cabeceras(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
     });
     if (!res.ok) return null;
     const data = await res.json();
+    // Versión mínima anunciada CON ANTELACIÓN (docs/versiones-soportadas.md): se avisa antes de que
+    // el servidor deje de aceptar esta.
+    if (data?.version_minima && isNewer(data.version_minima, VERSION)) {
+      state.versionMinimaAnunciada = { version: data.version_minima, desde: data.version_minima_desde || null };
+    }
     const latest = data?.version;
     if (latest && isNewer(latest, VERSION)) {
       state.actualizacionDisponible = latest;

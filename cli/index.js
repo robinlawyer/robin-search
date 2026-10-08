@@ -108,8 +108,11 @@ async function run() {
   // disco—, así que la app no rota el refresh_token por su cuenta y no se pisan. Si no hay
   // sesión, se dice; nunca se lanza un inicio de sesión desde aquí.
   if (opts._.includes('token')) {
-    const { getBearerQuiet } = await import('../server/auth/oauth.js');
+    const { getBearerQuiet, mantenerSesion } = await import('../server/auth/oauth.js');
     let token = null;
+    // 1.12.0 (caso Pedro): cuando RobinDesktop pide el token, de paso renueva la sesión y el
+    // certificado de licencia de este equipo, que valen también para el RobinSearch de Claude.
+    try { await mantenerSesion(); } catch { /* sin red: se dice abajo */ }
     try { token = await getBearerQuiet(); } catch { token = null; }
     process.stdout.write(`${JSON.stringify(token ? { ok: true, access_token: token } : { ok: false, motivo: 'sin_sesion' })}\n`);
     process.exit(token ? 0 : 1);

@@ -326,4 +326,8 @@ export function rutasDeRespaldo() {
   return { win: RUTA_WIN_VIEJA(), winDe: RUTA_WIN, fichero: RUTA_FICHERO(), dataDir: config.dataDir, home: os.homedir() };
 }
 
+// Las piezas de bajo nivel, para el llavero de la SESIÓN de RobinSearch (auth/llavero-sesion.js):
+// mismo método, otra entrada (la del correo no se toca).
+export const piezas = { ejecutar, powershell, psProteger, psDesproteger, linuxTieneLlavero };
+
 export default { guardar, leer, borrar, respaldo, aviso, SERVICIO, rutasDeRespaldo };

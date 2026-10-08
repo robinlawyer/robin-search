@@ -19,6 +19,8 @@ export const state = {
   expedienteActivo: null,
   // Aviso de actualización disponible (rellenado en arranque contra endpoint público).
   actualizacionDisponible: null,
+  // Versión mínima que el servidor dejará de aceptar por debajo, anunciada con antelación.
+  versionMinimaAnunciada: null,
 };
 
 // Suscriptores a los cambios de estado. Existe para que el canal de control

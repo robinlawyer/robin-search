@@ -9,18 +9,41 @@
 //   4. Se canjea el code en /oauth/token → access_token + refresh_token.
 //   5. Los tokens se guardan en el dir de datos (fichero 0600), se refrescan solos.
 //
-// Sin sesión válida, las herramientas de búsqueda no devuelven resultados (el motor es local,
-// pero el acceso es una función premium de la suscripción a RobinLawyer.ai).
+// Desde la 1.12.0 (Juan, 8-oct-2026, caso Pedro) lo que decide si RobinSearch se puede usar es el
+// CERTIFICADO DE LICENCIA firmado que se guarda en este ordenador (auth/licencia.js), no la sesión:
+// las herramientas son 100 % locales y siguen funcionando sin red mientras el certificado (o su
+// gracia) valga. La sesión se mantiene viva sola —al arrancar y cada 24 h, por la conexión de
+// salida, sin navegador ni puertos—, su llave de renovación vive en el llavero del sistema
+// (auth/llavero-sesion.js) y se gasta bajo un cerrojo entre procesos (auth/cerrojo.js). Cuando de
+// verdad hay que volver a autorizar, el chat da un CÓDIGO para robinlawyer.ai/conectar (RFC 8628),
+// válido desde cualquier navegador, también el del móvil.
 
 import http from 'node:http';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { spawn } from 'node:child_process';
 
 import { escribirJson, leerJson } from '../persistencia.js';
-import { config, ensureDataDirs } from '../config.js';
+import { config, ensureDataDirs, VERSION } from '../config.js';
 import { log } from '../logger.js';
 import { fail } from '../tools/util.js';
+import * as licencia from './licencia.js';
+import { conCerrojo } from './cerrojo.js';
+import { guardarLlave, leerLlave, borrarLlave, motorSesion } from './llavero-sesion.js';
+
+// Quién llama, en TODAS las peticiones a Robin: sin esto el servidor solo veía «node» y no podía
+// decir qué versión tenía un abogado (caso Pedro) ni aplicar una versión mínima.
+export function cabeceras(extra = {}) {
+  const e = process.versions.electron ? `; electron ${process.versions.electron}` : '';
+  return {
+    'User-Agent': `RobinSearch/${VERSION} (node ${process.versions.node}; ${process.platform}${e})`,
+    'X-RobinSearch-Version': VERSION,
+    ...extra,
+  };
+}
+const GRANT_DISPOSITIVO = 'urn:ietf:params:oauth:grant-type:device_code';
 
 const SCOPES = 'mcp:tools mcp:resources';
 const CLIENT_NAME = 'RobinSearch (servidor local)';
@@ -63,11 +86,82 @@ function saveAuth(a) {
 function clearTokens() {
   const a = loadAuth();
   if (!a) return;
+  if (a.refresh_en === 'llavero' && a.client_id) borrarLlave(a.client_id).catch(() => {});
   delete a.access_token;
   delete a.refresh_token;
+  delete a.refresh_en;
+  delete a.renovable;
   delete a.expires_at;
   delete a.user;
   saveAuth(a);
+}
+
+// ¿Hay llave de renovación (en el fichero o en el llavero)?
+const tieneLlave = (a) => Boolean(a?.refresh_token || a?.refresh_en === 'llavero');
+
+// Con un servidor de pruebas (127.0.0.1) nunca se toca el llavero real del abogado.
+function usaLlavero() {
+  if (process.env.ROBIN_SESION_LLAVERO) return process.env.ROBIN_SESION_LLAVERO !== 'fichero';
+  return !/^https?:\/\/(127\.0\.0\.1|localhost)(:|\/|$)/.test(config.oauthIssuer);
+}
+
+// La sesión con su llave de renovación, venga de donde venga.
+async function conLlave(a) {
+  if (!a || a.refresh_token || a.refresh_en !== 'llavero' || !a.client_id) return a;
+  const r = await leerLlave(a.client_id);
+  return r ? { ...a, refresh_token: r } : { ...a, _llave_ilegible: true };
+}
+
+// Guarda la sesión: la llave de renovación al llavero (si se puede), el resto a auth.json.
+async function guardarSesion(a) {
+  const { refresh_token, _llave_ilegible, ...resto } = a;
+  void _llave_ilegible;
+  if (refresh_token && usaLlavero() && (await guardarLlave(a.client_id, refresh_token))) {
+    saveAuth({ ...resto, refresh_en: 'llavero', renovable: true });
+    return;
+  }
+  const out = { ...resto, renovable: Boolean(refresh_token) };
+  if (refresh_token) {
+    out.refresh_token = refresh_token;
+    out.refresh_en = 'fichero';
+  } else delete out.refresh_en;
+  saveAuth(out);
+}
+
+// Lo último que se sabe de la conexión con Robin, POR PROCESO (el que lanza Claude y el que lanza
+// RobinDesktop no salen igual a internet: caso Pedro). Solo códigos técnicos.
+const rutaConexion = () => path.join(config.dataDir, 'conexion.json');
+export function claveProceso() {
+  const motor = process.versions.electron ? `electron${process.versions.electron.split('.')[0]}` : `node${process.versions.node.split('.')[0]}`;
+  return `${motor}:${path.basename(process.execPath).toLowerCase()}`;
+}
+export function leerConexion() {
+  try {
+    return JSON.parse(fs.readFileSync(rutaConexion(), 'utf8')) || {};
+  } catch {
+    return {};
+  }
+}
+function apuntarConexion(ok, error = null) {
+  try {
+    ensureDataDirs();
+    const c = leerConexion();
+    const k = claveProceso();
+    const p = c[k] || {};
+    const ahora = new Date().toISOString();
+    if (ok) {
+      p.ultimo_ok = ahora;
+    } else {
+      p.ultimo_error = { ...(error || {}), en: ahora };
+      if (!p.fallando_desde || (p.ultimo_ok && p.ultimo_ok > p.fallando_desde)) p.fallando_desde = ahora;
+    }
+    if (ok) delete p.fallando_desde;
+    p.version = VERSION;
+    c[k] = p;
+    fs.writeFileSync(rutaConexion(), JSON.stringify(c, null, 2));
+  } catch {
+    /* sin disco: no es imprescindible */
+  }
 }
 
 // ---------- discovery ---------- //
@@ -78,7 +172,7 @@ async function discover() {
   try {
     // Con límite: un proxy de despacho que acepta la conexión y no contesta dejaba colgada
     // cualquier herramienta hasta 5 minutos.
-    const r = await fetch(`${issuer}/.well-known/oauth-authorization-server`, { signal: AbortSignal.timeout(8000) });
+    const r = await fetch(`${issuer}/.well-known/oauth-authorization-server`, { headers: cabeceras(), signal: AbortSignal.timeout(8000) });
     if (r.ok) {
       _disc = await r.json();
       return _disc;
@@ -108,12 +202,12 @@ async function ensureClient() {
   const redirect_uris = REDIRECT_PORTS.map(redirectUri);
   const r = await fetch(disc.registration_endpoint, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: cabeceras({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({
       client_name: CLIENT_NAME,
       redirect_uris,
       token_endpoint_auth_method: 'none',
-      grant_types: ['authorization_code', 'refresh_token'],
+      grant_types: ['authorization_code', 'refresh_token', GRANT_DISPOSITIVO],
       scope: SCOPES,
     }),
   });
@@ -147,7 +241,7 @@ async function exchangeCode(disc, clientId, code, redirect, verifier) {
   });
   const r = await fetch(disc.token_endpoint, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
     body,
   });
   if (!r.ok) throw new Error(`canje del código falló (HTTP ${r.status})`);
@@ -197,7 +291,7 @@ export function pickupCode(url, clientId, verifier, deadlineMs, signal, { timeou
       try {
         const r = await fetch(url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
           body: new URLSearchParams({ client_id: clientId, code_verifier: verifier }).toString(),
           signal: AbortSignal.timeout(timeoutMs),
         });
@@ -224,9 +318,11 @@ export function pickupCode(url, clientId, verifier, deadlineMs, signal, { timeou
 
 // Una sola renovación a la vez en el proceso: dos herramientas a la vez con el token caducado
 // gastaban el mismo refresh_token dos veces y la segunda lo daba por revocado.
+// Y entre PROCESOS, un cerrojo de fichero (auth/cerrojo.js): con rotación, dos instancias con la
+// misma llave a la vez era la forma más rápida de quedarse sin sesión.
 let _renovando = null;
 function refresh(a) {
-  if (!_renovando) _renovando = renovar(a).finally(() => { _renovando = null; });
+  if (!_renovando) _renovando = conCerrojo('sesion', () => renovar(a)).finally(() => { _renovando = null; });
   return _renovando;
 }
 
@@ -250,6 +346,12 @@ function apuntarErrorRed(e) {
     detalle: String(c?.message || e?.message || '').slice(0, 160),
     en: new Date().toISOString(),
   };
+  apuntarConexion(false, { codigo: _ultimoErrorRed.codigo, detalle: _ultimoErrorRed.detalle });
+}
+// La versión mínima que exige el servidor, si esta ya no llega (HTTP 426).
+let _versionMinima = null;
+export function versionMinimaExigida() {
+  return _versionMinima;
 }
 const ERRORES_CERTIFICADO = new Set([
   'SELF_SIGNED_CERT_IN_CHAIN', 'DEPTH_ZERO_SELF_SIGNED_CERT', 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY',
@@ -259,25 +361,35 @@ const ERRORES_CERTIFICADO = new Set([
 
 async function renovar(a) {
   const r = await intentarRenovar(a);
-  if (r) _ultimaRenovacion = 'ok';
-  else if (_ultimaRenovacion !== 'rechazada') _ultimaRenovacion = 'sin_conexion';
+  if (r) {
+    _ultimaRenovacion = 'ok';
+    apuntarConexion(true);
+  } else if (_ultimaRenovacion !== 'rechazada' && _ultimaRenovacion !== 'version') _ultimaRenovacion = 'sin_conexion';
   return r;
 }
 
-// La sesión, releída del DISCO. Entre instancias (Claude Desktop y Claude Code, o la sonda que
-// Claude arranca y mata) la de memoria puede estar vieja: la otra ya rotó el refresh_token y el
-// nuestro está gastado. Mirar el disco antes de gastarlo evita el rechazo entero.
-function masFrescaQue(a) {
+// ¿Otra instancia acaba de renovar? (Claude Desktop y Claude Code, la sonda que Claude arranca y
+// mata, el CLI de RobinDesktop.) Bajo el cerrojo se mira el disco: si hay una llave de acceso
+// distinta y vigente, es la buena y no se gasta nada.
+function renovadaPorOtra(a) {
   const disco = loadAuth();
-  if (disco?.refresh_token && disco.refresh_token !== a?.refresh_token) return disco;
-  return a;
+  if (disco?.access_token && disco.access_token !== a?.access_token && (disco.expires_at || 0) > Date.now() + 60_000) return disco;
+  // Hasta la 1.11 la llave de renovación iba en el fichero: si la del disco ya no es la nuestra, es
+  // que otra (quizá una versión anterior) rotó.
+  if (disco?.refresh_token && a?.refresh_token && disco.refresh_token !== a.refresh_token) return { ...disco, _rotada: true };
+  return null;
 }
 
 async function intentarRenovar(aEntrada) {
   _ultimaRenovacion = null;
-  // Siempre con la llave que hay en disco AHORA, no con la que se leyó hace diez minutos.
-  const a = masFrescaQue(aEntrada);
-  if (!a?.refresh_token) return null;
+  const otra = renovadaPorOtra(aEntrada);
+  if (otra && !otra._rotada) return otra;
+  // Siempre con la llave que hay AHORA (disco y llavero), no con la que se leyó hace diez minutos.
+  const a = await conLlave(otra || loadAuth() || aEntrada);
+  if (!a?.refresh_token) {
+    if (a?._llave_ilegible) _ultimoErrorRed = { codigo: 'LLAVERO_ILEGIBLE', detalle: motorSesion(), en: new Date().toISOString() };
+    return null;
+  }
   const disc = await discover();
   const body = new URLSearchParams({
     grant_type: 'refresh_token',
@@ -288,13 +400,18 @@ async function intentarRenovar(aEntrada) {
   try {
     r = await fetch(disc.token_endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
       body,
       signal: AbortSignal.timeout(10000),
     });
   } catch (e) {
     apuntarErrorRed(e);
     return null; // sin red: no invalidamos la sesión, reintentaremos luego
+  }
+  if (r.status === 426) {
+    try { _versionMinima = (await r.json())?.version_minima || 'desconocida'; } catch { _versionMinima = 'desconocida'; }
+    _ultimaRenovacion = 'version';
+    return null; // la sesión no se borra: con la versión nueva se renueva sin volver a entrar
   }
   if (!r.ok) {
     if (r.status >= 500 || r.status === 429) _ultimoErrorRed = { codigo: `HTTP_${r.status}`, detalle: '', en: new Date().toISOString() };
@@ -310,6 +427,7 @@ async function intentarRenovar(aEntrada) {
       // La otra instancia pudo rotar el refresh_token un instante antes: si en disco ya hay otro,
       // es la sesión buena y no se borra.
       let actual = loadAuth();
+      if (actual?.access_token && actual.access_token !== a.access_token && (actual.expires_at || 0) > Date.now()) return actual;
       if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
       // Y pudo rotarlo un instante DESPUÉS de mirar (las dos instancias salieron con la misma
       // llave y esta perdió la carrera): se espera un poco y se vuelve a mirar antes de cerrarle
@@ -317,9 +435,14 @@ async function intentarRenovar(aEntrada) {
       // autenticado a no autenticado sin tocar nada, con dos instancias compitiendo.
       await new Promise((res) => setTimeout(res, 1500));
       actual = loadAuth();
+      if (actual?.access_token && actual.access_token !== a.access_token && (actual.expires_at || 0) > Date.now()) return actual;
       if (actual?.refresh_token && actual.refresh_token !== a.refresh_token) return actual.access_token ? actual : null;
       _ultimaRenovacion = 'rechazada';
       clearTokens(); // refresh revocado/expirado → hay que volver a iniciar sesión
+      // Rechazo EXPLÍCITO (equipo desconectado desde /devices, llave reutilizada, tope de 12 meses):
+      // el certificado de licencia de este equipo deja de valer en el acto.
+      licencia.borrar();
+      log.warn('El servidor rechazó la llave de renovación: hay que volver a conectar', { error });
     }
     return null;
   }
@@ -330,7 +453,7 @@ async function intentarRenovar(aEntrada) {
     return null; // un portal cautivo o proxy devolviendo HTML: no es un rechazo
   }
   const merged = { ...a, ...normalizeTokens(datos, a) };
-  saveAuth(merged);
+  await guardarSesion(merged);
   return merged;
 }
 
@@ -341,7 +464,7 @@ async function whoami(access) {
     // Con límite: el login espera a esta respuesta para guardar la sesión de
     // una vez, y una red de despacho que se la traga no puede dejarlo colgado.
     const r = await fetch(disc.userinfo_endpoint, {
-      headers: { Authorization: `Bearer ${access}` },
+      headers: cabeceras({ Authorization: `Bearer ${access}` }),
       signal: AbortSignal.timeout(8000),
     });
     if (!r.ok) return null;
@@ -636,7 +759,10 @@ function startLogin() {
     // tras entrar con otra cuenta, enseñaría el correo equivocado.
     if (user) merged.user = user;
     else delete merged.user;
-    saveAuth(merged);
+    await guardarSesion(merged);
+    _ultimaRenovacion = 'ok';
+    apuntarConexion(true);
+    await renovarCertificado(tokens.access_token);
     log.info('Sesión de RobinLawyer.ai iniciada', { usuario: user?.email || null });
     // RobinDesktop (ROBIN_WEB_HANDOFF=1) quiere además el secreto de la web. Si
     // ganó el sondeo, la vuelta local del navegador puede llegar un instante
@@ -690,18 +816,265 @@ function awaitAuthorizeUrl(timeoutMs = 6000) {
   });
 }
 
-// Gate para las herramientas: devuelve { ok, bearer } o { ok:false, loginUrl } y dispara el
-// login en segundo plano si no hay sesión.
+// ---------- certificado de licencia ---------- //
+// Lo pide al iniciar sesión, en cada renovación y como mucho una vez al día. Un servidor sin
+// certificados (antiguo, o sin clave) devuelve 404/503: se sigue como hasta la 1.11.
+export async function renovarCertificado(bearer) {
+  if (!bearer) return null;
+  const url = `${config.oauthIssuer.replace(/\/+$/, '')}/api/v1/robinsearch/licencia`;
+  try {
+    const r = await fetch(url, { headers: cabeceras({ Authorization: `Bearer ${bearer}` }), signal: AbortSignal.timeout(8000) });
+    if (r.status === 426) {
+      try { _versionMinima = (await r.json())?.version_minima || 'desconocida'; } catch { _versionMinima = 'desconocida'; }
+      return null;
+    }
+    if (!r.ok) return null;
+    const d = await r.json();
+    const datos = licencia.guardar(d?.certificado);
+    if (datos) log.info('Certificado de licencia renovado', { estado: datos.estado, valido_hasta: datos.valido_hasta });
+    return datos;
+  } catch (e) {
+    apuntarErrorRed(e);
+    return null;
+  }
+}
+
+// ---------- mantener la sesión viva sin RobinDesktop ---------- //
+// Juan, 8-oct-2026: «un abogado que solo abre Claude, sin abrir nunca RobinDesktop, debe poder
+// trabajar con RobinSearch durante meses». Al arrancar y cada 24 h: si a la llave de acceso le quedan
+// menos de 12 h, se renueva (por la conexión de salida, sin navegador ni puertos); y si toca, se
+// renueva el certificado. Sin red no pasa nada: se reintenta en la siguiente vuelta.
+const MARGEN_RENOVAR_MS = 12 * 3600 * 1000;
+let _manteniendo = null;
+export function mantenerSesion() {
+  if (config.robinToken) return Promise.resolve(null);
+  if (!_manteniendo) {
+    _manteniendo = (async () => {
+      const a = loadAuth();
+      if (!a?.access_token && !tieneLlave(a)) return null;
+      let bearer = a.access_token && (a.expires_at || 0) > Date.now() + MARGEN_RENOVAR_MS ? a.access_token : null;
+      if (!bearer && tieneLlave(a)) bearer = (await refresh(a))?.access_token || null;
+      if (bearer && licencia.tocaRenovar()) await renovarCertificado(bearer);
+      if (bearer) avisarSiOtroProcesoNoConecta();
+      // Y de paso, si hay versión nueva (para avisar en el chat aunque Claude lleve días abierto).
+      import('../update.js').then((m) => m.checkForUpdate()).catch(() => {});
+      return bearer;
+    })()
+      .catch((e) => {
+        log.warn('No se pudo mantener la sesión', { err: String(e?.message ?? e) });
+        return null;
+      })
+      .finally(() => { _manteniendo = null; });
+  }
+  return _manteniendo;
+}
+
+let _mantenimiento = null;
+export function iniciarMantenimiento({ primeraMs = 10_000, cadaMs = 24 * 3600 * 1000 } = {}) {
+  if (_mantenimiento || config.robinToken) return;
+  // 10 s: la sonda que Claude arranca y mata enseguida no llega a gastar la llave.
+  const t1 = setTimeout(() => { mantenerSesion(); }, primeraMs);
+  const t2 = setInterval(() => { mantenerSesion(); }, cadaMs);
+  t1.unref?.();
+  t2.unref?.();
+  _mantenimiento = { t1, t2 };
+}
+export function pararMantenimiento() {
+  if (!_mantenimiento) return;
+  clearTimeout(_mantenimiento.t1);
+  clearInterval(_mantenimiento.t2);
+  _mantenimiento = null;
+}
+
+// Caso Pedro: el RobinSearch que lanza Claude no salía a internet desde su despacho y el que lanza
+// RobinDesktop sí. Cuando ESTE proceso conecta y otro lleva más de un día sin poder, se manda un aviso
+// técnico (solo códigos de error y versiones) para saber la causa sin tener que adivinarla.
+const UN_DIA = 24 * 3600 * 1000;
+let _avisadoOtro = false;
+function avisarSiOtroProcesoNoConecta() {
+  if (_avisadoOtro) return;
+  const c = leerConexion();
+  const yo = claveProceso();
+  for (const [k, p] of Object.entries(c)) {
+    if (k === yo || !p?.fallando_desde) continue;
+    const desde = Date.parse(p.fallando_desde);
+    if (!Number.isFinite(desde) || Date.now() - desde < UN_DIA) continue;
+    if (Date.now() - Date.parse(p.ultimo_error?.en || 0) > 3 * UN_DIA) continue;
+    _avisadoOtro = true;
+    const causa = `el proceso ${k} (v${p.version || '?'}) no conecta desde ${p.fallando_desde}: ${p.ultimo_error?.codigo || '?'} ${p.ultimo_error?.detalle || ''}; este proceso (${yo}) sí conecta`;
+    import('../diagnostico.js')
+      .then((d) => d.informar('sin_conexion_otro_proceso', { fase: 'sesion', causa }))
+      .catch(() => {});
+    return;
+  }
+}
+
+// ---------- código de dispositivo (RFC 8628) ---------- //
+// La recuperación cuando todo falla (Juan, 8-oct-2026): el chat da un código para
+// robinlawyer.ai/conectar, válido desde cualquier navegador (también el del móvil). RobinSearch
+// sondea el servidor por su propia conexión y en cuanto el abogado lo aprueba queda conectado:
+// sin puerto local, sin redirecciones y sin «dile a Claude que has terminado».
+let _disp = null;
+const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Lo que reconoce el abogado en la pantalla de /conectar: «macOS 15», «Windows 11», no la versión del
+// núcleo (os.release() en un Mac da «24.6.0», que es Darwin).
+export function nombreSO(plataforma = process.platform, release = os.release()) {
+  const [mayor, , build] = String(release).split('.').map((n) => parseInt(n, 10));
+  if (plataforma === 'darwin') return mayor >= 20 ? `macOS ${mayor - 9}` : `macOS (Darwin ${release})`;
+  if (plataforma === 'win32') return mayor === 10 && build >= 22000 ? 'Windows 11' : mayor === 10 ? 'Windows 10' : `Windows ${release}`;
+  if (plataforma === 'linux') return `Linux ${release}`.slice(0, 80);
+  return `${plataforma} ${release}`.slice(0, 80);
+}
+
+function dispositivoPublico(d) {
+  if (!d) return null;
+  return {
+    user_code: d.user_code,
+    verification_uri: d.verification_uri,
+    verification_uri_complete: d.verification_uri_complete,
+    caduca_en_s: Math.max(0, Math.round((d.expira - Date.now()) / 1000)),
+    estado: d.terminado || 'esperando',
+  };
+}
+
+export function estadoDispositivo() {
+  return dispositivoPublico(_disp);
+}
+
+export function cancelarDispositivo() {
+  if (_disp && !_disp.terminado) _disp.terminado = 'cancelado';
+}
+
+// Devuelve { user_code, verification_uri, … } , { sin_conexion: true } o null (servidor sin el flujo).
+export async function iniciarDispositivo({ abrir = true, forzar = false } = {}) {
+  if (_disp && !_disp.terminado && _disp.expira > Date.now() + 30_000 && !forzar) return dispositivoPublico(_disp);
+  if (_disp && !_disp.terminado) _disp.terminado = 'sustituido';
+  const disc = await discover();
+  if (!disc.device_authorization_endpoint) return null;
+  let a;
+  try {
+    a = await ensureClient();
+  } catch (e) {
+    apuntarErrorRed(e);
+    return { sin_conexion: true };
+  }
+  let r;
+  try {
+    r = await fetch(disc.device_authorization_endpoint, {
+      method: 'POST',
+      headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+      body: new URLSearchParams({ client_id: a.client_id, scope: SCOPES, equipo: os.hostname().slice(0, 80), so: nombreSO() }).toString(),
+      signal: AbortSignal.timeout(10000),
+    });
+  } catch (e) {
+    apuntarErrorRed(e);
+    return { sin_conexion: true };
+  }
+  if (r.status === 426) {
+    try { _versionMinima = (await r.json())?.version_minima || 'desconocida'; } catch { _versionMinima = 'desconocida'; }
+    return { version_no_soportada: true };
+  }
+  if (!r.ok) return null;
+  let d;
+  try {
+    d = await r.json();
+  } catch {
+    return null;
+  }
+  if (!d?.device_code || !d?.user_code) return null;
+  const disp = {
+    device_code: d.device_code,
+    user_code: d.user_code,
+    verification_uri: d.verification_uri,
+    verification_uri_complete: d.verification_uri_complete || null,
+    expira: Date.now() + (Number(d.expires_in) || 600) * 1000,
+    intervalo: Math.max(1, Number(d.interval) || 5),
+    terminado: null,
+  };
+  _disp = disp;
+  disp.promesa = sondearDispositivo(disc, a, disp);
+  disp.promesa.catch(() => {});
+  if (abrir) openBrowser(disp.verification_uri_complete || disp.verification_uri);
+  log.info('Código de conexión pedido', { caduca_en_s: Math.round((disp.expira - Date.now()) / 1000) });
+  return dispositivoPublico(disp);
+}
+
+async function sondearDispositivo(disc, a, disp) {
+  let intervalo = disp.intervalo;
+  while (!disp.terminado && Date.now() < disp.expira) {
+    await dormir(intervalo * 1000);
+    if (disp.terminado) break;
+    let r;
+    try {
+      r = await fetch(disc.token_endpoint, {
+        method: 'POST',
+        headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+        body: new URLSearchParams({ grant_type: GRANT_DISPOSITIVO, device_code: disp.device_code, client_id: a.client_id }).toString(),
+        signal: AbortSignal.timeout(10000),
+      });
+    } catch (e) {
+      apuntarErrorRed(e);
+      continue;
+    }
+    let j = {};
+    try { j = await r.json(); } catch { j = {}; }
+    if (r.ok && j.access_token) {
+      const tokens = normalizeTokens(j);
+      const user = await whoami(tokens.access_token);
+      const merged = { ...(loadAuth() || {}), client_id: a.client_id, redirect_uris: a.redirect_uris, ...tokens, updated_at: Date.now() };
+      if (user) merged.user = user;
+      else delete merged.user;
+      await guardarSesion(merged);
+      _ultimaRenovacion = 'ok';
+      apuntarConexion(true);
+      await renovarCertificado(tokens.access_token);
+      disp.terminado = 'conectado';
+      log.info('RobinSearch conectado con el código', { usuario: user?.email || null });
+      return disp.terminado;
+    }
+    if (j.error === 'authorization_pending') continue;
+    if (j.error === 'slow_down') {
+      intervalo += 5;
+      continue;
+    }
+    disp.terminado = j.error === 'access_denied' ? 'denegado' : j.error === 'expired_token' ? 'caducado' : 'error';
+    return disp.terminado;
+  }
+  if (!disp.terminado) disp.terminado = 'caducado';
+  return disp.terminado;
+}
+
+// Gate para las herramientas. Desde la 1.12.0 decide el CERTIFICADO DE LICENCIA guardado en este
+// ordenador, sin red. Devuelve { ok:true, mode } o { ok:false, … } con lo necesario para decirle al
+// abogado qué hacer (código de conexión, sin derecho de uso, sin conexión, enlace de login).
+function okLicencia(der) {
+  return { ok: true, mode: der.modo, licencia: der, user: loadAuth()?.user || null };
+}
+
 export async function ensureAuthorized() {
   if (config.robinToken) return { ok: true, bearer: config.robinToken, mode: 'token' };
+  const der = licencia.derechoDeUso();
+  if (der.ok) {
+    mantenerSesion(); // en segundo plano: renueva lo que toque sin hacer esperar a la herramienta
+    return okLicencia(der);
+  }
   const bearer = await getBearerQuiet();
   if (bearer) {
+    if (licencia.tocaRenovar() || !der.ok) await renovarCertificado(bearer);
+    const d2 = licencia.derechoDeUso();
+    if (d2.ok) return okLicencia(d2);
+    if (d2.motivo === 'sin_derecho') return { ok: false, sin_derecho: true, estado: d2.estado };
+    // Servidor sin certificados (o que no ha podido darlo ahora): como hasta la 1.11.
     const a = loadAuth();
     return { ok: true, bearer, mode: 'oauth', user: a?.user || null };
   }
+  if (der.motivo === 'sin_derecho' && _ultimaRenovacion !== 'rechazada') {
+    return { ok: false, sin_derecho: true, estado: der.estado };
+  }
   const a = loadAuth();
   const hasta = (a?.expires_at || 0) + DIAS_SIN_CONEXION * 24 * 3600 * 1000;
-  if (_ultimaRenovacion === 'sin_conexion' && a?.access_token && a?.refresh_token && Date.now() < hasta) {
+  if (_ultimaRenovacion === 'sin_conexion' && a?.access_token && tieneLlave(a) && Date.now() < hasta) {
     log.info('Sin conexión con Robin: se sigue con la sesión guardada', { hasta: new Date(hasta).toISOString() });
     return { ok: true, bearer: a.access_token, mode: 'sin_conexion', user: a.user || null, sin_conexion_hasta: new Date(hasta).toISOString() };
   }
@@ -709,14 +1082,38 @@ export async function ensureAuthorized() {
   // no arregla nada —el navegador autoriza, pero este programa tampoco llega para recoger el
   // código— y el abogado se pasa la mañana autorizando enlaces. La sesión no está rechazada (eso
   // sería 'rechazada'): en cuanto haya conexión se renueva sola. Se dice eso, con la causa.
-  if (_ultimaRenovacion === 'sin_conexion' && a?.refresh_token) {
+  if (_versionMinima && _ultimaRenovacion === 'version') return { ok: false, version_no_soportada: true, version_minima: _versionMinima };
+  if (_ultimaRenovacion === 'sin_conexion' && tieneLlave(a)) {
     log.warn('Sin conexión con Robin pasado el margen: no se abre el login', { causa: _ultimoErrorRed?.codigo || null });
     return { ok: false, loginUrl: null, sin_conexion: true, error_red: _ultimoErrorRed };
   }
-  startLogin(); // no bloquea la llamada MCP; el usuario completa el login en el navegador
+  if (_versionMinima) return { ok: false, version_no_soportada: true, version_minima: _versionMinima };
+  // Hay que (re)conectar: con el código de dispositivo si el servidor lo ofrece.
+  const disp = await iniciarDispositivo();
+  if (disp?.user_code) return { ok: false, dispositivo: disp };
+  if (disp?.sin_conexion) return { ok: false, loginUrl: null, sin_conexion: true, error_red: _ultimoErrorRed };
+  if (disp?.version_no_soportada) return { ok: false, version_no_soportada: true, version_minima: _versionMinima };
+  startLogin(); // servidor sin código de dispositivo: el enlace de siempre
   const loginUrl = await awaitAuthorizeUrl();
   return { ok: false, loginUrl };
 }
+
+// Texto del código de conexión, el mismo en las herramientas y en reconectar_robinsearch.
+export function textoDispositivo(d) {
+  const url = (d.verification_uri || 'https://robinlawyer.ai/conectar').replace(/^https?:\/\//, '');
+  const min = Math.max(1, Math.round((d.caduca_en_s || 600) / 60));
+  return `Para conectar RobinSearch, abre ${url} en cualquier navegador (también vale el del móvil) ` +
+    `e introduce el código ${d.user_code}. Comprueba que el equipo que aparece es el tuyo. ` +
+    `En cuanto lo apruebes, RobinSearch se conecta solo: no hace falta que me digas nada, ` +
+    `basta con repetir la petición. El código caduca en ${min} minutos.`;
+}
+
+const TEXTO_SIN_DERECHO = {
+  prueba_terminada: 'Tu periodo de prueba de RobinLawyer.ai ha terminado, así que RobinSearch ya no está disponible en este ordenador. Puedes contratar tu plan en robinlawyer.ai/pricing; en cuanto esté activo, RobinSearch vuelve a funcionar solo.',
+  caducada: 'Tu licencia de RobinLawyer.ai ha caducado, así que RobinSearch ya no está disponible en este ordenador. Puedes renovarla en robinlawyer.ai/pricing; en cuanto esté activa, RobinSearch vuelve a funcionar solo.',
+  sin_licencia: 'Tu cuenta de RobinLawyer.ai no tiene ninguna licencia activa, así que RobinSearch no está disponible. Puedes activarla en robinlawyer.ai/pricing.',
+  cuenta_bloqueada: 'Tu cuenta de RobinLawyer.ai está pendiente de activación, así que RobinSearch todavía no está disponible. Escríbenos a hola@robinlawyer.ai si crees que es un error.',
+};
 
 function causaLegible(err) {
   const c = err?.codigo || '';
@@ -731,6 +1128,24 @@ function causaLegible(err) {
 
 // Respuesta MCP amable cuando falta sesión.
 export function authPromptResult(loginUrl, auth = null) {
+  if (auth?.dispositivo?.user_code) {
+    return fail(textoDispositivo(auth.dispositivo) + ' (Muéstrale al abogado el código y la dirección tal cual.)', {
+      requiere_login: true,
+      codigo: auth.dispositivo.user_code,
+      url: auth.dispositivo.verification_uri,
+      caduca_en_s: auth.dispositivo.caduca_en_s,
+    });
+  }
+  if (auth?.sin_derecho) {
+    return fail(TEXTO_SIN_DERECHO[auth.estado] || TEXTO_SIN_DERECHO.sin_licencia, { requiere_login: false, sin_derecho: true, estado: auth.estado || null });
+  }
+  if (auth?.version_no_soportada) {
+    return fail(
+      `Esta versión de RobinSearch (${VERSION}) ya no puede conectar con RobinLawyer.ai: la mínima es la ${auth.version_minima}. ` +
+        'Actualízala desde RobinDesktop o descárgala en robinlawyer.ai/descargas; la sesión se conserva y no hace falta volver a entrar.',
+      { requiere_login: false, version_no_soportada: true, version_minima: auth.version_minima || null },
+    );
+  }
   if (auth?.sin_conexion) {
     return fail(
       'RobinSearch no consigue conectar con RobinLawyer.ai desde este ordenador (' + causaLegible(auth.error_red) + '). ' +
@@ -757,10 +1172,47 @@ export function authPromptResult(loginUrl, auth = null) {
 // Estado de sesión para estado_servidor (silencioso, sin disparar login).
 export async function authStatus() {
   if (config.robinToken) return { autenticado: true, modo: 'token', usuario: null };
-  const bearer = await getBearerQuiet();
-  if (!bearer) return { autenticado: false, modo: null, usuario: null };
+  const der = licencia.derechoDeUso();
   const a = loadAuth();
-  return { autenticado: true, modo: 'oauth', usuario: a?.user?.email || a?.user?.name || null };
+  const llave = a?.refresh_en || (a?.refresh_token ? 'fichero' : null);
+  const lic = der.datos
+    ? { estado: der.datos.estado, plan: der.datos.plan, uso: der.ok, modo: der.ok ? der.modo : der.motivo, hasta: der.hasta || der.datos.valido_hasta, dias_restantes: der.dias_restantes ?? null }
+    : null;
+  const disp = estadoDispositivo();
+  const conexion = leerConexion()[claveProceso()] || null;
+  if (der.ok) {
+    return { autenticado: true, modo: der.modo, usuario: a?.user?.email || der.datos?.email || null, licencia: lic, llave_renovacion: llave, conexion, codigo_conexion: disp?.estado === 'esperando' ? disp : null };
+  }
+  const bearer = await getBearerQuiet();
+  if (!bearer) return { autenticado: false, modo: null, usuario: null, licencia: lic, llave_renovacion: llave, conexion, codigo_conexion: disp?.estado === 'esperando' ? disp : null };
+  return { autenticado: true, modo: 'oauth', usuario: a?.user?.email || a?.user?.name || null, licencia: lic, llave_renovacion: llave, conexion };
+}
+
+// Aviso para el chat cuando la licencia de este equipo está a punto de vencer (≤ 5 días o ya en la
+// gracia sin conexión). null = nada que decir.
+export function avisoSesion() {
+  if (config.robinToken) return null;
+  if (_versionMinima) {
+    return `Esta versión de RobinSearch (${VERSION}) ya no puede renovar su conexión con RobinLawyer.ai: la mínima es la ${_versionMinima}. ` +
+      'Sigue funcionando con la licencia guardada mientras valga, pero hay que actualizarla desde RobinDesktop o en robinlawyer.ai/descargas ' +
+      '(la sesión se conserva). Díselo al abogado.';
+  }
+  const der = licencia.derechoDeUso();
+  if (!der.ok) return null;
+  if (der.modo !== 'gracia' && (der.dias_restantes ?? 99) > 5) return null;
+  const dias = der.dias_restantes ?? 0;
+  const cuando = dias <= 0 ? 'hoy' : dias === 1 ? 'mañana' : `en ${dias} días`;
+  const causa = _ultimoErrorRed ? ` (${causaLegible(_ultimoErrorRed)})` : '';
+  if (der.modo === 'gracia') {
+    return `RobinSearch lleva días sin poder conectar con RobinLawyer.ai desde este ordenador${causa}; ` +
+      `sigue funcionando con la licencia guardada, pero vence ${cuando}. Para renovarla basta abrir RobinDesktop un momento ` +
+      'o escribir «reconectar RobinSearch». Díselo al abogado.';
+  }
+  if (der.datos?.renovable === false && der.datos?.licencia_hasta) {
+    return `El periodo de prueba de RobinLawyer.ai de este abogado termina ${cuando}; después RobinSearch dejará de estar disponible hasta que contrate su plan (robinlawyer.ai/pricing).`;
+  }
+  return `La licencia de RobinSearch de este ordenador vence ${cuando} y no se ha podido renovar todavía${causa}. ` +
+    'Para renovarla basta abrir RobinDesktop un momento o escribir «reconectar RobinSearch». Díselo al abogado.';
 }
 
 // Login interactivo bloqueante para el CLI (`robin-search login`). Imprime a stdout.
@@ -799,7 +1251,7 @@ export async function logout() {
       const disc = await discover();
       await fetch(disc.revocation_endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: cabeceras({ 'Content-Type': 'application/x-www-form-urlencoded' }),
         body: new URLSearchParams({ token: a.access_token, client_id: a.client_id }),
       });
     } catch {
@@ -807,7 +1259,8 @@ export async function logout() {
     }
   }
   clearTokens();
+  licencia.borrar();
   return true;
 }
 
-export default { ensureAuthorized, authPromptResult, authStatus, getBearerQuiet, loginInteractive, logout };
+export default { ensureAuthorized, authPromptResult, authStatus, getBearerQuiet, loginInteractive, logout, mantenerSesion, iniciarMantenimiento, iniciarDispositivo, avisoSesion };

@@ -1161,7 +1161,7 @@ export async function informar(motivo, datos = {}, { esperarMs = 6000 } = {}) {
     const bearer = await conTope(getBearerQuiet(), 3000).catch(() => null);
     const res = await fetch(config.diagnosticoUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}) },
+      headers: { 'Content-Type': 'application/json', 'X-RobinSearch-Version': VERSION, ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}) },
       body: cuerpo,
       signal: AbortSignal.timeout(esperarMs),
     });

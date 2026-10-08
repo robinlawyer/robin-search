@@ -20,6 +20,7 @@ import * as escritor from './escritor.js';
 import * as diagnostico from './diagnostico.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
+import { iniciarMantenimiento } from './auth/oauth.js';
 import { iniciarControl } from './control.js';
 import { neutralizarVersionesAntiguas } from './version-antigua.js';
 
@@ -354,6 +355,9 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
 
   // Comprobación de actualización en background (no bloquea el arranque).
   checkForUpdate().catch(() => {});
+  // La sesión se mantiene viva sola, aunque el abogado no abra nunca RobinDesktop (Juan,
+  // 8-oct-2026): al arrancar y cada 24 h, por la conexión de salida.
+  if (control) iniciarMantenimiento();
 
   // 2. Modelo. Precarga para no pagar la latencia en la primera búsqueda.
   //

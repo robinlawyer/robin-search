@@ -45,6 +45,9 @@ import leerAdjunto from './tools/leer_adjunto.js';
 import archivarCorreo from './tools/archivar_correo.js';
 import guardarBorrador from './tools/guardar_borrador.js';
 import enviarCorreo from './tools/enviar_correo.js';
+import reconectarRobinsearch from './tools/reconectar_robinsearch.js';
+import { avisoSesion } from './auth/oauth.js';
+import { state } from './state.js';
 
 const TOOLS = [
   buscarDocumentos,
@@ -74,7 +77,37 @@ const TOOLS = [
   archivarCorreo,
   guardarBorrador,
   enviarCorreo,
+  // Reconectar con un código desde cualquier navegador (Juan, 8-oct-2026, caso Pedro).
+  reconectarRobinsearch,
 ];
+
+// Avisos para que el abogado se entere MIENTRAS trabaja, aunque nunca abra RobinDesktop (Juan,
+// 8-oct-2026): una versión nueva y una licencia a punto de vencer. Van en la respuesta de la
+// herramienta, como mucho una vez cada 6 horas cada uno, para que Claude se lo diga.
+const CADA_AVISO_MS = 6 * 3600 * 1000;
+const _ultimoAviso = new Map();
+function avisosParaElChat() {
+  const out = [];
+  const ahora = Date.now();
+  const sesion = avisoSesion();
+  if (sesion && ahora - (_ultimoAviso.get('sesion') || 0) > CADA_AVISO_MS) {
+    out.push(sesion);
+    _ultimoAviso.set('sesion', ahora);
+  }
+  const nueva = state.actualizacionDisponible;
+  if (nueva && _ultimoAviso.get('version') !== nueva) {
+    out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Díselo al abogado: puede ` +
+      'instalarla con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
+    _ultimoAviso.set('version', nueva);
+  }
+  const minima = state.versionMinimaAnunciada;
+  if (minima && _ultimoAviso.get('minima') !== minima.version) {
+    out.push(`A partir del ${minima.desde || 'próximo cambio'} RobinLawyer.ai dejará de aceptar versiones de RobinSearch anteriores a la ${minima.version}; ` +
+      `este ordenador tiene la ${VERSION}. Díselo al abogado para que actualice desde RobinDesktop o robinlawyer.ai/descargas.`);
+    _ultimoAviso.set('minima', minima.version);
+  }
+  return out;
+}
 
 const byName = new Map(TOOLS.map((t) => [t.definition.name, t]));
 
@@ -123,6 +156,16 @@ async function main() {
         const cambios = alConsultar(expedienteDeLaLlamada(args));
         if (cambios) {
           res.structuredContent = { ...res.structuredContent, cambios_desde_tu_ultima_consulta: cambios };
+          res.content = [
+            { type: 'text', text: JSON.stringify(res.structuredContent, null, 2) },
+            ...(res.content || []).slice(1),
+          ];
+        }
+      }
+      if (name !== 'estado_servidor' && res?.structuredContent) {
+        const avisos = avisosParaElChat();
+        if (avisos.length) {
+          res.structuredContent = { ...res.structuredContent, aviso_robinsearch: avisos.join(' ') };
           res.content = [
             { type: 'text', text: JSON.stringify(res.structuredContent, null, 2) },
             ...(res.content || []).slice(1),

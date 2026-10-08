@@ -42,8 +42,13 @@ Después del primer indexado ya no hay espera: lo que añadas al expediente entr
 
 ## 5. Iniciar sesión
 
-La primera vez que busques se abre el navegador para entrar con tu cuenta de Robin Lawyer.
-Una vez y se recuerda.
+La primera vez que busques, Claude te da un código de 8 letras. Abre **robinlawyer.ai/conectar**
+en cualquier navegador (también vale el del móvil), entra con tu cuenta de RobinLawyer.ai, comprueba
+que el equipo que aparece es el tuyo y confirma. RobinSearch se conecta solo; repite la búsqueda.
+
+A partir de ahí no tienes que hacer nada: la sesión se renueva sola cada día y, si tu ordenador se
+queda sin conexión, RobinSearch (y el correo) siguen funcionando semanas con la licencia guardada.
+Si algún día hiciera falta, escribe en Claude «reconectar RobinSearch».
 
 ---
 

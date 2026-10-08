@@ -12,7 +12,7 @@ import * as expedientes from '../expedientes.js';
 import { leerCorreo, leerCuentas } from '../correo/ajustes.js';
 import nube from '../indexer/nube.js';
 import { ok } from './util.js';
-import { authStatus } from '../auth/oauth.js';
+import { authStatus, avisoSesion, versionMinimaExigida } from '../auth/oauth.js';
 import { estadoMotor } from '../embedder/embedder.js';
 import { estadoOcr } from '../indexer/ocr.js';
 
@@ -135,7 +135,16 @@ export async function handler() {
     tamanyo_indice_mb: tamanyoIndiceMb(),
   };
   if (state.actualizacionDisponible) {
-    respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Descárgala desde robinlawyer.ai/descargas`;
+    respuesta.aviso = `Nueva versión disponible (${state.actualizacionDisponible}). Instálala con el botón de RobinDesktop o descárgala en robinlawyer.ai/descargas; la sesión se conserva.`;
+  }
+  // La licencia de este equipo, a punto de vencer o vencida sin poder renovar (Juan, 8-oct-2026).
+  const avisoLic = avisoSesion();
+  if (avisoLic) respuesta.aviso_sesion = avisoLic;
+  else if (respuesta.sesion && !respuesta.sesion.autenticado) {
+    respuesta.aviso_sesion = 'RobinSearch no está conectado con RobinLawyer.ai en este ordenador. Escribe «reconectar RobinSearch» para conectarlo con un código desde cualquier navegador.';
+  }
+  if (versionMinimaExigida()) {
+    respuesta.aviso_version = `Esta versión ya no puede conectar con RobinLawyer.ai (la mínima es la ${versionMinimaExigida()}). Actualízala desde RobinDesktop o en robinlawyer.ai/descargas.`;
   }
 
   // Por qué el indexado va más lento de lo que podría. Hasta la 1.6.1 esto solo estaba en el

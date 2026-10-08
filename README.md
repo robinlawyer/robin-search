@@ -46,8 +46,10 @@ lenguaje natural y recibe solo los fragmentos relevantes.
 2. Doble clic → Claude Desktop abre el diálogo nativo.
 3. Selecciona la **Carpeta de expedientes** (una o varias). **No hay que pegar ningún token.**
 4. Confirma. El servidor arranca, indexa en segundo plano y queda añadido al arranque.
-5. La **primera vez que busques**, se abre el navegador para que **inicies sesión con tu cuenta de
-   Robin Lawyer** (OAuth, igual que el conector remoto). Hecho una vez, se recuerda.
+5. La **primera vez que busques**, Claude te da un **código**: lo introduces en
+   **robinlawyer.ai/conectar** desde cualquier navegador (también el del móvil) y RobinSearch queda
+   conectado a tu cuenta de RobinLawyer.ai. Hecho una vez, se mantiene solo: la licencia se comprueba
+   en el ordenador y la sesión se renueva sin abrir RobinDesktop (ver docs/SESION_Y_LICENCIA.md).
 
 > **Úsalo desde el CHAT de Claude Desktop.** RobinSearch es una extensión **local**: vive en el
 > ordenador del abogado. En las **tareas de Cowork** no está disponible salvo que se vincule el
