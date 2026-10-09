@@ -19,3 +19,7 @@ scripts/
 node_modules/bare-*/
 node_modules/protobufjs/cli/
 node_modules/prebuild-install/
+
+# Caché de @xenova/transformers: la crean las pruebas al descargar el modelo (135 MB). El modelo
+# va empaquetado en models/; esta copia no debe viajar en el .mcpb (9-oct-2026, 1.12.2: 243 MB).
+node_modules/@xenova/transformers/.cache/

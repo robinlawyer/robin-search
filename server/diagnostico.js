@@ -882,6 +882,34 @@ export function claudeLaCerro(marca, lineas = null) {
   // el mismo milisegundo salen cambiadas («Server transport closed» antes que el «Shutting down»
   // que lo provocó). Leído en bruto, un cierre ordenado pasaba por muerte del proceso.
   eventos.sort((a, b) => a.t - b.t);
+  // Claude anota cada lanzamiento en el registro del servidor («Initializing server», con
+  // milisegundos) y, según la versión y el camino (chat o Cowork/Code), también o solo en main.log
+  // («Connecting to …», al segundo y en hora local). Manda el canal del lanzamiento más cercano
+  // ANTES del arranque, como siempre: dos canales pueden ser dos procesos distintos (1-oct, el
+  // cierre del chat no tapa la muerte del de Cowork). 🔴 8-oct-2026 (Juan, 1.12.0): el proceso
+  // nació a las 16:18:14.x, después del «Connecting» de las 16:18:14 truncado al segundo; mandaba
+  // ese canal, que no dice NADA más (ni cierre ni muerte) de un proceso que vive 4 s, y el
+  // «Shutting down» de las 16:18:17.009 del registro del servidor no se miraba: un cierre ordenado
+  // pasaba por caída. Si el canal que manda calla, decide el cierre anotado en otro.
+  const porCanal = [...new Set(eventos.filter((e) => e.tipo === 'inicio').map((e) => e.canal))]
+    .map((canal) => cerroEnCanal(eventos, inicio, canal))
+    .filter(Boolean);
+  // El registro existe y no menciona el arranque de esa ejecución: no la lanzó ESTE Claude (la
+  // lanzó la app, el CLI o una prueba), así que Claude no pudo cerrarla.
+  if (!porCanal.length) return false;
+  const previos = porCanal.filter((c) => c.previo);
+  const manda = previos.length
+    ? previos.reduce((x, y) => (y.t > x.t ? y : x))
+    : porCanal.reduce((x, y) => (y.t < x.t ? y : x));
+  if (manda.veredicto !== 'mudo') return manda.veredicto;
+  return porCanal.some((c) => c !== manda && c.veredicto === true);
+}
+
+// Lo que dice UN canal del registro de Claude sobre el proceso que arrancó en `inicio`: cuándo lo
+// lanzó (`t`, `previo` si fue antes del arranque) y el veredicto: `true` si lo cerró Claude,
+// `false` si murió sin cierre, 'mudo' si después del lanzamiento el canal no dice nada. `null` si en
+// ese canal no consta su lanzamiento.
+function cerroEnCanal(eventos, inicio, canal) {
   // El lanzamiento del proceso es el más cercano ANTES de su arranque, dentro de 60 s (en
   // Windows, con el antivirus mirando node.exe, entre la línea y el proceso pasan segundos).
   // 🔴 29-sep-2026: se admitía también uno hasta 1 s DESPUÉS del arranque y, al recorrerlos todos,
@@ -893,29 +921,29 @@ export function claudeLaCerro(marca, lineas = null) {
   let posterior = -1;
   for (let i = 0; i < eventos.length; i++) {
     const e = eventos[i];
-    if (e.tipo !== 'inicio') continue;
+    if (e.tipo !== 'inicio' || e.canal !== canal) continue;
     if (e.t <= inicio && inicio - e.t <= 60_000) lanzado = i;
     else if (e.t > inicio && e.t <= inicio + 1000 && posterior < 0) posterior = i;
   }
+  const previo = lanzado >= 0;
   if (lanzado < 0) lanzado = posterior;
-  // El registro existe y no menciona el arranque de esa ejecución: no la lanzó ESTE Claude (la
-  // lanzó la app, el CLI o una prueba), así que Claude no pudo cerrarla.
-  if (lanzado < 0) return false;
-  const canal = eventos[lanzado].canal;
+  if (lanzado < 0) return null;
+  const t = eventos[lanzado].t;
+  const v = (veredicto) => ({ t, previo, veredicto });
   // Solo cuenta lo que le pasó a SU canal; y un veredicto de sondeo anterior al arranque es de
   // otro proceso (el relanzado nace después del veredicto).
   const resto = eventos
     .slice(lanzado + 1)
     .filter((e) => e.tipo !== 'inicio' && e.canal === canal && !(e.tipo === 'sondeo' && e.t <= inicio));
   const fin = resto[0];
-  if (!fin) return false;
-  if (fin.tipo === 'cierre') return true;
+  if (!fin) return v('mudo');
+  if (fin.tipo === 'cierre') return v(true);
   // Nació entre el lanzamiento y el veredicto del sondeo: era el proceso de sondeo, y Claude lo
   // descartó para lanzar otro.
-  if (fin.tipo === 'sondeo') return true;
+  if (fin.tipo === 'sondeo') return v(true);
   // El cierre y la muerte que lo acompaña llegan juntos: si hay un «Shutting down» pegado al final
   // (±2 s), lo cerró Claude. Una caída de verdad no trae ninguno.
-  return resto.some((e) => e.tipo === 'cierre' && Math.abs(e.t - fin.t) <= 2000);
+  return v(resto.some((e) => e.tipo === 'cierre' && Math.abs(e.t - fin.t) <= 2000));
 }
 
 export function registroSaneado(lit = literalesSensibles()) {
