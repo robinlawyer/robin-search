@@ -34,6 +34,7 @@ import leerSeccion from './tools/leer_seccion.js';
 import listarDocumentos from './tools/listar_documentos_indexados.js';
 import establecerExpedienteActivo from './tools/establecer_expediente_activo.js';
 import elegirExpediente from './tools/elegir_expediente.js';
+import fichaAsunto from './tools/ficha_asunto.js';
 import estadoServidor from './tools/estado_servidor.js';
 import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
@@ -63,6 +64,9 @@ const TOOLS = [
   establecerExpedienteActivo,
   // Elegir el expediente con la ventana de carpetas del sistema (propuesta de Juan, 1-oct-2026).
   elegirExpediente,
+  // La ficha de estado de cada asunto, para el director de asunto de «Hola Robin» (despacho
+  // agéntico, fase 1; documento de Juan del 12-oct-2026): un asunto = una o varias carpetas.
+  fichaAsunto,
   estadoServidor,
   // Barrido exhaustivo del expediente (due diligence sobre lo que no cabe en contexto).
   siguientePorRevisar,

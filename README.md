@@ -108,6 +108,7 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `listar_documentos_indexados` | Lista documentos indexados del expediente (incluye PDFs sin OCR) | `readOnlyHint`    |
 | `establecer_expediente_activo` | Fija el expediente de la sesión, o varios a la vez (o lo limpia al cerrar el asunto) | —                 |
 | `elegir_expediente`           | Abre la ventana de carpetas del sistema para elegir el expediente (o varios) con un clic | —                 |
+| `ficha_asunto`                | Ficha de estado del asunto para el director de asunto: fase, puerta, decisiones, plazos, escritos | —                 |
 | `estado_servidor`             | Estado, versión, actualización, expedientes detectados y activo, contadores | `readOnlyHint`    |
 | `siguiente_por_revisar`       | Siguiente trozo del expediente que nadie ha leído, con su texto y el progreso | `readOnlyHint`    |
 | `anotar`                      | Guarda la ficha de hechos de la ventana revisada                | —                 |
@@ -117,6 +118,31 @@ Ver [Barrido exhaustivo](docs/BARRIDO_DUE_DILIGENCE.md).
 | `leer_correo`                 | Un correo entero en texto plano, con sus adjuntos listados      | `readOnlyHint`    |
 | `guardar_borrador`            | Deja la respuesta redactada en Borradores, dentro del hilo      | —                 |
 | `enviar_correo`               | Envía por SMTP y deja copia en Enviados (**desactivado de fábrica**) | `destructiveHint` |
+
+### El director de asunto: la ficha de cada asunto (1.13.0)
+
+«Hola Robin» ya no solo arranca una conversación: retoma el asunto donde se quedó (despacho
+agéntico, fase 1; documento de Juan del 12-oct-2026). `ficha_asunto` guarda la ficha de estado de
+cada asunto **en el ordenador del abogado**, también cuando trabaja en la pestaña Chat de Claude,
+donde Claude no tiene disco propio:
+
+- **Un asunto = una o varias carpetas.** La documentación de un asunto suele vivir repartida (la
+  carpeta del cliente, la del procedimiento, la del data room). Un asunto las reúne, y solo hay uno
+  activo a la vez: `activar` fija como selección exactamente sus carpetas, con el aislamiento de
+  siempre frente a los demás clientes.
+- **Al volver, qué ha cambiado.** `activar` compara las carpetas del asunto con como estaban en la
+  sesión anterior y devuelve los documentos nuevos, modificados y retirados; quedan además anotados
+  en la ficha.
+- **La fase solo avanza con la decisión del abogado.** `resolver_puerta` es la única forma de
+  cambiar de fase (0 Entrada … 8 Cambios) y exige la decisión con sus palabras, que queda registrada
+  con fecha, fase y puerta. Las decisiones solo se añaden: no se pueden reescribir ni borrar. Un
+  escrito no pasa a «validado» ni a «enviado» sin decisión, y un plazo sin `calculo_plazos` no se
+  marca como firme.
+- **Legible sin Claude.** Además de `asuntos.json`, cada asunto tiene `asuntos/<id>/ficha.md` y
+  `decisiones.md` en el directorio de datos de RobinSearch. La ficha no copia el contenido de los
+  documentos: apunta a carpetas y guarda lo que el abogado decide.
+- **Nada se queda pegado.** Como el expediente activo, el asunto activo no sobrevive a cerrar Claude:
+  el siguiente «Hola Robin» propone los asuntos recientes, el último primero.
 
 ### Elegir el expediente con un clic, y varios a la vez (1.12.0)
 
