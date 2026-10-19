@@ -386,6 +386,15 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
 
+  // Solo pruebas automáticas: una excepción sin capturar de verdad (con stdio sano) se sigue
+  // tratando como caída aunque su código sea EPIPE; solo el eco del cierre de Claude no lo es.
+  if (process.env.ROBIN_PRUEBA_EXCEPCION) {
+    setTimeout(() => {
+      const e = new Error('excepción de prueba');
+      if (process.env.ROBIN_PRUEBA_EXCEPCION === 'EPIPE') Object.assign(e, { code: 'EPIPE', syscall: 'write' });
+      throw e;
+    }, 300);
+  }
   // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
   // DESPUÉS de cargar el modelo a propósito: es onnxruntime-web (Emscripten) el que instala el
   // manejador que relanza los rechazos; antes de cargarlo la prueba no probaba nada.

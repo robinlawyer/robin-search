@@ -48,6 +48,7 @@ import enviarCorreo from './tools/enviar_correo.js';
 import reconectarRobinsearch from './tools/reconectar_robinsearch.js';
 import { avisoSesion } from './auth/oauth.js';
 import { state } from './state.js';
+import { escribirStderr, stderrCerradoYa } from './tuberias.js';
 
 const TOOLS = [
   buscarDocumentos,
@@ -213,7 +214,8 @@ async function main() {
   // 🔴 29-sep-2026: con el Node que trae Claude (UtilityProcess) stderr acaba en main.log,
   // no en «mcp-server-<nombre>.log»; el registro se reconoce sobre todo por la ETIQUETA
   // con que Claude firma nuestras líneas (diagnostico.js, fuenteLogClaude).
-  process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
+  // Con la tubería ya rota por Claude no se escribe (tuberias.js; el oyente de stdio-guard recoge el error).
+  if (!stderrCerradoYa()) process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
   // desde el primer momento (estado_servidor informará "indexando"). Se espera a que Claude
@@ -234,6 +236,6 @@ async function main() {
 
 main().catch((err) => {
   log.error('Fallo fatal al arrancar el servidor', { err: String(err) });
-  process.stderr.write(`robin-search: fallo al arrancar: ${err?.message ?? err}\n`);
+  escribirStderr(`robin-search: fallo al arrancar: ${err?.message ?? err}\n`);
   process.exit(1);
 });

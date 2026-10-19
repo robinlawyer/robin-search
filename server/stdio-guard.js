@@ -7,6 +7,13 @@
 //
 // Redirigimos toda la consola a stderr (que sí es seguro). NO tocamos `process.stdout.write`,
 // que es justo el canal que usa el SDK de MCP para el JSON-RPC.
+//
+// Y se escuchan los errores de stdout/stderr: cuando Claude cierra las tuberías, escribir en ellas
+// da EPIPE, y sin oyente eso era una «excepción no capturada» contada como caída (tuberias.js).
+
+import { instalarOyentesStdio, escribirStderr } from './tuberias.js';
+
+instalarOyentesStdio();
 
 const toStderr =
   (prefix) =>
@@ -15,7 +22,7 @@ const toStderr =
       const line = args
         .map((a) => (typeof a === 'string' ? a : (() => { try { return JSON.stringify(a); } catch { return String(a); } })()))
         .join(' ');
-      process.stderr.write(`${prefix}${line}\n`);
+      escribirStderr(`${prefix}${line}\n`);
     } catch {
       /* nunca romper por un log */
     }
@@ -27,4 +34,3 @@ console.debug = toStderr('');
 console.warn = toStderr('');
 console.error = toStderr('');
 
-export {};

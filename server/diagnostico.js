@@ -37,6 +37,7 @@ import nube from './indexer/nube.js';
 import { getBearerQuiet, ultimoErrorRed } from './auth/oauth.js';
 import { certificadosSistema } from './certificados-sistema.js';
 import { escribirAtomico, escribirJson, conCerrojoDeFichero } from './persistencia.js';
+import { alCerrarseLaSalida, esTuberiaCerrada, stdoutCerradoYa, stderrCerradoYa } from './tuberias.js';
 
 const ENTRE_INFORMES_IGUALES_MS = 12 * 3600 * 1000;
 const MAX_INFORMES_DIA = 20;
@@ -1235,6 +1236,13 @@ export function instalarManejadores({ alCerrar } = {}) {
       /* señal no disponible en esta plataforma */
     }
   }
+  // Claude cerró la tubería de stdout (16-oct-2026, Eduardo): ya no hay a quién responder. Es un
+  // cierre ordenado como el de stdin cerrado, no una caída (tuberias.js).
+  alCerrarseLaSalida(() => salirLimpio('salida_cerrada'));
+  // ¿Esta excepción es solo el eco de que Claude ya se fue? EPIPE (o similar) con una de las
+  // tuberías de stdio ya rota: lo último que el proceso intentó escribir al marcharse Claude.
+  // Un EPIPE con stdout y stderr sanos es otra cosa (un socket propio) y se sigue avisando.
+  const esEcoDelCierre = (err) => esTuberiaCerrada(err) && (stdoutCerradoYa() || stderrCerradoYa() || cerrando);
   // Una promesa rechazada que nadie recoge TUMBA el proceso en Node ≥15. Aquí se registra, se
   // avisa y el servidor sigue atendiendo.
   //
@@ -1249,6 +1257,7 @@ export function instalarManejadores({ alCerrar } = {}) {
     }
   });
   const alRechazo = (motivo) => {
+    if (esEcoDelCierre(motivo)) return;
     log.error('Promesa rechazada sin capturar (el servidor sigue)', { err: String(motivo?.stack || motivo?.message || motivo) });
     informar('excepcion', { fase: faseActual() || 'en_marcha', causa: errorTecnico(motivo) }).catch(() => {});
   };
@@ -1257,7 +1266,16 @@ export function instalarManejadores({ alCerrar } = {}) {
   // Tras una excepción sin capturar el estado del proceso no es fiable: se deja la marca con la
   // causa (para el siguiente arranque, y para apartar el fichero si fue leyendo uno), se intenta
   // avisar y se sale.
+  // Una sola vez: mientras se avisa y se sale, otra excepción (la misma tubería rota, otra vez) no
+  // vuelve a registrarse ni a pisar la marca. Antes cada intento de registrarla daba otra (bucle).
+  let enExcepcion = false;
   const alExcepcion = (err) => {
+    if (esEcoDelCierre(err)) {
+      if (stdoutCerradoYa()) salirLimpio('salida_cerrada');
+      return;
+    }
+    if (enExcepcion) return;
+    enExcepcion = true;
     log.error('Excepción no capturada', { err: String(err?.stack || err) });
     const previa = _marca || {};
     marcarFase('excepcion', {

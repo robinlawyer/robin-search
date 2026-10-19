@@ -23,7 +23,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, execFile } from 'node:child_process';
 
 import { escribirJson, leerJson } from '../persistencia.js';
 import { config, ensureDataDirs, VERSION } from '../config.js';
@@ -142,6 +142,28 @@ export function leerConexion() {
     return {};
   }
 }
+// QUIÉN lanzó este proceso (18-oct-2026, Eduardo: «el proceso node24:node no conecta» y no había
+// forma de saber qué era ese node: ni Claude, que usa su Node interno, ni RobinDesktop, que usa el
+// suyo). Solo el NOMBRE del programa padre («claude», «Code Helper», «zsh»), nunca su ruta: la
+// ruta puede llevar el nombre de usuario. En Windows no se pregunta (no hay `ps`).
+let _lanzador;
+function averiguarLanzador() {
+  if (_lanzador !== undefined || process.platform === 'win32' || !process.ppid) return;
+  _lanzador = null;
+  try {
+    const h = execFile('ps', ['-o', 'comm=', '-p', String(process.ppid)], { timeout: 3000 }, (err, out) => {
+      if (err) return;
+      const nombre = path.basename(String(out || '').trim()).replace(/[^\p{L}\p{N} ._()-]/gu, '').slice(0, 40);
+      _lanzador = nombre || null;
+    });
+    h.on?.('error', () => {});
+    h.unref?.();
+  } catch {
+    /* sin ps: se queda sin saber */
+  }
+}
+averiguarLanzador();
+
 function apuntarConexion(ok, error = null) {
   try {
     ensureDataDirs();
@@ -151,11 +173,19 @@ function apuntarConexion(ok, error = null) {
     const ahora = new Date().toISOString();
     if (ok) {
       p.ultimo_ok = ahora;
+      delete p.fallando_desde;
+      delete p.fallos;
     } else {
       p.ultimo_error = { ...(error || {}), en: ahora };
-      if (!p.fallando_desde || (p.ultimo_ok && p.ultimo_ok > p.fallando_desde)) p.fallando_desde = ahora;
+      if (!p.fallando_desde || (p.ultimo_ok && p.ultimo_ok > p.fallando_desde)) {
+        p.fallando_desde = ahora;
+        p.fallos = 0;
+      }
+      // Intentos fallidos SEGUIDOS: uno solo (la red que tarda en volver al despertar el Mac) no es
+      // «no conecta» (18-oct-2026).
+      p.fallos = (Number(p.fallos) || 0) + 1;
     }
-    if (ok) delete p.fallando_desde;
+    if (_lanzador) p.lanzador = _lanzador;
     p.version = VERSION;
     c[k] = p;
     fs.writeFileSync(rutaConexion(), JSON.stringify(c, null, 2));
@@ -339,14 +369,31 @@ let _ultimoErrorRed = null;
 export function ultimoErrorRed() {
   return _ultimoErrorRed;
 }
-function apuntarErrorRed(e) {
+// El código técnico de un fallo de red. Los de texto (ENOTFOUND, ECONNRESET, CERT_…) tal cual; un
+// tiempo agotado (AbortSignal.timeout) es una DOMException cuyo `code` es el número heredado 23:
+// el informe decía «23 The operation was aborted due to timeout» (18-oct-2026). Se usa su nombre.
+export function codigoErrorRed(e) {
+  const c = e?.cause;
+  const texto = [c?.code, e?.code].find((x) => typeof x === 'string' && x);
+  return String(texto || c?.name || e?.name || 'desconocido').slice(0, 60);
+}
+// `t0`: cuándo empezó el intento. Si tardó MUCHO más que su tope, el proceso no corría (equipo
+// dormido, bucle de eventos bloqueado, sin memoria): no es lo mismo que una red que no contesta.
+function apuntarErrorRed(e, t0 = null) {
   const c = e?.cause;
   _ultimoErrorRed = {
-    codigo: String(c?.code || e?.code || e?.name || 'desconocido').slice(0, 60),
+    codigo: codigoErrorRed(e),
     detalle: String(c?.message || e?.message || '').slice(0, 160),
     en: new Date().toISOString(),
   };
-  apuntarConexion(false, { codigo: _ultimoErrorRed.codigo, detalle: _ultimoErrorRed.detalle });
+  const extra = {};
+  if (Number.isFinite(t0)) extra.ms = Date.now() - t0;
+  try {
+    extra.libre_mb = Math.round(os.freemem() / 1048576);
+  } catch {
+    /* sin dato */
+  }
+  apuntarConexion(false, { codigo: _ultimoErrorRed.codigo, detalle: _ultimoErrorRed.detalle, ...extra });
 }
 // La versión mínima que exige el servidor, si esta ya no llega (HTTP 426).
 let _versionMinima = null;
@@ -397,6 +444,7 @@ async function intentarRenovar(aEntrada) {
     client_id: a.client_id,
   });
   let r;
+  const t0 = Date.now();
   try {
     r = await fetch(disc.token_endpoint, {
       method: 'POST',
@@ -405,9 +453,11 @@ async function intentarRenovar(aEntrada) {
       signal: AbortSignal.timeout(10000),
     });
   } catch (e) {
-    apuntarErrorRed(e);
+    apuntarErrorRed(e, t0);
     return null; // sin red: no invalidamos la sesión, reintentaremos luego
   }
+  // Robin ha contestado: este proceso CONECTA, diga lo que diga la respuesta.
+  apuntarConexion(true);
   if (r.status === 426) {
     try { _versionMinima = (await r.json())?.version_minima || 'desconocida'; } catch { _versionMinima = 'desconocida'; }
     _ultimaRenovacion = 'version';
@@ -822,8 +872,18 @@ function awaitAuthorizeUrl(timeoutMs = 6000) {
 export async function renovarCertificado(bearer) {
   if (!bearer) return null;
   const url = `${config.oauthIssuer.replace(/\/+$/, '')}/api/v1/robinsearch/licencia`;
+  const t0 = Date.now();
+  let r;
   try {
-    const r = await fetch(url, { headers: cabeceras({ Authorization: `Bearer ${bearer}` }), signal: AbortSignal.timeout(8000) });
+    r = await fetch(url, { headers: cabeceras({ Authorization: `Bearer ${bearer}` }), signal: AbortSignal.timeout(8000) });
+  } catch (e) {
+    apuntarErrorRed(e, t0);
+    return null;
+  }
+  // Robin ha contestado: este proceso conecta. Antes solo lo apuntaba la renovación de la llave, y
+  // un proceso que solo pedía su certificado seguía «fallando desde» el día anterior (18-oct-2026).
+  apuntarConexion(true);
+  try {
     if (r.status === 426) {
       try { _versionMinima = (await r.json())?.version_minima || 'desconocida'; } catch { _versionMinima = 'desconocida'; }
       return null;
@@ -833,8 +893,8 @@ export async function renovarCertificado(bearer) {
     const datos = licencia.guardar(d?.certificado);
     if (datos) log.info('Certificado de licencia renovado', { estado: datos.estado, valido_hasta: datos.valido_hasta });
     return datos;
-  } catch (e) {
-    apuntarErrorRed(e);
+  } catch {
+    // Respuesta que no es JSON (portal cautivo, proxy): no es un fallo de conexión.
     return null;
   }
 }
@@ -854,6 +914,11 @@ export function mantenerSesion() {
       if (!a?.access_token && !tieneLlave(a)) return null;
       let bearer = a.access_token && (a.expires_at || 0) > Date.now() + MARGEN_RENOVAR_MS ? a.access_token : null;
       if (!bearer && tieneLlave(a)) bearer = (await refresh(a))?.access_token || null;
+      // Sin red al renovar (el Mac recién despertado, la wifi que vuelve): se reintenta en unos
+      // minutos, no al día siguiente. Antes un solo fallo a las 07:18 dejaba la llave sin renovar
+      // hasta la vuelta de 24 h (18-oct-2026).
+      if (!bearer && tieneLlave(a) && _ultimaRenovacion === 'sin_conexion') reintentarMantenimiento();
+      else _reintentos = 0;
       if (bearer && licencia.tocaRenovar()) await renovarCertificado(bearer);
       if (bearer) avisarSiOtroProcesoNoConecta();
       // Y de paso, si hay versión nueva (para avisar en el chat aunque Claude lleve días abierto).
@@ -867,6 +932,22 @@ export function mantenerSesion() {
       .finally(() => { _manteniendo = null; });
   }
   return _manteniendo;
+}
+
+// Reintentos tras un fallo de red en el mantenimiento: a los 5, 15 y 60 minutos; después, la vuelta
+// normal de 24 h.
+const REINTENTOS_MS = [5, 15, 60].map((m) => m * 60 * 1000);
+let _reintentos = 0;
+let _reintento = null;
+function reintentarMantenimiento() {
+  if (_reintento || _reintentos >= REINTENTOS_MS.length || !_mantenimiento) return;
+  const ms = Number(process.env.ROBIN_REINTENTO_MANTENIMIENTO_MS) || REINTENTOS_MS[_reintentos];
+  _reintentos += 1;
+  _reintento = setTimeout(() => {
+    _reintento = null;
+    mantenerSesion();
+  }, ms);
+  _reintento.unref?.();
 }
 
 let _mantenimiento = null;
@@ -883,30 +964,53 @@ export function pararMantenimiento() {
   if (!_mantenimiento) return;
   clearTimeout(_mantenimiento.t1);
   clearInterval(_mantenimiento.t2);
+  if (_reintento) clearTimeout(_reintento);
+  _reintento = null;
+  _reintentos = 0;
   _mantenimiento = null;
 }
 
 // Caso Pedro: el RobinSearch que lanza Claude no salía a internet desde su despacho y el que lanza
 // RobinDesktop sí. Cuando ESTE proceso conecta y otro lleva más de un día sin poder, se manda un aviso
 // técnico (solo códigos de error y versiones) para saber la causa sin tener que adivinarla.
+//
+// «Más de un día sin poder» quiere decir que SIGUE fallando un día después de empezar, no que falló
+// una vez hace un día (18-oct-2026, Eduardo: un solo tiempo agotado a las 07:18 del 17 —la petición
+// ni llegó al servidor; el mismo proceso descargó el feed 4 s después y pidió su certificado sin
+// problema al día siguiente— se avisó como «no conecta desde el 17»). Hace falta: un fallo reciente
+// (≤ 3 días), al menos 20 h después del primero, y ningún éxito desde entonces.
 const UN_DIA = 24 * 3600 * 1000;
+const FALLANDO_AL_MENOS_MS = 20 * 3600 * 1000;
+export function otroProcesoSinConexion(conexiones, yo, ahora = Date.now()) {
+  for (const [k, p] of Object.entries(conexiones || {})) {
+    if (k === yo || !p?.fallando_desde) continue;
+    const desde = Date.parse(p.fallando_desde);
+    const ultimo = Date.parse(p.ultimo_error?.en || '');
+    if (!Number.isFinite(desde) || !Number.isFinite(ultimo)) continue;
+    if (ahora - ultimo > 3 * UN_DIA) continue; // ya no lo intenta (o ya no existe)
+    // Un fallo suelto (o fallos de un rato): el primero y el último, demasiado juntos. Con 20 h entre
+    // ellos ya son dos intentos como mínimo (también en las entradas de la 1.12.2, sin `fallos`).
+    if (ultimo - desde < FALLANDO_AL_MENOS_MS) continue;
+    const ok = Date.parse(p.ultimo_ok || '');
+    if (Number.isFinite(ok) && ok >= desde) continue;
+    const e = p.ultimo_error || {};
+    const extra = [Number.isFinite(e.ms) ? `${e.ms} ms` : null, Number.isFinite(e.libre_mb) ? `${e.libre_mb} MB libres` : null].filter(Boolean).join(', ');
+    const intentos = Number(p.fallos) >= 2 ? `${p.fallos} intentos fallidos, ` : '';
+    return `el proceso ${k}${p.lanzador ? ` (lanzado por ${p.lanzador})` : ''} (v${p.version || '?'}) no conecta desde ${p.fallando_desde}: ` +
+      `${intentos}el último ${e.en}: ${e.codigo || '?'} ${e.detalle || ''}${extra ? ` [${extra}]` : ''}; este proceso (${yo}) sí conecta`;
+  }
+  return null;
+}
+
 let _avisadoOtro = false;
 function avisarSiOtroProcesoNoConecta() {
   if (_avisadoOtro) return;
-  const c = leerConexion();
-  const yo = claveProceso();
-  for (const [k, p] of Object.entries(c)) {
-    if (k === yo || !p?.fallando_desde) continue;
-    const desde = Date.parse(p.fallando_desde);
-    if (!Number.isFinite(desde) || Date.now() - desde < UN_DIA) continue;
-    if (Date.now() - Date.parse(p.ultimo_error?.en || 0) > 3 * UN_DIA) continue;
-    _avisadoOtro = true;
-    const causa = `el proceso ${k} (v${p.version || '?'}) no conecta desde ${p.fallando_desde}: ${p.ultimo_error?.codigo || '?'} ${p.ultimo_error?.detalle || ''}; este proceso (${yo}) sí conecta`;
-    import('../diagnostico.js')
-      .then((d) => d.informar('sin_conexion_otro_proceso', { fase: 'sesion', causa }))
-      .catch(() => {});
-    return;
-  }
+  const causa = otroProcesoSinConexion(leerConexion(), claveProceso());
+  if (!causa) return;
+  _avisadoOtro = true;
+  import('../diagnostico.js')
+    .then((d) => d.informar('sin_conexion_otro_proceso', { fase: 'sesion', causa }))
+    .catch(() => {});
 }
 
 // ---------- código de dispositivo (RFC 8628) ---------- //
