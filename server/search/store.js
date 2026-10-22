@@ -21,6 +21,7 @@
 // expedientes.
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { config } from '../config.js';
@@ -29,9 +30,16 @@ import { conReintentos, escribirAtomico } from '../persistencia.js';
 import { rutas } from '../rutas.js';
 import { itemsVectra } from './migracion-vectra.js';
 
-const TOPE_VECTORES_BYTES = (() => {
+// Tope de vectores en memoria. Fijo en 768 MB hasta la 1.12.3, y con el índice de un despacho
+// grande (21-oct-2026: 646.754 fragmentos = 993 MB de vectores) CADA búsqueda volvía a leer del
+// disco todo el índice —unos 24 s, medido con un índice sintético de ese tamaño—: no cabía y el
+// recorrido iba echando lo que la búsqueda siguiente necesitaba primero. Ahora el tope crece con
+// la memoria del equipo (5 %, entre 768 MB y 1,5 GB) y el recorrido no expulsa nada (abajo).
+export const TOPE_VECTORES_BYTES = (() => {
   const n = parseInt(process.env.ROBIN_MAX_VECTORES_MB, 10);
-  return (Number.isFinite(n) && n > 0 ? n : 768) * 1024 * 1024;
+  if (Number.isFinite(n) && n > 0) return n * 1024 * 1024;
+  const porMemoria = Math.round((os.totalmem() / 1048576) * 0.05);
+  return Math.min(1536, Math.max(768, porMemoria)) * 1024 * 1024;
 })();
 // Caché de metadatos (con el texto) por BYTES, no por documentos: 48 documentos pequeños son
 // nada, pero 48 tomos de miles de fragmentos eran gigas.
@@ -230,9 +238,14 @@ let _cambiosLocales = 0;
 let _refresco = null;
 // Cifras de la última apertura y de los refrescos (para el registro y las pruebas).
 let _ultimaApertura = null;
-const _cuentas = { completas: 0, incrementales: 0, cabecerasReleidas: 0 };
+const _cuentas = { completas: 0, incrementales: 0, cabecerasReleidas: 0, lecturasVectores: 0 };
 export function estadisticasCatalogo() {
-  return { ..._cuentas, ultimaApertura: _ultimaApertura, diario: { pos: _diarioPos, id: _diarioId } };
+  return {
+    ..._cuentas,
+    ultimaApertura: _ultimaApertura,
+    diario: { pos: _diarioPos, id: _diarioId },
+    vectores: { documentos: _vec.size, bytes: _vecBytes, tope: TOPE_VECTORES_BYTES },
+  };
 }
 
 function filaCatalogo(c) {
@@ -701,7 +714,11 @@ async function catalogoAlDia() {
   if (!_cab || _forzarCompleta || mtimeDir() !== _dirMtime) await refrescar();
 }
 
-function vectoresDe(cab) {
+// `recorrido`: lo pide una búsqueda que pasa por TODO el índice. Si ya no cabe, el documento se
+// lee y se usa sin guardarlo, en vez de echar a otro: en un recorrido, echar por antigüedad expulsa
+// justo lo que la búsqueda siguiente leerá primero, y ninguna búsqueda encontraba nada en memoria.
+// Así lo que cabe se queda, y cada búsqueda solo vuelve a leer lo que no cabe.
+function vectoresDe(cab, { recorrido = false } = {}) {
   const e = _vec.get(cab.docId);
   if (e && e.gen === cab.gen) {
     _vec.delete(cab.docId);
@@ -713,6 +730,7 @@ function vectoresDe(cab) {
   const ab = new ArrayBuffer(bytes);
   const u8 = new Uint8Array(ab);
   const fd = fs.openSync(rutaVec(cab.docId, cab.gen), 'r');
+  _cuentas.lecturasVectores += 1;
   try {
     let leido = 0;
     while (leido < bytes) {
@@ -733,6 +751,7 @@ function vectoresDe(cab) {
     normas[j] = Math.sqrt(s);
   }
   const ent = { gen: cab.gen, v, normas, bytes: bytes + cab.n * 4 };
+  if (recorrido && _vecBytes + ent.bytes > TOPE_VECTORES_BYTES && _vec.size > 0) return ent;
   _vec.set(cab.docId, ent);
   _vecBytes += ent.bytes;
   while (_vecBytes > TOPE_VECTORES_BYTES && _vec.size > 1) {
@@ -1068,7 +1087,7 @@ export async function query(vector, topK, filter = undefined) {
     let ent;
     let metas = null;
     try {
-      ent = vectoresDe(cab);
+      ent = vectoresDe(cab, { recorrido: true });
       if (fFrag.length) metas = metadatosDe(cab);
     } catch {
       continue; // documento retirado por la instancia que indexa mientras se buscaba

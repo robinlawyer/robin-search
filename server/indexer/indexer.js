@@ -45,6 +45,7 @@ import { embedPassages, cargaEmbedding, prepararHilos } from '../embedder/embedd
 import * as store from '../search/store.js';
 import * as registry from './registry.js';
 import * as cuarentena from './cuarentena.js';
+import * as noLegibles from './ilegibles.js';
 import * as diagnostico from '../diagnostico.js';
 import * as escritor from '../escritor.js';
 import * as ausentes from '../carpetas-ausentes.js';
@@ -254,6 +255,12 @@ export async function indexFile(absPath, { force = false, paralelo = false } = {
   const ext = path.extname(abs).toLowerCase();
   const apartado = cuarentena.estaApartado(abs, stat);
   if (apartado) return { ruta: logicalPath(abs), estado: 'apartado', motivo: apartado.motivo };
+  // Ya se intentó leer TAL COMO ESTÁ y no se pudo: no se vuelve a abrir en cada pasada
+  // (ilegibles.js). Sale con el mismo código, para que se cuente igual que la primera vez.
+  if (!force) {
+    const code = noLegibles.recordado(abs, stat);
+    if (code) throw Object.assign(new Error('Documento que ya se sabe que no se puede leer'), { code, recordado: true });
+  }
   const limite = limiteBytes(ext);
   if (stat.size > limite) {
     cuarentena.apartarPorTamanyo(abs, stat, limite);
@@ -537,6 +544,7 @@ export async function removeFilePath(absPath) {
   const rutaLogica = logicalPath(abs);
   if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
   const entry = registry.remove(abs);
+  noLegibles.olvidar(abs);
   state.ficherosSinOcr.delete(rutaLogica);
   if (entry) await store.deleteByDoc(entry.docId);
   return { ruta: rutaLogica, estado: 'eliminado' };
@@ -871,6 +879,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         resumen.indexados += 1;
         resumen.fragmentosNuevos += r.chunks || 0;
         nube.olvidar(abs);
+        noLegibles.olvidar(abs);
       } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
       else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
       else if (r.estado === 'apartado') resumen.apartados += 1;
@@ -939,6 +948,12 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       if (String(err?.code || '').startsWith('ROBIN_FICHERO_')) {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).danados += 1;
         resumen.omitidos += 1;
+        // Ya avisado en la pasada en que se intentó: ni se vuelve a abrir ni se repite el aviso.
+        if (err.recordado) {
+          resumen.ilegibles_recordados = (resumen.ilegibles_recordados || 0) + 1;
+          return;
+        }
+        noLegibles.anotar(abs, null, err.code);
         log.warn('Documento que no se ha podido leer', {
           fichero: logicalPath(abs), ext: extensionDe(abs), bytes: stat?.size ?? null, code: String(err.code),
         });

@@ -45,15 +45,28 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
   }
   const roots = config.roots;
   let t = Date.now();
+  // Se mira en CADA vuelta de cada bucle, también en las que no hacen nada (las de casi todos los
+  // documentos). Hasta la 1.12.3 solo soltaba el proceso cuando había algo que arreglar: con
+  // 34.000 documentos y nada que tocar, el arranque se quedaba ~3 s sin atender a nadie (medido;
+  // con varias instancias arrancando a la vez en un portátil, mucho más), y Claude, que cierra
+  // las instancias que no contestan a tiempo, las mataba con la marca de «abriendo el índice»
+  // puesta: el informe de «caída» del 21-oct-2026 (Mac de Eduardo, 34.353 documentos).
   const quizaRespirar = async () => {
-    if (Date.now() - t > 50) {
+    if (Date.now() - t > 25) {
       await respirar();
       t = Date.now();
     }
   };
+  // rootForPath normaliza la ruta entera en cada llamada y aquí se pedía tres veces por documento.
+  const raices = new Map();
+  const raizDe = (abs) => {
+    if (!raices.has(abs)) raices.set(abs, rootForPath(abs));
+    return raices.get(abs);
+  };
 
   // 1. Claves escritas como la carpeta configurada.
   for (const [abs, e] of registry.entries()) {
+    await quizaRespirar();
     const canon = rutas.canonizar(roots, abs);
     if (canon === abs) continue;
     const otra = registry.get(canon);
@@ -65,13 +78,13 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
     registry.remove(abs);
     if (e?.docId && e.docId !== otra.docId) await store.deleteByDoc(e.docId);
     resumen.reclavados += 1;
-    await quizaRespirar();
   }
 
   // 2. Retirar lo que no cuelga de ninguna carpeta configurada.
   const retiradosIds = new Set();
   for (const [abs, e] of registry.entries()) {
-    if (rootForPath(abs)) continue;
+    await quizaRespirar();
+    if (raizDe(abs)) continue;
     try {
       if (e?.docId) retiradosIds.add(e.docId);
       await removeFilePath(abs);
@@ -79,20 +92,19 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
     } catch (err) {
       log.error('No se pudo retirar del índice un documento de una carpeta quitada', { err: String(err) });
     }
-    await quizaRespirar();
   }
   // Y lo que está en el índice sin registro y con una raíz que ya no existe. Con el registro
   // olvidado (dañado y sin copia) lo que tiene raíz vigente se deja: lo sustituye el indexado.
   const conocidos = new Set(registry.all().map((e) => e.docId));
   const nombresVivos = new Set(roots.map((r) => r.name));
   for (const id of store.docIds()) {
+    await quizaRespirar();
     if (conocidos.has(id)) continue;
     const cab = store.cabecera(id);
     if (cab && nombresVivos.has(cab.raiz)) continue;
     await store.deleteByDoc(id);
     retiradosIds.add(id);
     resumen.huerfanosIndice += 1;
-    await quizaRespirar();
   }
   try {
     anotaciones.olvidarDocumentos(retiradosIds);
@@ -103,7 +115,8 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
   // 3. Recuperar el nombre con el que están archivados los documentos de cada carpeta.
   const porRaiz = new Map(roots.map((r) => [r, new Map()]));
   for (const [abs, e] of registry.entries()) {
-    const r = rootForPath(abs);
+    await quizaRespirar();
+    const r = raizDe(abs);
     if (!r) continue;
     const cuenta = porRaiz.get(r);
     cuenta.set(e.raiz, (cuenta.get(e.raiz) || 0) + 1);
@@ -125,7 +138,8 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
   // 4. Resellar lo que esté archivado con otro nombre u otra profundidad.
   const paresAnotaciones = new Map();
   for (const [abs, e] of registry.entries()) {
-    const r = rootForPath(abs);
+    await quizaRespirar();
+    const r = raizDe(abs);
     if (!r || !e) continue;
     const rutaRelativa = logicalPath(abs);
     const expediente = expedienteForLogicalPath(rutaRelativa);
@@ -151,7 +165,6 @@ export async function reconciliarCarpetas({ motivo = 'arranque' } = {}) {
         /* lo intentará el siguiente arranque */
       }
     }
-    await quizaRespirar();
   }
   if (paresAnotaciones.size) {
     try {

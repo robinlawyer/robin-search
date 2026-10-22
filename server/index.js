@@ -22,6 +22,7 @@ import { fail } from './tools/util.js';
 import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
 import * as registry from './indexer/registry.js';
+import * as noLegibles from './indexer/ilegibles.js';
 import { usarCertificadosDelSistema, proxyIgnorado } from './red-corporativa.js';
 import { piezasDe } from './estructura/piezas.js';
 
@@ -126,6 +127,7 @@ async function main() {
   const { salirLimpio } = diagnostico.instalarManejadores({
     alCerrar: () => {
       registry.guardarPendiente();
+      noLegibles.guardarYa();
       escritor.soltar();
     },
   });

@@ -53,7 +53,11 @@ export function causaDeCaida(caida, fase) {
   if (caida?.causa) return String(caida.causa);
   const partes = [
     caida?.incierta
-      ? `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y sin registro de Claude en este equipo no se sabe si se cayó o si la cerró Claude`
+      ? caida.sinRegistro === 'desfasado'
+        ? // 21-oct-2026: el registro de Claude existía pero llevaba días sin escribirse, y la causa
+          // decía «sin registro» mientras el informe decía «leído».
+          `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y el registro de Claude de este equipo está desfasado (Claude no lo escribe desde antes de lanzarla), así que no se sabe si se cayó o si la cerró Claude`
+        : `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y sin registro de Claude en este equipo no se sabe si se cayó o si la cerró Claude`
       : `la ejecución anterior se cortó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}`,
   ];
   if (caida?.ext) {
@@ -78,6 +82,9 @@ async function atenderCaidaAnterior() {
       ext: caida.ext ?? null,
       bytes: caida.bytes ?? null,
       caidas_seguidas: caida.caidasSeguidas,
+      marcas: caida.marcas ?? 1,
+      sin_registro: caida.sinRegistro ?? null,
+      lanzador: caida.lanzador ?? null,
       // Cuándo dejó de latir y con cuánta memoria (solo números): lo que separa una muerte por
       // memoria de un cierre de Claude cuando no hay registro de Claude que lo diga.
       ...diagnostico.datosDeMarca(caida),
@@ -85,7 +92,9 @@ async function atenderCaidaAnterior() {
   );
   // Sin registro de Claude, qué se vio al buscarlo (cuántas carpetas, cuántos registros de
   // servidores, si está el común): para localizar dónde lo guarda Claude en ese equipo.
-  if (caida.incierta) log.warn('Registro de Claude no encontrado', diagnostico.detalleLogClaude() || {});
+  if (caida.incierta) {
+    log.warn(caida.sinRegistro === 'desfasado' ? 'Registro de Claude desfasado' : 'Registro de Claude no encontrado', diagnostico.detalleLogClaude() || {});
+  }
   // Incierta: no hay registro de Claude en este equipo, así que no se sabe si se cayó o si
   // Claude cerró el servidor para reabrirlo. Apartar el documento que estaba leyendo (y con dos
   // «caídas» dejarlo FUERA del índice) es demasiado caro para una sospecha sin pruebas.
@@ -107,6 +116,7 @@ async function atenderCaidaAnterior() {
     fase,
     causa: causaDeCaida(caida, fase),
     fichero: caida.ext ? { ext: caida.ext, bytes: caida.bytes } : null,
+    caidasSeguidas: caida.caidasSeguidas,
   });
 }
 
@@ -116,7 +126,18 @@ async function atenderCaidaAnterior() {
 async function cotejarRegistro() {
   const aReindexar = [];
   const conocidos = new Set();
+  // Soltando el proceso cada pocos milisegundos (21-oct-2026): con decenas de miles de documentos
+  // este recorrido, entero de un tirón, dejaba la instancia sin atender a Claude —ni a su orden de
+  // cerrarse— mientras abría el índice (ver indexer/reconciliar.js).
+  let t = Date.now();
+  const quizaRespirar = async () => {
+    if (Date.now() - t > 25) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  };
   for (const [abs, e] of registry.entries()) {
+    await quizaRespirar();
     if (!e?.docId) continue;
     conocidos.add(e.docId);
     if (e.sinOcr || !e.numChunks) continue;
@@ -132,6 +153,7 @@ async function cotejarRegistro() {
     return { aReindexar: aReindexar.length, huerfanos: 0, registroOlvidado: store.docIds().length };
   }
   for (const id of store.docIds()) {
+    await quizaRespirar();
     if (conocidos.has(id)) continue;
     await store.deleteByDoc(id);
     huerfanos += 1;
