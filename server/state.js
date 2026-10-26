@@ -39,11 +39,27 @@ function avisar() {
   }
 }
 
+// Lectura larga DENTRO de un documento (hoy, el OCR de un escaneado): { fichero, pagina,
+// paginas, eta_segundos }. 26-oct-2026, Juan: «lleva más de 10 minutos con un mismo pdf». Un
+// recurso escaneado de 80 páginas son 10-20 minutos de OCR en un portátil (6-15 s por página) y
+// el panel solo cambiaba al pasar de documento: parecía colgado. Va aparte de `progreso` porque
+// cada documento que empieza lo reemplaza entero, y con documentos en paralelo el que empieza
+// no es el que se está leyendo.
+let lectura = null;
+
 export function setIndexando(progreso) {
   // Un indexado en curso no borra un error anterior: si el motor de embedding no cargó, ese
   // error sigue siendo la explicación de lo que está a punto de pasar.
   state.estado = 'indexando';
-  state.progreso = progreso;
+  state.progreso = lectura && progreso ? { ...progreso, lectura } : progreso;
+  avisar();
+}
+
+export function setLectura(l) {
+  lectura = l;
+  if (state.estado !== 'indexando' || !state.progreso) return;
+  const { lectura: _antes, ...resto } = state.progreso;
+  state.progreso = l ? { ...resto, lectura: l } : resto;
   avisar();
 }
 
@@ -55,6 +71,7 @@ export function setIndexando(progreso) {
 // línea siguiente (`indexFolder`) lo borraba con su `setActivo()` final, aunque los ficheros
 // hubieran fallado todos. La causa se autodestruía antes de que nadie pudiera leerla.
 export function setActivo() {
+  lectura = null;
   state.progreso = null;
   state.estado = state.ultimoError ? 'error' : 'activo';
   avisar();

@@ -15,6 +15,7 @@ import { extensionDe } from '../rutas.js';
 import { fileURLToPath } from 'node:url';
 import { config, ensureDataDirs } from '../config.js';
 import { log } from '../logger.js';
+import { setLectura } from '../state.js';
 import { tipoReal } from './tipo-real.js';
 
 const PKG_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -318,8 +319,19 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
     if (dpiReal === null) throw errorSinMemoria();
     const scale = mupdf.Matrix.scale(dpiReal / 72, dpiReal / 72);
     const inicio = Date.now();
+    // El panel dice por qué página va y cuánto le queda A ESTE documento (state.js, setLectura).
+    // Lo que queda sale del ritmo medido en sus propias páginas, sin pasar del tope de tiempo.
+    const fichero = path.basename(filePath);
+    const avanzar = (hechas) => {
+      const ms = Date.now() - inicio;
+      const restoTope = Math.max(0, config.ocrMaxMsPorDocumento - ms);
+      const eta = hechas > 0 ? Math.min((ms / hechas) * (limit - hechas), restoTope) : null;
+      setLectura({ tipo: 'ocr', fichero, pagina: Math.min(hechas + 1, limit), paginas: limit, eta_segundos: eta === null ? null : Math.round(eta / 1000) });
+    };
+    avanzar(0);
 
     for (let i = 0; i < limit; i++) {
+      if (i > 0) avanzar(i);
       if (Date.now() - inicio > config.ocrMaxMsPorDocumento) {
         log.warn('OCR: tope de tiempo por documento alcanzado; se indexa lo leído', { paginas_leidas: i, paginas: total });
         break;
@@ -363,6 +375,7 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
       }
     }
   } finally {
+    setLectura(null);
     // Sin esto, cada PDF escaneado dejaba su documento entero reservado en la memoria del WASM.
     doc.destroy?.();
     await soltarMotorSiFaltaMemoria();
