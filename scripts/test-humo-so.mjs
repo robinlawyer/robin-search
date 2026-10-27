@@ -169,6 +169,8 @@ Object.assign(env, {
   ROBIN_TOKEN: 'ROBIN-PRUEBA-humo', // sin login por navegador
   ROBIN_NO_BROWSER: '1',
   ROBIN_UPDATE_URL: 'http://127.0.0.1:9/no',
+  // Una sola conversación que va de caso en caso (la de varios chats a la vez: test-incidencias-27oct).
+  ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN: '0',
   ROBIN_OAUTH_ISSUER: 'http://127.0.0.1:9',
   ROBIN_DIAGNOSTICO_URL: 'off',
 });

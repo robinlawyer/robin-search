@@ -97,7 +97,22 @@ export function nuevaCuentaRecorrido() {
     // esto, un despacho con 300 documentos en .pages o en un formato de su programa de gestión
     // creía que estaban en las búsquedas: no fallaba nada, simplemente no estaban.
     formatos_fuera: {},
+    // Documentos de Google (Docs, Hojas, Presentaciones…) que Google Drive para escritorio deja en
+    // la carpeta como un acceso directo de pocos bytes: el texto vive en la nube de Google y en el
+    // disco no hay nada que leer, ni en modo «transmitir» ni en «replicar» (caso Ridwan, 27-oct-2026).
+    // Se cuentan aparte de `formatos_fuera` porque lo que hay que decirle al abogado es otra cosa.
+    google_nativos: 0,
   };
+}
+
+const EXT_GOOGLE = new Set(['.gdoc', '.gsheet', '.gslides', '.gdraw', '.gform', '.gjam', '.gsite', '.gmap', '.gtable', '.gscript']);
+
+// El mismo texto en estado_servidor y en indexar_carpeta.
+export function avisoGoogleNativos(n) {
+  return `${n} documento(s) de Google Docs, Hojas o Presentaciones (.gdoc, .gsheet, .gslides): en la ` +
+    'carpeta solo hay un acceso directo y el texto vive en la nube de Google, así que RobinSearch no ' +
+    'puede leerlos. Para que entren en las búsquedas, el abogado tiene que descargarlos en la misma ' +
+    'carpeta como Word, Excel o PDF (en Google: Archivo → Descargar); ';
 }
 
 // iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
@@ -219,6 +234,10 @@ function anotarFormatoFuera(cuenta, full) {
   if (!cuenta?.formatos_fuera) return;
   const ext = extensionDe(full);
   if (!ext || EXT_NO_DOCUMENTO.has(ext)) return;
+  if (EXT_GOOGLE.has(ext)) {
+    cuenta.google_nativos = (cuenta.google_nativos || 0) + 1;
+    return;
+  }
   if (!(ext in cuenta.formatos_fuera) && Object.keys(cuenta.formatos_fuera).length >= MAX_FORMATOS_FUERA) return;
   cuenta.formatos_fuera[ext] = (cuenta.formatos_fuera[ext] || 0) + 1;
 }

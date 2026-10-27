@@ -115,7 +115,9 @@ export async function handler(args) {
         // expediente destino en la misma frase (un cruce de clientes se ve así ANTES de decir
         // que sí). Solo se SUGIERE: no se escribe nada sin confirmación (Juan, 21-sep-2026).
         const sobreDelCorreo = mensajes.sobre(meta.envelope);
-        const activo = expedientes.getActivo();
+        // Con varios asuntos abiertos a la vez en este Claude, el activo puede ser el de otra
+        // conversación: no se sugiere ninguno (archivar_correo pedirá el expediente).
+        const activo = expedientes.otrosFijadosRecientes().length ? null : expedientes.getActivo();
         const deCorto = (meta.envelope?.from || [])[0]?.name || (meta.envelope?.from || [])[0]?.address || 'remitente desconocido';
 
         return ok({

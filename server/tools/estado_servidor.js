@@ -7,6 +7,7 @@ import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
 import * as cuarentena from '../indexer/cuarentena.js';
+import { avisoGoogleNativos } from '../indexer/indexer.js';
 import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
 import { leerCorreo, leerCuentas } from '../correo/ajustes.js';
@@ -218,6 +219,7 @@ export async function handler() {
         (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
         (ni.protegidos ? `${ni.protegidos} PDF(s) protegidos con contraseña (RobinSearch prueba las que haya en ROBIN_PDF_CLAVES; si no, el abogado tiene que quitarles la protección o dar la contraseña a quien lo instaló); ` : '') +
         (ni.danados ? `${ni.danados} documento(s) dañados que ni su propio programa abriría (RobinSearch ya ha intentado rescatar su texto); ` : '') +
+        (ni.google_nativos ? avisoGoogleNativos(ni.google_nativos) : '') +
         (ni.reintentables ? `${ni.reintentables} documento(s) que hoy no se han podido guardar en el índice (no cabían en la memoria del equipo, o el antivirus u otra ventana de Claude tenían un fichero abierto): se reintentan solos en la siguiente pasada; ` : '') +
         'lo que se busque no los cubre. Para los de la nube, RobinSearch ya ha pedido su descarga y ' +
         'los indexa solo en cuanto lleguen (ver pendientes_de_descarga); si el abogado tiene prisa, ' +

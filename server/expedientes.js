@@ -147,9 +147,34 @@ export function getActivo() {
   return state.expedienteActivo;
 }
 
+// VARIAS CONVERSACIONES A LA VEZ (27-oct-2026, al estudiar RobinSearch como conector remoto).
+// Claude Desktop arranca UN proceso de RobinSearch y lo comparten todos sus chats; el protocolo
+// no dice de qué chat viene cada llamada. Con el abogado en dos asuntos a la vez (Pérez en un
+// chat, Acme en otro), el segundo `establecer_expediente_activo` cambiaba el expediente del
+// primero, y la siguiente búsqueda de ese chat sin «expediente» contestaba con documentos del
+// otro cliente, sin error. Ahora se recuerda qué expedientes se han fijado hace poco: si hay más
+// de uno, una llamada que no diga el suyo NO se resuelve con el activo (podría ser el de la otra
+// conversación) y se pide que lo indique. Con un solo asunto todo sigue igual.
+const VENTANA_MS = (() => {
+  const n = parseFloat(process.env.ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN);
+  return (Number.isFinite(n) && n >= 0 ? n : 8 * 60) * 60 * 1000;
+})();
+const _fijados = new Map(); // expediente → cuándo se fijó por última vez
+
 export function setActivo(expediente) {
   state.expedienteActivo = expediente || null;
+  // Cerrar un asunto deja a TODAS las conversaciones sin activo: lo seguro es que cada una lo
+  // vuelva a fijar o lo diga en la llamada, no que herede el de otra.
+  if (expediente) _fijados.set(expediente, Date.now());
+  else _fijados.clear();
   return state.expedienteActivo;
+}
+
+// Otros expedientes fijados dentro de la ventana, además del activo.
+export function otrosFijadosRecientes(ahora = Date.now()) {
+  if (VENTANA_MS === 0) return []; // 0 = como hasta la 1.12.5 (pruebas de una sola conversación)
+  const activo = state.expedienteActivo;
+  return [..._fijados].filter(([e, t]) => e !== activo && ahora - t <= VENTANA_MS).map(([e]) => e);
 }
 
 // Núcleo de la política de aislamiento. Devuelve `{ ok, expediente }` o `{ ok:false, error }`
@@ -176,6 +201,19 @@ export function exigirExpediente(explicito) {
   }
 
   const activo = getActivo();
+  const otros = activo ? otrosFijadosRecientes() : [];
+  if (otros.length) {
+    return {
+      ok: false,
+      error:
+        `En este Claude se han fijado hace poco varios expedientes (${[activo, ...otros].join(', ')}), ` +
+        'seguramente desde conversaciones distintas, y el expediente activo es uno solo para todas: ' +
+        'podría ser el de otra conversación. RobinSearch no lo adivina, porque mezclar clientes es un ' +
+        'riesgo de secreto profesional. Repite la llamada indicando el expediente de ESTA conversación ' +
+        'en el parámetro "expediente", y sigue indicándolo en las siguientes.',
+      extra: { expediente_activo: activo, expedientes_recientes: [activo, ...otros], expedientes_disponibles: nombresConocidos() },
+    };
+  }
   if (activo) {
     // El expediente activo puede haber desaparecido del disco (carpeta renombrada o cerrada).
     const r = resolver(activo);
@@ -253,6 +291,7 @@ export default {
   contadoresAmbito,
   getActivo,
   setActivo,
+  otrosFijadosRecientes,
   exigirExpediente,
   perteneceA,
   EXPEDIENTE_SIN_CARPETA,

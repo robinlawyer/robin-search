@@ -23,7 +23,9 @@ export const definition = {
     'asunto. El nombre se resuelve de forma tolerante: vale la ruta completa ' +
     '("Expedientes/Pérez"), solo el nombre de la carpeta ("Pérez") o su slug ' +
     '("perez"). Si coincide con varios, no elige ninguno: devuelve los candidatos. ' +
-    'Usa "limpiar": true al cerrar el asunto para quedarse sin expediente activo.',
+    'Usa "limpiar": true al cerrar el asunto para quedarse sin expediente activo. El expediente ' +
+    'activo es uno para todas las conversaciones abiertas en este Claude: si trabajas en varios ' +
+    'asuntos a la vez, indica también "expediente" en cada llamada de lectura.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -119,6 +121,16 @@ export async function handler(args) {
     fragmentos_indexados: ficha.fragmentos,
     ficheros_sin_ocr: ficha.sin_ocr,
   };
+  // Otro asunto abierto hace poco en este mismo Claude (otra conversación, casi seguro): el
+  // expediente activo es uno para todas, así que desde ahora hay que decirlo en cada llamada.
+  const otros = expedientes.otrosFijadosRecientes();
+  if (otros.length) {
+    respuesta.otros_expedientes_recientes = otros;
+    respuesta.aviso_varias_conversaciones =
+      `Hace poco se fijó también ${otros.length === 1 ? 'el expediente' : 'los expedientes'} ${otros.join(', ')} ` +
+      'en este mismo Claude. El expediente activo es uno solo para todas las conversaciones, así que, ' +
+      `para no mezclar clientes, indica "expediente": "${r.expediente}" en cada llamada de esta conversación.`;
+  }
 
   if (actualizandose) {
     respuesta.ubicacion = 'red';

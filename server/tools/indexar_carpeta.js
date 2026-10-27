@@ -5,7 +5,7 @@
 import path from 'node:path';
 
 import { config, rootForPath } from '../config.js';
-import { indexFolder, indexandoAhora, alTerminarIndexado } from '../indexer/indexer.js';
+import { indexFolder, indexandoAhora, alTerminarIndexado, avisoGoogleNativos } from '../indexer/indexer.js';
 import { log } from '../logger.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
@@ -155,7 +155,8 @@ export async function handler(args) {
     avisos.push(
       'Parte de lo que hay en la carpeta no se ha podido indexar (ver "no_indexables"): ficheros ' +
         'en la nube sin descargar a este equipo (iCloud, OneDrive, Dropbox) o enlaces que no llevan ' +
-        'a nada accesible. La búsqueda no los cubre.',
+        'a nada accesible. La búsqueda no los cubre.' +
+        (resumen.no_indexables.google_nativos ? ` ${avisoGoogleNativos(resumen.no_indexables.google_nativos).replace(/; $/, '.')}` : ''),
     );
   }
   // Un recuento de errores SIN causa no se puede diagnosticar desde el chat, y el abogado no
