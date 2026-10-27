@@ -133,13 +133,32 @@ export async function handler(args) {
     });
   }
 
-  const resumen = await indexFolder({
-    folders,
-    force: Boolean(args?.forzar),
-    // Al re-indexar a mano también se retira del índice lo que ya no está en disco, para que
-    // una búsqueda no siga devolviendo un escrito que se sacó del expediente.
-    reconciliarBorrados: true,
-  });
+  let resumen;
+  try {
+    resumen = await indexFolder({
+      folders,
+      force: Boolean(args?.forzar),
+      // Al re-indexar a mano también se retira del índice lo que ya no está en disco, para que
+      // una búsqueda no siga devolviendo un escrito que se sacó del expediente.
+      reconciliarBorrados: true,
+    });
+  } catch (err) {
+    // 27-oct-2026 (Juan): «otra instancia de RobinSearch está indexando ahora mismo» salía como
+    // ERROR cuando el vigilante de carpetas ya estaba indexando esos mismos documentos en la otra
+    // instancia que arranca Claude. Funcionaba, pero el mensaje asustaba. No es un fallo: lo que
+    // se pide ya se está haciendo, y el vigilante recoge cualquier cambio de la carpeta él solo.
+    if (err?.code !== 'ROBIN_OTRA_INSTANCIA') throw err;
+    return ok({
+      indexado_en_curso: true,
+      carpetas: folders ?? config.watchedFolders,
+      mensaje:
+        'Estos documentos ya se están indexando: el vigilante de carpetas de RobinSearch detecta ' +
+        'solo lo que entra o cambia y lo está procesando ahora. No hace falta volver a pedirlo; ' +
+        'entran en las búsquedas en cuanto termina, y el progreso se ve en estado_servidor.' +
+        (args?.forzar ? ' Un re-indexado forzado de documentos que no han cambiado hay que pedirlo ' +
+          'otra vez cuando termine este.' : ''),
+    });
+  }
 
   // Carpeta ilegible ≠ carpeta vacía. Si la unidad de red no responde hay que decirlo, no
   // devolver un "0 documentos" que se lee como "aquí no hay nada".

@@ -1299,7 +1299,7 @@ export function avisoSesion() {
   if (_versionMinima) {
     return `Esta versión de RobinSearch (${VERSION}) ya no puede renovar su conexión con RobinLawyer.ai: la mínima es la ${_versionMinima}. ` +
       'Sigue funcionando con la licencia guardada mientras valga, pero hay que actualizarla desde RobinDesktop o en robinlawyer.ai/descargas ' +
-      '(la sesión se conserva). Díselo al abogado.';
+      '(la sesión se conserva).';
   }
   const der = licencia.derechoDeUso();
   if (!der.ok) return null;
@@ -1310,13 +1310,13 @@ export function avisoSesion() {
   if (der.modo === 'gracia') {
     return `RobinSearch lleva días sin poder conectar con RobinLawyer.ai desde este ordenador${causa}; ` +
       `sigue funcionando con la licencia guardada, pero vence ${cuando}. Para renovarla basta abrir RobinDesktop un momento ` +
-      'o escribir «reconectar RobinSearch». Díselo al abogado.';
+      'o escribir «reconectar RobinSearch».';
   }
   if (der.datos?.renovable === false && der.datos?.licencia_hasta) {
     return `El periodo de prueba de RobinLawyer.ai de este abogado termina ${cuando}; después RobinSearch dejará de estar disponible hasta que contrate su plan (robinlawyer.ai/pricing).`;
   }
   return `La licencia de RobinSearch de este ordenador vence ${cuando} y no se ha podido renovar todavía${causa}. ` +
-    'Para renovarla basta abrir RobinDesktop un momento o escribir «reconectar RobinSearch». Díselo al abogado.';
+    'Para renovarla basta abrir RobinDesktop un momento o escribir «reconectar RobinSearch».';
 }
 
 // Login interactivo bloqueante para el CLI (`robin-search login`). Imprime a stdout.

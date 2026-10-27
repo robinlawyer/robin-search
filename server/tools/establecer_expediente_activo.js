@@ -129,7 +129,7 @@ export async function handler(args) {
     respuesta.aviso_varias_conversaciones =
       `Hace poco se fijó también ${otros.length === 1 ? 'el expediente' : 'los expedientes'} ${otros.join(', ')} ` +
       'en este mismo Claude. El expediente activo es uno solo para todas las conversaciones, así que, ' +
-      `para no mezclar clientes, indica "expediente": "${r.expediente}" en cada llamada de esta conversación.`;
+      `para no mezclar clientes, las llamadas de lectura de esta conversación van con "expediente": "${r.expediente}".`;
   }
 
   if (actualizandose) {

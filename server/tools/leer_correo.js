@@ -143,7 +143,7 @@ export async function handler(args) {
             : (adjuntos.length
               ? {
                 pregunta: null,
-                que_haria: 'Este correo se puede archivar en el expediente (archivar_correo), pero no hay expediente activo en esta sesión: pregúntale al abogado en cuál va, o fíjalo con establecer_expediente_activo. No se adivina.',
+                que_haria: 'Este correo se puede archivar en el expediente (archivar_correo), pero no hay expediente activo en esta sesión: falta saber del abogado en cuál va (o fijarlo con establecer_expediente_activo). No se adivina.',
               }
               : null),
           desde,

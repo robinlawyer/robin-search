@@ -87,6 +87,18 @@ const TOOLS = [
 // 8-oct-2026): una versión nueva y una licencia a punto de vencer. Van en la respuesta de la
 // herramienta, como mucho una vez cada 6 horas cada uno, para que Claude se lo diga.
 const CADA_AVISO_MS = 6 * 3600 * 1000;
+// 27-oct-2026 (Juan, Claude Desktop): los resultados ya no llevan órdenes («Díselo al
+// abogado»), que Desktop descarta por no venir del usuario; llevan datos. Qué hacer con ellos
+// va aquí y en la descripción de las herramientas, el canal que el cliente reconoce del servidor.
+const INSTRUCCIONES =
+  'RobinSearch busca en los expedientes del despacho, en este ordenador. Campos de servicio en ' +
+  'los resultados: "cambios_desde_tu_ultima_consulta" son los documentos del expediente que han ' +
+  'entrado, cambiado o salido y aún no se le han contado al abogado: cuéntaselos una vez, en el ' +
+  'momento que indique "cuando_contarlo", y sigue con lo que ha pedido. "aviso_robinsearch" es un ' +
+  'aviso del servicio para el abogado (una versión nueva, la licencia a punto de vencer): ' +
+  'trasládaselo en una línea. "indexado_en_curso" quiere decir que los documentos ya se están ' +
+  'indexando y entrarán solos: no hace falta repetir la petición.';
+
 const _ultimoAviso = new Map();
 function avisosParaElChat() {
   const out = [];
@@ -98,14 +110,14 @@ function avisosParaElChat() {
   }
   const nueva = state.actualizacionDisponible;
   if (nueva && _ultimoAviso.get('version') !== nueva) {
-    out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Díselo al abogado: puede ` +
-      'instalarla con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
+    out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Se instala ` +
+      'con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
     _ultimoAviso.set('version', nueva);
   }
   const minima = state.versionMinimaAnunciada;
   if (minima && _ultimoAviso.get('minima') !== minima.version) {
     out.push(`A partir del ${minima.desde || 'próximo cambio'} RobinLawyer.ai dejará de aceptar versiones de RobinSearch anteriores a la ${minima.version}; ` +
-      `este ordenador tiene la ${VERSION}. Díselo al abogado para que actualice desde RobinDesktop o robinlawyer.ai/descargas.`);
+      `este ordenador tiene la ${VERSION}. Se actualiza desde RobinDesktop o robinlawyer.ai/descargas.`);
     _ultimoAviso.set('minima', minima.version);
   }
   return out;
@@ -134,7 +146,7 @@ async function main() {
 
   const server = new Server(
     { name: 'robin-search', version: VERSION },
-    { capabilities: { tools: {} } },
+    { capabilities: { tools: {} }, instructions: INSTRUCCIONES },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({

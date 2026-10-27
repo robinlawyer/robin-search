@@ -211,6 +211,11 @@ await espera(4000);
 const eB = (await s.call('estado_servidor')).data;
 check('B.3 no indexa lo nuevo (lo haría encima de la otra)', eB?.documentos_indexados === 1, `docs=${eB?.documentos_indexados}`);
 check('B.4 y sigue atendiendo búsquedas', (await s.call('buscar_documentos', { query: 'desahucio', expediente: 'Expedientes/Caso' })).data?.fragmentos?.length > 0);
+// 27-oct-2026 (Juan): indexar_carpeta mientras indexa la otra instancia no es un ERROR que asuste:
+// lo pedido ya se está haciendo y el vigilante de la otra lo recoge solo.
+const ixB = await s.call('indexar_carpeta', { expediente: 'Expedientes/Caso' });
+check('B.4b indexar_carpeta con la otra indexando no da error, dice que ya se está indexando',
+  !ixB.isError && ixB.data?.indexado_en_curso === true && !/vuelve a intentarlo/i.test(ixB.raw), ixB.raw.slice(0, 160));
 // La otra instancia desaparece: vuelve a tomar el relevo.
 fs.rmSync(lock, { force: true });
 check('B.5 si la otra suelta el cerrojo, vuelve a tomar el relevo', await esperarLog(datosB, /toma el relevo del índice/, 20000));

@@ -163,8 +163,8 @@ export async function handler(args) {
           bytes: elegido.bytes,
           texto_encontrado: false,
           nota: extraido?.sinOcr
-            ? `«${elegido.nombre}» es un escaneado sin texto y el OCR no ha reconocido nada. Dile al abogado `
-              + 'que lo abra él: RobinSearch no puede leerlo.'
+            ? `«${elegido.nombre}» es un escaneado sin texto y el OCR no ha reconocido nada: RobinSearch no `
+              + 'puede leerlo; hay que abrirlo directamente.'
             : `«${elegido.nombre}» no tiene texto legible (puede ser una imagen sin texto).`,
         });
       }
@@ -182,7 +182,7 @@ export async function handler(args) {
         leido_con_ocr: Boolean(extraido?.viaOcr),
         aviso_ocr: extraido?.viaOcr
           ? 'Este adjunto venía escaneado y se ha leído con reconocimiento óptico. Antes de dar por buenos '
-            + 'importes, fechas o números de cuenta, dile al abogado que los compruebe en el original.'
+            + 'importes, fechas o números de cuenta, conviene comprobarlos en el original.'
           : null,
         otros_adjuntos: adjuntos.filter((a) => a !== elegido).map((a) => a.nombre),
         desde,

@@ -88,7 +88,7 @@ check('con un solo asunto abierto se busca en el activo sin repetirlo', !b.isErr
 // Otro chat abre Acme.
 const e2 = await call('establecer_expediente_activo', { expediente: 'Acme-Mercantil' });
 check('al fijar un segundo asunto se avisa de que hay que indicarlo en cada llamada',
-  /indica "expediente": "Mi unidad\/Acme-Mercantil"/.test(e2.data.aviso_varias_conversaciones || '') && e2.data.otros_expedientes_recientes?.[0] === 'Mi unidad/Perez-Divorcio', JSON.stringify(e2.data).slice(0, 300));
+  /van con "expediente": "Mi unidad\/Acme-Mercantil"/.test(e2.data.aviso_varias_conversaciones || '') && e2.data.otros_expedientes_recientes?.[0] === 'Mi unidad/Perez-Divorcio', JSON.stringify(e2.data).slice(0, 300));
 
 // El primer chat vuelve a buscar sin decir su expediente: antes recibía lo de Acme.
 for (const [tool, args] of [

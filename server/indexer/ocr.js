@@ -150,7 +150,7 @@ export function estadoOcr() {
         aviso_disco:
           `Quedan ${libre} MB libres en el disco. El OCR de PDFs escaneados convierte cada página a ` +
           'imagen y necesita sitio: mientras no haya espacio, esos PDFs no se podrán leer (el resto de ' +
-          'documentos sí). Dile al abogado que libere espacio.',
+          'documentos sí). Hace falta liberar espacio en el disco.',
       };
     })(),
   };

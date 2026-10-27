@@ -23,8 +23,8 @@ export const definition = {
     'curso para saber qué falta por revisar y, después, sigue con siguiente_por_revisar: solo te ' +
     'servirá lo nuevo y lo cambiado. Aparte, cuando en el expediente hay documentos nuevos, ' +
     'modificados o retirados que aún no se le han contado al abogado, la respuesta de la primera ' +
-    'herramienta que lo vea trae "cambios_desde_tu_ultima_consulta" (sea el chat que sea): díselo ' +
-    'una sola vez, como indique su aviso_al_abogado.',
+    'herramienta que lo vea trae "cambios_desde_tu_ultima_consulta" (sea el chat que sea): cuéntaselo ' +
+    'una sola vez, en el momento que diga su "cuando_contarlo".',
   inputSchema: {
     type: 'object',
     properties: {

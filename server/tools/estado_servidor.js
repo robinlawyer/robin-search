@@ -204,8 +204,8 @@ export async function handler() {
       respuesta.aviso_carpetas_ausentes =
         `${state.ultimoIndexado.carpetas_ausentes.length} carpeta(s) configurada(s) ya NO existen en el ` +
         'ordenador (ver carpetas_ausentes). RobinSearch las ha apartado para no fallar en cada intento ' +
-        'y las vuelve a mirar sola por si reaparecen. Dile al abogado que las quite o corrija su ruta ' +
-        'en RobinDesktop; lo que se busque no cubre esas carpetas.';
+        'y las vuelve a mirar sola por si reaparecen. Se quitan o se corrige su ruta en RobinDesktop; ' +
+        'mientras tanto, lo que se busque no cubre esas carpetas.';
     }
     // Lo que el recorrido encontró pero no pudo meter: ficheros de iCloud/OneDrive sin descargar,
     // enlaces o junctions rotos, bucles. Sin esto una carpeta «bajo demanda» daba 0 en silencio.
@@ -234,8 +234,8 @@ export async function handler() {
       respuesta.aviso_formatos_no_indexados =
         'En las carpetas hay ficheros de formatos que RobinSearch todavía no lee, y por tanto NO están '
         + `en las búsquedas: ${top.map(([e, n]) => `${n} ${e}`).join(', ')}. `
-        + 'Si son documentos del expediente (por ejemplo .pages o .key de Mac), dile al abogado que los '
-        + 'exporte a PDF o Word y entrarán solos.';
+        + 'Si son documentos del expediente (por ejemplo .pages o .key de Mac), exportados a PDF o Word '
+        + 'en la misma carpeta entran solos.';
     }
     // Lo que está esperando a bajar de la nube: se pide su descarga y se reintenta solo. Se dice
     // aquí para que nadie dé por hecho que esos documentos ya están en las búsquedas.

@@ -25,7 +25,9 @@ export const definition = {
     'su fichero, página y puntuación. El contenido nunca sale del ordenador. ' +
     'La búsqueda está aislada por expediente: usa el expediente activo de la sesión (fíjalo ' +
     'con establecer_expediente_activo) o el que indiques en "expediente". Si no hay ninguno, ' +
-    'devuelve error en lugar de buscar en todos los expedientes.',
+    'devuelve error en lugar de buscar en todos los expedientes. Si la respuesta trae ' +
+    '"cambios_desde_tu_ultima_consulta", cuéntale al abogado esos cambios del expediente una vez, ' +
+    'cuando diga su "cuando_contarlo".',
   inputSchema: {
     type: 'object',
     properties: {

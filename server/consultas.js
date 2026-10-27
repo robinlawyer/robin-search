@@ -213,18 +213,13 @@ export function alConsultar(expediente, ahora = Date.now()) {
       log.info('Cambios en el expediente aún no contados', { expediente, momento, ...recuento });
       const recortar = (l) => l.slice(0, MAX_LISTA).map(sinDocId);
       const desde = enSesion ? new Date(previa.inicio).toISOString() : ultimaAnterior;
-      const aviso = enSesion
-        ? 'Mientras el abogado trabajaba (en este chat o en otro abierto hace poco) han entrado ' +
-          'o cambiado documentos de este expediente que aún no se le han contado. Díselo en una ' +
-          'línea, nombrándolos si son pocos, y sigue con lo que ha pedido. Si es un documento que ' +
-          'acabáis de guardar vosotros en esta conversación, basta con confirmar que ya está en ' +
-          'el índice. Díselo una sola vez.'
-        : `ANTES de contestar a lo que ha preguntado, dile al abogado en una o dos líneas qué ha ` +
-          `cambiado en este expediente desde su última consulta (${fechaLegible(ultimaAnterior)}): ` +
-          'cuántos documentos nuevos, modificados y retirados, nombrándolos si son pocos, y los que ' +
-          'han llegado sin texto legible (zona ciega). Ofrécele revisarlos (para un repaso ' +
-          'completo, siguiente_por_revisar o cambios_expediente). Díselo una sola vez y sigue con ' +
-          'su pregunta.';
+      // 27-oct-2026 (Juan, Claude Desktop): el resultado decía «Díselo…», «ANTES de contestar,
+      // dile…», y Desktop trata como ajenas las órdenes que llegan en un resultado. Ahora son
+      // DATOS (qué hay que contar y cuándo); qué hacer con ellos lo dicen las instrucciones del
+      // servidor y la descripción de las herramientas.
+      const cuando = enSesion
+        ? 'en una línea, al hilo de la respuesta: ha entrado mientras el abogado trabajaba'
+        : `antes de la respuesta: es lo que ha cambiado desde su última consulta (${fechaLegible(ultimaAnterior)})`;
       return {
         escribir: true,
         resultado: {
@@ -240,10 +235,17 @@ export function alConsultar(expediente, ahora = Date.now()) {
           ...(Object.values(recuento).some((n) => n > MAX_LISTA)
             ? { nota_listas: `Listas recortadas a ${MAX_LISTA}; el detalle completo, con cambios_expediente.` }
             : {}),
-          aviso_al_abogado:
-            aviso +
-            ' Si acaba de copiar ficheros y el índice aún trabaja (estado_servidor), adviértelo: ' +
-            'los que falten se contarán en cuanto entren.',
+          pendiente_de_contar_al_abogado: true,
+          cuando_contarlo: cuando,
+          que_contar: 'cuántos documentos nuevos, modificados y retirados (por su nombre si son ' +
+            'pocos) y los llegados sin texto legible, que la búsqueda no ve',
+          se_cuenta_una_vez: 'lo contado ya no vuelve a salir en otra consulta ni en otro chat',
+          para_revisarlos: 'siguiente_por_revisar (repaso completo) o cambios_expediente (detalle)',
+          ...(enSesion
+            ? { si_lo_habeis_guardado_aqui: 'si es un documento guardado en esta misma conversación, basta con confirmar que ya está en el índice' }
+            : {}),
+          si_el_indice_trabaja: 'si se acaban de copiar ficheros y el índice sigue trabajando ' +
+            '(estado_servidor), los que falten se contarán en cuanto entren',
         },
       };
     });
