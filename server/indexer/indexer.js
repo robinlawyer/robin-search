@@ -126,11 +126,21 @@ const RE_ICLOUD = /^\.(.+)\.icloud$/i;
 // perdía el tiempo fichero a fichero y salían como «error de indexado» — y no hay nada roto.
 //
 // Se detectan ANTES de leerlos: un fichero con tamaño pero SIN bloques asignados en disco es un
-// marcador, no un documento (iCloud y OneDrive en Mac/Linux lo dejan así). En Windows el sistema
-// no lo expone por `stat`; allí manda la clasificación del error de lectura, más abajo.
-export function esMarcadorDeNube(stat) {
-  if (process.platform === 'win32') return false;
+// marcador, no un documento (iCloud, OneDrive, Google Drive y Dropbox en Mac/Linux lo dejan así).
+// En Windows no se salta sin más: allí lo que da 0 bloques puede ser también un fichero diminuto
+// guardado dentro de la tabla de NTFS, y OneDrive deja leer el marcador mientras lo baja. Allí
+// se trae antes de leerlo (`necesitaTraerse` y nube.traer, en indexFile).
+export function esMarcadorDeNube(stat, plataforma = process.platform) {
+  if (plataforma === 'win32') return false;
   return Number(stat?.size) > 0 && stat?.blocks === 0;
+}
+
+// Windows: fichero que puede estar «solo en la nube» (OneDrive/SharePoint bajo demanda). libuv
+// da en `blocks` el tamaño asignado en disco, y un marcador de OneDrive no tiene nada asignado
+// (el Explorador: «Tamaño en disco: 0 bytes»). Leerlo en síncrono, como hace el extractor,
+// dejaba RobinSearch sin contestar a Claude mientras OneDrive lo bajaba (Eduardo, 28-oct-2026).
+export function necesitaTraerse(stat, plataforma = process.platform) {
+  return plataforma === 'win32' && Number(stat?.size) > 0 && stat?.blocks === 0;
 }
 
 // Errores que NO son un fallo de RobinSearch sino del fichero o de la nube del abogado. No
@@ -142,10 +152,15 @@ const CODIGOS_NUBE = new Set(['ETIMEDOUT', 'EHOSTDOWN', 'EHOSTUNREACH', 'ENOTCON
 // a uno solo hace daño (el propio OCR escribe temporales). Ver `cortarPorDisco`.
 const CODIGOS_DISCO = new Set(['ENOSPC', 'EDQUOT']);
 
-export function claseDeError(err) {
+export function claseDeError(err, plataforma = process.platform) {
   const code = String(err?.code || '');
   if (CODIGOS_DISCO.has(code)) return 'disco';
   if (CODIGOS_NUBE.has(code)) return 'nube';
+  // Windows: los errores propios de OneDrive (cliente cerrado o en pausa, sin conexión, descarga
+  // bloqueada en «Descargas automáticas de archivos») no tienen traducción en libuv y llegan como
+  // UNKNOWN. Hasta la 1.12.7 salían como «error de indexado», con aviso técnico, y el documento
+  // no se volvía a intentar nunca; son un «sin descargar» y se reintentan (nube.js).
+  if (plataforma === 'win32' && code === 'UNKNOWN') return 'nube';
   if (code === 'ENOENT') return 'desaparecido';
   return null;
 }
@@ -270,6 +285,20 @@ export async function indexFile(absPath, { force = false, paralelo = false } = {
     // Apuntado, no olvidado: se pide la descarga y se vuelve a mirar hasta que esté (nube.js).
     nube.apuntar(abs, 'sin_descargar');
     return { ruta: logicalPath(abs), estado: 'no_descargado' };
+  }
+  if (necesitaTraerse(stat)) {
+    const traido = await nube.traer(abs);
+    if (traido.estado === 'tarde' || traido.estado === 'nube') {
+      nube.apuntar(abs, 'sin_descargar');
+      return { ruta: logicalPath(abs), estado: 'no_descargado' };
+    }
+    if (traido.estado === 'ok') {
+      try {
+        stat = fs.statSync(abs);
+      } catch {
+        /* se ha ido mientras bajaba: el camino normal lo trata como desaparecido */
+      }
+    }
   }
   const ext = path.extname(abs).toLowerCase();
   const apartado = cuarentena.estaApartado(abs, stat);
