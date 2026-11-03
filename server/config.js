@@ -575,6 +575,23 @@ export function recargarCarpetas() {
   return config.watchedFolders;
 }
 
+// Las carpetas que dice ahora ajustes.json, sin aplicarlas. null si no se ha podido leer: con un
+// fichero dañado o a medio escribir no se sabe qué carpetas hay y no se cambia nada.
+export function carpetasEnAjustes() {
+  const a = leerAjustes(config.dataDir);
+  return a.existe && a.fiable && a.tieneCarpetas ? a.carpetas.map((c) => c.trim()).filter(Boolean) : null;
+}
+
+// Huella barata del fichero: se mira cada pocos segundos, solo se lee si cambia.
+export function firmaAjustes() {
+  try {
+    const st = fs.statSync(rutaAjustes(config.dataDir));
+    return `${st.mtimeMs}|${st.size}`;
+  } catch {
+    return null;
+  }
+}
+
 // La misma ruta con cada segmento escrito como está EN DISCO (caja y forma Unicode), sin seguir
 // enlaces: se busca cada nombre en el listado de su carpeta madre. null si algo no se puede leer.
 function formaEnDisco(abs) {

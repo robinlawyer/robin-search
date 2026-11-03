@@ -681,7 +681,12 @@ function dirsLogClaude() {
     } catch {
       familias = ['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t'];
     }
-    for (const f of familias) dirs.push(path.join(packages, f, 'LocalCache', 'Roaming', 'Claude', 'logs'));
+    for (const f of familias) {
+      dirs.push(path.join(packages, f, 'LocalCache', 'Roaming', 'Claude', 'logs'));
+      // Desde que Claude saca su perfil del paquete (Claude-Data, oct-2026), los registros pasan a
+      // %LOCALAPPDATA%\Claude\logs, que dentro del paquete se redirige aquí.
+      dirs.push(path.join(packages, f, 'LocalCache', 'Local', 'Claude', 'logs'));
+    }
   } else dirs.push(path.join(home, '.config', 'Claude', 'logs'));
   return dirs;
 }

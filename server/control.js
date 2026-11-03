@@ -18,8 +18,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
-import { config, guardarCarpetas, carpetasFijadasPorEntorno, comoConfiguradas } from './config.js';
+import { config, guardarCarpetas, carpetasFijadasPorEntorno, comoConfiguradas, carpetasEnAjustes, firmaAjustes, recargarCarpetas } from './config.js';
 import { log } from './logger.js';
 import { state, alCambiar } from './state.js';
 import { indexFolder, indexandoAhora, alTerminarIndexado } from './indexer/indexer.js';
@@ -63,15 +64,24 @@ let ultimoEnvio = 0;
 let pendiente = null;
 let ultimaFase; // fase/estado del último envío: un cambio de fase sale siempre, sin esperar
 
+// De dónde corre este servidor: la carpeta de la extensión. Es lo único que no depende de dónde
+// guarde Claude sus cosas, que ya ha cambiado más de una vez (2-nov-2026: en Windows, a
+// %LOCALAPPDATA%\Claude-Data\<paquete>, y RobinDesktop juraba que la extensión no estaba).
+const DIR_EXTENSION = fileURLToPath(new URL('..', import.meta.url)).replace(/[\\/]+$/, '');
+
 function retrato() {
   return {
     tipo: 'estado',
     version: config.version,
+    dirExtension: DIR_EXTENSION,
     estado: state.estado,
     progreso: state.progreso,          // { procesados, total, ficheroActual } o null
     ultimoError: state.ultimoError ? String(state.ultimoError.message ?? state.ultimoError) : null,
     ultimoIndexado: state.ultimoIndexado,
     carpetas: comoConfiguradas(config.watchedFolders),
+    // Lo que espera a que acabe el indexado en curso: sin esto la app decía «Al día» de una
+    // carpeta recién añadida que aún no se había tocado.
+    enCola: comoConfiguradas(enCola === 'todas' ? config.watchedFolders : [...(enCola ?? [])]),
     sinTexto: state.ficherosSinOcr ? state.ficherosSinOcr.size : 0,
     actualizacionDisponible: state.actualizacionDisponible,
     // Para que la app pueda decir por qué va lento en vez de dejar al abogado mirando una barra
@@ -197,6 +207,31 @@ async function lanzar(socket, carpetas, force) {
   }
 }
 
+// Lo que sigue a un cambio de carpetas. Solo la instancia que escribe toca el índice y vigila; las
+// demás se quedan con la lista nueva para buscar. Un lector que abriera aquí su vigilante se
+// pondría a indexar sobre un índice que no es suyo.
+async function aplicarCarpetas(socket, aplicadas) {
+  if (!escritor.soyEscritor()) {
+    anunciar();
+    return;
+  }
+  // Lo de las carpetas QUITADAS sale del índice ya, antes de que nadie pueda buscar: su nombre
+  // lógico puede heredarlo otra carpeta (otro cliente).
+  try {
+    await reconciliarCarpetas({ motivo: 'configurar' });
+  } catch (err) {
+    log.error('No se pudo ajustar el índice a las carpetas nuevas', { err: String(err) });
+  }
+  try {
+    await stopWatcher();          // es asíncrono: sin await se solapan dos vigilantes
+    if (aplicadas.length) startWatcher();
+  } catch (err) {
+    log.warn('No se pudo reiniciar el vigilante de carpetas', { err: String(err) });
+  }
+  anunciar();
+  if (aplicadas.length) reindexar(socket, { force: false }).catch((err) => log.warn('Fallo en el reindexado', { err: String(err) }));
+}
+
 // Cambiar las carpetas desde la app: se guardan, se aplican EN CALIENTE (sin
 // reiniciar Claude) y se indexa lo nuevo. Antes esto vivía en la pantalla de
 // configuración de Claude y obligaba a reiniciarlo.
@@ -217,28 +252,70 @@ async function configurar(socket, { carpetas }) {
       });
     }
     log.info('Carpetas de expedientes cambiadas desde la app', { carpetas: aplicadas });
-    // Lo de las carpetas QUITADAS sale del índice ya, antes de que nadie pueda buscar: su nombre
-    // lógico puede heredarlo otra carpeta (otro cliente). Solo la instancia que escribe el índice.
-    if (escritor.soyEscritor()) {
-      try {
-        await reconciliarCarpetas({ motivo: 'configurar' });
-      } catch (err) {
-        log.error('No se pudo ajustar el índice a las carpetas nuevas', { err: String(err) });
-      }
-    }
-    try {
-      await stopWatcher();          // es asíncrono: sin await se solapan dos vigilantes
-      if (aplicadas.length) startWatcher();
-    } catch (err) {
-      log.warn('No se pudo reiniciar el vigilante de carpetas', { err: String(err) });
-    }
     enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: true, carpetas: comoConfiguradas(aplicadas) });
-    anunciar();
-    if (aplicadas.length) reindexar(socket, { force: false }).catch((err) => log.warn('Fallo en el reindexado', { err: String(err) }));
+    await aplicarCarpetas(socket, aplicadas);
   } catch (err) {
     log.error('Fallo guardando las carpetas', { err: String(err) });
     enviar(socket, { tipo: 'respuesta', cmd: 'configurar', ok: false, motivo: String(err?.message ?? err) });
   }
+}
+
+// 🔴 2-nov-2026 (Juan, equipo Windows): se añade una carpeta en RobinDesktop con Claude abierto y
+// no se indexa hasta reiniciar Claude. Claude arranca varias instancias (cuatro en diez segundos en
+// ese equipo) y solo una escribe, pero el canal se lo queda la primera que lo abre, que suele ser
+// una que solo busca: la que indexa no se enteraba de nada. Y si el canal no estaba, la app dejaba
+// escrito ajustes.json y nadie volvía a leerlo. Por eso este repaso, en todas las instancias:
+//   · el canal acaba siempre en la instancia que escribe (el progreso solo lo sabe ella);
+//   · ajustes.json manda: cualquier cambio, venga de donde venga, llega a todas.
+const REPASO_MS = Number(process.env.ROBIN_REPASO_CANAL_MS) || 5000;
+let repaso = null;
+let firmaVista = null;
+let repasando = false;
+
+const claveCarpetas = (lista) => [...new Set(lista.map((c) => rutas.claveRuta(path.resolve(c))))].sort().join('\n');
+
+async function revisarAjustes() {
+  if (carpetasFijadasPorEntorno()) return;
+  const firma = firmaAjustes();
+  if (firma === firmaVista) return;
+  firmaVista = firma;
+  const enFichero = carpetasEnAjustes();    // null = no se ha podido leer: no se toca nada
+  if (!enFichero || claveCarpetas(enFichero) === claveCarpetas(config.watchedFolders)) return;
+  const aplicadas = recargarCarpetas();
+  log.info('Carpetas de expedientes cambiadas en ajustes.json', { carpetas: aplicadas.length });
+  await aplicarCarpetas(null, aplicadas);
+}
+
+async function repasar() {
+  if (repasando) return;
+  repasando = true;
+  try {
+    const escribo = escritor.soyEscritor();
+    if (escribo && !servidor?.listening) await iniciarControl();
+    else if (!escribo && servidor?.listening && escritor.otraInstancia()) {
+      log.info('Canal de control cedido a la instancia que escribe');
+      cerrarCanal();
+    }
+    await revisarAjustes();
+  } catch (err) {
+    log.warn('Fallo en el repaso del canal', { err: String(err) });
+  } finally {
+    repasando = false;
+  }
+}
+
+// El repaso reintenta abrir el canal cada pocos segundos mientras lo retenga otra instancia (una de
+// otra versión, Claude Code a la vez): se apunta una vez por episodio, no en cada intento.
+let ocupadoAvisado = false;
+function canalOcupado(ruta) {
+  if (!ocupadoAvisado) log.info('Canal de control ya servido por otra instancia', { ruta });
+  ocupadoAvisado = true;
+}
+
+function arrancarRepaso() {
+  if (repaso) return;
+  repaso = setInterval(() => { repasar(); }, REPASO_MS);
+  repaso.unref?.();
 }
 
 function atender(socket) {
@@ -273,6 +350,7 @@ function atender(socket) {
 // Desktop y Claude Code a la vez), esta instancia simplemente no sirve control:
 // no es motivo para fallar.
 export async function iniciarControl() {
+  arrancarRepaso();
   const ruta = rutaCanal();
   // Ya lo sirve ESTE proceso. Al tomar el relevo del índice se vuelve a llamar (por si el canal
   // lo servía la instancia muerta), y hasta la 1.9.0 abría un SEGUNDO servidor sobre el nombre que
@@ -291,7 +369,7 @@ export async function iniciarControl() {
         setTimeout(() => fin(false), 400).unref?.();
       });
       if (vivo) {
-        log.info('Canal de control ya servido por otra instancia', { ruta });
+        canalOcupado(ruta);
         return null;
       }
       try { fs.unlinkSync(ruta); } catch { /* seguimos */ }
@@ -314,12 +392,13 @@ export async function iniciarControl() {
       // En Windows la tubería con nombre no deja rastro en disco que comprobar antes: que la ocupe
       // otra instancia VIVA es lo normal (Claude arranca dos) y no un fallo.
       if (err?.code === 'EADDRINUSE') {
-        log.info('Canal de control ya servido por otra instancia', { ruta });
+        canalOcupado(ruta);
         return null;
       }
       throw err;
     }
     servidor = nuevo;
+    ocupadoAvisado = false;
     nuevo.on('error', (err) => {
       log.warn('Canal de control no disponible', { err: String(err) });
       if (servidor === nuevo) servidor = null;
@@ -340,14 +419,22 @@ export async function iniciarControl() {
   }
 }
 
-export function detenerControl() {
+// Solo se borra el socket si era nuestro: el de otra instancia viva la dejaría sorda.
+function cerrarCanal() {
+  const era = Boolean(servidor);
   try { servidor?.close(); } catch { /* nada */ }
   servidor = null;
   for (const c of clientes) { try { c.destroy(); } catch { /* nada */ } }
   clientes.clear();
-  if (process.platform !== 'win32') {
+  if (era && process.platform !== 'win32') {
     try { fs.unlinkSync(rutaCanal()); } catch { /* nada */ }
   }
+}
+
+export function detenerControl() {
+  clearInterval(repaso);
+  repaso = null;
+  cerrarCanal();
 }
 
 export default { iniciarControl, detenerControl, anunciar, rutaCanal };

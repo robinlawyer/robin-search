@@ -11,6 +11,14 @@ import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
+// 2-nov-2026 (Juan): decía que se añadía en los ajustes de la extensión en Claude, una pantalla que
+// ya no existe, y Claude se lo repetía al abogado junto con la oferta de copiarle el
+// expediente al entorno de trabajo. La carpeta se elige en RobinDesktop y no hay que reiniciar nada.
+const COMO_ANADIR_CARPETA =
+  'Se añade en la aplicación RobinDesktop → Expedientes → «Elegir carpeta…» (vale también una unidad ' +
+  'de red como Z:\\ o una ruta \\\\servidor\\recurso). No hay que reiniciar Claude: empieza a indexarse ' +
+  'sola y el progreso se ve ahí mismo y en estado_servidor.';
+
 export const definition = {
   name: 'indexar_carpeta',
   title: 'Indexar la carpeta de expedientes',
@@ -85,7 +93,7 @@ export async function handler(args) {
 
   if (config.watchedFolders.length === 0) {
     return fail(
-      'No hay carpetas de expedientes configuradas. Define ROBIN_FOLDER/ROBIN_FOLDERS.',
+      `No hay carpetas de expedientes configuradas. ${COMO_ANADIR_CARPETA}`,
     );
   }
 
@@ -112,10 +120,7 @@ export async function handler(args) {
     if (!rootForPath(abs)) {
       return fail(
         `La carpeta "${args.path}" está fuera de las carpetas de expedientes configuradas. ` +
-          'RobinSearch solo indexa dentro de ellas — esto NO se puede cambiar desde el chat. ' +
-          'Para añadirla (incluida una unidad de red Z:\\ o una ruta \\\\servidor\\recurso): ' +
-          'Claude Desktop → Configuración → Extensiones → RobinSearch → "Carpeta madre de ' +
-          'expedientes", y reinicia Claude Desktop.',
+          `RobinSearch solo indexa dentro de ellas — esto NO se puede cambiar desde el chat. ${COMO_ANADIR_CARPETA}`,
         { carpetas_configuradas: config.watchedFolders },
       );
     }

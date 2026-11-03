@@ -296,9 +296,19 @@ export function dirsClaude(home, plataforma, env = process.env) {
   if (plataforma === 'win32') {
     const roaming = env.APPDATA || path.join(home, 'AppData', 'Roaming');
     const local = env.LOCALAPPDATA || path.join(home, 'AppData', 'Local');
+    // Claude de la Tienda saca su perfil del paquete a %LOCALAPPDATA%\Claude-Data\<familia>
+    // (visto en su código, 4.4212, 2-nov-2026); en la propia carpeta si el perfil estaba en una
+    // ruta de red.
+    const claudeData = path.join(local, 'Claude-Data');
+    let perfiles = [];
+    try {
+      perfiles = fs.readdirSync(claudeData).filter((n) => /^[a-z0-9.-]+_[a-z0-9]+$/i.test(n)).map((n) => path.join(claudeData, n));
+    } catch { /* no hay: Claude clásico, o aún sin mudar */ }
     return [
       path.join(roaming, 'Claude'),
       ...['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t'].map((p) => path.join(local, 'Packages', p, 'LocalCache', 'Roaming', 'Claude')),
+      claudeData,
+      ...perfiles,
     ];
   }
   return [path.join(env.XDG_CONFIG_HOME || path.join(home, '.config'), 'Claude')];
