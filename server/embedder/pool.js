@@ -31,6 +31,22 @@ const VENTANA_MUERTES_MS = 60 * 1000;
 const MAX_MUERTES_EN_VENTANA = 6;
 const MB = 1024 * 1024;
 const MEMORIA_POR_HILO = 800 * MB;
+// Memoria libre por debajo de la cual el equipo entero empieza a fallar (el OCR aborta, un hilo
+// no carga): se sueltan los hilos de más en vez de esperar a los dos minutos de ocio.
+// 6-nov-2026: en el equipo de un cliente, con el sistema por debajo de 400 MB libres, el motor de
+// OCR abortaba, los hilos no cargaban («no_carga» una y otra vez, uno cada tres segundos) y el
+// proceso acabó muerto. Un hilo menos es ir más lento; insistir es morir.
+const SUELO_LIBRE = Number(process.env.ROBIN_EMBED_SUELO_LIBRE_MB || 700) * MB;
+const PRESION_CADA_MS = 5000;
+// Tras un hilo que no carga, no se vuelve a intentar crecer durante un rato (y a la tercera, ya
+// no se intenta más en toda la ejecución): cada intento carga un modelo y, si lo que falta es
+// memoria, el propio intento la remata.
+const ESPERA_TRAS_NO_CARGAR_MS = Number(process.env.ROBIN_EMBED_ESPERA_NO_CARGA_MS || 60000);
+const MAX_FALLOS_DE_CARGA = 3;
+// Un fallo del motor de JS del hilo (memoria agotada) mata al hilo, no al proceso: sin esto, un
+// `FatalProcessOutOfMemory` dentro de un worker_thread se lleva RobinSearch entero. El tope es
+// holgado (el pico medido de un hilo entero, WASM incluido, son ~678 MB) para que no muerda.
+const LIMITES_HILO = { maxOldGenerationSizeMb: 1024, maxYoungGenerationSizeMb: 64 };
 
 let _opc = null; // { objetivo, datosHilo, topeCargaMs, respaldo, avisar }
 let _hilos = [];
@@ -46,6 +62,9 @@ let _respaldoEnCurso = false;
 let _arranqueEscalonado = null;
 let _avisadoMemoria = false;
 let _temporizadorOcio = null;
+let _sinCrecerHasta = 0;
+let _fallosDeCarga = 0;
+let _ultimaPresion = 0;
 // Por qué no hay más hilos de los pedidos. Hasta la 1.6.1 esto solo se escribía en el registro
 // («no hay memoria para otro hilo, libre_mb: 301»): el abogado veía el indexado ir a un cuarto de
 // velocidad y no había forma de saber por qué sin abrir un fichero de log (correo de Eduardo y
@@ -134,7 +153,7 @@ function crearHilo() {
     // execArgv vacío: por defecto el hilo hereda las opciones de arranque del proceso, y alguna no
     // vale para un hilo (con `node --input-type=module -e …` el hilo ni arrancaba:
     // ERR_INPUT_TYPE_NOT_ALLOWED). El hilo no necesita ninguna.
-    h.w = new Worker(new URL('./hilo.js', import.meta.url), { workerData: _opc.datosHilo, execArgv: [] });
+    h.w = new Worker(new URL('./hilo.js', import.meta.url), { workerData: _opc.datosHilo, execArgv: [], resourceLimits: LIMITES_HILO });
   } catch (err) {
     h.muerto = true;
     alListo({ ok: false, error: String(err?.message ?? err) });
@@ -156,7 +175,7 @@ function crearHilo() {
     } else if (m?.tipo === 'no_carga') {
       clearTimeout(tope);
       alListo({ ok: false, error: m.error });
-      retirar(h, 'no_carga');
+      retirar(h, 'no_carga', m.error);
     } else if (m?.tipo === 'hecho') {
       terminarLote(h, m);
     } else if (m?.tipo === 'fallo') {
@@ -190,12 +209,22 @@ function crearHilo() {
   return h;
 }
 
-function retirar(h, motivo) {
+function retirar(h, motivo, causa = null) {
   if (h.muerto) return;
   h.muerto = true;
   _hilos = _hilos.filter((x) => x !== h);
   h.w?.terminate().catch(() => {});
-  if (motivo !== 'apagar') avisar('info', 'Hilo de embedding retirado', { motivo });
+  // La causa, SIEMPRE. Hasta la 1.12.9 esto decía solo «motivo: no_carga» y en el informe de un
+  // equipo que se estaba quedando sin memoria no había forma de saber qué había fallado dentro
+  // del hilo (6-nov-2026).
+  if (motivo !== 'apagar') {
+    avisar('info', 'Hilo de embedding retirado', {
+      motivo,
+      causa: causa ? String(causa).slice(0, 300) : h.ultimoError ? String(h.ultimoError).slice(0, 300) : null,
+      libre_mb: Math.round(os.freemem() / MB),
+      hilos: vivos().length,
+    });
+  }
 }
 
 function anotarMuerte() {
@@ -229,7 +258,8 @@ function reponer() {
   const h = crearHilo();
   h.cargado.then((r) => {
     if (!r.ok) {
-      retirar(h, 'no_carga');
+      anotarNoCarga(r.error);
+      retirar(h, 'no_carga', r.error);
       if (vivos().filter((x) => x.listo).length === 0) pasarARespaldo(`no se pudo reponer el hilo: ${r.error}`);
     }
   });
@@ -309,6 +339,7 @@ export function calcular(textos, { consulta = false } = {}) {
   });
   repartir();
   if (!consulta) {
+    vigilarPresion();
     ampliar();
     vigilarOcio();
   }
@@ -404,11 +435,52 @@ export function hayDemanda({ cola = _pasajes.length, hilos = vivos() } = {}) {
   return hilos.length > 0 && hilos.every((h) => h.lote);
 }
 
+// Un hilo que no carga: no se vuelve a intentar enseguida (y a la tercera, ya no se intenta).
+function anotarNoCarga(error) {
+  _fallosDeCarga += 1;
+  _sinCrecerHasta = Date.now() + ESPERA_TRAS_NO_CARGAR_MS;
+  if (_fallosDeCarga === MAX_FALLOS_DE_CARGA) {
+    _limite = {
+      motivo: 'no_cargan',
+      explicacion:
+        `Se trabaja con ${vivos().length} hilo(s) de cálculo: los demás no han podido cargar el modelo ` +
+        `(${String(error ?? '').slice(0, 200)}). Suele ser falta de memoria en el equipo; cerrando alguna ` +
+        'aplicación pesada y reiniciando Claude se vuelven a usar todos. El indexado va más lento, pero termina igual.',
+      hilos: vivos().length,
+      libre_mb: Math.round(os.freemem() / MB),
+      total_mb: Math.round(os.totalmem() / MB),
+    };
+    avisar('warn', 'No se intentan más hilos de embedding: el modelo no carga', { fallos: _fallosDeCarga, causa: String(error ?? '').slice(0, 200), libre_mb: _limite.libre_mb });
+  }
+}
+
+// Con el equipo por debajo del suelo de memoria libre, los hilos de más se sueltan YA.
+function vigilarPresion() {
+  if (process.platform === 'darwin') return; // os.freemem() allí no dice la verdad (ver cabeOtroHilo)
+  if (_modo !== 'hilos') return;
+  const ahora = Date.now();
+  if (ahora - _ultimaPresion < PRESION_CADA_MS) return;
+  _ultimaPresion = ahora;
+  if (os.freemem() >= SUELO_LIBRE) return;
+  const sobrantes = vivos().filter((h) => h.listo && !h.lote);
+  if (vivos().length - sobrantes.length < 1) sobrantes.pop();
+  for (const h of sobrantes) retirar(h, 'poca memoria en el equipo');
+  _sinCrecerHasta = ahora + ESPERA_TRAS_NO_CARGAR_MS;
+  if (sobrantes.length) {
+    avisar('warn', 'Poca memoria libre en el equipo: se sueltan hilos de embedding', {
+      libre_mb: Math.round(os.freemem() / MB),
+      suelo_mb: Math.round(SUELO_LIBRE / MB),
+      quedan: vivos().length,
+    });
+  }
+}
+
 // Más hilos SOLO cuando hay indexado que hacer: la instancia que solo busca (Claude arranca dos) o
 // un servidor con todo al día se queda con uno, que ocupa lo mismo que el modelo en el hilo
 // principal de antes.
 function ampliar() {
   if (_arranqueEscalonado || _modo !== 'hilos' || vivos().length >= _opc.objetivo || !hayDemanda()) return;
+  if (_fallosDeCarga >= MAX_FALLOS_DE_CARGA || Date.now() < _sinCrecerHasta) return;
   _arranqueEscalonado = (async () => {
     // Soltar antes de empezar: sin esto, si el bucle no entra, el `finally` corre antes de que
     // se asigne _arranqueEscalonado y la promesa ya resuelta lo dejaba bloqueado para siempre.
@@ -433,7 +505,8 @@ function ampliar() {
         const h = crearHilo();
         const rr = await h.cargado;
         if (!rr.ok) {
-          retirar(h, 'no_carga');
+          anotarNoCarga(rr.error);
+          retirar(h, 'no_carga', rr.error);
           break;
         }
       }

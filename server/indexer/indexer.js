@@ -972,9 +972,10 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         resumen.omitidos += 1;
         return;
       }
-      // Hoy el equipo no tenía memoria para el OCR de este escaneado. No está dañado ni hay nada
-      // que arreglar: se deja sin indexar y la siguiente pasada lo vuelve a intentar.
-      if (err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') {
+      // Hoy el equipo no tenía memoria para el OCR de este escaneado, o el motor de OCR está en
+      // pausa tras varias caídas. No está dañado ni hay nada que arreglar: se deja sin indexar y
+      // la siguiente pasada lo vuelve a intentar.
+      if (err?.code === 'ROBIN_FICHERO_SIN_MEMORIA' || err?.code === 'ROBIN_OCR_EN_PAUSA') {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).reintentables =
           ((resumen.no_indexables.reintentables) || 0) + 1;
         resumen.omitidos += 1;

@@ -29,6 +29,12 @@ const require = createRequire(import.meta.url);
 
 // Umbral: caracteres de texto extraíble por página por debajo del cual consideramos que
 // el PDF es una imagen escaneada sin capa OCR.
+// Fallos DEL MOMENTO (del equipo, no del documento): el disco lleno, la falta de memoria o el
+// motor de OCR en pausa tras varias caídas. Suben tal cual para que el documento quede sin
+// indexar y la pasada siguiente lo reintente, en vez de quedar marcado «sin texto legible».
+const DEL_MOMENTO = new Set(['ROBIN_DISCO_LLENO', 'ROBIN_FICHERO_SIN_MEMORIA', 'ROBIN_OCR_EN_PAUSA']);
+const esDelMomento = (err) => DEL_MOMENTO.has(err?.code);
+
 const MIN_CHARS_PER_PAGE = 12;
 
 // Conjuntos de extensiones por familia (para el dispatcher y para saber qué recursión aplica).
@@ -250,7 +256,7 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
     // sabría por qué (19-sep-2026, el ENOSPC que arrastró el indexado entero de Eduardo).
     // Igual con la falta de MEMORIA: marcar «sin OCR» sería darlo por ilegible para siempre,
     // cuando lo único que pasa es que hoy el equipo estaba lleno. Así se reintenta.
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('OCR falló; el fichero se marca sin OCR', { err: String(err) });
     return { pages: [], sinOcr: true, numPages };
   }
@@ -730,7 +736,7 @@ async function assembleEmail(header, body, attachments, opts) {
         inner = await extractBufferByName(att.filename, att.content, { ...opts, depth: depth + 1 });
       } catch (err) {
         // Sin memoria o sin disco hoy: el correo entero se reintenta, no se indexa sin su adjunto.
-        if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+        if (esDelMomento(err)) throw err;
         log.warn('Adjunto de correo ilegible (el correo sí se indexa)', { ext, err: String(err?.message ?? err) });
         continue;
       }
@@ -757,7 +763,7 @@ export async function extractImage(filePath) {
   } catch (err) {
     // Igual que en el PDF escaneado: sin memoria o sin disco HOY no es «imagen ilegible para
     // siempre»; sube para que se reintente en la pasada siguiente.
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('OCR de imagen falló; se marca sin OCR', { fichero: path.basename(filePath), err: String(err) });
     return { pages: [], sinOcr: true, numPages: 1 };
   }
@@ -834,7 +840,7 @@ export async function extractArchive(filePath, opts) {
     } catch (err) {
       // Falta de memoria o de disco: el contenedor ENTERO se deja para la pasada siguiente. Antes
       // se saltaba ese miembro y el .zip quedaba indexado sin él, para siempre.
-      if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+      if (esDelMomento(err)) throw err;
       log.warn('Miembro del contenedor ilegible', { ext: path.extname(name).toLowerCase(), err: String(err?.message ?? err) });
     }
   };
@@ -844,7 +850,7 @@ export async function extractArchive(filePath, opts) {
     else if (ext === '.rar') await recorrerRar(filePath, admitir, alMiembro, descartes);
     else if (ext === '.7z') await recorrer7z(filePath, admitir, alMiembro, descartes);
   } catch (err) {
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('No se pudo abrir el contenedor', { fichero: path.basename(filePath), err: String(err) });
     return { pages, sinOcr: pages.length === 0, numPages: null };
   }

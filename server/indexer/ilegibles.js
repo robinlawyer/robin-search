@@ -21,8 +21,9 @@ import { escribirJson, leerJson } from '../persistencia.js';
 const REINTENTAR_TRAS_MS = 7 * 24 * 3600 * 1000;
 const MAX_ENTRADAS = 20000;
 // Qué se recuerda. No: el PDF protegido (puede llegar la contraseña en ROBIN_PDF_CLAVES), el
-// vacío o sin descargar (lo lleva nube.js) ni la falta de memoria (es del momento, no del fichero).
-const NO_SE_RECUERDA = new Set(['ROBIN_FICHERO_PDF_PROTEGIDO', 'ROBIN_FICHERO_VACIO', 'ROBIN_FICHERO_SIN_MEMORIA']);
+// vacío o sin descargar (lo lleva nube.js), la falta de memoria ni el OCR en pausa (son del
+// momento, no del fichero).
+const NO_SE_RECUERDA = new Set(['ROBIN_FICHERO_PDF_PROTEGIDO', 'ROBIN_FICHERO_VACIO', 'ROBIN_FICHERO_SIN_MEMORIA', 'ROBIN_OCR_EN_PAUSA']);
 
 const ruta = () => path.join(config.dataDir, 'ilegibles.json');
 let _cache = null;

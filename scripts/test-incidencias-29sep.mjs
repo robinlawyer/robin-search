@@ -243,9 +243,13 @@ const cuerpoOcrImage = ocr.slice(ocr.indexOf('export async function ocrImage'), 
 check('7.1 la imagen suelta mira la memoria antes del OCR, como el PDF', /MINIMO_LIBRE_RAM_MB\) throw errorSinMemoria\(\)/.test(cuerpoOcrImage));
 check('7.2 con poca memoria se cierra el motor de OCR al acabar cada documento (PDF e imagen)',
   (ocr.match(/await soltarMotorSiFaltaMemoria\(\)/g) || []).length >= 2);
-const reLanza = /if \(err\?\.code === 'ROBIN_DISCO_LLENO' \|\| err\?\.code === 'ROBIN_FICHERO_SIN_MEMORIA'\) throw err;/g;
+// 6-nov-2026: la condición, repetida cinco veces, pasó a llamarse `esDelMomento` y añadió el
+// motor de OCR en pausa. Lo que se comprueba es lo mismo: que suba desde los cinco sitios.
+const reLanza = /if \(esDelMomento\(err\)\) throw err;/g;
 check('7.3 la falta de memoria sube desde la imagen, el miembro del contenedor, el contenedor y el adjunto',
   (extract.match(reLanza) || []).length >= 5, `veces=${(extract.match(reLanza) || []).length}`);
+check('7.3 bis y «del momento» son el disco lleno, la falta de memoria y el OCR en pausa',
+  /DEL_MOMENTO = new Set\(\['ROBIN_DISCO_LLENO', 'ROBIN_FICHERO_SIN_MEMORIA', 'ROBIN_OCR_EN_PAUSA'\]\)/.test(extract));
 if (process.platform !== 'darwin') {
   process.env.ROBIN_OCR_MINIMO_RAM_MB = String(10 * 1024 * 1024);
   const o = await import(`${url('server/indexer/ocr.js')}?v=mem`);

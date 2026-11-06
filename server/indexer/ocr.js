@@ -25,6 +25,36 @@ const OCR_DIR = path.join(MODELS_DIR, 'tesseract');
 let _workerPromise = null;
 let _estado = { listo: false, origen: null, error: null };
 
+// ── El motor que ha ABORTADO no se puede volver a usar ─────────────────────────────────────
+//
+// 6-nov-2026 (equipo Windows de un cliente, con Juan delante; antes, los mismos informes el 5-nov
+// con la 1.11.4 y el 4-nov con la 1.12.2): RobinSearch moría una y otra vez indexando, cada vez
+// con un documento distinto, y había que reiniciar Claude. En el registro, siempre lo mismo: una
+// tanda de imágenes al OCR, un «RuntimeError: Aborted()» del motor, más imágenes al mismo motor
+// y, pocos segundos después, el proceso muerto sin una sola línea más.
+//
+// Es el motor de tesseract (WASM, en un worker_threads que comparte proceso con todo lo demás).
+// Cuando aborta —se queda sin memoria dentro del WASM— ese módulo queda MUERTO: Emscripten pone
+// su ABORT y cualquier llamada posterior es a un runtime que ya no existe. Hasta aquí solo se
+// tiraba el motor cuando no contestaba (tope de tiempo); tras un abort se seguía llamando al
+// cadáver imagen tras imagen, y una de esas llamadas se lleva por delante el proceso entero.
+//
+// Ahora: un abort tira el motor (el siguiente documento arranca uno limpio), los trabajos van de
+// uno en uno (nadie entra en el WASM mientras otro está dentro, ni lo cierra por debajo), y si
+// aborta varias veces seguidas el OCR se para unos minutos en vez de insistir. Un documento sin
+// OCR se reintenta; un proceso muerto se lleva el indexado entero y obliga a reiniciar Claude.
+const RX_MOTOR_ROTO = /abort(ed)?\b|memory access out of bounds|out of memory|table index is out of bounds|null function or function signature mismatch|unreachable executed|RuntimeError/i;
+const MUERTES_PARA_PAUSA = Number(process.env.ROBIN_OCR_MUERTES_PARA_PAUSA) || 3;
+const PAUSA_MS = Number(process.env.ROBIN_OCR_PAUSA_MS) || 5 * 60 * 1000;
+let _motorRoto = null; // causa del abort, mientras el motor no se haya tirado
+let _muertesSeguidas = 0;
+let _pausaHasta = 0;
+let _enVuelo = 0;
+let _pico = 0; // solo pruebas: cuántos trabajos han llegado a estar dentro del motor a la vez
+// Solo pruebas automáticas: simula un motor que aborta en los N primeros trabajos (lo que hace
+// el WASM de tesseract cuando se queda sin memoria), sin tener que agotar la del equipo.
+let _pruebaAbortar = Number(process.env.ROBIN_PRUEBA_OCR_ABORTA || 0);
+
 // ── Espacio en disco ───────────────────────────────────────────────────────────────────────
 //
 // 19-sep-2026 (Eduardo, Mac de 8 GB): en el mismo segundo en que empezaron 202 errores de
@@ -131,10 +161,20 @@ export function idiomaEmpaquetado(lang = config.ocrLang) {
 export function estadoOcr() {
   if (!config.ocrEnabled) return { activo: false, estado: 'desactivado', motivo: 'desactivado (ROBIN_OCR=false)' };
   const emp = idiomaEmpaquetado();
-  const estado = _estado.error ? 'error' : _estado.listo ? 'listo' : 'sin_usar';
+  const enPausa = Date.now() < _pausaHasta;
+  const estado = enPausa ? 'en_pausa' : _estado.error ? 'error' : _estado.listo ? 'listo' : 'sin_usar';
   return {
     activo: true,
     estado,
+    ...(enPausa
+      ? {
+          pausa_segundos: Math.round((_pausaHasta - Date.now()) / 1000),
+          nota_pausa:
+            'El motor de OCR ha fallado varias veces seguidas (suele ser falta de memoria en el equipo): ' +
+            'se para unos minutos y lo reintenta solo. Los documentos escaneados afectados se vuelven a ' +
+            'intentar; el resto se sigue indexando con normalidad.',
+        }
+      : {}),
     ...(estado === 'sin_usar' ? { nota: 'Se pone en marcha con el primer documento escaneado; no es un fallo.' } : {}),
     idioma: config.ocrLang,
     listo: _estado.listo,
@@ -169,7 +209,13 @@ async function arrancarWorker() {
   // llega a `recognize` y solo falla ese fichero.
   const opciones = {
     cachePath: config.tesseractCache,
-    errorHandler: (err) => log.warn('OCR: el motor no pudo leer una imagen', { err: String(err?.message ?? err).slice(0, 200) }),
+    errorHandler: (err) => {
+      const txt = String(err?.message ?? err).slice(0, 200);
+      // Un abort NO es «esta imagen no se puede leer»: es el motor entero caído. Se anota aquí
+      // porque tesseract.js avisa por este camino antes de que el rechazo llegue a `recognize`.
+      if (RX_MOTOR_ROTO.test(txt)) _motorRoto = txt;
+      log.warn('OCR: el motor no pudo leer una imagen', { err: txt, motor_roto: Boolean(_motorRoto) });
+    },
   };
   if (emp.ok) {
     // Ruta local (no URL) → tesseract.js lo lee del disco. Guardamos el fichero sin
@@ -209,38 +255,103 @@ async function getWorker() {
 // descarta ese worker (el siguiente fichero arranca uno nuevo) y solo falla este.
 const TOPE_RECONOCER_MS = Number(process.env.ROBIN_OCR_TOPE_MS) || 180_000;
 
-async function reconocer(input) {
-  const worker = await getWorker();
-  let tope;
+// Un trabajo cada vez. El motor es UNO (un solo worker de tesseract) y entrar en su WASM desde
+// dos sitios a la vez —la imagen de un correo mientras se rasteriza la página de un escaneado—
+// o cerrarlo mientras otro está dentro es exactamente lo que lo hace abortar. Todo lo que toca
+// el motor (reconocer, tirarlo, soltarlo por memoria, apagarlo) pasa por esta cola.
+let _cola = Promise.resolve();
+function enSerie(fn) {
+  const turno = _cola.then(fn, fn);
+  _cola = turno.then(
+    () => undefined,
+    () => undefined,
+  );
+  return turno;
+}
+
+// Tira el motor: el siguiente documento arranca uno limpio (medio segundo). Solo desde la cola.
+async function tirarMotor(motivo, { fallo = true } = {}) {
+  const promesa = _workerPromise;
+  _workerPromise = null;
+  _motorRoto = null;
+  // Soltarlo a propósito (cierre, o para devolver memoria) NO es un fallo del OCR: si se anotara
+  // como error, `estado_servidor` diría «OCR: error» con el motor simplemente descansando.
+  _estado = { ..._estado, listo: false, error: fallo ? motivo : null };
+  if (!promesa) return;
+  log[fallo ? 'warn' : 'info']('OCR: se tira el motor y el siguiente documento arranca uno limpio', { motivo: String(motivo).slice(0, 200) });
   try {
-    return await Promise.race([
-      worker.recognize(input),
-      new Promise((_, rechazar) => {
-        tope = setTimeout(() => rechazar(new Error(`OCR sin respuesta en ${TOPE_RECONOCER_MS / 1000} s`)), TOPE_RECONOCER_MS);
-      }),
-    ]);
-  } catch (err) {
-    if (/sin respuesta/.test(String(err?.message))) {
-      if (_workerPromise) _workerPromise = null;
-      _estado = { ..._estado, listo: false, error: String(err.message) };
-      worker.terminate().catch(() => {});
-    }
-    throw err;
-  } finally {
-    clearTimeout(tope);
+    const w = await promesa;
+    await w.terminate();
+  } catch {
+    /* el motor ya estaba muerto: es justo lo que se quería */
   }
 }
 
-export async function terminateOcr() {
-  if (_workerPromise) {
+function errorOcrEnPausa() {
+  const seg = Math.max(1, Math.round((_pausaHasta - Date.now()) / 1000));
+  return Object.assign(
+    new Error(
+      `El motor de OCR ha fallado ${MUERTES_PARA_PAUSA} veces seguidas (el equipo se está quedando sin memoria): ` +
+        `se para ${seg} s y después se reintenta solo. El resto de documentos se sigue indexando.`,
+    ),
+    { code: 'ROBIN_OCR_EN_PAUSA' },
+  );
+}
+
+async function reconocer(input) {
+  return enSerie(async () => {
+    if (_motorRoto) await tirarMotor(`el motor abortó: ${_motorRoto}`);
+    if (Date.now() < _pausaHasta) throw errorOcrEnPausa();
+    const worker = await getWorker();
+    let tope;
+    _enVuelo += 1;
+    if (_enVuelo > _pico) _pico = _enVuelo;
     try {
-      const w = await _workerPromise;
-      await w.terminate();
-    } catch {
-      /* best-effort */
+      if (_pruebaAbortar > 0) {
+        _pruebaAbortar -= 1;
+        throw new Error('RuntimeError: Aborted(). Build with -sASSERTIONS for more info.');
+      }
+      const r = await Promise.race([
+        worker.recognize(input),
+        new Promise((_, rechazar) => {
+          tope = setTimeout(() => rechazar(new Error(`OCR sin respuesta en ${TOPE_RECONOCER_MS / 1000} s`)), TOPE_RECONOCER_MS);
+        }),
+      ]);
+      if (_motorRoto) await tirarMotor(`el motor abortó: ${_motorRoto}`);
+      else _muertesSeguidas = 0;
+      return r;
+    } catch (err) {
+      const txt = String(err?.message ?? err);
+      // Colgado o abortado: en los dos casos el motor se tira. Insistir sobre un motor abortado
+      // es lo que tumbaba el proceso (6-nov-2026).
+      if (/sin respuesta/.test(txt) || RX_MOTOR_ROTO.test(txt) || _motorRoto) {
+        _muertesSeguidas += 1;
+        await tirarMotor(txt.slice(0, 200));
+        if (_muertesSeguidas >= MUERTES_PARA_PAUSA) {
+          _pausaHasta = Date.now() + PAUSA_MS;
+          _muertesSeguidas = 0;
+          log.error('OCR en pausa: el motor ha caído varias veces seguidas; se reintenta más tarde', {
+            muertes: MUERTES_PARA_PAUSA,
+            pausa_s: Math.round(PAUSA_MS / 1000),
+            libre_mb: ramLibreMb(),
+          });
+        }
+      }
+      throw err;
+    } finally {
+      _enVuelo -= 1;
+      clearTimeout(tope);
     }
-    _workerPromise = null;
-  }
+  });
+}
+
+export async function terminateOcr() {
+  await enSerie(() => tirarMotor('cierre', { fallo: false }));
+}
+
+// Solo pruebas: el estado interno del motor (si está tirado, en pausa o con cuántas caídas).
+export function _estadoMotorParaPruebas() {
+  return { motor: Boolean(_workerPromise), roto: _motorRoto, muertes: _muertesSeguidas, pausa_ms: Math.max(0, _pausaHasta - Date.now()), pico: _pico };
 }
 
 // OCR de una imagen suelta (foto de siniestro, escaneo, pantallazo). Reutiliza el mismo
@@ -304,6 +415,8 @@ async function soltarMotorSiFaltaMemoria() {
 // Rasteriza y aplica OCR a un PDF escaneado. Devuelve [{ page, text }] igual que el
 // extractor normal, para que el resto del pipeline no note la diferencia.
 export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
+  // Con el motor en pausa no se rasteriza nada: el documento se deja para la pasada siguiente.
+  if (Date.now() < _pausaHasta) throw errorOcrEnPausa();
   const mupdf = await import('mupdf');
   const buf = fs.readFileSync(filePath);
   const doc = mupdf.Document.openDocument(buf, 'application/pdf');
@@ -368,6 +481,10 @@ export async function ocrPdf(filePath, { maxPages, dpi = config.ocrDpi } = {}) {
         const clean = (text || '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
         if (clean) pages.push({ page: i + 1, text: clean });
       } catch (err) {
+        // El motor en pausa, el equipo sin memoria o el disco lleno no son «esta página no se
+        // lee»: suben para que el documento entero se reintente más tarde, en vez de quedar
+        // marcado como escaneado sin texto legible (6-nov-2026).
+        if (err?.code === 'ROBIN_OCR_EN_PAUSA' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA' || err?.code === 'ROBIN_DISCO_LLENO') throw err;
         log.warn('OCR falló en una página', { page: i + 1, err: String(err) });
       } finally {
         pix?.destroy?.();
