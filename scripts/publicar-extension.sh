@@ -35,7 +35,13 @@ HUELLA=$(shasum -a 256 "$PAQUETE" | cut -d' ' -f1)
 echo "   $PAQUETE  $(du -m "$PAQUETE" | cut -f1) MB  ${HUELLA:0:12}…"
 
 echo "### 1. Subiendo"
-scp -i "$CLAVE" -q "$PAQUETE" "$SERVIDOR:$REMOTO/robin-search.mcpb"
+# Con reintentos y con ServerAliveInterval: en un enlace que pierde paquetes (6-nov-2026) el scp
+# se queda colgado a 0 KB/s sin dar error, y la publicación no terminaba nunca.
+for intento in 1 2 3 4; do
+  scp -i "$CLAVE" -o ConnectTimeout=20 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -q "$PAQUETE" "$SERVIDOR:$REMOTO/robin-search.mcpb" && break
+  [ "$intento" = 4 ] && { echo "   ABORTO: no se pudo subir el paquete tras 4 intentos"; exit 1; }
+  echo "   se cortó la subida (intento $intento); reintentando…"; sleep 5
+done
 REMOTA=$(ssh -i "$CLAVE" "$SERVIDOR" "sha256sum $REMOTO/robin-search.mcpb | cut -d' ' -f1")
 [ "$REMOTA" = "$HUELLA" ] || { echo "   ABORTO: la huella del servidor ($REMOTA) no coincide"; exit 1; }
 echo "   huella correcta en el servidor"

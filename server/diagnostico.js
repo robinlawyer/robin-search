@@ -274,6 +274,16 @@ export function revisarCaidaAnterior() {
       });
       continue;
     }
+    if (d?.fase && d.fase !== 'excepcion' && cierreDeClaudeTrasLatido(d)) {
+      // El registro de Claude dice que, tras el último latido de esa marca, lo que hizo con
+      // nuestro servidor fue CERRARLO (ver cierreDeClaudeTrasLatido). Es el cierre de Claude al
+      // acabar el día, no una caída: ni se avisa, ni se aparta el documento, ni cuenta.
+      log.info('La ejecución anterior la cerró Claude (su registro lo dice tras el último latido): no es una caída', {
+        fase: d.fase,
+        ...datosDeMarca(d),
+      });
+      continue;
+    }
     if (d?.fase && d.fase !== 'excepcion' && cerradaPorActualizacion(d)) {
       // Sin registro de Claude (o sin que lo mencione) también se sabe: la versión que murió no
       // es esta, y esta se instaló justo cuando aquella dejó de latir. Al actualizar una
@@ -989,6 +999,46 @@ export function eventoDeLinea(linea, { soloNuestras = false } = {}) {
 //
 // Sin el arranque del proceso en la marca (marcas de antes de la 1.6.1) o sin un lanzamiento que
 // case con él (lanzado por la app, la CLI, una prueba), se sigue contando como caída.
+// Todo lo que el registro de Claude dice de nuestro servidor (el del servidor y el main.log).
+function lineasDelRegistroDeClaude(fuente) {
+  return [...lineasFuente(fuente, 256 * 1024), ...lineasMain(fuente)];
+}
+
+// ── ¿Fue el cierre de Claude de ayer por la tarde? ────────────────────────────────────────
+//
+// 🔴 6-nov-2026. En el panel, TODAS las «caídas» de Windows eran de dos equipos, y las de uno de
+// ellos (30-oct, 3-nov, 5-nov) tenían la misma pinta: la marca llevaba sin latir 15 horas, 13
+// horas y 3 días y medio, y el registro de Claude de esa tarde decía «Shutting down server…
+// (intentional shutdown)» a las 19:29, a las 21:26 y a las 19:25. Es el abogado cerrando Claude
+// al irse, no una caída: en Windows no hay SIGTERM que atender, el proceso se corta en seco y la
+// marca se queda. A la mañana siguiente se avisaba de una caída y se ponía bajo sospecha un PDF
+// sano.
+//
+// `claudeLaCerro` no lo veía porque EXIGE encontrar el lanzamiento de ese proceso, y una jornada
+// entera de uso empuja el «Initializing server» fuera de la cola del registro que leemos. Aquí no
+// hace falta: basta con mirar qué dijo Claude de nuestro servidor DESPUÉS del último latido. Si
+// lo primero que anota es un cierre suyo, lo cerró él; si es una muerte («Server transport
+// closed» a secas, «disconnected»), se cayó.
+const MARGEN_LATIDO_MS = 2 * 60 * 1000;
+
+export function cierreDeClaudeTrasLatido(marca, lineas = null) {
+  const latido = Date.parse(marca?.latido || '');
+  if (!Number.isFinite(latido)) return false;
+  if (!lineas) {
+    const fuente = fuenteLogClaude();
+    if (!fuente) return false;
+    lineas = lineasDelRegistroDeClaude(fuente);
+  }
+  const despues = [];
+  for (const l of lineas) {
+    const e = eventoDeLinea(l);
+    if (e && (e.tipo === 'cierre' || e.tipo === 'muerte') && e.t >= latido - MARGEN_LATIDO_MS) despues.push(e);
+  }
+  if (!despues.length) return false;
+  despues.sort((a, b) => a.t - b.t);
+  return despues[0].tipo === 'cierre';
+}
+
 export function claudeLaCerro(marca, lineas = null) {
   const inicio = Date.parse(marca?.inicio);
   if (!Number.isFinite(inicio)) return false;
@@ -1005,7 +1055,7 @@ export function claudeLaCerro(marca, lineas = null) {
       _consultaDesfasada = true;
       return null;
     }
-    lineas = [...lineasFuente(fuente, 256 * 1024), ...lineasMain(fuente)];
+    lineas = lineasDelRegistroDeClaude(fuente);
   }
   const eventos = [];
   for (const l of lineas) {
@@ -1459,6 +1509,7 @@ export default {
   indiceAbierto,
   arranqueCompleto,
   caidasSeguidasEn,
+  cierreDeClaudeTrasLatido,
   limpiarTexto,
   errorTecnico,
   sanearDatos,

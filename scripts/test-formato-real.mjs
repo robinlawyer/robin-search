@@ -20,7 +20,7 @@ const { tipoDeCabecera } = await imp('server/indexer/tipo-real.js');
 const { esExtensionSoportada } = await imp('server/config.js');
 const { extractFile } = await imp('server/indexer/extract.js');
 const { terminateOcr } = await imp('server/indexer/ocr.js');
-const { claudeLaCerro } = await imp('server/diagnostico.js');
+const { claudeLaCerro, cierreDeClaudeTrasLatido } = await imp('server/diagnostico.js');
 
 // ── Tipo por cabecera ──
 const heic = fs.readFileSync(path.join(REPO, 'scripts/fixtures/recurso-heic.heic'));
@@ -120,6 +120,34 @@ const desordenado = [
   '2026-09-21T07:47:29.030Z [RobinSearch] [info] Initializing server... { metadata: undefined }',
 ];
 check('cierre de Claude con las líneas desordenadas tampoco es caída', claudeLaCerro({ inicio: '2026-09-21T07:47:24.500Z', t: '2026-09-21T07:47:28.000Z' }, desordenado) === true);
+
+// ── El cierre de Claude al acabar el día (Windows, 6-nov-2026) ──
+// Las tres «caídas» de un equipo Windows (30-oct, 3-nov, 5-nov) llevaban sin latir 15 h, 13 h y
+// 3 días y medio, y el registro de Claude de esa tarde decía «Shutting down server». Como la
+// jornada entera había empujado el «Initializing server» fuera de la cola que leemos,
+// `claudeLaCerro` no encontraba el lanzamiento y lo daba por caída, con su aviso y su PDF sano
+// apartado. Mirando lo que Claude dice DESPUÉS del último latido, se ve lo que fue.
+const jornada = [
+  '2026-11-05T18:29:45.001Z [RobinSearch] [info] Shutting down server... { metadata: undefined }',
+  '2026-11-05T18:29:45.002Z [RobinSearch] [info] Server transport closed (intentional shutdown) { metadata: undefined }',
+  '2026-11-06T08:08:53.100Z [RobinSearch] [info] Initializing server... { metadata: undefined }',
+];
+const marcaTarde = { latido: '2026-11-05T18:29:40.000Z', fase: 'indexando' };
+check('sin el lanzamiento en el registro, claudeLaCerro no puede decidir y lo da por caída',
+  claudeLaCerro({ ...marcaTarde, inicio: '2026-11-05T09:00:00.000Z' }, jornada) === false);
+check('pero el cierre de Claude tras el último latido SÍ se ve: no es una caída',
+  cierreDeClaudeTrasLatido(marcaTarde, jornada) === true);
+check('una muerte de verdad sigue siendo caída (lo primero tras el latido es la muerte)',
+  cierreDeClaudeTrasLatido({ latido: '2026-11-06T09:19:10.000Z' }, [
+    '2026-11-06T09:19:14.920Z [RobinSearch] [info] Server transport closed { metadata: undefined }',
+    '2026-11-06T09:27:19.726Z [RobinSearch] [info] Shutting down server... { metadata: undefined }',
+  ]) === false);
+check('y lo que pasó ANTES del último latido no cuenta',
+  cierreDeClaudeTrasLatido({ latido: '2026-11-05T18:29:40.000Z' }, [
+    '2026-11-05T08:00:00.000Z [RobinSearch] [info] Shutting down server... { metadata: undefined }',
+  ]) === false);
+check('sin latido en la marca (versiones viejas), no se decide por aquí',
+  cierreDeClaudeTrasLatido({ fase: 'indexando' }, jornada) === false);
 
 fs.rmSync(base, { recursive: true, force: true });
 const ok = results.every(Boolean);
