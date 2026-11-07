@@ -20,6 +20,7 @@ import { pathToFileURL } from 'node:url';
 import { config, limiteBytes } from '../config.js';
 import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
+import { descifrarItemsPorFuente } from './glifos.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 import { tipoReal } from './tipo-real.js';
 import { textoDeDoc, textoDePpt, deCp1252 } from './office-antiguo.js';
@@ -206,7 +207,9 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
     try {
       page = await pdf.getPage(p);
       const content = await page.getTextContent();
-      const plano = content.items
+      // Fuentes sin tabla de caracteres: pdfjs da el número de glifo («GH ODV» = «de las»). Ver glifos.js.
+      const items = descifrarItemsPorFuente(content.items);
+      const plano = items
         .map((it) => (typeof it.str === 'string' ? it.str : ''))
         .join(' ')
         .replace(/[ \t]+/g, ' ')
@@ -214,7 +217,7 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
       // La cuenta de caracteres (¿es un escaneado?) se hace SIEMPRE sobre el texto plano: con
       // saltos la decisión de pasar por OCR no puede cambiar.
       totalChars += plano.length;
-      const text = conSaltos ? conSaltosDeLinea(content.items) : plano;
+      const text = conSaltos ? conSaltosDeLinea(items) : plano;
       if (text) pages.push({ page: p, text });
     } catch (err) {
       paginasRotas += 1;
