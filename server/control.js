@@ -29,6 +29,7 @@ import { estadoMotor } from './embedder/embedder.js';
 import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import { rutas } from './rutas.js';
 import * as escritor from './escritor.js';
+import { compararVersiones } from './versiones.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 
 // Un nombre por carpeta de datos: dos instalaciones distintas (p. ej. un
@@ -300,6 +301,16 @@ async function repasar() {
   repasando = true;
   try {
     const escribo = escritor.soyEscritor();
+    // Nuestro socket ya no está en su sitio (lo borró al cerrarse una versión anterior que lo había
+    // tenido): se vuelve a abrir, o RobinDesktop no encontraría a nadie.
+    if (servidor?.listening && process.platform !== 'win32' && inodoCanal != null) {
+      let ino = null;
+      try { ino = fs.statSync(rutaCanal()).ino; } catch { ino = null; }
+      if (ino !== inodoCanal) {
+        log.info('El fichero del canal de control ha desaparecido: se vuelve a abrir');
+        cerrarCanal();
+      }
+    }
     if (escribo && !servidor?.listening) await iniciarControl();
     else if (!escribo && servidor?.listening && escritor.otraInstancia()) {
       log.info('Canal de control cedido a la instancia que escribe');
@@ -316,6 +327,7 @@ async function repasar() {
 // El repaso reintenta abrir el canal cada pocos segundos mientras lo retenga otra instancia (una de
 // otra versión, Claude Code a la vez): se apunta una vez por episodio, no en cada intento.
 let ocupadoAvisado = false;
+let inodoCanal = null;
 function canalOcupado(ruta) {
   if (!ocupadoAvisado) log.info('Canal de control ya servido por otra instancia', { ruta });
   ocupadoAvisado = true;
@@ -370,17 +382,17 @@ export async function iniciarControl() {
   try {
     if (process.platform !== 'win32' && fs.existsSync(ruta)) {
       // ¿Socket huérfano de un proceso muerto? Se comprueba conectando.
-      const vivo = await new Promise((resolve) => {
-        const s = net.connect(ruta);
-        const fin = (v) => { try { s.destroy(); } catch { /* nada */ } resolve(v); };
-        s.once('connect', () => fin(true));
-        s.once('error', () => fin(false));
-        setTimeout(() => fin(false), 400).unref?.();
-      });
-      if (vivo) {
+      const otro = await sondearCanal(ruta);
+      // 🔴 7-nov-2026: lo tiene una versión ANTERIOR (Claude actualizó la extensión y uno de sus
+      // servidores sigue con la vieja). Las anteriores a la 1.12.9 no ceden el canal a la que
+      // escribe, y RobinDesktop se quedaba hablando con una instancia que ya no indexa. La que
+      // escribe, si es más nueva, ocupa el nombre: las conexiones nuevas le llegan a ella.
+      const quitarlo = otro.vivo && escritor.soyEscritor() && otro.version && compararVersiones(config.version, otro.version) > 0;
+      if (otro.vivo && !quitarlo) {
         canalOcupado(ruta);
         return null;
       }
+      if (quitarlo) log.info('El canal de RobinDesktop lo tenía una versión anterior: pasa a esta', { otra: otro.version, actual: config.version });
       try { fs.unlinkSync(ruta); } catch { /* seguimos */ }
     }
 
@@ -408,6 +420,7 @@ export async function iniciarControl() {
     }
     servidor = nuevo;
     ocupadoAvisado = false;
+    try { inodoCanal = process.platform !== 'win32' ? fs.statSync(ruta).ino : null; } catch { inodoCanal = null; }
     nuevo.on('error', (err) => {
       log.warn('Canal de control no disponible', { err: String(err) });
       if (servidor === nuevo) servidor = null;
@@ -435,9 +448,37 @@ function cerrarCanal() {
   servidor = null;
   for (const c of clientes) { try { c.destroy(); } catch { /* nada */ } }
   clientes.clear();
+  // Solo se borra el fichero si sigue siendo NUESTRO socket: otra instancia puede haber ocupado ya
+  // el nombre, y borrarlo la dejaba sin canal.
   if (era && process.platform !== 'win32') {
-    try { fs.unlinkSync(rutaCanal()); } catch { /* nada */ }
+    try {
+      if (inodoCanal == null || fs.statSync(rutaCanal()).ino === inodoCanal) fs.unlinkSync(rutaCanal());
+    } catch { /* nada */ }
   }
+  inodoCanal = null;
+}
+
+// Conecta al canal y lee la primera línea (el retrato con la versión de quien lo sirve).
+function sondearCanal(ruta) {
+  return new Promise((resolve) => {
+    let vivo = false;
+    let buf = '';
+    const s = net.connect(ruta);
+    const fin = (version = null) => {
+      try { s.destroy(); } catch { /* nada */ }
+      resolve({ vivo, version });
+    };
+    s.setEncoding('utf8');
+    s.once('connect', () => { vivo = true; });
+    s.on('data', (d) => {
+      buf += d;
+      const corte = buf.indexOf('\n');
+      if (corte < 0) return;
+      try { fin(JSON.parse(buf.slice(0, corte))?.version ?? null); } catch { fin(); }
+    });
+    s.once('error', () => fin());
+    setTimeout(() => fin(), 600).unref?.();
+  });
 }
 
 export function detenerControl() {

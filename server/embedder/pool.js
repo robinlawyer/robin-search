@@ -58,6 +58,7 @@ let _muertes = [];
 let _muertesTotales = 0;
 let _memoriaPorHilo = null;
 let _siguienteId = 1;
+let _lotesPartidos = 0;
 let _respaldoEnCurso = false;
 let _arranqueEscalonado = null;
 let _avisadoMemoria = false;
@@ -234,12 +235,46 @@ function anotarMuerte() {
   _muertes.push(ahora);
 }
 
+// 🔴 7-nov-2026 (equipo Windows de un cliente, 16 GB con 1,3-3,6 libres): «failed to call
+// OrtRun(). error code = 6» una y otra vez con los MISMOS documentos (.msg de 11 MB y de 3,5 MB),
+// que se quedaban sin indexar. Es el motor sin memoria para calcular un lote de 16 fragmentos
+// largos (el pico de memoria crece con el tamaño del lote): repetir el mismo lote tres veces
+// fallaba tres veces. Ahora, a la segunda, el lote se PARTE en dos, y así hasta fragmentos sueltos:
+// con lotes pequeños cabe. Un vector calculado en otro lote difiere en el redondeo (coseno ≈0,997,
+// ver la cabecera): mucho mejor que un documento fuera del índice.
+function partirLote(lote) {
+  const mitad = Math.ceil(lote.textos.length / 2);
+  const hijos = [lote.textos.slice(0, mitad), lote.textos.slice(mitad)].map((textos) => {
+    const hijo = { textos, intentos: 1, consulta: lote.consulta, partido: true };
+    hijo.promesa = new Promise((resolve, reject) => {
+      hijo.resolve = resolve;
+      hijo.reject = reject;
+    });
+    return hijo;
+  });
+  Promise.all(hijos.map((h) => h.promesa)).then(([a, b]) => {
+    const v = new Float32Array(a.length + b.length);
+    v.set(a);
+    v.set(b, a.length);
+    lote.resolve(v);
+  }, lote.reject);
+  // Delante de la cola y en orden: son trabajo ya empezado.
+  const cola = lote.consulta ? _consultas : _pasajes;
+  cola.unshift(...hijos);
+  _lotesPartidos += 1;
+}
+
 function loteCaido(h, causa) {
   const lote = h.lote;
   h.lote = null;
   _hilos = _hilos.filter((x) => x !== h);
   if (!lote) return;
   lote.intentos += 1;
+  if (lote.intentos >= 2 && lote.textos.length > 1) {
+    avisar('info', 'Lote de embedding partido en dos tras fallar', { fragmentos: lote.textos.length, causa: String(causa ?? '').slice(0, 200), libre_mb: Math.round(os.freemem() / MB) });
+    partirLote(lote);
+    return;
+  }
   if (lote.intentos >= MAX_INTENTOS) {
     lote.reject(Object.assign(new Error(`El motor de embedding falló calculando este documento: ${causa}`), { code: 'ROBIN_EMBEDDING_CAIDO' }));
     return;
@@ -308,13 +343,30 @@ async function respaldoCola() {
   try {
     for (let lote = tomarLote(); lote; lote = tomarLote()) {
       try {
-        lote.resolve(await _opc.respaldo(lote.textos));
+        lote.resolve(await calcularPartiendo(_opc.respaldo, lote.textos));
       } catch (err) {
         lote.reject(err);
       }
     }
   } finally {
     _respaldoEnCurso = false;
+  }
+}
+
+// En un solo hilo (respaldo, o sin hilos): si el lote falla, se calcula por mitades, hasta
+// fragmentos sueltos. Solo un fragmento que falla SOLO hace fallar el documento.
+export async function calcularPartiendo(fn, textos) {
+  try {
+    return await fn(textos);
+  } catch (err) {
+    if (textos.length <= 1) throw err;
+    const mitad = Math.ceil(textos.length / 2);
+    const a = await calcularPartiendo(fn, textos.slice(0, mitad));
+    const b = await calcularPartiendo(fn, textos.slice(mitad));
+    const v = new Float32Array(a.length + b.length);
+    v.set(a);
+    v.set(b, a.length);
+    return v;
   }
 }
 
@@ -373,6 +425,7 @@ export function estado() {
     hilos_objetivo: _opc?.objetivo ?? null,
     ...(_memoriaPorHilo ? { memoria_por_hilo_mb: Math.round(_memoriaPorHilo / MB) } : {}),
     ...(_muertesTotales ? { hilos_caidos: _muertesTotales } : {}),
+    ...(_lotesPartidos ? { lotes_partidos: _lotesPartidos } : {}),
     ...(_motivo ? { motivo: _motivo } : {}),
     // Por qué hay menos hilos de los pedidos: en claro, para que se pueda enseñar tal cual.
     ...(_limite && _modo === 'hilos' && vivos().length < (_opc?.objetivo ?? 1)

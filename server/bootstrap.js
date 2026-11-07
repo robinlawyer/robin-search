@@ -17,6 +17,7 @@ import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import * as cuarentena from './indexer/cuarentena.js';
 import * as store from './search/store.js';
 import * as escritor from './escritor.js';
+import { compararVersiones } from './versiones.js';
 import * as diagnostico from './diagnostico.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
@@ -349,24 +350,24 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   // 1. Índice. Solo UNA instancia escribe; la otra busca y toma el relevo si la primera muere.
   const escribo = escritor.adquirir();
   const otra = escribo ? null : escritor.fichaOtraInstancia();
+  // Una versión ANTERIOR con el índice (Claude actualizó la extensión y solo reinició uno de sus
+  // servidores, o un proceso viejo huérfano): esta, más nueva, se lo queda y la anterior pasa a
+  // solo buscar (escritor.arrebatar). Hasta la 1.13.0 se avisaba con un error y se pedía al
+  // abogado cerrar Claude del todo (Eduardo, 7-nov-2026). La pasada sin Claude (--silent) no
+  // arrebata: la para RobinDesktop cuando vuelve Claude.
+  let arrebatado = false;
   if (!escribo) {
-    log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine', {
-      version: otra?.version ?? null,
-    });
-    // Dos VERSIONES distintas a la vez es un proceso viejo que el instalador dejó huérfano: no se
-    // arregla solo y explica síntomas que parecen otra cosa (sesión perdida, canal de control
-    // servido por quien no toca). Se dice, para poder cerrarlo (correo de Juan, 20-sep-2026).
-    if (otra?.distintaVersion) {
-      log.error('Hay DOS versiones de RobinSearch corriendo a la vez: cierra Claude del todo y vuelve a abrirlo', {
+    if (watch && otra?.distintaVersion && compararVersiones(config.version, otra.version) > 0 && escritor.arrebatar()) {
+      arrebatado = true;
+      log.info('Una versión anterior de RobinSearch tenía el índice: esta, más nueva, se lo queda y la anterior pasa a solo buscar', {
         actual: config.version,
         otra: otra.version,
+        margenS: Math.round(escritor.GRACIA_ARREBATO_MS / 1000),
       });
-      diagnostico
-        .informar('instancias_duplicadas', {
-          fase: 'arrancando',
-          causa: `dos versiones a la vez: esta ${config.version} y otra ${otra.version} (proceso ${otra.pid ? 'vivo' : 'desconocido'})`,
-        })
-        .catch(() => {});
+    } else {
+      log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine', {
+        version: otra?.version ?? null,
+      });
     }
   }
   await abrirIndice(escribo);
@@ -490,8 +491,17 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
 
   // Espera a que la instancia que escribe muera (o suelte el cerrojo) para tomar el relevo.
   let relevo = null;
-  const esperarRelevo = () => {
+  const esperarRelevo = (demora = 0) => {
     if (relevo) return;
+    if (demora > 0) {
+      // Arrebatado a una versión anterior: se le deja terminar lo que tenga a medio escribir.
+      relevo = setTimeout(() => {
+        relevo = null;
+        esperarRelevo();
+      }, demora);
+      relevo.unref?.();
+      return;
+    }
     relevo = setInterval(() => {
       if (!escritor.adquirir()) return;
       clearInterval(relevo);
@@ -528,7 +538,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     // Modo IT (--silent): no hay relevo que esperar; se dice y se sale.
     setError('Otra instancia de RobinSearch está usando este mismo directorio de datos. Ciérrala y vuelve a intentarlo.');
   } else {
-    esperarRelevo();
+    esperarRelevo(arrebatado ? escritor.GRACIA_ARREBATO_MS : 0);
   }
 }
 

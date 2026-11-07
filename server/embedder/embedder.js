@@ -230,7 +230,7 @@ export async function embedPassages(texts, { batchSize = LOTE } = {}) {
   for (let i = 0; i < prefijados.length; i += batchSize) lotes.push(prefijados.slice(i, i + batchSize));
   if (await conHilos()) return (await Promise.all(lotes.map((l) => pool.calcular(l)))).flatMap(trocear);
   const vectors = [];
-  for (const l of lotes) for (const v of trocear(await lotePrincipal(l))) vectors.push(v);
+  for (const l of lotes) for (const v of trocear(await pool.calcularPartiendo(lotePrincipal, l))) vectors.push(v);
   return vectors;
 }
 
