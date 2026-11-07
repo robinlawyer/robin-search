@@ -19,6 +19,7 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { isMainThread, workerData } from 'node:worker_threads';
 
 import { config, guardarCarpetas, carpetasFijadasPorEntorno, comoConfiguradas, carpetasEnAjustes, firmaAjustes, recargarCarpetas } from './config.js';
 import { log } from './logger.js';
@@ -67,13 +68,21 @@ let ultimaFase; // fase/estado del último envío: un cambio de fase sale siempr
 // De dónde corre este servidor: la carpeta de la extensión. Es lo único que no depende de dónde
 // guarde Claude sus cosas, que ya ha cambiado más de una vez (2-nov-2026: en Windows, a
 // %LOCALAPPDATA%\Claude-Data\<paquete>, y RobinDesktop juraba que la extensión no estaba).
-const DIR_EXTENSION = fileURLToPath(new URL('..', import.meta.url)).replace(/[\\/]+$/, '');
+// 🔴 1.13.0: con un motor descargado (motor.js) el código corre desde <datos>/motor/<versión>, que
+// NO es la extensión: la carpeta de la extensión la dice el supervisor, que sí corre desde ella.
+const DIR_EXTENSION = (
+  (!isMainThread && workerData?.motor?.raizIncluida) || fileURLToPath(new URL('..', import.meta.url))
+).replace(/[\\/]+$/, '');
 
 function retrato() {
   return {
     tipo: 'estado',
     version: config.version,
     dirExtension: DIR_EXTENSION,
+    // Qué motor atiende (1.13.0): la versión en marcha puede ser más nueva que la de la extensión
+    // instalada en Claude porque se actualizó sola, y si está bajo el supervisor.
+    supervisado: !isMainThread,
+    motorDescargado: Boolean(!isMainThread && workerData?.motor?.descargado),
     estado: state.estado,
     progreso: state.progreso,          // { procesados, total, ficheroActual } o null
     ultimoError: state.ultimoError ? String(state.ultimoError.message ?? state.ultimoError) : null,

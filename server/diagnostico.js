@@ -223,10 +223,14 @@ export function revisarCaidaAnterior() {
   }
   const caidas = [];
   for (const n of nombres) {
-    const m = /^en_curso-(\d+)\.json$/.exec(n);
+    // `en_curso-<pid>-h<n>.json` (1.13.0): la marca de un hilo del supervisor que MURIÓ, renombrada
+    // por el supervisor. Su pid sigue vivo (es el del supervisor), pero el hilo no: es una caída
+    // segura, la cuente quien la cuente (este mismo proceso con el hilo nuevo, u otra instancia).
+    const m = /^en_curso-(\d+)(-h\d+)?\.json$/.exec(n);
     if (!m) continue;
     const pid = Number(m[1]);
-    if (pid === process.pid) continue;
+    const deHiloMuerto = Boolean(m[2]);
+    if (pid === process.pid && !deHiloMuerto) continue;
     const ruta = path.join(config.dataDir, n);
     let edad = 0;
     try {
@@ -235,7 +239,7 @@ export function revisarCaidaAnterior() {
       continue;
     }
     // Un pid vivo con una marca de más de un día es un pid reciclado por otro programa.
-    if (pidVivo(pid) && edad < MARCA_CADUCA_MS) continue;
+    if (!deHiloMuerto && pidVivo(pid) && edad < MARCA_CADUCA_MS) continue;
     // Claude arranca dos instancias a la vez: las dos veían la misma marca y la contaban, y UNA
     // caída pasaba por dos (fichero sano apartado, índice rehecho). Solo la cuenta quien consigue
     // renombrarla primero.
@@ -255,6 +259,12 @@ export function revisarCaidaAnterior() {
       fs.rmSync(reclamada, { force: true });
     } catch {
       /* nada */
+    }
+    if (d && d.muerte_hilo) {
+      // El supervisor vio morir el hilo: no hay cierre de Claude que buscar en ningún registro.
+      log.warn('El hilo del servidor murió y el supervisor lo repuso', { fase: d.fase, codigo: d.muerte_hilo.codigo ?? null, ...datosDeMarca(d) });
+      caidas.push(d);
+      continue;
     }
     const cerroClaude = d?.fase && d.fase !== 'excepcion' ? claudeLaCerro(d) : false;
     if (cerroClaude === true) {

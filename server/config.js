@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { escribirJson, leerJson } from './persistencia.js';
 import { rutas, extensionDe, nombreValido } from './rutas.js';
+import { defaultDataDir } from './datos-dir.js';
 
 // La versión sale del package.json que viaja en el paquete, NO de una
 // constante a mano: escrita dos veces, se olvida una. El servidor estuvo
@@ -56,26 +57,6 @@ function firstDefined(...vals) {
 // Directorio de datos de la aplicación (índice vectorial, registro incremental, logs).
 // SIEMPRE fuera de la carpeta de expedientes para no disparar el watcher ni contaminar
 // el expediente del abogado.
-function defaultDataDir() {
-  const home = os.homedir();
-  switch (process.platform) {
-    case 'darwin':
-      return path.join(home, 'Library', 'Application Support', 'RobinLawyer', 'robin-search');
-    case 'win32':
-      return path.join(
-        firstDefined(process.env.APPDATA, path.join(home, 'AppData', 'Roaming')),
-        'RobinLawyer',
-        'robin-search',
-      );
-    default:
-      return path.join(
-        firstDefined(process.env.XDG_DATA_HOME, path.join(home, '.local', 'share')),
-        'robin-lawyer',
-        'robin-search',
-      );
-  }
-}
-
 function toInt(val, fallback) {
   const n = parseInt(val, 10);
   return Number.isFinite(n) && n > 0 ? n : fallback;

@@ -1276,6 +1276,15 @@ async function extractByExtension(filePath, extNombre, opts) {
 export async function extractFile(filePath, { maxPages, conSaltos = false, sinOcrNuevo = false } = {}) {
   // extensionDe y no extname a secas: «demanda.pdf » (espacio final) es un PDF.
   const ext = extensionDe(filePath);
+  // Solo pruebas (supervisor, 1.13.0): un motor WASM que revienta EN MITAD de la lectura de ese
+  // fichero («memory access out of bounds», Eduardo 31-oct): excepción sin capturar, lectura a medias.
+  if (process.env.ROBIN_PRUEBA_EXCEPCION_EN && path.basename(filePath) === process.env.ROBIN_PRUEBA_EXCEPCION_EN) {
+    return new Promise(() => {
+      setImmediate(() => {
+        throw new Error('RuntimeError: memory access out of bounds (prueba)');
+      });
+    });
+  }
   return extractByExtension(filePath, ext, { maxPages, depth: 0, conSaltos, sinOcrNuevo });
 }
 

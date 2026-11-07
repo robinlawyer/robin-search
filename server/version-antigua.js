@@ -36,13 +36,16 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { isMainThread, workerData } from 'node:worker_threads';
 import { config, VERSION } from './config.js';
 import { log } from './logger.js';
 import { escribirAtomico } from './persistencia.js';
 
 // La primera versión con el índice por documento. Todo lo anterior escribe index/index.json.
 export const PRIMERA_SEGURA = '1.4.5';
-const RAIZ_PROPIA = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// La extensión desde la que corre este RobinSearch: con un motor descargado (1.13.0) el código está
+// en <datos>/motor, pero la extensión instalada en Claude es la del supervisor.
+const RAIZ_PROPIA = path.resolve((!isMainThread && workerData?.motor?.raizIncluida) || path.join(path.dirname(fileURLToPath(import.meta.url)), '..'));
 
 export function compararVersiones(a, b) {
   const pa = String(a).replace(/^v/i, '').split(/[-+]/)[0].split('.').map((n) => parseInt(n, 10) || 0);

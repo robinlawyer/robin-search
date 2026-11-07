@@ -6,6 +6,7 @@ import { UPDATE_CHECK_URL, VERSION } from './config.js';
 import { log } from './logger.js';
 import { state } from './state.js';
 import { getBearerQuiet, cabeceras } from './auth/oauth.js';
+import { prepararMotor, supervisado } from './motor.js';
 
 function isNewer(remote, local) {
   const a = String(remote).split('.').map((n) => parseInt(n, 10) || 0);
@@ -62,6 +63,11 @@ async function comprobar(signal) {
     if (latest && isNewer(latest, VERSION)) {
       state.actualizacionDisponible = latest;
       log.info('Actualización disponible', { actual: VERSION, disponible: latest });
+      // Bajo el supervisor (1.13.0) se instala SOLA, con su huella comprobada (motor.js): el
+      // abogado no tiene que pulsar nada. En segundo plano: no retrasa esta respuesta.
+      if (supervisado()) {
+        prepararMotor({ version: latest, url: data?.url, sha256: data?.sha256 }).catch(() => {});
+      }
       return latest;
     }
     return null;

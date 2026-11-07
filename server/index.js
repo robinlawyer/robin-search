@@ -50,6 +50,9 @@ import reconectarRobinsearch from './tools/reconectar_robinsearch.js';
 import { avisoSesion } from './auth/oauth.js';
 import { state } from './state.js';
 import { escribirStderr, stderrCerradoYa } from './tuberias.js';
+import { isMainThread, parentPort } from 'node:worker_threads';
+import { supervisado as supervisadoMotor } from './motor.js';
+import fs from 'node:fs';
 
 const TOOLS = [
   buscarDocumentos,
@@ -109,7 +112,8 @@ function avisosParaElChat() {
     _ultimoAviso.set('sesion', ahora);
   }
   const nueva = state.actualizacionDisponible;
-  if (nueva && _ultimoAviso.get('version') !== nueva) {
+  // Bajo el supervisor la versión nueva se instala sola (motor.js): no hay nada que pedirle.
+  if (nueva && !supervisadoMotor() && _ultimoAviso.get('version') !== nueva) {
     out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Se instala ` +
       'con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
     _ultimoAviso.set('version', nueva);
@@ -163,6 +167,18 @@ async function main() {
     const { name, arguments: args } = request.params;
     const tool = byName.get(name);
     if (!tool) return fail(`Herramienta desconocida: ${name}`);
+    // Solo pruebas (supervisor): el hilo muere en mitad de esta herramienta, una vez.
+    if (process.env.ROBIN_PRUEBA_TUMBAR_UNA_VEZ && process.env.ROBIN_PRUEBA_TUMBAR_HERRAMIENTA === name) {
+      try {
+        fs.rmSync(process.env.ROBIN_PRUEBA_TUMBAR_UNA_VEZ);
+        setImmediate(() => {
+          throw new Error('RuntimeError: Aborted() (prueba)');
+        });
+        await new Promise(() => {});
+      } catch {
+        /* ya se tumbó una vez */
+      }
+    }
     try {
       const res = await tool.handler(args || {});
       // 6-oct-2026 (Juan): lo que ha cambiado en el expediente y aún no se le ha contado al
@@ -217,7 +233,10 @@ async function main() {
   process.stdin.on('end', () => {
     if (huboCliente) salirLimpio('stdin_cerrado');
   });
-  log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder });
+  log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder, supervisado: !isMainThread });
+  // Bajo el supervisor (1.13.0): le dice dónde están los datos, para recoger lo que deje este hilo
+  // si muere (su marca de fase y sus cerrojos).
+  if (!isMainThread) parentPort?.postMessage({ robin: 'dataDir', dataDir: config.dataDir });
   // HUELLA en el registro de Claude (23-sep-2026). Claude guarda lo que el servidor
   // escribe por stderr en «mcp-server-<nombre>.log», y ese <nombre> lo pone la
   // instalación: en tres equipos Windows de la 1.8.4 no había NINGÚN fichero cuyo

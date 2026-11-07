@@ -99,8 +99,11 @@ async function atenderCaidaAnterior() {
   // Claude cerró el servidor para reabrirlo. Apartar el documento que estaba leyendo (y con dos
   // «caídas» dejarlo FUERA del índice) es demasiado caro para una sospecha sin pruebas.
   if (caida.fichero && fase === 'indexando' && !caida.incierta) {
-    // Con una excepción vista no hay duda de qué fichero fue: se aparta a la primera.
-    const e = cuarentena.anotarCaida(caida.fichero, { seguro: caida.fase === 'excepcion' });
+    // Con una excepción vista no hay duda de qué fichero fue: se aparta a la primera. Salvo bajo el
+    // supervisor (1.13.0): el hilo repuesto trae los motores WASM LIMPIOS, y un motor estropeado
+    // por documentos anteriores revienta con uno sano (fmchocarro, 6-nov: cada vez uno distinto).
+    // Se reintenta una vez con motor limpio; si vuelve a tumbarlo, entonces sí es el documento.
+    const e = cuarentena.anotarCaida(caida.fichero, { seguro: caida.fase === 'excepcion' && !caida.muerte_hilo });
     if (e) {
       log.warn(e.caidas >= 2 ? 'Fichero apartado: hizo caer el indexador' : 'Fichero sospechoso de la caída: se reintenta una vez', {
         ext: e.ext,
