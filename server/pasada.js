@@ -79,6 +79,15 @@ if (config.watchedFolders.length === 0) {
 }
 process.stdout.write(`Indexando ${config.watchedFolders.length} carpeta(s):\n  ${config.watchedFolders.join('\n  ')}\n`);
 await bootstrap({ initialIndex: true, watch: false, warmModel: true });
+// Que Robin sepa cómo ha quedado la pasada (seguimiento.js): sin esto, la última noticia sería la de
+// hace 10 minutos y el servidor vería «parada» una pasada que en realidad terminó.
+try {
+  const seguimiento = await import('./seguimiento.js');
+  await seguimiento.latirAhora('termina');
+  seguimiento.pararSeguimiento();
+} catch {
+  /* nada: el latido nunca retrasa ni tumba la pasada */
+}
 if (state.estado === 'error') {
   process.stderr.write(`robin-search: indexado con errores: ${state.ultimoError}\n`);
   // En un hilo, 3 = «terminó, con errores» (el supervisor lo devuelve como 1): un 1 a secas sería

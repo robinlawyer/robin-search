@@ -22,6 +22,7 @@ import * as diagnostico from './diagnostico.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
 import { iniciarMantenimiento } from './auth/oauth.js';
+import { iniciarSeguimiento } from './seguimiento.js';
 import { iniciarControl } from './control.js';
 import { neutralizarVersionesAntiguas } from './version-antigua.js';
 
@@ -384,6 +385,10 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   // La sesión se mantiene viva sola, aunque el abogado no abra nunca RobinDesktop (Juan,
   // 8-oct-2026): al arrancar y cada 24 h, por la conexión de salida.
   if (control) iniciarMantenimiento();
+  // Seguimiento del indexado (9-nov-2026, Fernando: 114.800 documentos y un fin de semana parado sin
+  // que nadie lo supiera): latido de progreso a Robin y el equipo sin suspenderse mientras indexa.
+  // Solo actúa la instancia que escribe el índice; lo comprueba él en cada vuelta.
+  iniciarSeguimiento({ modo: control ? 'claude' : 'pasada' });
 
   // 2. Modelo. Precarga para no pagar la latencia en la primera búsqueda.
   //

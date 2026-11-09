@@ -908,6 +908,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
   await respirar();
   const { orden, bytesPendientes, pendientesPorExt } = await planificar(files, force);
+  // Cuántos documentos hay que leer de verdad en esta pasada y cuántos quedan (seguimiento.js):
+  // 9-nov-2026, Fernando (114.800 documentos, 3.960 indexados tras un fin de semana) — nadie supo
+  // que la pasada estaba parada hasta que Juan fue a verlo. Solo cifras: ni nombres ni rutas.
+  resumen.a_indexar = orden.reduce((n, o) => n + (o.stat?.pendiente ? 1 : 0), 0);
+  resumen.pendientes = resumen.a_indexar;
   const eta = nuevaEta(bytesPendientes, pendientesPorExt);
   // Con trabajo de verdad por delante, que los hilos de embedding (si los hay) estén arrancando
   // antes de repartir: decide si los documentos van de uno en uno o varios a la vez.
@@ -1036,7 +1041,10 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       });
     } finally {
       terminados += 1;
-      if (stat?.pendiente) eta.hecho(stat.size, fragmentosDelFichero, path.extname(abs).toLowerCase());
+      if (stat?.pendiente) {
+        eta.hecho(stat.size, fragmentosDelFichero, path.extname(abs).toLowerCase());
+        resumen.pendientes = Math.max(0, resumen.pendientes - 1);
+      }
     }
     if (onProgress) onProgress(state.progreso, resumen);
   };
@@ -1066,6 +1074,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         ficheroActual: logicalPath(abs),
         carpeta: rootForPath(abs)?.path ?? null,
         carpetas: accesibles,
+        pendientes: resumen.pendientes,
         ...eta.estimar(),
       });
       // Miles de ficheros sin cambios se despachan sin esperar a nada: sin soltar el proceso de

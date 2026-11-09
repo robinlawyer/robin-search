@@ -83,7 +83,7 @@ function modificarEstado(fn) {
 
 // Identificador aleatorio de ESTA instalación (agrupa los informes de un mismo equipo). No se
 // deriva de nada de la persona ni del equipo.
-function instalacionId() {
+export function instalacionId() {
   const est = leerEstado();
   if (est.instalacion) return est.instalacion;
   return modificarEstado((e) => {
