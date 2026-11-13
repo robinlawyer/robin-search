@@ -15,6 +15,7 @@ import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 import { log } from '../logger.js';
 import { estructuraDe, seccionDeFragmento, remisionesEn, describirRemision, rutaDe, piezasDeNodo, piezasDeRemision, claveDe } from '../estructura/documento.js';
 import { registrar } from '../estructura/piezas.js';
+import { soloEnDisco } from '../search/en-disco.js';
 
 export const definition = {
   name: 'buscar_documentos',
@@ -96,7 +97,15 @@ export async function handler(args) {
   const filtro = alcance.length > 1
     ? { expediente: { $in: alcance } }
     : { expediente: { $eq: expediente } };
-  const raw = await store.query(vector, topK, filtro);
+  let raw = await store.query(vector, topK, filtro);
+  // Lo que el abogado ha borrado del disco no se sirve aunque el vigilante no lo haya retirado aún
+  // (search/en-disco.js). Si al quitarlo faltan resultados, se pide un tramo más al índice.
+  let enDisco = await soloEnDisco(raw, 'docId');
+  if (enDisco.retirados && raw.length >= topK) {
+    raw = await store.query(vector, Math.min(topK * 3, 300), filtro);
+    enDisco = await soloEnDisco(raw, 'docId');
+  }
+  raw = enDisco.items;
 
   // Sin distinguir mayúsculas (Windows/macOS) ni forma Unicode: Claude escribe «Pérez» en NFC y
   // la carpeta puede estar en NFD; con comparación exacta el filtro devolvía 0 sin avisar.

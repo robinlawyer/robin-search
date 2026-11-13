@@ -5,6 +5,7 @@ import * as store from '../search/store.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+import { retiradoDelDisco, AVISO_RETIRADO } from '../search/en-disco.js';
 
 export const definition = {
   name: 'obtener_fragmento',
@@ -51,6 +52,10 @@ export async function handler(args) {
 
   const meta = await store.getChunk(docId, chunkId);
   if (!meta) return fail('Fragmento no encontrado.', { doc_id: docId, chunk_id: chunkId });
+  // Borrado del disco y aún sin retirar del índice: no se sirve (search/en-disco.js).
+  if (await retiradoDelDisco(docId, meta)) {
+    return fail(AVISO_RETIRADO, { doc_id: docId, chunk_id: chunkId, retirado_del_disco: true });
+  }
 
   // Barrera de aislamiento: un (doc_id, chunk_id) de otro expediente no devuelve texto.
   const expChunk = meta.expediente || expedienteForLogicalPath(meta.rutaRelativa);

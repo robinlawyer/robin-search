@@ -7,6 +7,7 @@ import * as registry from '../indexer/registry.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+import { soloEnDisco } from '../search/en-disco.js';
 
 export const definition = {
   name: 'listar_documentos_indexados',
@@ -69,8 +70,10 @@ export async function handler(args) {
       fecha_indexado: e.indexedAt,
     });
   }
-  documentos.sort((a, b) => a.ruta_relativa.localeCompare(b.ruta_relativa));
-  return ok({ expediente, total: documentos.length, documentos });
+  // Lo borrado del disco y aún sin retirar del índice no se lista (search/en-disco.js).
+  const { items: enDisco } = await soloEnDisco(documentos, 'doc_id', (d) => ({ rutaRelativa: d.ruta_relativa }));
+  enDisco.sort((a, b) => a.ruta_relativa.localeCompare(b.ruta_relativa));
+  return ok({ expediente, total: enDisco.length, documentos: enDisco });
 }
 
 export default { definition, handler };

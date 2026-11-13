@@ -150,7 +150,17 @@ async function drain() {
         for (const [a, j] of lote) pending.set(a, j);
         if (pending.size === 0) break;
       }
-      const [absPath, job] = pending.entries().next().value;
+      // Los borrados van PRIMERO (13-nov-2026, Juan): retirar un documento es inmediato y el
+      // abogado puede haberlo sacado por confidencialidad; indexar puede tardar (OCR). Antes se
+      // atendían por orden de llegada, detrás de lo que ya estuviera en cola.
+      let siguiente = null;
+      for (const e of pending) {
+        if (e[1].tipo === 'remove') {
+          siguiente = e;
+          break;
+        }
+      }
+      const [absPath, job] = siguiente ?? pending.entries().next().value;
       pending.delete(absPath);
       const ruta = logicalPath(absPath);
       setIndexando({ procesados: 0, total: 1, ficheroActual: ruta });

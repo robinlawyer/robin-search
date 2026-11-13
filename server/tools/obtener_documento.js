@@ -10,6 +10,7 @@ import * as registry from '../indexer/registry.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+import { retiradoDelDisco, AVISO_RETIRADO } from '../search/en-disco.js';
 
 const MAX_FRAGMENTOS_POR_LLAMADA = 60;
 
@@ -82,6 +83,12 @@ export async function handler(args) {
   }
 
   const chunks = await store.getDocChunks(docId);
+
+  // Borrado del disco y aún sin retirar del índice: no se sirve (search/en-disco.js). Se mira
+  // DESPUÉS de leer el índice, para que tampoco salga si se borra mientras se lee.
+  if (await retiradoDelDisco(docId, chunks[0])) {
+    return fail(AVISO_RETIRADO, { doc_id: docId, retirado_del_disco: true });
+  }
 
   // Documento que no está en el registro (índice heredado): se comprueba contra el metadato
   // del propio fragmento antes de devolver nada.

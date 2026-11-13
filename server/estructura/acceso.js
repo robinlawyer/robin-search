@@ -5,6 +5,7 @@ import { expedienteForLogicalPath } from '../config.js';
 import * as store from '../search/store.js';
 import * as registry from '../indexer/registry.js';
 import * as expedientes from '../expedientes.js';
+import { retiradoDelDisco, AVISO_RETIRADO } from '../search/en-disco.js';
 
 // → { ok: true, docId, expediente, entry, chunks } | { ok: false, error, extra }
 export async function documentoDelExpediente(args) {
@@ -28,6 +29,11 @@ export async function documentoDelExpediente(args) {
   }
 
   const chunks = await store.getDocChunks(docId);
+  // Borrado del disco y aún sin retirar del índice: no se sirve (search/en-disco.js), mirado
+  // después de leer el índice.
+  if (await retiradoDelDisco(docId, chunks[0])) {
+    return { ok: false, error: AVISO_RETIRADO, extra: { doc_id: docId, retirado_del_disco: true } };
+  }
   if (!entry && chunks.length > 0) {
     const expChunk = chunks[0].expediente || expedienteForLogicalPath(chunks[0].rutaRelativa);
     if (!expedientes.enAmbito(expChunk, expediente)) {
