@@ -2,7 +2,8 @@
 
 RobinSearch es el **Paso 2 del onboarding de Robin Lawyer**: un servidor MCP que corre en el
 ordenador del abogado, indexa la carpeta de expedientes del despacho y la hace **buscable
-semánticamente sin que ningún byte de los documentos salga del equipo**.
+semánticamente con los documentos y el índice en el propio equipo**: RobinLawyer.ai no los recibe,
+y a Claude solo le llegan los fragmentos que consulta.
 
 Resuelve el caso de los **expedientes masivos** (decenas de miles de páginas, muy por encima de
 la ventana de contexto de Claude): en lugar de cargar todo el expediente, Claude pregunta en
@@ -34,7 +35,7 @@ lenguaje natural y recibe solo los fragmentos relevantes.
   totalmente aislados.
 - **Carpeta madre, un caso por subcarpeta:** el abogado selecciona **una sola vez** la carpeta que contiene una subcarpeta por expediente. Cada subcarpeta de primer nivel es un caso, se indexa sola, y los casos nuevos aparecen sin reconfigurar nada. Ver [Un proyecto de Claude por expediente](docs/PROYECTO_POR_EXPEDIENTE.md).
 - **Aislamiento por expediente (v1.3.0):** cada carpeta de caso es un cliente distinto. Las búsquedas se limitan **siempre** a un expediente — el activo de la sesión (`establecer_expediente_activo`) o el que se indique en el parámetro `expediente`. Si no hay ninguno, la herramienta **devuelve error en lugar de buscar en todo**: traer contexto del caso B en una consulta sobre el caso A no es ruido, es riesgo de conflicto de intereses y de secreto profesional.
-- **Privacidad:** el contenido documental **nunca** sale del ordenador (RGPD / secreto profesional).
+- **Privacidad:** los documentos, el OCR y el índice se quedan en el ordenador del abogado y RobinLawyer.ai no los recibe nunca (RGPD / secreto profesional). Lo único que sale son los fragmentos que Claude pide en cada consulta, y van a la cuenta de Claude del propio abogado, con los términos de su plan.
 
 ---
 
@@ -219,11 +220,15 @@ el chat: `indexar_carpeta` solo actúa dentro de las carpetas que el abogado con
 
 **Política de privacidad completa: https://robinlawyer.ai/privacidad**
 
-RobinSearch está diseñado para que **ningún byte del contenido de tus documentos salga de tu
-ordenador**, en cumplimiento del RGPD (Reglamento (UE) 2016/679), la LOPDGDD (LO 3/2018) y el
-secreto profesional del abogado (art. 542.3 LOPJ).
+RobinSearch está diseñado para que **el contenido de tus documentos no llegue nunca a Robin
+Lawyer ni a ningún servidor de RobinSearch**, en cumplimiento del RGPD (Reglamento (UE) 2016/679),
+la LOPDGDD (LO 3/2018) y el secreto profesional del abogado (art. 542.3 LOPJ). Los documentos, el
+OCR y el índice se quedan en tu ordenador. Lo único que sale de él son los **fragmentos que Claude
+pide en cada consulta**, que van a tu cuenta de Claude (Anthropic) con los términos de tu plan: si
+trabajas con datos de clientes, conviene un plan de empresa de Claude y desactivar el uso de tus
+conversaciones para entrenar.
 
-- **Qué se procesa en local (y nunca se envía a ningún servidor):** el texto de tus documentos, el
+- **Qué se procesa en local (y nunca se envía a RobinLawyer.ai ni a ningún servidor de RobinSearch):** el texto de tus documentos, el
   OCR de los escaneados, los embeddings y el índice vectorial. Todo ello se calcula y se almacena
   en el disco de tu equipo (`~/Library/Application Support/RobinLawyer/robin-search` en macOS; la
   carpeta equivalente `%APPDATA%` en Windows). El modelo de embedding corre 100 % en local, **sin

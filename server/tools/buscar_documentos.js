@@ -22,7 +22,8 @@ export const definition = {
   description:
     'Búsqueda semántica sobre los documentos indexados de UN expediente del despacho. ' +
     'Recibe una consulta en lenguaje natural y devuelve los fragmentos más relevantes con ' +
-    'su fichero, página y puntuación. El contenido nunca sale del ordenador. ' +
+    'su fichero, página y puntuación. Los documentos y el índice están en el ordenador del abogado: ' +
+    'lo único que sale de él son los fragmentos que devuelve esta búsqueda, hacia esta conversación. ' +
     'La búsqueda está aislada por expediente: usa el expediente activo de la sesión (fíjalo ' +
     'con establecer_expediente_activo) o el que indiques en "expediente". Si no hay ninguno, ' +
     'devuelve error en lugar de buscar en todos los expedientes. Si la respuesta trae ' +

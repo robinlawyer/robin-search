@@ -19,6 +19,7 @@ import { spawn } from 'node:child_process';
 import { config } from '../config.js';
 import { rutas } from '../rutas.js';
 import { log } from '../logger.js';
+import { tipoDeCabecera } from './tipo-real.js';
 
 const ESPERAS_MS = [2, 5, 15, 45, 120, 360, 720].map((m) => m * 60 * 1000);
 // A partir de aquí, un fichero que sigue sin contenido es un fichero vacío, no uno por descargar.
@@ -258,9 +259,68 @@ export function lista() {
   return [..._pend.values()].map((e) => ({ ...e }));
 }
 
+// Los que de verdad esperan a bajar de la nube. Los que ya están en el disco pero a ceros se
+// cuentan aparte (`cuantosACeros`): decirle al abogado que «están bajando» sería falso.
 export function cuantos() {
   cargar();
-  return _pend.size;
+  let n = 0;
+  for (const e of _pend.values()) if (e.motivo !== 'a_ceros') n += 1;
+  return n;
+}
+
+export function cuantosACeros() {
+  cargar();
+  let n = 0;
+  for (const e of _pend.values()) if (e.motivo === 'a_ceros') n += 1;
+  return n;
+}
+
+// ¿Se dejó de insistir con este (vacío o a ceros de verdad)? El recorrido lo cuenta entonces como
+// lo que es y no como «en la nube sin descargar».
+export function dadoPorVacio(ruta) {
+  cargar();
+  const hasta = _vacios.get(clave(ruta));
+  return Boolean(hasta && hasta > Date.now());
+}
+
+// ¿Está el contenido a ceros? Un fichero que YA está en el disco (tiene bloques) pero cuyos
+// primeros bytes son todos cero no está «por descargar»: es una copia dañada, casi siempre por
+// una sincronización interrumpida (OneDrive la deja así; se recupera con «Historial de
+// versiones»). Hasta la 1.13.2 revisar() lo daba por «ya descargado», el indexador decía «vacío o
+// sin descargar», lo volvía a apuntar con la fecha de HOY y vuelta a empezar: el mismo documento
+// cada quince minutos, siempre «pendiente de descarga» y nunca explicado (Windows de un despacho
+// con 32.000 documentos en OneDrive, 11 y 12-nov-2026). Se lee en asíncrono y con plazo: nunca
+// puede dejar el servidor esperando.
+const CABECERA_CEROS = 512;
+// true = a ceros · false = tiene contenido (o no se ha podido mirar: el indexador dirá) ·
+// null = ahora no se puede mirar (cupo lleno o la lectura no contesta): se vuelve a mirar luego.
+// Usa el MISMO cupo que las descargas y devuelve el hueco cuando la lectura acaba de verdad, no al
+// cumplirse el plazo: una lectura colgada (red, nube) no puede ir ocupando hilos de disco sin
+// límite (revisión de Codex, 13-nov-2026).
+async function contenidoACeros(ruta, plazoMs = 5000) {
+  if (_enCurso >= MAX_DESCARGAS_A_LA_VEZ) return null;
+  _enCurso += 1;
+  const lectura = (async () => {
+    const fh = await fsp.open(ruta, 'r');
+    try {
+      const buf = Buffer.alloc(CABECERA_CEROS);
+      const { bytesRead } = await fh.read(buf, 0, CABECERA_CEROS, 0);
+      return bytesRead > 0 && tipoDeCabecera(buf.subarray(0, bytesRead)) === 'vacio';
+    } finally {
+      await fh.close().catch(() => {});
+    }
+  })().catch(() => false);
+  lectura.finally(() => { _enCurso -= 1; });
+  let reloj;
+  const plazo = new Promise((resolve) => {
+    reloj = setTimeout(() => resolve(null), plazoMs);
+    reloj.unref?.();
+  });
+  try {
+    return await Promise.race([lectura, plazo]);
+  } finally {
+    clearTimeout(reloj);
+  }
 }
 
 // Una pasada: pide las descargas que toquen y devuelve los que YA se pueden indexar.
@@ -269,6 +329,7 @@ export async function revisar({ indexar = null, forzar = false } = {}) {
   const ahora = Date.now();
   const listos = [];
   const vacios = [];
+  const aCeros = [];
   let pedidas = 0;
   for (const [k, e] of [..._pend]) {
     if (!forzar && e.proximo > ahora) continue;
@@ -278,8 +339,28 @@ export async function revisar({ indexar = null, forzar = false } = {}) {
       continue;
     }
     if (estado === 'si') {
-      _pend.delete(k);
-      listos.push(e.ruta);
+      const ceros = await contenidoACeros(e.ruta);
+      if (ceros === false) {
+        _pend.delete(k);
+        listos.push(e.ruta);
+        continue;
+      }
+      if (ceros === null) {
+        // Ahora no se ha podido mirar: se deja para la siguiente pasada, sin contar como intento.
+        e.proximo = ahora + ESPERAS_MS[0];
+        continue;
+      }
+      // Está en el disco pero a ceros. Se le da el mismo día de margen que a un vacío (por si el
+      // sincronizador lo está reescribiendo) y luego se deja de insistir y se dice lo que es.
+      e.motivo = 'a_ceros';
+      if (ahora - Date.parse(e.desde) >= SE_DA_POR_VACIO_MS) {
+        _pend.delete(k);
+        _vacios.set(k, ahora + OLVIDAR_VACIO_MS);
+        aCeros.push(e.ruta);
+        continue;
+      }
+      e.intentos += 1;
+      e.proximo = ahora + (ESPERAS_MS[Math.min(e.intentos, ESPERAS_MS.length - 1)]);
       continue;
     }
     // `>=` y no `>`: con el umbral a cero (las pruebas) apuntar y revisar pueden caer en el MISMO
@@ -315,7 +396,10 @@ export async function revisar({ indexar = null, forzar = false } = {}) {
   if (vacios.length) {
     log.info('Documentos que llevan un día sin contenido: se dan por vacíos', { n: vacios.length });
   }
-  return { listos: listos.length, vacios: vacios.length, pendientes: _pend.size, pedidas };
+  if (aCeros.length) {
+    log.info('Documentos con el contenido a ceros desde hace un día: se dan por dañados', { n: aCeros.length });
+  }
+  return { listos: listos.length, vacios: vacios.length, a_ceros: aCeros.length, pendientes: _pend.size, pedidas };
 }
 
 // Revisión periódica. `indexar(ruta)` es lo que hay que hacer con el que ya está descargado.
@@ -345,6 +429,6 @@ export function _limpiarParaPrueba() {
 }
 
 export default {
-  apuntar, olvidar, lista, cuantos, revisar, arrancar, parar, estadoEnDisco, sinBloques, traer,
+  apuntar, olvidar, lista, cuantos, cuantosACeros, dadoPorVacio, revisar, arrancar, parar, estadoEnDisco, sinBloques, traer,
   esErrorDeNube, descargasEnCurso, _limpiarParaPrueba,
 };

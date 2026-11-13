@@ -23,7 +23,7 @@ import { log } from '../logger.js';
 import { descifrarItemsPorFuente } from './glifos.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 import { tipoReal } from './tipo-real.js';
-import { textoDeDoc, textoDePpt, deCp1252 } from './office-antiguo.js';
+import { textoDeDoc, textoDePpt, deCp1252, oleCifrado } from './office-antiguo.js';
 import { entradasRecuperadas } from './zip-roto.js';
 
 const require = createRequire(import.meta.url);
@@ -318,6 +318,7 @@ function siEsZipRoto(err, ext) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractOfficeOle(filePath, ext) {
   const buf = fs.readFileSync(filePath);
+  if (oleCifrado(buf)) throw errorProtegido(ext);
   let texto = null;
   try {
     texto = ext === '.ppt' || ext === '.pps' || ext === '.pot' ? textoDePpt(buf) : textoDeDoc(buf);
@@ -613,7 +614,18 @@ function odfTextRuns(xml) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractSpreadsheet(filePath) {
   const XLSX = (await import('xlsx')).default ?? (await import('xlsx'));
-  const wb = XLSX.read(fs.readFileSync(filePath), { type: 'buffer', cellDates: true });
+  const buf = fs.readFileSync(filePath);
+  // Un .xlsx con contraseña es un contenedor OLE cifrado; el .xls de 97-2003 cifrado lo dice el
+  // propio lector. En los dos casos es el fichero, no un fallo nuestro (13-nov-2026: seis Excel
+  // así salían como «errores de indexado» y mandaban un aviso técnico en cada pasada).
+  if (buf.length >= 8 && buf.readUInt32BE(0) === 0xd0cf11e0 && oleCifrado(buf)) throw errorProtegido(path.extname(filePath).toLowerCase());
+  let wb;
+  try {
+    wb = XLSX.read(buf, { type: 'buffer', cellDates: true });
+  } catch (err) {
+    if (/password[- ]protected|encrypted/i.test(String(err?.message ?? err))) throw errorProtegido(path.extname(filePath).toLowerCase());
+    throw err;
+  }
   const pages = [];
   let pageNo = 0;
   for (const name of wb.SheetNames) {
@@ -1211,6 +1223,12 @@ export function errorDeFichero(code, mensaje) {
   return Object.assign(new Error(mensaje), { code: `ROBIN_FICHERO_${code}` });
 }
 
+// Word, Excel o PowerPoint con contraseña de apertura. Como el PDF protegido, no es un fallo de
+// RobinSearch: va a `no_indexables.protegidos` y estado_servidor le dice al abogado qué hacer.
+export function errorProtegido(ext) {
+  return errorDeFichero('PROTEGIDO', `El ${ext || 'documento'} está protegido con contraseña: hay que quitarle la protección (o guardar una copia sin ella en la carpeta) para que entre en las búsquedas`);
+}
+
 // La extensión con la que se lee: la del nombre, salvo que el contenido diga otra cosa.
 function extensionDeLectura(filePath, ext) {
   if (!EXT_BINARIAS.has(ext)) return ext;
@@ -1231,6 +1249,9 @@ function extensionDeLectura(filePath, ext) {
   if ((tipo === 'imagen' || tipo === 'heic') && !EXT_IMAGE.has(ext)) return tipo === 'heic' ? '.heic' : '.png';
   // Office antiguo con extensión nueva (.docx que es un .doc de 2003, .pptx que es un .ppt): desde
   // la 1.8.1 se LEE como lo que es en vez de darlo por ilegible.
+  // Un .docx/.pptx que es OLE suele ser uno CIFRADO (con contraseña), no un Office antiguo. (Las
+  // hojas ya han salido arriba: las mira su propio lector.)
+  if (tipo === 'ole' && oleCifrado(fs.readFileSync(filePath))) throw errorProtegido(ext);
   if (tipo === 'ole' && (ext === '.docx' || ext === '.dot')) return '.doc';
   if (tipo === 'ole' && (ext === '.pptx' || ext === '.odp')) return '.ppt';
   if (tipo === 'ole' && ext === '.odt') return '.doc';

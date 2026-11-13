@@ -963,8 +963,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // bajado (allí `stat` no distingue el marcador): 72 en un solo despacho el 21-sep. Se trata
       // igual —descarga y reintento—, y si después de un día sigue a cero, es que está vacío.
       if (err?.code === 'ROBIN_FICHERO_VACIO') {
-        nube.apuntar(abs, 'vacio');
-        (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
+        const ni = (resumen.no_indexables ??= nuevaCuentaRecorrido());
+        // Ya se le dio un día y sigue igual: no está en la nube, está vacío o a ceros (copia
+        // dañada). Se cuenta como lo que es, sin volver a apuntarlo.
+        if (nube.dadoPorVacio(abs) || !nube.apuntar(abs, 'vacio')) ni.vacios = (ni.vacios || 0) + 1;
+        else ni.no_descargados += 1;
         resumen.omitidos += 1;
         return;
       }
@@ -972,9 +975,15 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // texto). No es un error DE RobinSearch, pero tampoco se calla: va a `no_indexables`, que
       // `estado_servidor` explica uno a uno con lo que el abogado puede hacer. «errores» queda
       // para lo que sí hay que arreglar aquí.
-      if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO') {
+      if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO' || err?.code === 'ROBIN_FICHERO_PROTEGIDO') {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).protegidos += 1;
         resumen.omitidos += 1;
+        // El Word o Excel protegido se recuerda (no hay lista de contraseñas que probar para
+        // ellos): no se vuelve a abrir en cada pasada hasta que el abogado lo cambie.
+        if (err.code === 'ROBIN_FICHERO_PROTEGIDO' && !err.recordado) {
+          noLegibles.anotar(abs, null, err.code);
+          log.info('Documento protegido con contraseña: no se puede indexar', { ext: extensionDe(abs), bytes: stat?.size ?? null });
+        }
         return;
       }
       // Hoy el equipo no tenía memoria para el OCR de este escaneado, o el motor de OCR está en

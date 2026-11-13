@@ -27,6 +27,7 @@ import { esRutaDeRed } from '../net.js';
 import { log } from '../logger.js';
 import { setActivo, setIndexando, setError, clearError } from '../state.js';
 import { indexFile, removeFilePath, indexFolder, normalizarCausa } from '../indexer/indexer.js';
+import nube from '../indexer/nube.js';
 import * as diagnostico from '../diagnostico.js';
 import * as ausentes from '../carpetas-ausentes.js';
 
@@ -159,6 +160,16 @@ async function drain() {
         hechos += 1;
         log.info('Watcher: re-indexado', { ruta, tipo: job.tipo });
       } catch (err) {
+        // Lo que es del propio documento (vacío o a ceros, protegido con contraseña, dañado) no es
+        // un fallo del vigilante. Hasta la 1.13.2 cada uno contaba como fallo y dejaba RobinSearch
+        // en error («El watcher no pudo procesar N cambio(s)») por un PDF con contraseña que el
+        // abogado acababa de guardar (Windows con OneDrive, 11-nov-2026: 85 veces en un día). El
+        // recorrido periódico los cuenta y estado_servidor los explica.
+        if (String(err?.code || '').startsWith('ROBIN_FICHERO_') || err?.code === 'ROBIN_OCR_EN_PAUSA') {
+          if (err.code === 'ROBIN_FICHERO_VACIO' && !nube.dadoPorVacio(absPath)) nube.apuntar(absPath, 'vacio');
+          log.info('Watcher: documento que no se puede indexar tal como está', { code: String(err.code) });
+          continue;
+        }
         fallos += 1;
         ultimaCausa = normalizarCausa(err);
         log.error('Watcher: error procesando cambio', { ruta, err: String(err) });

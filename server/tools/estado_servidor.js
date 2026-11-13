@@ -217,7 +217,8 @@ export async function handler() {
         (ni.no_descargados ? `${ni.no_descargados} fichero(s) en la nube sin descargar a este equipo; ` : '') +
         (ni.enlaces_inaccesibles ? `${ni.enlaces_inaccesibles} enlace(s) o acceso(s) directo(s) que no llevan a nada accesible; ` : '') +
         (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
-        (ni.protegidos ? `${ni.protegidos} PDF(s) protegidos con contraseña (RobinSearch prueba las que haya en ROBIN_PDF_CLAVES; si no, el abogado tiene que quitarles la protección o dar la contraseña a quien lo instaló); ` : '') +
+        (ni.protegidos ? `${ni.protegidos} documento(s) protegidos con contraseña (PDF, Word o Excel). De los PDF, RobinSearch prueba las contraseñas que haya en ROBIN_PDF_CLAVES; para los demás, el abogado tiene que quitarles la protección o guardar en la misma carpeta una copia sin ella; ` : '') +
+        (ni.vacios ? `${ni.vacios} documento(s) vacíos o con todo el contenido a ceros: no es que estén en la nube, es que el fichero no tiene nada (suele ser una copia que se estropeó al sincronizar; en OneDrive se recupera la versión buena con clic derecho → «Historial de versiones», en Google Drive con «Gestionar versiones»); ` : '') +
         (ni.danados ? `${ni.danados} documento(s) dañados que ni su propio programa abriría (RobinSearch ya ha intentado rescatar su texto); ` : '') +
         (ni.google_nativos ? avisoGoogleNativos(ni.google_nativos) : '') +
         (ni.reintentables ? `${ni.reintentables} documento(s) que hoy no se han podido guardar en el índice (no cabían en la memoria del equipo, o el antivirus u otra ventana de Claude tenían un fichero abierto): se reintentan solos en la siguiente pasada; ` : '') +
@@ -246,6 +247,17 @@ export async function handler() {
         `${porDescargar} documento(s) están en las carpetas pero su contenido todavía no está en este ` +
         'ordenador (iCloud, OneDrive o Dropbox). RobinSearch ha pedido su descarga y los indexa solo ' +
         'en cuanto lleguen; hasta entonces NO están en las búsquedas.';
+    }
+    // Los que ya están en el disco pero con el contenido a ceros (copia dañada al sincronizar): se
+    // vuelven a mirar durante un día por si el sincronizador los está reescribiendo.
+    const aCeros = nube.cuantosACeros();
+    if (aCeros > 0) {
+      respuesta.documentos_a_ceros = aCeros;
+      respuesta.aviso_documentos_a_ceros =
+        `${aCeros} documento(s) están en este ordenador pero con todo el contenido a ceros: no se pueden ` +
+        'leer y NO están en las búsquedas. Suele ser una copia que se estropeó al sincronizar. RobinSearch ' +
+        'los vuelve a mirar durante un día; si siguen así, la versión buena se recupera en OneDrive con ' +
+        'clic derecho → «Historial de versiones» (en Google Drive, «Gestionar versiones»).';
     }
     if (state.ultimoIndexado.errores > 0) {
       respuesta.aviso_indexado =
