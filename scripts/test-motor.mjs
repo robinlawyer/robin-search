@@ -33,10 +33,23 @@ zip.addFile('manifest.json', Buffer.from('{}'));
 const paquete = zip.toBuffer();
 const huella = crypto.createHash('sha256').update(paquete).digest('hex');
 
+// 1.13.3: el fichero de versiones va FIRMADO (server/firma.js). Las pruebas firman con una clave
+// suya, que RobinSearch solo acepta con ROBIN_FEED_CLAVE_PRUEBA + ROBIN_MOTOR_PERMITIR_LOCAL.
+const clavePrueba = crypto.generateKeyPairSync('ed25519');
+const claveAjena = crypto.generateKeyPairSync('ed25519');
+const PUB_PRUEBA = clavePrueba.publicKey.export({ type: 'spki', format: 'pem' });
 let feed = {};
+let firmaCon = clavePrueba.privateKey;   // null = sin .sig
+let firmaColgada = false;                 // la .sig no contesta nunca
 let bajadas = 0;
 const srv = http.createServer((q, r) => {
-  if (q.url === '/feed.json') { r.writeHead(200, { 'content-type': 'application/json' }); return r.end(JSON.stringify(feed)); }
+  const texto = JSON.stringify(feed);
+  if (q.url === '/feed.json') { r.writeHead(200, { 'content-type': 'application/json' }); return r.end(texto); }
+  if (q.url === '/feed.json.sig') {
+    if (firmaColgada) return;   // ni cabeceras: se queda colgada
+    if (!firmaCon) { r.writeHead(404); return r.end(); }
+    r.writeHead(200, { 'content-type': 'text/plain' }); return r.end(crypto.sign(null, Buffer.from(texto), firmaCon).toString('base64'));
+  }
   if (q.url === '/p.mcpb') { bajadas += 1; r.writeHead(200, { 'content-length': paquete.length }); return r.end(paquete); }
   r.writeHead(404); r.end();
 });
@@ -45,7 +58,7 @@ const P = srv.address().port;
 
 function claude(datos, carpeta) {
   const env = { ...process.env, ROBIN_TOKEN: 't', ROBIN_DATA_DIR: datos, ROBIN_FOLDERS: carpeta, ROBIN_OCR: 'false', ROBIN_DIAGNOSTICO_URL: 'off',
-    ROBIN_OAUTH_ISSUER: 'http://127.0.0.1:9', ROBIN_UPDATE_URL: `http://127.0.0.1:${P}/feed.json`, ROBIN_MOTOR_PERMITIR_LOCAL: '1' };
+    ROBIN_OAUTH_ISSUER: 'http://127.0.0.1:9', ROBIN_UPDATE_URL: `http://127.0.0.1:${P}/feed.json`, ROBIN_MOTOR_PERMITIR_LOCAL: '1', ROBIN_FEED_CLAVE_PRUEBA: PUB_PRUEBA };
   delete env.ROBIN_SIN_SUPERVISOR;
   const c = spawn(process.execPath, [path.join(REPO, 'cli/index.js')], { env, stdio: ['pipe', 'pipe', 'pipe'] });
   let buf = ''; const w = new Map(); let id = 1; const s = { c };
@@ -72,6 +85,44 @@ function claude(datos, carpeta) {
   check('y no queda nada a medio bajar', !fs.readdirSync(path.join(datos, 'motor')).some((n) => n.includes('99.0.0')), fs.readdirSync(path.join(datos, 'motor')).join(','));
   check('se sigue con el motor de la extensión', ini.result?.serverInfo?.version !== '99.0.0');
   await s.cerrar();
+}
+
+// ─── 1b. Huella buena pero el fichero de versiones SIN firma, o firmado con otra clave ──────────
+//     (quien controlase el servidor podría publicar un paquete suyo CON su huella: 1.13.3)
+for (const [nombre, clave] of [['sin firma', null], ['firmado con una clave que no es la nuestra', claveAjena.privateKey]]) {
+  feed = { version: '99.0.0', url: `http://127.0.0.1:${P}/p.mcpb`, sha256: huella };
+  firmaCon = clave;
+  const antes = bajadas;
+  const datos = path.join(base, `d1b-${clave ? 'ajena' : 'sin'}`); const carpeta = path.join(base, `e1b-${clave ? 'ajena' : 'sin'}`); fs.mkdirSync(carpeta, { recursive: true });
+  const s = claude(datos, carpeta);
+  await s.rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 't', version: '1' } });
+  s.c.stdin.write('{"jsonrpc":"2.0","method":"notifications/initialized"}\n');
+  await s.rpc('tools/call', { name: 'estado_servidor', arguments: {} });
+  await espera(4000);
+  check(`${nombre}: con la huella buena NO se baja ni se instala nada`, bajadas === antes && !fs.existsSync(path.join(datos, 'motor', '99.0.0')), `bajadas=${bajadas - antes}`);
+  await s.cerrar();
+}
+firmaCon = clavePrueba.privateKey;
+
+// ─── 1c. La firma no contesta: el aviso de versión nueva (y el de mínima) llegan igual (revisión de Codex)
+{
+  feed = { version: '99.0.0', url: `http://127.0.0.1:${P}/p.mcpb`, sha256: huella, version_minima: '99.0.0', version_minima_desde: '2026-12-18' };
+  firmaColgada = true;
+  const antes = bajadas;
+  const datos = path.join(base, 'd1c'); const carpeta = path.join(base, 'e1c'); fs.mkdirSync(carpeta, { recursive: true });
+  const s = claude(datos, carpeta);
+  await s.rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 't', version: '1' } });
+  s.c.stdin.write('{"jsonrpc":"2.0","method":"notifications/initialized"}\n');
+  let texto = '';
+  for (let i = 0; i < 20 && !texto.includes('"actualizacion_disponible": "99.0.0"'); i++) {
+    const r = await s.rpc('tools/call', { name: 'estado_servidor', arguments: {} });
+    texto = r.result?.content?.[0]?.text || '';
+    if (!texto.includes('"actualizacion_disponible": "99.0.0"')) await espera(500);
+  }
+  check('con la firma colgada, la versión nueva se anuncia igual', texto.includes('"actualizacion_disponible": "99.0.0"'), (texto.match(/"actualizacion_disponible": [^,]*/) || ['sin el campo'])[0]);
+  check('y no se instala nada', bajadas === antes && !fs.existsSync(path.join(datos, 'motor', '99.0.0')));
+  await s.cerrar();
+  firmaColgada = false;
 }
 
 // ─── 2. Huella buena: se instala sola y Claude pasa a hablar con ella sin cortarse ─────────────

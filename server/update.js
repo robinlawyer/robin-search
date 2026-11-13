@@ -7,6 +7,7 @@ import { log } from './logger.js';
 import { state } from './state.js';
 import { getBearerQuiet, cabeceras } from './auth/oauth.js';
 import { prepararMotor, supervisado } from './motor.js';
+import { feedFirmado } from './firma.js';
 
 function isNewer(remote, local) {
   const a = String(remote).split('.').map((n) => parseInt(n, 10) || 0);
@@ -53,7 +54,9 @@ async function comprobar(signal) {
       headers: cabeceras(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
     });
     if (!res.ok) return null;
-    const data = await res.json();
+    // Los bytes EXACTOS: la firma es de ellos, no de un JSON vuelto a escribir.
+    const bytes = Buffer.from(await res.arrayBuffer());
+    const data = JSON.parse(bytes.toString('utf8'));
     // Versión mínima anunciada CON ANTELACIÓN (docs/versiones-soportadas.md): se avisa antes de que
     // el servidor deje de aceptar esta.
     if (data?.version_minima && isNewer(data.version_minima, VERSION)) {
@@ -65,9 +68,11 @@ async function comprobar(signal) {
       log.info('Actualización disponible', { actual: VERSION, disponible: latest });
       // Bajo el supervisor (1.13.0) se instala SOLA, con su huella comprobada (motor.js): el
       // abogado no tiene que pulsar nada. En segundo plano: no retrasa esta respuesta.
-      if (supervisado()) {
-        prepararMotor({ version: latest, url: data?.url, sha256: data?.sha256 }).catch(() => {});
-      }
+      // 🔴 1.13.3: y SOLO si el fichero de versiones viene firmado con nuestra clave (firma.js):
+      // la huella la publica el mismo servidor, así que por sí sola no prueba que el paquete sea
+      // nuestro. La firma se pide DESPUÉS de dejar anotados los avisos, en segundo plano y con su
+      // propio tope: una firma que tarda no puede llevarse por delante el aviso (revisión de Codex).
+      if (supervisado()) instalarSiFirmado(bytes, { version: latest, url: data?.url, sha256: data?.sha256 }).catch(() => {});
       return latest;
     }
     return null;
@@ -75,6 +80,23 @@ async function comprobar(signal) {
     // Sin conexión / endpoint caído: no es un error, simplemente no avisamos.
     return null;
   }
+}
+
+// La firma, al lado (firma.js): sin una firma válida de los bytes EXACTOS del fichero de versiones
+// no se instala nada solo.
+async function instalarSiFirmado(bytes, publicada) {
+  let firmado = false;
+  try {
+    const rf = await fetch(`${UPDATE_CHECK_URL}.sig`, { signal: AbortSignal.timeout(15_000), headers: cabeceras({}) });
+    if (rf.ok) firmado = feedFirmado(bytes, await rf.text());
+  } catch {
+    firmado = false;
+  }
+  if (!firmado) {
+    log.warn('Versión nueva publicada, pero el fichero de versiones no trae una firma válida: no se instala sola', { disponible: publicada.version });
+    return false;
+  }
+  return prepararMotor(publicada);
 }
 
 export default { checkForUpdate };
