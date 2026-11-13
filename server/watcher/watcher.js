@@ -56,9 +56,25 @@ function isSupported(p) {
   return esExtensionSoportada(p);
 }
 
+// ¿Está el vigilante con trabajo? (13-nov-2026, Juan: indexar_carpeta con el vigilante ya
+// indexando). Los ficheros sueltos que detecta los indexa él, fuera de indexFolder, así que
+// `indexandoAhora()` no lo veía: indexar_carpeta lanzaba un indexado completo EN PARALELO, repetía
+// el trabajo y no contestaba hasta terminarlo (medido: >5 min con 150 documentos entrando).
+export function vigilanteOcupado() {
+  return draining || pending.size > 0 || flushTimer !== null;
+}
+const _alQuedarLibre = new Set();
+export function alQuedarLibreVigilante(fn) {
+  _alQuedarLibre.add(fn);
+  return () => _alQuedarLibre.delete(fn);
+}
+
 function scheduleFlush() {
   if (flushTimer) clearTimeout(flushTimer);
-  flushTimer = setTimeout(() => serializar(drain), DEBOUNCE_MS);
+  flushTimer = setTimeout(() => {
+    flushTimer = null;
+    serializar(drain);
+  }, DEBOUNCE_MS);
 }
 
 // Ficheros que un evento dio por borrados pero que SIGUEN en disco: un error de lectura no es
@@ -193,7 +209,24 @@ async function drain() {
       clearError();
     }
     setActivo();
+    avisarSiLibre();
   }
+}
+
+// Avisa a quien espera al vigilante (la cola de indexar_carpeta) en cuanto no le queda trabajo.
+// Se llama al terminar cada drenado y al parar el vigilante, para que una petición encolada no
+// se quede sin lanzar (revisión de Codex, 13-nov-2026).
+function avisarSiLibre() {
+  if (vigilanteOcupado()) return;
+  setImmediate(() => {
+    for (const fn of _alQuedarLibre) {
+      try {
+        fn();
+      } catch {
+        /* un observador roto no rompe el vigilante */
+      }
+    }
+  });
 }
 
 function enqueue(absPath, tipo) {
@@ -548,6 +581,7 @@ export async function stopWatcher() {
     await _watcher.close();
     _watcher = null;
   }
+  avisarSiLibre();
 }
 
 // Solo pruebas: meter trabajo en la cola del vigilante y drenarla sin esperar al debounce.

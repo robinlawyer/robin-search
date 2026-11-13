@@ -6,6 +6,7 @@ import path from 'node:path';
 
 import { config, rootForPath } from '../config.js';
 import { indexFolder, indexandoAhora, alTerminarIndexado, avisoGoogleNativos } from '../indexer/indexer.js';
+import { vigilanteOcupado, alQuedarLibreVigilante } from '../watcher/watcher.js';
 import { log } from '../logger.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
@@ -73,7 +74,7 @@ function encolar(folders, force) {
 }
 
 function drenar() {
-  if (!_cola || _drenando || indexandoAhora()) return;
+  if (!_cola || _drenando || indexandoAhora() || vigilanteOcupado()) return;
   const c = _cola;
   _cola = null;
   _drenando = true;
@@ -86,6 +87,7 @@ function drenar() {
     });
 }
 alTerminarIndexado(drenar);
+alQuedarLibreVigilante(drenar);
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
@@ -127,6 +129,21 @@ export async function handler(args) {
     folders = [abs];
   }
 
+  if (vigilanteOcupado() && !indexandoAhora() && !_drenando) {
+    // El vigilante ya está metiendo en el índice lo que ha entrado en la carpeta: no es un fallo
+    // ni hace falta repetirlo. Se deja en cola un repaso para cuando termine.
+    encolar(folders, Boolean(args?.forzar));
+    return ok({
+      indexado_en_curso: true,
+      encolado: true,
+      carpetas: folders ?? config.watchedFolders,
+      mensaje:
+        'Estos documentos ya se están indexando: el vigilante de carpetas de RobinSearch detecta ' +
+        'solo lo que entra o cambia y lo está procesando ahora. No hace falta volver a pedirlo; ' +
+        'entran en las búsquedas en cuanto termina, y el progreso se ve en estado_servidor. Al ' +
+        'terminar se repasa la carpeta una vez más.',
+    });
+  }
   if (indexandoAhora() || _drenando) {
     encolar(folders, Boolean(args?.forzar));
     return ok({

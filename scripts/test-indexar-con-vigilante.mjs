@@ -27,9 +27,9 @@ function servidor(){
   let buf=''; const w=new Map(); let id=1; c.stderr.on('data',()=>{});
   c.stdout.on('data',(d)=>{buf+=d.toString();let i;while((i=buf.indexOf('\n'))>=0){const l=buf.slice(0,i).trim();buf=buf.slice(i+1);if(!l)continue;
     let m;try{m=JSON.parse(l);}catch{continue;}const f=w.get(m.id);if(f){w.delete(m.id);f(m);}}});
-  const rpc=(method,params)=>new Promise((res,rej)=>{const i=id++;const t=setTimeout(()=>rej(new Error('timeout '+method)),300000);
+  const rpc=(method,params)=>new Promise((res,rej)=>{const i=id++;const t=setTimeout(()=>rej(new Error('timeout '+method+' '+JSON.stringify(params?.name||''))),300000);
     w.set(i,(m)=>{clearTimeout(t);res(m);});c.stdin.write(JSON.stringify({jsonrpc:'2.0',id:i,method,params})+'\n');});
-  const call=async(name,args={})=>{const r=await rpc('tools/call',{name,arguments:args});const t=r.result?.content?.[0]?.text;
+  const call=async(name,args={})=>{const t0=Date.now();const r=await rpc('tools/call',{name,arguments:args});if(process.env.TRAZA)console.error(`[traza] ${name} ${((Date.now()-t0)/1000).toFixed(1)} s`);const t=r.result?.content?.[0]?.text;
     let data;try{data=JSON.parse(t);}catch{data={texto:t};}return{isError:Boolean(r.result?.isError),data,raw:t||''};};
   const ini=async()=>{await rpc('initialize',{protocolVersion:'2024-11-05',capabilities:{},clientInfo:{name:'prueba',version:'1'}});
     c.stdin.write(JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})+'\n');};
