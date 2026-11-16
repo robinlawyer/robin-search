@@ -25,6 +25,13 @@ Desde la 1.3.3 no pasa nada si te equivocas de nivel: un expediente incluye lo q
 Lo que **no** hay que hacer: elegir el disco entero, o la carpeta personal. Se indexaría todo
 lo que hay dentro, y tardaría horas de más para nada.
 
+**Si tus expedientes están en OneDrive**, funciona aunque los documentos estén solo en la nube:
+al indexar, RobinSearch pide a OneDrive que baje los documentos que tiene que leer. La primera vez
+tarda y ocupa disco. Lo recomendable es marcar la carpeta de expedientes, en el Explorador de
+Windows o en el Finder, con el botón derecho → **«Mantener siempre en este dispositivo»**. Cuando
+OneDrive termine de bajarla, los documentos estarán en el equipo aunque no haya conexión; para
+que lleguen los nuevos y los cambios, OneDrive tiene que seguir abierto y conectado.
+
 ## 3. Cerrar Claude Desktop y volver a abrirlo
 
 Sin esto la extensión no arranca. Es el paso que más se olvida.
