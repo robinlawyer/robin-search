@@ -193,6 +193,93 @@ const cli = (args, entrada = '') => {
   check('«correo olvidar» sin cuenta las desconecta todas', r.ok && (r.cuentas || []).length === 0 && (await llavero.leer(A)) === null);
 }
 
+// ─────────── Las carpetas de expedientes y el correo comparten ajustes.json ───────────
+// 🔴 22-nov-2026, Eduardo: «se me han borrado ya 2 veces los correos». Añadir o quitar una carpeta
+// en RobinDesktop con Claude abierto (orden `configurar` → guardarCarpetas) reescribía el fichero
+// con SOLO las carpetas: todas las cuentas desconectadas sin que nadie lo pidiera.
+{
+  const { guardarCarpetas, guardarNombres } = await imp('server/config.js');
+  const exp1 = path.join(base, 'Expedientes');
+  const exp2 = path.join(base, 'Expedientes-2');
+  fs.mkdirSync(exp1, { recursive: true });
+  fs.mkdirSync(exp2, { recursive: true });
+  ajustes.guardarCorreo({ usuario: A, imap: { host: 'mail.despacho.test' }, envioPermitido: true });
+  ajustes.guardarCorreo({ usuario: B, imap: { host: 'imap.correo.test' } });
+  const cuentas = () => { ajustes.olvidarCache(); return ajustes.leerCuentas().map((c) => c.usuario).join(','); };
+  const leer = () => JSON.parse(fs.readFileSync(rutaAjustes, 'utf8'));
+  check('(punto de partida) dos cuentas conectadas', cuentas() === `${A},${B}`);
+
+  guardarCarpetas([exp1, exp2]);
+  check('AÑADIR carpetas de expedientes no desconecta las cuentas de correo', cuentas() === `${A},${B}`, cuentas());
+  check('y guarda las carpetas pedidas', leer().carpetas?.length === 2);
+  check('ni le quita a una cuenta su permiso de envío', ajustes.leerCorreo(A).envioPermitido === true);
+
+  guardarCarpetas([exp2]);
+  check('QUITAR una carpeta tampoco', cuentas() === `${A},${B}` && leer().carpetas.length === 1, cuentas());
+  guardarCarpetas([]);
+  check('ni quitarlas todas', cuentas() === `${A},${B}`, cuentas());
+
+  guardarCarpetas([exp1]);
+  const f = leer(); delete f.nombres; fs.writeFileSync(rutaAjustes, JSON.stringify(f));
+  guardarNombres();
+  check('guardar los nombres de las carpetas conserva las cuentas', cuentas() === `${A},${B}` && Boolean(leer().nombres), cuentas());
+
+  ajustes.guardarCorreo({ envioPermitido: false }, B);
+  check('y al revés: tocar una cuenta conserva carpetas y nombres', leer().carpetas?.length === 1 && Boolean(leer().nombres));
+
+  // Si el fichero no se puede LEER (permisos, antivirus…), guardar el correo no puede escribir
+  // encima solo el correo: se perderían las carpetas. Se niega y el fichero queda como estaba.
+  if (process.platform !== 'win32' && process.getuid?.() !== 0) {
+    const antes = fs.readFileSync(rutaAjustes, 'utf8');
+    fs.chmodSync(rutaAjustes, 0o000);
+    let lanzo = false;
+    try { ajustes.guardarCorreo({ envioPermitido: true }, B); } catch { lanzo = true; }
+    fs.chmodSync(rutaAjustes, 0o600);
+    check('con ajustes.json ilegible, guardar el correo NO escribe encima', lanzo && fs.readFileSync(rutaAjustes, 'utf8') === antes);
+    fs.chmodSync(rutaAjustes, 0o000);
+    lanzo = false;
+    try { guardarCarpetas([exp1, exp2]); } catch { lanzo = true; }
+    fs.chmodSync(rutaAjustes, 0o600);
+    check('ni guardar las carpetas', lanzo && fs.readFileSync(rutaAjustes, 'utf8') === antes);
+
+    // Sin el fichero principal y con la copia .bak ilegible: tampoco se parte de cero.
+    const bak = `${rutaAjustes}.bak`;
+    fs.writeFileSync(bak, antes);
+    fs.renameSync(rutaAjustes, `${rutaAjustes}.apartado`);
+    fs.chmodSync(bak, 0o000);
+    lanzo = false;
+    try { guardarCarpetas([exp1]); } catch { lanzo = true; }
+    let lanzoCorreo = false;
+    try { ajustes.guardarCorreo({ envioPermitido: true }, B); } catch { lanzoCorreo = true; }
+    fs.chmodSync(bak, 0o600);
+    check('con el principal ausente y la copia ilegible, nadie escribe uno nuevo a medias', lanzo && lanzoCorreo && !fs.existsSync(rutaAjustes));
+    fs.renameSync(`${rutaAjustes}.apartado`, rutaAjustes);
+    const r = cli(['envio', '--permitir', `--cuenta=${B}`]);
+    check('(el CLI sigue funcionando después)', r.ok === true, JSON.stringify(r).slice(0, 200));
+  }
+
+  // Un LECTOR (sin el cerrojo de los escritores) que ve el fichero a medio escribir no lo aparta:
+  // usa la copia. Apartarlo podía llevarse por delante un guardado que llegaba en ese instante.
+  {
+    const bueno = fs.readFileSync(rutaAjustes, 'utf8');
+    fs.writeFileSync(`${rutaAjustes}.bak`, bueno);
+    fs.writeFileSync(rutaAjustes, '{"carpetas": ["/a", "/b');
+    ajustes.olvidarCache();
+    const cuentasLeidas = ajustes.leerCuentas().length;
+    check('un lector ve las cuentas de la copia y NO aparta el fichero', cuentasLeidas === 2 && fs.readFileSync(rutaAjustes, 'utf8').startsWith('{"carpetas": ["/a"'));
+    fs.writeFileSync(rutaAjustes, bueno);
+    ajustes.olvidarCache();
+  }
+
+  // «Olvidar» dice qué ha quitado de verdad (lo que se borra del llavero).
+  {
+    const r = ajustes.olvidarCorreo(B);
+    check('olvidar una cuenta devuelve solo esa en `quitadas`', JSON.stringify(r.quitadas) === JSON.stringify([B]) && cuentas() === A);
+    const t = ajustes.olvidarCorreo();
+    check('olvidar todas devuelve las que quedaban', JSON.stringify(t.quitadas) === JSON.stringify([A]) && cuentas() === '' && Array.isArray(leer().carpetas));
+  }
+}
+
 const bien = results.filter(Boolean).length;
 console.log(`\n${bien}/${results.length} comprobaciones OK`);
 fs.rmSync(base, { recursive: true, force: true });
