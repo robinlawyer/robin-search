@@ -25,7 +25,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 SERVIDOR=root@5.189.141.180
-CLAVE="$HOME/.ssh/id_jurix_server"
+CLAVE="${ROBIN_SSH_CLAVE:-$HOME/.ssh/id_jurix_server}"   # 23-nov-2026: la clave SSH de quien publica (la pasa publicar-semana.sh de robin-desktop)
 REMOTO=/opt/jurix/frontend/descargas
 BASE=https://robinlawyer.ai/descargas/
 PAQUETE=dist/robin-search.mcpb
