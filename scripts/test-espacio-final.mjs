@@ -168,8 +168,14 @@ async function profundidadCero(){
     fs.writeFileSync(f+'.bak',JSON.stringify({ids:['Cliente Bea']})); fs.writeFileSync(f,'{roto');
     const ex=await import(${EXP});
     const parecido=ex.exigirExpediente('Cliente-Bea');
-    console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error'}));`,[path.join(raiz,'Cliente Bea')]);
+    ex.catalogo();
+    const c1=JSON.parse(fs.readFileSync(f,'utf8')).cautela_hasta;
+    await new Promise((r)=>setTimeout(r,20));
+    ex.exigirExpediente('Cliente-Bea'); ex.catalogo();
+    const c2=JSON.parse(fs.readFileSync(f,'utf8')).cautela_hasta;
+    console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error',c1,c2}));`,[path.join(raiz,'Cliente Bea')]);
   check('recuperado de una copia .bak atrasada, tampoco se busca por parecido', d8.parecido==='error', JSON.stringify(d8));
+  check('y el plazo de la cautela no se renueva en cada consulta', Number(d8.c1)>Date.now() && d8.c1===d8.c2, JSON.stringify(d8));
   borrar(raiz);
 }
 

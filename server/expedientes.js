@@ -131,11 +131,19 @@ function leerEmitidosDeDisco(set) {
       // Otra instancia lo rehízo tras perderlo: lo que falta puede ser un id retirado.
       _cautelaHasta = Math.max(_cautelaHasta, Number(r.valor.cautela_hasta) || 0);
       // Recuperado de la copia .bak: puede ir una escritura por detrás (revisión de Codex, 18.ª ronda).
-      if (r.recuperado) _cautelaHasta = Math.max(_cautelaHasta, Date.now() + CAUTELA_TRAS_PERDIDA_MS);
+      // El plazo cuenta desde la PRIMERA recuperación (no se renueva en cada lectura) y el fichero
+      // principal se rehace con él en la siguiente escritura (Codex, 19.ª ronda).
+      if (r.recuperado) {
+        if (_cautelaHasta <= Date.now()) _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
+        _sinGuardar = true;
+      }
     }
     // Dañado y sin copia buena: lo guardado se ha perdido. Mientras viva este proceso no se busca
     // por parecido (podría ser un id retirado que solo estaba ahí; revisión de Codex, 16.ª ronda).
-    if (r.estado === 'corrupto') _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
+    if (r.estado === 'corrupto') {
+      if (_cautelaHasta <= Date.now()) _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
+      _sinGuardar = true;
+    }
     return true; // se ha podido leer (al escribir se rehace con lo que hay en memoria)
   } catch {
     return false;
