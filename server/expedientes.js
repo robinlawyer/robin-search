@@ -116,11 +116,17 @@ const MAX_EMITIDOS = 100000;
 let _emitidos = null;
 let _sinGuardar = false; // la última escritura falló: se reintenta en la siguiente ocasión
 const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
+// true si se ha podido leer (o no existe todavía); false si la lectura ha fallado (disco ocupado,
+// permisos): entonces NO se escribe, porque se guardaría una copia sin lo de otra instancia
+// (revisión de Codex, 14.ª ronda).
 function leerEmitidosDeDisco(set) {
   try {
     const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
     if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
-  } catch { /* sin fichero: nada que añadir */ }
+    return true;
+  } catch {
+    return false;
+  }
 }
 function emitidos() {
   if (_emitidos) return _emitidos;
@@ -138,11 +144,12 @@ function emitir(...ids) {
     // Con cerrojo y UNIENDO con lo que hay en disco: Claude puede arrancar dos instancias con la
     // misma carpeta de datos, y una no debe borrar lo que guardó la otra (Codex, 13.ª ronda).
     try {
-      conCerrojoDeFichero(rutaEmitidos(), () => {
-        leerEmitidosDeDisco(set);
+      const guardado = conCerrojoDeFichero(rutaEmitidos(), () => {
+        if (!leerEmitidosDeDisco(set)) return false;
         escribirJson(rutaEmitidos(), { ids: [...set].slice(-MAX_EMITIDOS) });
+        return true;
       }, { esperaMaxMs: 2000 });
-      _sinGuardar = false;
+      _sinGuardar = !guardado;
     } catch {
       _sinGuardar = true; // no impide trabajar: queda en memoria y se reintenta
     }
@@ -165,6 +172,9 @@ export function resolver(nombre) {
   // Codex, 25-nov, 7.ª ronda).
   const crudo = String(nombre ?? '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
   if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: emitir(crudo), conocidos };
+  // Antes de buscar por parecido, lo que hayan guardado otras instancias desde que se cargó
+  // (revisión de Codex, 14.ª ronda).
+  if (crudo.trim()) leerEmitidosDeDisco(emitidos());
   if (emitidos().has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };

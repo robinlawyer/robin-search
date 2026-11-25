@@ -112,7 +112,7 @@ async function profundidadCero(){
     console.log(JSON.stringify({g:g.ok?g.expediente:'error'}));`,[B]);
   check('tras reiniciar, el id retirado tampoco pasa a «Cliente Ana»', d2.g==='error', JSON.stringify(d2));
   // 3) Dos instancias con la misma carpeta de datos: lo que guarda una no lo borra la otra (13.ª ronda).
-  const C=path.join(raiz,'Cliente Nuevo'); fs.mkdirSync(C);
+  const C=path.join(raiz,'Cliente Nuevo'); fs.mkdirSync(C); fs.mkdirSync(path.join(raiz,'Cliente Bea'));
   const d3=await lanzarNodo(`
     const fs=await import('node:fs'); const path=await import('node:path');
     const ex=await import(${EXP}); const {config}=await import(${CFG});
@@ -124,6 +124,15 @@ async function profundidadCero(){
     const fin=JSON.parse(fs.readFileSync(f,'utf8')).ids;
     console.log(JSON.stringify({otra:fin.includes('De-Otra-Instancia'),nuevo:fin.includes('Cliente Nuevo'),ana:fin.includes('Cliente-Ana')}));`,[B]);
   check('con dos instancias, guardar no borra lo que guardó la otra', d3.otra===true && d3.nuevo===true && d3.ana===true, JSON.stringify(d3));
+  const d4=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const ex=await import(${EXP}); const {config}=await import(${CFG});
+    ex.catalogo();
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    const j=JSON.parse(fs.readFileSync(f,'utf8')); j.ids.push('Cliente-Bea'); fs.writeFileSync(f,JSON.stringify(j));
+    const g=ex.exigirExpediente('Cliente-Bea');
+    console.log(JSON.stringify({g:g.ok?g.expediente:'error'}));`,[path.join(raiz,'Cliente Bea')]);
+  check('un id que guardó OTRA instancia tampoco pasa a uno parecido', d4.g==='error', JSON.stringify(d4));
   borrar(raiz);
 }
 
