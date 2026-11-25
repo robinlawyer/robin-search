@@ -81,7 +81,35 @@ async function main(){
     rec.isError && !rec.raw.includes('SECRETO-SIN-ESPACIO-1111'), rec.raw.slice(0,200));
 }
 
-main().catch(e=>{console.error(e);results.push(false);}).finally(async()=>{
+// Profundidad 0: cada raíz es un expediente y su id no lleva «/». Retirada «Cliente-Ana», su id no
+// puede pasar por parecido a «Cliente Ana», que es otro cliente (revisión de Codex, 11.ª ronda).
+async function profundidadCero(){
+  const raiz=fs.mkdtempSync(path.join(os.tmpdir(),'rs-prof0-'));
+  const A=path.join(raiz,'Cliente-Ana'), B=path.join(raiz,'Cliente Ana');
+  fs.mkdirSync(A); fs.mkdirSync(B);
+  const codigo=`
+    const fs=await import('node:fs');
+    const ex=await import(${JSON.stringify(new URL('../server/expedientes.js',import.meta.url).href)});
+    const antes=ex.nombresConocidos();
+    const r1=ex.resolver('Cliente-Ana');
+    const {config}=await import(${JSON.stringify(new URL('../server/config.js',import.meta.url).href)});
+    config.roots=config.roots.filter((r)=>r.name!=='Cliente-Ana'); // retirada de la configuración
+    const despues=ex.nombresConocidos();
+    const r2=ex.resolver('Cliente-Ana');
+    const r3=ex.resolver('cliente ana');
+    console.log(JSON.stringify({antes,despues,r1:r1.expediente??r1.motivo,r2:r2.expediente??r2.motivo,r3:r3.expediente??r3.motivo}));`;
+  const out=await new Promise((res)=>{const p=spawn(process.execPath,['--input-type=module','-e',codigo],{env:{...process.env,
+    ROBIN_TOKEN:'t',ROBIN_FOLDERS:JSON.stringify([A,B]),ROBIN_EXPEDIENTE_DEPTH:'0',ROBIN_DATA_DIR:path.join(raiz,'datos'),
+    ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',QUITAR:A},stdio:['ignore','pipe','pipe']});
+    let o='';p.stdout.on('data',d=>o+=d);p.on('exit',()=>res(o));});
+  borrar(raiz);
+  let d={};try{d=JSON.parse(out.trim().split('\n').pop());}catch{}
+  check('profundidad 0: las dos raíces son expedientes distintos', (d.antes||[]).length===2, out.slice(0,200));
+  check('retirada «Cliente-Ana», su id NO pasa a «Cliente Ana»', d.r1==='Cliente-Ana' && JSON.stringify(d.despues)==='["Cliente Ana"]' && d.r2!=='Cliente Ana', JSON.stringify(d));
+  check('y lo escrito a mano sigue encontrando «Cliente Ana»', d.r3==='Cliente Ana', JSON.stringify(d));
+}
+
+main().then(profundidadCero).catch(e=>{console.error(e);results.push(false);}).finally(async()=>{
   await terminar(c); borrar(base);
   const okN=results.filter(Boolean).length;
   console.log(`\n${okN}/${results.length} comprobaciones OK`);

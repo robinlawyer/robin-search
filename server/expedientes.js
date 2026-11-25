@@ -102,8 +102,22 @@ export function catalogo() {
   return out.sort((a, b) => a.expediente.localeCompare(b.expediente));
 }
 
+// Ids que este proceso ha dado como válidos (fijados, resueltos o devueltos para reutilizar). Si
+// uno vuelve y su carpeta ya no está, NO se busca uno parecido: el parecido (mayúsculas, forma
+// Unicode, slug) es para lo que escribe el abogado, no para un id que ya fue de otro expediente
+// (revisión de Codex, 11.ª ronda: «Clientes/RUIZ» → «Clientes/Ruiz»; «Cliente-Ana» → «Cliente Ana»).
+const _emitidos = new Set();
+function emitir(id) {
+  if (typeof id === 'string' && id) _emitidos.add(id);
+  return id;
+}
+
 export function nombresConocidos() {
-  return catalogo().map((e) => e.expediente);
+  const ids = catalogo().map((e) => e.expediente);
+  // Todo id que ha estado en el catálogo es un id de verdad: si vuelve y ya no está, no se cambia
+  // por uno parecido (ver _emitidos).
+  for (const id of ids) _emitidos.add(id);
+  return ids;
 }
 
 // Resuelve el nombre que da el cliente contra los expedientes conocidos.
@@ -116,7 +130,8 @@ export function resolver(nombre) {
   // Primero el id EXACTO, sin recortar: «R/Caso » y «R/Caso» pueden ser dos clientes (revisión de
   // Codex, 25-nov, 7.ª ronda).
   const crudo = String(nombre ?? '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
-  if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: crudo, conocidos };
+  if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: emitir(crudo), conocidos };
+  if (_emitidos.has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
   // Con espacios alrededor y sin coincidencia exacta NO se recorta para buscar otro: puede ser el id
@@ -131,8 +146,8 @@ export function resolver(nombre) {
   if (bruto.includes('/')) {
     const hits = conocidos.filter((c) => c === bruto || igual(c, bruto));
     const exactos = hits.filter((c) => c === bruto);
-    if (exactos.length === 1) return { ok: true, expediente: exactos[0], conocidos };
-    if (hits.length === 1) return { ok: true, expediente: hits[0], conocidos };
+    if (exactos.length === 1) return { ok: true, expediente: emitir(exactos[0]), conocidos };
+    if (hits.length === 1) return { ok: true, expediente: emitir(hits[0]), conocidos };
     if (hits.length > 1) return { ok: false, motivo: 'ambiguo', candidatos: hits, conocidos };
     return { ok: false, motivo: 'desconocido', conocidos };
   }
@@ -147,7 +162,7 @@ export function resolver(nombre) {
 
   for (const test of estrategias) {
     const hits = conocidos.filter(test);
-    if (hits.length === 1) return { ok: true, expediente: hits[0], conocidos };
+    if (hits.length === 1) return { ok: true, expediente: emitir(hits[0]), conocidos };
     if (hits.length > 1) return { ok: false, motivo: 'ambiguo', candidatos: hits, conocidos };
   }
   return { ok: false, motivo: 'desconocido', conocidos };
@@ -216,6 +231,7 @@ const _fijados = new Map(); // expediente → cuándo se fijó por última vez
 
 export function setActivo(expediente) {
   const lista = listaIds(expediente);
+  for (const id of lista) emitir(id);
   state.expedientesActivos = lista;
   // OJO: sumar con «anadir» NO borra la selección anterior de la memoria. El servidor no sabe de
   // qué conversación viene la llamada: si la ampliación la hizo OTRO chat, borrarla haría pasar
