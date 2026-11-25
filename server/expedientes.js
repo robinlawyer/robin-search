@@ -114,6 +114,7 @@ export function catalogo() {
 // tampoco tras reiniciar se cambie un id retirado por otro parecido (Codex, 12.ª ronda).
 const MAX_EMITIDOS = 100000;
 let _emitidos = null;
+let _registroPerdido = false;
 let _sinGuardar = false; // la última escritura falló: se reintenta en la siguiente ocasión
 const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
 // true si se ha podido leer (o no existe todavía); false si la lectura ha fallado (disco ocupado,
@@ -123,7 +124,10 @@ function leerEmitidosDeDisco(set) {
   try {
     const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
     if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
-    return true;
+    // Dañado y sin copia buena: lo guardado se ha perdido. Mientras viva este proceso no se busca
+    // por parecido (podría ser un id retirado que solo estaba ahí; revisión de Codex, 16.ª ronda).
+    if (r.estado === 'corrupto') _registroPerdido = true;
+    return true; // se ha podido leer (al escribir se rehace con lo que hay en memoria)
   } catch {
     return false;
   }
@@ -176,7 +180,7 @@ export function resolver(nombre) {
   // (revisión de Codex, 14.ª ronda).
   // Si no se ha podido leer, no se busca por parecido: podría ser un id retirado que guardó otra
   // instancia (revisión de Codex, 15.ª ronda). Lo exacto ya se ha resuelto arriba.
-  if (crudo.trim() && !leerEmitidosDeDisco(emitidos())) return { ok: false, motivo: 'desconocido', conocidos };
+  if (crudo.trim() && (!leerEmitidosDeDisco(emitidos()) || _registroPerdido)) return { ok: false, motivo: 'desconocido', conocidos };
   if (emitidos().has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
