@@ -133,6 +133,16 @@ async function profundidadCero(){
     const g=ex.exigirExpediente('Cliente-Bea');
     console.log(JSON.stringify({g:g.ok?g.expediente:'error'}));`,[path.join(raiz,'Cliente Bea')]);
   check('un id que guardó OTRA instancia tampoco pasa a uno parecido', d4.g==='error', JSON.stringify(d4));
+  const d5=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const ex=await import(${EXP}); const {config}=await import(${CFG});
+    ex.catalogo();
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    fs.chmodSync(f,0o000);
+    const exacto=ex.exigirExpediente('Cliente Bea'); const parecido=ex.exigirExpediente('Cliente-Bea');
+    fs.chmodSync(f,0o644);
+    console.log(JSON.stringify({exacto:exacto.ok?exacto.expediente:'error',parecido:parecido.ok?parecido.expediente:'error'}));`,[path.join(raiz,'Cliente Bea')]);
+  check('con el registro ilegible, lo exacto funciona y lo parecido NO', d5.exacto==='Cliente Bea' && d5.parecido==='error', JSON.stringify(d5));
   borrar(raiz);
 }
 

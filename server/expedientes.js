@@ -174,7 +174,9 @@ export function resolver(nombre) {
   if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: emitir(crudo), conocidos };
   // Antes de buscar por parecido, lo que hayan guardado otras instancias desde que se cargó
   // (revisión de Codex, 14.ª ronda).
-  if (crudo.trim()) leerEmitidosDeDisco(emitidos());
+  // Si no se ha podido leer, no se busca por parecido: podría ser un id retirado que guardó otra
+  // instancia (revisión de Codex, 15.ª ronda). Lo exacto ya se ha resuelto arriba.
+  if (crudo.trim() && !leerEmitidosDeDisco(emitidos())) return { ok: false, motivo: 'desconocido', conocidos };
   if (emitidos().has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
