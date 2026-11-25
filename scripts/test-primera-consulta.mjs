@@ -60,6 +60,14 @@ const espera=(ms)=>new Promise(r=>setTimeout(r,ms));
 async function listo(call){for(let i=0;i<180;i++){const e=await call('estado_servidor');
   if(e.data?.ultimo_indexado&&e.data.estado!=='indexando')return e.data;await espera(1000);}
   return (await call('estado_servidor')).data;}
+// Reindexar y ESPERAR a que lo pedido esté en el índice. Desde que el vigilante de carpetas mete
+// él solo lo que cambia, indexar_carpeta contesta «en curso / en cola» y vuelve enseguida; buscar
+// justo después leía el índice viejo (fallo intermitente de las pruebas, 25-nov-2026). Se repite
+// hasta que una llamada indexa de verdad: entonces el vigilante ha terminado y se ha repasado la
+// carpeta entera.
+async function asentar(call){for(let i=0;i<180;i++){const r=await call('indexar_carpeta',{});
+  if(!r.isError&&!r.data?.encolado&&!r.data?.indexado_en_curso)return r.data;await new Promise(res=>setTimeout(res,1000));}
+  throw new Error('el indexado no se asienta');}
 
 
 const C='cambios_desde_tu_ultima_consulta';
@@ -86,8 +94,7 @@ fs.appendFileSync(path.join(CASO,'03 correo del arquitecto.txt'),
   ' ADDENDA: la licencia se concedió con condiciones. '+relleno('Condiciones del ayuntamiento.'));
 fs.rmSync(path.join(CASO,'05 acta de la junta.txt'));
 fs.writeFileSync(path.join(OTRO,'02 recurso.txt'),'SECRETO-RUIZ recurso. '+relleno('Motivos del recurso.'));
-await s.call('indexar_carpeta',{});
-await listo(s.call);
+await asentar(s.call);
 await espera(1500);
 
 const c0=await s.call('buscar_documentos',{query:'tasación de la nave'});
@@ -155,7 +162,7 @@ fs.writeFileSync(path.join(CASO,'10 requerimiento notarial.txt'),
 fs.appendFileSync(path.join(CASO,'08 informe de tasacion.txt'),
   ' REVISION: el valor se corrige a la baja. '+relleno('Ajuste por el estado de la cubierta.'));
 fs.rmSync(path.join(CASO,'09 nota simple.txt'));
-await s.call('indexar_carpeta',{}); await listo(s.call);
+await asentar(s.call);
 const jb=await s.call('buscar_documentos',{expediente:P,query:'requerimiento'});
 const kb=jb.data?.[C];
 check('(b) chat nuevo a los 10 min con documentos nuevos: SÍ los cuenta', (kb?.nuevos||[]).some(x=>/requerimiento/.test(x.ruta_relativa)), nom(kb?.nuevos));
@@ -168,19 +175,19 @@ check('(b) lo contado no se repite en la siguiente llamada', !jb2.data?.[C]);
 // (c) Durante el chat llega otro documento (un correo guardado, un escrito del contrario).
 fs.writeFileSync(path.join(CASO,'11 contestacion del vendedor.txt'),
   'CONTESTACION DEL VENDEDOR AL REQUERIMIENTO. '+relleno('El vendedor alega fuerza mayor en la entrega.'));
-await s.call('indexar_carpeta',{}); await listo(s.call);
+await asentar(s.call);
 const jc=await s.call('buscar_documentos',{expediente:P,query:'fuerza mayor'});
 const kc=jc.data?.[C];
 check('(c) lo que llega DURANTE el chat se cuenta en la siguiente consulta, una vez', (kc?.nuevos||[]).some(x=>/contestacion/.test(x.ruta_relativa)) && !(kc?.nuevos||[]).some(x=>/requerimiento/.test(x.ruta_relativa)), nom(kc?.nuevos));
 check('(c) y se presenta como llegado mientras trabaja, no como «desde tu última consulta»', kc?.momento==='durante_la_sesion' && /mientras/i.test(kc?.cuando_contarlo||''), kc?.momento);
 // El abogado sigue retocando ese mismo documento: no se le repite en cada llamada.
 fs.appendFileSync(path.join(CASO,'11 contestacion del vendedor.txt'),' Otrosí: se aporta certificado. '+relleno('Anexo.'));
-await s.call('indexar_carpeta',{}); await listo(s.call);
+await asentar(s.call);
 const jc2=await s.call('buscar_documentos',{expediente:P,query:'certificado'});
 check('(c) retocar un documento ya contado en esta sesión no se repite en cada llamada', !jc2.data?.[C], JSON.stringify(jc2.data?.[C]?.recuento||null));
 // Pero otro documento distinto que cambia sí se cuenta.
 fs.appendFileSync(path.join(CASO,'01 contrato de compraventa.txt'),' ADENDA: nueva fecha de entrega. '+relleno('Pacto de las partes.'));
-await s.call('indexar_carpeta',{}); await listo(s.call);
+await asentar(s.call);
 const jc3=await s.call('buscar_documentos',{expediente:P,query:'adenda'});
 check('(c) otro documento modificado durante la sesión sí se cuenta', (jc3.data?.[C]?.modificados||[]).some(x=>/contrato/.test(x.ruta_relativa)), nom(jc3.data?.[C]?.modificados));
 

@@ -91,6 +91,14 @@ function servidor({ madre, datos, env = {} }) {
   return { proc: c, call, salida };
 }
 
+// Reindexar y ESPERAR a que lo pedido esté en el índice. Desde que el vigilante de carpetas mete
+// él solo lo que cambia, indexar_carpeta contesta «en curso / en cola» y vuelve enseguida; buscar
+// justo después leía el índice viejo (fallo intermitente de las pruebas, 25-nov-2026). Se repite
+// hasta que una llamada indexa de verdad: entonces el vigilante ha terminado y se ha repasado la
+// carpeta entera.
+async function asentar(call){for(let i=0;i<180;i++){const r=await call('indexar_carpeta',{});
+  if(!r.isError&&!r.data?.encolado&&!r.data?.indexado_en_curso)return r.data;await new Promise(res=>setTimeout(res,1000));}
+  throw new Error('el indexado no se asienta');}
 async function esperarFin(call, intentos = 120) {
   for (let i = 0; i < intentos; i++) {
     const e = await call('estado_servidor');
@@ -182,7 +190,7 @@ check('A.3 y la versión anterior SIGUE en el índice (antes desaparecía)', b.d
 await docx(contrato, 'Contrato de compraventa de maquinaria industrial');
 const futuro2 = new Date(Date.now() + 10000);
 fs.utimesSync(contrato, futuro2, futuro2);
-await s.call('indexar_carpeta', {});
+await asentar(s.call);
 const b2 = await s.call('buscar_documentos', { query: 'compraventa de maquinaria industrial', expediente: 'Expedientes/Caso Local' });
 const frag = b2.data?.fragmentos?.find((f) => f.fichero === 'contrato.docx');
 check('A.4 arreglado el fichero, el documento se SUSTITUYE (sin restos del texto viejo)', Boolean(frag) && /maquinaria/.test(frag.texto || JSON.stringify(frag)) && !/arrendamiento/.test(JSON.stringify(b2.data)), JSON.stringify(frag || {}).slice(0, 90));
