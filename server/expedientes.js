@@ -17,6 +17,7 @@ import {
 import * as registry from './indexer/registry.js';
 import { rutas, tipoReal } from './rutas.js';
 import { state } from './state.js';
+import { escribirJson, leerJson } from './persistencia.js';
 
 // Normaliza un nombre para comparar de forma tolerante: sin tildes, minúsculas y con
 // cualquier separador (espacio, guion, guion bajo, punto) colapsado a "-". Así el slug del
@@ -99,6 +100,9 @@ export function catalogo() {
   for (const id of detectarEnDisco()) {
     if (!vistos.has(id)) out.push({ expediente: id, documentos: 0, fragmentos: 0, sin_ocr: 0 });
   }
+  // Todo id que sale en el catálogo (estado_servidor lo enseña tal cual) es un id de verdad: si
+  // vuelve y ya no está, no se cambia por uno parecido (ver _emitidos; Codex, 12.ª ronda).
+  emitir(...out.map((e) => e.expediente));
   return out.sort((a, b) => a.expediente.localeCompare(b.expediente));
 }
 
@@ -106,18 +110,36 @@ export function catalogo() {
 // uno vuelve y su carpeta ya no está, NO se busca uno parecido: el parecido (mayúsculas, forma
 // Unicode, slug) es para lo que escribe el abogado, no para un id que ya fue de otro expediente
 // (revisión de Codex, 11.ª ronda: «Clientes/RUIZ» → «Clientes/Ruiz»; «Cliente-Ana» → «Cliente Ana»).
-const _emitidos = new Set();
-function emitir(id) {
-  if (typeof id === 'string' && id) _emitidos.add(id);
-  return id;
+// Se guardan en la carpeta de datos (rutas lógicas del propio equipo; nunca se envían), para que
+// tampoco tras reiniciar se cambie un id retirado por otro parecido (Codex, 12.ª ronda).
+const MAX_EMITIDOS = 20000;
+let _emitidos = null;
+const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
+function emitidos() {
+  if (_emitidos) return _emitidos;
+  _emitidos = new Set();
+  try {
+    const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
+    if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') _emitidos.add(id);
+  } catch { /* sin fichero: se empieza de cero */ }
+  return _emitidos;
+}
+function emitir(...ids) {
+  const set = emitidos();
+  let nuevos = false;
+  for (const id of ids) {
+    if (typeof id === 'string' && id && !set.has(id)) { set.add(id); nuevos = true; }
+  }
+  if (nuevos) {
+    try {
+      escribirJson(rutaEmitidos(), { ids: [...set].slice(-MAX_EMITIDOS) });
+    } catch { /* no poder guardarlo no impide trabajar: queda en memoria */ }
+  }
+  return ids[0];
 }
 
 export function nombresConocidos() {
-  const ids = catalogo().map((e) => e.expediente);
-  // Todo id que ha estado en el catálogo es un id de verdad: si vuelve y ya no está, no se cambia
-  // por uno parecido (ver _emitidos).
-  for (const id of ids) _emitidos.add(id);
-  return ids;
+  return catalogo().map((e) => e.expediente);
 }
 
 // Resuelve el nombre que da el cliente contra los expedientes conocidos.
@@ -131,7 +153,7 @@ export function resolver(nombre) {
   // Codex, 25-nov, 7.ª ronda).
   const crudo = String(nombre ?? '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
   if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: emitir(crudo), conocidos };
-  if (_emitidos.has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
+  if (emitidos().has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
   // Con espacios alrededor y sin coincidencia exacta NO se recorta para buscar otro: puede ser el id
