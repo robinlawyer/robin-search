@@ -65,12 +65,18 @@ async function main(){
   check('y «Expedientes/Ruiz » explícito, el suyo',
     ex2.raw.includes('SECRETO-CON-ESPACIO-2222') && !ex2.raw.includes('SECRETO-SIN-ESPACIO-1111'));
 
+  const blanco=await call('buscar_documentos',{query:'escrito de demanda',expediente:'   ',n_resultados:10});
+  check('un "expediente" en blanco da error y no usa el activo', blanco.isError && !/SECRETO-/.test(blanco.raw));
+
   // Si «Ruiz » desaparece, el activo NO pasa a «Ruiz».
   fs.rmSync(path.join(MADRE,'Ruiz '),{recursive:true,force:true});
   for(let i=0;i<60;i++){const e=(await call('estado_servidor')).data; if(e?.documentos_indexados===1&&e.estado!=='indexando')break; await new Promise(r=>setTimeout(r,1000));}
   b=await call('buscar_documentos',{query:'escrito de demanda',n_resultados:10});
   check('desaparecido «Ruiz », la búsqueda sin expediente no sirve «Ruiz»',
     b.isError && !b.raw.includes('SECRETO-SIN-ESPACIO-1111'), b.raw.slice(0,200));
+  const rec=await call('buscar_documentos',{query:'escrito de demanda',expediente:'Expedientes/Ruiz ',n_resultados:10});
+  check('y el id que dio el servidor («Expedientes/Ruiz ») no se resuelve a «Ruiz»',
+    rec.isError && !rec.raw.includes('SECRETO-SIN-ESPACIO-1111'), rec.raw.slice(0,200));
 }
 
 main().catch(e=>{console.error(e);results.push(false);}).finally(async()=>{

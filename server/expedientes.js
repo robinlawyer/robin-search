@@ -119,6 +119,9 @@ export function resolver(nombre) {
   if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: crudo, conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
+  // Con espacios alrededor y sin coincidencia exacta NO se recorta para buscar otro: puede ser el id
+  // de una carpeta «Ruiz » que ya no está, y recortado sería «Ruiz», otro cliente (Codex, 9.ª ronda).
+  if (crudo !== crudo.trim()) return { ok: false, motivo: 'desconocido', conocidos };
 
   const ultimo = (s) => s.split('/').pop();
   const estrategias = [
@@ -321,6 +324,12 @@ function idsVigentes(activos) {
 
 function exigirExpedienteSinAnotar(explicito) {
   const pedidos = normalizarSeleccion(explicito ?? []);
+  // Un "expediente" que SÍ se ha pasado pero queda vacío (solo espacios) no es «no lo digo»: no se
+  // resuelve con el activo, que podría ser el de otra conversación (revisión de Codex, 9.ª ronda).
+  const dado = Array.isArray(explicito) ? explicito.length > 0 : typeof explicito === 'string' && explicito !== '';
+  if (dado && !pedidos.length) {
+    return { ok: false, error: 'El parámetro "expediente" ha llegado en blanco. Indica el nombre del expediente de esta conversación.', extra: { expedientes_disponibles: nombresConocidos() } };
+  }
 
   if (pedidos.length) {
     const r = resolverVarios(pedidos);

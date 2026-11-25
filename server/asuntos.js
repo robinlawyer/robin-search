@@ -206,6 +206,21 @@ function resolverCarpetas(lista) {
   return { ok: true, carpetas: r.expedientes };
 }
 
+function carpetasGuardadas(lista) {
+  const guardadas = expedientes.listaIds(lista);
+  if (!guardadas.length) return resolverCarpetas(lista);
+  const conocidos = new Set(expedientes.nombresConocidos());
+  const faltan = guardadas.filter((id) => !conocidos.has(id));
+  if (faltan.length) {
+    return {
+      ok: false,
+      error: `${faltan.map((x) => `«${x}»`).join(', ')} ya no está entre los expedientes que vigila RobinSearch.`,
+      extra: { carpetas_que_faltan: faltan, expedientes_disponibles: expedientes.nombresConocidos() },
+    };
+  }
+  return { ok: true, carpetas: guardadas };
+}
+
 // ---------------------------------------------------------------------------------------------
 // Instantánea del expediente para el resumen «desde la última vez»
 // ---------------------------------------------------------------------------------------------
@@ -517,8 +532,10 @@ export async function activar(id, { fijarSeleccion }) {
   if (b.asunto.estado === 'cerrado') {
     return { ok: false, error: `El asunto "${b.asunto.asunto_id}" está cerrado. Reábrelo con accion="reabrir" si el abogado lo pide.` };
   }
-  // Las carpetas pueden haberse renombrado o movido desde la última vez.
-  const c = resolverCarpetas(b.asunto.carpetas_expediente);
+  // Las carpetas pueden haberse renombrado o movido desde la última vez. Las guardadas ya son ids
+  // del catálogo: se exigen EXACTAS. Pasarlas por el resolvedor tolerante podía cambiar una carpeta
+  // desaparecida por la de otro cliente de nombre parecido (revisión de Codex, 9.ª ronda).
+  const c = carpetasGuardadas(b.asunto.carpetas_expediente);
   if (!c.ok) {
     return {
       ok: false,
