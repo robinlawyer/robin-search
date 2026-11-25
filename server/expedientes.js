@@ -17,7 +17,7 @@ import {
 import * as registry from './indexer/registry.js';
 import { rutas, tipoReal } from './rutas.js';
 import { state } from './state.js';
-import { escribirJson, leerJson } from './persistencia.js';
+import { conCerrojoDeFichero, escribirJson, leerJson } from './persistencia.js';
 
 // Normaliza un nombre para comparar de forma tolerante: sin tildes, minúsculas y con
 // cualquier separador (espacio, guion, guion bajo, punto) colapsado a "-". Así el slug del
@@ -112,16 +112,20 @@ export function catalogo() {
 // (revisión de Codex, 11.ª ronda: «Clientes/RUIZ» → «Clientes/Ruiz»; «Cliente-Ana» → «Cliente Ana»).
 // Se guardan en la carpeta de datos (rutas lógicas del propio equipo; nunca se envían), para que
 // tampoco tras reiniciar se cambie un id retirado por otro parecido (Codex, 12.ª ronda).
-const MAX_EMITIDOS = 20000;
+const MAX_EMITIDOS = 100000;
 let _emitidos = null;
+let _sinGuardar = false; // la última escritura falló: se reintenta en la siguiente ocasión
 const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
+function leerEmitidosDeDisco(set) {
+  try {
+    const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
+    if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
+  } catch { /* sin fichero: nada que añadir */ }
+}
 function emitidos() {
   if (_emitidos) return _emitidos;
   _emitidos = new Set();
-  try {
-    const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
-    if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') _emitidos.add(id);
-  } catch { /* sin fichero: se empieza de cero */ }
+  leerEmitidosDeDisco(_emitidos);
   return _emitidos;
 }
 function emitir(...ids) {
@@ -130,10 +134,18 @@ function emitir(...ids) {
   for (const id of ids) {
     if (typeof id === 'string' && id && !set.has(id)) { set.add(id); nuevos = true; }
   }
-  if (nuevos) {
+  if (nuevos || _sinGuardar) {
+    // Con cerrojo y UNIENDO con lo que hay en disco: Claude puede arrancar dos instancias con la
+    // misma carpeta de datos, y una no debe borrar lo que guardó la otra (Codex, 13.ª ronda).
     try {
-      escribirJson(rutaEmitidos(), { ids: [...set].slice(-MAX_EMITIDOS) });
-    } catch { /* no poder guardarlo no impide trabajar: queda en memoria */ }
+      conCerrojoDeFichero(rutaEmitidos(), () => {
+        leerEmitidosDeDisco(set);
+        escribirJson(rutaEmitidos(), { ids: [...set].slice(-MAX_EMITIDOS) });
+      }, { esperaMaxMs: 2000 });
+      _sinGuardar = false;
+    } catch {
+      _sinGuardar = true; // no impide trabajar: queda en memoria y se reintenta
+    }
   }
   return ids[0];
 }

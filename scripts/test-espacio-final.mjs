@@ -91,7 +91,7 @@ async function profundidadCero(){
   const CFG=JSON.stringify(new URL('../server/config.js',import.meta.url).href);
   const lanzarNodo=(codigo,carpetas)=>new Promise((res)=>{const p=spawn(process.execPath,['--input-type=module','-e',codigo],{env:{...process.env,
     ROBIN_TOKEN:'t',ROBIN_FOLDERS:JSON.stringify(carpetas),ROBIN_EXPEDIENTE_DEPTH:'0',ROBIN_DATA_DIR:path.join(raiz,'datos'),
-    ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'},stdio:['ignore','pipe','pipe']});
+    ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',NUEVA:path.join(raiz,'Cliente Nuevo')},stdio:['ignore','pipe','pipe']});
     let o='';p.stdout.on('data',d=>o+=d);p.on('exit',()=>{try{res(JSON.parse(o.trim().split('\n').pop()));}catch{res({crudo:o.slice(0,200)});}});});
   // 1) Como estado_servidor: solo se ENSEÑA el catálogo; luego se retira la raíz y se usa el id.
   const d=await lanzarNodo(`
@@ -111,6 +111,19 @@ async function profundidadCero(){
     const g=ex.exigirExpediente('Cliente-Ana');
     console.log(JSON.stringify({g:g.ok?g.expediente:'error'}));`,[B]);
   check('tras reiniciar, el id retirado tampoco pasa a «Cliente Ana»', d2.g==='error', JSON.stringify(d2));
+  // 3) Dos instancias con la misma carpeta de datos: lo que guarda una no lo borra la otra (13.ª ronda).
+  const C=path.join(raiz,'Cliente Nuevo'); fs.mkdirSync(C);
+  const d3=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const ex=await import(${EXP}); const {config}=await import(${CFG});
+    ex.catalogo();
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    const j=JSON.parse(fs.readFileSync(f,'utf8')); j.ids.push('De-Otra-Instancia'); fs.writeFileSync(f,JSON.stringify(j));
+    config.roots=[...config.roots,{name:'Cliente Nuevo',path:process.env.NUEVA,real:process.env.NUEVA}];
+    ex.catalogo();
+    const fin=JSON.parse(fs.readFileSync(f,'utf8')).ids;
+    console.log(JSON.stringify({otra:fin.includes('De-Otra-Instancia'),nuevo:fin.includes('Cliente Nuevo'),ana:fin.includes('Cliente-Ana')}));`,[B]);
+  check('con dos instancias, guardar no borra lo que guardó la otra', d3.otra===true && d3.nuevo===true && d3.ana===true, JSON.stringify(d3));
   borrar(raiz);
 }
 
