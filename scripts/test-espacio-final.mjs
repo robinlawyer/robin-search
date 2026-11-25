@@ -154,6 +154,13 @@ async function profundidadCero(){
     const rehecho=JSON.parse(fs.readFileSync(f,'utf8')).ids.includes('Cliente Bea');
     console.log(JSON.stringify({exacto:exacto.ok?exacto.expediente:'error',parecido:parecido.ok?parecido.expediente:'error',rehecho}));`,[path.join(raiz,'Cliente Bea')]);
   check('con el registro dañado (y su copia), lo exacto funciona y lo parecido NO', d6.exacto==='Cliente Bea' && d6.parecido==='error' && d6.rehecho===true, JSON.stringify(d6));
+  const d7=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const ex=await import(${EXP}); const {config}=await import(${CFG});
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    const parecido=ex.exigirExpediente('Cliente-Bea');
+    console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error',bak:fs.existsSync(f+'.bak'),cautela:Number(JSON.parse(fs.readFileSync(f,'utf8')).cautela_hasta)>Date.now()}));`,[path.join(raiz,'Cliente Bea')]);
+  check('otra instancia que lee el registro rehecho también evita el parecido, y hay copia .bak', d7.parecido==='error' && d7.bak===true && d7.cautela===true, JSON.stringify(d7));
   borrar(raiz);
 }
 

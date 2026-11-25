@@ -114,7 +114,10 @@ export function catalogo() {
 // tampoco tras reiniciar se cambie un id retirado por otro parecido (Codex, 12.ª ronda).
 const MAX_EMITIDOS = 100000;
 let _emitidos = null;
-let _registroPerdido = false;
+// Tras perder el registro, todas las instancias evitan el parecido durante 30 días (se anota en el
+// propio fichero al rehacerlo; revisión de Codex, 17.ª ronda).
+const CAUTELA_TRAS_PERDIDA_MS = 30 * 24 * 3600 * 1000;
+let _cautelaHasta = 0;
 let _sinGuardar = false; // la última escritura falló: se reintenta en la siguiente ocasión
 const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
 // true si se ha podido leer (o no existe todavía); false si la lectura ha fallado (disco ocupado,
@@ -123,10 +126,14 @@ const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
 function leerEmitidosDeDisco(set) {
   try {
     const r = leerJson(rutaEmitidos(), { validar: (v) => v && Array.isArray(v.ids) });
-    if (r.estado === 'ok') for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
+    if (r.estado === 'ok') {
+      for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
+      // Otra instancia lo rehízo tras perderlo: lo que falta puede ser un id retirado.
+      _cautelaHasta = Math.max(_cautelaHasta, Number(r.valor.cautela_hasta) || 0);
+    }
     // Dañado y sin copia buena: lo guardado se ha perdido. Mientras viva este proceso no se busca
     // por parecido (podría ser un id retirado que solo estaba ahí; revisión de Codex, 16.ª ronda).
-    if (r.estado === 'corrupto') _registroPerdido = true;
+    if (r.estado === 'corrupto') _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
     return true; // se ha podido leer (al escribir se rehace con lo que hay en memoria)
   } catch {
     return false;
@@ -150,7 +157,9 @@ function emitir(...ids) {
     try {
       const guardado = conCerrojoDeFichero(rutaEmitidos(), () => {
         if (!leerEmitidosDeDisco(set)) return false;
-        escribirJson(rutaEmitidos(), { ids: [...set].slice(-MAX_EMITIDOS) });
+        const datos = { ids: [...set].slice(-MAX_EMITIDOS) };
+        if (_cautelaHasta > Date.now()) datos.cautela_hasta = _cautelaHasta;
+        escribirJson(rutaEmitidos(), datos, { bak: true });
         return true;
       }, { esperaMaxMs: 2000 });
       _sinGuardar = !guardado;
@@ -180,7 +189,7 @@ export function resolver(nombre) {
   // (revisión de Codex, 14.ª ronda).
   // Si no se ha podido leer, no se busca por parecido: podría ser un id retirado que guardó otra
   // instancia (revisión de Codex, 15.ª ronda). Lo exacto ya se ha resuelto arriba.
-  if (crudo.trim() && (!leerEmitidosDeDisco(emitidos()) || _registroPerdido)) return { ok: false, motivo: 'desconocido', conocidos };
+  if (crudo.trim() && (!leerEmitidosDeDisco(emitidos()) || _cautelaHasta > Date.now())) return { ok: false, motivo: 'desconocido', conocidos };
   if (emitidos().has(crudo)) return { ok: false, motivo: 'desconocido', conocidos };
   const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
