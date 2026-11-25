@@ -69,6 +69,14 @@ const espera=(ms)=>new Promise(r=>setTimeout(r,ms));
 async function listo(call){for(let i=0;i<180;i++){const e=await call('estado_servidor');
   if(e.data?.ultimo_indexado&&e.data.estado!=='indexando')return e.data;await espera(1000);}
   return (await call('estado_servidor')).data;}
+// Reindexar y ESPERAR a que lo pedido esté en el índice. Desde que el vigilante de carpetas mete
+// él solo lo que cambia, indexar_carpeta contesta «en curso / en cola» y vuelve enseguida; buscar
+// justo después leía el índice viejo (fallo intermitente de las pruebas, 25-nov-2026). Se repite
+// hasta que una llamada indexa de verdad: entonces el vigilante ha terminado y se ha repasado la
+// carpeta entera.
+async function asentar(call){for(let i=0;i<180;i++){const r=await call('indexar_carpeta',{});
+  if(!r.isError&&!r.data?.encolado&&!r.data?.indexado_en_curso)return r.data;await new Promise(res=>setTimeout(res,1000));}
+  throw new Error('el indexado no se asienta');}
 
 let s=servidor();
 await s.rpc('initialize',{protocolVersion:'2026-07-28',capabilities:{},clientInfo:{name:'t',version:'1'}});
@@ -100,8 +108,7 @@ fs.appendFileSync(path.join(CASO,'03 correo del arquitecto.txt'),
   ' ADDENDA: la licencia se concedió con condiciones. '+relleno('Condiciones del ayuntamiento.'));
 fs.rmSync(path.join(CASO,'05 acta de la junta.txt'));
 fs.writeFileSync(path.join(OTRO,'02 recurso.txt'),'SECRETO-RUIZ recurso. '+relleno('Motivos del recurso.'));
-await s.call('indexar_carpeta',{});
-await listo(s.call);
+await asentar(s.call);
 
 const d2=await s.call('cambios_expediente');
 const nom=(l)=>(l||[]).map(x=>x.ruta_relativa).join(' | ');
