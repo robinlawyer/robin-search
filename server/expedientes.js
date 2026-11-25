@@ -130,6 +130,8 @@ function leerEmitidosDeDisco(set) {
       for (const id of r.valor.ids) if (typeof id === 'string') set.add(id);
       // Otra instancia lo rehízo tras perderlo: lo que falta puede ser un id retirado.
       _cautelaHasta = Math.max(_cautelaHasta, Number(r.valor.cautela_hasta) || 0);
+      // Recuperado de la copia .bak: puede ir una escritura por detrás (revisión de Codex, 18.ª ronda).
+      if (r.recuperado) _cautelaHasta = Math.max(_cautelaHasta, Date.now() + CAUTELA_TRAS_PERDIDA_MS);
     }
     // Dañado y sin copia buena: lo guardado se ha perdido. Mientras viva este proceso no se busca
     // por parecido (podría ser un id retirado que solo estaba ahí; revisión de Codex, 16.ª ronda).

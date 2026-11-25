@@ -161,6 +161,15 @@ async function profundidadCero(){
     const parecido=ex.exigirExpediente('Cliente-Bea');
     console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error',bak:fs.existsSync(f+'.bak'),cautela:Number(JSON.parse(fs.readFileSync(f,'utf8')).cautela_hasta)>Date.now()}));`,[path.join(raiz,'Cliente Bea')]);
   check('otra instancia que lee el registro rehecho también evita el parecido, y hay copia .bak', d7.parecido==='error' && d7.bak===true && d7.cautela===true, JSON.stringify(d7));
+  const d8=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const {config}=await import(${CFG});
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    fs.writeFileSync(f+'.bak',JSON.stringify({ids:['Cliente Bea']})); fs.writeFileSync(f,'{roto');
+    const ex=await import(${EXP});
+    const parecido=ex.exigirExpediente('Cliente-Bea');
+    console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error'}));`,[path.join(raiz,'Cliente Bea')]);
+  check('recuperado de una copia .bak atrasada, tampoco se busca por parecido', d8.parecido==='error', JSON.stringify(d8));
   borrar(raiz);
 }
 
