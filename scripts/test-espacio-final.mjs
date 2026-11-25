@@ -67,6 +67,8 @@ async function main(){
 
   const blanco=await call('buscar_documentos',{query:'escrito de demanda',expediente:'   ',n_resultados:10});
   check('un "expediente" en blanco da error y no usa el activo', blanco.isError && !/SECRETO-/.test(blanco.raw));
+  const vacio=await call('buscar_documentos',{query:'escrito de demanda',expediente:'',n_resultados:10});
+  check('y "expediente": "" tampoco', vacio.isError && !/SECRETO-/.test(vacio.raw));
 
   // Si «Ruiz » desaparece, el activo NO pasa a «Ruiz».
   fs.rmSync(path.join(MADRE,'Ruiz '),{recursive:true,force:true});

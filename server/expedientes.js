@@ -124,11 +124,23 @@ export function resolver(nombre) {
   if (crudo !== crudo.trim()) return { ok: false, motivo: 'desconocido', conocidos };
 
   const ultimo = (s) => s.split('/').pop();
+  const igual = (a, b) => a.normalize('NFC').toLowerCase() === b.normalize('NFC').toLowerCase();
+  // Un id COMPLETO («Raíz/Carpeta», el que el servidor devuelve para reutilizar) solo vale exacto o
+  // sin distinguir mayúsculas ni la forma Unicode: si su carpeta ya no está, el parecido (slug)
+  // podía llevar a «Raíz/Ruiz 64» desde «Raíz/Ruiz-64», otro cliente (revisión de Codex, 10.ª ronda).
+  if (bruto.includes('/')) {
+    const hits = conocidos.filter((c) => c === bruto || igual(c, bruto));
+    const exactos = hits.filter((c) => c === bruto);
+    if (exactos.length === 1) return { ok: true, expediente: exactos[0], conocidos };
+    if (hits.length === 1) return { ok: true, expediente: hits[0], conocidos };
+    if (hits.length > 1) return { ok: false, motivo: 'ambiguo', candidatos: hits, conocidos };
+    return { ok: false, motivo: 'desconocido', conocidos };
+  }
   const estrategias = [
     (c) => c === bruto,                                     // id exacto
-    (c) => c.toLowerCase() === bruto.toLowerCase(),         // id sin distinguir mayúsculas
+    (c) => igual(c, bruto),                                 // id sin distinguir mayúsculas
     (c) => ultimo(c) === bruto,                             // nombre de la carpeta del caso
-    (c) => ultimo(c).toLowerCase() === bruto.toLowerCase(),
+    (c) => igual(ultimo(c), bruto),
     (c) => slug(c) === slug(bruto),                         // slug del id completo
     (c) => slug(ultimo(c)) === slug(bruto),                 // slug de la carpeta del caso
   ];
@@ -326,7 +338,8 @@ function exigirExpedienteSinAnotar(explicito) {
   const pedidos = normalizarSeleccion(explicito ?? []);
   // Un "expediente" que SÍ se ha pasado pero queda vacío (solo espacios) no es «no lo digo»: no se
   // resuelve con el activo, que podría ser el de otra conversación (revisión de Codex, 9.ª ronda).
-  const dado = Array.isArray(explicito) ? explicito.length > 0 : typeof explicito === 'string' && explicito !== '';
+  // También "" y []: se ha pasado el parámetro, aunque vacío (revisión de Codex, 10.ª ronda).
+  const dado = Array.isArray(explicito) || typeof explicito === 'string';
   if (dado && !pedidos.length) {
     return { ok: false, error: 'El parámetro "expediente" ha llegado en blanco. Indica el nombre del expediente de esta conversación.', extra: { expedientes_disponibles: nombresConocidos() } };
   }
