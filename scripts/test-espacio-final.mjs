@@ -176,6 +176,19 @@ async function profundidadCero(){
     console.log(JSON.stringify({parecido:parecido.ok?parecido.expediente:'error',c1,c2}));`,[path.join(raiz,'Cliente Bea')]);
   check('recuperado de una copia .bak atrasada, tampoco se busca por parecido', d8.parecido==='error', JSON.stringify(d8));
   check('y el plazo de la cautela no se renueva en cada consulta', Number(d8.c1)>Date.now() && d8.c1===d8.c2, JSON.stringify(d8));
+  const d9=await lanzarNodo(`
+    const fs=await import('node:fs'); const path=await import('node:path');
+    const {config}=await import(${CFG});
+    const f=path.join(config.dataDir,'ids-expedientes.json');
+    const casiVencida=Date.now()+24*3600*1000;
+    fs.writeFileSync(f,JSON.stringify({ids:['Cliente Bea'],cautela_hasta:casiVencida}));
+    const ex=await import(${EXP});
+    ex.catalogo();
+    fs.writeFileSync(f,'{roto'); fs.writeFileSync(f+'.bak','{roto');
+    ex.exigirExpediente('Cliente-Bea'); ex.catalogo();
+    const nueva=JSON.parse(fs.readFileSync(f,'utf8')).cautela_hasta;
+    console.log(JSON.stringify({dias:Math.round((nueva-Date.now())/86400000)}));`,[path.join(raiz,'Cliente Bea')]);
+  check('una segunda pérdida con la cautela a punto de vencer abre sus propios 30 días', d9.dias>=29, JSON.stringify(d9));
   borrar(raiz);
 }
 

@@ -118,6 +118,7 @@ let _emitidos = null;
 // propio fichero al rehacerlo; revisión de Codex, 17.ª ronda).
 const CAUTELA_TRAS_PERDIDA_MS = 30 * 24 * 3600 * 1000;
 let _cautelaHasta = 0;
+let _recuperando = false;
 let _sinGuardar = false; // la última escritura falló: se reintenta en la siguiente ocasión
 const rutaEmitidos = () => path.join(config.dataDir, 'ids-expedientes.json');
 // true si se ha podido leer (o no existe todavía); false si la lectura ha fallado (disco ocupado,
@@ -134,14 +135,21 @@ function leerEmitidosDeDisco(set) {
       // El plazo cuenta desde la PRIMERA recuperación (no se renueva en cada lectura) y el fichero
       // principal se rehace con él en la siguiente escritura (Codex, 19.ª ronda).
       if (r.recuperado) {
-        if (_cautelaHasta <= Date.now()) _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
+        // 30 días desde el PRINCIPIO de cada episodio de recuperación; las lecturas del mismo
+        // episodio no lo renuevan (Codex, 19.ª y 20.ª rondas).
+        if (!_recuperando) _cautelaHasta = Math.max(_cautelaHasta, Date.now() + CAUTELA_TRAS_PERDIDA_MS);
+        _recuperando = true;
         _sinGuardar = true;
+      } else {
+        _recuperando = false; // el fichero principal vuelve a estar bien: se cierra el episodio
       }
     }
     // Dañado y sin copia buena: lo guardado se ha perdido. Mientras viva este proceso no se busca
     // por parecido (podría ser un id retirado que solo estaba ahí; revisión de Codex, 16.ª ronda).
+    // Dañado y sin copia: SIEMPRE es una pérdida nueva (leerJson aparta el fichero dañado), así que
+    // abre sus propios 30 días (Codex, 20.ª ronda).
     if (r.estado === 'corrupto') {
-      if (_cautelaHasta <= Date.now()) _cautelaHasta = Date.now() + CAUTELA_TRAS_PERDIDA_MS;
+      _cautelaHasta = Math.max(_cautelaHasta, Date.now() + CAUTELA_TRAS_PERDIDA_MS);
       _sinGuardar = true;
     }
     return true; // se ha podido leer (al escribir se rehace con lo que hay en memoria)
