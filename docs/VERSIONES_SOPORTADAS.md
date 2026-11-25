@@ -16,3 +16,17 @@ RobinDesktop). Por eso el servidor es **compatible hacia atrás**:
 - Por debajo de la mínima el servidor responde `426 version_no_soportada`: RobinSearch NO borra la
   sesión (con la versión nueva renueva sin volver a entrar), sigue con el certificado de licencia
   mientras valga y le dice al abogado qué versión necesita.
+
+## El fichero de versiones va firmado (1.13.3, 13-nov-2026)
+
+Desde la 1.13.0 RobinSearch instala solo la versión publicada (`server/motor.js`). Desde la
+1.13.3 lo hace **solo si el fichero de versiones viene firmado** con la clave de RobinLawyer.ai
+(`server/firma.js`): la firma Ed25519 de los bytes exactos de `robin-search-latest.json` se
+sirve al lado, en `robin-search-latest.json.sig`, y la clave privada no está en el servidor. Sin
+firma válida se avisa de la versión nueva, pero no se instala nada.
+
+El fichero lo escribe y lo firma **solo** `scripts/publicar-semana.sh` de robin-desktop (la
+publicación semanal: app, RobinSearch y plugin juntos). `scripts/publicar-extension.sh` solo sube
+el `.mcpb`. `version_minima` y `version_minima_desde` los pone esa misma publicación cuando es
+urgente (`--urgente`), a la vez que la mínima de RobinDesktop (`app.minima`), con la fecha a 30
+días; ver «Los dos campos de mínima» en `docs/actualizaciones.md` de robin-desktop.

@@ -74,6 +74,11 @@ const vacio = () => ({ version: 1, asuntos: {} });
 // Asunto activo de ESTE proceso. Como la selección de expedientes, no se persiste: al cerrar
 // Claude no queda un asunto «pegado», y el siguiente «Hola Robin» propone los recientes.
 let _activo = null;
+// Asuntos activados hace poco (id → cuándo). Como con los expedientes (1.12.6): Claude comparte un
+// solo RobinSearch entre todas sus conversaciones; si en la ventana se han abierto otros asuntos,
+// una acción sin "asunto_id" podría ser de la otra conversación y no se resuelve con el activo
+// (revisión de Codex, 25-nov). Dos asuntos con las mismas carpetas se distinguen aquí.
+const _activados = new Map();
 
 export function getActivoId() {
   return _activo;
@@ -382,7 +387,23 @@ export function rutaEspejo(id) {
 // ---------------------------------------------------------------------------------------------
 
 function buscar(datos, id) {
-  const pedido = texto(id) || _activo;
+  const explicito = texto(id);
+  if (!explicito && _activo) {
+    const otros = [..._activados]
+      .filter(([x, t]) => x !== _activo && expedientes.enVentanaDeConversaciones(t))
+      .map(([x]) => x);
+    if (otros.length) {
+      return {
+        ok: false,
+        error:
+          'En este Claude se han abierto hace poco varios asuntos, seguramente desde conversaciones ' +
+          'distintas, y el asunto activo es uno solo para todas: podría ser el de otra conversación. ' +
+          'Repite la llamada indicando el "asunto_id" de ESTA conversación.',
+        extra: { asunto_activo: _activo, asuntos_recientes: [_activo, ...otros] },
+      };
+    }
+  }
+  const pedido = explicito || _activo;
   if (!pedido) {
     return { ok: false, error: 'No hay asunto activo: indica "asunto_id" (los tienes en accion="listar").' };
   }
@@ -394,6 +415,10 @@ function buscar(datos, id) {
       extra: { asuntos: Object.values(datos.asuntos).filter((x) => x.estado !== 'cerrado').map(resumenLista) },
     };
   }
+  // Toda operación sobre un asunto renueva su hora, como las lecturas de un expediente: si otra
+  // conversación abre otro, la barrera salta también para quien seguía con este sin abrirlo de
+  // nuevo (revisión de Codex, 6.ª ronda).
+  _activados.set(a.asunto_id, Date.now());
   return { ok: true, asunto: a };
 }
 
@@ -506,6 +531,7 @@ export async function activar(id, { fijarSeleccion }) {
   const sel = await fijarSeleccion(c.carpetas);
   if (!sel.ok) return sel;
   _activo = b.asunto.asunto_id;
+  _activados.set(_activo, Date.now());
 
   const actual = instantanea(c.carpetas);
   const resultado = conAlmacen((d) => {
@@ -700,6 +726,7 @@ export function reabrir(id, { decision }) {
 // Para las pruebas.
 export function _olvidarActivo() {
   _activo = null;
+  _activados.clear();
 }
 
 export default {

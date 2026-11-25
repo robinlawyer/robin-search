@@ -17,10 +17,12 @@ import { reconciliarCarpetas } from './indexer/reconciliar.js';
 import * as cuarentena from './indexer/cuarentena.js';
 import * as store from './search/store.js';
 import * as escritor from './escritor.js';
+import { compararVersiones } from './versiones.js';
 import * as diagnostico from './diagnostico.js';
 import { startWatcher, stopWatcher } from './watcher/watcher.js';
 import { checkForUpdate } from './update.js';
 import { iniciarMantenimiento } from './auth/oauth.js';
+import { iniciarSeguimiento } from './seguimiento.js';
 import { iniciarControl } from './control.js';
 import { neutralizarVersionesAntiguas } from './version-antigua.js';
 
@@ -53,7 +55,11 @@ export function causaDeCaida(caida, fase) {
   if (caida?.causa) return String(caida.causa);
   const partes = [
     caida?.incierta
-      ? `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y sin registro de Claude en este equipo no se sabe si se cayó o si la cerró Claude`
+      ? caida.sinRegistro === 'desfasado'
+        ? // 21-oct-2026: el registro de Claude existía pero llevaba días sin escribirse, y la causa
+          // decía «sin registro» mientras el informe decía «leído».
+          `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y el registro de Claude de este equipo está desfasado (Claude no lo escribe desde antes de lanzarla), así que no se sabe si se cayó o si la cerró Claude`
+        : `la ejecución anterior terminó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}, y sin registro de Claude en este equipo no se sabe si se cayó o si la cerró Claude`
       : `la ejecución anterior se cortó sin cerrar ${FASE_EN_CLARO[fase] || `en fase ${fase}`}`,
   ];
   if (caida?.ext) {
@@ -78,6 +84,9 @@ async function atenderCaidaAnterior() {
       ext: caida.ext ?? null,
       bytes: caida.bytes ?? null,
       caidas_seguidas: caida.caidasSeguidas,
+      marcas: caida.marcas ?? 1,
+      sin_registro: caida.sinRegistro ?? null,
+      lanzador: caida.lanzador ?? null,
       // Cuándo dejó de latir y con cuánta memoria (solo números): lo que separa una muerte por
       // memoria de un cierre de Claude cuando no hay registro de Claude que lo diga.
       ...diagnostico.datosDeMarca(caida),
@@ -85,13 +94,18 @@ async function atenderCaidaAnterior() {
   );
   // Sin registro de Claude, qué se vio al buscarlo (cuántas carpetas, cuántos registros de
   // servidores, si está el común): para localizar dónde lo guarda Claude en ese equipo.
-  if (caida.incierta) log.warn('Registro de Claude no encontrado', diagnostico.detalleLogClaude() || {});
+  if (caida.incierta) {
+    log.warn(caida.sinRegistro === 'desfasado' ? 'Registro de Claude desfasado' : 'Registro de Claude no encontrado', diagnostico.detalleLogClaude() || {});
+  }
   // Incierta: no hay registro de Claude en este equipo, así que no se sabe si se cayó o si
   // Claude cerró el servidor para reabrirlo. Apartar el documento que estaba leyendo (y con dos
   // «caídas» dejarlo FUERA del índice) es demasiado caro para una sospecha sin pruebas.
   if (caida.fichero && fase === 'indexando' && !caida.incierta) {
-    // Con una excepción vista no hay duda de qué fichero fue: se aparta a la primera.
-    const e = cuarentena.anotarCaida(caida.fichero, { seguro: caida.fase === 'excepcion' });
+    // Con una excepción vista no hay duda de qué fichero fue: se aparta a la primera. Salvo bajo el
+    // supervisor (1.13.0): el hilo repuesto trae los motores WASM LIMPIOS, y un motor estropeado
+    // por documentos anteriores revienta con uno sano (fmchocarro, 6-nov: cada vez uno distinto).
+    // Se reintenta una vez con motor limpio; si vuelve a tumbarlo, entonces sí es el documento.
+    const e = cuarentena.anotarCaida(caida.fichero, { seguro: caida.fase === 'excepcion' && !caida.muerte_hilo });
     if (e) {
       log.warn(e.caidas >= 2 ? 'Fichero apartado: hizo caer el indexador' : 'Fichero sospechoso de la caída: se reintenta una vez', {
         ext: e.ext,
@@ -107,6 +121,7 @@ async function atenderCaidaAnterior() {
     fase,
     causa: causaDeCaida(caida, fase),
     fichero: caida.ext ? { ext: caida.ext, bytes: caida.bytes } : null,
+    caidasSeguidas: caida.caidasSeguidas,
   });
 }
 
@@ -116,7 +131,18 @@ async function atenderCaidaAnterior() {
 async function cotejarRegistro() {
   const aReindexar = [];
   const conocidos = new Set();
+  // Soltando el proceso cada pocos milisegundos (21-oct-2026): con decenas de miles de documentos
+  // este recorrido, entero de un tirón, dejaba la instancia sin atender a Claude —ni a su orden de
+  // cerrarse— mientras abría el índice (ver indexer/reconciliar.js).
+  let t = Date.now();
+  const quizaRespirar = async () => {
+    if (Date.now() - t > 25) {
+      await new Promise((r) => setImmediate(r));
+      t = Date.now();
+    }
+  };
   for (const [abs, e] of registry.entries()) {
+    await quizaRespirar();
     if (!e?.docId) continue;
     conocidos.add(e.docId);
     if (e.sinOcr || !e.numChunks) continue;
@@ -132,6 +158,7 @@ async function cotejarRegistro() {
     return { aReindexar: aReindexar.length, huerfanos: 0, registroOlvidado: store.docIds().length };
   }
   for (const id of store.docIds()) {
+    await quizaRespirar();
     if (conocidos.has(id)) continue;
     await store.deleteByDoc(id);
     huerfanos += 1;
@@ -324,24 +351,24 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   // 1. Índice. Solo UNA instancia escribe; la otra busca y toma el relevo si la primera muere.
   const escribo = escritor.adquirir();
   const otra = escribo ? null : escritor.fichaOtraInstancia();
+  // Una versión ANTERIOR con el índice (Claude actualizó la extensión y solo reinició uno de sus
+  // servidores, o un proceso viejo huérfano): esta, más nueva, se lo queda y la anterior pasa a
+  // solo buscar (escritor.arrebatar). Hasta la 1.13.0 se avisaba con un error y se pedía al
+  // abogado cerrar Claude del todo (Eduardo, 7-nov-2026). La pasada sin Claude (--silent) no
+  // arrebata: la para RobinDesktop cuando vuelve Claude.
+  let arrebatado = false;
   if (!escribo) {
-    log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine', {
-      version: otra?.version ?? null,
-    });
-    // Dos VERSIONES distintas a la vez es un proceso viejo que el instalador dejó huérfano: no se
-    // arregla solo y explica síntomas que parecen otra cosa (sesión perdida, canal de control
-    // servido por quien no toca). Se dice, para poder cerrarlo (correo de Juan, 20-sep-2026).
-    if (otra?.distintaVersion) {
-      log.error('Hay DOS versiones de RobinSearch corriendo a la vez: cierra Claude del todo y vuelve a abrirlo', {
+    if (watch && otra?.distintaVersion && compararVersiones(config.version, otra.version) > 0 && escritor.arrebatar()) {
+      arrebatado = true;
+      log.info('Una versión anterior de RobinSearch tenía el índice: esta, más nueva, se lo queda y la anterior pasa a solo buscar', {
         actual: config.version,
         otra: otra.version,
+        margenS: Math.round(escritor.GRACIA_ARREBATO_MS / 1000),
       });
-      diagnostico
-        .informar('instancias_duplicadas', {
-          fase: 'arrancando',
-          causa: `dos versiones a la vez: esta ${config.version} y otra ${otra.version} (proceso ${otra.pid ? 'vivo' : 'desconocido'})`,
-        })
-        .catch(() => {});
+    } else {
+      log.info('Otra instancia de RobinSearch tiene el índice: esta solo busca hasta que la otra termine', {
+        version: otra?.version ?? null,
+      });
     }
   }
   await abrirIndice(escribo);
@@ -358,6 +385,10 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
   // La sesión se mantiene viva sola, aunque el abogado no abra nunca RobinDesktop (Juan,
   // 8-oct-2026): al arrancar y cada 24 h, por la conexión de salida.
   if (control) iniciarMantenimiento();
+  // Seguimiento del indexado (9-nov-2026, Fernando: 114.800 documentos y un fin de semana parado sin
+  // que nadie lo supiera): latido de progreso a Robin y el equipo sin suspenderse mientras indexa.
+  // Solo actúa la instancia que escribe el índice; lo comprueba él en cada vuelta.
+  iniciarSeguimiento({ modo: control ? 'claude' : 'pasada' });
 
   // 2. Modelo. Precarga para no pagar la latencia en la primera búsqueda.
   //
@@ -386,6 +417,15 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     }
   }
 
+  // Solo pruebas automáticas: una excepción sin capturar de verdad (con stdio sano) se sigue
+  // tratando como caída aunque su código sea EPIPE; solo el eco del cierre de Claude no lo es.
+  if (process.env.ROBIN_PRUEBA_EXCEPCION) {
+    setTimeout(() => {
+      const e = new Error('excepción de prueba');
+      if (process.env.ROBIN_PRUEBA_EXCEPCION === 'EPIPE') Object.assign(e, { code: 'EPIPE', syscall: 'write' });
+      throw e;
+    }, 300);
+  }
   // Solo pruebas automáticas: una promesa rechazada que nadie recoge no debe tumbar el servidor.
   // DESPUÉS de cargar el modelo a propósito: es onnxruntime-web (Emscripten) el que instala el
   // manejador que relanza los rechazos; antes de cargarlo la prueba no probaba nada.
@@ -456,8 +496,17 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
 
   // Espera a que la instancia que escribe muera (o suelte el cerrojo) para tomar el relevo.
   let relevo = null;
-  const esperarRelevo = () => {
+  const esperarRelevo = (demora = 0) => {
     if (relevo) return;
+    if (demora > 0) {
+      // Arrebatado a una versión anterior: se le deja terminar lo que tenga a medio escribir.
+      relevo = setTimeout(() => {
+        relevo = null;
+        esperarRelevo();
+      }, demora);
+      relevo.unref?.();
+      return;
+    }
     relevo = setInterval(() => {
       if (!escritor.adquirir()) return;
       clearInterval(relevo);
@@ -494,7 +543,7 @@ export async function bootstrap({ initialIndex = true, watch = true, warmModel =
     // Modo IT (--silent): no hay relevo que esperar; se dice y se sale.
     setError('Otra instancia de RobinSearch está usando este mismo directorio de datos. Ciérrala y vuelve a intentarlo.');
   } else {
-    esperarRelevo();
+    esperarRelevo(arrebatado ? escritor.GRACIA_ARREBATO_MS : 0);
   }
 }
 

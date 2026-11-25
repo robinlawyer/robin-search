@@ -58,7 +58,12 @@ export async function cargarExtractor({ modelo, quantized = true, modelsDir, emp
 // más largo del lote queda enmascarado en el modelo (atención y media), así que la composición
 // del lote no cambia el vector más allá del redondeo de coma flotante; sí cambia el cómputo, y por
 // eso quien arma los lotes junta textos de longitud parecida (pool.js).
+// Solo pruebas automáticas: un lote de más de N fragmentos falla como falló en el equipo de un
+// cliente sin memoria (7-nov-2026). Vale en los hilos y en el hilo principal.
+const PRUEBA_LOTE_MAX = Number(process.env.ROBIN_PRUEBA_FALLA_LOTE_MAYOR_QUE) || 0;
+
 export async function vectoresDeLote(extractor, textos, dim) {
+  if (PRUEBA_LOTE_MAX && textos.length > PRUEBA_LOTE_MAX) throw new Error('failed to call OrtRun(). error code = 6.');
   const out = await extractor(textos, { pooling: 'mean', normalize: true });
   const datos = out.data;
   if (!datos || datos.length !== textos.length * dim) {

@@ -7,6 +7,7 @@
 // secreto profesional (art. 21 EGAE / art. 542.3 LOPJ).
 
 import fs from 'node:fs';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import path from 'node:path';
 import {
   config,
@@ -112,7 +113,11 @@ export function nombresConocidos() {
 // viene a evitar.
 export function resolver(nombre) {
   const conocidos = nombresConocidos();
-  const bruto = String(nombre ?? '').trim().replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
+  // Primero el id EXACTO, sin recortar: «R/Caso » y «R/Caso» pueden ser dos clientes (revisión de
+  // Codex, 25-nov, 7.ª ronda).
+  const crudo = String(nombre ?? '').replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
+  if (crudo.trim() && conocidos.includes(crudo)) return { ok: true, expediente: crudo, conocidos };
+  const bruto = crudo.trim().replace(/^\/+|\/+$/g, '');
   if (!bruto) return { ok: false, motivo: 'vacio', conocidos };
 
   const ultimo = (s) => s.split('/').pop();
@@ -148,10 +153,17 @@ export function rutaAbsoluta(expedienteId) {
 // o dos casos conexos). Hacia fuera se conserva la forma de siempre: `getActivo()` devuelve un
 // texto si hay uno, una lista si hay varios y null si no hay ninguno, para no romper a quien ya
 // lee `expediente_activo` como texto.
+// Sin recortar: el resolvedor prueba primero el texto tal cual (un id puede acabar en espacio) y
+// después la versión recortada (revisión de Codex, 7.ª ronda).
 export function normalizarSeleccion(x) {
-  const lista = (Array.isArray(x) ? x : [x])
-    .map((v) => (typeof v === 'string' ? v.trim() : ''))
-    .filter(Boolean);
+  return listaIds(x);
+}
+
+// Ids que YA son del catálogo (resueltos): se guardan y comparan tal cual, sin recortar. Recortar
+// convertía «R/Caso » en «R/Caso», que puede ser otro expediente (revisión de Codex, 7.ª ronda).
+// normalizarSeleccion (con trim) es solo para lo que escribe el cliente, antes de resolverlo.
+export function listaIds(x) {
+  const lista = (Array.isArray(x) ? x : [x]).filter((v) => typeof v === 'string' && v.trim() !== '');
   return [...new Set(lista)];
 }
 
@@ -162,7 +174,7 @@ function formaPublica(lista) {
 
 // Para los mensajes: «Madre/Pérez» o «Madre/Pérez» + «Madre/García».
 export function etiqueta(sel) {
-  return normalizarSeleccion(sel).map((e) => `«${e}»`).join(' + ') || '(ninguno)';
+  return listaIds(sel).map((e) => `«${e}»`).join(' + ') || '(ninguno)';
 }
 
 export function getActivo() {
@@ -173,9 +185,45 @@ export function getActivos() {
   return [...(state.expedientesActivos || [])];
 }
 
+// VARIAS CONVERSACIONES A LA VEZ (27-oct-2026, al estudiar RobinSearch como conector remoto).
+// Claude Desktop arranca UN proceso de RobinSearch y lo comparten todos sus chats; el protocolo
+// no dice de qué chat viene cada llamada. Con el abogado en dos asuntos a la vez (Pérez en un
+// chat, Acme en otro), el segundo `establecer_expediente_activo` cambiaba el expediente del
+// primero, y la siguiente búsqueda de ese chat sin «expediente» contestaba con documentos del
+// otro cliente, sin error. Ahora se recuerda qué expedientes se han fijado hace poco: si hay más
+// de uno, una llamada que no diga el suyo NO se resuelve con el activo (podría ser el de la otra
+// conversación) y se pide que lo indique. Con un solo asunto todo sigue igual.
+const VENTANA_MS = (() => {
+  const n = parseFloat(process.env.ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN);
+  return (Number.isFinite(n) && n >= 0 ? n : 8 * 60) * 60 * 1000;
+})();
+const _fijados = new Map(); // expediente → cuándo se fijó por última vez
+
 export function setActivo(expediente) {
-  state.expedientesActivos = normalizarSeleccion(expediente);
+  const lista = listaIds(expediente);
+  state.expedientesActivos = lista;
+  // OJO: sumar con «anadir» NO borra la selección anterior de la memoria. El servidor no sabe de
+  // qué conversación viene la llamada: si la ampliación la hizo OTRO chat, borrarla haría pasar
+  // la barrera a los dos (revisión de Codex, 25-nov). Tras «anadir», las lecturas piden el
+  // parámetro "expediente" durante la ventana: más pesado, pero nunca mezcla clientes.
+  // Cerrar un asunto deja a TODAS las conversaciones sin activo, pero NO borra la memoria de lo
+  // fijado: si un chat cierra el suyo y otro fija C, un tercero que siguiera con A sin indicarlo
+  // recibiría C (revisión de Codex, 25-nov). Lo fijado caduca solo, con la ventana. Una selección
+  // de varios cuenta como UNA selección (la de una conversación).
+  if (lista.length) _fijados.set(claveSeleccion(lista), { t: Date.now(), etiqueta: etiquetaSeleccion(lista) });
   return getActivo();
+}
+
+// Clave con la que se recuerda una selección: inequívoca (la lista ordenada en JSON: una carpeta
+// que se llame «A + B» no coincide con la selección de A y B) y sin depender del orden. Para los
+// mensajes, la etiqueta: el expediente si es uno (como en la 1.12.6) y «A + B» si son varios.
+export function claveSeleccion(lista) {
+  return JSON.stringify([...listaIds(lista)].sort());
+}
+
+function etiquetaSeleccion(lista) {
+  const l = listaIds(lista);
+  return l.length === 1 ? l[0] : [...l].sort().join(' + ');
 }
 
 // Se dice en la respuesta de las herramientas que fijan la selección. Claude Desktop arranca UN
@@ -217,11 +265,61 @@ export function resolverVarios(pedidos) {
   return { ok: true, expedientes: out };
 }
 
+// ¿Cae `t` dentro de la ventana de «varias conversaciones»? (0 = ventana apagada.)
+export function enVentanaDeConversaciones(t, ahora = Date.now()) {
+  return VENTANA_MS > 0 && ahora - t <= VENTANA_MS;
+}
+
+// Otros expedientes fijados dentro de la ventana, además del activo.
+export function otrosFijadosRecientes(ahora = Date.now()) {
+  if (VENTANA_MS === 0) return []; // 0 = como hasta la 1.12.5 (pruebas de una sola conversación)
+  const activa = getActivos().length ? claveSeleccion(getActivos()) : null;
+  return [..._fijados]
+    .filter(([clave, f]) => clave !== activa && ahora - f.t <= VENTANA_MS)
+    .map(([, f]) => f.etiqueta);
+}
+
 // Núcleo de la política de aislamiento. Devuelve `{ ok, expediente }` o `{ ok:false, error }`
 // con un error EXPLÍCITO. Nunca devuelve "todos los expedientes": si no se sabe cuál es, no
 // se busca. `expediente` es un texto si la selección es de uno y una lista si es de varios;
 // enAmbito/ambito/contadoresAmbito aceptan las dos formas.
+// El expediente que ha usado DE VERDAD cada llamada a una herramienta (index.js la ejecuta dentro
+// de `ambitoLlamada.run`). Con varias conversaciones a la vez, el activo global puede cambiar a
+// mitad de una llamada; el aviso de cambios tiene que hablar del expediente que esa llamada leyó
+// (revisión de Codex, 25-nov).
+export const ambitoLlamada = new AsyncLocalStorage();
+export function anotarAmbito(expediente) {
+  const s = ambitoLlamada.getStore();
+  if (s) s.expediente = expediente;
+}
+
 export function exigirExpediente(explicito) {
+  const g = exigirExpedienteSinAnotar(explicito);
+  if (g.ok) {
+    anotarAmbito(g.expediente);
+    // Una lectura con el expediente EXPLÍCITO también cuenta como «este expediente está en uso»:
+    // si otra conversación fija otro después, la que leía este sin fijarlo no hereda el ajeno en
+    // su siguiente llamada sin parámetro (revisión de Codex, 25-nov).
+    // Y también la lectura del ACTIVO sin parámetro: esta conversación sigue usándolo, así que si
+    // otra fija otro, la barrera tiene que saltar (revisión de Codex, 5.ª ronda).
+    recordarSeleccion(g.expedientes);
+  }
+  return g;
+}
+
+// También renueva la hora de la selección ACTIVA: si su apunte había caducado y otra conversación
+// fija otra después, la que la leía de forma explícita no se queda sin barrera (Codex, 25-nov).
+function recordarSeleccion(lista) {
+  _fijados.set(claveSeleccion(lista), { t: Date.now(), etiqueta: etiquetaSeleccion(lista) });
+}
+
+// Los activos, si TODOS siguen en el catálogo con su id exacto; si no, null.
+function idsVigentes(activos) {
+  const conocidos = new Set(nombresConocidos());
+  return activos.every((id) => conocidos.has(id)) ? [...activos] : null;
+}
+
+function exigirExpedienteSinAnotar(explicito) {
   const pedidos = normalizarSeleccion(explicito ?? []);
 
   if (pedidos.length) {
@@ -231,18 +329,40 @@ export function exigirExpediente(explicito) {
   }
 
   const activos = getActivos();
+  let vigentes = null;
+  // Primero, que el activo siga existiendo (antes de la barrera: si no, un activo desaparecido se
+  // quedaba fijado y bloqueando; revisión de Codex, 6.ª ronda). Coincidencia EXACTA: los ids ya
+  // se resolvieron al fijarlos, y pasarlos otra vez por el resolvedor tolerante podría convertir
+  // un «Cliente-Ana» desaparecido en «Cliente Ana», que es otro cliente (5.ª ronda).
   if (activos.length) {
-    // Un expediente activo puede haber desaparecido del disco (carpeta renombrada o cerrada).
-    const r = resolverVarios(activos);
-    if (r.ok) return { ok: true, expediente: formaPublica(r.expedientes), expedientes: r.expedientes };
-    setActivo(null);
+    vigentes = idsVigentes(activos);
+    if (!vigentes) {
+      setActivo(null);
+      return {
+        ok: false,
+        error:
+          `El expediente activo (${etiqueta(activos)}) ya no existe: puede que se haya renombrado o ` +
+          'movido la carpeta. Vuelve a fijarlo con elegir_expediente o establecer_expediente_activo.',
+        extra: { expedientes_disponibles: nombresConocidos() },
+      };
+    }
+  }
+  const otros = activos.length ? otrosFijadosRecientes() : [];
+  if (otros.length) {
+    const activa = etiquetaSeleccion(activos);
     return {
       ok: false,
       error:
-        `El expediente activo (${etiqueta(activos)}) ya no existe: puede que se haya renombrado o ` +
-        'movido la carpeta. Vuelve a fijarlo con elegir_expediente o establecer_expediente_activo.',
-      extra: { expedientes_disponibles: nombresConocidos() },
+        `En este Claude se han fijado hace poco varios expedientes (${[activa, ...otros].join(', ')}), ` +
+        'seguramente desde conversaciones distintas, y el expediente activo es uno solo para todas: ' +
+        'podría ser el de otra conversación. RobinSearch no lo adivina, porque mezclar clientes es un ' +
+        'riesgo de secreto profesional. Repite la llamada indicando el expediente de ESTA conversación ' +
+        'en el parámetro "expediente", y sigue indicándolo en las siguientes.',
+      extra: { expediente_activo: getActivo(), expedientes_recientes: [activa, ...otros], expedientes_disponibles: nombresConocidos() },
     };
+  }
+  if (vigentes) {
+    return { ok: true, expediente: formaPublica(vigentes), expedientes: vigentes };
   }
 
   const conocidos = nombresConocidos();
@@ -348,6 +468,7 @@ export function expedienteDeCarpeta(absPath) {
   }
   const id = [raiz.name, ...segmentos.slice(0, depth)].join('/');
   // Con el nombre exacto del disco (caja y forma Unicode), que es como está en el índice.
+  // resolver() prueba primero el id tal cual (sin recortar espacios finales).
   const r = resolver(id);
   return { ok: true, expediente: r.ok ? r.expediente : id, exacta: segmentos.length === depth };
 }
@@ -361,6 +482,7 @@ export default {
   resolver,
   resolverVarios,
   normalizarSeleccion,
+  listaIds,
   etiqueta,
   enAmbito,
   ambito,
@@ -368,6 +490,7 @@ export default {
   getActivo,
   getActivos,
   setActivo,
+  otrosFijadosRecientes,
   exigirExpediente,
   exigirExpedienteUnico,
   expedienteDeCarpeta,

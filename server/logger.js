@@ -4,6 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { config, ensureDataDirs } from './config.js';
+import { escribirStderr } from './tuberias.js';
 
 const MAX_BYTES = 10 * 1024 * 1024; // 10 MB por fichero
 const MAX_FILES = 3;
@@ -59,8 +60,9 @@ function write(level, msg, extra) {
   } catch {
     /* si el disco falla, no tumbamos el servidor por un log */
   }
-  // stderr es seguro en MCP stdio (stdout está reservado para el protocolo JSON-RPC).
-  if (level === 'error' || level === 'warn') process.stderr.write(line);
+  // stderr es seguro en MCP stdio (stdout está reservado para el protocolo JSON-RPC). Con la
+  // tubería ya cerrada por Claude no se insiste: cada intento era otro EPIPE (tuberias.js).
+  if (level === 'error' || level === 'warn') escribirStderr(line);
 }
 
 export const log = {

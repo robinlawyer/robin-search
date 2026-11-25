@@ -5,11 +5,20 @@
 import path from 'node:path';
 
 import { config, rootForPath } from '../config.js';
-import { indexFolder, indexandoAhora, alTerminarIndexado } from '../indexer/indexer.js';
+import { indexFolder, indexandoAhora, alTerminarIndexado, avisoGoogleNativos } from '../indexer/indexer.js';
+import { vigilanteOcupado, alQuedarLibreVigilante } from '../watcher/watcher.js';
 import { log } from '../logger.js';
 import { ok, fail } from './util.js';
 import * as expedientes from '../expedientes.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+
+// 2-nov-2026 (Juan): decía que se añadía en los ajustes de la extensión en Claude, una pantalla que
+// ya no existe, y Claude se lo repetía al abogado junto con la oferta de copiarle el
+// expediente al entorno de trabajo. La carpeta se elige en RobinDesktop y no hay que reiniciar nada.
+const COMO_ANADIR_CARPETA =
+  'Se añade en la aplicación RobinDesktop → Expedientes → «Elegir carpeta…» (vale también una unidad ' +
+  'de red como Z:\\ o una ruta \\\\servidor\\recurso). No hay que reiniciar Claude: empieza a indexarse ' +
+  'sola y el progreso se ve ahí mismo y en estado_servidor.';
 
 export const definition = {
   name: 'indexar_carpeta',
@@ -65,7 +74,7 @@ function encolar(folders, force) {
 }
 
 function drenar() {
-  if (!_cola || _drenando || indexandoAhora()) return;
+  if (!_cola || _drenando || indexandoAhora() || vigilanteOcupado()) return;
   const c = _cola;
   _cola = null;
   _drenando = true;
@@ -78,6 +87,7 @@ function drenar() {
     });
 }
 alTerminarIndexado(drenar);
+alQuedarLibreVigilante(drenar);
 
 export async function handler(args) {
   const auth = await ensureAuthorized();
@@ -85,7 +95,7 @@ export async function handler(args) {
 
   if (config.watchedFolders.length === 0) {
     return fail(
-      'No hay carpetas de expedientes configuradas. Define ROBIN_FOLDER/ROBIN_FOLDERS.',
+      `No hay carpetas de expedientes configuradas. ${COMO_ANADIR_CARPETA}`,
     );
   }
 
@@ -112,16 +122,28 @@ export async function handler(args) {
     if (!rootForPath(abs)) {
       return fail(
         `La carpeta "${args.path}" está fuera de las carpetas de expedientes configuradas. ` +
-          'RobinSearch solo indexa dentro de ellas — esto NO se puede cambiar desde el chat. ' +
-          'Para añadirla (incluida una unidad de red Z:\\ o una ruta \\\\servidor\\recurso): ' +
-          'Claude Desktop → Configuración → Extensiones → RobinSearch → "Carpeta madre de ' +
-          'expedientes", y reinicia Claude Desktop.',
+          `RobinSearch solo indexa dentro de ellas — esto NO se puede cambiar desde el chat. ${COMO_ANADIR_CARPETA}`,
         { carpetas_configuradas: config.watchedFolders },
       );
     }
     folders = [abs];
   }
 
+  if (vigilanteOcupado() && !indexandoAhora() && !_drenando) {
+    // El vigilante ya está metiendo en el índice lo que ha entrado en la carpeta: no es un fallo
+    // ni hace falta repetirlo. Se deja en cola un repaso para cuando termine.
+    encolar(folders, Boolean(args?.forzar));
+    return ok({
+      indexado_en_curso: true,
+      encolado: true,
+      carpetas: folders ?? config.watchedFolders,
+      mensaje:
+        'Estos documentos ya se están indexando: el vigilante de carpetas de RobinSearch detecta ' +
+        'solo lo que entra o cambia y lo está procesando ahora. No hace falta volver a pedirlo; ' +
+        'entran en las búsquedas en cuanto termina, y el progreso se ve en estado_servidor. Al ' +
+        'terminar se repasa la carpeta una vez más.',
+    });
+  }
   if (indexandoAhora() || _drenando) {
     encolar(folders, Boolean(args?.forzar));
     return ok({
@@ -133,13 +155,32 @@ export async function handler(args) {
     });
   }
 
-  const resumen = await indexFolder({
-    folders,
-    force: Boolean(args?.forzar),
-    // Al re-indexar a mano también se retira del índice lo que ya no está en disco, para que
-    // una búsqueda no siga devolviendo un escrito que se sacó del expediente.
-    reconciliarBorrados: true,
-  });
+  let resumen;
+  try {
+    resumen = await indexFolder({
+      folders,
+      force: Boolean(args?.forzar),
+      // Al re-indexar a mano también se retira del índice lo que ya no está en disco, para que
+      // una búsqueda no siga devolviendo un escrito que se sacó del expediente.
+      reconciliarBorrados: true,
+    });
+  } catch (err) {
+    // 27-oct-2026 (Juan): «otra instancia de RobinSearch está indexando ahora mismo» salía como
+    // ERROR cuando el vigilante de carpetas ya estaba indexando esos mismos documentos en la otra
+    // instancia que arranca Claude. Funcionaba, pero el mensaje asustaba. No es un fallo: lo que
+    // se pide ya se está haciendo, y el vigilante recoge cualquier cambio de la carpeta él solo.
+    if (err?.code !== 'ROBIN_OTRA_INSTANCIA') throw err;
+    return ok({
+      indexado_en_curso: true,
+      carpetas: folders ?? config.watchedFolders,
+      mensaje:
+        'Estos documentos ya se están indexando: el vigilante de carpetas de RobinSearch detecta ' +
+        'solo lo que entra o cambia y lo está procesando ahora. No hace falta volver a pedirlo; ' +
+        'entran en las búsquedas en cuanto termina, y el progreso se ve en estado_servidor.' +
+        (args?.forzar ? ' Un re-indexado forzado de documentos que no han cambiado hay que pedirlo ' +
+          'otra vez cuando termine este.' : ''),
+    });
+  }
 
   // Carpeta ilegible ≠ carpeta vacía. Si la unidad de red no responde hay que decirlo, no
   // devolver un "0 documentos" que se lee como "aquí no hay nada".
@@ -155,7 +196,8 @@ export async function handler(args) {
     avisos.push(
       'Parte de lo que hay en la carpeta no se ha podido indexar (ver "no_indexables"): ficheros ' +
         'en la nube sin descargar a este equipo (iCloud, OneDrive, Dropbox) o enlaces que no llevan ' +
-        'a nada accesible. La búsqueda no los cubre.',
+        'a nada accesible. La búsqueda no los cubre.' +
+        (resumen.no_indexables.google_nativos ? ` ${avisoGoogleNativos(resumen.no_indexables.google_nativos).replace(/; $/, '.')}` : ''),
     );
   }
   // Un recuento de errores SIN causa no se puede diagnosticar desde el chat, y el abogado no

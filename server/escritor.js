@@ -136,6 +136,18 @@ function renovar() {
 
 export function adquirir() {
   if (_soy) return confirmar();
+  // Cerrojo ARREBATADO a una versión anterior (arrebatar()): pasado el margen, es nuestro.
+  if (_token) {
+    const d = leer();
+    if (d && !d.ilegible && d.pid === process.pid && d.token === _token) {
+      _soy = true;
+      _visto = null;
+      _renuevo = setInterval(renovar, RENUEVO_MS);
+      _renuevo.unref?.();
+      return true;
+    }
+    if (d && !d.ilegible) _token = null; // nos lo quitaron: se sigue por el camino normal
+  }
   try {
     fs.mkdirSync(config.dataDir, { recursive: true });
   } catch {
@@ -167,6 +179,52 @@ export function adquirir() {
     }
   }
   return false;
+}
+
+// 🔴 7-nov-2026 (Eduardo, Mac): se instaló la 1.13.0 con Claude abierto y Claude solo reinició uno
+// de sus servidores; el otro, una 1.12.2 de la víspera, seguía con el índice. La nueva se quedaba
+// de lectora, mandaba un informe de «instancias_duplicadas» y pedía al abogado cerrar Claude del
+// todo. Y la vieja seguía indexando con el motor que tumbaba el proceso.
+//
+// Ahora la versión MÁS NUEVA se queda el cerrojo: escribe su ficha (pid + token) encima de la de la
+// vieja. Desde la 1.4.8 todas las versiones comprueban su token antes de cada escritura y en cada
+// renovación (cada 30 s), así que la vieja ve que ya no es suyo y pasa a solo buscar de forma
+// ordenada (alPerder). La nueva NO escribe todavía: espera GRACIA_ARREBATO_MS para que lo que la
+// vieja tuviera a medio escribir termine, y entonces adquirir() la hace escritora.
+export const GRACIA_ARREBATO_MS = RENUEVO_MS + 15_000;
+
+export function arrebatar() {
+  if (_soy) return true;
+  const token = crypto.randomBytes(12).toString('hex');
+  const datos = JSON.stringify({ pid: process.pid, token, version: VERSION, desde: new Date().toISOString(), arrebatado: true });
+  const tmp = `${ruta()}.${process.pid}.nuevo`;
+  try {
+    fs.writeFileSync(tmp, datos);
+  } catch {
+    return false;
+  }
+  // Renombrado encima: atómico, la otra nunca lee una ficha a medias. En Windows puede fallar
+  // si el antivirus o la otra instancia la tienen abierta en ese instante: se reintenta.
+  for (let i = 0; i < 5; i++) {
+    try {
+      fs.renameSync(tmp, ruta());
+      _token = token;
+      _visto = null;
+      return true;
+    } catch {
+      const hasta = Date.now() + 50;
+      while (Date.now() < hasta) { /* espera corta */ }
+    }
+  }
+  fs.rmSync(tmp, { force: true });
+  try {
+    fs.writeFileSync(ruta(), datos);
+    _token = token;
+    _visto = null;
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function soyEscritor() {
@@ -210,4 +268,4 @@ export function soltar() {
   _token = null;
 }
 
-export default { adquirir, soyEscritor, soltar, otraInstancia, fichaOtraInstancia, pidVivo, confirmar, alPerder };
+export default { adquirir, arrebatar, soyEscritor, soltar, otraInstancia, fichaOtraInstancia, pidVivo, confirmar, alPerder, GRACIA_ARREBATO_MS };

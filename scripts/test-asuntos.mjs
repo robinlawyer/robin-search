@@ -25,7 +25,8 @@ for(const [caso,d] of Object.entries(CASOS)){
   fs.writeFileSync(path.join(MADRE,caso,'docs','anexo.txt'),`Anexo del asunto. ${d.secreto}.`);
 }
 const DATOS=path.join(base,'datos');
-const env={...process.env,ROBIN_TOKEN:'t',ROBIN_FOLDERS:MADRE,ROBIN_DATA_DIR:DATOS,ROBIN_OCR:'false',
+// Una sola conversación que cambia de asunto: sin la ventana de la 1.12.6 (test-incidencias-27oct la prueba aparte).
+const env={...process.env,ROBIN_TOKEN:'t',ROBIN_FOLDERS:MADRE,ROBIN_DATA_DIR:DATOS,ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN:'0',ROBIN_OCR:'false',
   ROBIN_LOG_LEVEL:'error',ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'};
 
 function arrancar(){

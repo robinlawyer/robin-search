@@ -15,6 +15,7 @@ import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 import { log } from '../logger.js';
 import { estructuraDe, seccionDeFragmento, remisionesEn, describirRemision, rutaDe, piezasDeNodo, piezasDeRemision, claveDe } from '../estructura/documento.js';
 import { registrar } from '../estructura/piezas.js';
+import { soloEnDisco } from '../search/en-disco.js';
 
 export const definition = {
   name: 'buscar_documentos',
@@ -22,11 +23,14 @@ export const definition = {
   description:
     'Búsqueda semántica sobre los documentos indexados de UN expediente del despacho. ' +
     'Recibe una consulta en lenguaje natural y devuelve los fragmentos más relevantes con ' +
-    'su fichero, página y puntuación. El contenido nunca sale del ordenador. ' +
+    'su fichero, página y puntuación. Los documentos y el índice están en el ordenador del abogado: ' +
+    'lo único que sale de él son los fragmentos que devuelve esta búsqueda, hacia esta conversación. ' +
     'La búsqueda está aislada por expediente: usa el que indiques en "expediente" (uno, o una ' +
     'lista si el abogado ha elegido varios) o, si se omite, el activo (elegir_expediente / ' +
     'establecer_expediente_activo). Si no hay ninguno, devuelve error en lugar de buscar en ' +
-    'todos los expedientes.',
+    'todos los expedientes. Si la respuesta trae ' +
+    '"cambios_desde_tu_ultima_consulta", cuéntale al abogado esos cambios del expediente una vez, ' +
+    'cuando diga su "cuando_contarlo".',
   inputSchema: {
     type: 'object',
     properties: {
@@ -88,7 +92,7 @@ export async function handler(args) {
   // que hace que el aislamiento no cueste recall (el post-filtro en memoria de la 1.2.x podía
   // devolver menos de n resultados, o ninguno, al quedarse sin candidatos del expediente).
   // Con varios expedientes, la subcarpeta se busca dentro de CADA uno.
-  const prefijos = subcarpeta ? expedientes.normalizarSeleccion(expediente).map((e) => `${e}/${subcarpeta}`) : null;
+  const prefijos = subcarpeta ? expedientes.listaIds(expediente).map((e) => `${e}/${subcarpeta}`) : null;
   const topK = prefijos ? Math.min(n * 5, 200) : n;
   // El ámbito es el expediente Y lo que cuelga de él (ver expedientes.enAmbito). Con igualdad
   // estricta, un caso cuyas subcarpetas son expedientes por sí mismas devolvía solo los
@@ -97,7 +101,15 @@ export async function handler(args) {
   const filtro = alcance.length > 1
     ? { expediente: { $in: alcance } }
     : { expediente: { $eq: expediente } };
-  const raw = await store.query(vector, topK, filtro);
+  let raw = await store.query(vector, topK, filtro);
+  // Lo que el abogado ha borrado del disco no se sirve aunque el vigilante no lo haya retirado aún
+  // (search/en-disco.js). Si al quitarlo faltan resultados, se pide un tramo más al índice.
+  let enDisco = await soloEnDisco(raw, 'docId');
+  if (enDisco.retirados && raw.length >= topK) {
+    raw = await store.query(vector, Math.min(topK * 3, 300), filtro);
+    enDisco = await soloEnDisco(raw, 'docId');
+  }
+  raw = enDisco.items;
 
   // Sin distinguir mayúsculas (Windows/macOS) ni forma Unicode: Claude escribe «Pérez» en NFC y
   // la carpeta puede estar en NFD; con comparación exacta el filtro devolvía 0 sin avisar.

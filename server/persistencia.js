@@ -74,7 +74,7 @@ function leerUno(ruta, validar) {
 //                  `<ruta>.corrupto-<fecha>` para no perderla ni volver a tropezar
 // Un error de E/S que no sea «no existe» ni contenido dañado (disco, permisos) se LANZA: quien
 // llama no puede confundirlo con un fichero vacío.
-export function leerJson(ruta, { validar = esObjeto, bak = true } = {}) {
+export function leerJson(ruta, { validar = esObjeto, bak = true, apartar = true } = {}) {
   try {
     return { estado: 'ok', valor: leerUno(ruta, validar) };
   } catch (err) {
@@ -96,6 +96,15 @@ export function leerJson(ruta, { validar = esObjeto, bak = true } = {}) {
       recuperado = null;
     }
   }
+  // Otro proceso puede haber dejado un fichero bueno (renombrado atómico) entre la lectura y
+  // aquí: apartarlo entonces sería perder un guardado recién hecho. Se mira una vez más. Y quien
+  // lee SIN el cerrojo de los escritores (`apartar: false`) no aparta nunca: solo usa la copia.
+  try {
+    return { estado: 'ok', valor: leerUno(ruta, validar) };
+  } catch {
+    /* sigue dañado */
+  }
+  if (!apartar) return recuperado ? { estado: 'ok', valor: recuperado, recuperado: true } : { estado: 'corrupto', valor: null };
   try {
     conReintentos(() => fs.renameSync(ruta, `${ruta}.corrupto-${new Date().toISOString().replace(/[:.]/g, '-')}`));
   } catch {
@@ -103,6 +112,25 @@ export function leerJson(ruta, { validar = esObjeto, bak = true } = {}) {
   }
   if (recuperado) return { estado: 'ok', valor: recuperado, recuperado: true };
   return { estado: 'corrupto', valor: null };
+}
+
+// Para LEER-MODIFICAR-ESCRIBIR un fichero que comparten varios dueños (ajustes.json: carpetas de
+// expedientes y cuentas de correo). Como leerJson, pero si la copia .bak existe y no se ha podido
+// leer por E/S (permisos, antivirus, disco) —no por estar dañada— se LANZA: partir de {} y
+// escribir encima borraría lo que guardó el otro dueño (22-nov-2026, el correo de Eduardo).
+export function leerParaReescribir(ruta, opciones = {}) {
+  const r = leerJson(ruta, opciones);
+  if (r.estado === 'ok') return r;
+  let copia;
+  try {
+    copia = JSON.parse(conReintentos(() => fs.readFileSync(`${ruta}.bak`, 'utf8')));
+  } catch (err) {
+    if (err?.code && err.code !== 'ENOENT') throw err;
+    return r;
+  }
+  // La copia se ha podido leer AHORA (el fallo de antes era pasajero): se usa.
+  const validar = opciones.validar || esObjeto;
+  return validar(copia) ? { estado: 'ok', valor: copia, recuperado: true } : r;
 }
 
 // Leer-modificar-escribir entre PROCESOS: Claude arranca dos instancias y las dos pueden guardar

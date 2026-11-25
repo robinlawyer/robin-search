@@ -15,6 +15,7 @@
 import * as expedientes from '../expedientes.js';
 import * as anotaciones from '../anotaciones.js';
 import { ok, fail } from './util.js';
+import { soloEnDisco } from '../search/en-disco.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
 
 export const definition = {
@@ -88,8 +89,19 @@ export async function handler(args) {
   if (!gate.ok) return fail(gate.error, gate.extra);
   const expediente = gate.expediente;
 
+  // Lo borrado del disco no se sirve, tampoco los hechos que se sacaron de ello.
+  const ids = anotaciones.docIdsDelPlan(expediente);
+  const vivos = new Set((await soloEnDisco(ids.map((doc_id) => ({ doc_id })), 'doc_id', () => null)).items.map((x) => x.doc_id));
+  const excluir = new Set(ids.filter((id) => !vivos.has(id)));
+
   const estado = anotaciones.estadoBarrido(expediente);
   const cabecera = cabeceraCobertura(estado);
+  if (excluir.size) {
+    cabecera.documentos_borrados_del_disco = excluir.size;
+    cabecera.aviso_borrados =
+      `${excluir.size} documento(s) del barrido ya no están en la carpeta del expediente: sus fichas no se sirven, ` +
+      'aunque la cobertura los siga contando hasta que el vigilante los retire del índice.';
+  }
 
   if (estado.ventanas_revisadas === 0) {
     return fail(
@@ -100,7 +112,7 @@ export async function handler(args) {
   }
 
   if (args?.agrupar_por) {
-    const g = anotaciones.agrupar(expediente, args.agrupar_por);
+    const g = anotaciones.agrupar(expediente, args.agrupar_por, { excluir });
     if (!g.ok) return fail(g.error);
     return ok({ ...cabecera, campo: g.campo, total: g.total, filas: g.filas });
   }
@@ -109,6 +121,7 @@ export async function handler(args) {
     doc_id: args?.doc_id ?? null,
     desde: args?.desde ?? 0,
     limite: args?.limite ?? 50,
+    excluir,
   });
   return ok({
     ...cabecera,

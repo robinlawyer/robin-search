@@ -16,11 +16,30 @@ export function abarcaVarios(id) {
 }
 
 // → { ok: true, respuesta } | { ok: false, error, extra }
-export async function fijarSeleccion(ids, { anadir = false } = {}) {
-  const nuevos = expedientes.normalizarSeleccion(ids);
+export async function fijarSeleccion(ids, { anadir = false, seleccionActual = null } = {}) {
+  const nuevos = expedientes.listaIds(ids);
+
+  // Sumar a la selección: el servidor no sabe de qué conversación viene la llamada, así que hay
+  // que decir cuál es la selección de ESTA conversación. Si no coincide con la activa (otra
+  // conversación ha fijado otra), no se suma: se mezclarían clientes (revisión de Codex, 25-nov).
+  const previos = expedientes.getActivos();
+  if (anadir && previos.length) {
+    const dicha = expedientes.listaIds(seleccionActual ?? []);
+    if (!dicha.length || expedientes.claveSeleccion(dicha) !== expedientes.claveSeleccion(previos)) {
+      return {
+        ok: false,
+        error:
+          'Para sumar expedientes a la selección, indica en "seleccion_actual" la selección que ' +
+          'tiene ESTA conversación (la que devolvió la última llamada en "pasa_en_cada_llamada"). ' +
+          'Si no coincide con la activa, la activa puede ser de otra conversación: fija la lista ' +
+          'completa en "expediente" sin "anadir".',
+        extra: { motivo: 'seleccion_actual_necesaria' },
+      };
+    }
+  }
 
   const seleccion = anadir
-    ? expedientes.normalizarSeleccion([...expedientes.getActivos(), ...nuevos])
+    ? expedientes.listaIds([...expedientes.getActivos(), ...nuevos])
     : nuevos;
   expedientes.setActivo(seleccion);
 
@@ -45,7 +64,10 @@ export async function fijarSeleccion(ids, { anadir = false } = {}) {
 
   // Contadores de TODO el ámbito (cada expediente y sus subcarpetas), no solo de su raíz.
   const ficha = expedientes.contadoresAmbito(seleccion);
-  const activo = expedientes.getActivo();
+  // La selección de ESTA llamada: mientras se esperaba el reescaneo de red, otra conversación ha
+  // podido fijar otra y getActivo() ya sería la suya (revisión de Codex, 25-nov).
+  const activo = seleccion.length === 0 ? null : seleccion.length === 1 ? seleccion[0] : [...seleccion];
+  expedientes.anotarAmbito(activo);
   const respuesta = {
     expediente_activo: activo,
     documentos_indexados: ficha.documentos,
@@ -54,6 +76,16 @@ export async function fijarSeleccion(ids, { anadir = false } = {}) {
     pasa_en_cada_llamada: { expediente: activo },
     aviso_conversaciones: expedientes.AVISO_CONVERSACIONES,
   };
+  // Otro asunto abierto hace poco en este mismo Claude (otra conversación, casi seguro): el
+  // expediente activo es uno para todas, así que desde ahora hay que decirlo en cada llamada.
+  const otros = expedientes.otrosFijadosRecientes();
+  if (otros.length) {
+    respuesta.otros_expedientes_recientes = otros;
+    respuesta.aviso_varias_conversaciones =
+      `Hace poco se fijó también ${otros.length === 1 ? 'el expediente' : 'los expedientes'} ${otros.join(', ')} ` +
+      'en este mismo Claude. El expediente activo es uno solo para todas las conversaciones, así que, ' +
+      `para no mezclar clientes, las llamadas de lectura de esta conversación van con "expediente": ${JSON.stringify(activo)}.`;
+  }
   if (seleccion.length > 1) {
     respuesta.por_expediente = seleccion.map((id) => ({ expediente: id, ...expedientes.contadoresAmbito(id) }));
     respuesta.nota_varios =

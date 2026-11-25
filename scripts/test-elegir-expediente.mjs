@@ -35,7 +35,7 @@ const SIM=path.join(base,'dialogo.json');
 const elige=(x)=>fs.writeFileSync(SIM,JSON.stringify(x));
 
 const env={...process.env,ROBIN_TOKEN:'t',ROBIN_FOLDERS:MADRE,
-  ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
+  ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN:'0',ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
   ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',
   ROBIN_DIALOGO_SIMULADO:`@${SIM}`,ROBIN_ESPERA_DIALOGO_MS:'1500'};
 
@@ -114,8 +114,36 @@ async function main(){
   check('si tarda, contesta «pendiente» sin fijar nada',!r.isError && r.data.pendiente===true);
   elige({rutas:[path.join(MADRE,'Gómez - Despido')]}); // si abriese OTRA ventana, elegiría esto
   r=await call('elegir_expediente');
-  check('la siguiente llamada recoge la MISMA elección (no abre otra ventana)',
-    !r.isError && r.data.expediente_activo===E('Pérez - Herencia'), r.raw.slice(0,200));
+  check('la siguiente llamada recoge la MISMA elección (no abre otra ventana)… sin fijarla: pide confirmar',
+    !r.isError && r.data.pendiente_de_confirmar===true && JSON.stringify(r.data.carpetas_elegidas).includes('Pérez - Herencia') && !JSON.stringify(r.data).includes('Gómez'), r.raw.slice(0,200));
+  const cod=r.data.confirmar;
+  let cf=await call('elegir_expediente',{confirmar:'000000000000'});
+  check('un código de confirmación que no es el dado no fija nada',cf.isError && cf.data.motivo==='confirmacion_no_valida');
+  cf=await call('elegir_expediente',{confirmar:cod});
+  check('confirmar con el código fija EXACTAMENTE lo elegido',!cf.isError && cf.data.expediente_activo===E('Pérez - Herencia'), cf.raw.slice(0,600).replace(/\n/g," "));
+  cf=await call('elegir_expediente',{confirmar:cod});
+  check('el código sirve una sola vez',cf.isError && cf.data.motivo==='confirmacion_no_valida');
+  // Confirmar SUMANDO a la selección de esta conversación (revisión de Codex, 25-nov).
+  elige({rutas:[path.join(MADRE,'Pérez - Divorcio')],tarda_ms:2500});
+  r=await call('elegir_expediente',{anadir:true,seleccion_actual:E('Pérez - Herencia')});
+  elige({rutas:[path.join(MADRE,'Gómez - Despido')]});
+  r=await call('elegir_expediente',{anadir:true,seleccion_actual:E('Pérez - Herencia')});
+  cf=await call('elegir_expediente',{confirmar:r.data?.confirmar,anadir:true,seleccion_actual:E('Pérez - Herencia')});
+  check('confirmar con "anadir" SUMA lo elegido a la selección',
+    !cf.isError && JSON.stringify([...(cf.data.expediente_activo||[])].sort())===JSON.stringify([E("Pérez - Divorcio"),E("Pérez - Herencia")]), cf.raw.slice(0,600).replace(/\n/g," "));
+
+  // Dos elecciones pendientes a la vez: el código de una no invalida el de la otra (Codex, 6.ª ronda).
+  elige({rutas:[path.join(MADRE,'Pérez - Herencia')],tarda_ms:2500});
+  await call('elegir_expediente');
+  elige({rutas:[path.join(MADRE,'Gómez - Despido')]});
+  const p1=await call('elegir_expediente');
+  elige({rutas:[path.join(MADRE,'Pérez - Divorcio')],tarda_ms:2500});
+  await call('elegir_expediente');
+  elige({rutas:[path.join(MADRE,'Gómez - Despido')]});
+  const p2=await call('elegir_expediente');
+  cf=await call('elegir_expediente',{confirmar:p1.data?.confirmar});
+  check('con dos elecciones pendientes, la primera sigue confirmándose con su código',
+    p1.data?.confirmar && p2.data?.confirmar && p1.data.confirmar!==p2.data.confirmar && !cf.isError && cf.data.expediente_activo===E('Pérez - Herencia'), cf.raw.slice(0,200));
 
   // --- 6. Varias carpetas separadas en el mismo trabajo ---
   elige({rutas:[path.join(MADRE,'Pérez - Divorcio'),path.join(MADRE,'Pérez - Herencia')]});
@@ -155,7 +183,11 @@ async function main(){
   check('establecer_expediente_activo admite una lista (nombres tolerantes)',
     !r.isError && Array.isArray(r.data.expediente_activo) && r.data.expediente_activo.length===2);
   r=await call('establecer_expediente_activo',{expediente:'Pérez - Herencia',anadir:true});
-  check('"anadir" suma sin quitar los anteriores',!r.isError && r.data.expediente_activo.length===3);
+  check('"anadir" sin decir la selección de esta conversación no suma nada',r.isError && /seleccion_actual/.test(r.raw));
+  r=await call('establecer_expediente_activo',{expediente:'Pérez - Herencia',anadir:true,seleccion_actual:['Gómez - Despido','perez-divorcio']});
+  check('"anadir" con una selección que no es la activa no suma',r.isError);
+  r=await call('establecer_expediente_activo',{expediente:'Pérez - Herencia',anadir:true,seleccion_actual:[E('Gómez - Despido'),E('Pérez - Divorcio')]});
+  check('"anadir" con la selección de esta conversación suma sin quitar los anteriores',!r.isError && r.data.expediente_activo.length===3, r.raw.slice(0,200));
   r=await call('establecer_expediente_activo',{expediente:['Pérez - Divorcio','No existe']});
   check('si uno de la lista no existe, no se fija nada a medias',r.isError && (await call('estado_servidor')).data.expediente_activo.length===3);
 

@@ -100,7 +100,8 @@ check('el RETIRADO', (k?.retirados||[]).some(x=>/acta de la junta/.test(x.ruta_r
 check('no da por cambiado lo que no cambió',
   !nom(k?.nuevos).includes('contrato') && !nom(k?.modificados).includes('contrato'));
 check('no mezcla el expediente de otro cliente', !c0.raw.includes('SECRETO-RUIZ') && !/recurso\.txt/.test(JSON.stringify(k||{})));
-check('le dice a Claude que se lo cuente al abogado antes de contestar', /ANTES de contestar/.test(k?.aviso_al_abogado||''));
+check('dice, como dato, que está pendiente de contar y que va antes de la respuesta', k?.pendiente_de_contar_al_abogado === true && /antes de la respuesta/.test(k?.cuando_contarlo||''));
+check('el resultado no lleva órdenes al modelo (Desktop las descarta, Juan 26-oct)', !/d[ií]selo|dile al abogado|ANTES de contestar/i.test(JSON.stringify(k||{})));
 check('y la respuesta de la herramienta sigue entera', Array.isArray(c0.data?.resultados||c0.data?.hits||c0.data?.fragmentos) || Object.keys(c0.data||{}).length>2, Object.keys(c0.data||{}).join(','));
 
 // ── 3. Una sola vez por sesión ──
@@ -171,7 +172,7 @@ await s.call('indexar_carpeta',{}); await listo(s.call);
 const jc=await s.call('buscar_documentos',{expediente:P,query:'fuerza mayor'});
 const kc=jc.data?.[C];
 check('(c) lo que llega DURANTE el chat se cuenta en la siguiente consulta, una vez', (kc?.nuevos||[]).some(x=>/contestacion/.test(x.ruta_relativa)) && !(kc?.nuevos||[]).some(x=>/requerimiento/.test(x.ruta_relativa)), nom(kc?.nuevos));
-check('(c) y se presenta como llegado mientras trabaja, no como «desde tu última consulta»', kc?.momento==='durante_la_sesion' && /mientras/i.test(kc?.aviso_al_abogado||''), kc?.momento);
+check('(c) y se presenta como llegado mientras trabaja, no como «desde tu última consulta»', kc?.momento==='durante_la_sesion' && /mientras/i.test(kc?.cuando_contarlo||''), kc?.momento);
 // El abogado sigue retocando ese mismo documento: no se le repite en cada llamada.
 fs.appendFileSync(path.join(CASO,'11 contestacion del vendedor.txt'),' Otrosí: se aporta certificado. '+relleno('Anexo.'));
 await s.call('indexar_carpeta',{}); await listo(s.call);
@@ -192,7 +193,7 @@ const jd=await s.call('buscar_documentos',{expediente:P,query:'entrega'});
 const kd=jd.data?.[C];
 check('(d) tras reiniciar: el documento retocado después de contarlo sale como modificado (nada se pierde)', (kd?.modificados||[]).some(x=>/contestacion/.test(x.ruta_relativa)), nom(kd?.modificados));
 check('(d) y no repite nada de lo ya contado', !nom(kd?.nuevos).match(/requerimiento|contestacion/) && !nom(kd?.modificados).match(/tasacion|contrato/) && !nom(kd?.retirados).includes('nota simple'), JSON.stringify(kd?.recuento||null));
-check('(d) al empezar sesión dice «desde tu última consulta»', kd?.momento==='inicio_de_sesion' && /última consulta/.test(kd?.aviso_al_abogado||''), kd?.momento);
+check('(d) al empezar sesión dice «desde tu última consulta»', kd?.momento==='inicio_de_sesion' && /última consulta/.test(kd?.cuando_contarlo||''), kd?.momento);
 const jd2=await s.call('buscar_documentos',{expediente:P,query:'entrega'});
 check('(d) y una vez contado, calla', !jd2.data?.[C]);
 await terminar(s.proc);

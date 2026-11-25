@@ -7,7 +7,7 @@
 
 import fs from 'node:fs';
 import { config, rutaAjustes } from '../config.js';
-import { escribirJson, leerJson, conCerrojoDeFichero } from '../persistencia.js';
+import { escribirJson, leerJson, leerParaReescribir, conCerrojoDeFichero } from '../persistencia.js';
 
 export const POR_DEFECTO = {
   usuario: null,
@@ -43,12 +43,21 @@ function leerFichero() {
   if (cache && Date.now() - cache.el < CACHE_MS) return cache.valor;
   let valor = {};
   try {
-    valor = leerJson(rutaAjustes(config.dataDir)).valor || {};
+    valor = leerJson(rutaAjustes(config.dataDir), { apartar: false }).valor || {};
   } catch {
     valor = {};
   }
   cache = { valor, el: Date.now() };
   return valor;
+}
+
+// Para ESCRIBIR no vale leerFichero(): ante un error de E/S devuelve {} y lo de encima se
+// guardaría sin las carpetas de expedientes, que viven en el mismo fichero (lo inverso de lo que
+// le pasó a Eduardo el 22-nov-2026). Aquí el error se lanza y no se escribe nada.
+function leerParaEscribir() {
+  olvidarCache();
+  const r = leerParaReescribir(rutaAjustes(config.dataDir));
+  return r.valor && typeof r.valor === 'object' ? { ...r.valor } : {};
 }
 
 const num = (v, porDefecto) => (Number.isInteger(v) && v > 0 && v < 65536 ? v : porDefecto);
@@ -66,7 +75,11 @@ const misma = (a, b) => Boolean(a && b) && String(a).trim().toLowerCase() === St
 // sigue leyendo tal cual —nadie tiene que volver a conectar su correo al actualizar— y se pasa
 // a la forma de lista la primera vez que se escribe.
 function crudas() {
-  const c = leerFichero().correo;
+  return crudasDe(leerFichero());
+}
+
+function crudasDe(fichero) {
+  const c = fichero?.correo;
   if (!c || typeof c !== 'object') return [];
   if (Array.isArray(c.cuentas)) return c.cuentas.filter((x) => x && typeof x === 'object');
   return [c];
@@ -133,9 +146,8 @@ export function guardarCorreo(parcial, cuenta = null) {
   const ruta = rutaAjustes(config.dataDir);
   fs.mkdirSync(config.dataDir, { recursive: true });
   return conCerrojoDeFichero(ruta, () => {
-    olvidarCache();
-    const actual = leerFichero();
-    const lista = crudas().map((c) => ({ ...c }));
+    const actual = leerParaEscribir();
+    const lista = crudasDe(actual).map((c) => ({ ...c }));
     const quien = texto(parcial?.usuario) || texto(cuenta);
     // Sin decir cuál, la principal: la primera CONECTADA, la misma que devuelve leerCorreo().
     let i = quien ? lista.findIndex((c) => misma(c.usuario, quien))
@@ -159,25 +171,23 @@ export function guardarCorreo(parcial, cuenta = null) {
 
 // Olvidar una cuenta (el «Desconectar» de su fila en la app), o todas si no se dice cuál. La
 // contraseña la borra del llavero quien llama: aquí solo se quita lo que hay en el fichero.
+// Devuelve también `quitadas`: las direcciones que se han quitado DE VERDAD, leídas dentro del
+// cerrojo. Son las que quien llama debe borrar del llavero (una cuenta conectada por otro proceso
+// justo antes no puede quedarse sin configuración y con su contraseña huérfana, ni al revés).
 export function olvidarCorreo(cuenta = null) {
   const ruta = rutaAjustes(config.dataDir);
   return conCerrojoDeFichero(ruta, () => {
-    olvidarCache();
-    const actual = leerFichero();
-    if (!cuenta) {
-      delete actual.correo;
-      escribirJson(ruta, actual, { bak: true, indent: 2 });
-      olvidarCache();
-      return leerCorreo();
-    }
-    const lista = crudas().filter((c) => !misma(c.usuario, cuenta));
+    const actual = leerParaEscribir();
+    const todas = crudasDe(actual);
+    const quitadas = todas.filter((c) => !cuenta || misma(c.usuario, cuenta)).map((c) => texto(c.usuario)).filter(Boolean);
+    const lista = cuenta ? todas.filter((c) => !misma(c.usuario, cuenta)) : [];
     if (lista.length) escribirCuentas(actual, lista);
     else {
       delete actual.correo;
       escribirJson(ruta, actual, { bak: true, indent: 2 });
       olvidarCache();
     }
-    return leerCorreo();
+    return { ...leerCorreo(), quitadas };
   });
 }
 

@@ -6,8 +6,9 @@ import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { escribirJson, leerJson } from './persistencia.js';
+import { escribirJson, leerJson, leerParaReescribir, conCerrojoDeFichero } from './persistencia.js';
 import { rutas, extensionDe, nombreValido } from './rutas.js';
+import { defaultDataDir } from './datos-dir.js';
 
 // La versión sale del package.json que viaja en el paquete, NO de una
 // constante a mano: escrita dos veces, se olvida una. El servidor estuvo
@@ -56,26 +57,6 @@ function firstDefined(...vals) {
 // Directorio de datos de la aplicación (índice vectorial, registro incremental, logs).
 // SIEMPRE fuera de la carpeta de expedientes para no disparar el watcher ni contaminar
 // el expediente del abogado.
-function defaultDataDir() {
-  const home = os.homedir();
-  switch (process.platform) {
-    case 'darwin':
-      return path.join(home, 'Library', 'Application Support', 'RobinLawyer', 'robin-search');
-    case 'win32':
-      return path.join(
-        firstDefined(process.env.APPDATA, path.join(home, 'AppData', 'Roaming')),
-        'RobinLawyer',
-        'robin-search',
-      );
-    default:
-      return path.join(
-        firstDefined(process.env.XDG_DATA_HOME, path.join(home, '.local', 'share')),
-        'robin-lawyer',
-        'robin-search',
-      );
-  }
-}
-
 function toInt(val, fallback) {
   const n = parseInt(val, 10);
   return Number.isFinite(n) && n > 0 ? n : fallback;
@@ -111,6 +92,26 @@ export function rutaAjustes(dataDir) {
   return path.join(dataDir, 'ajustes.json');
 }
 
+// 🔴 22-nov-2026 (Eduardo: «se me han borrado ya 2 veces los correos»). ajustes.json lo comparten
+// las carpetas de expedientes y las cuentas de correo (clave `correo`, server/correo/ajustes.js).
+// Guardar las carpetas lo reescribía ENTERO con solo `carpetas` y `nombres`: añadir o quitar una
+// carpeta en RobinDesktop con Claude abierto (orden `configurar` del canal) desconectaba todas las
+// cuentas de correo. Toda escritura de aquí cambia SOLO lo suyo y conserva el resto, bajo el
+// mismo cerrojo que usa el correo (la app y las instancias de Claude guardan a la vez).
+// Un error de E/S al leer (disco, permisos, antivirus) se LANZA y no se escribe: no se pisa lo
+// que no se ha podido leer. Un fichero dañado sin copia buena ya lo aparta leerJson.
+function reescribirAjustes(dataDir, cambiar) {
+  const ruta = rutaAjustes(dataDir);
+  fs.mkdirSync(dataDir, { recursive: true });
+  return conCerrojoDeFichero(ruta, () => {
+    const r = leerParaReescribir(ruta);
+    const actual = r.valor && typeof r.valor === 'object' ? { ...r.valor } : {};
+    const nuevo = cambiar(actual, r);
+    if (nuevo) escribirJson(ruta, nuevo, { bak: true, indent: 2 });
+    return nuevo;
+  });
+}
+
 // Ajustes cortados (apagón a mitad) no pueden dejar al abogado sin carpetas: se recuperan de la
 // copia .bak que deja cada escritura.
 //
@@ -122,7 +123,8 @@ export function rutaAjustes(dataDir) {
 // carpetas hay, y entonces nada se puede dar por «quitado de la configuración».
 function leerAjustes(dataDir) {
   try {
-    const r = leerJson(rutaAjustes(dataDir));
+    // Sin cerrojo: no aparta un fichero dañado (eso lo hace quien escribe, con el cerrojo).
+    const r = leerJson(rutaAjustes(dataDir), { apartar: false });
     const v = r.valor || {};
     const carpetas = [];
     const nombres = new Map();
@@ -194,9 +196,13 @@ function migrarDesdeClaude(dataDir, ajustes = leerAjustes(dataDir)) {
         ? carpetas.map(String).filter(Boolean)
         : typeof carpetas === 'string' && carpetas.trim() ? [carpetas.trim()] : [];
       if (!lista.length) continue;
-      fs.mkdirSync(dataDir, { recursive: true });
-      escribirJson(rutaAjustes(dataDir), { carpetas: lista, migradoDeClaude: true }, { bak: true, indent: 2 });
-      return lista;
+      // Sin pisar lo demás del fichero (las cuentas de correo pueden estar ya conectadas). Y se
+      // vuelve a mirar DENTRO del cerrojo: si la app ha guardado carpetas mientras tanto —aunque
+      // sea una lista vacía a propósito—, mandan las suyas y no se migra nada.
+      const escrito = reescribirAjustes(dataDir, (actual, r) => (
+        r.estado === 'corrupto' || Array.isArray(actual.carpetas) ? null : { ...actual, carpetas: lista, migradoDeClaude: true }
+      ));
+      return escrito ? lista : [];
     }
     return [];
   } catch {
@@ -575,6 +581,23 @@ export function recargarCarpetas() {
   return config.watchedFolders;
 }
 
+// Las carpetas que dice ahora ajustes.json, sin aplicarlas. null si no se ha podido leer: con un
+// fichero dañado o a medio escribir no se sabe qué carpetas hay y no se cambia nada.
+export function carpetasEnAjustes() {
+  const a = leerAjustes(config.dataDir);
+  return a.existe && a.fiable && a.tieneCarpetas ? a.carpetas.map((c) => c.trim()).filter(Boolean) : null;
+}
+
+// Huella barata del fichero: se mira cada pocos segundos, solo se lee si cambia.
+export function firmaAjustes() {
+  try {
+    const st = fs.statSync(rutaAjustes(config.dataDir));
+    return `${st.mtimeMs}|${st.size}`;
+  } catch {
+    return null;
+  }
+}
+
 // La misma ruta con cada segmento escrito como está EN DISCO (caja y forma Unicode), sin seguir
 // enlaces: se busca cada nombre en el listado de su carpeta madre. null si algo no se puede leer.
 function formaEnDisco(abs) {
@@ -642,23 +665,18 @@ export function comoConfiguradas(lista) {
 // fichero (`carpetas` lo gobierna la app). No escribe si ya está al día ni si el fichero no se ha
 // podido leer (no se pisa lo que no se sabe qué tiene).
 export function guardarNombres() {
-  const ruta = rutaAjustes(config.dataDir);
-  let actual = {};
-  try {
-    const r = leerJson(ruta);
-    if (r.estado === 'corrupto') return false;
-    actual = r.valor || {};
-  } catch {
-    return false;
-  }
   const nombres = {};
   for (const r of config.roots) nombres[r.path] = r.name;
-  const previos = actual.nombres && typeof actual.nombres === 'object' ? actual.nombres : {};
-  const iguales = Object.keys(nombres).length === Object.keys(previos).length
-    && Object.entries(nombres).every(([k, v]) => previos[k] === v);
-  if (iguales) return false;
-  fs.mkdirSync(config.dataDir, { recursive: true });
-  escribirJson(ruta, { ...actual, nombres }, { bak: true, indent: 2 });
+  // Con cerrojo: sin él, un correo conectado a la vez se perdía al escribir esto encima. Un
+  // fichero que no se puede leer LANZA (quien llama lo registra y se reintenta al reconciliar).
+  const escrito = reescribirAjustes(config.dataDir, (actual, r) => {
+    if (r.estado === 'corrupto') return null;
+    const previos = actual.nombres && typeof actual.nombres === 'object' ? actual.nombres : {};
+    const iguales = Object.keys(nombres).length === Object.keys(previos).length
+      && Object.entries(nombres).every(([k, v]) => previos[k] === v);
+    return iguales ? null : { ...actual, nombres };
+  });
+  if (!escrito) return false;
   for (const r of config.roots) r.nombreGuardado = true;
   return true;
 }
@@ -681,10 +699,13 @@ export function guardarCarpetas(carpetas) {
   for (const abs of lista) {
     if (!nombres[abs] && previos.has(rutas.claveRuta(abs))) nombres[abs] = previos.get(rutas.claveRuta(abs));
   }
-  fs.mkdirSync(config.dataDir, { recursive: true });
-  const datos = { carpetas: lista };
-  if (Object.keys(nombres).length) datos.nombres = nombres;
-  escribirJson(rutaAjustes(config.dataDir), datos, { bak: true, indent: 2 });
+  // Solo `carpetas` y `nombres`: el resto del fichero (las cuentas de correo) se conserva.
+  reescribirAjustes(config.dataDir, (actual) => {
+    const datos = { ...actual, carpetas: lista };
+    if (Object.keys(nombres).length) datos.nombres = nombres;
+    else delete datos.nombres;
+    return datos;
+  });
   const vigiladas = recargarCarpetas();
   if (!carpetasFijadasPorEntorno()) {
     try {

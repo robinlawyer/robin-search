@@ -25,7 +25,9 @@ export const definition = {
     'los candidatos. Admite VARIOS expedientes (lista) cuando el abogado quiere trabajar con ' +
     'carpetas separadas a la vez; "anadir": true los suma a los que ya hay. Si el abogado no da ' +
     'un nombre, usa elegir_expediente, que le abre la ventana de carpetas del sistema. Usa ' +
-    '"limpiar": true al cerrar el asunto.',
+    '"limpiar": true al cerrar el asunto. El expediente activo es uno para todas las conversaciones ' +
+    'abiertas en este Claude: si trabajas en varios asuntos a la vez, indica también "expediente" ' +
+    'en cada llamada de lectura.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -37,8 +39,13 @@ export const definition = {
       },
       anadir: {
         type: 'boolean',
-        description: 'Si es true, suma estos expedientes a los ya seleccionados en vez de sustituirlos.',
+        description: 'Si es true, suma estos expedientes a los ya seleccionados en vez de sustituirlos. Exige "seleccion_actual".',
         default: false,
+      },
+      seleccion_actual: {
+        type: ['string', 'array'],
+        items: { type: 'string' },
+        description: 'Con "anadir": la selección que tiene ESTA conversación (la de "pasa_en_cada_llamada" de la última respuesta).',
       },
       limpiar: {
         type: 'boolean',
@@ -62,11 +69,10 @@ export async function handler(args) {
   if (!auth.ok) return authPromptResult(auth.loginUrl, auth);
 
   if (args?.limpiar === true) {
-    const anterior = expedientes.getActivo();
+    // No se dice cuál había: podía ser el de otra conversación (revisión de Codex, 25-nov).
     expedientes.setActivo(null);
     return ok({
       expediente_activo: null,
-      expediente_anterior: anterior,
       documentos_indexados: 0,
       mensaje:
         'Sesión sin expediente activo. Las búsquedas pedirán que indiques uno antes de ' +
@@ -93,7 +99,7 @@ export async function handler(args) {
     );
   }
 
-  const f = await fijarSeleccion(r.expedientes, { anadir: args?.anadir === true });
+  const f = await fijarSeleccion(r.expedientes, { anadir: args?.anadir === true, seleccionActual: args?.seleccion_actual ?? null });
   if (!f.ok) return fail(f.error, f.extra);
   return ok(f.respuesta);
 }

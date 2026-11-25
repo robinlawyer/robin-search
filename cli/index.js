@@ -131,29 +131,26 @@ async function run() {
   }
 
   if (opts.silent) {
-    // Modo IT: indexar una vez y salir. Aquí stdout es seguro (no es modo MCP).
-    const { bootstrap } = await import('../server/bootstrap.js');
-    const { state } = await import('../server/state.js');
-    const { config } = await import('../server/config.js');
-    if (config.watchedFolders.length === 0) {
-      process.stderr.write('robin-search: falta --folder/--folders o ROBIN_FOLDER/ROBIN_FOLDERS.\n');
-      process.exit(2);
+    // Modo IT / RobinDesktop con Claude cerrado: indexar una vez y salir (server/pasada.js).
+    // Desde la 1.13.0 en un hilo vigilado: si un documento tumba el motor, se repone y se sigue.
+    if (process.env.ROBIN_SIN_SUPERVISOR === '1') {
+      await import('../server/pasada.js');
+      return;
     }
-    process.stdout.write(`Indexando ${config.watchedFolders.length} carpeta(s):\n  ${config.watchedFolders.join('\n  ')}\n`);
-    await bootstrap({ initialIndex: true, watch: false, warmModel: true });
-    if (state.estado === 'error') {
-      process.stderr.write(`robin-search: indexado con errores: ${state.ultimoError}\n`);
-      process.exit(1);
-    }
-    process.stdout.write('Indexado completado.\n');
-    // Salida explícita: los hilos de embedding que quedan esperando trabajo mantendrían vivo el
-    // proceso, y un despliegue de IT que espera a que termine se quedaba colgado. El registro
-    // pendiente se vuelca en el manejador de 'exit'.
-    process.exit(0);
+    const { supervisarPasada } = await import('../server/supervisor.js');
+    process.exit(await supervisarPasada());
   }
 
-  // Modo por defecto: arrancar el servidor MCP (el módulo se auto-ejecuta).
-  await import('../server/index.js');
+  // Modo por defecto: el servidor MCP. Desde la 1.13.0 Claude habla con el SUPERVISOR
+  // (server/supervisor.js), que ejecuta el servidor en un hilo aislado y lo repone si muere: un
+  // fallo de un motor de lectura ya no deja a Claude sin RobinSearch. ROBIN_SIN_SUPERVISOR=1 lo
+  // arranca como antes (pruebas).
+  if (process.env.ROBIN_SIN_SUPERVISOR === '1') {
+    await import('../server/index.js');
+    return;
+  }
+  const { supervisarServidor } = await import('../server/supervisor.js');
+  supervisarServidor();
 }
 
 run().catch((err) => {

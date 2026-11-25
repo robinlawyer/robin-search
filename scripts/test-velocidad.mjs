@@ -75,6 +75,8 @@ if (process.env.PROBAR_VENENO) {
   const w = await e.embedPassages(frases.slice(0, 3));
   veneno += '|despues:' + w.length;
 }
+// Los vectores, a un fichero: 180 KB por la tubería salían cortados con process.exit detrás.
+if (process.env.SACAR_VECTORES) (await import('node:fs')).writeFileSync(process.env.SACAR_VECTORES, JSON.stringify(v.map((x) => Array.from(x))));
 console.log(JSON.stringify({ hash: h.digest('hex'), n: v.length, dim: v[0].length, calculo: e.estadoMotor().calculo, veneno }));
 process.exit(0);
 `;
@@ -96,6 +98,21 @@ check('B. el pool sigue en hilos tras reponer el hilo', caida.datos?.calculo?.mo
 const veneno = await guion(CALCULO, { ROBIN_EMBED_HILOS: '1', ROBIN_PRUEBA_HILO_MUERE_CON: 'VENENO', PROBAR_VENENO: '1' });
 check('C. el texto que tumba el motor falla solo él', /^ROBIN_EMBEDDING_CAIDO\|despues:3$/.test(veneno.datos?.veneno ?? ''), veneno.datos?.veneno ?? veneno.err);
 check('C. lo demás se calculó igual', veneno.datos?.hash === principal.datos?.hash);
+
+// C2. 7-nov-2026: el motor sin memoria para un lote de 16 fragmentos («OrtRun() error code = 6»,
+// siempre los mismos documentos). El lote se parte hasta que cabe: ningún documento fuera.
+const coseno = (a, b) => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * b[i]; return s; };
+const leerVecs = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; } };
+const fRef = path.join(base, 'vecs-ref.json');
+await guion(CALCULO, { ROBIN_EMBED_HILOS: '0', SACAR_VECTORES: fRef });
+for (const [nombre, hilosN] of [['hilos', '2'], ['hilo principal', '0']]) {
+  const fPartido = path.join(base, `vecs-partido-${hilosN}.json`);
+  const partido = await guion(CALCULO, { ROBIN_EMBED_HILOS: hilosN, ROBIN_PRUEBA_FALLA_LOTE_MAYOR_QUE: '4', SACAR_VECTORES: fPartido });
+  check(`C2. lotes que no caben (${nombre}): se parten y se calculan TODOS los fragmentos`, partido.datos?.n === 22, partido.datos ? `${partido.datos.n} de 22; ${JSON.stringify(partido.datos.calculo)}` : partido.err);
+  const a = leerVecs(fPartido); const r = leerVecs(fRef);
+  const peor = a && r ? Math.min(...a.map((x, i) => coseno(x, r[i]))) : 0;
+  check(`C2. y con los vectores de siempre salvo redondeo (${nombre})`, peor > 0.99, `coseno mínimo ${peor.toFixed(4)}`);
+}
 
 const sinHilos = await guion(CALCULO, { ROBIN_EMBED_HILOS: '2', ROBIN_PRUEBA_HILO_NO_CARGA: '1' });
 check('D. si los hilos no cargan, se calcula en el hilo principal', sinHilos.datos?.calculo?.modo === 'hilo_principal', JSON.stringify(sinHilos.datos?.calculo ?? sinHilos.err));

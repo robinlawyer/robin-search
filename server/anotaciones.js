@@ -322,12 +322,20 @@ export function delta(expediente, { desde = null } = {}) {
 
 // Todas las fichas válidas del expediente, en orden de lectura. Paginado: en un expediente
 // grande son cientos, y devolverlas de golpe es justo el desbordamiento que esto evita.
-export function todas(expediente, { doc_id = null, desde = 0, limite = 50 } = {}) {
+// Los documentos del plan del barrido (para saber cuáles se han borrado del disco).
+export function docIdsDelPlan(expediente) {
+  return [...new Set(plan(expediente).ventanas.map((v) => v.doc_id))];
+}
+
+// `excluir`: docIds que ya no están en el disco. Sus hechos extraídos no se sirven, igual que el
+// documento (1.13.3; revisión de Codex, 25-nov).
+export function todas(expediente, { doc_id = null, desde = 0, limite = 50, excluir = null } = {}) {
   const { ventanas } = plan(expediente);
   const estado = cargar()[expediente] || null;
   const fichas = [];
   for (const v of ventanas) {
     if (doc_id && v.doc_id !== doc_id) continue;
+    if (excluir && excluir.has(v.doc_id)) continue;
     const f = fichaDe(estado, v);
     if (!f) continue;
     fichas.push({
@@ -353,14 +361,14 @@ export function todas(expediente, { doc_id = null, desde = 0, limite = 50 } = {}
 // Vista CRUZADA: un solo campo de todas las fichas, junto y con su origen. Es el paso que
 // hace saltar la contradicción — dos fechas de entrega distintas para la misma obligación
 // aparecen una al lado de la otra sin que nadie haya preguntado por ellas.
-export function agrupar(expediente, campo) {
+export function agrupar(expediente, campo, { excluir = null } = {}) {
   if (!CAMPOS_CRUZABLES.includes(campo)) {
     return {
       ok: false,
       error: `"${campo}" no es un campo cruzable. Usa uno de: ${CAMPOS_CRUZABLES.join(', ')}.`,
     };
   }
-  const { fichas } = todas(expediente, { limite: 200000 });
+  const { fichas } = todas(expediente, { limite: 200000, excluir });
   const filas = [];
   for (const f of fichas) {
     const valores = f[campo];

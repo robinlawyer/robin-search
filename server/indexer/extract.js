@@ -20,15 +20,22 @@ import { pathToFileURL } from 'node:url';
 import { config, limiteBytes } from '../config.js';
 import { extensionDe } from '../rutas.js';
 import { log } from '../logger.js';
+import { descifrarItemsPorFuente } from './glifos.js';
 import { ocrPdf, ocrImage } from './ocr.js';
 import { tipoReal } from './tipo-real.js';
-import { textoDeDoc, textoDePpt, deCp1252 } from './office-antiguo.js';
+import { textoDeDoc, textoDePpt, deCp1252, oleCifrado } from './office-antiguo.js';
 import { entradasRecuperadas } from './zip-roto.js';
 
 const require = createRequire(import.meta.url);
 
 // Umbral: caracteres de texto extraíble por página por debajo del cual consideramos que
 // el PDF es una imagen escaneada sin capa OCR.
+// Fallos DEL MOMENTO (del equipo, no del documento): el disco lleno, la falta de memoria o el
+// motor de OCR en pausa tras varias caídas. Suben tal cual para que el documento quede sin
+// indexar y la pasada siguiente lo reintente, en vez de quedar marcado «sin texto legible».
+const DEL_MOMENTO = new Set(['ROBIN_DISCO_LLENO', 'ROBIN_FICHERO_SIN_MEMORIA', 'ROBIN_OCR_EN_PAUSA']);
+const esDelMomento = (err) => DEL_MOMENTO.has(err?.code);
+
 const MIN_CHARS_PER_PAGE = 12;
 
 // Conjuntos de extensiones por familia (para el dispatcher y para saber qué recursión aplica).
@@ -200,7 +207,9 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
     try {
       page = await pdf.getPage(p);
       const content = await page.getTextContent();
-      const plano = content.items
+      // Fuentes sin tabla de caracteres: pdfjs da el número de glifo («GH ODV» = «de las»). Ver glifos.js.
+      const items = descifrarItemsPorFuente(content.items);
+      const plano = items
         .map((it) => (typeof it.str === 'string' ? it.str : ''))
         .join(' ')
         .replace(/[ \t]+/g, ' ')
@@ -208,7 +217,7 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
       // La cuenta de caracteres (¿es un escaneado?) se hace SIEMPRE sobre el texto plano: con
       // saltos la decisión de pasar por OCR no puede cambiar.
       totalChars += plano.length;
-      const text = conSaltos ? conSaltosDeLinea(content.items) : plano;
+      const text = conSaltos ? conSaltosDeLinea(items) : plano;
       if (text) pages.push({ page: p, text });
     } catch (err) {
       paginasRotas += 1;
@@ -250,7 +259,7 @@ export async function extractPdf(filePath, { maxPages, conSaltos = false, sinOcr
     // sabría por qué (19-sep-2026, el ENOSPC que arrastró el indexado entero de Eduardo).
     // Igual con la falta de MEMORIA: marcar «sin OCR» sería darlo por ilegible para siempre,
     // cuando lo único que pasa es que hoy el equipo estaba lleno. Así se reintenta.
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('OCR falló; el fichero se marca sin OCR', { err: String(err) });
     return { pages: [], sinOcr: true, numPages };
   }
@@ -309,6 +318,7 @@ function siEsZipRoto(err, ext) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractOfficeOle(filePath, ext) {
   const buf = fs.readFileSync(filePath);
+  if (oleCifrado(buf)) throw errorProtegido(ext);
   let texto = null;
   try {
     texto = ext === '.ppt' || ext === '.pps' || ext === '.pot' ? textoDePpt(buf) : textoDeDoc(buf);
@@ -604,7 +614,18 @@ function odfTextRuns(xml) {
 // ─────────────────────────────────────────────────────────────────────────────
 export async function extractSpreadsheet(filePath) {
   const XLSX = (await import('xlsx')).default ?? (await import('xlsx'));
-  const wb = XLSX.read(fs.readFileSync(filePath), { type: 'buffer', cellDates: true });
+  const buf = fs.readFileSync(filePath);
+  // Un .xlsx con contraseña es un contenedor OLE cifrado; el .xls de 97-2003 cifrado lo dice el
+  // propio lector. En los dos casos es el fichero, no un fallo nuestro (13-nov-2026: seis Excel
+  // así salían como «errores de indexado» y mandaban un aviso técnico en cada pasada).
+  if (buf.length >= 8 && buf.readUInt32BE(0) === 0xd0cf11e0 && oleCifrado(buf)) throw errorProtegido(path.extname(filePath).toLowerCase());
+  let wb;
+  try {
+    wb = XLSX.read(buf, { type: 'buffer', cellDates: true });
+  } catch (err) {
+    if (/password[- ]protected|encrypted/i.test(String(err?.message ?? err))) throw errorProtegido(path.extname(filePath).toLowerCase());
+    throw err;
+  }
   const pages = [];
   let pageNo = 0;
   for (const name of wb.SheetNames) {
@@ -730,7 +751,7 @@ async function assembleEmail(header, body, attachments, opts) {
         inner = await extractBufferByName(att.filename, att.content, { ...opts, depth: depth + 1 });
       } catch (err) {
         // Sin memoria o sin disco hoy: el correo entero se reintenta, no se indexa sin su adjunto.
-        if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+        if (esDelMomento(err)) throw err;
         log.warn('Adjunto de correo ilegible (el correo sí se indexa)', { ext, err: String(err?.message ?? err) });
         continue;
       }
@@ -757,7 +778,7 @@ export async function extractImage(filePath) {
   } catch (err) {
     // Igual que en el PDF escaneado: sin memoria o sin disco HOY no es «imagen ilegible para
     // siempre»; sube para que se reintente en la pasada siguiente.
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('OCR de imagen falló; se marca sin OCR', { fichero: path.basename(filePath), err: String(err) });
     return { pages: [], sinOcr: true, numPages: 1 };
   }
@@ -834,7 +855,7 @@ export async function extractArchive(filePath, opts) {
     } catch (err) {
       // Falta de memoria o de disco: el contenedor ENTERO se deja para la pasada siguiente. Antes
       // se saltaba ese miembro y el .zip quedaba indexado sin él, para siempre.
-      if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+      if (esDelMomento(err)) throw err;
       log.warn('Miembro del contenedor ilegible', { ext: path.extname(name).toLowerCase(), err: String(err?.message ?? err) });
     }
   };
@@ -844,7 +865,7 @@ export async function extractArchive(filePath, opts) {
     else if (ext === '.rar') await recorrerRar(filePath, admitir, alMiembro, descartes);
     else if (ext === '.7z') await recorrer7z(filePath, admitir, alMiembro, descartes);
   } catch (err) {
-    if (err?.code === 'ROBIN_DISCO_LLENO' || err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') throw err;
+    if (esDelMomento(err)) throw err;
     log.error('No se pudo abrir el contenedor', { fichero: path.basename(filePath), err: String(err) });
     return { pages, sinOcr: pages.length === 0, numPages: null };
   }
@@ -1202,6 +1223,12 @@ export function errorDeFichero(code, mensaje) {
   return Object.assign(new Error(mensaje), { code: `ROBIN_FICHERO_${code}` });
 }
 
+// Word, Excel o PowerPoint con contraseña de apertura. Como el PDF protegido, no es un fallo de
+// RobinSearch: va a `no_indexables.protegidos` y estado_servidor le dice al abogado qué hacer.
+export function errorProtegido(ext) {
+  return errorDeFichero('PROTEGIDO', `El ${ext || 'documento'} está protegido con contraseña: hay que quitarle la protección (o guardar una copia sin ella en la carpeta) para que entre en las búsquedas`);
+}
+
 // La extensión con la que se lee: la del nombre, salvo que el contenido diga otra cosa.
 function extensionDeLectura(filePath, ext) {
   if (!EXT_BINARIAS.has(ext)) return ext;
@@ -1222,6 +1249,9 @@ function extensionDeLectura(filePath, ext) {
   if ((tipo === 'imagen' || tipo === 'heic') && !EXT_IMAGE.has(ext)) return tipo === 'heic' ? '.heic' : '.png';
   // Office antiguo con extensión nueva (.docx que es un .doc de 2003, .pptx que es un .ppt): desde
   // la 1.8.1 se LEE como lo que es en vez de darlo por ilegible.
+  // Un .docx/.pptx que es OLE suele ser uno CIFRADO (con contraseña), no un Office antiguo. (Las
+  // hojas ya han salido arriba: las mira su propio lector.)
+  if (tipo === 'ole' && oleCifrado(fs.readFileSync(filePath))) throw errorProtegido(ext);
   if (tipo === 'ole' && (ext === '.docx' || ext === '.dot')) return '.doc';
   if (tipo === 'ole' && (ext === '.pptx' || ext === '.odp')) return '.ppt';
   if (tipo === 'ole' && ext === '.odt') return '.doc';
@@ -1267,6 +1297,15 @@ async function extractByExtension(filePath, extNombre, opts) {
 export async function extractFile(filePath, { maxPages, conSaltos = false, sinOcrNuevo = false } = {}) {
   // extensionDe y no extname a secas: «demanda.pdf » (espacio final) es un PDF.
   const ext = extensionDe(filePath);
+  // Solo pruebas (supervisor, 1.13.0): un motor WASM que revienta EN MITAD de la lectura de ese
+  // fichero («memory access out of bounds», Eduardo 31-oct): excepción sin capturar, lectura a medias.
+  if (process.env.ROBIN_PRUEBA_EXCEPCION_EN && path.basename(filePath) === process.env.ROBIN_PRUEBA_EXCEPCION_EN) {
+    return new Promise(() => {
+      setImmediate(() => {
+        throw new Error('RuntimeError: memory access out of bounds (prueba)');
+      });
+    });
+  }
   return extractByExtension(filePath, ext, { maxPages, depth: 0, conSaltos, sinOcrNuevo });
 }
 

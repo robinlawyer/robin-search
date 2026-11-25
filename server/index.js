@@ -22,6 +22,7 @@ import { fail } from './tools/util.js';
 import * as diagnostico from './diagnostico.js';
 import * as escritor from './escritor.js';
 import * as registry from './indexer/registry.js';
+import * as noLegibles from './indexer/ilegibles.js';
 import { usarCertificadosDelSistema, proxyIgnorado } from './red-corporativa.js';
 import { piezasDe } from './estructura/piezas.js';
 
@@ -40,7 +41,8 @@ import siguientePorRevisar from './tools/siguiente_por_revisar.js';
 import anotar from './tools/anotar.js';
 import obtenerAnotaciones from './tools/obtener_anotaciones.js';
 import cambiosExpediente from './tools/cambios_expediente.js';
-import { HERRAMIENTAS_CONSULTA, alConsultar, expedienteDeLaLlamada } from './consultas.js';
+import { HERRAMIENTAS_CONSULTA, alConsultar } from './consultas.js';
+import * as expedientesMod from './expedientes.js';
 import buscarCorreos from './tools/buscar_correos.js';
 import leerCorreo from './tools/leer_correo.js';
 import leerAdjunto from './tools/leer_adjunto.js';
@@ -50,6 +52,10 @@ import enviarCorreo from './tools/enviar_correo.js';
 import reconectarRobinsearch from './tools/reconectar_robinsearch.js';
 import { avisoSesion } from './auth/oauth.js';
 import { state } from './state.js';
+import { escribirStderr, stderrCerradoYa } from './tuberias.js';
+import { isMainThread, parentPort } from 'node:worker_threads';
+import { supervisado as supervisadoMotor } from './motor.js';
+import fs from 'node:fs';
 
 const TOOLS = [
   buscarDocumentos,
@@ -92,6 +98,18 @@ const TOOLS = [
 // 8-oct-2026): una versión nueva y una licencia a punto de vencer. Van en la respuesta de la
 // herramienta, como mucho una vez cada 6 horas cada uno, para que Claude se lo diga.
 const CADA_AVISO_MS = 6 * 3600 * 1000;
+// 27-oct-2026 (Juan, Claude Desktop): los resultados ya no llevan órdenes («Díselo al
+// abogado»), que Desktop descarta por no venir del usuario; llevan datos. Qué hacer con ellos
+// va aquí y en la descripción de las herramientas, el canal que el cliente reconoce del servidor.
+const INSTRUCCIONES =
+  'RobinSearch busca en los expedientes del despacho, en este ordenador. Campos de servicio en ' +
+  'los resultados: "cambios_desde_tu_ultima_consulta" son los documentos del expediente que han ' +
+  'entrado, cambiado o salido y aún no se le han contado al abogado: cuéntaselos una vez, en el ' +
+  'momento que indique "cuando_contarlo", y sigue con lo que ha pedido. "aviso_robinsearch" es un ' +
+  'aviso del servicio para el abogado (una versión nueva, la licencia a punto de vencer): ' +
+  'trasládaselo en una línea. "indexado_en_curso" quiere decir que los documentos ya se están ' +
+  'indexando y entrarán solos: no hace falta repetir la petición.';
+
 const _ultimoAviso = new Map();
 function avisosParaElChat() {
   const out = [];
@@ -102,15 +120,16 @@ function avisosParaElChat() {
     _ultimoAviso.set('sesion', ahora);
   }
   const nueva = state.actualizacionDisponible;
-  if (nueva && _ultimoAviso.get('version') !== nueva) {
-    out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Díselo al abogado: puede ` +
-      'instalarla con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
+  // Bajo el supervisor la versión nueva se instala sola (motor.js): no hay nada que pedirle.
+  if (nueva && !supervisadoMotor() && _ultimoAviso.get('version') !== nueva) {
+    out.push(`RobinSearch ${nueva} ya está disponible (este ordenador tiene la ${VERSION}). Se instala ` +
+      'con el botón de RobinDesktop o descargándola en robinlawyer.ai/descargas y abriéndola con Claude; la sesión se conserva.');
     _ultimoAviso.set('version', nueva);
   }
   const minima = state.versionMinimaAnunciada;
   if (minima && _ultimoAviso.get('minima') !== minima.version) {
     out.push(`A partir del ${minima.desde || 'próximo cambio'} RobinLawyer.ai dejará de aceptar versiones de RobinSearch anteriores a la ${minima.version}; ` +
-      `este ordenador tiene la ${VERSION}. Díselo al abogado para que actualice desde RobinDesktop o robinlawyer.ai/descargas.`);
+      `este ordenador tiene la ${VERSION}. Se actualiza desde RobinDesktop o robinlawyer.ai/descargas.`);
     _ultimoAviso.set('minima', minima.version);
   }
   return out;
@@ -132,13 +151,14 @@ async function main() {
   const { salirLimpio } = diagnostico.instalarManejadores({
     alCerrar: () => {
       registry.guardarPendiente();
+      noLegibles.guardarYa();
       escritor.soltar();
     },
   });
 
   const server = new Server(
     { name: 'robin-search', version: VERSION },
-    { capabilities: { tools: {} } },
+    { capabilities: { tools: {} }, instructions: INSTRUCCIONES },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -155,13 +175,30 @@ async function main() {
     const { name, arguments: args } = request.params;
     const tool = byName.get(name);
     if (!tool) return fail(`Herramienta desconocida: ${name}`);
+    // Solo pruebas (supervisor): el hilo muere en mitad de esta herramienta, una vez.
+    if (process.env.ROBIN_PRUEBA_TUMBAR_UNA_VEZ && process.env.ROBIN_PRUEBA_TUMBAR_HERRAMIENTA === name) {
+      try {
+        fs.rmSync(process.env.ROBIN_PRUEBA_TUMBAR_UNA_VEZ);
+        setImmediate(() => {
+          throw new Error('RuntimeError: Aborted() (prueba)');
+        });
+        await new Promise(() => {});
+      } catch {
+        /* ya se tumbó una vez */
+      }
+    }
     try {
-      const res = await tool.handler(args || {});
+      // El aviso de cambios va con el expediente que ESTA llamada ha leído (lo anota
+      // exigirExpediente en su contexto), no con el activo de después, que otra conversación ha
+      // podido cambiar mientras tanto. Si la llamada no ha leído ninguno (limpiar), no hay aviso.
+      const ambito = {};
+      const res = await expedientesMod.ambitoLlamada.run(ambito, () => tool.handler(args || {}));
+      const expedienteConsulta = ambito.expediente ?? null;
       // 6-oct-2026 (Juan): lo que ha cambiado en el expediente y aún no se le ha contado al
       // abogado, para que Claude se lo diga sin que lo pregunte. 8-oct: sin depender de una pausa
       // (un chat nuevo a los diez minutos comparte este mismo proceso; ver consultas.js).
       if (HERRAMIENTAS_CONSULTA.has(name) && !res?.isError && res?.structuredContent) {
-        const cambios = alConsultar(expedienteDeLaLlamada(args));
+        const cambios = alConsultar(expedienteConsulta);
         if (cambios) {
           res.structuredContent = { ...res.structuredContent, cambios_desde_tu_ultima_consulta: cambios };
           res.content = [
@@ -209,7 +246,10 @@ async function main() {
   process.stdin.on('end', () => {
     if (huboCliente) salirLimpio('stdin_cerrado');
   });
-  log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder });
+  log.info('Servidor MCP conectado (stdio)', { carpeta: config.watchedFolder, supervisado: !isMainThread });
+  // Bajo el supervisor (1.13.0): le dice dónde están los datos, para recoger lo que deje este hilo
+  // si muere (su marca de fase y sus cerrojos).
+  if (!isMainThread) parentPort?.postMessage({ robin: 'dataDir', dataDir: config.dataDir });
   // HUELLA en el registro de Claude (23-sep-2026). Claude guarda lo que el servidor
   // escribe por stderr en «mcp-server-<nombre>.log», y ese <nombre> lo pone la
   // instalación: en tres equipos Windows de la 1.8.4 no había NINGÚN fichero cuyo
@@ -220,7 +260,8 @@ async function main() {
   // 🔴 29-sep-2026: con el Node que trae Claude (UtilityProcess) stderr acaba en main.log,
   // no en «mcp-server-<nombre>.log»; el registro se reconoce sobre todo por la ETIQUETA
   // con que Claude firma nuestras líneas (diagnostico.js, fuenteLogClaude).
-  process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
+  // Con la tubería ya rota por Claude no se escribe (tuberias.js; el oyente de stdio-guard recoge el error).
+  if (!stderrCerradoYa()) process.stderr.write(`robin-search: servidor listo (v${VERSION})\n`);
 
   // El indexado inicial y el watcher arrancan en segundo plano: el servidor responde
   // desde el primer momento (estado_servidor informará "indexando"). Se espera a que Claude
@@ -241,6 +282,6 @@ async function main() {
 
 main().catch((err) => {
   log.error('Fallo fatal al arrancar el servidor', { err: String(err) });
-  process.stderr.write(`robin-search: fallo al arrancar: ${err?.message ?? err}\n`);
+  escribirStderr(`robin-search: fallo al arrancar: ${err?.message ?? err}\n`);
   process.exit(1);
 });

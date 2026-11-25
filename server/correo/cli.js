@@ -369,19 +369,33 @@ async function olvidar(o = {}) {
     return salida({ ok: false, motivo: 'cuenta_desconocida', mensaje: `La cuenta «${pedida}» no está conectada.` });
   }
   // Sin --cuenta, TODAS (lo que hacía «Desconectar» cuando solo había una).
-  const cuales = pedida ? [leerCorreo(pedida)] : leerCuentas();
-  for (const c of cuales) {
-    if (!c.usuario) continue;
-    await llavero.borrar(c.usuario);
-    await oauth.olvidarPermiso(c.usuario);
-    oauth.olvidarEnMemoria(c.usuario);
+  // Primero el fichero y después las contraseñas: si ajustes.json no se puede escribir, la cuenta
+  // sigue conectada Y con su contraseña (se puede reintentar), en vez de quedar en la lista sin
+  // poder entrar. Y se borran las contraseñas de las cuentas que se han quitado de verdad.
+  const { quitadas } = olvidarCorreo(pedida ? leerCorreo(pedida).usuario : null);
+  for (const usuario of quitadas) {
+    await llavero.borrar(usuario);
+    await oauth.olvidarPermiso(usuario);
+    oauth.olvidarEnMemoria(usuario);
   }
-  olvidarCorreo(pedida ? cuales[0].usuario : null);
   carpetasMod.olvidarCache();
   return salida({ ok: true, ...(await estado()) });
 }
 
 export async function ejecutar(argv) {
+  try {
+    return await ejecutarOrden(argv);
+  } catch (err) {
+    // ajustes.json ilegible (permisos, antivirus, disco): se dice en JSON, que es lo que espera
+    // RobinDesktop, y no se ha escrito nada encima.
+    if (err?.code && /^E[A-Z]+$/.test(err.code)) {
+      return salida({ ok: false, motivo: 'ajustes_ilegibles', mensaje: `No se ha podido leer o guardar la configuración del correo (${err.code}). Inténtalo de nuevo en un momento; si se repite, reinicia el ordenador.` });
+    }
+    throw err;
+  }
+}
+
+async function ejecutarOrden(argv) {
   const [sub, ...resto] = argv;
   const o = banderas(resto);
   switch (sub) {

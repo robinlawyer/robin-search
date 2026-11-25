@@ -7,6 +7,7 @@ import { esRutaDeRed } from '../net.js';
 import { state } from '../state.js';
 import * as registry from '../indexer/registry.js';
 import * as cuarentena from '../indexer/cuarentena.js';
+import { avisoGoogleNativos } from '../indexer/indexer.js';
 import * as store from '../search/store.js';
 import * as expedientes from '../expedientes.js';
 import { leerCorreo, leerCuentas } from '../correo/ajustes.js';
@@ -203,8 +204,8 @@ export async function handler() {
       respuesta.aviso_carpetas_ausentes =
         `${state.ultimoIndexado.carpetas_ausentes.length} carpeta(s) configurada(s) ya NO existen en el ` +
         'ordenador (ver carpetas_ausentes). RobinSearch las ha apartado para no fallar en cada intento ' +
-        'y las vuelve a mirar sola por si reaparecen. Dile al abogado que las quite o corrija su ruta ' +
-        'en RobinDesktop; lo que se busque no cubre esas carpetas.';
+        'y las vuelve a mirar sola por si reaparecen. Se quitan o se corrige su ruta en RobinDesktop; ' +
+        'mientras tanto, lo que se busque no cubre esas carpetas.';
     }
     // Lo que el recorrido encontró pero no pudo meter: ficheros de iCloud/OneDrive sin descargar,
     // enlaces o junctions rotos, bucles. Sin esto una carpeta «bajo demanda» daba 0 en silencio.
@@ -216,8 +217,10 @@ export async function handler() {
         (ni.no_descargados ? `${ni.no_descargados} fichero(s) en la nube sin descargar a este equipo; ` : '') +
         (ni.enlaces_inaccesibles ? `${ni.enlaces_inaccesibles} enlace(s) o acceso(s) directo(s) que no llevan a nada accesible; ` : '') +
         (ni.bucles_evitados ? `${ni.bucles_evitados} enlace(s) en bucle que se han saltado; ` : '') +
-        (ni.protegidos ? `${ni.protegidos} PDF(s) protegidos con contraseña (RobinSearch prueba las que haya en ROBIN_PDF_CLAVES; si no, el abogado tiene que quitarles la protección o dar la contraseña a quien lo instaló); ` : '') +
+        (ni.protegidos ? `${ni.protegidos} documento(s) protegidos con contraseña (PDF, Word o Excel). De los PDF, RobinSearch prueba las contraseñas que haya en ROBIN_PDF_CLAVES; para los demás, el abogado tiene que quitarles la protección o guardar en la misma carpeta una copia sin ella; ` : '') +
+        (ni.vacios ? `${ni.vacios} documento(s) vacíos o con todo el contenido a ceros: no es que estén en la nube, es que el fichero no tiene nada (suele ser una copia que se estropeó al sincronizar; en OneDrive se recupera la versión buena con clic derecho → «Historial de versiones», en Google Drive con «Gestionar versiones»); ` : '') +
         (ni.danados ? `${ni.danados} documento(s) dañados que ni su propio programa abriría (RobinSearch ya ha intentado rescatar su texto); ` : '') +
+        (ni.google_nativos ? avisoGoogleNativos(ni.google_nativos) : '') +
         (ni.reintentables ? `${ni.reintentables} documento(s) que hoy no se han podido guardar en el índice (no cabían en la memoria del equipo, o el antivirus u otra ventana de Claude tenían un fichero abierto): se reintentan solos en la siguiente pasada; ` : '') +
         'lo que se busque no los cubre. Para los de la nube, RobinSearch ya ha pedido su descarga y ' +
         'los indexa solo en cuanto lleguen (ver pendientes_de_descarga); si el abogado tiene prisa, ' +
@@ -232,8 +235,8 @@ export async function handler() {
       respuesta.aviso_formatos_no_indexados =
         'En las carpetas hay ficheros de formatos que RobinSearch todavía no lee, y por tanto NO están '
         + `en las búsquedas: ${top.map(([e, n]) => `${n} ${e}`).join(', ')}. `
-        + 'Si son documentos del expediente (por ejemplo .pages o .key de Mac), dile al abogado que los '
-        + 'exporte a PDF o Word y entrarán solos.';
+        + 'Si son documentos del expediente (por ejemplo .pages o .key de Mac), exportados a PDF o Word '
+        + 'en la misma carpeta entran solos.';
     }
     // Lo que está esperando a bajar de la nube: se pide su descarga y se reintenta solo. Se dice
     // aquí para que nadie dé por hecho que esos documentos ya están en las búsquedas.
@@ -244,6 +247,17 @@ export async function handler() {
         `${porDescargar} documento(s) están en las carpetas pero su contenido todavía no está en este ` +
         'ordenador (iCloud, OneDrive o Dropbox). RobinSearch ha pedido su descarga y los indexa solo ' +
         'en cuanto lleguen; hasta entonces NO están en las búsquedas.';
+    }
+    // Los que ya están en el disco pero con el contenido a ceros (copia dañada al sincronizar): se
+    // vuelven a mirar durante un día por si el sincronizador los está reescribiendo.
+    const aCeros = nube.cuantosACeros();
+    if (aCeros > 0) {
+      respuesta.documentos_a_ceros = aCeros;
+      respuesta.aviso_documentos_a_ceros =
+        `${aCeros} documento(s) están en este ordenador pero con todo el contenido a ceros: no se pueden ` +
+        'leer y NO están en las búsquedas. Suele ser una copia que se estropeó al sincronizar. RobinSearch ' +
+        'los vuelve a mirar durante un día; si siguen así, la versión buena se recupera en OneDrive con ' +
+        'clic derecho → «Historial de versiones» (en Google Drive, «Gestionar versiones»).';
     }
     if (state.ultimoIndexado.errores > 0) {
       respuesta.aviso_indexado =

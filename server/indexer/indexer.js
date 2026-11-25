@@ -45,6 +45,7 @@ import { embedPassages, cargaEmbedding, prepararHilos } from '../embedder/embedd
 import * as store from '../search/store.js';
 import * as registry from './registry.js';
 import * as cuarentena from './cuarentena.js';
+import * as noLegibles from './ilegibles.js';
 import * as diagnostico from '../diagnostico.js';
 import * as escritor from '../escritor.js';
 import * as ausentes from '../carpetas-ausentes.js';
@@ -96,7 +97,22 @@ export function nuevaCuentaRecorrido() {
     // esto, un despacho con 300 documentos en .pages o en un formato de su programa de gestión
     // creía que estaban en las búsquedas: no fallaba nada, simplemente no estaban.
     formatos_fuera: {},
+    // Documentos de Google (Docs, Hojas, Presentaciones…) que Google Drive para escritorio deja en
+    // la carpeta como un acceso directo de pocos bytes: el texto vive en la nube de Google y en el
+    // disco no hay nada que leer, ni en modo «transmitir» ni en «replicar» (caso Ridwan, 27-oct-2026).
+    // Se cuentan aparte de `formatos_fuera` porque lo que hay que decirle al abogado es otra cosa.
+    google_nativos: 0,
   };
+}
+
+const EXT_GOOGLE = new Set(['.gdoc', '.gsheet', '.gslides', '.gdraw', '.gform', '.gjam', '.gsite', '.gmap', '.gtable', '.gscript']);
+
+// El mismo texto en estado_servidor y en indexar_carpeta.
+export function avisoGoogleNativos(n) {
+  return `${n} documento(s) de Google Docs, Hojas o Presentaciones (.gdoc, .gsheet, .gslides): en la ` +
+    'carpeta solo hay un acceso directo y el texto vive en la nube de Google, así que RobinSearch no ' +
+    'puede leerlos. Para que entren en las búsquedas, el abogado tiene que descargarlos en la misma ' +
+    'carpeta como Word, Excel o PDF (en Google: Archivo → Descargar); ';
 }
 
 // iCloud deja «.Demanda.pdf.icloud» en lugar del fichero mientras no se descarga.
@@ -110,11 +126,21 @@ const RE_ICLOUD = /^\.(.+)\.icloud$/i;
 // perdía el tiempo fichero a fichero y salían como «error de indexado» — y no hay nada roto.
 //
 // Se detectan ANTES de leerlos: un fichero con tamaño pero SIN bloques asignados en disco es un
-// marcador, no un documento (iCloud y OneDrive en Mac/Linux lo dejan así). En Windows el sistema
-// no lo expone por `stat`; allí manda la clasificación del error de lectura, más abajo.
-export function esMarcadorDeNube(stat) {
-  if (process.platform === 'win32') return false;
+// marcador, no un documento (iCloud, OneDrive, Google Drive y Dropbox en Mac/Linux lo dejan así).
+// En Windows no se salta sin más: allí lo que da 0 bloques puede ser también un fichero diminuto
+// guardado dentro de la tabla de NTFS, y OneDrive deja leer el marcador mientras lo baja. Allí
+// se trae antes de leerlo (`necesitaTraerse` y nube.traer, en indexFile).
+export function esMarcadorDeNube(stat, plataforma = process.platform) {
+  if (plataforma === 'win32') return false;
   return Number(stat?.size) > 0 && stat?.blocks === 0;
+}
+
+// Windows: fichero que puede estar «solo en la nube» (OneDrive/SharePoint bajo demanda). libuv
+// da en `blocks` el tamaño asignado en disco, y un marcador de OneDrive no tiene nada asignado
+// (el Explorador: «Tamaño en disco: 0 bytes»). Leerlo en síncrono, como hace el extractor,
+// dejaba RobinSearch sin contestar a Claude mientras OneDrive lo bajaba (Eduardo, 28-oct-2026).
+export function necesitaTraerse(stat, plataforma = process.platform) {
+  return plataforma === 'win32' && Number(stat?.size) > 0 && stat?.blocks === 0;
 }
 
 // Errores que NO son un fallo de RobinSearch sino del fichero o de la nube del abogado. No
@@ -126,10 +152,15 @@ const CODIGOS_NUBE = new Set(['ETIMEDOUT', 'EHOSTDOWN', 'EHOSTUNREACH', 'ENOTCON
 // a uno solo hace daño (el propio OCR escribe temporales). Ver `cortarPorDisco`.
 const CODIGOS_DISCO = new Set(['ENOSPC', 'EDQUOT']);
 
-export function claseDeError(err) {
+export function claseDeError(err, plataforma = process.platform) {
   const code = String(err?.code || '');
   if (CODIGOS_DISCO.has(code)) return 'disco';
   if (CODIGOS_NUBE.has(code)) return 'nube';
+  // Windows: los errores propios de OneDrive (cliente cerrado o en pausa, sin conexión, descarga
+  // bloqueada en «Descargas automáticas de archivos») no tienen traducción en libuv y llegan como
+  // UNKNOWN. Hasta la 1.12.7 salían como «error de indexado», con aviso técnico, y el documento
+  // no se volvía a intentar nunca; son un «sin descargar» y se reintentan (nube.js).
+  if (plataforma === 'win32' && code === 'UNKNOWN') return 'nube';
   if (code === 'ENOENT') return 'desaparecido';
   return null;
 }
@@ -218,6 +249,10 @@ function anotarFormatoFuera(cuenta, full) {
   if (!cuenta?.formatos_fuera) return;
   const ext = extensionDe(full);
   if (!ext || EXT_NO_DOCUMENTO.has(ext)) return;
+  if (EXT_GOOGLE.has(ext)) {
+    cuenta.google_nativos = (cuenta.google_nativos || 0) + 1;
+    return;
+  }
   if (!(ext in cuenta.formatos_fuera) && Object.keys(cuenta.formatos_fuera).length >= MAX_FORMATOS_FUERA) return;
   cuenta.formatos_fuera[ext] = (cuenta.formatos_fuera[ext] || 0) + 1;
 }
@@ -251,9 +286,29 @@ export async function indexFile(absPath, { force = false, paralelo = false } = {
     nube.apuntar(abs, 'sin_descargar');
     return { ruta: logicalPath(abs), estado: 'no_descargado' };
   }
+  if (necesitaTraerse(stat)) {
+    const traido = await nube.traer(abs);
+    if (traido.estado === 'tarde' || traido.estado === 'nube') {
+      nube.apuntar(abs, 'sin_descargar');
+      return { ruta: logicalPath(abs), estado: 'no_descargado' };
+    }
+    if (traido.estado === 'ok') {
+      try {
+        stat = fs.statSync(abs);
+      } catch {
+        /* se ha ido mientras bajaba: el camino normal lo trata como desaparecido */
+      }
+    }
+  }
   const ext = path.extname(abs).toLowerCase();
   const apartado = cuarentena.estaApartado(abs, stat);
   if (apartado) return { ruta: logicalPath(abs), estado: 'apartado', motivo: apartado.motivo };
+  // Ya se intentó leer TAL COMO ESTÁ y no se pudo: no se vuelve a abrir en cada pasada
+  // (ilegibles.js). Sale con el mismo código, para que se cuente igual que la primera vez.
+  if (!force) {
+    const code = noLegibles.recordado(abs, stat);
+    if (code) throw Object.assign(new Error('Documento que ya se sabe que no se puede leer'), { code, recordado: true });
+  }
   const limite = limiteBytes(ext);
   if (stat.size > limite) {
     cuarentena.apartarPorTamanyo(abs, stat, limite);
@@ -537,6 +592,7 @@ export async function removeFilePath(absPath) {
   const rutaLogica = logicalPath(abs);
   if (!escritor.confirmar()) return { ruta: rutaLogica, estado: 'omitido', motivo: 'solo_lectura' };
   const entry = registry.remove(abs);
+  noLegibles.olvidar(abs);
   state.ficherosSinOcr.delete(rutaLogica);
   if (entry) await store.deleteByDoc(entry.docId);
   return { ruta: rutaLogica, estado: 'eliminado' };
@@ -852,6 +908,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
   setIndexando({ fase: 'indexando', procesados: 0, total: files.length, ficheroActual: null, carpeta: null, carpetas: accesibles });
   await respirar();
   const { orden, bytesPendientes, pendientesPorExt } = await planificar(files, force);
+  // Cuántos documentos hay que leer de verdad en esta pasada y cuántos quedan (seguimiento.js):
+  // 9-nov-2026, Fernando (114.800 documentos, 3.960 indexados tras un fin de semana) — nadie supo
+  // que la pasada estaba parada hasta que Juan fue a verlo. Solo cifras: ni nombres ni rutas.
+  resumen.a_indexar = orden.reduce((n, o) => n + (o.stat?.pendiente ? 1 : 0), 0);
+  resumen.pendientes = resumen.a_indexar;
   const eta = nuevaEta(bytesPendientes, pendientesPorExt);
   // Con trabajo de verdad por delante, que los hilos de embedding (si los hay) estén arrancando
   // antes de repartir: decide si los documentos van de uno en uno o varios a la vez.
@@ -871,6 +932,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         resumen.indexados += 1;
         resumen.fragmentosNuevos += r.chunks || 0;
         nube.olvidar(abs);
+        noLegibles.olvidar(abs);
       } else if (r.estado === 'sin_cambios') resumen.sinCambios += 1;
       else if (r.estado === 'sin_ocr') resumen.sinOcr += 1;
       else if (r.estado === 'apartado') resumen.apartados += 1;
@@ -901,8 +963,11 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // bajado (allí `stat` no distingue el marcador): 72 en un solo despacho el 21-sep. Se trata
       // igual —descarga y reintento—, y si después de un día sigue a cero, es que está vacío.
       if (err?.code === 'ROBIN_FICHERO_VACIO') {
-        nube.apuntar(abs, 'vacio');
-        (resumen.no_indexables ??= nuevaCuentaRecorrido()).no_descargados += 1;
+        const ni = (resumen.no_indexables ??= nuevaCuentaRecorrido());
+        // Ya se le dio un día y sigue igual: no está en la nube, está vacío o a ceros (copia
+        // dañada). Se cuenta como lo que es, sin volver a apuntarlo.
+        if (nube.dadoPorVacio(abs) || !nube.apuntar(abs, 'vacio')) ni.vacios = (ni.vacios || 0) + 1;
+        else ni.no_descargados += 1;
         resumen.omitidos += 1;
         return;
       }
@@ -910,14 +975,21 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       // texto). No es un error DE RobinSearch, pero tampoco se calla: va a `no_indexables`, que
       // `estado_servidor` explica uno a uno con lo que el abogado puede hacer. «errores» queda
       // para lo que sí hay que arreglar aquí.
-      if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO') {
+      if (err?.code === 'ROBIN_FICHERO_PDF_PROTEGIDO' || err?.code === 'ROBIN_FICHERO_PROTEGIDO') {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).protegidos += 1;
         resumen.omitidos += 1;
+        // El Word o Excel protegido se recuerda (no hay lista de contraseñas que probar para
+        // ellos): no se vuelve a abrir en cada pasada hasta que el abogado lo cambie.
+        if (err.code === 'ROBIN_FICHERO_PROTEGIDO' && !err.recordado) {
+          noLegibles.anotar(abs, null, err.code);
+          log.info('Documento protegido con contraseña: no se puede indexar', { ext: extensionDe(abs), bytes: stat?.size ?? null });
+        }
         return;
       }
-      // Hoy el equipo no tenía memoria para el OCR de este escaneado. No está dañado ni hay nada
-      // que arreglar: se deja sin indexar y la siguiente pasada lo vuelve a intentar.
-      if (err?.code === 'ROBIN_FICHERO_SIN_MEMORIA') {
+      // Hoy el equipo no tenía memoria para el OCR de este escaneado, o el motor de OCR está en
+      // pausa tras varias caídas. No está dañado ni hay nada que arreglar: se deja sin indexar y
+      // la siguiente pasada lo vuelve a intentar.
+      if (err?.code === 'ROBIN_FICHERO_SIN_MEMORIA' || err?.code === 'ROBIN_OCR_EN_PAUSA') {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).reintentables =
           ((resumen.no_indexables.reintentables) || 0) + 1;
         resumen.omitidos += 1;
@@ -939,6 +1011,12 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       if (String(err?.code || '').startsWith('ROBIN_FICHERO_')) {
         (resumen.no_indexables ??= nuevaCuentaRecorrido()).danados += 1;
         resumen.omitidos += 1;
+        // Ya avisado en la pasada en que se intentó: ni se vuelve a abrir ni se repite el aviso.
+        if (err.recordado) {
+          resumen.ilegibles_recordados = (resumen.ilegibles_recordados || 0) + 1;
+          return;
+        }
+        noLegibles.anotar(abs, null, err.code);
         log.warn('Documento que no se ha podido leer', {
           fichero: logicalPath(abs), ext: extensionDe(abs), bytes: stat?.size ?? null, code: String(err.code),
         });
@@ -972,7 +1050,10 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
       });
     } finally {
       terminados += 1;
-      if (stat?.pendiente) eta.hecho(stat.size, fragmentosDelFichero, path.extname(abs).toLowerCase());
+      if (stat?.pendiente) {
+        eta.hecho(stat.size, fragmentosDelFichero, path.extname(abs).toLowerCase());
+        resumen.pendientes = Math.max(0, resumen.pendientes - 1);
+      }
     }
     if (onProgress) onProgress(state.progreso, resumen);
   };
@@ -1002,6 +1083,7 @@ async function indexFolderSinContar({ folders, force = false, onProgress, reconc
         ficheroActual: logicalPath(abs),
         carpeta: rootForPath(abs)?.path ?? null,
         carpetas: accesibles,
+        pendientes: resumen.pendientes,
         ...eta.estimar(),
       });
       // Miles de ficheros sin cambios se despachan sin esperar a nada: sin soltar el proceso de

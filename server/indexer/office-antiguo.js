@@ -60,6 +60,27 @@ function offsetsFib(doc) {
   return { rgLw, rgFcLcb: p, cbRgFcLcb };
 }
 
+// ¿Es un documento de Office protegido con contraseña? (13-nov-2026, informes técnicos de un
+// despacho en Windows con la carpeta en OneDrive.)
+//   · Word, Excel o PowerPoint de 2007 en adelante con contraseña de apertura: el .docx/.xlsx/.pptx
+//     deja de ser un ZIP y pasa a ser un contenedor OLE con el contenido cifrado en el flujo
+//     «EncryptedPackage». Hasta la 1.13.2 un .docx así se leía como un .doc antiguo, no salía
+//     texto y se «indexaba» vacío SIN AVISO: el abogado creía que estaba en las búsquedas.
+//   · Word 97-2003 cifrado: bit fEncrypted (0x0100) de la cabecera del flujo WordDocument.
+//   · PowerPoint 97-2003 cifrado: flujo «EncryptedSummary».
+// (El Excel 97-2003 cifrado lo reconoce el propio lector de hojas: «File is password-protected».)
+export function oleCifrado(buf) {
+  let cfb;
+  try {
+    cfb = CFB.read(buf, { type: 'buffer' });
+  } catch {
+    return false;
+  }
+  if (CFB.find(cfb, 'EncryptedPackage') || CFB.find(cfb, 'EncryptedSummary')) return true;
+  const doc = flujo(cfb, 'WordDocument');
+  return Boolean(doc && doc.length >= 12 && doc.readUInt16LE(0) === FIB_IDENT && (doc.readUInt16LE(0x0a) & 0x0100));
+}
+
 export function textoDeDoc(buf) {
   const cfb = CFB.read(buf, { type: 'buffer' });
   const doc = flujo(cfb, 'WordDocument');

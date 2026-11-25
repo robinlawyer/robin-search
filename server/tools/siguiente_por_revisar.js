@@ -12,6 +12,7 @@ import * as expedientes from '../expedientes.js';
 import * as anotaciones from '../anotaciones.js';
 import { ok, fail } from './util.js';
 import { ensureAuthorized, authPromptResult } from '../auth/oauth.js';
+import { retiradoDelDisco, AVISO_RETIRADO } from '../search/en-disco.js';
 
 export const definition = {
   name: 'siguiente_por_revisar',
@@ -50,6 +51,10 @@ async function textoVentana(v, expediente) {
   if (entry && !expedientes.enAmbito(expDoc, expediente)) return null;
 
   const chunks = await store.getDocChunks(v.doc_id);
+  // Borrado del disco y aún sin retirar del índice: no se sirve su texto (search/en-disco.js).
+  if (await retiradoDelDisco(v.doc_id, chunks[0] ?? { rutaRelativa: v.ruta_relativa })) {
+    return { texto: '', paginas: null, fichero: null, retirado_del_disco: true, aviso: AVISO_RETIRADO };
+  }
   if (chunks.length === 0) return { texto: '', paginas: null, fichero: null };
   const expChunk = chunks[0].expediente || expedienteForLogicalPath(chunks[0].rutaRelativa);
   if (!expedientes.enAmbito(expChunk, expediente)) return null;
@@ -138,6 +143,7 @@ export async function handler(args) {
     fragmentos_documento: v.fragmentos_documento,
     paginas: contenido.paginas,
     texto: contenido.texto,
+    ...(contenido.retirado_del_disco ? { retirado_del_disco: true, aviso_retirado: contenido.aviso } : {}),
     siguiente_paso:
       'Lee este texto ENTERO y llama a "anotar" con doc_id y desde_fragmento tal cual vienen ' +
       'aquí. No resumas: extrae hechos con su página. Luego vuelve a llamar a esta tool.',

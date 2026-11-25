@@ -259,7 +259,10 @@ contarle al abogado**, no una tarea.
 
 ## Registros
 
-De RobinSearch al servidor de RobinLawyer solo viajan avisos técnicos, y ni siquiera esos llevan
-nada del correo: ni remitentes, ni destinatarios, ni asuntos, ni cuerpos. Las direcciones se
+Del correo no llega nada al servidor de RobinLawyer. RobinSearch solo habla con él para la
+sesión y la licencia, para consultar el fichero de versiones y su firma, para descargar una
+actualización del motor cuando la hay, para el latido con las cifras del indexado y para los
+informes de fallo, y ninguno de ellos lleva nada del correo: ni remitentes, ni destinatarios, ni
+asuntos, ni cuerpos. Las direcciones se
 tapan y la cuenta y el servidor de correo del despacho se añaden a la lista de literales que la
 barrera de `diagnostico.js` sustituye antes de enviar nada.

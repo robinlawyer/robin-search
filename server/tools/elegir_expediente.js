@@ -11,6 +11,7 @@
 // «pendiente» y la siguiente llamada recoge la misma elección (no abre otra ventana).
 
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { ok, fail } from './util.js';
 import { config } from '../config.js';
 import { state } from '../state.js';
@@ -25,6 +26,11 @@ const CADUCIDAD_ELECCION_MS = 10 * 60 * 1000;
 
 let enCurso = null; // { promesa, opciones, desde }
 let sinRecoger = null; // { resultado, opciones, hasta }
+// Elección heredada a la espera de que el abogado confirme que es la de ESTA conversación. Se
+// confirma con el código, nunca volviendo a escribir el nombre: si la carpeta desaparece, un nombre
+// parecido podría resolverse a la de otro cliente (revisión de Codex, 25-nov).
+// Una entrada por elección: confirmar una no invalida otra pendiente (revisión de Codex, 6.ª ronda).
+const porConfirmar = new Map(); // codigo → { clave, ids, hasta }
 
 export const definition = {
   name: 'elegir_expediente',
@@ -50,8 +56,17 @@ export const definition = {
       },
       anadir: {
         type: 'boolean',
-        description: 'Sumar lo elegido a los expedientes ya seleccionados en vez de sustituirlos.',
+        description: 'Sumar lo elegido a los expedientes ya seleccionados en vez de sustituirlos. Exige "seleccion_actual".',
         default: false,
+      },
+      seleccion_actual: {
+        type: ['string', 'array'],
+        items: { type: 'string' },
+        description: 'Con "anadir": la selección que tiene ESTA conversación (la de "pasa_en_cada_llamada" de la última respuesta).',
+      },
+      confirmar: {
+        type: 'string',
+        description: 'El código "confirmar" que devolvió una respuesta con "pendiente_de_confirmar", cuando el abogado ha dicho que esa carpeta es la de esta conversación.',
       },
     },
   },
@@ -105,11 +120,10 @@ function abrir(opciones) {
   return ficha;
 }
 
-async function aplicar(resultado, opciones) {
+async function aplicar(resultado, opciones, { heredada = false } = {}) {
   if (resultado.estado === 'cancelado') {
     return ok({
       cancelado: true,
-      expediente_activo: expedientes.getActivo(),
       mensaje:
         'El abogado ha cerrado la ventana sin elegir. Pregúntale en qué expediente quiere trabajar ' +
         '(lista abajo) y fíjalo con establecer_expediente_activo.',
@@ -182,8 +196,34 @@ async function aplicar(resultado, opciones) {
     );
   }
 
-  const ids = expedientes.normalizarSeleccion(elegidos.map((e) => e.expediente));
-  const f = await fijarSeleccion(ids, { anadir: opciones.anadir === true });
+  const ids = expedientes.listaIds(elegidos.map((e) => e.expediente));
+  if (heredada) {
+    // La ventana la abrió una llamada anterior, que pudo ser de OTRA conversación: el servidor no
+    // lo sabe. No se fija nada hasta que el abogado confirme que es la carpeta de ESTE asunto
+    // (revisión de Codex, 25-nov).
+    // La MISMA elección recogida por dos llamadas a la vez da el mismo código: el primero no queda
+    // invalidado por el segundo (revisión de Codex, 5.ª ronda).
+    const clave = expedientes.claveSeleccion(ids);
+    const t = Date.now();
+    for (const [c, p] of porConfirmar) if (t > p.hasta) porConfirmar.delete(c);
+    const vigente = [...porConfirmar].find(([, p]) => p.clave === clave);
+    const codigo = vigente ? vigente[0] : crypto.randomBytes(6).toString('hex');
+    porConfirmar.set(codigo, { clave, ids, hasta: t + CADUCIDAD_ELECCION_MS });
+    return ok({
+      pendiente_de_confirmar: true,
+      carpetas_elegidas: elegidos.map((e) => e.carpeta),
+      expedientes_elegidos: ids,
+      confirmar: codigo,
+      mensaje:
+        'Esta carpeta se eligió en una ventana que abrió una llamada anterior, quizá desde otra ' +
+        'conversación, así que NO se ha fijado. Pregunta al abogado si es la carpeta del asunto de ' +
+        'ESTA conversación; si dice que sí, vuelve a llamar a elegir_expediente con "confirmar" ' +
+        `= "${codigo}" (y, si esta conversación quería SUMARLA a su selección, con "anadir": true y ` +
+        'su "seleccion_actual"). No la fijes escribiendo el nombre: si la carpeta ya no está, un ' +
+        'nombre parecido podría ser el de otro cliente.',
+    });
+  }
+  const f = await fijarSeleccion(ids, { anadir: opciones.anadir === true, seleccionActual: opciones.seleccionActual });
   if (!f.ok) return fail(f.error, { ...f.extra, expedientes_disponibles: disponibles() });
 
   const respuesta = { ...f.respuesta };
@@ -204,13 +244,15 @@ export async function handler(args) {
   const auth = await ensureAuthorized();
   if (!auth.ok) return authPromptResult(auth.loginUrl);
 
-  const opciones = { varias: args?.varias === true, anadir: args?.anadir === true };
+  const opciones = { varias: args?.varias === true, anadir: args?.anadir === true, seleccionActual: args?.seleccion_actual ?? null };
+
+  if (args?.confirmar != null) return confirmar(String(args.confirmar), opciones);
 
   // Una elección hecha después de que la llamada anterior contestara «pendiente».
   if (sinRecoger) {
     const s = sinRecoger;
     sinRecoger = null;
-    if (Date.now() <= s.hasta) return aplicar(s.resultado, s.opciones);
+    if (Date.now() <= s.hasta) return aplicar(s.resultado, s.opciones, { heredada: true });
   }
 
   if (!(config.roots || []).length) {
@@ -222,6 +264,7 @@ export async function handler(args) {
   }
 
   // Si ya hay una ventana abierta (la llamada anterior contestó «pendiente»), se espera a ESA.
+  const heredada = Boolean(enCurso);
   const actual = enCurso || abrir(opciones);
   let tope;
   const SIGUE = Symbol('sigue');
@@ -242,7 +285,33 @@ export async function handler(args) {
   }
   // La resolvió esta misma llamada: no queda nada sin recoger.
   sinRecoger = null;
-  return aplicar(r, actual.opciones);
+  return aplicar(r, actual.opciones, { heredada });
+}
+
+// Confirmación de una elección heredada: los identificadores EXACTOS que se eligieron, o nada.
+async function confirmar(codigo, opciones) {
+  const p = porConfirmar.get(codigo);
+  if (!p || Date.now() > p.hasta) {
+    porConfirmar.delete(codigo);
+    return fail(
+      'Ese código de confirmación no es válido o ha caducado. Vuelve a abrir la ventana con ' +
+        'elegir_expediente para que el abogado elija la carpeta.',
+      { motivo: 'confirmacion_no_valida' },
+    );
+  }
+  porConfirmar.delete(codigo);
+  const conocidos = new Set(expedientes.nombresConocidos());
+  const faltan = p.ids.filter((id) => !conocidos.has(id));
+  if (faltan.length) {
+    return fail(
+      `La carpeta elegida ya no está entre los expedientes de RobinSearch (${faltan.join(', ')}): no se ` +
+        'ha fijado nada. Vuelve a abrir la ventana con elegir_expediente.',
+      { motivo: 'carpeta_desaparecida', expedientes_disponibles: disponibles() },
+    );
+  }
+  const f = await fijarSeleccion(p.ids, { anadir: opciones.anadir, seleccionActual: opciones.seleccionActual });
+  if (!f.ok) return fail(f.error, { ...f.extra, expedientes_disponibles: disponibles() });
+  return ok(f.respuesta);
 }
 
 export default { definition, handler };

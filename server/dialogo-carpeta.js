@@ -44,7 +44,8 @@ function ejecutar(cmd, args, { env, entrada } = {}) {
   });
 }
 
-const lineas = (s) => String(s || '').split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
+// Sin recortar los espacios del final: una carpeta puede llamarse «Ruiz » (revisión de Codex, 25-nov).
+const lineas = (s) => String(s || '').split(/\r?\n/).map((x) => x.replace(/^\s+/, '')).filter((x) => x.trim() !== '');
 
 // macOS. `activate` sin destino trae la ventana delante (si no, se abre DETRÁS de Claude y parece
 // que no ha pasado nada) y no necesita el permiso de Automatización: no se controla otra app. La

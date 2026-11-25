@@ -36,13 +36,16 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { isMainThread, workerData } from 'node:worker_threads';
 import { config, VERSION } from './config.js';
 import { log } from './logger.js';
 import { escribirAtomico } from './persistencia.js';
 
 // La primera versión con el índice por documento. Todo lo anterior escribe index/index.json.
 export const PRIMERA_SEGURA = '1.4.5';
-const RAIZ_PROPIA = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// La extensión desde la que corre este RobinSearch: con un motor descargado (1.13.0) el código está
+// en <datos>/motor, pero la extensión instalada en Claude es la del supervisor.
+const RAIZ_PROPIA = path.resolve((!isMainThread && workerData?.motor?.raizIncluida) || path.join(path.dirname(fileURLToPath(import.meta.url)), '..'));
 
 export function compararVersiones(a, b) {
   const pa = String(a).replace(/^v/i, '').split(/[-+]/)[0].split('.').map((n) => parseInt(n, 10) || 0);
@@ -296,9 +299,19 @@ export function dirsClaude(home, plataforma, env = process.env) {
   if (plataforma === 'win32') {
     const roaming = env.APPDATA || path.join(home, 'AppData', 'Roaming');
     const local = env.LOCALAPPDATA || path.join(home, 'AppData', 'Local');
+    // Claude de la Tienda saca su perfil del paquete a %LOCALAPPDATA%\Claude-Data\<familia>
+    // (visto en su código, 4.4212, 2-nov-2026); en la propia carpeta si el perfil estaba en una
+    // ruta de red.
+    const claudeData = path.join(local, 'Claude-Data');
+    let perfiles = [];
+    try {
+      perfiles = fs.readdirSync(claudeData).filter((n) => /^[a-z0-9.-]+_[a-z0-9]+$/i.test(n)).map((n) => path.join(claudeData, n));
+    } catch { /* no hay: Claude clásico, o aún sin mudar */ }
     return [
       path.join(roaming, 'Claude'),
       ...['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t'].map((p) => path.join(local, 'Packages', p, 'LocalCache', 'Roaming', 'Claude')),
+      claudeData,
+      ...perfiles,
     ];
   }
   return [path.join(env.XDG_CONFIG_HOME || path.join(home, '.config'), 'Claude')];

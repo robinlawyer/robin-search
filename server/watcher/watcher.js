@@ -27,6 +27,7 @@ import { esRutaDeRed } from '../net.js';
 import { log } from '../logger.js';
 import { setActivo, setIndexando, setError, clearError } from '../state.js';
 import { indexFile, removeFilePath, indexFolder, normalizarCausa } from '../indexer/indexer.js';
+import nube from '../indexer/nube.js';
 import * as diagnostico from '../diagnostico.js';
 import * as ausentes from '../carpetas-ausentes.js';
 
@@ -55,9 +56,25 @@ function isSupported(p) {
   return esExtensionSoportada(p);
 }
 
+// ¿Está el vigilante con trabajo? (13-nov-2026, Juan: indexar_carpeta con el vigilante ya
+// indexando). Los ficheros sueltos que detecta los indexa él, fuera de indexFolder, así que
+// `indexandoAhora()` no lo veía: indexar_carpeta lanzaba un indexado completo EN PARALELO, repetía
+// el trabajo y no contestaba hasta terminarlo (medido: >5 min con 150 documentos entrando).
+export function vigilanteOcupado() {
+  return draining || pending.size > 0 || flushTimer !== null;
+}
+const _alQuedarLibre = new Set();
+export function alQuedarLibreVigilante(fn) {
+  _alQuedarLibre.add(fn);
+  return () => _alQuedarLibre.delete(fn);
+}
+
 function scheduleFlush() {
   if (flushTimer) clearTimeout(flushTimer);
-  flushTimer = setTimeout(() => serializar(drain), DEBOUNCE_MS);
+  flushTimer = setTimeout(() => {
+    flushTimer = null;
+    serializar(drain);
+  }, DEBOUNCE_MS);
 }
 
 // Ficheros que un evento dio por borrados pero que SIGUEN en disco: un error de lectura no es
@@ -149,7 +166,17 @@ async function drain() {
         for (const [a, j] of lote) pending.set(a, j);
         if (pending.size === 0) break;
       }
-      const [absPath, job] = pending.entries().next().value;
+      // Los borrados van PRIMERO (13-nov-2026, Juan): retirar un documento es inmediato y el
+      // abogado puede haberlo sacado por confidencialidad; indexar puede tardar (OCR). Antes se
+      // atendían por orden de llegada, detrás de lo que ya estuviera en cola.
+      let siguiente = null;
+      for (const e of pending) {
+        if (e[1].tipo === 'remove') {
+          siguiente = e;
+          break;
+        }
+      }
+      const [absPath, job] = siguiente ?? pending.entries().next().value;
       pending.delete(absPath);
       const ruta = logicalPath(absPath);
       setIndexando({ procesados: 0, total: 1, ficheroActual: ruta });
@@ -159,6 +186,16 @@ async function drain() {
         hechos += 1;
         log.info('Watcher: re-indexado', { ruta, tipo: job.tipo });
       } catch (err) {
+        // Lo que es del propio documento (vacío o a ceros, protegido con contraseña, dañado) no es
+        // un fallo del vigilante. Hasta la 1.13.2 cada uno contaba como fallo y dejaba RobinSearch
+        // en error («El watcher no pudo procesar N cambio(s)») por un PDF con contraseña que el
+        // abogado acababa de guardar (Windows con OneDrive, 11-nov-2026: 85 veces en un día). El
+        // recorrido periódico los cuenta y estado_servidor los explica.
+        if (String(err?.code || '').startsWith('ROBIN_FICHERO_') || err?.code === 'ROBIN_OCR_EN_PAUSA') {
+          if (err.code === 'ROBIN_FICHERO_VACIO' && !nube.dadoPorVacio(absPath)) nube.apuntar(absPath, 'vacio');
+          log.info('Watcher: documento que no se puede indexar tal como está', { code: String(err.code) });
+          continue;
+        }
         fallos += 1;
         ultimaCausa = normalizarCausa(err);
         log.error('Watcher: error procesando cambio', { ruta, err: String(err) });
@@ -172,7 +209,24 @@ async function drain() {
       clearError();
     }
     setActivo();
+    avisarSiLibre();
   }
+}
+
+// Avisa a quien espera al vigilante (la cola de indexar_carpeta) en cuanto no le queda trabajo.
+// Se llama al terminar cada drenado y al parar el vigilante, para que una petición encolada no
+// se quede sin lanzar (revisión de Codex, 13-nov-2026).
+function avisarSiLibre() {
+  if (vigilanteOcupado()) return;
+  setImmediate(() => {
+    for (const fn of _alQuedarLibre) {
+      try {
+        fn();
+      } catch {
+        /* un observador roto no rompe el vigilante */
+      }
+    }
+  });
 }
 
 function enqueue(absPath, tipo) {
@@ -527,6 +581,7 @@ export async function stopWatcher() {
     await _watcher.close();
     _watcher = null;
   }
+  avisarSiLibre();
 }
 
 // Solo pruebas: meter trabajo en la cola del vigilante y drenarla sin esperar al debounce.

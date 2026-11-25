@@ -86,6 +86,7 @@ const srv = http.createServer(async (req, res) => {
       return json(res, 200, emitir(fam));
     }
     if (g === 'refresh_token') {
+      if (S.tirarSiguienteRenovacion) { S.tirarSiguienteRenovacion = false; S.renovacionesTiradas = (S.renovacionesTiradas || 0) + 1; req.socket.destroy(); return; }
       const rt = f.get('refresh_token'); const t = S.tokens.get(rt);
       if (!t || !familiaViva(t.familia)) return json(res, 400, { error: 'invalid_grant' });
       if (t.revocado) {
@@ -264,6 +265,20 @@ await hasta(() => st.state.ultimoInforme?.motivo === 'sin_conexion_otro_proceso'
 check('cuando este proceso conecta y otro lleva días sin poder, se manda el aviso técnico con su error', st.state.ultimoInforme?.motivo === 'sin_conexion_otro_proceso', JSON.stringify(st.state.ultimoInforme || {}).slice(0, 100));
 const conex = JSON.parse(fs.readFileSync(CONEX, 'utf8'));
 check('y cada proceso deja su propio rastro de conexión', Boolean(conex[oauth.claveProceso()]?.ultimo_ok) && Boolean(conex['node24:claude.exe']));
+
+// ── P8 (18-oct-2026): un fallo de red en la vuelta diaria se reintenta en minutos, no en 24 h ──
+const aR = JSON.parse(fs.readFileSync(AUTH, 'utf8')); aR.expires_at = Date.now() + 3600e3; fs.writeFileSync(AUTH, JSON.stringify(aR)); // < 12 h: toca renovar
+process.env.ROBIN_REINTENTO_MANTENIMIENTO_MS = '300';
+const rotP8 = S.rotaciones;
+S.tirarSiguienteRenovacion = true;
+oauth.iniciarMantenimiento({ primeraMs: 10, cadaMs: 24 * 3600 * 1000 });
+const renovadaP8 = await hasta(() => S.rotaciones > rotP8, 10000);
+oauth.pararMantenimiento();
+delete process.env.ROBIN_REINTENTO_MANTENIMIENTO_MS;
+check('P8 la vuelta de mantenimiento que pilla la red caída se reintenta sola enseguida y renueva',
+  S.renovacionesTiradas === 1 && renovadaP8, JSON.stringify({ tiradas: S.renovacionesTiradas, rot: S.rotaciones - rotP8 }));
+const cP8 = JSON.parse(fs.readFileSync(CONEX, 'utf8'))[oauth.claveProceso()] || {};
+check('P8 y al conectar ya no queda «fallando desde» para este proceso', !cP8.fallando_desde && Boolean(cP8.ultimo_ok), JSON.stringify(cP8));
 
 check('el sistema se dice como lo reconoce el abogado', oauth.nombreSO('darwin', '24.6.0') === 'macOS 15' && oauth.nombreSO('win32', '10.0.22631') === 'Windows 11' && oauth.nombreSO('win32', '10.0.19045') === 'Windows 10');
 

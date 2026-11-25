@@ -24,6 +24,7 @@ import path from 'node:path';
 import v8 from 'node:v8';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
 import { leerCuentas } from './correo/ajustes.js';
 import { config, VERSION, rootForPath } from './config.js';
 import { log } from './logger.js';
@@ -37,6 +38,7 @@ import nube from './indexer/nube.js';
 import { getBearerQuiet, ultimoErrorRed } from './auth/oauth.js';
 import { certificadosSistema } from './certificados-sistema.js';
 import { escribirAtomico, escribirJson, conCerrojoDeFichero } from './persistencia.js';
+import { alCerrarseLaSalida, esTuberiaCerrada, stdoutCerradoYa, stderrCerradoYa } from './tuberias.js';
 
 const ENTRE_INFORMES_IGUALES_MS = 12 * 3600 * 1000;
 const MAX_INFORMES_DIA = 20;
@@ -81,7 +83,7 @@ function modificarEstado(fn) {
 
 // Identificador aleatorio de ESTA instalación (agrupa los informes de un mismo equipo). No se
 // deriva de nada de la persona ni del equipo.
-function instalacionId() {
+export function instalacionId() {
   const est = leerEstado();
   if (est.instalacion) return est.instalacion;
   return modificarEstado((e) => {
@@ -106,6 +108,52 @@ let _cerrando = false;
 // (± un latido) y cómo estaba. Solo números.
 const LATIDO_MS = Number(process.env.ROBIN_LATIDO_MS) || 5000;
 let _latido = null;
+
+// QUIÉN lanzó este proceso (21-oct-2026). En el Mac de Eduardo el registro de Claude que leemos
+// no se escribe desde el 16-oct y, aun así, Claude seguía lanzando RobinSearch: sin saber si el
+// lanzador era Claude Desktop, Claude Code (sesiones de Cowork) u otra cosa, no se podía saber
+// qué registro mirar. Solo viaja la CATEGORÍA, nunca la ruta ni el nombre del ejecutable.
+export function categoriaLanzador(ejecutable, argumentos = '') {
+  // `ejecutable`: lo que da `ps -o comm=` (la ruta del programa, sin argumentos: los de un
+  // terminal pueden llevar cualquier texto). Los argumentos solo se miran si el programa es
+  // node, que es como va Claude Code instalado con npm («node …/@anthropic-ai/claude-code/cli.js»).
+  const c = String(ejecutable || '').trim();
+  if (!c) return 'desconocido';
+  const base = c.split(/[\\/]/).pop().toLowerCase();
+  if (/claude\.app[\\/]|[\\/]anthropicclaude[\\/]|anthropic\.claude|[\\/]windowsapps[\\/]claude/i.test(c) || base === 'claude helper' || base === 'claude.exe') return 'claude_desktop';
+  if (base === 'claude' || /[\\/]claude-code[\\/]/i.test(c)) return 'claude_code';
+  if (/^(node|node\.exe|bun)$/.test(base)) return /@anthropic-ai[\\/]claude-code|[\\/]claude-code[\\/]/i.test(String(argumentos)) ? 'claude_code' : 'node';
+  if (/robindesktop|robin desktop/i.test(c)) return 'robindesktop';
+  if (/^-?(zsh|bash|sh|fish|dash|login|cmd\.exe|powershell\.exe|pwsh|pwsh\.exe)$/.test(base)) return 'terminal';
+  if (/^(launchd|systemd|init)$/.test(base)) return 'sistema';
+  return 'otro';
+}
+let _lanzador = process.env.ROBIN_PRUEBA_LANZADOR || null;
+export const lanzador = () => _lanzador;
+function fijarLanzador(valor) {
+  _lanzador = valor;
+  if (_marca && !_cerrando) _marca.lanzador = valor;
+}
+if (!_lanzador) {
+  try {
+    if (process.platform === 'win32') _lanzador = 'desconocido';
+    else {
+      const pid = String(process.ppid);
+      const hijo = execFile('ps', ['-o', 'comm=', '-p', pid], { timeout: 2000 }, (err, comm) => {
+        if (err) return fijarLanzador('desconocido');
+        const base = String(comm).trim().split(/[\\/]/).pop();
+        if (!/^(node|bun)$/i.test(base)) return fijarLanzador(categoriaLanzador(comm));
+        const otro = execFile('ps', ['-o', 'command=', '-p', pid], { timeout: 2000 }, (err2, cmd) =>
+          fijarLanzador(categoriaLanzador(comm, err2 ? '' : cmd)),
+        );
+        otro.unref?.();
+      });
+      hijo.unref?.();
+    }
+  } catch {
+    _lanzador = 'desconocido';
+  }
+}
 
 function memoriaAhora() {
   const MB = 1048576;
@@ -141,7 +189,7 @@ function latir() {
 export function marcarFase(fase, extra = {}) {
   if (_cerrando) return;
   const ahora = new Date().toISOString();
-  _marca = { pid: process.pid, fase, t: ahora, inicio: INICIO_PROCESO, version: VERSION, latido: ahora, ...memoriaAhora(), ...extra };
+  _marca = { pid: process.pid, fase, t: ahora, inicio: INICIO_PROCESO, version: VERSION, latido: ahora, lanzador: _lanzador, ...memoriaAhora(), ...extra };
   escribirMarca();
   if (!_latido) {
     _latido = setInterval(latir, LATIDO_MS);
@@ -175,10 +223,14 @@ export function revisarCaidaAnterior() {
   }
   const caidas = [];
   for (const n of nombres) {
-    const m = /^en_curso-(\d+)\.json$/.exec(n);
+    // `en_curso-<pid>-h<n>.json` (1.13.0): la marca de un hilo del supervisor que MURIÓ, renombrada
+    // por el supervisor. Su pid sigue vivo (es el del supervisor), pero el hilo no: es una caída
+    // segura, la cuente quien la cuente (este mismo proceso con el hilo nuevo, u otra instancia).
+    const m = /^en_curso-(\d+)(-h\d+)?\.json$/.exec(n);
     if (!m) continue;
     const pid = Number(m[1]);
-    if (pid === process.pid) continue;
+    const deHiloMuerto = Boolean(m[2]);
+    if (pid === process.pid && !deHiloMuerto) continue;
     const ruta = path.join(config.dataDir, n);
     let edad = 0;
     try {
@@ -187,7 +239,7 @@ export function revisarCaidaAnterior() {
       continue;
     }
     // Un pid vivo con una marca de más de un día es un pid reciclado por otro programa.
-    if (pidVivo(pid) && edad < MARCA_CADUCA_MS) continue;
+    if (!deHiloMuerto && pidVivo(pid) && edad < MARCA_CADUCA_MS) continue;
     // Claude arranca dos instancias a la vez: las dos veían la misma marca y la contaban, y UNA
     // caída pasaba por dos (fichero sano apartado, índice rehecho). Solo la cuenta quien consigue
     // renombrarla primero.
@@ -208,11 +260,38 @@ export function revisarCaidaAnterior() {
     } catch {
       /* nada */
     }
+    if (d && d.muerte_hilo) {
+      // El supervisor vio morir el hilo: no hay cierre de Claude que buscar en ningún registro.
+      log.warn('El hilo del servidor murió y el supervisor lo repuso', { fase: d.fase, codigo: d.muerte_hilo.codigo ?? null, ...datosDeMarca(d) });
+      caidas.push(d);
+      continue;
+    }
     const cerroClaude = d?.fase && d.fase !== 'excepcion' ? claudeLaCerro(d) : false;
     if (cerroClaude === true) {
       // Claude pidió el cierre (se reinstala o actualiza la extensión, se cierra Claude) y mató el
       // proceso antes de que atendiera la señal: no es una caída ni el fichero tiene culpa.
       log.info('La ejecución anterior la cerró Claude: no es una caída', { fase: d.fase });
+      continue;
+    }
+    if (d?.fase && d.fase !== 'excepcion' && cerradaEnTanda(d)) {
+      // 21-oct-2026, Mac de Eduardo: Claude cerró de golpe una docena de instancias (19:29) y
+      // las que no llegaron a atender la señal —estaban abriendo el índice— murieron sin borrar
+      // su marca. Las demás dejaron su «Cierre ordenado» en NUESTRO registro en esos mismos
+      // segundos: eso es Claude cerrando, no una caída, haya o no registro de Claude que lo diga.
+      log.info('La ejecución anterior la cerró Claude junto con las demás instancias: no es una caída', {
+        fase: d.fase,
+        ...datosDeMarca(d),
+      });
+      continue;
+    }
+    if (d?.fase && d.fase !== 'excepcion' && cierreDeClaudeTrasLatido(d)) {
+      // El registro de Claude dice que, tras el último latido de esa marca, lo que hizo con
+      // nuestro servidor fue CERRARLO (ver cierreDeClaudeTrasLatido). Es el cierre de Claude al
+      // acabar el día, no una caída: ni se avisa, ni se aparta el documento, ni cuenta.
+      log.info('La ejecución anterior la cerró Claude (su registro lo dice tras el último latido): no es una caída', {
+        fase: d.fase,
+        ...datosDeMarca(d),
+      });
       continue;
     }
     if (d?.fase && d.fase !== 'excepcion' && cerradaPorActualizacion(d)) {
@@ -230,17 +309,70 @@ export function revisarCaidaAnterior() {
     // cerrando el servidor para reabrirlo; se anota como INCIERTA: ni se aparta el documento que
     // estaba leyendo (estaba sano) ni cuenta para rehacer el índice, que son las dos reacciones
     // caras. Se sigue avisando, pero dicho como lo que es.
-    if (cerroClaude === null && d) d.incierta = true;
+    if (cerroClaude === null && d) {
+      d.incierta = true;
+      // Por qué no se sabe: no hay registro de Claude, o lo hay pero Claude ya no lo escribe (el
+      // 21-oct el informe decía «sin registro de Claude» con `claude_log: leido`).
+      d.sinRegistro = _consultaDesfasada ? 'desfasado' : 'sin_registro';
+    }
     if (d?.fase) caidas.push(d);
   }
   if (!caidas.length) return null;
   caidas.sort((a, b) => String(a.t).localeCompare(String(b.t)));
   const seguidas = modificarEstado((est) => {
-    est.caidas = [...(est.caidas || []), ...caidas.map((c) => ({ fase: c.faseOriginal || c.fase, t: c.t, version: c.version ?? null, incierta: c.incierta === true }))].slice(-10);
-    est.caidasSeguidas = (est.caidasSeguidas || 0) + caidas.length;
+    // Varias marcas que dejaron de latir en el MISMO momento son UN suceso (Claude cerrando
+    // varias instancias a la vez, o el equipo apagándose), no varias caídas seguidas: el 21-oct
+    // cinco marcas de la misma tanda se contaron como «5 caídas seguidas», y con tres de ellas
+    // «confirmadas» se habría rehecho un índice de 34.000 documentos. Se agrupan también con las
+    // que acaba de contar OTRA instancia (las dos arrancan a la vez y se reparten las marcas).
+    const previas = est.caidas || [];
+    let nuevas = 0;
+    for (const c of caidas) {
+      const l = Date.parse(c.latido || '');
+      const ultima = previas[previas.length - 1];
+      const misma = Number.isFinite(l) && Number.isFinite(ultima?.l) && Math.abs(l - ultima.l) <= MISMA_TANDA_MS;
+      if (misma) {
+        // La tanda es incierta solo si lo son todas sus marcas.
+        if (c.incierta !== true) ultima.incierta = false;
+        ultima.marcas = (ultima.marcas || 1) + 1;
+        continue;
+      }
+      previas.push({ fase: c.faseOriginal || c.fase, t: c.t, l: Number.isFinite(l) ? l : null, version: c.version ?? null, incierta: c.incierta === true });
+      nuevas += 1;
+    }
+    est.caidas = previas.slice(-10);
+    est.caidasSeguidas = (est.caidasSeguidas || 0) + nuevas;
     return est.caidasSeguidas;
   });
-  return { ...caidas[caidas.length - 1], caidasSeguidas: seguidas };
+  return { ...caidas[caidas.length - 1], caidasSeguidas: seguidas, marcas: caidas.length };
+}
+
+// Marcas que dejaron de latir con menos de esto entre sí son de la misma tanda.
+const MISMA_TANDA_MS = 60_000;
+
+// ¿Murió la ejecución de la marca mientras Claude cerraba OTRAS instancias de RobinSearch? Se
+// mira en nuestro propio registro (que existe siempre, a diferencia del de Claude) si alguna
+// instancia anotó un «Cierre ordenado» en los segundos en que esa marca dejó de latir. Solo con
+// marcas que laten (1.9.1+): sin latido no se sabe cuándo murió.
+export function cerradaEnTanda(marca, lineas = null) {
+  const vivo = Date.parse(marca?.latido || '');
+  if (!Number.isFinite(vivo)) return false;
+  const desde = vivo - 5000;
+  const hasta = vivo + LATIDO_MS + 15_000;
+  const texto = lineas ?? colaDeFichero(path.join(config.logDir, 'robin-search.log'), 512 * 1024).split('\n');
+  for (const l of texto) {
+    if (!l.includes('Cierre ordenado de RobinSearch')) continue;
+    let j;
+    try {
+      j = JSON.parse(l);
+    } catch {
+      continue;
+    }
+    if (j?.msg !== 'Cierre ordenado de RobinSearch') continue;
+    const t = Date.parse(j.t || '');
+    if (Number.isFinite(t) && t >= desde && t <= hasta) return true;
+  }
+  return false;
 }
 
 // Cuándo se instaló ESTA versión en el disco: el cambio (ctime) más reciente de la carpeta de la
@@ -569,7 +701,12 @@ function dirsLogClaude() {
     } catch {
       familias = ['Claude_pzs8sxrjxfjjc', 'AnthropicPBC.Claude_fnn82j28hfe8t'];
     }
-    for (const f of familias) dirs.push(path.join(packages, f, 'LocalCache', 'Roaming', 'Claude', 'logs'));
+    for (const f of familias) {
+      dirs.push(path.join(packages, f, 'LocalCache', 'Roaming', 'Claude', 'logs'));
+      // Desde que Claude saca su perfil del paquete (Claude-Data, oct-2026), los registros pasan a
+      // %LOCALAPPDATA%\Claude\logs, que dentro del paquete se redirige aquí.
+      dirs.push(path.join(packages, f, 'LocalCache', 'Local', 'Claude', 'logs'));
+    }
   } else dirs.push(path.join(home, '.config', 'Claude', 'logs'));
   return dirs;
 }
@@ -587,8 +724,13 @@ export const esLogNuestro = (n) =>
 // equipo no lo encontramos (viaja en el informe, nunca la ruta).
 let _estadoLogClaude = 'sin_mirar';
 let _detalleLogClaude = null;
+// La última vez que se consultó para decidir sobre una marca, el registro encontrado era ANTERIOR
+// al lanzamiento de esa ejecución: existe, pero Claude ya no escribe en él. Hasta la 1.12.3 el
+// informe decía `claude_log: leido` y, a la vez, «sin registro de Claude» (21-oct-2026).
+let _consultaDesfasada = false;
 export function estadoLogClaude() {
   if (_estadoLogClaude === 'sin_mirar') fuenteLogClaude();
+  if (_consultaDesfasada && String(_estadoLogClaude).startsWith('leido')) return 'desfasado';
   return _estadoLogClaude;
 }
 
@@ -643,11 +785,11 @@ function colaEsNuestra(ruta) {
 // 1-oct, «se cortó sin cerrar cargando el modelo».
 function fuenteLogClaude() {
   let mejor = null;
-  let mt = 0;
   let estado = null;
   let vistoDir = false;
   let sinPermiso = false;
   const det = { carpetas_probadas: 0, carpetas_legibles: 0, logs_mcp_server: 0, mcp_log: false, main_log: false, main_log_nuestro: false, reciente_min: null };
+  const propios = [];
   const ajenos = [];
   const comunes = [];
   const principales = [];
@@ -693,36 +835,42 @@ function fuenteLogClaude() {
       }
       if (!/^mcp-server-.*\.log$/i.test(n)) continue;
       det.logs_mcp_server += 1;
-      if (esLogNuestro(n)) {
-        if (st.mtimeMs > mt) {
-          mt = st.mtimeMs;
-          mejor = { ruta: r, soloNuestras: false, mtimeMs: st.mtimeMs };
-          estado = 'leido';
-        }
-      } else ajenos.push([r, st.mtimeMs]);
+      if (esLogNuestro(n)) propios.push([r, st.mtimeMs]);
+      else ajenos.push([r, st.mtimeMs]);
     }
   }
-  if (masReciente) det.reciente_min = Math.max(0, Math.round((Date.now() - masReciente) / 60000));
-  if (!mejor) {
-    ajenos.sort((a, b) => b[1] - a[1]);
-    for (const [r, m] of ajenos) {
-      if (!colaEsNuestra(r)) continue;
-      mejor = { ruta: r, soloNuestras: false, mtimeMs: m };
-      estado = 'leido_por_contenido';
-      break;
-    }
+  const minutos = (m) => Math.max(0, Math.round((Date.now() - m) / 60000));
+  if (masReciente) det.reciente_min = minutos(masReciente);
+  // Por orden de preferencia: el que se llama como nuestro servidor, el que habla de él (por
+  // contenido) y el común (mcp.log, solo nuestras líneas). 🔴 21-oct-2026 (Mac de Eduardo): hasta
+  // la 1.12.3 bastaba con que EXISTIERA el primero, aunque Claude no lo tocara desde hacía cinco
+  // días, para no mirar los otros; ahora, si uno posterior en la lista es más reciente y habla de
+  // nuestro servidor, manda ese.
+  const masNuevo = (lista) => lista.sort((a, b) => b[1] - a[1])[0];
+  const p = masNuevo(propios);
+  if (p) {
+    mejor = { ruta: p[0], soloNuestras: false, mtimeMs: p[1] };
+    estado = 'leido';
+    det.nuestro_min = minutos(p[1]);
   }
-  if (!mejor) {
-    comunes.sort((a, b) => b[1] - a[1]);
-    for (const [r, m] of comunes) {
-      if (!colaEsNuestra(r)) continue;
-      mejor = { ruta: r, soloNuestras: true, mtimeMs: m };
-      estado = 'leido_mcp_log';
-      break;
-    }
+  for (const [r, m] of ajenos.sort((a, b) => b[1] - a[1])) {
+    if (mejor && m <= mejor.mtimeMs) break;
+    if (!colaEsNuestra(r)) continue;
+    mejor = { ruta: r, soloNuestras: false, mtimeMs: m };
+    estado = 'leido_por_contenido';
+    break;
+  }
+  for (const [r, m] of comunes.sort((a, b) => b[1] - a[1])) {
+    det.mcp_log_min = minutos(m);
+    if (mejor && m <= mejor.mtimeMs) break;
+    if (!colaEsNuestra(r)) continue;
+    mejor = { ruta: r, soloNuestras: true, mtimeMs: m };
+    estado = 'leido_mcp_log';
+    break;
   }
   // main.log: el más reciente que hable de nuestro servidor (lanzamientos y cierres).
   principales.sort((a, b) => b[1] - a[1]);
+  if (principales.length) det.main_log_min = minutos(principales[0][1]);
   for (const [r, m] of principales) {
     if (!colaDeFichero(r, BYTES_MAIN_LOG).split('\n').some((l) => eventoDeLinea(l, { soloNuestras: true }))) continue;
     det.main_log_nuestro = true;
@@ -735,6 +883,7 @@ function fuenteLogClaude() {
     }
     break;
   }
+  if (mejor) det.fuente_min = minutos(mejor.mtimeMs);
   _estadoLogClaude = estado || (sinPermiso ? 'sin_permiso' : vistoDir ? 'sin_fichero' : 'sin_carpeta');
   _detalleLogClaude = det;
   return mejor;
@@ -860,18 +1009,63 @@ export function eventoDeLinea(linea, { soloNuestras = false } = {}) {
 //
 // Sin el arranque del proceso en la marca (marcas de antes de la 1.6.1) o sin un lanzamiento que
 // case con él (lanzado por la app, la CLI, una prueba), se sigue contando como caída.
+// Todo lo que el registro de Claude dice de nuestro servidor (el del servidor y el main.log).
+function lineasDelRegistroDeClaude(fuente) {
+  return [...lineasFuente(fuente, 256 * 1024), ...lineasMain(fuente)];
+}
+
+// ── ¿Fue el cierre de Claude de ayer por la tarde? ────────────────────────────────────────
+//
+// 🔴 6-nov-2026. En el panel, TODAS las «caídas» de Windows eran de dos equipos, y las de uno de
+// ellos (30-oct, 3-nov, 5-nov) tenían la misma pinta: la marca llevaba sin latir 15 horas, 13
+// horas y 3 días y medio, y el registro de Claude de esa tarde decía «Shutting down server…
+// (intentional shutdown)» a las 19:29, a las 21:26 y a las 19:25. Es el abogado cerrando Claude
+// al irse, no una caída: en Windows no hay SIGTERM que atender, el proceso se corta en seco y la
+// marca se queda. A la mañana siguiente se avisaba de una caída y se ponía bajo sospecha un PDF
+// sano.
+//
+// `claudeLaCerro` no lo veía porque EXIGE encontrar el lanzamiento de ese proceso, y una jornada
+// entera de uso empuja el «Initializing server» fuera de la cola del registro que leemos. Aquí no
+// hace falta: basta con mirar qué dijo Claude de nuestro servidor DESPUÉS del último latido. Si
+// lo primero que anota es un cierre suyo, lo cerró él; si es una muerte («Server transport
+// closed» a secas, «disconnected»), se cayó.
+const MARGEN_LATIDO_MS = 2 * 60 * 1000;
+
+export function cierreDeClaudeTrasLatido(marca, lineas = null) {
+  const latido = Date.parse(marca?.latido || '');
+  if (!Number.isFinite(latido)) return false;
+  if (!lineas) {
+    const fuente = fuenteLogClaude();
+    if (!fuente) return false;
+    lineas = lineasDelRegistroDeClaude(fuente);
+  }
+  const despues = [];
+  for (const l of lineas) {
+    const e = eventoDeLinea(l);
+    if (e && (e.tipo === 'cierre' || e.tipo === 'muerte') && e.t >= latido - MARGEN_LATIDO_MS) despues.push(e);
+  }
+  if (!despues.length) return false;
+  despues.sort((a, b) => a.t - b.t);
+  return despues[0].tipo === 'cierre';
+}
+
 export function claudeLaCerro(marca, lineas = null) {
   const inicio = Date.parse(marca?.inicio);
   if (!Number.isFinite(inicio)) return false;
   if (!lineas) {
     const fuente = fuenteLogClaude();
     // Sin registro de Claude no se sabe si la cerró él o se cayó: `null`, nunca «se cayó».
+    _consultaDesfasada = false;
     if (!fuente) return null;
     // Un registro que Claude no ha tocado desde ANTES de lanzar ese proceso (el lanzamiento se
     // anota como mucho un minuto antes de que arranque) no puede contar cómo terminó: es de otra
-    // instalación o de otra época. Su silencio no prueba nada.
-    if (Number.isFinite(fuente.mtimeMs) && fuente.mtimeMs < inicio - 60_000) return null;
-    lineas = [...lineasFuente(fuente, 256 * 1024), ...lineasMain(fuente)];
+    // instalación o de otra época. Su silencio no prueba nada. Y se dice ASÍ en el informe
+    // (`claude_log: desfasado`), no «leído».
+    if (Number.isFinite(fuente.mtimeMs) && fuente.mtimeMs < inicio - 60_000) {
+      _consultaDesfasada = true;
+      return null;
+    }
+    lineas = lineasDelRegistroDeClaude(fuente);
   }
   const eventos = [];
   for (const l of lineas) {
@@ -1021,6 +1215,7 @@ function sistema() {
     ram_total_mb: Math.round(os.totalmem() / 1048576),
     ram_libre_mb: Math.round(os.freemem() / 1048576),
     heap_limite_mb: heap,
+    lanzador: _lanzador || 'desconocido',
   };
 }
 
@@ -1096,22 +1291,31 @@ function carpetasResumen() {
   };
 }
 
-function puedeEnviar(firma) {
-  const est = leerEstado();
+// RESERVA del envío, bajo el cerrojo de diagnostico.json: comprobar y apuntar en el mismo paso.
+// Hasta la 1.12.3 se comprobaba antes de enviar y se apuntaba al recibir la respuesta, así que
+// dos instancias que arrancaban a la vez (Claude lanza varias) pasaban las dos la comprobación y
+// llegaban DOS informes iguales en el mismo segundo (21-oct-2026, Mac de Eduardo). Devuelve la
+// marca de la reserva (para soltarla si el envío falla) o null si ya se avisó / tope del día.
+function reservarEnvio(firma) {
   const ahora = Date.now();
-  const ultimo = est.enviados?.[firma];
-  if (ultimo && ahora - ultimo < ENTRE_INFORMES_IGUALES_MS) return false;
-  const hoy = (est.enviosRecientes || []).filter((t) => ahora - t < 24 * 3600 * 1000);
-  return hoy.length < MAX_INFORMES_DIA;
-}
-
-function anotarEnvio(firma) {
-  const ahora = Date.now();
-  modificarEstado((est) => {
+  return modificarEstado((est) => {
+    const ultimo = est.enviados?.[firma];
+    if (ultimo && ahora - ultimo < ENTRE_INFORMES_IGUALES_MS) return null;
+    const hoy = (est.enviosRecientes || []).filter((t) => ahora - t < 24 * 3600 * 1000);
+    if (hoy.length >= MAX_INFORMES_DIA) return null;
     est.enviados = Object.fromEntries(
       Object.entries({ ...(est.enviados || {}), [firma]: ahora }).filter(([, t]) => ahora - t < 7 * 24 * 3600 * 1000),
     );
-    est.enviosRecientes = [...(est.enviosRecientes || []).filter((t) => ahora - t < 24 * 3600 * 1000), ahora];
+    est.enviosRecientes = [...hoy, ahora];
+    return ahora;
+  });
+}
+
+// El envío no llegó: se suelta la reserva para que el próximo intento pueda avisar.
+function soltarEnvio(firma, reserva) {
+  modificarEstado((est) => {
+    if (est.enviados?.[firma] === reserva) delete est.enviados[firma];
+    est.enviosRecientes = (est.enviosRecientes || []).filter((t) => t !== reserva);
   });
 }
 
@@ -1157,7 +1361,9 @@ export function construirInforme(motivo, datos = {}) {
     fase: datos.fase ?? null,
     causa,
     fichero,
-    caidas_seguidas: leerEstado().caidasSeguidas || 0,
+    // La cuenta que vio QUIEN informa (la misma que dice la causa): leída después, otra instancia
+    // podía haber sumado sus marcas entretanto y el informe decía «2» en la causa y 5 aquí.
+    caidas_seguidas: Number.isFinite(datos.caidasSeguidas) ? datos.caidasSeguidas : leerEstado().caidasSeguidas || 0,
     // Si el registro de Claude se ha podido leer en este equipo o no: de ello depende que una
     // marca huérfana se sepa distinguir de un cierre de Claude, y hasta hoy lo adivinábamos.
     claude_log: estadoLogClaude(),
@@ -1182,29 +1388,35 @@ export async function informar(motivo, datos = {}, { esperarMs = 6000 } = {}) {
       resultado.noEnviado = 'desactivado';
       return resultado;
     }
-    if (!puedeEnviar(firma)) {
+    const reserva = reservarEnvio(firma);
+    if (reserva === null || reserva === undefined) {
       resultado.noEnviado = 'ya_avisado';
       return resultado;
     }
-    const bearer = await conTope(getBearerQuiet(), 3000).catch(() => null);
-    const res = await fetch(config.diagnosticoUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-RobinSearch-Version': VERSION, ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}) },
-      body: cuerpo,
-      signal: AbortSignal.timeout(esperarMs),
-    });
-    resultado.enviado = res.ok;
-    resultado.http = res.status;
-    if (res.ok) {
-      try {
-        resultado.id = (await res.json())?.id ?? null;
-      } catch {
-        resultado.id = null;
+    let llego = false;
+    try {
+      const bearer = await conTope(getBearerQuiet(), 3000).catch(() => null);
+      const res = await fetch(config.diagnosticoUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-RobinSearch-Version': VERSION, ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}) },
+        body: cuerpo,
+        signal: AbortSignal.timeout(esperarMs),
+      });
+      resultado.enviado = res.ok;
+      resultado.http = res.status;
+      if (res.ok) {
+        llego = true;
+        try {
+          resultado.id = (await res.json())?.id ?? null;
+        } catch {
+          resultado.id = null;
+        }
+        log.info('Aviso técnico enviado a Robin', { motivo, fase: datos.fase ?? null, firma });
+      } else {
+        log.warn('Robin no aceptó el aviso técnico', { motivo, code: String(res.status) });
       }
-      anotarEnvio(firma);
-      log.info('Aviso técnico enviado a Robin', { motivo, fase: datos.fase ?? null, firma });
-    } else {
-      log.warn('Robin no aceptó el aviso técnico', { motivo, code: String(res.status) });
+    } finally {
+      if (!llego) soltarEnvio(firma, reserva);
     }
   } catch (err) {
     log.warn('No se pudo enviar el aviso técnico', { motivo, err: String(err?.message ?? err) });
@@ -1235,6 +1447,13 @@ export function instalarManejadores({ alCerrar } = {}) {
       /* señal no disponible en esta plataforma */
     }
   }
+  // Claude cerró la tubería de stdout (16-oct-2026, Eduardo): ya no hay a quién responder. Es un
+  // cierre ordenado como el de stdin cerrado, no una caída (tuberias.js).
+  alCerrarseLaSalida(() => salirLimpio('salida_cerrada'));
+  // ¿Esta excepción es solo el eco de que Claude ya se fue? EPIPE (o similar) con una de las
+  // tuberías de stdio ya rota: lo último que el proceso intentó escribir al marcharse Claude.
+  // Un EPIPE con stdout y stderr sanos es otra cosa (un socket propio) y se sigue avisando.
+  const esEcoDelCierre = (err) => esTuberiaCerrada(err) && (stdoutCerradoYa() || stderrCerradoYa() || cerrando);
   // Una promesa rechazada que nadie recoge TUMBA el proceso en Node ≥15. Aquí se registra, se
   // avisa y el servidor sigue atendiendo.
   //
@@ -1249,6 +1468,7 @@ export function instalarManejadores({ alCerrar } = {}) {
     }
   });
   const alRechazo = (motivo) => {
+    if (esEcoDelCierre(motivo)) return;
     log.error('Promesa rechazada sin capturar (el servidor sigue)', { err: String(motivo?.stack || motivo?.message || motivo) });
     informar('excepcion', { fase: faseActual() || 'en_marcha', causa: errorTecnico(motivo) }).catch(() => {});
   };
@@ -1257,7 +1477,16 @@ export function instalarManejadores({ alCerrar } = {}) {
   // Tras una excepción sin capturar el estado del proceso no es fiable: se deja la marca con la
   // causa (para el siguiente arranque, y para apartar el fichero si fue leyendo uno), se intenta
   // avisar y se sale.
+  // Una sola vez: mientras se avisa y se sale, otra excepción (la misma tubería rota, otra vez) no
+  // vuelve a registrarse ni a pisar la marca. Antes cada intento de registrarla daba otra (bucle).
+  let enExcepcion = false;
   const alExcepcion = (err) => {
+    if (esEcoDelCierre(err)) {
+      if (stdoutCerradoYa()) salirLimpio('salida_cerrada');
+      return;
+    }
+    if (enExcepcion) return;
+    enExcepcion = true;
     log.error('Excepción no capturada', { err: String(err?.stack || err) });
     const previa = _marca || {};
     marcarFase('excepcion', {
@@ -1290,6 +1519,7 @@ export default {
   indiceAbierto,
   arranqueCompleto,
   caidasSeguidasEn,
+  cierreDeClaudeTrasLatido,
   limpiarTexto,
   errorTecnico,
   sanearDatos,

@@ -276,6 +276,16 @@ export function backfillExpediente() {
   return sellados;
 }
 
+// Documentos en el índice SIN leer de disco: lo que ya hay en memoria (seguimiento.js, cada pocos
+// minutos). `stats()` vuelve a parsear files.json si cambió, y con 114.000 documentos eso son decenas
+// de MB parados en el hilo que atiende a Claude. null si aún no se ha cargado.
+export function contarEnMemoria() {
+  if (!_cache) return null;
+  let n = 0;
+  for (const k in _cache) if (!_cache[k]?.sinOcr) n += 1;
+  return n;
+}
+
 export function stats() {
   const reg = load();
   let documentos = 0;
@@ -292,4 +302,4 @@ export function stats() {
   return { documentos, fragmentos, sinOcr };
 }
 
-export default { docIdForAbsPath, porDocId, rutaDeDocId, conHuella, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };
+export default { contarEnMemoria, docIdForAbsPath, porDocId, rutaDeDocId, conHuella, get, isStale, set, remove, renombrarClave, removeMany, vaciar, all, entries, backfillExpediente, stats, guardarPendiente, descartarPendiente, empezadoVacio };

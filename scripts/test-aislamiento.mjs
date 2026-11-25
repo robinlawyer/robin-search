@@ -54,7 +54,10 @@ for (const [caso, d] of Object.entries(CASOS)) {
 const env={...process.env,ROBIN_TOKEN:'t',
   ROBIN_FOLDERS:MADRE,                        // <- UNA sola carpeta: la madre
   ROBIN_DATA_DIR:path.join(base,'datos'),ROBIN_OCR:'false',ROBIN_LOG_LEVEL:'error',
-  ROBIN_UPDATE_URL:'http://127.0.0.1:9/no'};
+  ROBIN_UPDATE_URL:'http://127.0.0.1:9/no',
+  // Una sola conversación que va de caso en caso: sin la protección de varios chats a la vez
+  // (esa la prueba test-incidencias-27oct), que aquí pediría el expediente en cada llamada.
+  ROBIN_VENTANA_VARIOS_EXPEDIENTES_MIN:'0'};
 
 const c=spawn(process.execPath,[path.join(REPO,'server/index.js')],{env,stdio:['pipe','pipe','pipe']});
 let buf=''; const w=new Map(); let id=1; let se='';
